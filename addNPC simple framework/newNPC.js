@@ -242,7 +242,18 @@ function updateNPC(stage){
                 }
                 if(!V.NPCNameList.includes(npc.nam)){
                     V.NPCNameList.push(npc.nam)
-                }           
+                }
+
+                if(!C.npc[npc.nam]){
+                    Object.defineProperty(C.npc, npc.nam, {
+                        get() {
+                            return V.NPCName[setup.NPCNameList.indexOf(npc.nam)];
+                        },
+                        set(val) {
+                            V.NPCName[setup.NPCNameList.indexOf(npc.nam)] = val;
+                        },
+                    })                    
+                }
             }
         })        
     }

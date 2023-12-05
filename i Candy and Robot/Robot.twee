@@ -23,42 +23,42 @@
 <</widget>>
 
 <<widget "ghumanity">>
-    <<set $robot.humanity += 1>> |
+    <<set $iRobot.humanity += 1>> |
     <span class="orange"> + Humanity</span>
 <</widget>>
 
 <<widget "gghumanity">>
-    <<set $robot.humanity += 3>> |
+    <<set $iRobot.humanity += 3>> |
     <span class="orange"> + + Humanity</span>
 <</widget>>
 
 <<widget "lhumanity">>
-    <<set $robot.humanity -= 1>> |
+    <<set $iRobot.humanity -= 1>> |
     <span class="yellow"> - Humanity</span>
 <</widget>>
 
 <<widget "llhumanity">>
-    <<set $robot.humanity -= 3>> |
+    <<set $iRobot.humanity -= 3>> |
     <span class="yellow"> - - Humanity</span>
 <</widget>>
 
 <<widget "lllhumanity">>
-    <<set $robot.humanity -= 7>> |
+    <<set $iRobot.humanity -= 7>> |
     <span class="yellow"> - - - Humanity</span>
 <</widget>>
 
 <<widget "gcondition">>
-    <<set $robot.condition += 2>> |
+    <<set $iRobot.condition += 2>> |
     <span class="green"> + condition</span>
 <</widget>>
 
 <<widget "lcondition">>
-    <<set $robot.condition -= 1>> |
+    <<set $iRobot.condition -= 1>> |
     <span class="red"> - condition</span>
 <</widget>>
 
 <<widget "llcondition">>
-    <<set $robot.condition -= 3>> |
+    <<set $iRobot.condition -= 3>> |
     <span class="red"> - - condition</span>
 <</widget>>
 
@@ -67,7 +67,7 @@
 <<widget "iRobotMechchoptions">>
     <br>
     道具：<br>
-	<<if $robot.condition lt 10>>
+	<<if $iRobot.condition lt 10>>
 		<<link [[打开工具盒|Room Robot]]>><</link>>
 	<<else>>
 		<<link [[检查机器人|Room Robot]]>><</link>>
@@ -77,14 +77,14 @@
 
 <<widget "robotoption">>
 
-<<if $robot.condition lte 1>>
-    <<trauma 5>><<set $robot.condition to 0>> <<set $mechaitems.robotbuild to 0>>
-    Your robot friend <<print $robot.name>> is completely broken. It can't play with you anymore. If you still want <<print $robot.name>>, you need to rebuild it. <<gtrauma>> <<lllhumanity>> <br>
+<<if $iRobot.condition lte 1>>
+    <<trauma 5>><<set $iRobot.condition to 0>> <<set $mechaItems.robotbuild to 0>>
+    Your robot friend <<print $iRobot.name>> is completely broken. It can't play with you anymore. If you still want <<print $iRobot.name>>, you need to rebuild it. <<gtrauma>> <<lllhumanity>> <br>
     <br>
 <<else>>
 
 <<silently>>
-    <<set _robotcondition = { currentValue : $robot.condition, preText:'Its condition looks', states:[
+    <<set _robotcondition = { currentValue : $iRobot.condition, preText:'Its condition looks', states:[
         {requiredValue:1, color:'red', description:"almost broken", postText:". If you don't fix it, you have to build a new one."},
         {requiredValue:20, color:'orange', description:'very bad',postText:', you need to fix it.'},
         {requiredValue:40, color:'purple', description:'bad', postText:',you have to maintenance it.'},
@@ -95,15 +95,15 @@
     ]}>>
 <</silently>>
 
-You look at your robot friend <<print $robot.name>>.<<characteristic-text _robotcondition>>.<br>
+You look at your robot friend <<print $iRobot.name>>.<<characteristic-text _robotcondition>>.<br>
 <br>
 
 <<link [[Talk(0:10)|Robot talk]]>><<pass 10>><</link>>  <<lstress>> <<ltrauma>> <br>
 <<link [[Beat its(0:10)|Robot beat]]>><<pass 10>><</link>>  <<llstress>> <<lltrauma>> <br>
 
-    <<if $robot.condition gt 50 and $robot.condition lt 100>>
+    <<if $iRobot.condition gt 50 and $iRobot.condition lt 100>>
         <<link [[Maintenance(0:20)|Robot Fix]]>><<pass 20>><</link>>
-    <<elseif $robot.condition lt 50>>
+    <<elseif $iRobot.condition lt 50>>
         <<link [[Fix it(0:30)|Robot Fix]]>><<pass 30>><</link>>  <<gtiredness>> 
     <</if>><br>
 
@@ -113,31 +113,31 @@ You look at your robot friend <<print $robot.name>>.<<characteristic-text _robot
 
 :: Room Robot
 <<effects>><br>
-<<if $robot.condition lt 5>>
+<<if $iRobot.condition lt 5>>
     <<= lanSwitch('You opend your tool box.', '你打开了工具盒。')>><br>
 <<else>>
-    <<= lanSwitch('You step to your robot.', '你从机器人身边离开了。')>><br>
+    <<= lanSwitch('You step to your iRobot.', '你从机器人身边离开了。')>><br>
 <</if>><br>
 
-<<if $mechaitems.puzzle isnot 0>>
-<<link [[Play unlocking puzzle (0:10)|Room puzzle]]>><<pass 10>><<set $mechaitems.puzzle -= 1>><</link>><<llstress>><br>
+<<if $mechaItems.puzzle isnot 0>>
+<<link [[Play unlocking puzzle (0:10)|Room puzzle]]>><<pass 10>><<set $mechaItems.puzzle -= 1>><</link>><<llstress>><br>
 <</if>>
 
-<<if $mechaitems.box isnot 0>>
-<<link [[Figure up the mechanism from box (0:20)|Room Mechanism box]]>><<pass 20>><<set $mechaitems.box -= 1>><</link>><<llstress>> | <span class="lblue">+ mechanic</span><br>
+<<if $mechaItems.box isnot 0>>
+<<link [[Figure up the mechanism from box (0:20)|Room Mechanism box]]>><<pass 20>><<set $mechaItems.box -= 1>><</link>><<llstress>> | <span class="lblue">+ mechanic</span><br>
 <</if>>
 
-<<if $mechaitems.robot is 1>>
-    <<if $mechaitems.tool is 0>>
+<<if $mechaItems.robot is 1>>
+    <<if $mechaItems.tool is 0>>
         <br>You look at your robot building set, but you need some tools to build it.<br>
-    <<elseif $mechaitems.robotbuild gte 100>>
+    <<elseif $mechaItems.robotbuild gte 100>>
         <br><br>
         <<robotoption>>
-    <<elseif $mechaitems.robotbuild isnot 0 and $mechaitems.part lt 1>>
+    <<elseif $mechaItems.robotbuild isnot 0 and $mechaItems.part lt 1>>
         <br>You look at your robot building set, but you need a parts to continue.<br>
     <<else>>
         <br>You look at your robot building set.<br>
-        <<link [[Build the robot(0:30)|Room Mechanism robot]]>><<pass 30>><<set $mechaitems.robotbuild += 1>><<if $mechaitems.robotbuild gte 10>><<set $mechaitems.parts -= 1>><</if>><</link>> <<gtiredness>> | <span class="lblue">+ mechanic</span>
+        <<link [[Build the robot(0:30)|Room Mechanism robot]]>><<pass 30>><<set $mechaItems.robotbuild += 1>><<if $mechaItems.robotbuild gte 10>><<set $mechaItems.parts -= 1>><</if>><</link>> <<gtiredness>> | <span class="lblue">+ mechanic</span>
     <</if>>
     <br>
 <</if>>
@@ -159,9 +159,9 @@ You look at your robot friend <<print $robot.name>>.<<characteristic-text _robot
 <<set _succesrate to random(1,100)>>
 <<stress -12>>
 
-<<if $robot.condition gte 20>>
+<<if $iRobot.condition gte 20>>
 "This puzzle is fun."<br>
-The mechanic voice from <<print $robot.name>> sounds happy, you have a good time with it. <<lstress>> <<ghumanity>> <br>
+The mechanic voice from <<print $iRobot.name>> sounds happy, you have a good time with it. <<lstress>> <<ghumanity>> <br>
 
 <<else>>
 You played the puzzle for 10 minutes. <<lstress>><br>
@@ -177,7 +177,7 @@ You played the puzzle for 10 minutes. <<lstress>><br>
 
 <<elseif $skulduggery gte 300 and _succesrate lte 50>>
     <<trauma - 1>>
-    <<if $robot.condition gte 20>><<trauma -3>><</if>>
+    <<if $iRobot.condition gte 20>><<trauma -3>><</if>>
     It's pretty easy, you got fun. <<ltrauma>>
 
 <<elseif $skulduggery gte 200>>
@@ -185,7 +185,7 @@ You played the puzzle for 10 minutes. <<lstress>><br>
 <</if>>
 <br>
 
-<<if $mechaitems.puzzle is 0>>
+<<if $mechaItems.puzzle is 0>>
 <br>Maybe it's been played too many times, the puzzle buckle is completely broken.<br>
 <</if>>
 
@@ -201,9 +201,9 @@ You played the puzzle for 10 minutes. <<lstress>><br>
 <<addmechaskill>>
 <<willpower 1>>
 
-<<if $robot.condition gte 20>>
+<<if $iRobot.condition gte 20>>
     "Master, are you try to figure up the mechanism of this box? It's intresting, looks like a maze inside the box."<br>
-    Your robot friend <<print $robot.name>> sits next to you and watches what you do. <<lstress>> <<ghumanity>> <br>
+    Your robot friend <<print $iRobot.name>> sits next to you and watches what you do. <<lstress>> <<ghumanity>> <br>
     You learn some mechanic from box
 
 <<else>>
@@ -227,7 +227,7 @@ You played the puzzle for 10 minutes. <<lstress>><br>
 . <<gwillpower>><br>
 
 
-<<if $mechaitems.box is 0>>
+<<if $mechaItems.box is 0>>
  Maybe it's been played too many times, the mechanism box is completely broken.<br>
 <</if>>
 
@@ -243,27 +243,27 @@ You played the puzzle for 10 minutes. <<lstress>><br>
 <<set $stress to Math.clamp($stress - ($stressmax*0.01),0,$stressmax)>>
 <<tiredness 5>>
 
-You spent 30 minutes for build your robot. | <<lstress>><br>
+You spent 30 minutes for build your iRobot. | <<lstress>><br>
 
 <<if (_succesrate - ($sciencetrait*5)) gte ($mechanic/10) >>
-    <<set $mechaitems.robotbuild to Math.clamp($mechaitems.robotbuild - random(1,2),0,100)>>
+    <<set $mechaItems.robotbuild to Math.clamp($mechaItems.robotbuild - random(1,2),0,100)>>
     <br>
     Unfortunately, because of your mistakes, the progress is slightly backward.<br> | <span class="red">- Robot Process</span>
 <<else>>
 
-    <<if $mechaitems.robotbuild gte 100>>
-    <<set $robot.condition to $mechaitems.robotbuild>>
-    Your Robot is finish! Give it a name ! The robot's name is <<textbox "$robot.name" "Robert">>.
+    <<if $mechaItems.robotbuild gte 100>>
+    <<set $iRobot.condition to $mechaItems.robotbuild>>
+    Your Robot is finish! Give it a name ! The robot's name is <<textbox "$iRobot.name" "Robert">>.
 
-    <<elseif $mechaitems.robotbuild lte 10>>
+    <<elseif $mechaItems.robotbuild lte 10>>
     It's just started, don't worry, continue to build it.
-    <<elseif $mechaitems.robotbuild lte 20>>
+    <<elseif $mechaItems.robotbuild lte 20>>
     You are building the framework of the robot, take your time.
-    <<elseif $mechaitems.robotbuild lte 40>>
+    <<elseif $mechaItems.robotbuild lte 40>>
     Your robot already has a frame, go on.
-    <<elseif $mechaitems.robotbuild lte 60>>
+    <<elseif $mechaItems.robotbuild lte 60>>
     Your robot already has a basic look, so go ahead.
-    <<elseif $mechaitems.robotbuild lte 80>>
+    <<elseif $mechaItems.robotbuild lte 80>>
     The basic features of your robot are ready, just left the details wait to be added!
     <<else>>
     It's the last part! Your robot looks like it's almost done, go for it!
@@ -306,54 +306,54 @@ During the process, you learn some about mechanic
 :: Robot talk
 <<stress -10>><<trauma -2>>
 
-<<if $robot.humanity gte 80>>
+<<if $iRobot.humanity gte 80>>
     <<if $trauma gte ($traumamax*0.8)>>
         "My human friend, you looks terrified. I think you need a hug."<br>
-        The mechanic voice from <<print $robot.name>> sounds sad. It slowly approaches you and gives you a hug.<br>
+        The mechanic voice from <<print $iRobot.name>> sounds sad. It slowly approaches you and gives you a hug.<br>
         <br>
         "I will do anything for you, witch thing can makes you feel better."<br>
         <br>
-        You hugged it back tightly and cried out, telling it about the recent events of you. <<print $robot.name>> gently strokes your hair 
+        You hugged it back tightly and cried out, telling it about the recent events of you. <<print $iRobot.name>> gently strokes your hair 
     <<elseif $trauma gte ($traumamax*0.5)>>
         "My human friend, you looks so sad. I think you need a hug."
-        The mechanic voice from <<print $robot.name>> sounds sad. It slowly approaches you and gives you a hug.<br>
+        The mechanic voice from <<print $iRobot.name>> sounds sad. It slowly approaches you and gives you a hug.<br>
         <br>
         "I will listen to you, if you have something want to tell."<br>
         <br>
-        You hugged it back, and telling <<print $robot.name>> about the recent events of you. <<print $robot.name>> gently holds your hand,
+        You hugged it back, and telling <<print $iRobot.name>> about the recent events of you. <<print $iRobot.name>> gently holds your hand,
     <<elseif $trauma gte ($traumamax*0.3)>>
         "My human friend, you looks nervous. I think you need to relax."<br>
-        Your robot <<print $robot.name>> approaches to you, then gave you a hug.<br>
+        Your robot <<print $iRobot.name>> approaches to you, then gave you a hug.<br>
         <br>
         You try to calm down yourself then tell it what happen to you rencently,
     <<else>>
         "My human friend, I'm glad to see you! You looks pretty good today."<br>
-        The mechanic voice form <<print $robot.name>> sounds happy. It approuches you and storkes your hair.<br>
+        The mechanic voice form <<print $iRobot.name>> sounds happy. It approuches you and storkes your hair.<br>
         <br>
-        You share your recent events to <<print $robot.name>>,
+        You share your recent events to <<print $iRobot.name>>,
     <</if>>
 
-<<elseif $robot.humanity gte 60>>
+<<elseif $iRobot.humanity gte 60>>
 "Hey my friends! I have something want to share with you."<br>
-Your robot friend <<print $robot.name>> looks happy. It approuches you and give you a hug.<br>
+Your robot friend <<print $iRobot.name>> looks happy. It approuches you and give you a hug.<br>
 <br>
 You shared with each other what has happened recently,
 
-<<elseif $robot.humanity gte 40>>
+<<elseif $iRobot.humanity gte 40>>
 "Master, what do we talk about today? Or do something else?"<br>
 <br>
 You chatted about recent events, then spend time to play puzzles together,
 
-<<elseif $robot.humanity gte 20>>
+<<elseif $iRobot.humanity gte 20>>
 "Master, what do we talk about today? I want to know more about the world."<br>
 <br>
-You talk to <<print $robot.name>> about your rencent events,
+You talk to <<print $iRobot.name>> about your rencent events,
 
 <<else>>
 "Master, what can I do for you?"<br>
-<<print $robot.name>> says to you in that comical-sounding mechanic voice.<br>
+<<print $iRobot.name>> says to you in that comical-sounding mechanic voice.<br>
 <br>
-You try to teach <<print $robot.name>> to understand your feelings. You spend time with it,
+You try to teach <<print $iRobot.name>> to understand your feelings. You spend time with it,
 
 <</if>>
 this makes you feel relaxed. <<lstress>> <<ltrauma>> <<ghumanity>><br>
@@ -366,27 +366,27 @@ this makes you feel relaxed. <<lstress>> <<ltrauma>> <<ghumanity>><br>
 :: Robot beat
 <<stress -25>><<trauma -5>>
 
-<<if $robot.humanity gte 80>>
+<<if $iRobot.humanity gte 80>>
 "My human friend, you look so sad."<br>
-The mechanic voice form <<print $robot.name>> sounds sad. It tries to stop you by hug.<br><br>
+The mechanic voice form <<print $iRobot.name>> sounds sad. It tries to stop you by hug.<br><br>
 
 "You can hit me because I won't get hurt. But I hope you better stop this, because it's very meaningless. Hurting me will hurt yourself at the same time."
 
-<<elseif $robot.humanity gte 60>>
+<<elseif $iRobot.humanity gte 60>>
 "Master, Why do you hit me? It's meaningless because I won't hurt. It only hurt yourself."<br>
-The mechanic voice from <<print $robot.name>> sounds sad.
+The mechanic voice from <<print $iRobot.name>> sounds sad.
 
-<<elseif $robot.humanity gte 40>>
+<<elseif $iRobot.humanity gte 40>>
 "I can't understand why do you want to hit me. But if hitting me makes you feel better, that's fine."<br>
-The mechanic voice from <<print $robot.name>> says.
+The mechanic voice from <<print $iRobot.name>> says.
 
-<<elseif $robot.humanity gte 20>>
+<<elseif $iRobot.humanity gte 20>>
 "Master, did I do something wrong?"<br>
-The mechanic voice from <<print $robot.name>> sounds confuse.
+The mechanic voice from <<print $iRobot.name>> sounds confuse.
 
 <<else>>
 "Master, don't forget to fix me after you do this."<br>
-The mechanic voice from <<print $robot.name>> sounds a little bit angry.
+The mechanic voice from <<print $iRobot.name>> sounds a little bit angry.
 <</if>>
 <<llstress>> <<lltrauma>> <<lhumanity>> <<llcondition>> <br>
 
@@ -396,12 +396,12 @@ The mechanic voice from <<print $robot.name>> sounds a little bit angry.
 
 :: Robot Fix
 
-<<if $mechaitems.parts lt 5>>
-    You need some part to fix your robot.<br>
+<<if $mechaItems.parts lt 5>>
+    You need some part to fix your iRobot.<br>
 
 <<else>>
 
-    <<tiredness 5>><<set $mechaitems.parts -= 5>>
+    <<tiredness 5>><<set $mechaItems.parts -= 5>>
     You spend time for fix your robot friend. <<ltiredness>> <<gcondition>> <br>
 
 <</if>>

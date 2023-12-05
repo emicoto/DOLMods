@@ -492,3 +492,79 @@ function addctionEvent(){
 }
 
 DefineMacroS('addctionEvent', addctionEvent)
+
+$(document).one(':storyready',()=>{
+	let check = setInterval(()=>{
+		if(setup.bodywriting){
+			addBodyWriting()
+			clearInterval(check)
+		}
+	}, 100)
+})
+
+function addBodyWriting(){
+	let fifty_whore = {
+		index: Object.keys(setup.bodywriting).length,
+		writing: "£50",
+		type: "text",
+		writ_cn: "£50",
+		arrow: 1,
+		special: "prostitution",
+		gender: "n",
+		lewd: 1,
+		degree: 5000,
+		key: "fifty_whore",
+		sprites: []
+	}
+	setup.bodywriting_namebyindex[fifty_whore.index] = fifty_whore.key
+	setup.bodywriting.fifty_whore = fifty_whore	
+
+	let drug_eater = {
+		index: Object.keys(setup.bodywriting).length,
+		writing: "Drug Eater",
+		type: "text",
+		writ_cn: "瘾君子",
+		arrow: 0,
+		special: "drugs",
+		gender: "m",
+		lewd: 1,
+		degree: 0,
+		key: "drug_eater",
+		sprites: []
+	}
+	setup.bodywriting_namebyindex[drug_eater.index] = drug_eater.key
+	setup.bodywriting.drug_eater = drug_eater
+
+	let drug_whore = {
+		index: Object.keys(setup.bodywriting).length,
+		writing: "Drug Whore",
+		type: "text",
+		writ_cn: "为药卖身",
+		arrow: 0,
+		special: "prostitution",
+		gender: "n",
+		lewd: 1,
+		degree: 0,
+		key: "drug_whore",
+		sprites: []
+	}
+	setup.bodywriting_namebyindex[drug_whore.index] = drug_whore.key
+	setup.bodywriting.drug_whore = drug_whore
+
+
+	let drug_slut = {
+		index: Object.keys(setup.bodywriting).length,
+		writing: "Drug Slut",
+		type: "text",
+		writ_cn: "药瘾婊子",
+		arrow: 0,
+		special: "drugs",
+		gender: "n",
+		lewd: 1,
+		degree: 0,
+		key: "drug_slut",
+		sprites: []
+	}
+	setup.bodywriting_namebyindex[drug_slut.index] = drug_slut.key
+	setup.bodywriting.drug_slut = drug_slut
+}
