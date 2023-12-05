@@ -1,25 +1,30 @@
 
-window.lanSwitch = function(EN, CN){
+function lanSwitch(EN, CN){
     if (setup.language == 'CN'){
         return CN
     }
     
     return EN
 }
+window.lanSwitch = lanSwitch
+DefineMacroS('lanSwitch', lanSwitch)
 
-let checkSetup = setInterval(()=>{
-    if(setup && setup.breastsizes){
-        if(setup.breastsizes[1] === '微隆的'){
-            setup.language = 'CN'
-        }
-        else{
-            setup.language = 'EN'
-        }
 
-        $(document).trigger('languageChecked')        
-        clearInterval(checkSetup)
+let lancheck = setInterval(()=>{
+    if( typeof setup !== 'object' ){ return }
+
+    if(window.modI18N || setup.breastsizes){
+        setup.language = 'CN'        
+    }else{
+        setup.language = 'EN'
     }
-}, 30)
+
+    if(setup.language == 'CN' || (setup.language == 'EN' && setup.breastsizes[1] !== '微隆的')){
+        clearInterval(lancheck)
+        $(document).trigger('languageChecked')
+    }
+}, 50)
+
 
 class NamedNPC{
     constructor(name, title, des, type){

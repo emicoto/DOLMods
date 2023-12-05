@@ -4,7 +4,7 @@
 	<<setupTabs>>
 	<div id="overlayTabs" class="tab">
 		<<closeButtonMobile>>
-		<<button "道具">>
+		<<button lanSwitch('ITEMS',"道具")>>
 			<<toggleTab>>
 			<<replace #customOverlayContent>><<pocketItems>><</replace>>
 		<</button>>
@@ -14,23 +14,25 @@
 
 <<widget "printCandyItems">>
 <<if $candyItems[$args[0]] > 0 >>
-<<print setup.candyDrug[$args[0]].name>> x <<print $candyItems[$args[0]]>> | <<if $combat is 0>><<link '吃' $passage>><<run setup.candyDrug[$args[0]].onuse()>><</link>><</if>> <span class="steel"><<print setup.candyDrug[$args[0]].info>></span><br>
+	<<set _output to lanSwitch('Eat', '吃')>>
+<<print setup.candyDrug[$args[0]].name>> x <<print $candyItems[$args[0]]>> | <<if $combat is 0>><<link _output $passage>><<run setup.candyDrug[$args[0]].onuse()>><</link>><</if>> <span class="steel"><<print setup.candyDrug[$args[0]].info>></span><br>
 <</if>>
 <</widget>>
 
 <<widget "printLuneDrug">>
 <<if $candyDrug[$args[0]].owned > 0 >>
-<<print setup.candyDrug[$args[0]].name>> x <<print $candyDrug[$args[0]].owned>> 粒 | <<if $combat is 0>><<link '吞服' $passage>><<run setup.candyDrug[$args[0]].ontake()>><</link>><</if>> <span class="steel"><<print setup.candyDrug[$args[0]].info>></span><br>
+	<<set _output to lanSwitch('Take', '吞服')>>
+<<print setup.candyDrug[$args[0]].name>> x <<print $candyDrug[$args[0]].owned>> 粒 | <<if $combat is 0>><<link _output $passage>><<run setup.candyDrug[$args[0]].ontake()>><</link>><</if>> <span class="steel"><<print setup.candyDrug[$args[0]].info>></span><br>
 <</if>>
 <</widget>>
 
 <<widget "pocketItems">>
 <br>
-防狼喷雾: <<print $spray>> | <span class="steel">你只能在战斗中使用。 </span><br>
+<<=lanSwitch('Spray','防狼喷雾')>>: <<print $spray>> | <span class="steel"><<lanSwitch 'You only can use during combat.' '你只能在战斗中使用。'>> </span><br>
 <br>
 <<if setup.countlDrug() >= 1>>
 <hr>
-药物：<br>
+<<=lanSwitch('Drugs','药物')>>：<br>
 <<printLuneDrug 'serotonin'>>
 <<printLuneDrug 'melatonin'>>
 <<printLuneDrug 'neuroOptimization'>>
