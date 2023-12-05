@@ -6,20 +6,21 @@
  "scriptFileList_inject_early": [],
  "scriptFileList_preload": [],
  "scriptFileList": [
-    "Setup.js",
-    "newNPC.js"
+    "JS/Setup.js",
+    "JS/processCheck.js",
+    "JS/newNPC.js"
  ],
  "tweeFileList": [
- "Setup.twee",
- "Pocket.twee",
- "Robot.twee",
- "Pharmacy.twee"
+ "addTwees/Setup.twee",
+ "addTwees/Pocket.twee",
+ "addTwees/Robot.twee",
+ "addTwees/Pharmacy.twee"
  ],
  "imgFileList": [],
  "additionFile": [
-    "bedroomWidget.txt",
-    "drugsWidget.txt",
-    "drunkWidget.txt"
+    "replaceFiles/bedroomWidget.txt",
+    "replaceFiles/drugsWidget.txt",
+    "replaceFiles/drunkWidget.txt"
  ],
  "addonPlugin": [
   {
@@ -75,32 +76,32 @@
 	{
      "passage": "Widgets",
      "findString": "<</if>>\n<</widget>>\n\n\n<<widget \"tableText\">>",
-     "replaceFile": "bedroomWidget.txt"
+     "replaceFile": "replaceFiles/bedroomWidget.txt"
     },
 	{
         "passage": "Widgets Stats",
         "findString": "\n\t\t<<set $drugged += Math.floor(_args[0] * _drugged_mod)>>\n",
-        "replaceFile": "drugsWidget.txt"
+        "replaceFile": "replaceFiles/drugsWidget.txt"
     },
     {
         "passage": "Widgets Stats",
         "findString": "\n\t\t<<set $drunk += Math.floor(_args[0] * _drunk_mod)>>\n",
-        "replaceFile": "drunkWidget.txt"
+        "replaceFile": "replaceFiles/drunkWidget.txt"
     },
     {
         "passage": "Widgets Bodywriting",
         "findString": "<<if (($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200)) gte 1000)>>",
-        "replace": "<<if (($enemyarousal + ($enemytrust * 6) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 100)) gte 880)>>"
+        "replace": "<<if (($enemyarousal + ($enemytrust * 5.5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 100)) gte 880)>>"
     },
     {
         "passage": "Widgets Bodywriting",
         "findString": "<<elseif (($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200)) gte 500)>>",
-        "replace": "<<elseif (($enemyarousal + ($enemytrust * 6) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 100)) gte 440)>>"
+        "replace": "<<elseif (($enemyarousal + ($enemytrust * 5.5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 100)) gte 440)>>"
     },
     {
         "passage": "Widgets Bodywriting",
         "findString": "<<elseif $skin[_args[0]].degree lte ($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200))>>",
-        "replace": "<<elseif $skin[_args[0]].degree lte ($enemyarousal + ($enemytrust * 6) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 100))>>"
+        "replace": "<<elseif $skin[_args[0]].degree lte ($enemyarousal * 2 + ($enemytrust * 5) - $enemyanger + ($attractiveness / 5) * (currentSkillValue(\"seductionskill\") / 100))>>"
     }
    ]
   }
