@@ -1,3 +1,20 @@
+function printIDrugsLink(key){
+	if(!key) return ;
+
+	let drug = setup.candyDrug[key]
+	let linkname = ''
+
+	if(drug.type == 'drugs'){
+		linkname = `${drug.name}(${drug.num}${lanSwitch('pills', '粒')})`
+	}
+	else{
+		linkname = drug.name
+	}
+
+	return `<<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to setup.candyDrug["${key}"]>><</link>><br>`
+}
+
+DefineMacroS('printIDrugsLink', printIDrugsLink)
 
 function checkDayPass(){
 	if(!V.iCandyStats){

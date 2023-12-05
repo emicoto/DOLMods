@@ -1,21 +1,4 @@
 :: Pharmacy Items [widget]
-
-<<widget 'printIDrugsLink'>>
-
-<<if $args[0]>>
-	<<set _drug = setup.candyDrug[$args[0]]>>
-	<<if _drug.type is 'drugs'>>
-		<<set _output = _drug.name + '(' + _drug.num + lanSwitch('pills', '粒') + ')'>>
-	<<else>>
-		<<set _output = _drug.name>>
-	<</if>>
-
-	<<link _output 'Pharmacy Sale EX'>><<set $pharmacyItem to _drug>><</link>>
-	<br>
-<</if>>
-
-<</widget>>
-
 <<widget "ExtraPharmacy">>
 	<<lanSwitch 'General Medicine' '常规药'>>:
 	<br>
