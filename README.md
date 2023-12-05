@@ -53,7 +53,7 @@ most content builded on old version, need update to ML version now.
 before install need install NPC simple framework.
 
 ## Install Mods
-需要ModLoader 2.10版++ 以及汉化MOD
+需要ModLoader 2.10版++ 中文版需要汉化MOD。
 
 ModLoader 指路：https://github.com/Lyoko-Jeremie/DoLModLoaderBuild/releases
 
