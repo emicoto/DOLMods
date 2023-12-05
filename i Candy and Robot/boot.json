@@ -66,7 +66,7 @@
     {
         "passage":"Widgets Difficulty",
         "findString":"<<set $skulduggeryroll to random(1, 1000)>>",
-        "replace":"<<set $skulduggeryroll to random(1, 1000)>>\n<<if $mechaitems.tool is 1>><<set $skulduggeryroll *= 1.1>><<set $skulduggerydifficulty *= 0.95>><</if>>"
+        "replace":"<<set $skulduggeryroll to random(1, 1000)>>\n<<if $mechaItems.tool is 1>><<set $skulduggeryroll *= 1.1>><<set $skulduggerydifficulty *= 0.95>><</if>>"
     },
     {
         "passage":"Widgets Sleep",
@@ -102,6 +102,11 @@
         "passage": "Widgets Bodywriting",
         "findString": "<<elseif $skin[_args[0]].degree lte ($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200))>>",
         "replace": "<<elseif $skin[_args[0]].degree lte ($enemyarousal * 2 + ($enemytrust * 5) - $enemyanger + ($attractiveness / 5) * (currentSkillValue(\"seductionskill\") / 100))>>"
+    },
+    {
+        "passage": "Brothel",
+        "findString": "<<if $brotheljob is 1>>",
+        "replace": "<<if $brotheljob is 1>>\n<<brothelDrugs>>"
     }
    ]
   }

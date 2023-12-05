@@ -4,7 +4,7 @@ function checkDayPass(){
 		V.iCandyStats.lastdaycheck = Time.days
 	}
 
-	if(Time.days >= V.iCandyStats.lastdaycheck){
+	if(Time.days > V.iCandyStats.lastdaycheck){
 		//-- 处理当天的嗑药状态
 		addictionPross()
 
@@ -126,7 +126,7 @@ function addictionPross(){
 		}
 
 		//计算当天超量，每天自然恢复3点，但如果当天有嗑过药恢复数就减少。
-		drug.overdose = drug.overdose + Math.max(drug.taken - 3, -3)
+		drug.overdose = Math.max(drug.overdose + Math.max(drug.taken - 3, -3), 0)
 		//每日清零当日计数器
 		drug.taken = 0
 	}

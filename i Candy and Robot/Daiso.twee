@@ -36,42 +36,42 @@ You are in the Daiso General Shop. <<if $daystate is "night">>There're nobody he
 	Mechanic:
 	<br>
 
-    <<if $money gte 50000 and $mechaitems.tool is 0>>
+    <<if $money gte 50000 and $mechaItems.tool is 0>>
         <li><<link [[Buy mechanic tool set £500|$passage]]>><<set $boughtItem to "mechanic tool set">><</link>></li>
-    <<elseif $mechaitems.tool is 1>>
+    <<elseif $mechaItems.tool is 1>>
         <li>You already have the mechanic tool set.</li>
     <<else>>
         <li>You don't have £500 for the mechanic tool set.</li>
     <</if>>
 
 
-    <<if $money gte 3000 and $mechaitems.puzzle is 0>>
+    <<if $money gte 3000 and $mechaItems.puzzle is 0>>
         <li><<link [[Buy Puzzle buckle £30|$passage]]>><<set $boughtItem to "puzzle buckle">><</link>></li>
-    <<elseif $mechaitems.puzzle gte 1>>
+    <<elseif $mechaItems.puzzle gte 1>>
         <li>You already have the puzzle buclke.</li>
     <<else>>
         <li>You don't have £30 for the Puzzle buckle.</li>
     <</if>>
 
 
-    <<if $money gte 10000 and $mechaitems.box is 0>>
+    <<if $money gte 10000 and $mechaItems.box is 0>>
         <li><<link [[Buy Mechanism box £100|$passage]]>><<set $boughtItem to "mechanism box">><</link>></li>
-    <<elseif $mechaitems.box gte 1>>
+    <<elseif $mechaItems.box gte 1>>
         <li>You already have the mechanism box.</li>
     <<else>>
         <li>You don't have £100 for the Mechanism Box.</li>
     <</if>>
 
-    <<if $money gte 500000 and $mechaitems.robot is 0>>
+    <<if $money gte 500000 and $mechaItems.robot is 0>>
         <li><<link [[Buy Robot Set £5000|$passage]]>><<set $boughtItem to "robot set">><</link>></li>
-    <<elseif $mechaitems.robot is 1>>
+    <<elseif $mechaItems.robot is 1>>
         <li> You already have the robot set.</li>
     <<else>>
         <li>You don't have £5000 for the robot set.</li>
     <</if>>
 
-    <<if $money gte 10000 and $mechaitems.robot is 1 and $mechaitems.tool is 1>>
-        <li><<link [[Buy 10 set Mechanic Parts £100|$passage]]>><<set $boughtItem to "mechanic parts">><</link>> | the parts you already have: <<print $mechaitems.parts>></li>
+    <<if $money gte 10000 and $mechaItems.robot is 1 and $mechaItems.tool is 1>>
+        <li><<link [[Buy 10 set Mechanic Parts £100|$passage]]>><<set $boughtItem to "mechanic parts">><</link>> | the parts you already have: <<print $mechaItems.parts>></li>
     <<elseif $money lt 10000>>
         <li>You don't have £100 for the mechanic parts.</li>
     <<else>>
@@ -89,15 +89,15 @@ You are in the Daiso General Shop. <<if $daystate is "night">>There're nobody he
 	<<if $boughtItem isnot undefined>>
 		<<switch $boughtItem>>
 		<<case "mechanic tool set">>
-			<<set $money -= 50000>><<set $mechaitems.tool to 1>><<set $skulduggery += 50>>
+			<<set $money -= 50000>><<set $mechaItems.tool to 1>><<set $skulduggery += 50>>
         <<case "puzzle buckle">>
-            <<set $money -= 3000>><<set $mechaitems.puzzle to 12>>
+            <<set $money -= 3000>><<set $mechaItems.puzzle to 12>>
         <<case "mechanism box">>
-            <<set $money -= 10000>><<set $mechaitems.box to 12>>
+            <<set $money -= 10000>><<set $mechaItems.box to 12>>
         <<case "robot set">>
-            <<set $money -= 500000>><<set $mechaitems.robot to 1>>
+            <<set $money -= 500000>><<set $mechaItems.robot to 1>>
         <<case "mechanic parts">>
-            <<set $money -= 10000>><<set $mechaitems.parts += 10>>
+            <<set $money -= 10000>><<set $mechaItems.parts += 10>>
 		<</switch>>
 		<<unset $boughtItem>>
 	<</if>>

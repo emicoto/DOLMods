@@ -60,26 +60,26 @@
 <<if setup.countMechaItems() >= 1>>
 	<hr>
 
-	<<if $mechaitems.tool is 1>>
+	<<if $mechaItems.tool is 1>>
 	工具箱 | <span class="steel">+10% 诡术成功率</span><br>
 	<</if>>
 
-	<<if $mechaitems.puzzle isnot 0>>
+	<<if $mechaItems.puzzle isnot 0>>
 	益智扣 | <span class="steel">你能从中领悟一些解锁技巧。</span><br>
 	<</if>>
 
-	<<if $mechaitems.box isnot 0>>
+	<<if $mechaItems.box isnot 0>>
 	机巧箱 | <span class="steel">你能从中领悟一些机械知识。</span><br>
 	<</if>>
 
-	<<if $mechaitems.robot is 1>>
+	<<if $mechaItems.robot is 1>>
 	<br>
-		<<if $mechaitems.robotbuild gte 100>>
+		<<if $mechaItems.robotbuild gte 100>>
 			机器人朋友 <<print $robotname>> | 它是你的朋友，可以在自己的房间里一起玩耍。<br>
 		<<else>>
-			机器人套组 | <span class="steel"><<if $mechaitems.robotbuild isnot 0>>组装进度: <<print $mechaitems.robotbuild>>%. |<</if>> 你能提升通过组装机器人习得机械知识。</span><br>
+			机器人套组 | <span class="steel"><<if $mechaItems.robotbuild isnot 0>>组装进度: <<print $mechaItems.robotbuild>>%. |<</if>> 你能提升通过组装机器人习得机械知识。</span><br>
 		<</if>>
-		机械零件 x <<print $mechaitems.parts>>  | <<if $mechaitems.parts isnot 0>><span class="steel">你可以利用这些零件修理你的机器人。</span><</if>><br>
+		机械零件 x <<print $mechaItems.parts>>  | <<if $mechaItems.parts isnot 0>><span class="steel">你可以利用这些零件修理你的机器人。</span><</if>><br>
 	<</if>>
 	
 	<br>

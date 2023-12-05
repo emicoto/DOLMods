@@ -16,8 +16,8 @@ setup.countlItems = function(){
 
 setup.countMechaItems = function(){
 	let count = 0
-	for(let i in V.mechaitems){
-		if(i !== 'robotbuild') count += V.mechaitems[i];
+	for(let i in V.mechaItems){
+		if(i !== 'robotbuild') count += V.mechaItems[i];
 	}
 	return count
 }
@@ -253,13 +253,8 @@ setup.candyDrug = {
 	}
 }
 
-function setBodywrite(obj){
-	setup.bodywriting_namebyindex[obj.index] = obj.key
-	setup.bodywriting[obj.key] = obj
-}
-
 function newBodyWrite(obj){
-	return {
+	let item = {
 		index: Object.keys(setup.bodywriting).length,
 		writing: obj.name,
 		type: obj.type ?? 'text',
@@ -270,12 +265,17 @@ function newBodyWrite(obj){
 		lewd: 1,
 		degree: obj.degree ?? 0,
 		key: obj.key,
-		sprites:[],
+		sprites:[],		
 	}
+
+	setup.bodywriting[obj.key] = item
+	setup.bodywriting_namebyindex[obj.index] = obj.key
+
+	return item
 }
 
 function addBodyWriting(){
-	let newTattos = [
+	setup.newTattos = [
 
 		newBodyWrite({
 			key:'fifty_whore', name:'£50', sp:'prostitution', degree:5000, 
@@ -298,12 +298,166 @@ function addBodyWriting(){
 		})
 
 	]
-	newTattos.forEach((value)=>{
-		setBodywrite(value)
-	})
+	console.log(setup.newTattos)
 }
 
 
+
+setup.iCandyVariable = {}
+setup.iCandyVersion = '0.1.1'
+
+let cv = setup.iCandyVariable
+
+cv.iCandyStats = {
+	modversion: setup.iCandyVersion,
+	keepHairs: 't',
+	candies: {},
+	drugs:{
+		take: 0, overdose: 0, addict: 0, withdraw: 0,
+	},
+	alcohol:{
+		drunk: 0, overdrunk: 0, addict: 0, withdraw: 0,
+	},
+
+	flags:{
+		candy	: {},
+		drugs	: { addict: 0, withdraw: 0 },
+		alcohol	: { addict: 0, withdraw: 0 },
+
+		angelkisswake: 0,
+	},
+
+	angelkissTaken: 0,
+}
+
+let flaglist = [
+	//地点事件flag
+	'barbstreet', 'harvestreet', 'chinatown', 
+	'brothel', 'pub', 'orphan', 'hospital',
+	'repairshop', 'snackshop', 'sewer',
+	// 角色事件flag	
+	'xinyu', 'robot', 'foxlady', 
+	//特殊事件flag记录	
+	'mainevent', 'special'
+]
+cv.iCandyStory = {}
+
+flaglist.forEach((key)=>{
+	cv.iCandyStory[key] = {}
+})
+
+cv.candyDrug = {}
+cv.candyItems = {}
+
+for(let i in setup.candyDrug){
+	let drug = setup.candyDrug[i]
+	
+	if(drug.type == 'drugs'){
+		cv.candyDrug[i] = {
+			taken: 0,
+			overdose: 0,
+			addict: 0,
+			owned: 0,
+		}
+	}
+	else{
+		cv.candyItems[i] = 0
+	}
+}
+
+cv.mechaItems = {
+	puzzle: 0,
+	box: 0,
+	robot: 0,
+	tool: 0,
+	parts: 0,
+	robobuild: 0,
+}
+
+cv.iRobot = {
+	name: 'Robert',
+	battery: 0,
+	humanity: 0,
+	condition: 0,
+}
+
+cv.myApartment = {
+	home: false,
+	paid: 0,
+	nextpayday: 0,
+}
+
+cv.repairStore = {
+	repaired: 0,
+	bonus: 0,
+	work: 0,
+	today: 0,
+	workhour: 0,
+	staffkey: 0,
+
+	event: 0,
+	intro: 0,
+}
+
+
+function updateObj(objname, defaultvar){
+	if(V[objname] == undefined){
+		V[objname] = defaultvar
+	}
+
+	if (typeof V[objname] !== 'object'){
+		return
+	}
+
+	for (let i in cv[objname] ){
+		//添加新增变量到存档
+		if(typeof V[objname][i] !== typeof cv[objname][i]){
+			V[objname][i] = clone(cv[objname])
+		}
+		//从存档里删除弃用变量
+		else if(V[objname][i] !== undefined && cv[objname] == undefined ){
+			delete V[objname][i]
+		}
+	}
+}
+
+function iCandyInit(){
+	if(V.iCandyStats && V.iCandyStats.modversion !== setup.iCandyVersion ){
+		//更新
+		updateObj('iCandyStats', {})
+		updateObj('iCandyStory', {})
+		updateObj('candyDrug', {})
+		updateObj('candyItems', {})
+		updateObj('mechaItems', {})
+		updateObj('mechanic', 0)
+		updateObj('iRobot', {})
+		updateObj('natural_lactation', 0)
+		updateObj('myApartment', {})
+		updateObj('repairStore', {})
+
+	}
+
+	if(!V.iCandyStats){
+		//首次初始化
+		V.iCandyStats = clone(cv.iCandyStats)
+		V.iCandyStory = clone(cv.iCandyStory)
+		V.candyDrug = clone(cv.candyDrug)
+		V.candyItems = clone(cv.candyItems)
+		V.mechaItems = clone(cv.mechaItems)
+
+		V.mechanic = 0
+		V.iRobot = clone(cv.iRobot)
+
+		V.natural_lactation = 0
+		V.myApartment = clone(cv.myApartment)
+		V.repairStore = clone(cv.repairStore)
+
+	}
+
+	return ''
+}
+
+DefineMacroS('iCandyInit', iCandyInit)
 
 $(document).one(':storyready',()=>{
 	let check = setInterval(()=>{
