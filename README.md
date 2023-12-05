@@ -10,6 +10,7 @@ Bigger AP bar and random probability makes AP bars go backwards and ejaculate du
 
 ## free attitudes
 自由选择态度。
+
 you can choose your attitude without requirement.
 
 ## addNPC simple framework
