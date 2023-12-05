@@ -1,0 +1,4 @@
+
+        <<set _drug to Math.floor(_args[0] * _drugged_mod)>>
+        <<set $iCandyStats.drugs.take += Math.max(Math.floor(_drug/100+0.5), 1)>>
+		<<set $drugged += _drug>>

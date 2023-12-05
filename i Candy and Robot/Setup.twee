@@ -1,0 +1,140 @@
+:: Lune Mod Variables Setup [widget]
+<<widget "iCandyInit">>
+
+<<if $iCandyStats is undefined or $iCandyStats.modversion isnot '0.1.0'>>
+	<<set $iCandyStats to {
+		modversion:'0.1.0',
+		keepHairs: 't',
+		candies: {},
+		drugs:{
+			take: 0,
+			overdose: 0,
+			addict: 0,
+			withdraw:0,
+		},
+		alcohol:{
+			drunk: 0,
+			overdrunk: 0,
+			addict: 0,
+			withdraw: 0,
+		},
+		flags:{
+			candy:{},
+			drugs:{
+				addict: 0,
+				withdraw: 0,
+			},
+			alcohol:{
+				addict: 0,
+				withdraw: 0,
+			},
+			angelkisswake: 0
+		},
+		angelkissTaken: 0,
+	}>>
+<</if>>
+
+<<if $candyDrug is undefined or $iCandyStats.modversion isnot '0.1.0'>>
+	<<set _druglist = ['serotonin', 'melatonin', 'neuroOptimization', 'aminobutyric', 'painreduce', 'angelkiss']>>
+	<<set $candyDrug to {}>>
+	<<for  _i=0; _i<_druglist.length; _i++>>
+		<<set _drug = _druglist[_i]>>
+		<<set $candyDrug[_drug] to {
+			taken: 0,
+			overdose: 0,
+			addict: 0,
+			owned: 0
+		}>>
+	<</for>>
+<</if>>
+
+<<if $candyItems is undefined or $iCandyStats.modversion isnot '0.1.0'>>
+	<<set $candyItems = {
+		lubricant	: 0,
+		lubricantSP : 0,
+		fruitscandy : 0,
+		chocolate	: 0,
+		ramune		: 0,
+		lolipop		: 0,
+		potachips	: 0,
+	}>>
+<</if>>
+
+<<if $mechaItems is undefined or $iCandyStats.modversion isnot '0.1.0'>>
+	<<set $mechaItems = {
+		puzzle:0,
+		box:0,
+		robot:0,
+		tool:0,
+		parts:0,
+		robotbuild:0,
+	}>>
+<</if>>
+
+<<if $mechanic is undefined>>
+	<<set $mechanic to 0>>
+<</if>>
+
+<<if $iRobot is undefined or $iCandyStats.modversion isnot '0.1.0'>>
+	<<set $iRobot = {
+		name:"Robert",
+		pronoun:"it",
+		battery:0,
+		humanity:0,
+		condition:0,
+	}>>
+<</if>>
+
+<<if $natural_lactation is undefined>>
+	<<set $natural_lactation to 0>>
+<</if>>
+
+
+<<if $myApartment is undefined or $iCandyStats.modversion isnot '0.1.0'>>
+	<<set $myApartment = {
+		home:false,
+		paid:0,
+		nextpayday:0,
+	}>>
+<</if>>
+
+<<if $repairStore is undefined or $iCandyStats.modversion isnot '0.1.0'>>
+	<<set $repairStore = {
+		intro:0,
+		event:0,
+		repaired:0,
+		bonus:0,
+		work:0,
+		today:0,
+		workhour:0,
+		staffkey:0,
+	}>>
+<</if>>
+<</widget>>
+
+:: Lune Mod Widgets [widget]
+
+<<widget "lactationchange">>
+	<<if $natural_lactation is 1>>
+		<<if $lactating is 0>>
+			<<set $lactating to 1>><<set $lactation_pressure to 120>><<set $milk_amount to 120*$breastsize>>
+		<<elseif $args[0]>>
+			<<set $lactation_pressure += $args[0]>>
+		<<elseif $lactation_pressure lte 12>>
+			<<set $lactation_pressure += $natural_lactation*120>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "daisoicon">>
+	<<if $images is 1>>
+		<img id="icon" src="img/misc/icon/daiso.png">
+	<</if>>
+<</widget>>
+
+<<widget "repairicon">>
+	<<if $images is 1>>
+		<img id="icon" src="img/misc/icon/repair.png">
+	<</if>>
+<</widget>>
+

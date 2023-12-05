@@ -1,0 +1,38 @@
+{
+  "name": "LongerCombat",
+  "version": "2.0.0",
+  "styleFileList": [],
+  "scriptFileList": [
+    "longercombat.js"
+  ],
+  "tweeFileList": [
+  ],
+  "imgFileList": [],
+  "additionFile": [
+    "readme.md"
+  ],
+  "addonPlugin": [
+    {
+      "modName": "TweeReplacer",
+      "addonName": "TweeReplacerAddon",
+      "modVersion": "1.0.0",
+      "params": [
+        {
+          "passage": "PassageFooter",
+          "findString": "<div id=\"gameVersionDisplay\">\n",
+          "replace": "<<longerCombat>>\n\n<div id=\"gameVersionDisplay\">\n"
+        }
+      ]
+    }
+  ],
+  "dependenceInfo": [
+    {
+      "modName": "TweeReplacer",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "ReplacePatcher",
+      "version": "^1.0.0"
+    }
+  ]
+}

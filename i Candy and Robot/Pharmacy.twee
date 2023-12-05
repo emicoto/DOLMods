@@ -1,0 +1,58 @@
+:: Pharmacy Items [widget]
+<<widget "ExtraPharmacy">>
+	常规药：
+	<br>
+	<<link "羟色胺(一盒20粒)" "Pharmacy Sale EX">><<set $pharmacyItem to setup.candyDrug["serotonin"]>><</link>>
+	<br>
+	<<link "褪黑素(一瓶30粒)" "Pharmacy Sale EX">><<set $pharmacyItem to setup.candyDrug["melatonin"]>><</link>>
+	<br>
+	<<link "神经优化片(一盒20粒)" "Pharmacy Sale EX">><<set $pharmacyItem to setup.candyDrug["neuroOptimization"]>><</link>>
+	<br>
+	<<link "氨基丁酸(一盒20粒)" "Pharmacy Sale EX">><<set $pharmacyItem to setup.candyDrug["aminobutyric"]>><</link>>
+	<br>
+	<<link "止痛药(一盒20粒)" "Pharmacy Sale EX">><<set $pharmacyItem to setup.candyDrug["painreduce"]>><</link>>
+	<br><br>
+
+	特殊：
+	<br>
+	<<link "润滑油（200ml装）" "Pharmacy Sale EX">><<set $pharmacyItem to setup.candyDrug["lubricant"]>><</link>>
+	<br><br>
+<</widget>>
+
+
+:: Pharmacy Sale EX
+<<set $outside to 0>><<set $location to 'hospital'>><<effects>>
+<<formatmoney $pharmacyItem.price>>
+
+<<person>>看向你所指的药说：“价格是_printmoney。
+<<switch $pharmacyItem.name>>
+	<<case '羟色胺'>>
+		羟色胺有放松以及提振心情的效果。最好是有需要时才吃，不要吃太多哦。
+	<<case '褪黑素'>>
+		晚上睡觉前半小时吃一片，能帮助睡眠以及消减压力。
+	<<case '神经优化片'>>
+		这个神经优化片有提神醒脑，增强记忆力的效果。吃多了也不会有额外效果的啊。
+	<<case '氨基丁酸'>>
+		氨基丁酸的补充对抑郁症焦虑症有一定效果。这个药效比较强，最好有需要时才吃。
+	<<case '止痛药'>>
+		止痛药一次一片，如果真的很痛可以吃多一片。
+	<<case '润滑油'>>
+		使用润滑油之前，最好洗个澡哦。
+<</switch>>
+”<br><br>
+
+<<if $money gte $pharmacyItem.price>>
+    <<set _linkname to '花费'+_printmoney +'购买'+$pharmacyItem.name>>
+	<<link _linkname 'Pharmacy'>>
+		<<run
+			console.log('buy ',V.pharmacyItem.id,' x ', V.pharmacyItem.num)
+			console.log('already owned:', V.candyDrug[V.pharmacyItem.id].owned)
+			V.money -= V.pharmacyItem.price;
+			V.candyDrug[V.pharmacyItem.id].owned += V.pharmacyItem.num;
+		>>
+	<</link>><br>
+<<else>>
+	<span class='purple'>你负担不起购买。</span><br>
+<</if>>
+
+<<link '不买了' 'Pharmacy'>><</link>>

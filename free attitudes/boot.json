@@ -1,0 +1,51 @@
+{
+  "name": "Free Attitudes",
+  "version": "1.0.0",
+  "styleFileList": [],
+  "scriptFileList": [
+  ],
+  "tweeFileList": [
+  ],
+  "imgFileList": [],
+  "additionFile": [
+  ],
+  "addonPlugin": [
+    {
+      "modName": "TweeReplacer",
+      "addonName": "TweeReplacerAddon",
+      "modVersion": "1.0.0",
+      "params": [
+        {
+          "passage": "Widgets Attitudes",
+          "findString": "\t<<if $submissive gt 850>>\n\t\t<label><<radiobutton \"$speech_attitude\" \"meek\" autocheck>> <span class=\"meek\">温顺的</span></label>\n\t\t<br>\n\t<<else>>\n\t\t<span class=\"black\"><i>你过于反抗，无法采取温顺的态度。</i></span>\n\t\t<br>\n\t<</if>>",
+          "replace": "\t<label><<radiobutton \"$speech_attitude\" \"meek\" autocheck>> <span class=\"meek\">温顺的</span></label>\n\t\t<br>\n\t"
+        },
+        {
+          "passage": "Widgets Attitudes",
+          "findString": "\t<<if $submissive lt 1150>>\n\t\t<label><<radiobutton \"$speech_attitude\" \"bratty\" autocheck>> <span class=\"brat\">抗拒的</span></label>\n\t\t<br>\n\t<<else>>\n\t\t<span class=\"black\"><i>你太温顺了，无法采取反抗的态度。</i></span>\n\t\t<br>\n\t<</if>>",
+          "replace": "\t<label><<radiobutton \"$speech_attitude\" \"bratty\" autocheck>> <span class=\"brat\">抗拒的</span></label>\n\t\t<br>\n\t"
+        },
+        {
+          "passage": "Widgets Stats",
+          "findString": "<<sub_check>>",
+          "replace": " "
+        },
+        {
+          "passage": "Widgets Stats",
+          "findString": "<<sub_check>>",
+          "replace": " "
+        }
+      ]
+    }
+  ],
+  "dependenceInfo": [
+    {
+      "modName": "TweeReplacer",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "ReplacePatcher",
+      "version": "^1.0.0"
+    }
+  ]
+}

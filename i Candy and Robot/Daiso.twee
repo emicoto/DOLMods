@@ -1,0 +1,153 @@
+﻿:: Daiso Shop Lock
+
+<<set $outside to 0>><<set $location to "shopping_centre">><<effects>><<set $lock to 200>>
+<<if $skulduggery gte $lock>>
+	<span class="green">The lock looks easy to pick.</span>
+	<br><br>
+	<<link [[Pick it (0:10)|Daiso Shop]]>><<pass 10>><<crimeup 20>><</link>><<crime>>
+	<br>
+<<else>>
+	<span class="red">The lock looks beyond your ability to pick.</span>
+	<<skulduggeryrequired>>
+	<br><br>
+<</if>>
+<<link [[Leave|Shopping Centre]]>><</link>>
+<br>
+
+:: Daiso Shop
+
+<<set $outside to 0>><<set $location to "shopping_centre">><<effects>>
+
+You are in the Daiso General Shop. <<if $daystate is "night">>There're nobody here.<<else>>There are all kinds of interesting items.<</if>>
+<br><br>
+
+<<if $daystate is "night" and $hour isnot $closinghour and $daisotheft isnot 1>>
+	<<link [[Examine the cash register|Daiso Register]]>><</link>>
+	<br>
+<</if>>
+<<if $daystate isnot "night">>
+	<<if $boughtItem isnot undefined>>
+		<br>
+		<<generate1>><<person1>>You ask shop owner for the <<print $boughtItem>>. "Sure <<if $player.gender_appearance is "m">>sir<<else>>madam<</if>>" <<he>> says with a smile. "Thank you for your purchase."<<endevent>>
+		<br><br>
+		<<DaisoBuyItem>>
+	<</if>>
+	<br>
+	Mechanic:
+	<br>
+
+    <<if $money gte 50000 and $mechaitems.tool is 0>>
+        <li><<link [[Buy mechanic tool set £500|$passage]]>><<set $boughtItem to "mechanic tool set">><</link>></li>
+    <<elseif $mechaitems.tool is 1>>
+        <li>You already have the mechanic tool set.</li>
+    <<else>>
+        <li>You don't have £500 for the mechanic tool set.</li>
+    <</if>>
+
+
+    <<if $money gte 3000 and $mechaitems.puzzle is 0>>
+        <li><<link [[Buy Puzzle buckle £30|$passage]]>><<set $boughtItem to "puzzle buckle">><</link>></li>
+    <<elseif $mechaitems.puzzle gte 1>>
+        <li>You already have the puzzle buclke.</li>
+    <<else>>
+        <li>You don't have £30 for the Puzzle buckle.</li>
+    <</if>>
+
+
+    <<if $money gte 10000 and $mechaitems.box is 0>>
+        <li><<link [[Buy Mechanism box £100|$passage]]>><<set $boughtItem to "mechanism box">><</link>></li>
+    <<elseif $mechaitems.box gte 1>>
+        <li>You already have the mechanism box.</li>
+    <<else>>
+        <li>You don't have £100 for the Mechanism Box.</li>
+    <</if>>
+
+    <<if $money gte 500000 and $mechaitems.robot is 0>>
+        <li><<link [[Buy Robot Set £5000|$passage]]>><<set $boughtItem to "robot set">><</link>></li>
+    <<elseif $mechaitems.robot is 1>>
+        <li> You already have the robot set.</li>
+    <<else>>
+        <li>You don't have £5000 for the robot set.</li>
+    <</if>>
+
+    <<if $money gte 10000 and $mechaitems.robot is 1 and $mechaitems.tool is 1>>
+        <li><<link [[Buy 10 set Mechanic Parts £100|$passage]]>><<set $boughtItem to "mechanic parts">><</link>> | the parts you already have: <<print $mechaitems.parts>></li>
+    <<elseif $money lt 10000>>
+        <li>You don't have £100 for the mechanic parts.</li>
+    <<else>>
+        <li>You don't need the mechanic parts yet.</li>
+    <</if>>
+
+<</if>>
+<br>
+<<link [[Leave|Shopping Centre]]>><</link>>
+<br>
+
+:: Widgets DaisoBuy [widget]
+
+<<widget "DaisoBuyItem">>
+	<<if $boughtItem isnot undefined>>
+		<<switch $boughtItem>>
+		<<case "mechanic tool set">>
+			<<set $money -= 50000>><<set $mechaitems.tool to 1>><<set $skulduggery += 50>>
+        <<case "puzzle buckle">>
+            <<set $money -= 3000>><<set $mechaitems.puzzle to 12>>
+        <<case "mechanism box">>
+            <<set $money -= 10000>><<set $mechaitems.box to 12>>
+        <<case "robot set">>
+            <<set $money -= 500000>><<set $mechaitems.robot to 1>>
+        <<case "mechanic parts">>
+            <<set $money -= 10000>><<set $mechaitems.parts += 10>>
+		<</switch>>
+		<<unset $boughtItem>>
+	<</if>>
+<</widget>>
+
+:: Daiso Register
+<<set $outside to 0>><<effects>><<set $lock to 200>>
+
+A standard cash register sits on a counter. It's locked tight.
+<br><br>
+
+	<<if $skulduggery gte $lock>>
+	<span class="green">The lock looks easy to pick.</span>
+	<br><br>
+
+	<<link [[Pick it (0:10)|Daiso Register Sneak]]>><<pass 10>><<crimeup 1>><</link>><<crime>>
+	<br>
+	<<else>>
+	<span class="red">The lock looks beyond your ability to pick.</span><<skulduggeryrequired>>
+	<br><br>
+	<</if>>
+
+<<link [[Leave|Pet Shop]]>><</link>>
+<br>
+
+:: Daiso Register Sneak
+<<set $outside to 0>><<effects>><<set $lock to 200>>
+
+<<set $daisotheft to 1>>
+
+<<set $tip to random(3000, 9000)>>
+<<set $tip to Math.round($tip)>>
+You deftly open the cash register and count out the money inside.
+There's £<<print ($tip / 100)>>.
+<br><br>
+
+<<if $skulduggery lt 300>>
+<<skulduggeryskilluse>>
+<<else>>
+<span class="blue">There's nothing more you can learn from locks this simple.</span>
+<</if>>
+<br><br>
+
+<<if $rng gte 86>>
+<<skulshopevents>>
+<<else>>
+
+<<link [[Take it|Daiso Shop]]>><<set $money += $tip>><<set $crime += ($tip / 100)>><</link>><<crime>>
+<br>
+<<link [[Leave it|Daiso Shop]]>><</link>>
+<br>
+<</if>>
+
