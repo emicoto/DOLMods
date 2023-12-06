@@ -8,7 +8,13 @@ function printIDrugsLink(key){
 		linkname = `${drug.name}(${drug.num}${lanSwitch('pills', '粒')})`
 	}
 	else{
-		linkname = drug.name
+		if(drug.subType == 'liquid'){
+			linkname = `${drug.name}(${drug.num}ml)`
+		}
+		else{
+			linkname = drug.name
+		}
+		
 	}
 
 	return `<<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to setup.candyDrug["${key}"]>><</link>><br>`
@@ -46,12 +52,12 @@ function checkDayPass(){
 	//战斗结束后，从天使吻药效中醒来时
 	if(V.iCandyStats.angelkissTaken == 1 && V.combat == 0 && V.hallucinogen <= 1 ){
 		setup.candyDrug.angelkiss.onwake()
-		V.iCandyStats.flag.angelkisswake = 1
+		V.iCandyStats.flags.angelkisswake = 1
 	}
 
 	let html = addctionEvent()
 	if(html && html.length > 1)
-		new wikifier(null, `<<append #addMsg transition>>${html}<</append>>`)
+		new Wikifier(null, `<<append #addMsg transition>>${html}<</append>>`)
 
 	return ''
 }
@@ -102,11 +108,10 @@ function addictionPross(){
 
 	for(let i in V.candyDrug){
 		//确认初始化
-
-		if(!Stats.candies[i]){
+		if(!Stats.candies[i] || !Stats.candies[i].addict){
 			Stats.candies[i] = {
-				withdraw: 0,
-				clear: 0,
+				addict:0,
+				withdraw:0,
 			}
 		}
 
@@ -122,7 +127,8 @@ function addictionPross(){
 		let textflag = Stats.flags[i]
 
 		//确认依赖度，连续嗑药数达标就会获得依赖。
-		if(drug.overdose > setup.candyDrug[i].maxOD && drug.addict==0){
+		console.log(i, drug)
+		if(drug.overdose >= setup.candyDrug[i].maxOD && drug.addict==0){
 			drug.addict = 1 //状态flag
 			textflag.addict = 1 //文本显示flag
 		}
@@ -147,7 +153,14 @@ function addictionPross(){
 		}
 
 		//计算当天超量，每天自然恢复3点，但如果当天有嗑过药恢复数就减少。
-		drug.overdose = Math.max(drug.overdose + Math.max(drug.taken - 3, -3), 0)
+		let recover = {
+			super: 0.5,
+			strong: 1,
+			risky: 2,
+			normal: 3,
+		}
+		drug.overdose = drug.overdose + Math.max(drug.taken-3, 0)
+		drug.overdose = Math.max(drug.overdose - recover[drug.subType], 0)
 		//每日清零当日计数器
 		drug.taken = 0
 	}
@@ -217,7 +230,7 @@ function addctionEvent(){
 	let {candy, drugs, alcohol, angelkisswake } = V.iCandyStats.flags
 
 	if(angelkisswake == 1){
-		html += '你从甜美的幻境中醒来了，你感到头昏脑涨。<<lllcontrol>><<gggalcohol>><<gggstress>><<gtruama>>'
+		html += '你从甜美的幻境中醒来了，你感到头昏脑涨。<<lllcontrol>><<gggalcohol>><<gggstress>><<gtrauma>>'
 		V.iCandyStats.flags.angelkisswake = 0
 	}
 
@@ -236,7 +249,7 @@ function addctionEvent(){
 			html += `你今天没吃${setup.candyDrug[i].name}感到些许心慌。<<ggstress>><<stress 12>>`
 		}
 		else if(candy[i].withdraw == 1 && i == 'angelkiss'){
-			html += `你今天没嗑天使之吻，感到浑身发烫难受。<<gggstress>><<stress 60>><<gtruama>><<truama 8>><<arousal 240 'genital'>>`
+			html += `你今天没嗑天使之吻，感到浑身发烫难受。<<gggstress>><<stress 60>><<gtrauma>><<trauma 8>><<arousal 240 'genital'>>`
 		}
 		candy[i].withdraw = 0
 	}
@@ -249,7 +262,7 @@ function addctionEvent(){
 	}
 
 	if(drugs.withdraw == 1){
-		html += `你今天没吸收性奋类药物，你感到十分空虚难受。<<ggstress>><<gtruama>><<stress 16>><<truama 4>>`
+		html += `你今天没吸收性奋类药物，你感到十分空虚难受。<<ggstress>><<gtrauma>><<stress 16>><<trauma 4>>`
 	}
 
 	drugs.addict = 0

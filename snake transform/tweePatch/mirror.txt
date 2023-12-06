@@ -1,0 +1,63 @@
+
+		<div class='tf-snake'>
+			<<if $snake gt 1>>
+				__Snake__
+				<br>
+				<<if $transformationParts.snake.ears isnot "disabled">>
+					<div class='tf-part-item'>
+						Ears:
+						<<listbox "$transformationParts.snake.ears" autoselect>>
+							<<option "Hide" "hidden">>
+							<<option "Default" "default">>
+						<</listbox>>
+					</div>
+				<</if>>
+				<<if $transformationParts.snake.bottom isnot "disabled" or $transformationParts.snake.bottom1 isnot 'disabled'>>
+					<div class='tf-part-item'>
+						Bottom:
+						<select id="snakeBottoms">        
+							<option value="white">white</option>
+							<option value="pink">pink</option>
+							<option value="blue">blue</option>
+							<option value="dirt">dirt</option>
+							<option value="gray">gray</option>
+							<option value="dark">dark</option>
+							<option value="default">default</option>
+						</select>
+						<script>
+							$(document).ready(()=>{
+								let defVar = 'default';
+
+								if(V.transformationParts.snake.bottom !== 'disabled'){
+									defVar = V.transformationParts.snake.bottom;
+								}
+								else if(V.transformationParts.snake.bottom1 !== 'disabled'){
+									defVar = V.transformationParts.snake.bottom1;
+								}
+
+								$('#snakeBottoms').val(defVar);
+
+								$('#snakeBottoms').change(()=>{
+
+									var bottom = $('#snakeBottoms').val();
+									console.log(bottom);
+
+									if(bottom == 'default'){
+										V.transformationParts.snake.bottom = 'disabled';
+										V.transformationParts.snake.bottom1 = 'default';
+									}
+									else{
+										V.transformationParts.snake.bottom1 = 'disabled';
+										V.transformationParts.snake.bottom = bottom;
+									}
+								})
+							})
+						</script>
+					</div>
+				<</if>>
+				<br>
+			<</if>>
+		</div>
+
+
+		<div class='tf-fox'>

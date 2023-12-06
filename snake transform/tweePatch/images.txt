@@ -1,0 +1,11 @@
+
+	<<if !_disabled.includes($transformationParts.snake.bottom1)>>
+		<img class="layer-backhair colour-hair anim-idle-2f" @src="'img/transformations/snake/bottom.png'">
+	<</if>>
+	<<if !_disabled.includes($transformationParts.snake.bottom)>>
+		<img class="layer-backhair colour-hair anim-idle-2f" @src="'img/transformations/snake/bottom/'+$transformationParts.snake.bottom+'.png'">
+	<</if>>
+	
+	<<if !_disabled.includes($transformationParts.snake.ears)>>
+		<img class="layer-backhair colour-hair anim-idle-2f" @src="'img/transformations/snake/ears/'+$transformationParts.snake.ears+'.png'">
+	<</if>>

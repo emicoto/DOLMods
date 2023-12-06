@@ -1,0 +1,62 @@
+{
+  "name": "Snake Transform",
+  "version": "0.1.0",
+  "styleFileList": [],
+  "scriptFileList": [
+    "setup.js"
+  ],
+  "tweeFileList": [
+  ],
+  "imgFileList": [],
+  "additionFile": [
+  ],
+  "addonPlugin": [
+    {
+      "modName": "TweeReplacer",
+      "addonName": "TweeReplacerAddon",
+      "modVersion": "1.0.0",
+      "params": [
+        {
+          "passage":"Widgets Canvas Model Main",
+          "findString":"<<set _modeloptions.fox_cheeks_type to $transformationParts.fox.cheeks>>",
+          "replaceFile":"tweePatch/canvasmodel-img.txt"
+        },
+        {
+          "passage":"Widgets Mirror",
+          "findString":"\t<div class='tf-fox'>\n",
+          "replaceFile":"tweePatch/mirror.txt"
+        }
+      ]
+    },
+    
+    {
+      "modName": "ReplacePatcher",
+      "addonName": "ReplacePatcherAddon",
+      "modVersion": "1.0.0",
+      "params": {
+        "js": [
+          {
+            "from": "\"writing_forehead\": {",
+            "to": "\"snake_ears_type\": {\n\t\t\tsrcfn(options) {\n\t\t\t\treturn 'img/transformations/snake/ears/'+options.snake_ears_type+'.png'\n\t\t\t},\n\t\t\tshowfn(options) {\n\t\t\t\treturn options.show_tf && isPartEnabled(options.snake_ears_type)\n\t\t\t},\n\t\t\tz: ZIndices.backhair,\n\t\t\tanimation: \"idle\"\n\t\t},\n\t\t\"snake_bottom1_type\": \n\t\t{\n\t\t\tsrcfn(options) {\n\t\t\t\treturn 'img/transformations/snake/bottom.png'\n\t\t\t},\n\t\t\tshowfn(options) {\n\t\t\t\treturn options.show_tf && isPartEnabled(options.snake_bottom1_type)\n\t\t\t},\n\t\t\tz: ZIndices.lower,\n\t\t\tanimation: \"idle\",\n\t\t\tfilters: [\"hair\"],\n\t\t},\n\t\t\"snake_bottom_type\": \n\t\t{\n\t\t\tsrcfn(options) {\n\t\t\t\treturn 'img/transformations/snake/bottom/'+options.snake_bottom_type+'.png'\n\t\t\t},\n\t\t\tshowfn(options) {\n\t\t\t\treturn options.show_tf && isPartEnabled(options.snake_bottom_type)\n\t\t\t},\n\t\t\tz: ZIndices.lower,\n\t\t\tanimation: \"idle\"\n\t\t},\n\t\t\"writing_forehead\": {",
+            "fileName": "canvasmodel-main.js"
+          },
+          {
+            "from": "\"writing_forehead\": \"\",",
+            "to": "\t\t\t\"snake_ears_type\": \"disabled\",\n\t\t\t\"snake_bottom_type\": \"disabled\",\n\t\t\t\"snake_bottom1_type\": \"disabled\",",
+            "fileName": "canvasmodel-main.js"
+          }
+        ]
+      }
+    }
+  ],
+  "dependenceInfo": [
+    {
+      "modName": "TweeReplacer",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "ReplacePatcher",
+      "version": "^1.0.0"
+    }
+  ]
+}

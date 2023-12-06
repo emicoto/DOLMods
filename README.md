@@ -52,6 +52,10 @@ most content builded on old version, need update to ML version now.
 
 before install need install NPC simple framework.
 
+## Snake Transform
+蛇的转化。目前只完成显示逻辑。
+设计提案与像素图：土豆怂怂主厨
+
 ## Install Mods
 需要ModLoader 2.10版++ 以及汉化MOD
 

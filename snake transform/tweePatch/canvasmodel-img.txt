@@ -1,0 +1,5 @@
+<<set _modeloptions.fox_cheeks_type to $transformationParts.fox.cheeks>>
+
+<<set _modeloptions.snake_ears_type to $transformationParts.snake.ears>>
+<<set _modeloptions.snake_bottom_type to $transformationParts.snake.bottom>>
+<<set _modeloptions.snake_bottom1_type to $transformationParts.snake.bottom1>>

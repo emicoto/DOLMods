@@ -14,7 +14,8 @@
  "addTwees/Setup.twee",
  "addTwees/Pocket.twee",
  "addTwees/Robot.twee",
- "addTwees/Pharmacy.twee"
+ "addTwees/Pharmacy.twee",
+ "addTwees/PassageReady.twee"
  ],
  "imgFileList": [],
  "additionFile": [
@@ -36,7 +37,7 @@
     {
         "passage":"PassageHeader",
         "findString":"<<unset $bypassHeader>>",
-        "replace":"<<unset $bypassHeader>>\n<<iCandyInit>><<checkDayPass>><<lactationchange>>\n<div id='addMsg'><br></div>"
+        "replace":"<<unset $bypassHeader>>\n<<run console.log('run from passage header') >><<iCandyInit>><<checkDayPass>><<lactationchange>>\n<div id='addMsg'><br></div>"
     },
     {
         "passage":"StoryCaption",

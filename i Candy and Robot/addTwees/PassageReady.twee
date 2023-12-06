@@ -1,0 +1,4 @@
+:: PassageReady
+<<run
+    console.log('run from passageReady')
+>>

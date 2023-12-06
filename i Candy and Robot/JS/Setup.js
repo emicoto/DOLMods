@@ -27,11 +27,19 @@ setup.iCandyVersion = '0.1.1'
 
 let cv = setup.iCandyVariable
 
+function getPalam(key, value){
+	let list = ['trauma', 'pain', 'tiredness', 'drunk', 'hallucinations','control','corruption','stress', 'drugged']
+	if(!V.statFreeze && list.includes(key))
+		V[key] += value
+}
+window.getPalam = getPalam
+
 function setupCandyVar(){
 
 	setup.candyDrug = {
 		serotonin:{
 			type	: 'drugs',
+			subType : 'normal',
 			id		: 'serotonin',
 			name	: lanSwitch('Serotonin','羟色胺'),
 			num		: 20,
@@ -41,7 +49,7 @@ function setupCandyVar(){
 			withdraw: 5,
 			ontake	: function(){
 				let drug = V.candyDrug[this.id]
-				let truama =  40 * Math.max(1-(drug.taken*0.1), 0.2)
+				let truama =  20 * Math.max(1-(drug.taken*0.1), 0.2)
 				wikifier('trauma', -truama)
 				drug.owned --
 				drug.taken ++
@@ -49,6 +57,7 @@ function setupCandyVar(){
 		},
 		melatonin:{
 			type	: 'drugs',
+			subType : 'normal',
 			id		: 'melatonin',
 			name	: lanSwitch('Melatonin', '褪黑素'),
 			num		: 30,
@@ -58,7 +67,7 @@ function setupCandyVar(){
 			withdraw: 5,
 			ontake	: function(){
 				let drug = V.candyDrug[this.id]
-				let stress = 300 * Math.max(1-(drug.taken*0.1), 0.2)
+				let stress = 20 * Math.max(1-(drug.taken*0.1), 0.2)
 				wikifier('stress', -stress)
 				drug.owned --
 				drug.taken ++
@@ -66,6 +75,7 @@ function setupCandyVar(){
 		},
 		neuroOptimization:{
 			type	: 'drugs',
+			subType : 'normal',
 			id		: 'neuroOptimization',
 			name	: lanSwitch('Neuro Optimization', '神经优化片'),
 			num		: 20,
@@ -75,7 +85,7 @@ function setupCandyVar(){
 			withdraw: 3,
 			ontake	: function(){
 				let drug = V.candyDrug[this.id]
-				let control = 100 * Math.max(1-(drug.taken*0.1), 0.2)
+				let control = 60 * Math.max(1-(drug.taken*0.1), 0.2)
 				wikifier('control', control)
 				drug.owned --
 				drug.taken ++		
@@ -83,6 +93,7 @@ function setupCandyVar(){
 		},
 		aminobutyric:{
 			type	: 'drugs',
+			subType : 'normal',
 			id		: 'aminobutyric',
 			name	: lanSwitch('Aminobutyric','氨基丁酸'),
 			num		: 20,
@@ -92,7 +103,7 @@ function setupCandyVar(){
 			withdraw: 7,
 			ontake	: function(){
 				let drug = V.candyDrug[this.id]
-				let trauma = 120 * Math.max(1-(drug.taken*0.1), 0.2)
+				let trauma = 80 * Math.max(1-(drug.taken*0.1), 0.2)
 				wikifier('trauma', -trauma)
 				drug.owned --
 				drug.taken ++	
@@ -100,6 +111,7 @@ function setupCandyVar(){
 		},
 		painreduce:{
 			type	: 'drugs',
+			subType : 'normal',
 			id		: 'painreduce',
 			name	: lanSwitch('Painkiller','止痛药'),
 			num		: 20,
@@ -109,7 +121,7 @@ function setupCandyVar(){
 			withdraw: 5,
 			ontake	: function(){
 				let drug = V.candyDrug[this.id]
-				let pain = 50 * Math.max(1-(drug.taken*0.1), 0.2)
+				let pain = 40 * Math.max(1-(drug.taken*0.1), 0.2)
 				wikifier('pain', -pain)
 				drug.owned --
 				drug.taken ++
@@ -118,6 +130,7 @@ function setupCandyVar(){
 	
 		angelkiss:{
 			type	:'drugs',
+			subType :'strong',
 			id		:'angelkiss',
 			name	: lanSwitch('Angel Kiss','天使之吻'),
 			num		: 3,
@@ -127,18 +140,19 @@ function setupCandyVar(){
 			withdraw: 20,
 			ontake  : function(enemy){
 				let drug = V.candyDrug[this.id]
-				let pain = 100 * Math.max(1-(drug.taken*0.1), 0.1)
-				let trauma = 300 * Math.max(1-(drug.taken*0.1), 0.1)
-				let stress = 1200 * Math.max(1-(drug.taken*0.1), 0.1)
+				let pain = 60 * Math.max(1-(drug.taken*0.1), 0.1)
+				let trauma = 360 * Math.max(1-(drug.taken*0.1), 0.1)
+				let stress = 80 * Math.max(1-(drug.taken*0.1), 0.1)
 	
 				wikifier('pain', -pain)
 				wikifier('trauma', -trauma)
 				wikifier('stress', -stress)
 	
-				wikifier('drugs', 1000)
-				wikifier('alcohol', 300)
-				wikifier('arousal', 100, 'genital')
-				wikifier('hallucinogen', 100)
+				getPalam('drunk', 1000)
+				getPalam('drugged', 1000)
+
+				wikifier('arousal', 600, 'genital')
+				wikifier('hallucinogen', 240)
 	
 				V.iCandyStats.angelkissTaken = 1
 	
@@ -148,10 +162,10 @@ function setupCandyVar(){
 					drug.owned--
 			},
 			onwake  : function(){
-				wikifier('stress', 30)
-				wikifier('trauma', 4)
-				wikifier('alcohol', 100)
-				wikifier('control', -36)
+				wikifier('stress', 60)
+				wikifier('trauma', 50)
+				wikifier('alcohol', 300)
+				wikifier('control', -40)
 	
 				V.iCandyStats.angelkissTaken = 0
 			}
@@ -159,7 +173,8 @@ function setupCandyVar(){
 	
 		//-- 常规道具
 		fruitscandy:{
-			type	: 'candy',
+			type	: 'items',
+			subType : 'candy',
 			id		: 'fruitscandy',
 			name	: lanSwitch('Fruits Candy','水果糖'),
 			num		: 12,
@@ -173,14 +188,15 @@ function setupCandyVar(){
 			},
 		},
 		chocolate:{
-			type	: 'candy',
+			type	: 'items',
+			subType : 'candy',
 			id		: 'chocolate',
 			name	: lanSwitch('Chocolate','巧克力'),
 			num		: 3,
 			price	: 1600,
 			info	: lanSwitch('Sweet chocolate, may relives a little stress for you',"甜甜的巧克力，能缓解些许压力"),
 			onuse	: function(){
-				let stress = random(20, 60)
+				let stress = random(1, 3)
 				let tiredness = random(60, 100)
 				wikifer('stress', -stress)
 				wikifier('tiredness', -tiredness)
@@ -189,7 +205,8 @@ function setupCandyVar(){
 			},
 		},
 		ramune:{
-			type	: 'soda',
+			type	: 'items',
+			subType : 'drink',
 			id		: 'ramune',
 			name	: lanSwitch('Ramune','波子水'),
 			num		: 1,
@@ -203,7 +220,8 @@ function setupCandyVar(){
 			},
 		},
 		lolipop:{
-			type	: 'candy',
+			type	: 'items',
+			subType : 'candy',
 			id		: 'lolipop',
 			name	: lanSwitch('Lolipop','波板糖'),
 			num		: 1,
@@ -217,8 +235,9 @@ function setupCandyVar(){
 		},
 	
 		potachips:{
-			type	:'snack',
-			id		:"potachips",
+			type	: 'items',
+			subType : 'snack',
+			id		: "potachips",
 			name	: lanSwitch('Potato Chips','薯片'),
 			num		: 1,
 			price	: 500,
@@ -233,8 +252,9 @@ function setupCandyVar(){
 		},
 
 		candyfloss:{
-			type	:'candy',
-			id		:"candyfloss",
+			type	: 'items',
+			subType : 'candy',
+			id		: "candyfloss",
 			name	: lanSwitch('Candyfloss','棉花糖'),
 			num		: 1,
 			price	: 640,
@@ -242,8 +262,12 @@ function setupCandyVar(){
 			onuse	: function(){
 				let tiredness = random(30, 80)
 				wikifer('tiredness', -tiredness)
+
 				let trauma = random(3, 9)
 				wikifier('trauma', trauma)
+				
+				let stress = random(2, 8)
+				wikifer('stress', -stress)
 	
 				V.candyItems[this.id] --
 			}
@@ -251,7 +275,8 @@ function setupCandyVar(){
 		},
 	
 		lubricant:{
-			type	: 'extra',
+			type	: 'items',
+			subType : 'liquid',
 			id		: 'lubricant',
 			name	: lanSwitch('Lubricant','润滑油'),
 			num		: 200,
@@ -262,7 +287,8 @@ function setupCandyVar(){
 			}
 		},
 		lubricantSP:{
-			type	: 'extra',
+			type	: 'items',
+			subType : 'liquid',
 			id		: 'lubricantSP',
 			name	: lanSwitch('Drugged Lubricant','催情润滑油'),
 			num		: 300,
