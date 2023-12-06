@@ -57,7 +57,7 @@ before install need install NPC simple framework.
 设计提案与像素图：土豆怂怂主厨
 
 ## Install Mods
-需要ModLoader 2.10版++ 以及汉化MOD
+需要ModLoader 2.10版++ 中文版需要汉化MOD。
 
 ModLoader 指路：https://github.com/Lyoko-Jeremie/DoLModLoaderBuild/releases
 
