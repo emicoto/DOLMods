@@ -1,0 +1,18 @@
+::passage-bailey-pond-2
+::LostMod passage-ruby-pond-2
+
+<<effects>>
+
+"又是这件事？"<<he>>无奈地摇了摇头。"我不是说过吗？我们现在经济情况没有这个余裕。"
+
+<br><br>
+
+<<if $money gte 200000>>
+    <<link [[为泉水池付款 (£2000)|Bailey Pond Pay]]>>
+        <<set $money -= 200000>>
+    <</link>>
+    <br>
+<</if>>
+
+<<link [[离开|Orphanage]]>><<endevent>><</link>>
+<br>

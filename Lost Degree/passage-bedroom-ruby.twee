@@ -1,0 +1,38 @@
+::passage-bedroom-bailey
+::LostMod passage-bedroom-ruby
+
+"<<effects>>
+<<run statusCheck("Robin")>>
+<!-- Bailey catches you by surprise, no time to get dressed -->
+
+<<if $inRobinsRoom>>
+    你听到了屋外的敲门声，伴随而来的还有一个熟悉的声音。"我可以进来吗？"<span class="blue">是鲁比。</span>
+    <br><br>
+    
+    在得到你的允许后，鲁比推开门，将头探了进来。"你和罗宾的关系真好。"鲁比看着你，和在床上熟睡的罗宾，笑了笑。
+<<else>>
+    你听到了屋外的敲门声，伴随而来的还有一个熟悉的声音。"我可以进来吗？"<span class="blue">是鲁比。</span>
+<</if>>
+
+<<if $exposed gte 1>>
+     你匆忙穿上上一次穿的衣服。<<bedclotheson "bed">>
+    在得到你的允许后，鲁比推开门，将头探了进来。<<nnpc_He "Ruby">>看着你，轻轻地微笑着。
+    
+<</if>>
+<br><br>
+
+<<if $robinfirstrentfight>> <!-- the first robin fight has already happened -->
+    <<if !["sleep", "orphanage"].includes(_robin_location)>>
+        <<rentduerobin 0>>
+    <<else>>
+        <<rentduerobin 1>>
+    <</if>>
+<<else>>
+    <<if ["sleep", "orphanage"].includes(_robin_location) and $inRobinsRoom>>
+        <<rentdue 1>> <!-- Robin is in the room with the PC -->
+    <<else>>
+        <<rentdue 0>>
+    <</if>>
+<</if>>
+<<unset $inRobinsRoom>>
+

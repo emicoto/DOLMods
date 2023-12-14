@@ -1,0 +1,19 @@
+::Farm Alex Orphanage Trip 2
+::LostMod Farm Alex Orphanage Trip 2
+
+<<effects>>
+
+你们很快就到了孤儿院，你的
+<<if childrenCountBetweenParents("pc", "Alex") gte 2>>孩子们<<else>>孩子<</if>>就在这里。艾利克斯似乎被孤儿院的状态吓到了。<br><br>
+
+"可以请你去把
+<<if childrenCountBetweenParents("pc", "Alex") gte 2>>孩子们<<else>>孩子<</if>>接回来吗？"艾利克斯说，"我不确定我能不能进去。"<br><br>
+
+你点点头，进入了孤儿院，径直走向育婴室，带走了孩子，然后转身离开。<br><br>
+
+你看向你的右边，发现鲁比正从办公室里微笑着看着你，几个孤儿偷偷瞥了你和你宝宝几眼，眼里充满着羡慕。<br><br>
+
+艾利克斯给你开了门，你怀里抱着你的
+<<if childrenCountBetweenParents("pc", "Alex") gte 2>>宝宝们<<else>>宝宝<</if>>，上了车。<br><br>
+
+<<link [[继续|Farm Alex Orphanage Trip 3]]>><</link>>

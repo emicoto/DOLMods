@@ -1,0 +1,13 @@
+::Bailey Office Alex Children Fee
+::LostMod passage-Ruby-office-alex-children
+
+"<<effects>>
+
+\"你想带走你的孩子？当然可以。"鲁比笑了笑。
+<br>
+不过，<<He>>顿了顿，继续说道："但你只能带走和那个牛仔男孩的孩子。因为我们也不能让他承担抚养你其他孩子的责任。"
+<br><br>
+
+<<link "接走艾利克斯的孩子" "passage-bailey-office-alex-children-fee-2">><</link>>
+<br>
+<<link [[离开|Orphanage]]>><<endevent>><</link>>"

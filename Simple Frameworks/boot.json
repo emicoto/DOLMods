@@ -1,15 +1,24 @@
 {
-  "name": "addNPC simple framework",
+  "name": "Simple Frameworks",
   "version": "1.0.0",
+  "scriptFileList_inject_early": [
+    "simplewidget.js"
+  ],
+  "scriptFileList_earlyload": [
+    "preload.js"
+  ],
+  "scriptFileList_preload": [
+  ],
   "styleFileList": [],
   "scriptFileList": [
-    "newNPC.js"
+    "newNPC.js",
+    "selectcase.js", 
+    "util.js",
+    "eslib.js"    
   ],
-  "tweeFileList": [
-  ],
+  "tweeFileList": [],
   "imgFileList": [],
-  "additionFile": [
-  ],
+  "additionFile": [],
   "addonPlugin": [
     {
       "modName": "TweeReplacer",

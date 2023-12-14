@@ -1,0 +1,98 @@
+:: Simple Widget Frameworks [Widget]
+<<widget "beforeLinkZone">>
+
+<</widget>>
+
+
+<<widget "ExtraLinkzone">>
+
+
+<</widget>>
+
+
+<<widget "iModHeader">>
+
+
+<</widget>>
+
+
+<<widget 'iModFooter'>>
+
+
+<</widget>>
+
+
+<<widget 'iModReady'>>
+
+
+<</widget>>
+
+
+<<widget 'iModDone'>>
+
+
+<</widget>>
+
+
+<<widget 'iModInit'>>
+
+<</widget>>
+
+<<widget 'iModInitFunction'>>
+
+
+<</widget>>
+
+
+<<widget "ModSkillsBox">>
+
+
+<</widget>>
+
+
+<<widget "ModCharaDescription">>
+
+<</widget>>
+
+
+<<widget "ModCaptionDescription">>
+
+
+<</widget>>
+
+
+<<widget "ModStatusBar">>
+
+
+<</widget>>
+
+
+<<widget "ModMenuBig">>
+
+<</widget>>
+
+
+<<widget "ModMenuSmall">>
+
+
+<</widget>>
+
+
+<<widget 'iModsOptions'>>
+<<setupOptions>>
+<span class="gold"><<lanSwitch "Simple Framework" "简易框架" >></span>
+<br>
+
+<<lanSwitch "Current Language Setting: " "当前语言设定：">>
+<<set _output to lanSwitch("English","中文")>>
+<<link _output $passage>>
+    <<if setup.language is 'EN'>>
+        <<set setup.language to 'CN'>>
+    <<else>>
+        <<set setup.language to 'EN'>>
+    <</if>>
+<</link>>
+<br><br>
+
+
+<</widget>>

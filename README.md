@@ -16,19 +16,25 @@ Bigger AP bar and random probability makes AP bars go backwards and ejaculate du
 
 you can choose your attitude without requirement.
 
-## addNPC simple framework
-一个简易的新增NPC的框架。
+## Simple Framework
+一个简易的新增内容框架。支持添加：NPC，物品，左侧栏描述、菜单、按钮，模组设置面板支持，新地图入口以及互动点入口等等
 
-当卸载包含新增NPC的MOD时，会清除多余的NPC。
+只需要把写好的内容入口用widget包装起来，把widget名加到对应的模块队列里就好。
 
-当安装包含新增NPC的MOD时，会在合适的时机添加进游戏系统。
+目前支持的模块可以参考temp文件夹里的twee文件。
+
+写法可以参考simple new content文件夹里的文件。
 
 
-A simple new Named NPC framework.
+A simple new content framework. support to add: NPC, items, text/button/statusbar/widget to UIBar, mod option in panel
 
-when uninstall a mod includes new NPC, will delete the illegal NPC from saves.
+new map entrance or new links at locations..etc
 
-when install a mod includes new NPC, will add npc in to old save and game system.
+you can check all supportted zone at widget copy.twee
+
+all you need to do just wrap your content with widget then put your widget's name to the zone array.
+
+you can check the simple new content(a sample mod) to learn how to add your content.
 
 ## i Candy and Robot
 一个关于爱，糖果（药物），和机器人的大型原创模组。
@@ -39,7 +45,7 @@ when install a mod includes new NPC, will add npc in to old save and game system
 
 很多内容都是很久以前做的，正在逐步更新中。
 
-安装前需要安装简易NPC框架。
+安装前需要安装简易框架。
 
 
 A original content mod about love, candy(drugs), robot.
@@ -50,7 +56,7 @@ new story, new skill(mechanic, chemical),new job(repair), new save house(your ap
 
 most content builded on old version, need update to ML version now.
 
-before install need install NPC simple framework.
+before install need install Simple framework.
 
 ## Snake Transform
 蛇的转化。目前只完成显示逻辑。

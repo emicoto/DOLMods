@@ -1,15 +1,7 @@
-setup.countlDrug = function(){
+setup.countHomeStorage = function(){
 	let count = 0
-	for(let i in V.candyDrug){
-		count += V.candyDrug[i].owned
-	}
-	return count
-},
-
-setup.countlItems = function(){
-	let count = 0
-	for(let i in V.candyItems){
-		count += V.candyItems[i]
+	for(let i in V.iStorage.orphanage){
+		count += V.iStorage.orphanage[i]
 	}
 	return count
 }
@@ -17,13 +9,61 @@ setup.countlItems = function(){
 setup.countMechaItems = function(){
 	let count = 0
 	for(let i in V.mechaItems){
-		if(i !== 'robotbuild') count += V.mechaItems[i];
+		count += V.mechaItems[i]
 	}
 	return count
 }
 
+setup.iCandySettings = {
+	alcohol:{
+		threshold: 3,
+		maxOD: 10,
+		withdraw: 72,
+		clear: 28,
+		hours: 0
+	},
+	drug:{
+		threshold: 1,
+		maxOD: 8,
+		withdraw: 24,
+		clear: 28,
+		hours: 0,
+	},
+	nicotine:{
+		threshold: 1,
+		maxOD: 6,
+		withdraw: 36,
+		clear: 28,
+		hours: 0,
+	},
+
+	medicine:{
+		threshold: 4,
+		maxOD: 12,
+		withdraw: 72,
+		clear: 7,
+		hours: 0,
+	},
+
+	riskyDrugs:{
+		threshold: 1,
+		maxOD: 3,
+		withdraw: 24,
+		clear: 30,
+		hours: 1,
+	},
+
+	superDrugs:{
+		threshold: 0,
+		maxOD: 1,
+		withdraw: 12,
+		clear: 48,
+		hours: 2,
+	}
+
+}
 setup.iCandyVariable = {}
-setup.iCandyVersion = '0.1.1'
+setup.iCandyVersion = '0.2.0'
 
 let cv = setup.iCandyVariable
 
@@ -34,331 +74,177 @@ function getPalam(key, value){
 }
 window.getPalam = getPalam
 
-function setupCandyVar(){
+function getPhysique(value){
+	if(V.statFreeze){
+		V.physique = Math.clamp(V.physique + value, 0, V.physiquesize)
+	}
+}
+window.getPhysique = getPhysique
 
-	setup.candyDrug = {
-		serotonin:{
-			type	: 'drugs',
-			subType : 'normal',
-			id		: 'serotonin',
-			name	: lanSwitch('Serotonin','羟色胺'),
-			num		: 20,
-			price	: 6200,
-			info	: lanSwitch('Help you relax and uplifit your mood',"具有放松和提振心情的作用"),
-			maxOD	: 12,
-			withdraw: 5,
-			ontake	: function(){
-				let drug = V.candyDrug[this.id]
-				let truama =  20 * Math.max(1-(drug.taken*0.1), 0.2)
-				wikifier('trauma', -truama)
-				drug.owned --
-				drug.taken ++
-			},
-		},
-		melatonin:{
-			type	: 'drugs',
-			subType : 'normal',
-			id		: 'melatonin',
-			name	: lanSwitch('Melatonin', '褪黑素'),
-			num		: 30,
-			price	: 4800,
-			info	: lanSwitch('Help for sleep and reduce stress',"能帮助睡眠以及消减压力"),
-			maxOD	: 16,
-			withdraw: 5,
-			ontake	: function(){
-				let drug = V.candyDrug[this.id]
-				let stress = 20 * Math.max(1-(drug.taken*0.1), 0.2)
-				wikifier('stress', -stress)
-				drug.owned --
-				drug.taken ++
-			},
-		},
-		neuroOptimization:{
-			type	: 'drugs',
-			subType : 'normal',
-			id		: 'neuroOptimization',
-			name	: lanSwitch('Neuro Optimization', '神经优化片'),
-			num		: 20,
-			price	: 6400,
-			info	: lanSwitch('Improves the brain and memory',"提神醒脑，增强记忆力"),
-			maxOD	: 24,
-			withdraw: 3,
-			ontake	: function(){
-				let drug = V.candyDrug[this.id]
-				let control = 60 * Math.max(1-(drug.taken*0.1), 0.2)
-				wikifier('control', control)
-				drug.owned --
-				drug.taken ++		
-			},
-		},
-		aminobutyric:{
-			type	: 'drugs',
-			subType : 'normal',
-			id		: 'aminobutyric',
-			name	: lanSwitch('Aminobutyric','氨基丁酸'),
-			num		: 20,
-			price	: 12000,
-			info	: lanSwitch('Help for against depression and anxiety',"对抑郁症和焦虑症有一定抵御效果"),
-			maxOD	: 10,
-			withdraw: 7,
-			ontake	: function(){
-				let drug = V.candyDrug[this.id]
-				let trauma = 80 * Math.max(1-(drug.taken*0.1), 0.2)
-				wikifier('trauma', -trauma)
-				drug.owned --
-				drug.taken ++	
-			},
-		},
-		painreduce:{
-			type	: 'drugs',
-			subType : 'normal',
-			id		: 'painreduce',
-			name	: lanSwitch('Painkiller','止痛药'),
-			num		: 20,
-			price	: 4800,
-			info	: lanSwitch('Fast-acting painkiller',"速效止痛药"),
-			maxOD	: 12,
-			withdraw: 5,
-			ontake	: function(){
-				let drug = V.candyDrug[this.id]
-				let pain = 40 * Math.max(1-(drug.taken*0.1), 0.2)
-				wikifier('pain', -pain)
-				drug.owned --
-				drug.taken ++
-			},
-		},
-	
-		angelkiss:{
-			type	:'drugs',
-			subType :'strong',
-			id		:'angelkiss',
-			name	: lanSwitch('Angel Kiss','天使之吻'),
-			num		: 3,
-			price	: 5000,
-			info	: lanSwitch('Fast-acting psychotropic drugs, takes you fly to heaven','速效精神药物，带你直上天国。'),
-			maxOD   : 1,
-			withdraw: 20,
-			ontake  : function(enemy){
-				let drug = V.candyDrug[this.id]
-				let pain = 60 * Math.max(1-(drug.taken*0.1), 0.1)
-				let trauma = 360 * Math.max(1-(drug.taken*0.1), 0.1)
-				let stress = 80 * Math.max(1-(drug.taken*0.1), 0.1)
-	
-				wikifier('pain', -pain)
-				wikifier('trauma', -trauma)
-				wikifier('stress', -stress)
-	
-				getPalam('drunk', 1000)
-				getPalam('drugged', 1000)
+function getExtraSens(type, num, timer){
+	let sens = V.iCandyStats.extraSens
 
-				wikifier('arousal', 600, 'genital')
-				wikifier('hallucinogen', 240)
-	
-				V.iCandyStats.angelkissTaken = 1
-	
-				drug.taken++
-				V.medicated++
-				if(!enemy)
-					drug.owned--
-			},
-			onwake  : function(){
-				wikifier('stress', 60)
-				wikifier('trauma', 50)
-				wikifier('alcohol', 300)
-				wikifier('control', -40)
-	
-				V.iCandyStats.angelkissTaken = 0
-			}
-		},
-	
-		//-- 常规道具
-		fruitscandy:{
-			type	: 'items',
-			subType : 'candy',
-			id		: 'fruitscandy',
-			name	: lanSwitch('Fruits Candy','水果糖'),
-			num		: 12,
-			price	: 2000,
-			info	: lanSwitch("Sweet and sour, give you a little happiness","酸酸甜甜的，提供些许幸福感"),
-			onuse	: function(){
-				let trauma = random(3, 12)
-				wikifier('trauma', -trauma)
-	
-				V.candyItems[this.id] --
-			},
-		},
-		chocolate:{
-			type	: 'items',
-			subType : 'candy',
-			id		: 'chocolate',
-			name	: lanSwitch('Chocolate','巧克力'),
-			num		: 3,
-			price	: 1600,
-			info	: lanSwitch('Sweet chocolate, may relives a little stress for you',"甜甜的巧克力，能缓解些许压力"),
-			onuse	: function(){
-				let stress = random(1, 3)
-				let tiredness = random(60, 100)
-				wikifer('stress', -stress)
-				wikifier('tiredness', -tiredness)
-	
-				V.candyItems[this.id] --
-			},
-		},
-		ramune:{
-			type	: 'items',
-			subType : 'drink',
-			id		: 'ramune',
-			name	: lanSwitch('Ramune','波子水'),
-			num		: 1,
-			price	: 800,
-			info	: lanSwitch('Cool ramune, recover a bit of stamina',"清爽的波子水，能补充点体力"),
-			onuse	: function(){
-				let tiredness = random(64, 120)
-				wikifier('tiredness', -tiredness)
-	
-				V.candyItems[this.id] --
-			},
-		},
-		lolipop:{
-			type	: 'items',
-			subType : 'candy',
-			id		: 'lolipop',
-			name	: lanSwitch('Lolipop','波板糖'),
-			num		: 1,
-			price	: 400,
-			info	: lanSwitch('Sweet, big lolipop, give you a bit of happiness',"甜甜的大波板糖，提供些许幸福感"),
-			onuse	: function(){
-				let trauma = random(4, 20)
-				wikifer('trauma', trauma)
-				V.candyItems[this.id] --
-			},
-		},
-	
-		potachips:{
-			type	: 'items',
-			subType : 'snack',
-			id		: "potachips",
-			name	: lanSwitch('Potato Chips','薯片'),
-			num		: 1,
-			price	: 500,
-			info	: lanSwitch('Crunchy chips for some hungry','脆脆的薯片，补充些许体力。'),
-			onuse	: function(){
-				let tiredness = random(50, 100)
-				wikifer('tiredness', -tiredness)
-	
-				V.candyItems[this.id] --
-			}
-	
-		},
-
-		candyfloss:{
-			type	: 'items',
-			subType : 'candy',
-			id		: "candyfloss",
-			name	: lanSwitch('Candyfloss','棉花糖'),
-			num		: 1,
-			price	: 640,
-			info	: lanSwitch('Sweet, cloud like candyfloss, give you a bit happiness','甜甜的，云一般的棉花糖，给你点幸福感'),
-			onuse	: function(){
-				let tiredness = random(30, 80)
-				wikifer('tiredness', -tiredness)
-
-				let trauma = random(3, 9)
-				wikifier('trauma', trauma)
-				
-				let stress = random(2, 8)
-				wikifer('stress', -stress)
-	
-				V.candyItems[this.id] --
-			}
-	
-		},
-	
-		lubricant:{
-			type	: 'items',
-			subType : 'liquid',
-			id		: 'lubricant',
-			name	: lanSwitch('Lubricant','润滑油'),
-			num		: 200,
-			price	: 3000,
-			onuse   : function(){
-				V.player.bodyliquid.anus.goo += 50
-				V.candyItems[this.id] -= 10
-			}
-		},
-		lubricantSP:{
-			type	: 'items',
-			subType : 'liquid',
-			id		: 'lubricantSP',
-			name	: lanSwitch('Drugged Lubricant','催情润滑油'),
-			num		: 300,
-			price	: 6000,
-			onuse	: function(enemy){
-				V.player.bodyliquid.anus.goo += 50
-				let drug = 200
-				wikifer('drugs', drug)
-	
-				if(!enemy)
-					V.candyDrug[this.id] -= 10
-			}
+	//获取原始值
+	if(sens[type].add == 0 && sens[type].timer == 0){
+		sens[type].base = V[type+'sensitivity']
+		sens[type].add = num
+		sens[type].timer = timer
+	}
+	else{
+		sens[type].add += num
+		if(sens[type].timer < timer/2 ){
+			sens[type].timer = timer
 		}
+	}
+}
+
+function updateSens(pass){
+	let list = ['genital', 'bottom', 'breast', 'mouth']
+	let sens = V.iCandyStats.extraSens
+	let init
+
+	list.forEach((type)=>{
+		if(sens[type].add > 0 && sens[type].timer > 0){
+			V[type+'sensitivity'] = sens[type].base + sens[type].add
+			sens[type].timer = Math.max( sens[type].timer - pass, 0)
+		}
+		else if(sens[type].timer <= 0 && sens.init == 1){
+			V[type+'sensitivity'] = sens[type].base
+		}
+		else if(!sens.init){
+			sens[type].base = V[type+'sensitivity']
+			init = true
+		}
+	})
+
+	if (init){
+		sens.init = 1
+	}
+}
+
+function iCandyStatus(){
+
+	function addiction(){
+		this.taken = 0;
+		this.overdose = 0;
+		this.addict = 0;
+		this.withdrawCoolDown = 0;
+		this.clearedTimes = 0;
+	}
+
+	function drugsEvent(){
+		this.addiction = 0;
+		this.withdraw = 0;
+		this.cleared = 0;
+		this.high = 0;
+		this.after = 0;
+		this.daily = 0;
 	}
 
 	cv.iCandyStats = {
 		modversion: setup.iCandyVersion,
 		keepHairs: 't',
-		candies: {},
-		drugs:{
-			take: 0, overdose: 0, addict: 0, withdraw: 0,
-		},
-		alcohol:{
-			drunk: 0, overdrunk: 0, addict: 0, withdraw: 0,
+		general:{
+			drugs:new addiction(),
+			alcohol:new addiction(),
+			nicotine:new addiction(),
 		},
 
-		flags:{
-			candy	: {},
-			drugs	: { addict: 0, withdraw: 0 },
-			alcohol	: { addict: 0, withdraw: 0 },
+		drugs:{},
 
-			angelkisswake: 0,
+		adEvents:{
+			drugs	: {},
+			general : {
+				drugs	: new drugsEvent(),
+				alcohol	: new drugsEvent(),
+				nicotine: new drugsEvent(),
+			},
 		},
 
-		angelkissTaken: 0,
+		extraSens:{
+			genital:{
+				base: 1, //原生数值，在追加值为零时会定期刷新
+				add: 0,  //追加值，减少就是负数了
+				timer: 0, //生效时间，效果过了后会每小时下降 0.1
+			},
+			bottom:{
+				base: 1, //原生数值，在追加值为零时会定期刷新
+				add: 0,  //追加值，减少就是负数了
+				timer: 0, //生效时间，效果过了后会每小时下降 0.1
+			},
+			breast:{
+				base: 1, //原生数值，在追加值为零时会定期刷新
+				add: 0,  //追加值，减少就是负数了
+				timer: 0, //生效时间，效果过了后会每小时下降 0.1
+			},
+			mouth:{
+				base: 1, //原生数值，在追加值为零时会定期刷新
+				add: 0,  //追加值，减少就是负数了
+				timer: 0, //生效时间，效果过了后会每小时下降 0.1
+			}
+		},
+
 	}
 
-	let flaglist = [
+	const flaglist = [
 		//地点事件flag
 		'barbstreet', 'harvestreet', 'chinatown', 
-		'brothel', 'pub', 'orphan', 'hospital',
+		'brothel', 'pub', 'orphanage', 'hospital',
 		'repairshop', 'snackshop', 'sewer',
 		// 角色事件flag	
 		'xinyu', 'robot', 'foxlady', 
 		//特殊事件flag记录	
 		'mainevent', 'special'
 	]
+	
 	cv.iCandyStory = {}
 
 	flaglist.forEach((key)=>{
 		cv.iCandyStory[key] = {}
 	})
 
-	cv.candyDrug = {}
-	cv.candyItems = {}
+	cv.pockets = {
+		body: [],
+		bags: [],
+		cart: [],
+		hole: [],
+		bagtype : 'none',
+		carttype: 'none',
+		wallettype: 'none',
+	}
 
-	for(let i in setup.candyDrug){
-		let drug = setup.candyDrug[i]
 
-		if(drug.type == 'drugs'){
-			cv.candyDrug[i] = {
-				taken: 0,
-				overdose: 0,
-				addict: 0,
-				owned: 0,
-			}
+	cv.iStorage = {
+		lockers  : {},//放在储物柜里的物品可以在某些地方使用，如厕所、学校、浴室、妓院等
+		warehouse: {},//放在仓库里的物品用于贩售
+		orphanage: {},//只要在孤儿院就能使用
+		apartment: {},//只要在出租屋就能使用
+		farmbarns: {},//只要在农场就能使用
+		home: {}, //当前安全屋镜像
+	
+		bushes_park:{},
+		trashbin_elk:{},
+		hideout:{},
+	
+		warehouseOwned: 0,
+		lockerOwned:{
+			school: 1,
+			strip_club: 0,
+			brothel: 0,
+			shopping_centre: 0,
+			office_building: 0,
+			beach: 0,
 		}
-		else{
-			cv.candyItems[i] = 0
+	}
+
+	for(let i in CandyItems.data){
+		let item = CandyItems.data[i]
+
+		if(item.tags.includes('addiction') && item.tags.containsAny('nicotine', 'alcohol') == false ){
+			cv.iCandyStats.drugs[i] = new addiction()
+			cv.iCandyStats.adEvents.drugs[i] = new drugsEvent()
 		}
+		cv.iStorage.orphanage[i] = 0
 	}
 
 	cv.mechaItems = {
@@ -367,7 +253,6 @@ function setupCandyVar(){
 		robot: 0,
 		tool: 0,
 		parts: 0,
-		robobuild: 0,
 	}
 
 	cv.iRobot = {
@@ -375,12 +260,31 @@ function setupCandyVar(){
 		battery: 0,
 		humanity: 0,
 		condition: 0,
+		build: 0,
 	}
 
 	cv.myApartment = {
-		home: false,
+		owned: 0,
 		paid: 0,
-		nextpayday: 0,
+		nextPayDay: 0,
+	}
+
+	cv.iBank = {
+		money: 0,
+		plan: 'none',
+		nextCountDay: 0,
+		debt: 0,
+		credit: 100
+	}
+
+	cv.iPhone = {
+		owned: 0,
+		venmo: 0,
+		app: [],
+		contact: {},
+		record:{},
+		photos:[],
+		controler: 'none'
 	}
 
 	cv.repairStore = {
@@ -390,10 +294,15 @@ function setupCandyVar(){
 		today: 0,
 		workhour: 0,
 		staffkey: 0,
-
-		event: 0,
-		intro: 0,
 	}
+
+	C.hunger = {
+		max:2000,
+		min:0
+	}
+
+	cv.chemistry = 0
+	cv.mechanic = 0
 
 	setup.iCandyMod = 'ready'
 }
@@ -402,8 +311,8 @@ $(document).one('languageChecked', ()=>{
 	if(Macro.has('lanSwitch') == false){
 		DefineMacroS('lanSwitch', window.lanSwitch)
 	}
-	setupCandyVar()
-	
+	CandyItems.init()
+	iCandyStatus()
 })
 
 
@@ -477,51 +386,55 @@ function updateObj(objname, defaultvar){
 	}
 }
 
-
-function iCandyInit(){
-	if(setup.iCandyMod !== 'ready'){
-		console.log('等待初始化中')
-		setTimeout(()=>{
-			console.log('i Candy and Robot 初始化')
-			iCandyInit()
-		}, 60)
+function updateItemObj(){
+	for(let i in CandyItems.data){
+		if(V.candyDrug[i]?.owned > 0){
+			V.iStorage.homeItems[i] = V.candyDrug[i].owned
+			delete V.candyDrug[i].owned
+		}
+		else if(V.candyItems[i]){
+			V.iStorage.homeItems[i] = V.candyItems[i]
+		}
+		else{
+			V.iStorage.homeItems[i] = 0
+		}
 	}
 
-	if(V.iCandyStats && V.iCandyStats.modversion !== setup.iCandyVersion ){
+	delete V.candyItems
+
+	for(let i in cv.candyDrug){
+		if(typeof cv.candyDrug[i] !== V.candyDrug[i]){
+			V.candyDrug[i] = clone(cv.candyDrug[i])
+		}
+		else if(typeof V.candyDrug[i].clearedTimes == 'undefined'){
+			let oldata = V.candyDrug[i]
+			V.candyDrug[i] = {
+				taken: oldata.taken,
+				overdose: oldata.overdose,
+				addict: oldata.addict,
+				withdrawCoolDown: 0, //戒断倒计时，按小时算。
+				clearedTimes: 0, //戒除的次数，根据药物强度，每次戒除后，下次染上毒瘾需求的戒断日+1/+3
+			}
+		}
+	}
+}
+
+function iCandyUpdate(){
+	if(V.iCandyStats?.modversion !== setup.iCandyVersion ){
 		//更新
 		updateObj('iCandyStats', {})
 		updateObj('iCandyStory', {})
-		updateObj('candyDrug', {})
-		updateObj('candyItems', {})
+		updateItemObj()
 		updateObj('mechaItems', {})
 		updateObj('mechanic', 0)
+		updateObj('chemical', 0)
 		updateObj('iRobot', {})
 		updateObj('natural_lactation', 0)
 		updateObj('myApartment', {})
 		updateObj('repairStore', {})
 	}
-
-	if(!V.iCandyStats){
-		//首次初始化
-		V.iCandyStats = clone(cv.iCandyStats)
-		V.iCandyStory = clone(cv.iCandyStory)
-		V.candyDrug = clone(cv.candyDrug)
-		V.candyItems = clone(cv.candyItems)
-		V.mechaItems = clone(cv.mechaItems)
-
-		V.mechanic = 0
-		V.iRobot = clone(cv.iRobot)
-
-		V.natural_lactation = 0
-		V.myApartment = clone(cv.myApartment)
-		V.repairStore = clone(cv.repairStore)
-
-	}
-
-	return ''
 }
-
-DefineMacroS('iCandyInit', iCandyInit)
+DefineMacroS('iCandyUpdate', iCandyUpdate)
 
 
 $(document).one(':storyready',()=>{

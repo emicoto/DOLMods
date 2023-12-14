@@ -1,0 +1,22 @@
+:: ASimpleContentTest [widget]
+<<widget "aSimpleTest">>
+    <div id='test'>just a simple test. make this show at top of every passage!</div>
+<</widget>>
+
+<<widget "myOptionsA">>
+   <span class="gold">my Options A</span>
+<br>
+
+<div>
+  any option setting here
+</div>
+
+<</widget>>
+
+<<widget "myOptionsA">>
+    <div id='test'>optionB</div>
+<</widget>>
+
+<<widget "myOptionsC">>
+    <div id='test'>optionC</div>
+<</widget>>

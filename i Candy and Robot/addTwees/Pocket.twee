@@ -1,5 +1,10 @@
 :: Lune Pocket Items [widget]
 
+<<widget "ItemsOverlaySettings">>
+	<<replace #customOverlayTitle>><<titlePocketItems>><</replace>>
+	<<replace #customOverlayContent>><<pocketItems>><</replace>>
+<</widget>>
+
 <<widget "titlePocketItems">>
 	<<setupTabs>>
 	<div id="overlayTabs" class="tab">
@@ -8,9 +13,14 @@
 			<<toggleTab>>
 			<<replace #customOverlayContent>><<pocketItems>><</replace>>
 		<</button>>
+		<<button lanSwitch('Storage',"库存")>>
+			<<toggleTab>>
+			<<replace #customOverlayContent>><<storageItems>><</replace>>
+		<</button>>
 	</div>
 	<<closeButton>>
 <</widget>>
+
 
 <<widget "printCandyItems">>
 <<if $candyItems[$args[0]] > 0 >>
@@ -30,34 +40,7 @@
 <br>
 <<=lanSwitch('Spray','防狼喷雾')>>: <<print $spray>> | <span class="steel"><<lanSwitch 'You only can use during combat.' '你只能在战斗中使用。'>> </span><br>
 <br>
-<<if setup.countlDrug() >= 1>>
-<hr>
-<<=lanSwitch('Drugs','药物')>>：<br>
-<<printLuneDrug 'serotonin'>>
-<<printLuneDrug 'melatonin'>>
-<<printLuneDrug 'neuroOptimization'>>
-<<printLuneDrug 'aminobutyric'>>
-<<printLuneDrug 'painreduce'>>
-<<printLuneDrug 'angelkiss'>>
-<br>
-<</if>>
 
-<<if setup.countlItems() >= 1>>
-	<hr>
-	<<printCandyItems 'fruitscandy'>>
-	<<printCandyItems 'chocolate'>>
-	<<printCandyItems 'ramune'>>
-	<<printCandyItems 'lolipop'>>
-	<<printCandyItems 'potachips'>>
-
-	<<if $candyItems.lubricant gt 0>>
-	润滑油 <<print $candyItems.lubricant>>ml | <span class="steel">可以润滑肛门，请在浴室内使用。</span><br>
-	<</if>>
-
-	<<if $candyItems.lubricantSP gt 0>>
-	催情润滑油 <<print $candyItems.lubricantSP>>ml | <span class="steel">有催情效果的润滑油，请在浴室内使用。</span><br>
-	<</if>>
-<</if>>
 
 <<if setup.countMechaItems() >= 1>>
 	<hr>
@@ -76,10 +59,10 @@
 
 	<<if $mechaItems.robot is 1>>
 	<br>
-		<<if $mechaItems.robotbuild gte 100>>
+		<<if $iRobot.build gte 100>>
 			机器人朋友 <<print $robotname>> | 它是你的朋友，可以在自己的房间里一起玩耍。<br>
 		<<else>>
-			机器人套组 | <span class="steel"><<if $mechaItems.robotbuild isnot 0>>组装进度: <<print $mechaItems.robotbuild>>%. |<</if>> 你能提升通过组装机器人习得机械知识。</span><br>
+			机器人套组 | <span class="steel"><<if $iRobot.build  isnot 0>>组装进度: <<print $iRobot.build >>%. |<</if>> 你能提升通过组装机器人习得机械知识。</span><br>
 		<</if>>
 		机械零件 x <<print $mechaItems.parts>>  | <<if $mechaItems.parts isnot 0>><span class="steel">你可以利用这些零件修理你的机器人。</span><</if>><br>
 	<</if>>

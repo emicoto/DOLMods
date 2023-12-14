@@ -1,0 +1,132 @@
+{
+ "name": "i, Candy + Robot",
+ "version": "1.0.0",
+ "styleFileList": [],
+ "scriptFileList_earlyload": [],
+ "scriptFileList_inject_early": [],
+ "scriptFileList_preload": [],
+ "scriptFileList": [
+    "JS/Setup.js",
+    "JS/processCheck.js",
+    "JS/newNPC.js"
+ ],
+ "tweeFileList": [
+ "addTwees/Setup.twee",
+ "addTwees/Pocket.twee",
+ "addTwees/Robot.twee",
+ "addTwees/Pharmacy.twee"
+ ],
+ "imgFileList": [],
+ "additionFile": [
+    "replaceFiles/bedroomWidget.txt",
+    "replaceFiles/drugsWidget.txt",
+    "replaceFiles/drunkWidget.txt"
+ ],
+ "addonPlugin": [
+  {
+   "modName": "TweeReplacer",
+   "addonName": "TweeReplacerAddon",
+   "modVersion": "1.0.0",
+   "params": [
+    {
+        "passage":"Pharmacy",
+        "findString":"Contacts:",
+        "replace":"<<ExtraPharmacy>>\n\tContacts:"
+    },
+    {
+        "passage":"PassageHeader",
+        "findString":"<<unset $bypassHeader>>",
+        "replace":"<<unset $bypassHeader>>\n<<iCandyInit>><<checkDayPass>><<lactationchange>>\n<div id='addMsg'><br></div>"
+    },
+    {
+        "passage":"StoryCaption",
+        "findString":"<div class=\"sidebarButtonSplit\">",
+        "replace":"<<button lanSwitch('ITEMS','道具')>><<overlayReplace \"items\">><</button>>\n\t\t\t<div class=\"sidebarButtonSplit\">"
+    },
+    {
+        "passage":"overlayReplace",
+        "findString":"<<case \"traits\">>",
+        "replace":"<<case \"items\">><<replace #customOverlayTitle>><<titlePocketItems>><</replace>><<replace #customOverlayContent>><<pocketItems>><</replace>>\t\t<<case \"traits\">>"
+    },
+    {
+        "passage":"Widgets Journal",
+        "findString":"\t<<if $antiquemoney gt 0 || $blackmoney gt 0 || $phials_held gte 1 || $lurkers_held gte 1>>\n\t\t<hr>\n\t\t<span class=\"gold bold\">Inventory</span>\n\t\t<br>\n\t<</if>>\n\t<ul style=\"margin-top:10px;margin-left:-5px;\">\n\t<<if $antiquemoney gt 0>>\n\t\t<li>You are carrying <span class=\"green\">£<<print $antiquemoney>></span> in antiques. You can sell them to the museum.</li>\n\t<</if>>\n\t<<if $blackmoney gt 0>>\n\t\t<li>You are carrying <span class=\"green\">£<<print $blackmoney>></span> in stolen goods. You can sell them to someone on the black market.</li>\n\t<</if>>\n\t<<if $phials_held gte 2>>\n\t\t<li>You are carrying <span class=\"green\">$phials_held</span> phials of aphrodisiac. You can sell them on Elk Street.</li>\n\t<<elseif $phials_held gte 1>>\n\t\t<li>You are carrying a phial of aphrodisiac. You can sell it on Elk Street.</li>\n\t<</if>>\n\t<<if $lurkers_held gte 2>>\n\t\t<li>You are carrying <span class=\"green\">$lurkers_held</span> lurkers.</li>\n\t<<elseif $lurkers_held is 1>>\n\t\t<li>You are carrying a lurker.</li>\n\t<</if>>\n\t<<if $location is \"prison\">>\n\t\t<li>You have <span class=\"green\"><<number $prison.teeth>></span> shark's teeth.\n\t\t<<if $prison_wren_intro isnot 1>>\n\t\t\tYou can find Wren in the yard on Fridays after lunch.\n\t\t\t<br>\n\t\t<</if>>\n\t\t</li>\n\t<</if>>\n\t</ul>\n\n\t<<if $plants_known.length gt 0>>\n\t<hr>\n\t\t<span class=\"gold bold\">Seeds</span>\n\t\t<br>\n\t\tYou can grow:\n\t\t<<set _plant_keys to Object.keys(setup.plants)>>\n\t\t<<for _i to 0; _i lt _plant_keys.length; _i++>>\n\t\t\t<<if setup.plants[_plant_keys[_i]].type is \"flower\" or setup.plants[_plant_keys[_i]].type is \"vegetable\">>\n\t\t\t\t<<if $plants_known.includes( setup.plants[_plant_keys[_i]].name)>>\n\t\t\t\t\t<<if $options.images is 1 and setup.plants[_plant_keys[_i]].icon>>\n\t\t\t\t\t\t<img class=\"tending_icon\" @src=\"`img/misc/icon/tending/` + setup.plants[_plant_keys[_i]].icon\">\n\t\t\t\t\t<</if>>\n\t\t\t\t\t<span class=\"green\"><<print setup.plants[_plant_keys[_i]].plural[0].toUpperCase() + setup.plants[_plant_keys[_i]].plural.substring(1)>></span> |\n\t\t\t\t<<else>>\n\t\t\t\t\t??? |\n\t\t\t\t<</if>>\n\t\t\t<</if>>\n\t\t<</for>>\n\t<</if>>\n\n\t<<set _plant_keys to Object.keys($plants)>>\n\t<<if _plant_keys.length gt 0>>\n\t<hr>\n\t<span class=\"gold bold\">Produce</span>\n\t<br>\n\tYou have:\n\t<<for _t to 0; _t lt _plant_keys.length; _t++>>\n\t\t<<if $plants[_plant_keys[_t]].amount gte 1>><<set _plant_temp to 1>>\n\t\t\t<span class=\"green\"><<print $plants[_plant_keys[_t]].amount>></span>\n\t\t\t<<if $options.images is 1 and setup.plants[_plant_keys[_t]].icon>>\n\t\t\t\t<img class=\"tending_icon\" @src=\"`img/misc/icon/tending/` + setup.plants[_plant_keys[_t]].icon\">\n\t\t\t<</if>>\n\t\t\t<<if setup.plants[$plants[_plant_keys[_t]].name].singular and $plants[_plant_keys[_t]].amount === 1>>\n\t\t\t\t<<print setup.plants[$plants[_plant_keys[_t]].name].singular>> |\n\t\t\t<<else>>\n\t\t\t\t<<print $plants[_plant_keys[_t]].plural>> |\n\t\t\t<</if>>\n\t\t<</if>>\n\t<</for>>\n\t<br><br>\n\t<</if>>",
+        "replace":"\n"
+    },
+    {
+        "passage":"Characteristics",
+        "findString" :"<<set _housekeepingConfig =\t{ name : \"Housekeeping\",displayType : \"grade\",\tcurrentValue : $housekeeping,\t\tmodifier: 100, modTypes: { good: [], bad: [] },\t\tstates : _detailedSkillGrades}>>\n",
+        "replace":"<<set _housekeepingConfig =\t{ name : \"Housekeeping\",displayType : \"grade\",\tcurrentValue : $housekeeping,\t\tmodifier: 100, modTypes: { good: [], bad: [] },\t\tstates : _detailedSkillGrades}>>\n\t\t\t\t<<set _mechanicConfig = \t{ name : lanSwitch('Mechanic','机械'),\tdisplayType : \"grade\",\tcurrentValue : $mechanic,\t\tmodifier: 100, modTypes: { good: [], bad: [] },\t\tstates : _detailedSkillGrades}>>"   
+    },
+    {
+        "passage":"Characteristics",
+        "findString" :"<<characteristic-box _housekeepingConfig>>\n",
+        "replace":"<<characteristic-box _housekeepingConfig>>\n\t\t\t<<characteristic-box _mechanicConfig>>\n"   
+    },
+    {
+        "passage":"Widgets Difficulty",
+        "findString":"<<set $skulduggeryroll to random(1, 1000)>>",
+        "replace":"<<set $skulduggeryroll to random(1, 1000)>>\n<<if $mechaItems.tool is 1>><<set $skulduggeryroll *= 1.1>><<set $skulduggerydifficulty *= 0.95>><</if>>"
+    },
+    {
+        "passage":"Widgets Sleep",
+        "findString" :"<<if $ruffledisable is \"f\">>\n\t\t<<set $_hair to",
+        "replace":"<<if $ruffledisable is \"f\" and $iCandyStats.keepHairs is \"f\">>\n\t\t<<set $_hair to"   
+    },
+	{
+     "passage": "Widgets",
+     "findString": "<</if>>\n<</widget>>\n\n\n<<widget \"tableText\">>",
+     "replaceFile": "replaceFiles/bedroomWidget.txt"
+    },
+	{
+        "passage": "Widgets Stats",
+        "findString": "\n\t\t<<set $drugged += Math.floor(_args[0] * _drugged_mod)>>\n",
+        "replaceFile": "replaceFiles/drugsWidget.txt"
+    },
+    {
+        "passage": "Widgets Stats",
+        "findString": "\n\t\t<<set $drunk += Math.floor(_args[0] * _drunk_mod)>>\n",
+        "replaceFile": "replaceFiles/drunkWidget.txt"
+    },
+    {
+        "passage": "Widgets Bodywriting",
+        "findString": "<<if (($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200)) gte 1000)>>",
+        "replace": "<<if (($enemyarousal + ($enemytrust * 5.5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 100)) gte 880)>>"
+    },
+    {
+        "passage": "Widgets Bodywriting",
+        "findString": "<<elseif (($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200)) gte 500)>>",
+        "replace": "<<elseif (($enemyarousal + ($enemytrust * 5.5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 100)) gte 440)>>"
+    },
+    {
+        "passage": "Widgets Bodywriting",
+        "findString": "<<elseif $skin[_args[0]].degree lte ($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200))>>",
+        "replace": "<<elseif $skin[_args[0]].degree lte ($enemyarousal * 2 + ($enemytrust * 5) - $enemyanger + ($attractiveness / 5) * (currentSkillValue(\"seductionskill\") / 100))>>"
+    },
+    {
+        "passage": "Brothel",
+        "findString": "<<if $brotheljob is 1>>",
+        "replace": "<<if $brotheljob is 1>>\n<<brothelDrugs>>"
+    }
+   ]
+  }
+ ],
+ "dependenceInfo": [
+  {
+   "modName": "ModLoader",
+   "version": ">=1.1.0"
+  },
+  {
+   "modName": "ModLoader DoL ImageLoaderHook",
+   "version": ">=1.0.0"
+  },
+  {
+   "modName": "TweeReplacer",
+   "version": ">=1.0.0"
+  },
+  {
+   "modName": "ReplacePatcher",
+   "version": ">=1.0.0"
+  }
+ ]
+}

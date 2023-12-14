@@ -1,0 +1,17 @@
+::Domus Window Orphan Escape Injured
+::LostMod Domus Window Orphan Escape Injured
+
+"<<effects>>
+<<earnFeat \"The Value of Pain\">>
+<<person2>>
+你紧跟在<<person>>后面，走下一段台阶，穿过格子架旁的一扇门。直到你们走到街上的某个地方才停下来。
+<br><br>
+
+"谢，谢谢你，"<<person>>喘息着。"只有我一个人的话会更难，我想帮助鲁比，帮助大家，但我不知道<<person1>><<person>>会伤害我。不该是那样的。"
+<br><br>
+
+<<person2>><<He>>给了你一个拥抱，然后朝孤儿院的方向走。这并不远，你可以在两栋房子之间看见孤儿院的屋檐。
+<br><br>
+
+<<link [[继续|Domus Street]]>><<endevent>><<clearNPC domus_couple_0>><<clearNPC domus_couple_1>><</link>>
+<br>"

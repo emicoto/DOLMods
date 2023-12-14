@@ -2,16 +2,16 @@
 <<widget "ExtraPharmacy">>
 	<<lanSwitch 'General Medicine' '常规药'>>:
 	<br>
-	<<printIDrugsLink 'serotonin'>>
-	<<printIDrugsLink 'melatonin'>>
-	<<printIDrugsLink 'neuroOptimization'>>
-	<<printIDrugsLink 'aminobutyric'>>
-	<<printIDrugsLink 'painreduce'>>
+	<<iMedicineLink 'serotonin'>>
+	<<iMedicineLink 'melatonin'>>
+	<<iMedicineLink 'neuroOptimization'>>
+	<<iMedicineLink 'aminobutyric'>>
+	<<iMedicineLink 'painreduce'>>
 	<br>
 
 	<<lanSwitch 'Special' '特殊'>>：
 	<br>
-	<<printIDrugsLink 'lubricant'>>
+	<<iMedicineLink 'lubricant'>>
 	<br><br>
 <</widget>>
 

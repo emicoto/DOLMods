@@ -1,27 +1,32 @@
 {
- "name": "i, Candy + Robot",
- "version": "1.0.0",
- "styleFileList": [],
- "scriptFileList_earlyload": [],
- "scriptFileList_inject_early": [],
- "scriptFileList_preload": [],
- "scriptFileList": [
-    "JS/Setup.js",
-    "JS/processCheck.js",
-    "JS/newNPC.js"
- ],
- "tweeFileList": [
- "addTwees/Setup.twee",
- "addTwees/Pocket.twee",
- "addTwees/Robot.twee",
- "addTwees/Pharmacy.twee"
- ],
- "imgFileList": [],
- "additionFile": [
-    "replaceFiles/bedroomWidget.txt",
-    "replaceFiles/drugsWidget.txt",
-    "replaceFiles/drunkWidget.txt"
- ],
+    "name": "i, Candy + Robot",
+    "version": "1.5.0",
+    "styleFileList": [],
+    "scriptFileList_earlyload": [],
+    "scriptFileList_inject_early": [],
+    "scriptFileList_preload": [],
+    "scriptFileList": [
+       "JS/Items.js",
+       "JS/itemManager.js",
+       "JS/Setup.js",
+       "JS/processCheck.js",
+       "JS/newNPC.js"
+    ],
+    "tweeFileList": [
+    "addTwees/Setup.twee",
+    "addTwees/Pocket.twee",
+    "addTwees/Robot.twee",
+    "addTwees/Pharmacy.twee",
+    "addTwees/PassageReady.twee"
+    ],
+    "imgFileList": [],
+    "additionFile": [
+       "replaceFiles/bedroomWidget.txt",
+       "replaceFiles/drugsWidget.txt",
+       "replaceFiles/drunkWidget.txt",
+       "replaceFiles/journal.txt",
+       "replaceFiles/skillsetting.txt"
+    ],
  "addonPlugin": [
   {
    "modName": "TweeReplacer",
@@ -34,9 +39,19 @@
         "replace":"<<ExtraPharmacy>>\n\tContacts:"
     },
     {
+        "passage":"Widgets variablesStatic",
+        "findString":"<</widget>>",
+        "replace":"\n\n<<lunemodInit>>\n\n<</widget>>"
+    },
+    {
         "passage":"PassageHeader",
         "findString":"<<unset $bypassHeader>>",
-        "replace":"<<unset $bypassHeader>>\n<<iCandyInit>><<checkDayPass>><<lactationchange>>\n<div id='addMsg'><br></div>"
+        "replace":"<<unset $bypassHeader>>\n<<iCandyHeader>><div id='addMsg'></div>"
+    },
+    {
+        "passage":"PassageFooter",
+        "findString":"<div id=\"gameVersionDisplay\">",
+        "replace":"<<iCandyFooter>><br>\n<div id=\"gameVersionDisplay\">"
     },
     {
         "passage":"StoryCaption",
@@ -50,8 +65,8 @@
     },
     {
         "passage":"Widgets Journal",
-        "findString":"\t<<if $antiquemoney gt 0 || $blackmoney gt 0 || $phials_held gte 1 || $lurkers_held gte 1>>\n\t\t<hr>\n\t\t<span class=\"gold bold\">Inventory</span>\n\t\t<br>\n\t<</if>>\n\t<ul style=\"margin-top:10px;margin-left:-5px;\">\n\t<<if $antiquemoney gt 0>>\n\t\t<li>You are carrying <span class=\"green\">£<<print $antiquemoney>></span> in antiques. You can sell them to the museum.</li>\n\t<</if>>\n\t<<if $blackmoney gt 0>>\n\t\t<li>You are carrying <span class=\"green\">£<<print $blackmoney>></span> in stolen goods. You can sell them to someone on the black market.</li>\n\t<</if>>\n\t<<if $phials_held gte 2>>\n\t\t<li>You are carrying <span class=\"green\">$phials_held</span> phials of aphrodisiac. You can sell them on Elk Street.</li>\n\t<<elseif $phials_held gte 1>>\n\t\t<li>You are carrying a phial of aphrodisiac. You can sell it on Elk Street.</li>\n\t<</if>>\n\t<<if $lurkers_held gte 2>>\n\t\t<li>You are carrying <span class=\"green\">$lurkers_held</span> lurkers.</li>\n\t<<elseif $lurkers_held is 1>>\n\t\t<li>You are carrying a lurker.</li>\n\t<</if>>\n\t<<if $location is \"prison\">>\n\t\t<li>You have <span class=\"green\"><<number $prison.teeth>></span> shark's teeth.\n\t\t<<if $prison_wren_intro isnot 1>>\n\t\t\tYou can find Wren in the yard on Fridays after lunch.\n\t\t\t<br>\n\t\t<</if>>\n\t\t</li>\n\t<</if>>\n\t</ul>\n\n\t<<if $plants_known.length gt 0>>\n\t<hr>\n\t\t<span class=\"gold bold\">Seeds</span>\n\t\t<br>\n\t\tYou can grow:\n\t\t<<set _plant_keys to Object.keys(setup.plants)>>\n\t\t<<for _i to 0; _i lt _plant_keys.length; _i++>>\n\t\t\t<<if setup.plants[_plant_keys[_i]].type is \"flower\" or setup.plants[_plant_keys[_i]].type is \"vegetable\">>\n\t\t\t\t<<if $plants_known.includes( setup.plants[_plant_keys[_i]].name)>>\n\t\t\t\t\t<<if $options.images is 1 and setup.plants[_plant_keys[_i]].icon>>\n\t\t\t\t\t\t<img class=\"tending_icon\" @src=\"`img/misc/icon/tending/` + setup.plants[_plant_keys[_i]].icon\">\n\t\t\t\t\t<</if>>\n\t\t\t\t\t<span class=\"green\"><<print setup.plants[_plant_keys[_i]].plural[0].toUpperCase() + setup.plants[_plant_keys[_i]].plural.substring(1)>></span> |\n\t\t\t\t<<else>>\n\t\t\t\t\t??? |\n\t\t\t\t<</if>>\n\t\t\t<</if>>\n\t\t<</for>>\n\t<</if>>\n\n\t<<set _plant_keys to Object.keys($plants)>>\n\t<<if _plant_keys.length gt 0>>\n\t<hr>\n\t<span class=\"gold bold\">Produce</span>\n\t<br>\n\tYou have:\n\t<<for _t to 0; _t lt _plant_keys.length; _t++>>\n\t\t<<if $plants[_plant_keys[_t]].amount gte 1>><<set _plant_temp to 1>>\n\t\t\t<span class=\"green\"><<print $plants[_plant_keys[_t]].amount>></span>\n\t\t\t<<if $options.images is 1 and setup.plants[_plant_keys[_t]].icon>>\n\t\t\t\t<img class=\"tending_icon\" @src=\"`img/misc/icon/tending/` + setup.plants[_plant_keys[_t]].icon\">\n\t\t\t<</if>>\n\t\t\t<<if setup.plants[$plants[_plant_keys[_t]].name].singular and $plants[_plant_keys[_t]].amount === 1>>\n\t\t\t\t<<print setup.plants[$plants[_plant_keys[_t]].name].singular>> |\n\t\t\t<<else>>\n\t\t\t\t<<print $plants[_plant_keys[_t]].plural>> |\n\t\t\t<</if>>\n\t\t<</if>>\n\t<</for>>\n\t<br><br>\n\t<</if>>",
-        "replace":"\n"
+        "findString":"\t<<if $antiquemoney gt 0 || $blackmoney gt 0 || $phials_held gte 1 || $lurkers_held gte 1>>\n\t\t<hr>\n\t\t<span class=\"gold bold\">物品栏</span>\n\t\t<br>\n\t<</if>>\n\t<ul style=\"margin-top:10px;margin-left:-5px;\">\n\t<<if $antiquemoney gt 0>>\n\t\t<li>你携带了价值<span class=\"green\">£<<print $antiquemoney>></span>的古董，你可以将它们卖给博物馆。</li>\n\t<</if>>\n\t<<if $blackmoney gt 0>>\n\t\t<li>你携带了价值<span class=\"green\">£<<print $blackmoney>></span>的赃物，你可以在黑市上将它们卖掉。</li>\n\t<</if>>\n\t<<if $phials_held gte 2>>\n\t\t<li>你携带了<span class=\"green\">$phials_held</span>瓶催情剂，你可以在麋鹿街上出售它们。</li>\n\t<<elseif $phials_held gte 1>>\n\t\t<li>你携带了一瓶催情剂，你可以在麋鹿街上卖掉它。</li>\n\t<</if>>\n\t<<if $lurkers_held gte 2>>\n\t\t<li>你携带了<span class=\"green\">$lurkers_held</span>个潜伏者。</li>\n\t<<elseif $lurkers_held is 1>>\n\t\t<li>你携带了一个潜伏者。</li>\n\t<</if>>\n\t<<if $location is \"prison\">>\n\t\t<li>你有<span class=\"green\"><<number $prison.teeth>></span>颗鲨鱼牙齿。\n\t\t<<if $prison_wren_intro isnot 1>>\n\t\t\t你可以于午餐后在院子里找到伦恩。\n\t\t\t<br>\n\t\t<</if>>\n\t\t</li>\n\t<</if>>\n\t</ul>\n\n\t<<if $plants_known.length gt 0>>\n\t<hr>\n\t\t<span class=\"gold bold\">种子</span>\n\t\t<br>\n\t\t你可以种植：\n\t\t<<set _plant_keys to Object.keys(setup.plants)>>\n\t\t<<for _i to 0; _i lt _plant_keys.length; _i++>>\n\t\t\t<<if setup.plants[_plant_keys[_i]].type is \"flower\" or setup.plants[_plant_keys[_i]].type is \"vegetable\">>\n\t\t\t\t<<if $plants_known.includes( setup.plants[_plant_keys[_i]].name)>>\n\t\t\t\t\t<<if $options.images is 1 and setup.plants[_plant_keys[_i]].icon>>\n\t\t\t\t\t\t<img class=\"tending_icon\" @src=\"`img/misc/icon/tending/` + setup.plants[_plant_keys[_i]].icon\">\n\t\t\t\t\t<</if>>\n\t\t\t\t\t<span class=\"green\"><<print setup.plants[_plant_keys[_i]].plural>></span> |\n\t\t\t\t<<else>>\n\t\t\t\t\t??? |\n\t\t\t\t<</if>>\n\t\t\t<</if>>\n\t\t<</for>>\n\t<</if>>\n\n\t<<set _plant_keys to Object.keys($plants)>>\n\t<<if _plant_keys.length gt 0>>\n\t<hr>\n\t<span class=\"gold bold\">可出售产品</span>\n\t<br>\n\t你有着：\n\t<<for _t to 0; _t lt _plant_keys.length; _t++>>\n\t\t<<if $plants[_plant_keys[_t]].amount gte 1>><<set _plant_temp to 1>>\n\t\t\t<span class=\"green\"><<print $plants[_plant_keys[_t]].amount>></span>\n\t\t\t<<if $options.images is 1 and setup.plants[_plant_keys[_t]].icon>>\n\t\t\t\t<img class=\"tending_icon\" @src=\"`img/misc/icon/tending/` + setup.plants[_plant_keys[_t]].icon\">\n\t\t\t<</if>>\n\t\t\t<<if setup.plants[$plants[_plant_keys[_t]].name].singular and $plants[_plant_keys[_t]].amount === 1>>\n\t\t\t\t<<print $plants[_plant_keys[_t]].plural>> |\n\t\t\t<<else>>\n\t\t\t\t<<print $plants[_plant_keys[_t]].plural>> |\n\t\t\t<</if>>\n\t\t<</if>>\n\t<</for>>\n\t<br><br>\n\t<</if>>\n\t<<if _plant_temp is 1>>你可以在<span class=\"gold\">黎明时分</span>前往<span class=\"gold\">康努达塔斯街</span>租用摊位来进行出售。<br><</if>>",
+        "replaceFile":"replaceFiles/journal.txt"
     },
     {
         "passage":"Characteristics",
@@ -74,9 +89,9 @@
         "replace":"<<if $ruffledisable is \"f\" and $iCandyStats.keepHairs is \"f\">>\n\t\t<<set $_hair to"   
     },
 	{
-     "passage": "Widgets",
-     "findString": "<</if>>\n<</widget>>\n\n\n<<widget \"tableText\">>",
-     "replaceFile": "replaceFiles/bedroomWidget.txt"
+        "passage": "Widgets",
+        "findString": "<</if>>\n<</widget>>\n\n\n<<widget \"tableText\">>",
+        "replaceFile": "replaceFiles/bedroomWidget.txt"
     },
 	{
         "passage": "Widgets Stats",
@@ -107,6 +122,11 @@
         "passage": "Brothel",
         "findString": "<<if $brotheljob is 1>>",
         "replace": "<<if $brotheljob is 1>>\n<<brothelDrugs>>"
+    },
+    {
+        "passage": "Adult Shop",
+        "findString": "\t<br><br>\n<</if>>\n\n<<if $stress",
+        "replace": "\t<br><br>\n<</if>>\n\n<div id=\"addAfterMsg\"></div>\n\n<<if $stress"
     }
    ]
   }
@@ -126,6 +146,10 @@
   },
   {
    "modName": "ReplacePatcher",
+   "version": ">=1.0.0"
+  },
+  {
+   "modName": "Simple Frameworks",
    "version": ">=1.0.0"
   }
  ]

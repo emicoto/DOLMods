@@ -1,0 +1,37 @@
+{
+  "name": "SimpleContent",
+  "version": "1.0.0",
+  "scriptFileList_inject_early": [
+    "newContent.js"
+  ],
+  "scriptFileList_earlyload": [ ],
+   "scriptFileList_preload": [ ],
+  "styleFileList": [],
+  "scriptFileList": [
+    "newNPC.js"
+  ],
+  "tweeFileList": [
+    "test.twee"
+  ],
+  "imgFileList": [ ],
+  "additionFile": [ ],
+
+  "addonPlugin": [
+    {
+      "modName": "TweeReplacer",
+      "addonName": "TweeReplacerAddon",
+      "modVersion": "1.0.0",
+      "params": [  ]
+    }
+  ],
+  "dependenceInfo": [
+    {
+      "modName": "TweeReplacer",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "ReplacePatcher",
+      "version": "^1.0.0"
+    }
+  ]
+}

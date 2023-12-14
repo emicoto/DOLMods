@@ -1,0 +1,22 @@
+:: iCandyRobot ModOptions[widget]
+<<widget "iCandyOptions">>
+<span class="gold"><<lanSwitch "Settings" "功能设定" >></span>
+<div>
+
+<div class="settingsToggle">
+    <label>
+    <<checkbox "$iCandyOptions." false true autocheck>>
+    <mouse class="tooltip-small linkBlue">(?)
+    <span>
+        <<=lanSwitch(
+            "english hints",
+            "中文提示"
+        )>>
+    </span>
+    </mouse>
+    </label>
+</div>
+
+</div>
+
+<</widget>>

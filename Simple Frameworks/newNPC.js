@@ -1,9 +1,10 @@
 
-function lanSwitch(EN, CN){
+function lanSwitch(...lan){
+    let [EN, CN] = lan
+
     if (setup.language == 'CN'){
         return CN
     }
-    
     return EN
 }
 window.lanSwitch = lanSwitch
@@ -13,9 +14,10 @@ DefineMacroS('lanSwitch', lanSwitch)
 let lancheck = setInterval(()=>{
     if( typeof setup !== 'object' ){ return }
 
-    if(window.modI18N || setup.breastsizes){
+    if(window.modI18N || setup.breastsizes[1] == '微隆的'){
         setup.language = 'CN'        
-    }else{
+    }
+    else {
         setup.language = 'EN'
     }
 
@@ -23,19 +25,91 @@ let lancheck = setInterval(()=>{
         clearInterval(lancheck)
         $(document).trigger('languageChecked')
     }
-}, 50)
+}, 100)
 
 
 class NamedNPC{
+    static database = []
+    /**
+     * 
+     * @param {NamedNPC} npc 
+     */
+    static add(...npc){
+        this.database.push(...npc)
+    }
+    static clear(){
+        //- 清理非法NPC
+        for(let i=0; i<V.NPCName.length; i++){
+            let npc = V.NPCName[i]
+
+            if(!setup.NPCNameList.includes(npc.nam)){
+                V.NPCName.deleteAt(i)
+                V.NPCNameList.deleteAt(i)
+                i--
+            }
+        } 
+    }
+    static update(){
+        this.database.forEach((data)=>{
+            let npc = clone(data)
+            if( V.NPCNameList.includes(npc.nam) === false ){
+                npc.title = lanSwitch(npc.title_lan)
+                npc.description = lanSwitch(npc.description_lan)
+
+                if(!V.NPCName.find( chara => chara.nam == npc.nam)){
+                    V.NPCName.push(npc)
+                }
+                if(!setup.NPCNameList.includes(npc.nam) && V.passage !== 'Start'){
+                    setup.NPCNameList.push(npc.nam)
+                }
+                if(!V.NPCNameList.includes(npc.nam)){
+                    V.NPCNameList.push(npc.nam)
+                }
+
+                if(!C.npc[npc.nam]){
+                    Object.defineProperty(C.npc, npc.nam, {
+                        get() {
+                            return V.NPCName[setup.NPCNameList.indexOf(npc.nam)];
+                        },
+                        set(val) {
+                            V.NPCName[setup.NPCNameList.indexOf(npc.nam)] = val;
+                        },
+                    })                    
+                }
+            }
+        })
+    }
+    static switchlan(){
+        V.NPCName.forEach((npc)=>{
+            if(npc.title_lan){
+                npc.title = lanSwitch(npc.title_lan)
+            }
+            if(npc.description_lan){
+                npc.description = lanSwitch(npc.description_lan)
+            }
+        })
+    }
+    static init(stage){
+        this.clear()
+        this.update()
+        console.log('addNamedNPC', stage, V.NPCName, setup.NPCNameList)        
+    }
+    static reset(npc){
+        let data = new NamedNPC(npc.nam, npc.title, npc.des, npc.type)
+        for(let i in npc){
+            data[i] = npc[i]
+        }
+        return data
+    }
     constructor(name, title, des, type){
         this.nam = name
-        this.title = title
-        this.description = des
+        this.title_lan = title
+        this.description_lan = des
         this.type = type
 
         this.penis = 0
         this.vagina = 0
-        this.insecurity = ''
+        this.insecurity = 'none'
         this.pronoun = 'none'
         this.penissize = 0
         this.penisdesc = 'none'
@@ -200,82 +274,36 @@ class NamedNPC{
 
 window.NamedNPC = NamedNPC
 setup.addNPCList = []
+
 $(document).trigger('addNameNPC:ready')
 
-
-$(document).one('languageChecked', ()=>{
-    setup.addNPCList.push(
-        new NamedNPC('Tester', lanSwitch('tester', '测试员'), lanSwitch('Tester', '测试员'), 'robot' ).Init('m', 'adult'),       
-    )
-})
+//在init阶段统一切换显示语言
+NamedNPC.add(
+    new NamedNPC('Tester', ['tester', '测试员'], ['Tester', '测试员'], 'robot' ).Init('m', 'adult'),
+)
 
 $(document).one(':storyready', ()=>{
     let checkSetup = setInterval(()=>{
         if(setup && setup.NPCNameList){
-            updateNPC('update NPC on Startup') 
+            NamedNPC.init('adding NPC on Startup')
             clearInterval(checkSetup)
         }
     }, 60)
 })
 
-function updateNPC(stage){
-
-    const clear = function(){
-        //- 清理非法NPC
-        for(let i=0; i<V.NPCName.length; i++){
-            let npc = V.NPCName[i]
-
-            if(!setup.NPCNameList.includes(npc.nam)){
-                V.NPCName.deleteAt(i)
-                V.NPCNameList.deleteAt(i)
-                i--
-            }
-        }        
-    }
-
-    const update = function(){
-        clear()
-
-        setup.addNPCList.forEach((npc)=>{
-            if( V.NPCNameList.includes(npc.nam) === false ){
-
-                if(!V.NPCName.find( chara => chara.nam == npc.nam)){
-                    V.NPCName.push(npc)
-                }
-                if(!setup.NPCNameList.includes(npc.nam) && V.passage !== 'Start'){
-                    setup.NPCNameList.push(npc.nam)
-                }
-                if(!V.NPCNameList.includes(npc.nam)){
-                    V.NPCNameList.push(npc.nam)
-                }
-
-                if(!C.npc[npc.nam]){
-                    Object.defineProperty(C.npc, npc.nam, {
-                        get() {
-                            return V.NPCName[setup.NPCNameList.indexOf(npc.nam)];
-                        },
-                        set(val) {
-                            V.NPCName[setup.NPCNameList.indexOf(npc.nam)] = val;
-                        },
-                    })                    
-                }
-            }
-        })        
-    }
-
-    console.log('updateNPC', stage, V.NPCName, setup.NPCNameList)
-    update()
-
-    if(V.passage == 'Start'){
-        new Wikifier(null, '<<goto Start>>')
-    }        
-
-}
+setup.NPCFrameworkOnLoad = false
 
 function checkUpdate(){
-    setTimeout(()=>{
-        updateNPC('update NPC list after load a save')
-    }, 300)
+    setup.NPCFrameworkOnLoad = true
 }
 
 Save.onLoad.add(checkUpdate)
+
+//读档时的处理
+$(document).on(':passageinit', ()=>{
+    if(setup.NPCFrameworkOnLoad === true && V.passage !== 'Start'){
+        NamedNPC.clear()
+        NamedNPC.update()
+        setup.NPCFrameworkOnLoad = false
+    }
+})

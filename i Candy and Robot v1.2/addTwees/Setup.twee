@@ -1,0 +1,25 @@
+:: Lune Mod Widgets [widget]
+<<widget "lactationchange">>
+	<<if $natural_lactation is 1>>
+		<<if $lactating is 0>>
+			<<set $lactating to 1>><<set $lactation_pressure to 120>><<set $milk_amount to 120*$breastsize>>
+		<<elseif $args[0]>>
+			<<set $lactation_pressure += $args[0]>>
+		<<elseif $lactation_pressure lte 12>>
+			<<set $lactation_pressure += $natural_lactation*120>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "daisoicon">>
+	<<if $images is 1>>
+		<img id="icon" src="img/misc/icon/daiso.png">
+	<</if>>
+<</widget>>
+
+<<widget "repairicon">>
+	<<if $images is 1>>
+		<img id="icon" src="img/misc/icon/repair.png">
+	<</if>>
+<</widget>>
+

@@ -1,0 +1,142 @@
+:: Simple Widget Frameworks [Widget]
+
+beforeLink Zone
+useful to add some new content before links zone at locations
+this only will showup at street map or buildings, forest, any passage includes location change
+
+用来处理需要排版插到连接区域前面的内容。
+只出现在能进行活动的地点（如城镇建筑，街道，森林等）
+
+<<widget "beforeLinkZone">>
+    
+<</widget>>
+
+ExtraLink zone
+useful to add some new content after link zone and before setting links
+this only will showup at that passage has attidute and settings link(yep, the place where your pc sleep)
+
+//用来处理可睡觉进行设置的房间内，需要排版到设置前面的内容
+<<widget "ExtraLinkzone">>
+    
+<</widget>>
+
+iModHeader zone
+useful to add message or cg before text content.
+this will show at top of page, and this will show up at every passage
+so, if you want your content only show up at certain passage, you need to set it
+
+//正文前面，最上面区域
+<<widget "iModHeader">>
+    
+<</widget>>
+
+iModFooter zone
+useful to add links or content after link zone.
+this will show at bottom of page, and this will show up at every passage
+so, if you want your content only show up at certain passage, you need to set it
+
+//所有内容后面
+<<widget 'iModFooter'>>
+    
+<</widget>>
+
+iModReady zone
+this is script only zone.
+useful to do some script before event text show up.
+
+//预处理，只能跑代码不显示
+<<widget 'iModReady'>>
+    
+<</widget>>
+
+iModDone zone
+this is script only zone.
+useful to do some css change or html performance.
+
+//后处理，只能跑代码不显示，常用于HTML演出
+<<widget 'iModDone'>>
+    
+<</widget>>
+
+iModInit zone
+this is script only zone.
+useful to initial your mod data before start
+
+//游戏初始化
+<<widget 'iModInit'>>
+
+<</widget>>
+
+
+ModSkillsBox zone
+you can add your skill setting to this zone.
+let your skill show up at characterist panel
+
+//模组添加的角色面板内容
+//技能盒子
+<<widget "ModSkillsBox">>
+    
+<</widget>>
+
+ModCharaDescription
+some extra pc description after the description of tattoos
+
+//额外说明（跟在纹身说明后）
+<<widget "ModCharaDescription">>
+    
+<</widget>>
+
+ModCaptionDescription
+some extra description before the description of clothes at UIBar
+
+//左边栏说明区（在衣服描述之前）
+<<widget "ModCaptionDescription">>
+<<=simpleFrameworks.playWidgets('ModCaptionDescription', passage())>>
+<</widget>>
+
+ModStatusBar
+some extra status bar after allure bar
+
+//左边栏状态条
+<<widget "ModStatusBar">>
+<<=simpleFrameworks.playWidgets('ModStatusBar', passage())>>
+<</widget>>
+
+ModMenuBig
+a big button area at UIBar
+
+//左边栏按钮（长）
+<<widget "ModMenuBig">>
+<<=simpleFrameworks.playWidgets('ModMenuBig', passage())>>
+<</widget>>
+
+ModMenuSmall
+a small button area at UIBar
+
+//左边栏按钮（短）
+<<widget "ModMenuSmall">>
+<<=simpleFrameworks.playWidgets('ModMenuSmall', passage())>>
+<</widget>>
+
+iModsOptions
+add your mods option here
+
+//模组设置面板
+<<widget 'iModsOptions'>>
+<<setupOptions>>
+<span class="gold"><<lanSwitch "Simple Framework" "简易框架" >></span>
+<br>
+
+<<lanSwitch "Current Language Setting: " "当前语言设定：">>
+<<set _output to lanSwitch("English","中文")>>
+<<link _ouput $passage>>
+    <<if setup.language is 'EN'>>
+        <<set setup.language to 'CN'>>
+    <<else>>
+        <<set setup.language to 'EN'>>
+    <</if>>
+<</link>>
+<br><br>
+
+
+<</widget>>

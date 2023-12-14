@@ -1,3 +1,8 @@
+<!-- 
+  顺序在 passageinit后，passagestart前。
+  div还在准备的路上呢，并不能进行文本操作。
+  只能做进程处理。
+ -->
 :: PassageReady
 <<run
     console.log('run from passageReady')

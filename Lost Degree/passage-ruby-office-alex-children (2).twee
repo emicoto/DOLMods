@@ -1,0 +1,17 @@
+::Bailey Office Alex Children Fee 2
+::LostMod Ruby Office Alex Children Fee 2
+
+"<<effects>>
+<<set C.npc.Alex.pregnancy.fee to true>>
+
+
+\"好的，\"<<he>>点了点头，\"你想什么时候把孩子带走都行。\"
+<br><br>
+
+\"好了，我还要工作。孩子你可以出去了。\"<<he>>说。
+<br><br>
+
+<span class=\"gold\">你现在可以带你的孩子回农场了，你应该和艾利克斯谈谈。</span>
+<br><br>
+
+<<link [[继续|Orphanage]]>><<endevent>><</link>>"

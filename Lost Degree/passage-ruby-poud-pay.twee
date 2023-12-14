@@ -1,0 +1,19 @@
+::passage-bailey-pond-pay
+::LostMod passage-ruby-pond-pay
+
+<<effects>>
+<<set $mason_pond to 3>>
+<<set $mason_pond_timer to 7>>
+
+你把钱放在桌子上。鲁比用一种难以置信的眼神看着你。"孩子，你哪来的钱。"
+<br>
+不过，似乎是看到了你坚定的眼神，<<he>>点了点头，笑着说道："你从来没有让我失望过，孩子。我为你感到骄傲。"
+<br>
+说完，<<He>>转向<<his>>的电脑，你偷偷瞄了一眼，鲁比是在给工程队发送邮件。
+<br>
+过了一会，<<He>>抬起头来，向你致意："谢谢你，孩子。孩子们都会感谢你的。"
+<br><br>
+
+<<link [[离开|Orphanage]]>><<endevent>><</link>>
+<br>
+

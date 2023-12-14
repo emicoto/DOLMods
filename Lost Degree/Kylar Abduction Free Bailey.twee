@@ -1,0 +1,20 @@
+::Kylar Abduction Free Bailey
+::LostMod Kylar Abduction Free ruby
+
+"<<effects>><<npc Ruby>>
+<<set $kylar_abduction_bailey to 1>>
+"我被绑架了。我被关在多瑙河街一所房子下面的地下室里。门口有一根石柱，上面刻着神殿的标志。"
+<br><br>
+你加上了你的名字，<span class="green">然后把信息发送给鲁比。</span>你不知道鲁比什么时候会行动，甚至不知道<<he>>有没有救你的能力。你现在能做的只有等待。
+<br><br>
+
+<<if $kylar_camera is 2 or $kylar_camera is 3>>
+    <<link [[视频|Kylar Abduction Free Video]]>><</link>>
+    <br>
+<</if>>
+<<link [[照片|Kylar Abduction Free Pictures]]>><</link>>
+<br>
+<br>
+
+<<link [[离开|Kylar Abduction Free]]>><</link>>
+<br>"

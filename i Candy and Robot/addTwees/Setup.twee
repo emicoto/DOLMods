@@ -1,4 +1,16 @@
 :: Lune Mod Widgets [widget]
+<<widget "iCandyHeader">>
+<!-- 在PassageHeader里的处理  -->
+
+
+<</widget>>
+
+<<widget "iCandyFooter">>
+<!-- 在PassageFooter里的处理  -->
+
+
+<</widget>>
+
 <<widget "lactationchange">>
 	<<if $natural_lactation is 1>>
 		<<if $lactating is 0>>
@@ -23,3 +35,47 @@
 	<</if>>
 <</widget>>
 
+<<widget "nicotine">>
+	<<if $args[0]>>
+		<<set $nicotine += $args[0]>>
+		<<set $iCandyStat.nicotine.take += Math.max(Math.floor($args[0]/100+0.5), 1)>>
+		<<set $nicotine to Math.clamp($nicotine, 0, 1000)>>
+	<</if>>
+<</widget>>
+
+<<widget "lwillpower">>
+	<<if $statdisable is "f">> |
+		<span class="red">- <<lanSwitch 'Willpower' '意志'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "llwillpower">>
+	<<if $statdisable is "f">> |
+		<span class="red">- - <<lanSwitch 'Willpower' '意志'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "lllwillpower">>
+	<<if $statdisable is "f">> |
+		<span class="red">- - - <<lanSwitch 'Willpower' '意志'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "lphysique">>
+	<<if $statdisable is "f">> |
+		<span class="red">-<<lanSwitch 'Physique' '体质'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "llphysique">>
+	<<if $statdisable is "f">> |
+		<span class="red">- -<<lanSwitch 'Physique' '体质'>></span>
+	<</if>>
+<</widget>>
+
+
+<<widget "lllphysique">>
+	<<if $statdisable is "f">> |
+		<span class="red">- - -<<lanSwitch 'Physique' '体质'>></span>
+	<</if>>
+<</widget>>

@@ -1,0 +1,22 @@
+::passage-bailey-pond
+::LostMod passage-ruby-pond
+
+"<<effects>>
+
+你问鲁比是否有可能像梅森建议的那样在孤儿院的花园里修一个泉水池。"这是可能的，"鲁比说，"一条地下水流就在我们的正下方流淌。我查过一次，要花£2000。"
+<br><br>
+
+<<He>>看着你。语调里有些失落与几分漫不经心："不过，我们哪有这个钱去修什么泉水池呢……"
+
+<br><br>
+
+<<if $money gte 600000>>
+    <<link [[为泉水池付款 (£2000)|Bailey Pond Pay]]>>
+        <<set $money -= 200000>>
+    <</link>>
+    <br>
+<</if>>
+
+<<link [[离开|Orphanage]]>><<endevent>><</link>>
+<br>"
+

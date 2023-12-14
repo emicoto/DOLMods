@@ -1,32 +1,33 @@
-function printIDrugsLink(key){
-	if(!key) return ;
+function printMedicineLink(itemId){
+	if(!itemId) return ;
 
-	let drug = setup.candyDrug[key]
+	let drug = CandyItems.get(itemId)
 	let linkname = ''
 
-	if(drug.type == 'drugs'){
-		linkname = `${drug.name}(${drug.num}${lanSwitch('pills', '粒')})`
+	if(drug.tags.includes('pill')){
+		linkname = `${drug.name}(${drug.num}${lanSwitch('pills per bottle', '粒/瓶')})`
+	}
+	else if(drug.tags.includes('liquid')){
+		linkname = `${drug.name}(${drug.num}ml${lanSwitch(' bottle','装')})`
+	}
+	else if(drug.tags.includes('inject')){
+		linkname = `${drug.name}(${drug.num}${lanSwitch('shots per pack','管/盒')})`
 	}
 	else{
-		if(drug.subType == 'liquid'){
-			linkname = `${drug.name}(${drug.num}ml)`
-		}
-		else{
-			linkname = drug.name
-		}
-		
+		linkname = drug.name
 	}
 
-	return `<<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to setup.candyDrug["${key}"]>><</link>><br>`
+	return `<<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to CandyItems.data["${key}"]>><</link>><br>`
 }
 
-DefineMacroS('printIDrugsLink', printIDrugsLink)
+DefineMacroS('iMedicineLink', printMedicineLink)
+
+function wetAnusLub(arg){
+	V.player.bodyliquid.anus.goo += arg
+}
+DefineMacroS('anusgoo', wetAnusLub)
 
 function checkDayPass(){
-	if(!V.iCandyStats){
-		return ''
-	}
-
 	if(!V.iCandyStats.lastdaycheck){
 		V.iCandyStats.lastdaycheck = Time.days
 	}
@@ -68,11 +69,11 @@ DefineMacroS('checkDayPass', checkDayPass)
 
 function combatEffect(){
 	if(V.combat == 0) return
-	//合意场景也返回.
+	//合意场景对象不是惠特尼也返回.
 	if(V.consensual==0) return
 
-	//当PC创伤高于一定程度时，NPC有一定概率会PC喂天使之吻。
-	if(V.trauma >= 2000 && V.mouthuse !== 'penis'){
+	//当PC创伤或压力高于一定程度时，NPC有一定概率会PC喂天使之吻。
+	if( V.mouthuse !== 'penis' && V.trauma >= 500 || V.stress >= 1000){
 		for(let i=0; i < V.enemynomax; i++){
 			let npc = V.NPCList[i]
 			if(npc.stance == 'defeated' || npc.type !== 'human')
@@ -83,21 +84,26 @@ function combatEffect(){
 					new Wikifier(null, `<<append #addMsg transition>>${npc.fullDescription}给你喂了颗甜甜的糖果，你感觉整个人变得轻松愉快。<<gggdrugged>><<ggghallucinogens>><</append>>`)
 					break
 				}
+
+			//一定概率随机喂高风险药物
+
 		}
 	}
 
-	//当NPC的屌在A前进不去时，会有一定概率给PC上催情润滑油.
 	for(let i=0; i < V.enemynomax; i++){
 		let npc = V.NPCList[i]
         if(npc.stance == 'defeated' || npc.type !== 'human')
             continue
 
+			//当NPC的屌在A前进不去时，会有一定概率给PC上催情润滑油.
 			if(npc.penis.includes('anus') && (npc.penis !== 'anus' || npc.penis !== 'anusdouble') ){
-				if(random(100) > 50){
+				if(random(100) > 30){
 					setup.candyDrug.lubricantSP.onuse(1)
 					new Wikifier(null, `<<append #addMsg transition>>${npc.fullDescription}在你的菊部涂抹了催情润滑油。 <<gggdrugged>><</append>>`)
 				}
 			}
+
+			//一定概率被打针
 	}
 
 

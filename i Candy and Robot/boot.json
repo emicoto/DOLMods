@@ -1,27 +1,32 @@
 {
  "name": "i, Candy + Robot",
- "version": "1.0.0",
+ "version": "1.5.0",
  "styleFileList": [],
  "scriptFileList_earlyload": [],
  "scriptFileList_inject_early": [],
  "scriptFileList_preload": [],
  "scriptFileList": [
+    "JS/Items.js",
+    "JS/itemManager.js",
     "JS/Setup.js",
     "JS/processCheck.js",
     "JS/newNPC.js"
  ],
  "tweeFileList": [
- "addTwees/Setup.twee",
- "addTwees/Pocket.twee",
- "addTwees/Robot.twee",
- "addTwees/Pharmacy.twee",
- "addTwees/PassageReady.twee"
+    "addTwees/Setup.twee",
+    "addTwees/Pocket.twee",
+    "addTwees/Robot.twee",
+    "addTwees/Pharmacy.twee",
+    "addTwees/PassageReady.twee"
  ],
  "imgFileList": [],
  "additionFile": [
     "replaceFiles/bedroomWidget.txt",
     "replaceFiles/drugsWidget.txt",
-    "replaceFiles/drunkWidget.txt"
+    "replaceFiles/drunkWidget.txt",
+    "replaceFiles/journal.txt",
+    "replaceFiles/skillsetting.txt",
+    "replaceFiles/options.txt"
  ],
  "addonPlugin": [
   {
@@ -35,9 +40,19 @@
         "replace":"<<ExtraPharmacy>>\n\t隐形眼镜"
     },
     {
+        "passage":"Widgets variablesStatic",
+        "findString":"<</widget>>",
+        "replace":"\n\n<<lunemodInit>>\n\n<</widget>>"
+    },
+    {
         "passage":"PassageHeader",
         "findString":"<<unset $bypassHeader>>",
-        "replace":"<<unset $bypassHeader>>\n<<run console.log('run from passage header') >><<iCandyInit>><<checkDayPass>><<lactationchange>>\n<div id='addMsg'><br></div>"
+        "replace":"<<unset $bypassHeader>>\n<<iCandyHeader>><div id='addMsg'></div>"
+    },
+    {
+        "passage":"PassageFooter",
+        "findString":"<div id=\"gameVersionDisplay\">",
+        "replace":"<<iCandyFooter>>\n<div id=\"gameVersionDisplay\">"
     },
     {
         "passage":"StoryCaption",
@@ -47,22 +62,22 @@
     {
         "passage":"overlayReplace",
         "findString":"<<case \"traits\">>",
-        "replace":"<<case \"items\">><<replace #customOverlayTitle>><<titlePocketItems>><</replace>><<replace #customOverlayContent>><<pocketItems>><</replace>>\t\t<<case \"traits\">>"
+        "replace":"<<case \"items\">><<ItemsOverlaySettings>>\t\t<<case \"traits\">>"
     },
     {
         "passage":"Widgets Journal",
         "findString":"\t<<if $antiquemoney gt 0 || $blackmoney gt 0 || $phials_held gte 1 || $lurkers_held gte 1>>\n\t\t<hr>\n\t\t<span class=\"gold bold\">物品栏</span>\n\t\t<br>\n\t<</if>>\n\t<ul style=\"margin-top:10px;margin-left:-5px;\">\n\t<<if $antiquemoney gt 0>>\n\t\t<li>你携带了价值<span class=\"green\">£<<print $antiquemoney>></span>的古董，你可以将它们卖给博物馆。</li>\n\t<</if>>\n\t<<if $blackmoney gt 0>>\n\t\t<li>你携带了价值<span class=\"green\">£<<print $blackmoney>></span>的赃物，你可以在黑市上将它们卖掉。</li>\n\t<</if>>\n\t<<if $phials_held gte 2>>\n\t\t<li>你携带了<span class=\"green\">$phials_held</span>瓶催情剂，你可以在麋鹿街上出售它们。</li>\n\t<<elseif $phials_held gte 1>>\n\t\t<li>你携带了一瓶催情剂，你可以在麋鹿街上卖掉它。</li>\n\t<</if>>\n\t<<if $lurkers_held gte 2>>\n\t\t<li>你携带了<span class=\"green\">$lurkers_held</span>个潜伏者。</li>\n\t<<elseif $lurkers_held is 1>>\n\t\t<li>你携带了一个潜伏者。</li>\n\t<</if>>\n\t<<if $location is \"prison\">>\n\t\t<li>你有<span class=\"green\"><<number $prison.teeth>></span>颗鲨鱼牙齿。\n\t\t<<if $prison_wren_intro isnot 1>>\n\t\t\t你可以于午餐后在院子里找到伦恩。\n\t\t\t<br>\n\t\t<</if>>\n\t\t</li>\n\t<</if>>\n\t</ul>\n\n\t<<if $plants_known.length gt 0>>\n\t<hr>\n\t\t<span class=\"gold bold\">种子</span>\n\t\t<br>\n\t\t你可以种植：\n\t\t<<set _plant_keys to Object.keys(setup.plants)>>\n\t\t<<for _i to 0; _i lt _plant_keys.length; _i++>>\n\t\t\t<<if setup.plants[_plant_keys[_i]].type is \"flower\" or setup.plants[_plant_keys[_i]].type is \"vegetable\">>\n\t\t\t\t<<if $plants_known.includes( setup.plants[_plant_keys[_i]].name)>>\n\t\t\t\t\t<<if $options.images is 1 and setup.plants[_plant_keys[_i]].icon>>\n\t\t\t\t\t\t<img class=\"tending_icon\" @src=\"`img/misc/icon/tending/` + setup.plants[_plant_keys[_i]].icon\">\n\t\t\t\t\t<</if>>\n\t\t\t\t\t<span class=\"green\"><<print setup.plants[_plant_keys[_i]].plural>></span> |\n\t\t\t\t<<else>>\n\t\t\t\t\t??? |\n\t\t\t\t<</if>>\n\t\t\t<</if>>\n\t\t<</for>>\n\t<</if>>\n\n\t<<set _plant_keys to Object.keys($plants)>>\n\t<<if _plant_keys.length gt 0>>\n\t<hr>\n\t<span class=\"gold bold\">可出售产品</span>\n\t<br>\n\t你有着：\n\t<<for _t to 0; _t lt _plant_keys.length; _t++>>\n\t\t<<if $plants[_plant_keys[_t]].amount gte 1>><<set _plant_temp to 1>>\n\t\t\t<span class=\"green\"><<print $plants[_plant_keys[_t]].amount>></span>\n\t\t\t<<if $options.images is 1 and setup.plants[_plant_keys[_t]].icon>>\n\t\t\t\t<img class=\"tending_icon\" @src=\"`img/misc/icon/tending/` + setup.plants[_plant_keys[_t]].icon\">\n\t\t\t<</if>>\n\t\t\t<<if setup.plants[$plants[_plant_keys[_t]].name].singular and $plants[_plant_keys[_t]].amount === 1>>\n\t\t\t\t<<print $plants[_plant_keys[_t]].plural>> |\n\t\t\t<<else>>\n\t\t\t\t<<print $plants[_plant_keys[_t]].plural>> |\n\t\t\t<</if>>\n\t\t<</if>>\n\t<</for>>\n\t<br><br>\n\t<</if>>\n\t<<if _plant_temp is 1>>你可以在<span class=\"gold\">黎明时分</span>前往<span class=\"gold\">康努达塔斯街</span>租用摊位来进行出售。<br><</if>>",
-        "replace":"\n"
+        "replaceFile":"replaceFiles/journal.txt"
     },
     {
         "passage":"Characteristics",
         "findString" :"<<set _housekeepingConfig =\t{ name : \"家务\",displayType : \"grade\",\tcurrentValue : $housekeeping,\t\tmodifier: 100, modTypes: { good: [], bad: [] },\t\tstates : _detailedSkillGrades}>>\n",
-        "replace":"<<set _housekeepingConfig =\t{ name : \"家务\",displayType : \"grade\",\tcurrentValue : $housekeeping,\t\tmodifier: 100, modTypes: { good: [], bad: [] },\t\tstates : _detailedSkillGrades}>>\n\t\t\t\t<<set _mechanicConfig = \t{ name : lanSwitch('Mechanic','机械'),\tdisplayType : \"grade\",\tcurrentValue : $mechanic,\t\tmodifier: 100, modTypes: { good: [], bad: [] },\t\tstates : _detailedSkillGrades}>>"   
+        "replaceFile":"replaceFiles/skillsetting.txt"   
     },
     {
         "passage":"Characteristics",
         "findString" :"<<characteristic-box _housekeepingConfig>>\n",
-        "replace":"<<characteristic-box _housekeepingConfig>>\n\t\t\t<<characteristic-box _mechanicConfig>>\n"   
+        "replace":"<<characteristic-box _housekeepingConfig>>\n\t\t\t<<characteristic-box _mechanicConfig>>\n\t\t\t<<characteristic-box _chemistryConfig>>\n"   
     },
     {
         "passage":"Widgets Difficulty",
@@ -75,9 +90,9 @@
         "replace":"<<if $ruffledisable is \"f\" and $iCandyStats.keepHairs is \"f\">>\n\t\t<<set $_hair to"   
     },
 	{
-     "passage": "Widgets",
-     "findString": "<</if>>\n<</widget>>\n\n\n<<widget \"tableText\">>",
-     "replaceFile": "replaceFiles/bedroomWidget.txt"
+        "passage": "Widgets",
+        "findString": "<</if>>\n<</widget>>\n\n\n<<widget \"tableText\">>",
+        "replaceFile": "replaceFiles/bedroomWidget.txt"
     },
 	{
         "passage": "Widgets Stats",
@@ -107,7 +122,7 @@
     {
         "passage": "Brothel",
         "findString": "<<if $brotheljob is 1>>",
-        "replace": "<<if $brotheljob is 1>>\n<<brothelDrugs>>"
+        "replace": "\n<div id=\"addAfterMsg\"></div>\n<<if $brotheljob is 1>>\n<<brothelDrugs>>"
     }
    ]
   }
@@ -127,6 +142,10 @@
   },
   {
    "modName": "ReplacePatcher",
+   "version": ">=1.0.0"
+  },
+  {
+   "modName": "Simple Frameworks",
    "version": ">=1.0.0"
   }
  ]

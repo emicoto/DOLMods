@@ -1,0 +1,15 @@
+::passage-baileys-office-owl
+::LostMod passage-ruby-office-owl
+
+<<set $outside to 0>>
+<<set $location to \"home\">>
+<<effects>>
+
+猫头鹰向下凝视着你。它变得有点磨损，可能是因为和孤儿们玩了一些粗暴的游戏。或者是和鲁比。
+<br><br>
+
+<<link [[把它拿回去|Bailey's Office Owl Take]]>><<set $kylar_camera to 2>><</link>>
+<br>
+
+<<link [[离开|Bailey's Office]]>><</link>>
+<br>

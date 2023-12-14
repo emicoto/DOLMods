@@ -1,0 +1,44 @@
+::Orphanage Christmas
+::LostMod Orphanage Christmas
+
+<<effects>>
+
+你和其他孤儿一起庆祝圣诞节。
+
+<<rng>>
+
+<<if Time.hour gte 20>>
+    随着节日的结束，孩子们开始取下那些装饰品。
+<<else>>
+    <<if $rng gte 91>>
+        现在正在传递拿取新鲜出炉的饼干，而你则乘机拿了一个。<<lstress>><<stress -6>>
+    <<elseif $rng gte 81>>
+        一些人正在谈论外面有多冷，你对此深感赞同。
+    <<elseif $rng gte 71>>
+        一个<<generatey1>><<person1>><<person>>将礼物传递给了<<generatey2>><<person2>><<person>>。<<He>>看起来很是高兴，但<<he>>也有足够的耐心等到回去再拆开。
+    <<elseif $rng gte 61>>
+        <<if $robinmissing is 0>>
+            罗宾正在分发着小袋零食。
+        <<else>>
+            一个<<generatey1>><<person1>><<person>>正盯着窗外，<<He>>看起来很担心罗宾。
+        <</if>>
+    <<elseif $rng gte 51>>
+        一些金属丝做成的装饰品掉到了地板上，你将它们放回原处。
+    <<elseif $rng gte 41>>
+        有人抱怨着孤儿院实在太冷了，<<generatey1>><<person1>>一个<<person>>想请求鲁比调高温度，但其他人拦下了<<him>>。
+    <<elseif $rng gte 31>>
+        他们既喧闹又快乐。
+    <<elseif $rng gte 21>>
+        有人偷拿了一些白兰地蛋酒。
+    <<elseif $rng gte 11>>
+        <<generatey1>><<person1>><<person>>受到了不知道是谁送的价值昂贵的电子礼物。这让<<He>>引来了很多嫉妒。
+    <<else>>
+        大厅里充满了欢乐的气氛。
+    <</if>>
+<</if>>
+
+<br><br>
+
+<<endevent>>
+
+<<link [[继续|Orphanage]]>><</link>>

@@ -1,0 +1,48 @@
+	<ul style="margin-top:10px;margin-left:-5px;">
+	<<if $lurkers_held gte 2>>
+		<li><<=lanSwitch(
+            `You have<span class="green">${$lurkers_held}</span> lurkers.`,
+            `你有<span class="green">${$lurkers_held}</span>个潜伏者。`
+        )
+        >></li>
+	<<elseif $lurkers_held is 1>>
+		<li><<=lanSwitch(
+            'You have a lurker',
+            '你有一个潜伏者。')>></li>
+	<</if>>
+	<<if $location is "prison">>
+		<li>
+        <<=lanSwitch(
+            `You have<span class="green"><<number $prison.teeth>></span> shark's teeth.`,
+            `你有<span class="green"><<number $prison.teeth>></span>颗鲨鱼牙齿。`
+        )>>
+		<<if $prison_wren_intro isnot 1>>
+			<<=lanSwitch(
+                'You can find Wren in the yard on Fridays after lunch.',
+                '你可以于午餐后在院子里找到伦恩。'
+            )>>
+			<br>
+		<</if>>
+		</li>
+	<</if>>
+	</ul>
+
+	<<if $plants_known.length gt 0>>
+	<hr>
+		<span class="gold bold"><<lanSwitch 'Seeds' '种子'>></span>
+		<br>
+		<<landSwitch 'You can grow' '你可以种植'>>：
+		<<set _plant_keys to Object.keys(setup.plants)>>
+		<<for _i to 0; _i lt _plant_keys.length; _i++>>
+			<<if setup.plants[_plant_keys[_i]].type is "flower" or setup.plants[_plant_keys[_i]].type is "vegetable">>
+				<<if $plants_known.includes( setup.plants[_plant_keys[_i]].name)>>
+					<<if $options.images is 1 and setup.plants[_plant_keys[_i]].icon>>
+						<img class="tending_icon" @src="`img/misc/icon/tending/` + setup.plants[_plant_keys[_i]].icon">
+					<</if>>
+					<span class="green"><<print setup.plants[_plant_keys[_i]].plural>></span> |
+				<<else>>
+					??? |
+				<</if>>
+			<</if>>
+		<</for>>
+	<</if>>

@@ -64,7 +64,7 @@ function simpleEjaculation(){
                     wikifier('vaginalentranceejacstat')
                     wikifier('bodyliquid', 'vaginaoutside', 'semen')
                     wikifier('bodyliquid', 'thigh', 'semen')
-                    wikifier('recordSperm', {target: "pc", spermOwner: `V.NPCList[${i}]`, spermType: `$enemytype is "man" ? "human" : $NPCList[${i}].type`, rngModifier: 15, rngType: "canWash"})
+                    wikifier('recordSperm', `{target: "pc", spermOwner: $NPCList[${i}], spermType: $enemytype is "man" ? "human" : $NPCList[${i}].type, rngModifier: 15, rngType: "canWash"}`)
                     break
                 
                 case 'anusentrace':

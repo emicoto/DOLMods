@@ -13,6 +13,41 @@
 
 <</widget>>
 
+<<widget "hungercaption">>
+	<<if Number.isFinite($hunger)>>
+		<div id="tirednesscaption" @title="'hunger: ' + $hunger.toFixed(2)">
+			<div @class="($options.showCaptionText is true ? '' : 'rightMeterText')">
+				Hunger:
+				<<if $options.showCaptionText is true>>
+					<<if $hunger gte C.hunger.max>>
+						<span class="red">You are starving!</span>
+					<<elseif $hunger gte (C.hunger.max / 5) * 4>>
+						<span class="pink">You are famished.</span>
+					<<elseif $hunger gte (C.hunger.max / 5) * 3>>
+						<span class="purple">You are ravenous.</span>
+					<<elseif $hunger gte (C.hunger.max / 5) * 2>>
+						<span class="blue">You are hungry.</span>
+					<<elseif $hunger gte C.hunger.max / 5>>
+						<span class="lblue">You are peckish.</span>
+					<<elseif $hunger gte 1>>
+						<span class="teal">You are satiated.</span>
+					<<else>>
+						<span class="green">You are full.</span>
+					<</if>>
+				<</if>>
+			</div>
+
+			<<if $hunger gte C.hunger.max>>
+				<<set $stress += (($hunger - C.hunger.max) * 16)>><<set $trauma += (($tiredness - C.tiredness.max) / 3)>>
+			<</if>>
+
+			<<set $hunger = Math.clamp($hunger, 0, C.hunger.max)>>
+			<<set _showCaptionText to !$options.showCaptionText>>
+			<<statbar $hunger `C.hunger.max` _showCaptionText>>
+			<div style="clear:both;"></div>
+		</div>
+	<</if>>
+<</widget>>
 
 :: WetAnal
 

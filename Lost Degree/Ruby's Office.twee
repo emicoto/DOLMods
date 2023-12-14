@@ -1,0 +1,109 @@
+::Bailey's Office
+::LostMod Ruby's Office
+
+<<set $outside to 0>><<set $location to "home">><<effects>>
+
+<<if Object.values($children).find(child => child.mother === "Alex" && child.location === "home") or Object.values($children).find(child => child.father === "Alex" && child.location === "home")>>
+
+	<<if Object.values($children).find(child => child.mother === "Alex" && child.location === "home")>>
+		<<set _alexMother to Object.values($children).find(child => child.mother === "Alex" && child.location === "home")>>
+
+	<<elseif Object.values($children).find(child => child.father === "Alex" && child.location === "home")>>
+		<<set _alexFather to Object.values($children).find(child => child.father === "Alex" && child.location === "home")>>
+	<</if>>
+
+<</if>>
+
+<<npc Ruby>><<person1>>
+
+<<if Time.hour lte 6 or Time.hour gte 10>>
+	你进入鲁比的办公室。<<Hes>>不在那里。<<He>>在早上7点到9点之间才会在里面。
+	<br><br>
+
+	<<if $kylar_camera is 3>>
+		<span class="blue">凯拉尔的猫头鹰，就是你送给孤儿的那只，在角落里的柜子顶上看着你。</span>一定是孤儿们转送给<He>的。
+		<br>
+		<<link "检查猫头鹰" "Bailey's Office Owl">><</link>>
+		<br>
+
+	<</if>>
+
+<<else>>
+	你走进鲁比的办公室，发现<<him>>坐在<<his>>的办公桌旁。
+
+	<<if !$daily.baileyVisit>>
+		<<set $daily.baileyVisit to 0>>
+		<<set _options to 1>>
+		<<if $dissociation gte 1>>
+			<<He>>看着你的眼睛和痛苦的表情。"孩子，注意安全啊！"<<He>>的眼神里有些担忧，把<<he>>手上读的一份文件放到一边。
+			<br>
+			<<He>>走到你的面前确认你没有大碍以后，他松了口气。坐回了<<His>>办公桌前。
+		<<elseif $pain gte 40>>
+			<<He>>看着你满是泪水的脸，皱起了眉头，走过来确认了你的伤势。
+			<br>
+			"怎么搞的，这么不小心。"<<He>>嘟囔着。随后<<He>>摸了摸你的头，"抱歉，孩子。我现在有点忙，不能亲自帮你处理伤口。浴室里有绷带，你拿去用吧。"
+			<br>
+			说完，<<He>>坐回了<<His>>办公桌前。
+
+		<<elseif $goooutsidecount + $semenoutsidecount gte 25>>
+			<<He>>看着你的身体，上面沾满了<<if $semenoutsidecount gte 1 and $goooutsidecount gte 1>>精液和粘液<<elseif $semenoutsidecount gte 1>>精液<<else>>粘液<</if>>，鲁比转过身去，"孩子，快去洗洗澡吧。"
+		<<elseif $arousal gte ($arousalmax / 5) * 3>>
+			<<He>>看着你泛着潮红的脸。满脸担忧："孩子……怎么了？"在确认了你只是过于性奋的时候，<<He>>尴尬而不失礼貌地转过头，继续进行<<He>>的工作。
+		<<else>>
+			<<He>>看着你。"孩子，有什么需要我帮忙的吗？"
+		<</if>>
+	<<elseif $daily.baileyVisit is 1>>
+		<<set _options to 1>>
+		<<if $mason_pond is 2>>
+			<<He>>望着你。"是有关泉水池的事吗？"
+		<<else>>
+			<<He>>有些疑惑地看着你。"又有什么事要和我说吗？"
+		<</if>>
+
+	<<elseif $daily.baileyVisit is 2>>
+		<<set _options to 1>>
+		<<He>>看起来有些不耐烦。"孩子，又怎么了？"
+	<<elseif $daily.baileyVisit is 3>>
+		<<set _options to 2>>
+		<<He>>皱起眉头，放下了手中的文件，从桌子前站起身来，大步走到你的跟前。
+		<br>
+		你原本以为<<He>>会生气，甚至做好了挨一顿打的准备。但<<He>>只是蹲下身子，轻轻地捧起你的脸。"孩子，来找我这么多次，肯定是遇到什么烦恼了吧？好好地跟我谈谈，好吗？"
+		<br><br>
+		<<link "向他诉苦" "Ruby's consolation 1">><<stress -12>><</link>>
+		<br>
+		<<link "拥抱他" "Ruby's consolation 2">><<trauma -123>><</link>>
+		<br>
+		<<link "崩溃" "Ruby's consolation 3">><<if $trauma gte 3000>><<trauma -300>><</link>>
+		<br>
+		<<link "说你没事" "Ruby's consolation 4">><</link>>
+
+	<<elseif $daily.baileyVisit is 100>>
+		<<He>>看起来很疲惫。"好吧，孩子。看得出你真的很闲。"
+	<<else>>
+		<<He>>正在埋头工作，完全没注意到你。
+		<<if ($robinpaid isnot 1 and $robindebtknown is 1) or ($pub_hack_job is 3 and not $hacker_tasks.includes("bailey")) or $mason_pond is 1 or $mason_pond is 2 or $bailey_pound is 1 or isPubfameTaskAccepted("bailey")>>
+			<span class="blue">鲁比今天已经太累了。再和<<Him>>聊天也无济于事了。</span>
+		<</if>>
+	<</if>>
+	<<set $daily.baileyVisit++>>
+<</if>>
+<br><br>
+
+<<if C.npc.Alex.pregnancy.fee isnot true and C.npc.Alex.pregnancy.nursery is true and (_alexMother or _alexFather) and (Time.hour gte 7 and Time.hour lte 9)>>
+	<<link [[把你的孩子带回农场|Bailey Office Alex Children Fee]]>><</link>>
+	<br>
+<</if>>
+
+	<<if $mason_pond is 1>>
+		<<link [[询问泉水池的事|Bailey Pond]]>><<set $mason_pond to 2>><</link>>
+		<br>
+	<</if>>
+	<<if $mason_pond is 2>>
+		<<link [[询问泉水池的事|Bailey Pond 2]]>><</link>>
+		<br>
+	<</if>>
+
+<<if _options isnot 2>>
+	<<link [[离开|Orphanage]]>><<endevent>><</link>>
+	<br>
+<</if>>
