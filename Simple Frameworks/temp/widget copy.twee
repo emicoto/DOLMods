@@ -91,7 +91,7 @@ some extra description before the description of clothes at UIBar
 
 //左边栏说明区（在衣服描述之前）
 <<widget "ModCaptionDescription">>
-<<=simpleFrameworks.playWidgets('ModCaptionDescription', passage())>>
+
 <</widget>>
 
 ModStatusBar
@@ -99,7 +99,7 @@ some extra status bar after allure bar
 
 //左边栏状态条
 <<widget "ModStatusBar">>
-<<=simpleFrameworks.playWidgets('ModStatusBar', passage())>>
+    
 <</widget>>
 
 ModMenuBig
@@ -107,7 +107,7 @@ a big button area at UIBar
 
 //左边栏按钮（长）
 <<widget "ModMenuBig">>
-<<=simpleFrameworks.playWidgets('ModMenuBig', passage())>>
+    
 <</widget>>
 
 ModMenuSmall
@@ -115,7 +115,7 @@ a small button area at UIBar
 
 //左边栏按钮（短）
 <<widget "ModMenuSmall">>
-<<=simpleFrameworks.playWidgets('ModMenuSmall', passage())>>
+    
 <</widget>>
 
 iModsOptions
