@@ -11,10 +11,9 @@
   ],
   "styleFileList": [],
   "scriptFileList": [
-    "newNPC.js",
-    "selectcase.js", 
+    "selectcase.js",
     "util.js",
-    "eslib.js"    
+    "newNPC.js"
   ],
   "tweeFileList": [],
   "imgFileList": [],

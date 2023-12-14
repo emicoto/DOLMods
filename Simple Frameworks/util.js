@@ -39,11 +39,6 @@ window.dlog = function (type = "log", ...args) {
 		return true;
 	}
 
-	//make sure the value is an object
-	function isObject(props) {
-		return Object.prototype.toString.call(props) === "[object Object]";
-	}
-
 	//check x is in range of min and max
 	function inrange(x, min, max) {
 		return x >= min && x <= max;
@@ -135,10 +130,6 @@ window.dlog = function (type = "log", ...args) {
         }
     }
 
-	//find the key of an object by value
-	function findkey(data, value, compare = (a, b) => a === b) {
-		return Object.keys(data).find((k) => compare(data[k], value));
-	}
 
 	//swap two elements in an array
 	function swap(arr, a, b) {
@@ -147,12 +138,6 @@ window.dlog = function (type = "log", ...args) {
 		arr[b] = c;
 		arr[a] = d;
 		return arr;
-	}
-
-	//shift an array by given number
-	function arrShift(arr, n) {
-		if (Math.abs(n) > arr.length) n = n % arr.length;
-		return arr.slice(-n).concat(arr.slice(0, -n));
 	}
 
 	//deep clone an object
@@ -230,13 +215,8 @@ window.dlog = function (type = "log", ...args) {
 		);
 	}
 
-	//get index by value
-	function getIndexByValue(array, value) {
-		return array.findIndex((item) => item === value);
-	}
 
 	Object.defineProperties(window, {
-		isObject: { value: isObject },
 		inrange: { value: inrange },
 		between: { value: between },
 		random: { value: random },
@@ -246,15 +226,109 @@ window.dlog = function (type = "log", ...args) {
 		groupmatch: { value: groupmatch },
 		sumObj: { value: sumObj },
         sumObjProp : { value: sumObjProp },
-		findkey: { value: findkey },
 		swap: { value: swap },
-		arrshift: { value: arrShift },
 		clone: { value: clone },
 		countArray: { value: countArray },
 		setPath: { value: setPath },
 		getKeyByValue: { value: getKeyByValue },
-		getIndexByValue: { value: getIndexByValue },
 		isValid: { value: isValid },
 	});
+	
+//fix the number to any decimal places
+Object.defineProperty(Math, "fix",{
+	configurable: true,
+	writable:true,
+
+	value(num, count){
+		const value = Number(num);
+		const a = Number(count) || 2;
+
+		return parseFloat(value.toFixed(a));
+	}
+})
+
+Object.defineProperty(Number.prototype, "fix", {
+	configurable: true,
+	writable:true,
+
+	value(/* value */){
+		if (this == null) {
+			// lazy equality for null
+			throw new TypeError("Number.prototype.fix called on null or undefined");
+		}
+
+		if (arguments.length > 1) {
+			throw new Error("Number.prototype.fix called with an incorrect number of parameters");
+		}
+
+		let value = Number(arguments[0]) || 2;
+
+		return parseFloat(this.toFixed(value));
+	}
+})
+
+/**
+ * @param {string[]} arg
+ * @returns {boolean}
+ * @description
+ * Checks if the string or array contains the given argument.
+ * @example
+ * "Hello World".has("Hello"); // 1
+ * "Hello World".has("Hello", "World", "Foo"); // 2
+ * "Hello World".has("Foo"); // false
+ * "Hello World".has("Foo", "Bar"); // false
+ */
+Object.defineProperty(String.prototype, "has", {
+	configurable: true,
+	writable: true,
+	value(...arg) {
+		if (this == null) {
+			throw new TypeError("String.prototype.has called on null or undefined");
+		}
+
+		if (Array.isArray(arg[0])) arg = arg[0];
+		let count = 0;
+		for (let i = 0; i < arg.length; i++) {
+			if (this.includes(arg[i])) count++;
+		}
+		if (!count) return false;
+		return count;
+	},
+});
+
+Object.defineProperty(Array.prototype, "has", {
+	configurable: true,
+	writable: true,
+	value(/* needles */) {
+		if (this == null) {
+			throw new TypeError("Array.prototype.has called on null or undefined");
+		}
+
+		if (arguments.length === 1) {
+			if (Array.isArray(arguments[0])) {
+				return Array.prototype.has.apply(this, arguments[0]);
+			}
+
+			return Array.prototype.includes.apply(this, arguments);
+		}
+
+		let count = 0;
+		for (let i = 0, iend = arguments.length; i < iend; i++) {
+			if (
+				Array.prototype.some.call(
+					this,
+					function (val) {
+						return val === this.val || (val !== val && this.val !== this.val);
+					},
+					{ val: arguments[i] }
+				)
+			) {
+				count++;
+			}
+		}
+		if(count == 0) return false
+		return count;
+	},
+});
 
 })();
