@@ -25,6 +25,8 @@ you can choose your attitude without requirement.
 
 写法可以参考simple new content文件夹里的文件。
 
+这个MOD必须在排序最前面，但同时必须在汉化MOD之后（避免存在覆盖错误）
+
 
 A simple new content framework. support to add: NPC, items, text/button/statusbar/widget to UIBar, mod option in panel
 
@@ -35,6 +37,8 @@ you can check all supportted zone at widget copy.twee
 all you need to do just wrap your content with widget then put your widget's name to the zone array.
 
 you can check the simple new content(a sample mod) to learn how to add your content.
+
+this mod need to be load very early, but need to be load after i18n(if you are using i18n)
 
 ## i Candy and Robot
 一个关于爱，糖果（药物），和机器人的大型原创模组。
