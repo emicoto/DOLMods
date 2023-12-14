@@ -852,7 +852,7 @@
 			name:'PassageReady',
 			position:'100,100',
 			size:'100,100',
-			tags:['widget'],
+			tags:[],
 			content: '<<iModReady>>\n'
 		}
 		
@@ -863,7 +863,7 @@
 			name:'PassageDone',
 			position:'100,100',
 			size:'100,100',
-			tags:['widget'],
+			tags:[],
 			content: '<<iModDone>>\n'
 		}
 
