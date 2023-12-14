@@ -702,7 +702,7 @@
 		}
 	
 		if(source.includes('<<stateman>>')){
-			source = source.replace('<<stateman>>', '<div id="addAfterMsg"></div>')
+			source = source.replace('<<stateman>>', '<<stateman>>\n<div id="addAfterMsg"></div>')
 			passage.content = source
 			patchedPassage[title] = 1
 		}
