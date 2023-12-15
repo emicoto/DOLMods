@@ -7,7 +7,7 @@ this only will showup at street map or buildings, forest, any passage includes l
 用来处理需要排版插到连接区域前面的内容。
 只出现在能进行活动的地点（如城镇建筑，街道，森林等）
 
-<<widget "beforeLinkZone">>
+<<widget "BeforeLinkZone">>
     
 <</widget>>
 
@@ -16,7 +16,7 @@ useful to add some new content after link zone and before setting links
 this only will showup at that passage has attidute and settings link(yep, the place where your pc sleep)
 
 //用来处理可睡觉进行设置的房间内，需要排版到设置前面的内容
-<<widget "ExtraLinkzone">>
+<<widget "ExtraLinkZone">>
     
 <</widget>>
 

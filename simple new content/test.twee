@@ -55,11 +55,6 @@ setup your UIBar
 $args[0]
 <</widget>>
 
-
-npc custom opinion widget
-the widget name mast be NpcName(key at C.npc) + Opinion
-
-npc对pc的评价内容定制用。widget名必须是Name(C.npc的key) + Opinion
 <<widget "TesterOpinion">>
 <<=lanSwitch("thinks you're its master.", '觉得你是它的主人。')>>
 <</widget>>

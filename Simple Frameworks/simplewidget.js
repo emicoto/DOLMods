@@ -29,8 +29,8 @@ window.simpleFrameworks = {
         ModMenuBig:[],
         ModMenuSmall:[],
         
-        beforeLinkZone:[],
-        extraLinkzone:[],
+        BeforeLinkZone:[],
+        ExtraLinkZone:[],
 
         iModDone:[],
         iModReady:[],
@@ -84,7 +84,7 @@ window.simpleFrameworks = {
 <span class="gold"><<lanSwitch "Simple Framework" "简易框架" >></span>
 <br>
 
-<<lanSwitch "Current Language Setting: " "当前语言设定：">>
+<<lanSwitch "Current Modds Language Setting: " "当前模组语言设定：">>
 <<set _output to lanSwitch("English","中文")>>
 <<link _output $passage>>
 	<<if setup.language is 'EN'>>

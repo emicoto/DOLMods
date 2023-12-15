@@ -64,7 +64,7 @@ class NamedNPC{
                 if(!V.NPCName.find( chara => chara.nam == npc.nam)){
                     V.NPCName.push(npc)
                 }
-                if(!setup.NPCNameList.includes(npc.nam) && V.passage !== 'Start'){
+                if(!setup.NPCNameList.includes(npc.nam)){
                     setup.NPCNameList.push(npc.nam)
                 }
                 if(!V.NPCNameList.includes(npc.nam)){
@@ -94,10 +94,9 @@ class NamedNPC{
             }
         })
     }
-    static init(stage){
-        this.clear()
+    static init(){
         this.update()
-        console.log('addNamedNPC', stage, V.NPCName, setup.NPCNameList)        
+        console.log('addNamedNPC', 'init mod npc from storyinit', V.NPCName, setup.NPCNameList)        
     }
     static reset(npc){
         let data = new NamedNPC(npc.nam, npc.title, npc.des, npc.type)
@@ -340,17 +339,6 @@ setup.addModTrait = function(){
     })
 
 }
-
-//在init阶段统一切换显示语言
-
-$(document).one(':storyready', ()=>{
-    let checkSetup = setInterval(()=>{
-        if(setup && setup.NPCNameList){
-            NamedNPC.init('adding NPC on Startup')
-            clearInterval(checkSetup)
-        }
-    }, 60)
-})
 
 setup.NPCFrameworkOnLoad = false
 

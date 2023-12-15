@@ -74,14 +74,10 @@
 <</widget>>
 
 <<widget "bodywriting_drugs_select">>
-	<<switch random(1, 8)>>
-		<<case 1>><<add_bodywriting _args[0] brood_mother _args[1]>>
-		<<case 2>><<add_bodywriting _args[0] inseminate_me _args[1]>>
-		<<case 3>><<add_bodywriting _args[0] impregnate_me _args[1]>>
-		<<case 4>><<add_bodywriting _args[0] pregnancy_slut _args[1]>>
-		<<case 5>><<add_bodywriting _args[0] breeding_ground _args[1]>>
-		<<case 6>><<add_bodywriting _args[0] seedbed _args[1]>>
-		<<case 7>><<add_bodywriting _args[0] fertile _args[1]>>
-		<<case 8>><<add_bodywriting _args[0] fill_me_up _args[1]>>
+	<<switch random(1, 4)>>
+		<<case 1>><<add_bodywriting _args[0] drug_eater _args[1]>>
+		<<case 2>><<add_bodywriting _args[0] drug_whore _args[1]>>
+		<<case 3>><<add_bodywriting _args[0] sell_for_drug _args[1]>>
+		<<case 4>><<add_bodywriting _args[0] drug_slut _args[1]>>
 	<</switch>>
 <</widget>>

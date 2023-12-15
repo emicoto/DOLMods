@@ -222,7 +222,7 @@ const iManager = {
      * 检测身上可用物品格
      * @returns {number}
      */
-    checkbodySlots : function(){
+    checkBodySlots : function(){
         let count = 2
         const {worn} = V
         if(worn.upper.name !== 'naked' || worn.over_upper !== 'naked'){
@@ -241,7 +241,7 @@ const iManager = {
      */
     MaxSlots : {
         body(){
-            return checkBodySlots()
+            return this.checkBodySlots()
         },
         hole(){
             return currentSkillValue('promiscuity') > 80 ? 2 : 0
@@ -378,41 +378,12 @@ const iManager = {
         let msg = ''
         let leftNum = 0
 
-        const shiftStacks = function(stacks, amount){
-            stacks.reduce((left, item)=>{
-                if(left == 0) return left;
-                //如果开启了无限堆叠模式……到这步骤都不影响。
-                if(item.count < size){
-                    //万一amount比size要小得多呢……？限制一下！
-                    let get = Math.clamp(size - item.count, 0, left);
-                    item.count += get;
-                    left = get;
-                }
-                return left
-            }, amount)
-        }
-
-        const shiftSlots = function(slots, items){
-            return slots.reduce((result, { pos, count})=>{
-                let pocket = V.pockets[pos]
-                let item
-                for(let i=0; i < count; i++){
-                    item = result.items.pop()
-                    pocket.push(item)
-                    if(result.items.length == 0) break
-                }
-                result.lastPos = pos;
-                result.lastCount = item.count
-                return result
-            }, { lastPos: '' , items, lastCount:0 })
-        }
-
         //先进行是否存在即存堆叠的检测。如果即存堆叠有足够空间，就直接加上。  
         let {total, stacks} = this.getStackFromPockets(itemId)
 
         if(total > 0){
             //先整合看看有无剩余
-            leftNum = shiftStacks(stacks, num)
+            leftNum = this.shiftStacks(stacks, num)
             //如果这里已经没剩余数了，直接返回没有额外信息。
             if(leftNum == 0) return msg
         }
@@ -432,7 +403,7 @@ const iManager = {
         //检测空格位置。有空间就塞，没有就把多余的扔地上/存储物柜/藏物点
         let Slots = this.getEmptySlots()
         if (Slots.total > 0){          
-            leftItems = shiftSlots(Slots.slots, clone(items))
+            leftItems = this.shiftSlots(Slots.slots, clone(items))
 
             //如果这里已经处理完了，根据最后处理的口袋抛个提示
             if(leftItems.items.length == 0 ){
@@ -463,13 +434,13 @@ const iManager = {
             return this.transferMsg.farm(item)
         }
         //如果所在地有储物柜
-        else if(this.hasLockers() && this.canStoreLockers()){
+        else if(this.hasLockers() && this.canStoreLockers(item.id)){
             this.storeItems('lockers', item.id, item.count)
             return this.transferMsg.lockers(item)
         }
         //如果所在地有藏物点
-        else if(this.getHidePoint()){
-            let [place, storage] = this.getHidePoint()
+        else if(this.hidePoint[getLocation()]){
+            let [place, storage] = this.hidePoint[getLocation()]
             this.storeItems(storage, item.id, item.count)
             return this.transferMsg[place](item)
         }
@@ -492,25 +463,75 @@ const iManager = {
     //获取所在地的藏物点。
     //公园有灌木丛，工厂街有垃圾桶，岛上是自己的藏身处
     //灌木丛和垃圾桶每日清理。岛屿藏身处则概率清理。
-    getHidePoint(){
-        if(getLocation() == 'park'){
-            return ['bushes', 'bushes_park']
-        }
-        if(getLocation() == 'elk'){
-            return ['trashbin', 'trashbin_elk']
-        }
-        if(getLocation() == 'island'){
-            return ['hideout', 'hideout']
-        }
+    hidePoint :{
+        park: ['bushes', 'bushes_park'],
+        elk : ['trashbin', 'trashbin_elk'],
+        island : ['hideout', 'hideout']
     },
 
-    canStoreLockers(){
-        return Object.keys(V.iStorage.lockers).length >= 20
+    canStoreLockers(itemId){
+        let itemlist = Object.keys(V.iStorage.lockers)
+        return (itemlist.length < 20 && !itemlist.includes(itemId)) || itemlist.includes(itemId)
     },
 
     //定期更新口袋和容器的堆叠，并进行爆衣检测。
-    updatePockets(){
+    updatePockets(situation){
+        //初始化
+        if(!V.iManager.temp){
+            this.saveSlotsStatus()
+        }
 
+        //先做爆衣检测        
+        this.checkBroken()
+        //然后保存当前slot状态
+        this.saveSlotsStatus()
+
+    },
+
+    onEquipBag(itemId){
+
+
+        this.updatePockets()
+    },
+
+    onUnEquipBag(itemId){
+        
+        
+        this.updatePockets()
+    },
+
+    checkBroken(){
+        if( this.MaxSlots.body() < V.iManager.temp.body){
+            V.iManager.status.body = 'broken';
+            V.iManager.textevent.body = 1;
+        }
+        else if( this.MaxSlots.body() > 2 ){
+            V.iManager.status.body = 'clotheson'
+        }
+        
+        if( this.MaxSlots.bag() < V.iManager.temp.bag && this.MaxSlots.bag() == 0 ){
+            V.iManager.status.bag = 'lost';
+            V.iManager.textevent.bag = 1;
+        }
+        else if( this.MaxSlots.bag() < V.iManager.temp.bag && this.MaxSlots.bag() > 0 ){
+            V.iManager.status.bag = 'change';
+            V.iManager.textevent.bag = 2
+        }
+
+        else if( this.MaxSlots.hole < V.iManager.temp.hole ){
+            V.iManager.status.hole = 'fit';
+            V.iManager.textevent.hole = 1;
+        }
+
+    },
+
+    saveSlotsStatus(){
+        V.iManager.temp = {
+            body: this.MaxSlots.body(),
+            bag:this.MaxSlots.bag(),
+            hole:this.MaxSlots.hole(),
+            cart:this.MaxSlots.cart(),
+        }
     },
 
     //被强奸后随机丢失物品，一定概率丢失背包钱包手推车
@@ -544,6 +565,10 @@ const iManager = {
 
 }
 
+/**
+ * 
+ * @returns {string}
+ */
 function getLocation(){
     //巴士里直接返回巴士
     if(V.passage == 'Bus' || V.passage.includes('Bus')){

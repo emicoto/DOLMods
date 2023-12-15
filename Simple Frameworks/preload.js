@@ -13,603 +13,603 @@
 	const locationPassage = {
 		'PassageHeader':[
 			{
-				scr:"<<unset $bypassHeader>>",
+				src:"<<unset $bypassHeader>>",
 				to:"<<unset $bypassHeader>>\n<<iModHeader>><div id='headerPopUp'></div>"
 			}
 		],
 		'PassageFooter':[
 			{
-				scr:"<div id=\"gameVersionDisplay\">",
+				src:"<div id=\"gameVersionDisplay\">",
 				to:"<<iModFooter>><div id='footerMsg'></div>\n<div id=\"gameVersionDisplay\">"
 			}
 		],
 		'StoryCaption':[
 			{
-				scr:'<div id="sidebar-look-description">',
+				src:'<div id="sidebar-look-description">',
 				applybefore:'<<ModCaptionDescription>>\n\t\t\t'
 			},
 			{
-				scr:'<<allurecaption>>',
+				src:'<<allurecaption>>',
 				applybefore:'<<ModStatusBar>>\n\t\t\t'
 			},
 			{
-				scr:'<</button>>\n\t\t\t<div class="sidebarButtonSplit">',
+				src:'<</button>>\n\t\t\t<div class="sidebarButtonSplit">',
 				to:'<</button>>\n\t\t\t<<ModMenuBig>>\n\t\t\t<div class="sidebarButtonSplit">',
 			},
 			{
-				scr:'</div>\n\t\t\t<div class="sidebarButtonSplit">',
+				src:'</div>\n\t\t\t<div class="sidebarButtonSplit">',
 				to:'</div>\n\t\t\t<div class="sidebarButtonSplit"><<ModMenuSmall>></div>\n\t\t\t<div class="sidebarButtonSplit">'
 			}
 		]
 		,
 		'Adult Shop':[
 			{
-				scr: "\t<br><br>\n<</if>>\n\n<<if $stress",
-				to: "\t<br><br>\n<</if>>\n\n<div id=\"addAfterMsg\"></div><<beforeLinkZone>>\n\n<<if $stress"
+				src: "\t<br><br>\n<</if>>\n\n<<if $stress",
+				to: "\t<br><br>\n<</if>>\n\n<div id=\"addAfterMsg\"></div><<BeforeLinkZone>>\n\n<<if $stress"
 			}
 		],
 		'Brothel':[
 			{
-				scr: '<<if $brotheljob is 1>>',
-				applybefore: '\n<div id=\"addAfterMsg\"></div>\n<<beforeLinkZone>>\n'
+				src: '<<if $brotheljob is 1>>',
+				applybefore: '\n<div id=\"addAfterMsg\"></div>\n<<BeforeLinkZone>>\n'
 			},
 		],
 		'Asylum Cell':[
 			{
-				scr:'<<effects>>',
+				src:'<<effects>>',
 				applyafter:'<div id="addAfterMsg"></div>\n'
 	
 			},
 			{
-				scrgroup:'<<roomoptions>>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				srcgroup:'<<roomoptions>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			},
 			{
-				scrgroup:'<<link [[Settings|Asylum Settings]]>><</link>>',
-				applybefore:'<<ExtraLinkzone>>\n'
+				srcgroup:'<<link [[Settings|Asylum Settings]]>><</link>>',
+				applybefore:'<<ExtraLinkZone>>\n'
 			},
 			{
-				scrgroup:'<<link [[设置|Asylum Settings]]>><</link>>',
-				applybefore:'<<ExtraLinkzone>>\n'
+				srcgroup:'<<link [[设置|Asylum Settings]]>><</link>>',
+				applybefore:'<<ExtraLinkZone>>\n'
 			}
 		],
 		'Asylum':[
 			{
-				scr:'<<effects>>',
+				src:'<<effects>>',
 				applyafter:'<div id="addAfterMsg"></div>\n'
 			},
 			{
-				scr:'<<asylumicon  "cell">>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<asylumicon  "cell">>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			},
 			{
-				scr:'<<asylumicon "door">>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<asylumicon "door">>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			},
 			{
-				scr:'<<if $exposed gte 1>>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<if $exposed gte 1>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Eden Cabin':[
 			{
-				scr:'<<if ($edenfreedom is 2 and $edendays lt 8) or ($edenfreedom is 1 and $edendays lt 2)>>',
+				src:'<<if ($edenfreedom is 2 and $edendays lt 8) or ($edenfreedom is 1 and $edendays lt 2)>>',
 				applybefore:'<div id="addAfterMsg"></div>\n'
 			},
 			{
-				scrgroup:'<<if Time.monthName is "November" and $edenprepare is 1>>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				srcgroup:'<<if Time.monthName is "November" and $edenprepare is 1>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			},
 			{
-				scr:'<<bedicon "eden">><<link',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<bedicon "eden">><<link',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			},
 			{
-				scr:'<<foodicon "pancakes">><<link',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<foodicon "pancakes">><<link',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Churchyard':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n'
 			},
 			{
-				scr:'<<foresticon "churchyard">>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<foresticon "churchyard">>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Forest':[
 			{
-				scr:'<<if $forest lte 0>>',
+				src:'<<if $forest lte 0>>',
 				applybefore:'<div id="addAfterMsg"></div>\n'
 			},
 			{
-				scrgroup:'<<forestdeeper>>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				srcgroup:'<<forestdeeper>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Lake Shore':[
 			{
-				scr:'<<if $exposed gte 1 and $laketeenspresent is 1>>',
+				src:'<<if $exposed gte 1 and $laketeenspresent is 1>>',
 				applybefore:'<div id="addAfterMsg"></div>\n',
 			},
 			{
-				scr:'<<mirroricon>>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<mirroricon>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Lake Bus':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<if $exposed lte 0>>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<if $exposed lte 0>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Lake Waterfall':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<lakereturnjourney>>',
-				applyafter:'\n<<beforeLinkZone>>\n'
+				src:'<<lakereturnjourney>>',
+				applyafter:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Lake Fishing Rock':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<lakereturnjourney>>',
-				applyafter:'\n<<beforeLinkZone>>\n'
+				src:'<<lakereturnjourney>>',
+				applyafter:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Lake Firepit':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<lakereturnjourney>>',
-				applyafter:'\n<<beforeLinkZone>>\n'
+				src:'<<lakereturnjourney>>',
+				applyafter:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Lake Campsite':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<lakereturnjourney>>',
-				applyafter:'\n<<beforeLinkZone>>\n'
+				src:'<<lakereturnjourney>>',
+				applyafter:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Lake Shallows':[
 			{
-				scr:'<<if $stress gte $stressmax and !$possessed>>',
+				src:'<<if $stress gte $stressmax and !$possessed>>',
 				applybefore:'\n<div id="addAfterMsg"></div>\n',
 			},
 			{
-				scr:'<<lakereturnjourney>>',
-				applyafter:'\n<<beforeLinkZone>>\n'
+				src:'<<lakereturnjourney>>',
+				applyafter:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Lake Shallows Ice':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<lakereturnjourney>>',
-				applyafter:'\n<<beforeLinkZone>>\n'
+				src:'<<lakereturnjourney>>',
+				applyafter:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Lake Depths':[
 			{
-				scr:'<<if $stress gte $stressmax and !$possessed>>',
+				src:'<<if $stress gte $stressmax and !$possessed>>',
 				applybefore:'\n<div id="addAfterMsg"></div>\n',
 			},
 			{
-				scr:'<<swimicon>><<link',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<swimicon>><<link',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Lake Depths Ice':[
 			{
-				scr:'<<if $stress gte $stressmax and !$possessed>>',
+				src:'<<if $stress gte $stressmax and !$possessed>>',
 				applybefore:'\n<div id="addAfterMsg"></div>\n',
 			},
 			{
-				scr:'<<if $nextPassageCheck',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<if $nextPassageCheck',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Tentacle Plains':[
 			{
-				scr:'<<tentaclewolf>>',
+				src:'<<tentaclewolf>>',
 				applyafter:'\n<div id="addAfterMsg"></div>\n'
 			},
 			{
-				scr:'<<if $tentnorth is 0 and $tenteast is 0>>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<if $tentnorth is 0 and $tenteast is 0>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Wolf Cave':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<if $wolfcavedig gte 13>>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<if $wolfcavedig gte 13>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			},
 			{
-				scr:'<<link [[Settings|',
-				applybefore:'\n<<ExtraLinkzone>>\n'
+				src:'<<link [[Settings|',
+				applybefore:'\n<<ExtraLinkZone>>\n'
 			},
 			{
-				scr:'<<link [[设置|',
-				applybefore:'\n<<ExtraLinkzone>>\n'
+				src:'<<link [[设置|',
+				applybefore:'\n<<ExtraLinkZone>>\n'
 			}
 		],
 		'Wolf Cave Clearing':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<if $halloweenWolves and $wolfstate is "cave">>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<if $halloweenWolves and $wolfstate is "cave">>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Bird Tower':[
 			{
-				scr:'<<endevent>>',
+				src:'<<endevent>>',
 				applyafter:'\n<div id="addAfterMsg"></div>\n'
 			},
 			{
-				scr:'<<if $leftarm is "bound" or $rig',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<if $leftarm is "bound" or $rig',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			},
 			{
-				scr:'<<if $syndromebird is 1>>',
-				applybefore:'\n<<ExtraLinkzone>>\n'
+				src:'<<if $syndromebird is 1>>',
+				applybefore:'\n<<ExtraLinkZone>>\n'
 			}
 		],
 		'Coast Path':[
 			{
-				scr:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n<<beforeLinkZone>>\n',
+				src:'<br><br>',
+				to:'<br><div id="addAfterMsg"></div><br>\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Coast Path Farmland':[
 			{
-				scr:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n<<beforeLinkZone>>\n',
+				src:'<br><br>',
+				to:'<br><div id="addAfterMsg"></div><br>\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Estate':[
 			{
-				scr: '<<ind>><<link',
-				applybefore:'<div id="addAfterMsg"></div>\n<<beforeLinkZone>>\n'
+				src: '<<ind>><<link',
+				applybefore:'<div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Farmland':[
 			{
-				scr:'<<if $stress gte $stressmax>>',
-				applybefore:'<div id="addAfterMsg"></div>\n<<beforeLinkZone>>\n'
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'<div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n'
 			},
 		],
 		'Farm Shed':[
 			{
-				scr:'<<ind>><<link',
-				applybefore:'<div id="addAfterMsg"></div>\n<<beforeLinkZone>>\n'
+				src:'<<ind>><<link',
+				applybefore:'<div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n'
 			},
 		],
 		'Farm Shave':[
 			{
-				scr:'<<if $pblevel gte',
-				applybefore:'<div id="addAfterMsg"></div>\n<<beforeLinkZone>>\n'
+				src:'<<if $pblevel gte',
+				applybefore:'<div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n'
 			},
 		],
 		'Farm Cottage':[
 			{
-				scr:'<<if $farm.build_finished.includes("nursery")>>',
+				src:'<<if $farm.build_finished.includes("nursery")>>',
 				applybefore:'\n<div id="addAfterMsg"></div>\n'
 			},
 			{
-				scrgroup:'<<farm_cottage_options>>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				srcgroup:'<<farm_cottage_options>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Farm Bedroom':[
 			{
-				scr:'<<if $stress gte $stressmax and !$possessed>>',
+				src:'<<if $stress gte $stressmax and !$possessed>>',
 				applybefore:'\n<div id="addAfterMsg"></div>\n'
 			},
 			{
-				scr:'<<if !($earSlime.event and $earSlime.noSleep)>>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<if !($earSlime.event and $earSlime.noSleep)>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			},
 			{
-				scr:'<<link [[Settings|',
-				applybefore:'\n<<ExtraLinkzone>>\n'
+				src:'<<link [[Settings|',
+				applybefore:'\n<<ExtraLinkZone>>\n'
 			},
 			{
-				scr:'<<link [[设置|',
-				applybefore:'\n<<ExtraLinkzone>>\n'
+				src:'<<link [[设置|',
+				applybefore:'\n<<ExtraLinkZone>>\n'
 			}
 		],
 		'Farm Alex Bedroom':[
 			{
-				scr:'<<if $stress gte $stressmax and !$possessed>>',
+				src:'<<if $stress gte $stressmax and !$possessed>>',
 				applybefore:'\n<div id="addAfterMsg"></div>\n'
 			},
 			{
-				scr:'<<if playerIsPregnant() and ',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<if playerIsPregnant() and ',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Meadow':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<relaxicon>>',
-				applybefore:'\n<<beforeLinkZone>>\n'
+				src:'<<relaxicon>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
 		'Livestock Cell':[
 			{
-				scr:'<<if isPlayerNonparasitePregnancyEnding()>>',
+				src:'<<if isPlayerNonparasitePregnancyEnding()>>',
 				applybefore:'\n<div id="addAfterMsg"></div>\n'
 			},
 			{
-				scr:'<<else>>\n\t<<link',
-				to:'<<else>>\n\t<<beforeLinkZone>>\n<<link',
+				src:'<<else>>\n\t<<link',
+				to:'<<else>>\n\t<<BeforeLinkZone>>\n<<link',
 			},
 			{
-				scr:'<<link [[Settings',
-				applybefore:'\n<<ExtraLinkzone>>\n',
+				src:'<<link [[Settings',
+				applybefore:'\n<<ExtraLinkZone>>\n',
 			
 			}
 		],
 		'Livestock Field':[
 			{
-				scr:'<<if isPlayerNonparasitePregnancyEnding()>>',
+				src:'<<if isPlayerNonparasitePregnancyEnding()>>',
 				applybefore:'\n<div id="addAfterMsg"></div>\n'
 			},
 			{
-				scr:'<<farmicon "grass">>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<farmicon "grass">>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Moor':[
 			{
-				scr:'<<if $stress gte $stressmax>>',
+				src:'<<if $stress gte $stressmax>>',
 				applybefore:'\n<div id="addAfterMsg"></div>\n'
 			},
 			{
-				scr:'\t<<if $moor gte 100>>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'\t<<if $moor gte 100>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Castle':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<if $harpy gte 6 ',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<if $harpy gte 6 ',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Arcade':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<if Time.hour is 21>>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<if Time.hour is 21>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			},
 		],
 		'Beach':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<if $exposed lte 0>>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<if $exposed lte 0>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Brothel Dressing Room':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<wardrobeicon>>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<wardrobeicon>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			},
 			{
-				scr:'<<link [[Settings',
-				applybefore:'\n<<ExtraLinkzone>>\n',
+				src:'<<link [[Settings',
+				applybefore:'\n<<ExtraLinkZone>>\n',
 			},
 			{
-				scr:'<<link [[设置',
-				applybefore:'\n<<ExtraLinkzone>>\n',
+				src:'<<link [[设置',
+				applybefore:'\n<<ExtraLinkZone>>\n',
 			}
 		],
 		'Bus':[
 			{
-				scr:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br><<beforeLinkZone>>\n',
+				src:'<br><br>',
+				to:'<br><div id="addAfterMsg"></div><br><<BeforeLinkZone>>\n',
 			}
 		],
 		'Bus Station':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<if $exposed gte 1>>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<if $exposed gte 1>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Ocean Breeze':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<if $openinghours is 1 and $exposed',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<if $openinghours is 1 and $exposed',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Elk Compound':[
 			{
-				scr:'<<if $stress gte $stressmax>>',
+				src:'<<if $stress gte $stressmax>>',
 				applybefore:'\n<div id="addAfterMsg"></div>\n',
 			},
 			{
-				scr:'<<if $danger lte',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<if $danger lte',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Dance Studio':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<if $openinghours is 1 and $exposed lt 1>>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<if $openinghours is 1 and $exposed lt 1>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Docks':[
 			{
-				scr:'<<if $arousal gte $arousalmax>>',
+				src:'<<if $arousal gte $arousalmax>>',
 				applybefore:'\n<div id="addAfterMsg"></div>\n',
 			},
 			{
-				scr:'<<if $robindebtevent gte 1 and',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<if $robindebtevent gte 1 and',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Flats':[
 			{
-				scr:'<<if $stress gte $stressmax and !$possessed>>',
+				src:'<<if $stress gte $stressmax and !$possessed>>',
 				applybefore:'\n<div id="addAfterMsg"></div>\n',
 			},
 			{
-				scr:'        <<if Time.dayState is "night">>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'        <<if Time.dayState is "night">>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Bedroom':[
 			{
-				scr:"<<set _desk to Furniture.get('desk')>>",
+				src:"<<set _desk to Furniture.get('desk')>>",
 				applybefore:'\n<div id="addAfterMsg"></div>\n',
 			},
 			{
-				scr:'<<deskText "icon">>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<deskText "icon">>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			},
 			{
-				scr:'<<link [[Settings',
-				applybefore:'\n<<ExtraLinkzone>>\n',
+				src:'<<link [[Settings',
+				applybefore:'\n<<ExtraLinkZone>>\n',
 			},
 			{
-				scr:'<<link [[设置',
-				applybefore:'\n<<ExtraLinkzone>>\n',
+				src:'<<link [[设置',
+				applybefore:'\n<<ExtraLinkZone>>\n',
 			}
 		],
 		'Bathroom':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<if $leftarm is "bound" and $rightarm is "bound">>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<if $leftarm is "bound" and $rightarm is "bound">>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		"Orphanage":[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<<if $police_hack is 2 and',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<if $police_hack is 2 and',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Orphanage Ward':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scrgroup:'<<orphanageWardOptions>>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				srcgroup:'<<orphanageWardOptions>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Storm Drain Entrance':[
 			{
-				scr:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n<<beforeLinkZone>>\n',
+				src:'<br><br>',
+				to:'<br><div id="addAfterMsg"></div><br>\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Hospital front':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			
 			{
-				scr:'<<getinicon>><<link',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<getinicon>><<link',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Hospital Foyer':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			
 			{
-				scr:'<<if $exposed gte 1>>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<if $exposed gte 1>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Trash':[
 			{
-				scr:'<br><br>',
+				src:'<br><br>',
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			
 			{
-				scr:'<<eventstrash>>\n<<else>>',
-				applyafter:'\n<<beforeLinkZone>>\n',
+				src:'<<eventstrash>>\n<<else>>',
+				applyafter:'\n<<BeforeLinkZone>>\n',
 			}
 		],
 		'Museum':[
 			{
-				scr:'<<if $arousal gte $arousalmax>>',
+				src:'<<if $arousal gte $arousalmax>>',
 				applybefore:'<div id="addAfterMsg"></div>\n',
 			},
 			
 			{
-				scr:'<<if $museumhorseintro is 0>>',
-				applybefore:'\n<<beforeLinkZone>>\n',
+				src:'<<if $museumhorseintro is 0>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		]
 	}
@@ -621,44 +621,50 @@
 				applyafter:'\n<<ModSkillsBox>>\n',
 			},
 			{
-				scr:'<<bodywriting>>',
+				src:'<<bodywriting>>',
 				applyafter:'\n<<ModCharaDescription>>\n'
 			}
 		],
 		'overlayReplace':[
 			{
-				scr:'</div>\n\t<<closeButton>>\n<</widget>>\n\n<<widget \"titleSaves\">>',
+				src:'</div>\n\t<<closeButton>>\n<</widget>>\n\n<<widget \"titleSaves\">>',
 				to:`\t\t<<button lanSwitch('Mods', '模组设置')>>\n\t\t<<toggleTab>>\n\t\t<<replace #customOverlayContent>><<iModsOptions>><</replace>>\n\t\t<</button>>\n\n</div>\n\t<<closeButton>>\n<</widget>>\n\n<<widget "titleSaves">>`
+			}
+		],
+		'npcNamed':[
+			{
+				src:"<</widget>>",
+				to:"<<run NamedNPC.init()>>\n\n<</widget>>",
 			}
 		],
 		'Widgets variablesStatic':[
 			{
-				scr:"<</widget>>",
+				src:"<</widget>>",
 				to:"<<iModInit>>\n\n<</widget>>",
 			}
 		],
 		'Social':[
 			{
-				scr:'T.importantNPCs = T.importantNpcOrder',
+				src:'T.importantNPCs = T.importantNpcOrder',
 				applybefore:'\n\t\t\tsetup.ModSocialSetting();\n\n\t\t\t'
 			},
 			{
-				scr:'<br>\n\t\t<span class="gold">Fame</span>',
+				src:'<br>\n\t\t<span class="gold">Fame</span>',
 				applybefore:'\n\t\t<<iModStatus>>\n\t\t'
 			},
 			{
-				scr:"<br>\n\t\t<span class=\"gold\">知名度</span>",
+				src:"<br>\n\t\t<span class=\"gold\">知名度</span>",
 				applybefore:'\n\t\t<<iModStatus>>\n\t\t'
 			},
 			{
-				scr:`<div class="relation-box" @style="(_boxConfig.style || '')">`,
+				src:`<div class="relation-box" @style="(_boxConfig.style || '')">`,
 				applybefore:'\n\t\t<<iModFame>>\n\t\t'
 			}
 		],
 
 		'Traits':[
 			{
-				scr:'<div id="traitListsSearch">',
+				src:'<div id="traitListsSearch">',
 				applybefore:'\n<<run setup.addModTrait()>>\n\n'
 			},
 		],
@@ -672,7 +678,17 @@
 		'Widgets Named Npcs':[
 			{
 				src:'<<relationshiptext>>',
-				to:'<<if NamedNPC.has($NPCName[_i].nam)>><<ModaddNPCRelationText>><<else>><<relationshiptext>><</if>>'
+				to:'<<if NamedNPC.has($NPCName[_i].nam) >= 0>><<ModaddNPCRelationText>><<else>><<relationshiptext>><</if>>'
+			}
+		],
+		'Widgets':[
+			{
+				srcgroup:'\t_npcData.nam',
+				to:'\t_npcData.description'
+			},
+			{
+				srcgroup:'<<print _npcData.nam',
+				to:'<<print _npcData.description'
 			}
 		]
 	}
@@ -683,26 +699,26 @@
 	
 		if(locationPassage[title]){
 			locationPassage[title].forEach((set)=>{
-				if(set.scr){
+				if(set.src){
 					if(set.to){
-						source = source.replace(set.scr, set.to)
+						source = source.replace(set.src, set.to)
 					}
 					else if(set.applyafter){
-						source = source.replace(set.scr, set.scr + set.applyafter)
+						source = source.replace(set.src, set.src + set.applyafter)
 					}
 					else if(set.applybefore){
-						source = source.replace(set.scr, set.applybefore + set.scr)
+						source = source.replace(set.src, set.applybefore + set.src)
 					}
 				}
-				if(set.scrgroup){
+				if(set.srcgroup){
 					if(set.to){
-						source = source.split(set.scrgroup).join(set.to)
+						source = source.split(set.srcgroup).join(set.to)
 					}
 					else if(set.applyafter){
-						source = source.split(set.scrgroup).join(set.scrgroup + set.applyafter)
+						source = source.split(set.srcgroup).join(set.srcgroup + set.applyafter)
 					}
 					else if(set.applybefore){
-						source = source.split(set.scrgroup).join(set.applybefore + set.scrgroup)
+						source = source.split(set.srcgroup).join(set.applybefore + set.srcgroup)
 					}
 				}
 			})
@@ -713,7 +729,7 @@
 		}
 	
 		if(source.includes('<<if $options.mapTop is true>>')){
-			source = source.replace('<<if $options.mapTop is true>>', '<<beforeLinkZone>>\n<<if $options.mapTop is true>>')
+			source = source.replace('<<if $options.mapTop is true>>', '<<BeforeLinkZone>>\n<<if $options.mapTop is true>>')
 			passage.content = source
 		}
 	
@@ -724,17 +740,17 @@
 	
 	
 		if(source.includes('<<drainlinks>>')){
-			source = source.replace('<<drainlinks>>', '<<beforeLinkZone>>\n<<drainlinks>>')
+			source = source.replace('<<drainlinks>>', '<<BeforeLinkZone>>\n<<drainlinks>>')
 			passage.content = source
 		}
 	
 		if(source.includes('<<island_tide_options>>')){
-			source = source.replace('<<island_tide_options>>', '<<beforeLinkZone>>\n<<island_tide_options>>')
+			source = source.replace('<<island_tide_options>>', '<<BeforeLinkZone>>\n<<island_tide_options>>')
 			passage.content = source
 		}
 	
 		if(source.includes('<<stall_actions>>')){
-			source = source.replace('<<stall_actions>>', '<<beforeLinkZone>>\n<<stall_actions>>')
+			source = source.replace('<<stall_actions>>', '<<BeforeLinkZone>>\n<<stall_actions>>')
 			passage.content = source
 		}
 	
@@ -796,18 +812,18 @@
 		if(!patch && txt.includes('<br><br>')){
 			if(txt.includes('<<if') === false && txt.count('<br><br>') > 1 ){
 				txt = txt.split('<br><br>')
-				txt[txt.length-1] = txt[txt.length-1]  + "\n<div id='addAfterMsg'><div>"
+				txt[txt.length-1] = txt[txt.length-1]  + "\n<div id='addAfterMsg'></div>"
 				txt.join('<br><br>')
 	
 			}
 			else{
-				txt.replace('<br><br>', `<br>\n<div id='addAfterMsg'><div><br>`)
+				txt.replace('<br><br>', `<br>\n<div id='addAfterMsg'></div><br>`)
 			}
 			patch = true
 		}
 	
 		if(!patch){
-			txt.replace('<<effects>>', "<<effects>><div id='addAfterMsg'><div>")
+			txt.replace('<<effects>>', "<<effects>><div id='addAfterMsg'></div>")
 		}
 	
 		if(patch){
@@ -826,26 +842,26 @@
 		console.log(typeof source, title, passage)
 	
 		widgetPassage[title].forEach((set)=>{
-			if(set.scr){
+			if(set.src){
 				if(set.to){
-					source = source.replace(set.scr, set.to)
+					source = source.replace(set.src, set.to)
 				}
 				else if(set.applyafter){
-					source = source.replace(set.scr, set.scr + set.applyafter)
+					source = source.replace(set.src, set.src + set.applyafter)
 				}
 				else if(set.applybefore){
-					source = source.replace(set.scr, set.applybefore + set.scr)
+					source = source.replace(set.src, set.applybefore + set.src)
 				}
 			}
-			if(set.scrgroup){
+			if(set.srcgroup){
 				if(set.to){
-					source = source.split(set.scrgroup).join(set.to)
+					source = source.split(set.srcgroup).join(set.to)
 				}
 				else if(set.applyafter){
-					source = source.split(set.scrgroup).join(set.scrgroup + set.applyafter)
+					source = source.split(set.srcgroup).join(set.srcgroup + set.applyafter)
 				}
 				else if(set.applybefore){
-					source = source.split(set.scrgroup).join(set.applybefore + set.scrgroup)
+					source = source.split(set.srcgroup).join(set.applybefore + set.srcgroup)
 				}
 			}
 		})
@@ -905,10 +921,10 @@
 
 
 <<widget "ModaddNPCRelationText">>
-<<if SugarCube.Macros.has($args[0]+'Opinion')>>
-    <<print '<<'+$args[0]+'Opinion>>'>>
+<<print C.npc[_npc].description>>
+<<if SugarCube.Macro.has(_npc+'Opinion')>>
+    <<print '<<'+_npc+'Opinion>>'>>
 <<else>>
-    <<print C.npc[_npc].description>>
     <<if C.npc[_npc].love gte $npclovehigh>>
         <<if C.npc[_npc].dom gte $npcdomhigh>>
             <<=lanSwitch(

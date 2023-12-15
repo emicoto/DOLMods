@@ -1,10 +1,10 @@
 :: Simple Widget Frameworks [Widget]
-<<widget "beforeLinkZone">>
+<<widget "BeforeLinkZone">>
 
 <</widget>>
 
 
-<<widget "ExtraLinkzone">>
+<<widget "ExtraLinkZone">>
 
 
 <</widget>>
@@ -108,7 +108,7 @@
 
 
 <<widget "ModaddNPCRelationText">>
-<<if SugarCube.Macros.has($args[0]+'Opinion')>>
+<<if SugarCube.Macro.has($args[0]+'Opinion')>>
     <<print '<<'+$args[0]+'Opinion>>'>>
 <<else>>
     <<print C.npc[_npc].description>>
