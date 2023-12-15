@@ -918,12 +918,12 @@
         <<elseif C.npc[_npc].dom lte $npcdomlow>>
             <<=lanSwitch(
                 "thinks you're <span class='green'>inspiring.</span>",
-                "觉得你<span class='green'>令人心动。</span>"
+                "认为你<span class='green'>令人心动。</span>"
             )>>
         <<else>>
             <<=lanSwitch(
                 "thinks you're <span class='green'>delightful.</span>",
-                "觉得你<span class='green'>令人愉快。</span>"
+                "认为你<span class='green'>令人愉快。</span>"
             )>>
         <</if>>
     <<elseif C.npc[_npc].love lte $npclovelow>>
