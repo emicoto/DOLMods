@@ -1,11 +1,13 @@
 
 function lanSwitch(...lan){
     let [EN, CN] = lan
+    if(Array.isArray(lan[0]))
+    [EN, CN] = lan[0]
 
     if (setup.language == 'CN'){
-        return CN
+        return CN ?? EN
     }
-    return EN
+    return EN ?? CN
 }
 window.lanSwitch = lanSwitch
 DefineMacroS('lanSwitch', lanSwitch)
@@ -48,6 +50,9 @@ class NamedNPC{
                 i--
             }
         } 
+    }
+    static has(name){
+        return this.database.findIndex((npc)=>{ return npc.nam == name })
     }
     static update(){
         this.database.forEach((data)=>{
@@ -270,17 +275,73 @@ class NamedNPC{
         }
         return this
     }
+    isImportant(){
+        setup.ModNpcImportant.push(this.nam)
+        return this
+    }
+    isSpecial(){
+        setup.ModNpcSpecial.push(this.nam)
+        return this
+    }
 }
 
-window.NamedNPC = NamedNPC
-setup.addNPCList = []
+window.NamedNPC = NamedNPC;
+setup.addNPCList = [];
+setup.ModNpcSetting = {};
+setup.ModNpcImportant = [];
+setup.ModNpcSpecial = [];
+setup.ModTraits = [];
+setup.ModTraitTitle = [];
 
-$(document).trigger('addNameNPC:ready')
+setup.ModSocialSetting = function(){
+    Object.assign(T.npcConfig, setup.ModNpcSetting)
+    T.importantNpcOrder.push(...setup.ModNpcImportant)
+    T.specialNPCs.push(...setup.ModNpcSpecial)
+}
+
+setup.addModTrait = function(){
+    let Traits = [
+        'General Traits',
+        'Special Traits',
+        'School Traits',
+        'Trauma Traits',
+        'NPC Traits',
+        'Hypnosis Traits',
+        'Acceptance Traits'
+    ]
+
+    console.log(Traits)
+
+    setup.ModTraitTitle.forEach((option)=>{
+        if(String(option) == `[object Object]`){
+            T.traitLists.push({
+                title: lanSwitch(option.display),
+                traits: []
+            })
+
+            Traits.push(option.title)
+        }
+    })
+
+    setup.ModTraits.forEach((trait)=>{
+        let { addto, name, cond, text, colour } = trait;
+
+        let index = Traits.indexOf(addto)
+        let option = {
+            name: lanSwitch(name),
+            has: typeof cond == 'function' ? cond() : cond,
+            text: lanSwitch(text),
+            colour,
+        }
+
+        console.log(option, addto, index)
+
+        T.traitLists[index].traits.push(option)
+    })
+
+}
 
 //在init阶段统一切换显示语言
-NamedNPC.add(
-    new NamedNPC('Tester', ['tester', '测试员'], ['Tester', '测试员'], 'robot' ).Init('m', 'adult'),
-)
 
 $(document).one(':storyready', ()=>{
     let checkSetup = setInterval(()=>{
@@ -302,8 +363,15 @@ Save.onLoad.add(checkUpdate)
 //读档时的处理
 $(document).on(':passageinit', ()=>{
     if(setup.NPCFrameworkOnLoad === true && V.passage !== 'Start'){
-        NamedNPC.clear()
-        NamedNPC.update()
+        setTimeout(()=>{
+            NamedNPC.clear()
+            NamedNPC.update()
+        },60)
         setup.NPCFrameworkOnLoad = false
     }
+    
+})
+
+$(document).on(':switchlanguage',()=>{
+    NamedNPC.switchlan()
 })

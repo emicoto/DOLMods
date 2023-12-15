@@ -28,7 +28,7 @@ window.simpleFrameworks = {
         ModStatusBar:[],
         ModMenuBig:[],
         ModMenuSmall:[],
-
+        
         beforeLinkZone:[],
         extraLinkzone:[],
 
@@ -37,7 +37,10 @@ window.simpleFrameworks = {
         iModHeader:[],
         iModFooter:[],
         iModsOptions:[],
+        iModStatus:[],
+        iModFame:[],
         iModInit:[],
+
     },
 
     storyInit(){
@@ -89,11 +92,12 @@ window.simpleFrameworks = {
 	<<else>>
 		<<set setup.language to 'EN'>>
 	<</if>>
+    <<run $(document).trigger(':switchlanguage')>>
 <</link>>
 <br><br>
 
 `
-        }
+        },
     },
 
     createMicroWidgets : async function(){

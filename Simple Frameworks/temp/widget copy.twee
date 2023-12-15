@@ -140,3 +140,46 @@ add your mods option here
 
 
 <</widget>>
+
+Support for MOD UI Overlay Page.
+no need to assign with code. just write your button/link.
+check the sample via simple new content.
+//UI面板，不需要注册。添加自己的UI面板的方法请看simple new content的样本.
+<<widget "iModReplace">>
+	<<set _key to _args[0]>>
+	<<if !_key>>
+		<<exit>>
+	<</if>>
+
+	<<if _currentOverlay is _key>>
+		<<run closeOverlay()>>
+		<<exit>>
+	<</if>>
+
+	<<script>>
+		T.buttons.toggle();
+		updateOptions();
+		T.currentOverlay = T.key;
+		$("#customOverlay").removeClass("hidden").parent().removeClass("hidden");
+		$("#customOverlay").attr("data-overlay", T.currentOverlay);
+	<</script>>
+	<<print '<<'+_key+'>>'>>
+<</widget>>
+
+iModStatus
+add your custom location status.
+will display after farm status.
+名声模块。用于添加你的自定义地图名声到社交页面里。
+会跟在农场名声之后。
+<<widget "iModStatus">>
+    
+<</widget>>
+
+iModFame
+add your custom fame to display at Social page.
+will display after 
+名声模块。用于添加你的自定义个人名声到社交页面里。
+会跟在犯罪名声等之后
+<<widget "iModFame">>
+    
+<</widget>>

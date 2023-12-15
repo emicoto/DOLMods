@@ -8,9 +8,9 @@
 //also you can add a lot at once.
 
 simpleFrameworks.addto('iModHeader', 'aSimpleTest')
-
+simpleFrameworks.addto('ModMenuSmall', 'testButton')
 simpleFrameworks.addto('iModsOptions', 'myOptionsA', 'myOptionsB', 'myOptionsC')
-
+/*
 simpleFrameworks.addto('iModFooter', {
     passage:'Start', //set what passage your widget will show up
     widget: 'aSimpleTest',
@@ -22,4 +22,4 @@ simpleFrameworks.addto('iModFooter', {
 })
 
 //also can add a lot at once
-simpleFrameworks.addto('iModFooter', {passage:'Start', widget: 'aSimpleTest'}, {passage:'Start', widget: 'aSimpleTest'},{passage:'Start', widget: 'aSimpleTest'},{passage:'Start', widget: 'aSimpleTest'},{passage:'Start', widget: 'aSimpleTest'},)
+simpleFrameworks.addto('iModFooter', {passage:'Start', widget: 'aSimpleTest'}, {passage:'Start', widget: 'aSimpleTest'},{passage:'Start', widget: 'aSimpleTest'},{passage:'Start', widget: 'aSimpleTest'},{passage:'Start', widget: 'aSimpleTest'},)*/

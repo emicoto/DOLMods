@@ -40,11 +40,6 @@
         "replace":"<<ExtraPharmacy>>\n\t隐形眼镜"
     },
     {
-        "passage":"Widgets variablesStatic",
-        "findString":"<</widget>>",
-        "replace":"\n\n<<lunemodInit>>\n\n<</widget>>"
-    },
-    {
         "passage":"PassageHeader",
         "findString":"<<unset $bypassHeader>>",
         "replace":"<<unset $bypassHeader>>\n<<iCandyHeader>><div id='addMsg'></div>"
@@ -57,12 +52,7 @@
     {
         "passage":"StoryCaption",
         "findString":"<div class=\"sidebarButtonSplit\">",
-        "replace":"<<button lanSwitch('ITEMS','道具')>><<overlayReplace \"items\">><</button>>\n\t\t\t<div class=\"sidebarButtonSplit\">"
-    },
-    {
-        "passage":"overlayReplace",
-        "findString":"<<case \"traits\">>",
-        "replace":"<<case \"items\">><<ItemsOverlaySettings>>\t\t<<case \"traits\">>"
+        "replace":"<<button lanSwitch('ITEMS','道具')>><<overlayReplace \"ItemsOverlaySettings\">><</button>>\n\t\t\t<div class=\"sidebarButtonSplit\">"
     },
     {
         "passage":"Widgets Journal",
@@ -122,7 +112,7 @@
     {
         "passage": "Brothel",
         "findString": "<<if $brotheljob is 1>>",
-        "replace": "\n<div id=\"addAfterMsg\"></div>\n<<if $brotheljob is 1>>\n<<brothelDrugs>>"
+        "replace": "\n<<if $brotheljob is 1>>\n<<brothelDrugs>>"
     }
    ]
   }

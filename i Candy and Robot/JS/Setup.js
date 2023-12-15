@@ -304,7 +304,7 @@ function iCandyStatus(){
 	cv.chemistry = 0
 	cv.mechanic = 0
 
-	setup.iCandyMod = 'ready'
+	setup.iCandyMod = 'variable ready'
 }
 
 $(document).one('languageChecked', ()=>{
@@ -442,6 +442,14 @@ $(document).one(':storyready',()=>{
 		if( setup.bodywriting ){
 			addBodyWriting()
 			clearInterval(check)
+		}
+	}, 100)
+
+	let check2 = setInterval(()=>{
+		if( V.featsBoosts ){
+			//modifyFeatsBoosts()
+			//Engine.play('Start')
+			clearInterval(check2)
 		}
 	}, 100)
 })

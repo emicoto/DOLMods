@@ -13,10 +13,53 @@
 
 <</widget>>
 
-<<widget "myOptionsA">>
+<<widget "myOptionsB">>
     <div id='test'>optionB</div>
 <</widget>>
 
 <<widget "myOptionsC">>
     <div id='test'>optionC</div>
+<</widget>>
+
+display a button with overlay at UIBar
+<<widget "testButton">>
+<<button lanSwitch('TEST','测试')>>
+    <<iModReplace 'testOverlay'>>
+<</button>>
+<</widget>>
+
+
+setup your UIBar
+<<widget "testOverlay">>
+	<<replace #customOverlayTitle>><<titleTest>><</replace>>
+	<<replace #customOverlayContent>><<TestOver>><</replace>>
+<</widget>>
+
+<<widget "titleTest">>
+	<<setupTabs>>
+	<div id="overlayTabs" class="tab">
+		<<closeButtonMobile>>
+		<<button lanSwitch('TEST','测试')>>
+			<<toggleTab>>
+			<<replace #customOverlayContent>><<TestOver>><</replace>>
+		<</button>>
+	</div>
+	<<closeButton>>
+<</widget>>
+
+<<widget "TestOver">>
+这只是一个测试。
+<</widget>>
+
+<<widget "TestPrint">>
+$args[0]
+<</widget>>
+
+
+npc custom opinion widget
+the widget name mast be NpcName(key at C.npc) + Opinion
+
+npc对pc的评价内容定制用。widget名必须是Name(C.npc的key) + Opinion
+<<widget "TesterOpinion">>
+<<=lanSwitch("thinks you're its master.", '觉得你是它的主人。')>>
 <</widget>>

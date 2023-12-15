@@ -1,0 +1,87 @@
+:: Widgets Bodywriting [widget]
+
+<<widget "bodywriting_npc_special">>
+	<<rng>>
+	<<if $rng gte 90>>
+		<<if $fame.rape gte random(200, 1000)>>
+			<<bodywriting_rape_select _args[0] _args[1]>>
+			<<bodywriting_finalisation _args[0]>>
+		<<else>>
+			<<bodywriting_npc_normal _args[0] _args[1]>>
+		<</if>>
+	<<elseif $rng gte 80>>
+		<<if $fame.sex gte random(200, 1000)>>
+			<<bodywriting_sex_select _args[0] _args[1]>>
+			<<bodywriting_finalisation _args[0]>>
+		<<else>>
+			<<bodywriting_npc_normal _args[0] _args[1]>>
+		<</if>>
+	<<elseif $rng gte 70>>
+		<<if $fame.bestiality gte random(200, 1000)>>
+			<<bodywriting_bestiality_select _args[0] _args[1]>>
+			<<bodywriting_finalisation _args[0]>>
+		<<else>>
+			<<bodywriting_npc_normal _args[0] _args[1]>>
+		<</if>>
+	<<elseif $rng gte 60>>
+		<<if $fame.pregnancy gte random(200, 1000) and $player.vaginaExist and $rng gte 65>>
+			<<bodywriting_pregnancy_select _args[0]>>
+			<<bodywriting_finalisation _args[0]>>
+		<<elseif $fame.impreg gte random(200, 1000) and $player.penisExist>>
+			<<bodywriting_impreg_select _args[0]>>
+			<<bodywriting_finalisation _args[0]>>
+		<<else>>
+			<<bodywriting_npc_normal _args[0]>>
+		<</if>>
+    <<elseif $rng gte 50 and $fame.drugs gte random(50, 200)>>
+        <<if random(0, 100) gte 40>>
+            <<bodywriting_drugs_select _args[0] _args[1]>>
+            <<bodywriting_finalisation _args[0]>>
+        <<else>>
+            <<bodywriting_npc_normal _args[0] _args[1]>>
+        <</if>>
+	<<elseif $rng gte 50>>
+		<<if $fame.prostitution gte random(200, 1000)>>
+			<<bodywriting_prostitution_select _args[0] _args[1]>>
+			<<bodywriting_finalisation _args[0]>>
+		<<else>>
+			<<bodywriting_npc_normal _args[0] _args[1]>>
+		<</if>>
+	<<elseif $rng gte 40>>
+		<<if $fame.exhibitionism gte random(200, 1000)>>
+			<<bodywriting_exhibitionism_select _args[0] _args[1]>>
+			<<bodywriting_finalisation _args[0]>>
+		<<else>>
+			<<bodywriting_npc_normal _args[0] _args[1]>>
+		<</if>>
+	<<elseif $rng gte 28>>
+		<<if $beauty gte random(1, $beautymax)>>
+			<<bodywriting_beauty_select _args[0] _args[1]>>
+			<<bodywriting_finalisation _args[0]>>
+		<<else>>
+			<<bodywriting_npc_normal _args[0] _args[1]>>
+		<</if>>
+	<<elseif $rng gte 16>>
+		<<if $fame.scrap gte random(1, 1000)>>
+			<<bodywriting_scrap_select _args[0] _args[1]>>
+			<<bodywriting_finalisation _args[0]>>
+		<<else>>
+			<<bodywriting_npc_normal _args[0] _args[1]>>
+		<</if>>
+	<<else>>
+		<<bodywriting_npc_normal _args[0] _args[1]>>
+	<</if>>
+<</widget>>
+
+<<widget "bodywriting_drugs_select">>
+	<<switch random(1, 8)>>
+		<<case 1>><<add_bodywriting _args[0] brood_mother _args[1]>>
+		<<case 2>><<add_bodywriting _args[0] inseminate_me _args[1]>>
+		<<case 3>><<add_bodywriting _args[0] impregnate_me _args[1]>>
+		<<case 4>><<add_bodywriting _args[0] pregnancy_slut _args[1]>>
+		<<case 5>><<add_bodywriting _args[0] breeding_ground _args[1]>>
+		<<case 6>><<add_bodywriting _args[0] seedbed _args[1]>>
+		<<case 7>><<add_bodywriting _args[0] fertile _args[1]>>
+		<<case 8>><<add_bodywriting _args[0] fill_me_up _args[1]>>
+	<</switch>>
+<</widget>>

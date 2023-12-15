@@ -548,7 +548,7 @@
 				to:'<br><div id="addAfterMsg"></div><br>\n',
 			},
 			{
-				scr:'<if $police_hack is 2 and',
+				scr:'<<if $police_hack is 2 and',
 				applybefore:'\n<<beforeLinkZone>>\n',
 			}
 		],
@@ -637,7 +637,44 @@
 				to:"<<iModInit>>\n\n<</widget>>",
 			}
 		],
-	
+		'Social':[
+			{
+				scr:'T.importantNPCs = T.importantNpcOrder',
+				applybefore:'\n\t\t\tsetup.ModSocialSetting();\n\n\t\t\t'
+			},
+			{
+				scr:'<br>\n\t\t<span class="gold">Fame</span>',
+				applybefore:'\n\t\t<<iModStatus>>\n\t\t'
+			},
+			{
+				scr:"<br>\n\t\t<span class=\"gold\">知名度</span>",
+				applybefore:'\n\t\t<<iModStatus>>\n\t\t'
+			},
+			{
+				scr:`<div class="relation-box" @style="(_boxConfig.style || '')">`,
+				applybefore:'\n\t\t<<iModFame>>\n\t\t'
+			}
+		],
+
+		'Traits':[
+			{
+				scr:'<div id="traitListsSearch">',
+				applybefore:'\n<<run setup.addModTrait()>>\n\n'
+			},
+		],
+
+		'Widgets Settings':[
+			{
+				src:'$NPCName[_npcId].nam',
+				to:'$NPCName[_npcId].description'
+			}
+		],
+		'Widgets Named Npcs':[
+			{
+				src:'<<relationshiptext>>',
+				to:'<<if NamedNPC.has($NPCName[_i].nam)>><<ModaddNPCRelationText>><<else>><<relationshiptext>><</if>>'
+			}
+		]
 	}
 	
 	//能批处理的批处理。街道和地点，以及战斗场景
@@ -844,7 +881,91 @@
 			tags:['widget']
 		}
 
-		data.content = simpleFrameworks.widgethtml
+		let html = 
+`\n\n<<widget "iModReplace">>
+	<<set _key to _args[0]>>
+	<<if !_key>>
+		<<exit>>
+	<</if>>
+
+	<<if _currentOverlay is _key>>
+		<<run closeOverlay()>>
+		<<exit>>
+	<</if>>
+
+	<<script>>
+		T.buttons.toggle();
+		updateOptions();
+		T.currentOverlay = T.key;
+		$("#customOverlay").removeClass("hidden").parent().removeClass("hidden");
+		$("#customOverlay").attr("data-overlay", T.currentOverlay);
+	<</script>>
+	<<print '<<'+_key+'>>'>>
+<</widget>>
+
+
+<<widget "ModaddNPCRelationText">>
+<<if SugarCube.Macros.has($args[0]+'Opinion')>>
+    <<print '<<'+$args[0]+'Opinion>>'>>
+<<else>>
+    <<print C.npc[_npc].description>>
+    <<if C.npc[_npc].love gte $npclovehigh>>
+        <<if C.npc[_npc].dom gte $npcdomhigh>>
+            <<=lanSwitch(
+                "thinks you're <span class='green'>adorable.</span>",
+                "觉得你<span class='green'>十分惹人疼爱。</span>"
+            )>>
+        <<elseif C.npc[_npc].dom lte $npcdomlow>>
+            <<=lanSwitch(
+                "thinks you're <span class='green'>inspiring.</span>",
+                "觉得你<span class='green'>令人心动。</span>"
+            )>>
+        <<else>>
+            <<=lanSwitch(
+                "thinks you're <span class='green'>delightful.</span>",
+                "觉得你<span class='green'>令人愉快。</span>"
+            )>>
+        <</if>>
+    <<elseif C.npc[_npc].love lte $npclovelow>>
+        <<if C.npc[_npc].dom gte $npcdomhigh>>
+            <<=lanSwitch(
+                "thinks you're <span class='red'>pathetic.</span>",
+                "认为你<span class='red'>十分可悲。</span>"
+            )>>
+        <<elseif C.npc[_npc].dom lte $npcdomlow>>
+            <<=lanSwitch(
+                "thinks you're <span class='red'>irritating.</span>",
+                "认为你<span class='red'>使人恼火。</span>"
+            )>>
+        <<else>>
+            <<=lanSwitch(
+                "thinks you're <span class='red'>terrible.</span>",
+                "认为你<span class='red'>非常讨厌。</span>"
+            )>>
+        <</if>>
+    <<else>>
+        <<if C.npc[_npc].dom gte $npcdomhigh>>
+            <<=lanSwitch(
+                "thinks you're <span class='pink'>cute.</span>",
+                "认为你<span class='pink'>很可爱。</span>"
+            )>>
+        <<elseif C.npc[_npc].dom lte $npcdomlow>>
+            <<=lanSwitch(
+                "<span class='teal'>looks up to you.</span>",
+                "<span class='teal'>敬仰着你。</span>",
+            )>>
+        <<else>>
+            <<=lanSwitch(
+                'has no strong opinion of you.',
+                '对你没什么看法。'
+            )>>
+        <</if>>
+    <</if>>
+<</if>>
+<</widget>>
+`
+
+		data.content = simpleFrameworks.widgethtml + html
 		passageData.set('Simple Widget Frameworks', data)
 
 		data = {
