@@ -127,6 +127,10 @@
   {
    "modName": "ReplacePatcher",
    "version": ">=1.0.0"
+  },
+  {
+    "modName":"Simple Frameworks",
+    "version":">=1.0.0"
   }
  ]
 }

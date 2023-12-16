@@ -27,7 +27,7 @@ let lancheck = setInterval(()=>{
         clearInterval(lancheck)
         $(document).trigger('languageChecked')
     }
-}, 100)
+}, 60)
 
 
 class NamedNPC{

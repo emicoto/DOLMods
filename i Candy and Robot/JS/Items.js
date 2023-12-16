@@ -43,7 +43,7 @@ class CandyItems{
 	 * @param {number} price 
 	 * @param {number} num 
 	 */
-	static init = setupCandyItems
+	static init = setupVanillaItems
 	constructor(id, name, price, num, type='items'){
 		this.type = type
 		this.id = id
@@ -75,7 +75,7 @@ class CandyItems{
 		this.size = 'inject'
 		return this
 	}
-	setInfo(CN, EN){
+	setInfo(EN, CN){
 		this.info = [EN ?? CN, CN ?? EN]
 		return this
 	}
@@ -200,11 +200,8 @@ function setupVanillaItems(){
 	}	
 }
 
-window.setupVanillaItems = setupVanillaItems
 
-function setupCandyItems(){
 let c = CandyItems
-
 //----------------------------------------------
 //  原版道具特殊处理
 //----------------------------------------------
@@ -711,4 +708,3 @@ c.add('angelpowder', ['Angel Powder', '天使粉'], 28680, 2, 'drugs')
 })
 //----------------------------------------------
 
-}
