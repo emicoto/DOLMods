@@ -1287,6 +1287,12 @@
 				src:'<<link [[设置|Asylum Settings]]>><</link>>',
 				applybefore:'<<ExtraLinkZone>>\n'
 			}
+		],
+		'Widgets Underground':[
+			{
+				src:'<<widget "undergroundCellOptions">>',
+				applyafter:'\n<<ExtraLinkZone>>\n'
+			}
 		]
 	}
 	
