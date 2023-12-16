@@ -1,21 +1,28 @@
 :: Simple Widget Frameworks [Widget]
 
+<div id='addAfterMsg'></div>
+a div area at every passage has <<effets>>
+this div area is use for some extra effets text append after
+local event description.
+because the vanilla source code is so messy,
+so not all passage will append after the right position.
+somecase will append after vanilla effets text.
+
+
 beforeLink Zone
 useful to add some new content before links zone at locations
 this only will showup at street map or buildings, forest, any passage includes location change
+and this only will showup when no vanilla event happend
 
 用来处理需要排版插到连接区域前面的内容。
-只出现在能进行活动的地点（如城镇建筑，街道，森林等）
-
+只出现在能进行活动的地点（如城镇建筑，街道，森林等），且只会在没有原版事件发生的情况出现。
 <<widget "BeforeLinkZone">>
     
 <</widget>>
 
 ExtraLink zone
-useful to add some new content after link zone and before setting links
-this only will showup at that passage has attidute and settings link(yep, the place where your pc sleep)
-
-//用来处理可睡觉进行设置的房间内，需要排版到设置前面的内容
+useful to add some new content before attidue/settings links and a few passage(bathroom/toilet/special location) before leave/getout links
+//主要用于需要排版到 态度/设置 前面添加选项内容,在浴室、厕所、以及少量有带图标的离开链接的地点也会有这个区域。
 <<widget "ExtraLinkZone">>
     
 <</widget>>
@@ -23,7 +30,7 @@ this only will showup at that passage has attidute and settings link(yep, the pl
 iModHeader zone
 useful to add message or cg before text content.
 this will show at top of page, and this will show up at every passage
-so, if you want your content only show up at certain passage, you need to set it
+so, if you want your content only show up at certain passage, you need to set passage name when add
 
 //正文前面，最上面区域
 <<widget "iModHeader">>
@@ -33,7 +40,7 @@ so, if you want your content only show up at certain passage, you need to set it
 iModFooter zone
 useful to add links or content after link zone.
 this will show at bottom of page, and this will show up at every passage
-so, if you want your content only show up at certain passage, you need to set it
+so, if you want your content only show up at certain passage, you need to set passage name when add
 
 //所有内容后面
 <<widget 'iModFooter'>>
@@ -91,6 +98,14 @@ some extra description before the description of clothes at UIBar
 
 //左边栏说明区（在衣服描述之前）
 <<widget "ModCaptionDescription">>
+
+<</widget>>
+
+ModCaptionAfterDescription
+some extra description after the description of clothes and body situation at UIBar
+//左边栏说明区（在衣服与身体状况描述之后）
+<<widget "ModCaptionAfterDescription">>
+
 
 <</widget>>
 
@@ -181,5 +196,20 @@ will display after
 名声模块。用于添加你的自定义个人名声到社交页面里。
 会跟在犯罪名声等之后
 <<widget "iModFame">>
+    
+<</widget>>
+
+
+ModShopZone
+only will show up at some shop that doesn't have showcase for items, includes Cafe.
+which shop you like to show your items, you need to assign a passage name.
+
+用于添加商店物品。
+只会出现在没有物品展示模块的商店中（就是全是链接那种，包括咖啡店）。
+至于要出现在那个地点，你需要在注册你的widget时填写passage名
+
+ps.纹身店的拓展位置在Tattoo Choice
+ps.tattoo's ModShopZone is location at Tattoo Choice
+<<widget "ModShopZone">>
     
 <</widget>>

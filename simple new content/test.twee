@@ -51,10 +51,16 @@ setup your UIBar
 这只是一个测试。
 <</widget>>
 
-<<widget "TestPrint">>
-$args[0]
+<<widget "TestCaption">>
+你有一通未接来电。<br>
+<</widget>>
+
+<<widget "TestCaptionAfter">>
+你中毒了。<br>
 <</widget>>
 
 <<widget "TesterOpinion">>
 <<=lanSwitch("thinks you're its master.", '觉得你是它的主人。')>>
 <</widget>>
+
+

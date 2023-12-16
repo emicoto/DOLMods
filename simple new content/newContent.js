@@ -10,6 +10,8 @@
 simpleFrameworks.addto('iModHeader', 'aSimpleTest')
 simpleFrameworks.addto('ModMenuSmall', 'testButton')
 simpleFrameworks.addto('iModsOptions', 'myOptionsA', 'myOptionsB', 'myOptionsC')
+simpleFrameworks.addto('ModCaptionDescription', 'TestCaption')
+simpleFrameworks.addto('ModCaptionAfterDescription', 'TestCaptionAfter')
 /*
 simpleFrameworks.addto('iModFooter', {
     passage:'Start', //set what passage your widget will show up
@@ -23,3 +25,14 @@ simpleFrameworks.addto('iModFooter', {
 
 //also can add a lot at once
 simpleFrameworks.addto('iModFooter', {passage:'Start', widget: 'aSimpleTest'}, {passage:'Start', widget: 'aSimpleTest'},{passage:'Start', widget: 'aSimpleTest'},{passage:'Start', widget: 'aSimpleTest'},{passage:'Start', widget: 'aSimpleTest'},)*/
+
+/**
+ 
+'Furniture Shop Papers':[
+	{
+		src:'<<set _normalisedName to Util.escape(_chosenWallpaperCustom).replace(/\[/g, "&#91;").replace(/\]/g, "&#93;")>>',
+		to:'<<set _normalisedName to _chosenWallpaperCustom>>'
+	}
+],
+  
+ */

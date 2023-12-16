@@ -60,6 +60,10 @@
 
 <</widget>>
 
+<<widget "ModCaptionAfterDescription">>
+
+
+<</widget>>
 
 <<widget "ModStatusBar">>
 
@@ -187,4 +191,8 @@
 		$("#customOverlay").attr("data-overlay", T.currentOverlay);
 	<</script>>
 	<<print '<<'+_key+'>>'>>
+<</widget>>
+
+<<widget "ModShopZone">>
+    
 <</widget>>

@@ -25,12 +25,14 @@ window.simpleFrameworks = {
         ModSkillsBox:[],
         ModCharaDescription:[],
         ModCaptionDescription:[],
+        ModCaptionAfterDescription:[],
         ModStatusBar:[],
         ModMenuBig:[],
         ModMenuSmall:[],
         
         BeforeLinkZone:[],
         ExtraLinkZone:[],
+        ModShopZone:[],
 
         iModDone:[],
         iModReady:[],
@@ -122,8 +124,13 @@ window.simpleFrameworks = {
                 return html
             },
 
-            end : ()=>{
-                return `<</widget>>\n`
+            end : (zone, length)=>{
+                let html = `<</widget>>\n`
+                let br=['ModShopZone','ModCaptionAfterDescription','ExtraLinkZone']
+                if(br.includes(zone) && length > 0){
+                    html = '<br>' + html
+                }
+                return html
             }
 
         }
@@ -147,7 +154,7 @@ window.simpleFrameworks = {
                     html += print.widget(widget)
                 }
             })                
-            html += print.end()
+            html += print.end(zone, this.data[zone].length)
         }
 
         this.widgethtml = html

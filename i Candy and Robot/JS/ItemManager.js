@@ -486,6 +486,8 @@ const iManager = {
         //然后保存当前slot状态
         this.saveSlotsStatus()
 
+        //更新背包堆叠情况。如果爆了就清除多的物品并扔出提示文本
+
     },
 
     onEquipBag(itemId){

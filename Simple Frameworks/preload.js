@@ -25,8 +25,8 @@
 		],
 		'StoryCaption':[
 			{
-				src:'<div id="sidebar-look-description">',
-				applybefore:'<<ModCaptionDescription>>\n\t\t\t'
+				src:'<<schoolday>>\n\t\t<br>',
+				to:'<<schoolday>>\n\t\t<div id="captionTextBox">\n\t\t<<ModCaptionDescription>><br>\n\t\t\t'
 			},
 			{
 				src:'<<allurecaption>>',
@@ -39,9 +39,23 @@
 			{
 				src:'</div>\n\t\t\t<div class="sidebarButtonSplit">',
 				to:'</div>\n\t\t\t<div class="sidebarButtonSplit"><<ModMenuSmall>></div>\n\t\t\t<div class="sidebarButtonSplit">'
+			},
+			{
+				src:'<<goo>>',
+				applybefore:'\n\t\t\t<<ModCaptionAfterDescription>>\n\t\t\t<<goo>>\n\t\t</div>'
 			}
-		]
-		,
+		],
+		'Bath':[
+			{
+				src:'<<effects>>',
+				applyafter:'<div id="addAfterMsg"></div>\n'
+	
+			},
+			{
+				src:'<<getouticon>><<link',
+				applybefore:'\n<<ExtraLinkZone>>\n'
+			}
+		],
 		'Adult Shop':[
 			{
 				src: "\t<br><br>\n<</if>>\n\n<<if $stress",
@@ -54,6 +68,17 @@
 				applybefore: '\n<div id=\"addAfterMsg\"></div>\n<<BeforeLinkZone>>\n'
 			},
 		],
+		'Brothel Shower':[
+			{
+				src:'<<wash>>\n<br><br>',
+				applyafter:'<div id="addAfterMsg"></div>\n'
+	
+			},
+			{
+				src:'<<getouticon>>',
+				applybefore:'<<ExtraLinkZone>>\n'
+			}
+		],
 		'Asylum Cell':[
 			{
 				src:'<<effects>>',
@@ -65,11 +90,22 @@
 				applybefore:'\n<<BeforeLinkZone>>\n'
 			},
 			{
-				srcgroup:'<<link [[Settings|Asylum Settings]]>><</link>>',
+				srcgroup:'<<if $asylumstate isnot "sleep">>',
 				applybefore:'<<ExtraLinkZone>>\n'
+			}
+		],
+		'Asylum Garden':[
+			{
+				src:'<br><br>',
+				applyafter:'<div id="addAfterMsg"></div>\n'
+	
 			},
 			{
-				srcgroup:'<<link [[设置|Asylum Settings]]>><</link>>',
+				src:'<<display_plot asylum>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			},
+			{
+				src:'<<getouticon>>',
 				applybefore:'<<ExtraLinkZone>>\n'
 			}
 		],
@@ -91,6 +127,21 @@
 				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
+		'Eden Plots':[
+			{
+				src:'<<effects>>',
+				applyafter:'<div id="addAfterMsg"></div>\n'
+	
+			},
+			{
+				src:'<<display_plot eden>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			},
+			{
+				src:'<<getouticon>>',
+				applybefore:'<<ExtraLinkZone>>\n'
+			}
+		],
 		'Eden Cabin':[
 			{
 				src:'<<if ($edenfreedom is 2 and $edendays lt 8) or ($edenfreedom is 1 and $edendays lt 2)>>',
@@ -109,10 +160,20 @@
 				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
+		'Cabin Actions':[
+			{
+				src:'<br>',
+				to:'<br><div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<roomoptions>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			}
+		],
 		'Churchyard':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n'
+				to:'<br><br><div id="addAfterMsg"></div>\n'
 			},
 			{
 				src:'<<foresticon "churchyard">>',
@@ -142,7 +203,7 @@
 		'Lake Bus':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<if $exposed lte 0>>',
@@ -152,7 +213,7 @@
 		'Lake Waterfall':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<lakereturnjourney>>',
@@ -162,7 +223,7 @@
 		'Lake Fishing Rock':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<lakereturnjourney>>',
@@ -172,7 +233,7 @@
 		'Lake Firepit':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<lakereturnjourney>>',
@@ -182,7 +243,7 @@
 		'Lake Campsite':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<lakereturnjourney>>',
@@ -202,7 +263,7 @@
 		'Lake Shallows Ice':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<lakereturnjourney>>',
@@ -242,7 +303,7 @@
 		'Wolf Cave':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<if $wolfcavedig gte 13>>',
@@ -260,11 +321,30 @@
 		'Wolf Cave Clearing':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<if $halloweenWolves and $wolfstate is "cave">>',
 				applybefore:'\n<<BeforeLinkZone>>\n'
+			},
+			{
+				src:'<<if $nextPassageCheck is "Forest">>',
+				applybefore:'\n<<ExtraLinkZone>>\n'
+			}
+		],
+		'Wolf Cave Plots':[
+			{
+				src:'<<effects>>',
+				applyafter:'<div id="addAfterMsg"></div>\n'
+	
+			},
+			{
+				src:'<<display_plot wolf>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			},
+			{
+				src:'<<getouticon>>',
+				applybefore:'<<ExtraLinkZone>>\n'
 			}
 		],
 		'Bird Tower':[
@@ -279,6 +359,17 @@
 			{
 				src:'<<if $syndromebird is 1>>',
 				applybefore:'\n<<ExtraLinkZone>>\n'
+			}
+		],
+		'Bird Tower Base':[
+			{
+				src:'<br><br>',
+				applyafter:'<div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n'
+	
+			},
+			{
+				src:'<<getouticon>>',
+				applybefore:'<<ExtraLinkZone>>\n'
 			}
 		],
 		'Coast Path':[
@@ -297,6 +388,10 @@
 			{
 				src: '<<ind>><<link',
 				applybefore:'<div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n'
+			},
+			{
+				src:'<<if $estate.entrance is "gate">>',
+				applybefore:'<<ExtraLinkZone>>\n'
 			}
 		],
 		'Farmland':[
@@ -310,6 +405,14 @@
 				src:'<<ind>><<link',
 				applybefore:'<div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n'
 			},
+			{
+				src:'<<ind>><<link [[Leave',
+				applybefore:'\n<<ExtraLinkZone>>\n'
+			},
+			{
+				src:'<<ind>><<link [[离开',
+				applybefore:'\n<<ExtraLinkZone>>\n'
+			}
 		],
 		'Farm Shave':[
 			{
@@ -355,10 +458,24 @@
 				applybefore:'\n<<BeforeLinkZone>>\n'
 			}
 		],
+		'Farm Fields':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<display_plot farm>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			},
+			{
+				src:'<<getouticon>>',
+				applybefore:'\n<<ExtraLinkZone>>\n'
+			}
+		],
 		'Meadow':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<relaxicon>>',
@@ -377,7 +494,10 @@
 			{
 				src:'<<link [[Settings',
 				applybefore:'\n<<ExtraLinkZone>>\n',
-			
+			},
+			{
+				src:'<<link [[设置',
+				applybefore:'\n<<ExtraLinkZone>>\n',
 			}
 		],
 		'Livestock Field':[
@@ -403,7 +523,7 @@
 		'Castle':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<if $harpy gte 6 ',
@@ -413,7 +533,7 @@
 		'Arcade':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<if Time.hour is 21>>',
@@ -423,7 +543,7 @@
 		'Beach':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<if $exposed lte 0>>',
@@ -433,7 +553,7 @@
 		'Brothel Dressing Room':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<wardrobeicon>>',
@@ -457,7 +577,7 @@
 		'Bus Station':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<if $exposed gte 1>>',
@@ -467,11 +587,15 @@
 		'Ocean Breeze':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<if $openinghours is 1 and $exposed',
 				applybefore:'\n<<BeforeLinkZone>>\n',
+			},
+			{
+				src:'<<if $money gte 200>>',
+				applybefore:'\n<<ModShopZone>>\n',
 			}
 		],
 		'Elk Compound':[
@@ -487,7 +611,7 @@
 		'Dance Studio':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<if $openinghours is 1 and $exposed lt 1>>',
@@ -535,7 +659,7 @@
 		'Bathroom':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<if $leftarm is "bound" and $rightarm is "bound">>',
@@ -545,7 +669,7 @@
 		"Orphanage":[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				src:'<<if $police_hack is 2 and',
@@ -555,7 +679,7 @@
 		'Orphanage Ward':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			{
 				srcgroup:'<<orphanageWardOptions>>',
@@ -571,7 +695,7 @@
 		'Hospital front':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			
 			{
@@ -582,7 +706,7 @@
 		'Hospital Foyer':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			
 			{
@@ -590,10 +714,24 @@
 				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
 		],
+		'Pharmacy':[
+			{
+				src:'<<effects>>',
+				applyafter:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'Contacts:',
+				applybefore:'<<ModShopZone>>\n\t'
+			},
+			{
+				src:'隐形眼镜:',
+				applybefore:'<<ModShopZone>>\n\t'
+			}
+		],
 		'Trash':[
 			{
 				src:'<br><br>',
-				to:'<br><div id="addAfterMsg"></div><br>\n',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
 			},
 			
 			{
@@ -611,7 +749,456 @@
 				src:'<<if $museumhorseintro is 0>>',
 				applybefore:'\n<<BeforeLinkZone>>\n',
 			}
+		],
+		'Office Lobby':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'<div id="addAfterMsg"></div>\n',
+			},
+			{
+				src:'<</if>>\n\t<<if Time.isWeekEnd()>>',
+				to:'<</if>>\n\n<<BeforeLinkZone>>\n\n\t<<if Time.isWeekEnd()>>',
+			}
+		],
+		'Office Agency':[
+			{
+				src:'<br><br>',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
+			},
+			
+			{
+				src:'<<assignmenticon>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
+			}
+		],
+		"Men's Toilets":[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'<div id="addAfterMsg"></div>\n',
+			},
+			{
+				src:'<<mirroricon>><<link',
+				applybefore:'\n<<BeforeLinkZone>>\n',
+			},
+			{
+				src:'<<if _store_check isnot 1>>',
+				applybefore:'\n<<ExtraLinkZone>>\n',
+			}
+		],
+		"Women's Toilets":[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'<div id="addAfterMsg"></div>\n',
+			},
+			{
+				src:'\n\t\t\t<<link [[',
+				applybefore:'\n<<BeforeLinkZone>>\n',
+			},
+			{
+				src:'<<if _store_check isnot 1>>',
+				applybefore:'\n<<ExtraLinkZone>>\n',
+			}
+		],
+		"Police Station":[
+			{
+				src:'<br><br>',
+				to:'<br><div id="addAfterMsg"></div><br><<BeforeLinkZone>>\n',
+			}
+		],
+		'Pound':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'<div id="addAfterMsg"></div>\n',
+			},
+			{
+				src:'<<link [[',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			},
+			{
+				src:'<<beastNEWinit 1 dog>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			}
+		],
+		'Prison Cell':[
+			{
+				src:'<<link [[Settings|Asylum Settings]]>><</link>>',
+				applybefore:'<<ExtraLinkZone>>\n'
+			},
+			{
+				src:'<<link [[设置|Asylum Settings]]>><</link>>',
+				applybefore:'<<ExtraLinkZone>>\n'
+			},
+			{
+				src:'<<if isPlayerNonparasitePregnancyEnding()>>',
+				applybefore:'<div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n'
+			}
+		],
+		'Prison Canteen':[
+			{
+				src:'<<if Time.hour is 20>>',
+				applybefore:'<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<if $prison.schedule is ',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			}
+		],
+		'Prison Wren':[
+			{
+				src:'<<effects>>',
+				applyafter:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<link [[',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			},
+			{
+				src:'<<if $prison.yard_key is 1 ',
+				applybefore:'<<ModShopZone>>\n\n'
+			}
+		],
+		'Pub':[
+			{
+				src:'<<if $averyPub is 1 ',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<askicon>><<link [[',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			}
+		],
+		'Canteen':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<if def $milkshake and $milkshake gt 0>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+
+			}
+		],
+		'School Boy Changing Room':[
+			{
+				src:'<<if $arousal gte $arousalmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<changingRoom>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+
+			}
+		],
+		'School Girl Changing Room':[
+			{
+				src:'<<if $arousal gte $arousalmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<changingRoom>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+
+			}
+		],
+		'Hallways':[
+			{
+				src:'<<if $arousal gte $arousalmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<schoolperiod>>',
+				applyafter:'\n<<BeforeLinkZone>>\n'
+
+			}
+		],
+		'School Library':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<projectoptions>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			}
+		],
+		"School Boy's Toilets":[
+			{
+				src:'<br><br>',
+				to:'<br><div id="addAfterMsg"></div><br><<BeforeLinkZone>>\n',
+			},
+			{
+				src:'<<if _store_check isnot 1>>',
+				applybefore:'\n<<ExtraLinkZone>>\n'
+			}
+		],
+		"School Girl's Toilets":[
+			{
+				src:'<br><br>',
+				to:'<br><div id="addAfterMsg"></div><br><<BeforeLinkZone>>\n',
+			},
+			{
+				src:'<<if _store_check isnot 1>>',
+				applybefore:'\n<<ExtraLinkZone>>\n'
+			}
+		],
+		'Sea Beach':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<if $exposed lte 0 or Time.dayState',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			}
+		],
+		'Sea Rocks':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<swimicon "leave">>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			}
+		],
+		'Rocks':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<if $smuggler_location is',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			}
+		],
+		'Sea Docks':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<docksicon>><<link',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			}
+		],
+		'Sea Cliffs':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<if $swimmingSuccess>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			}
+		],
+		'Sea':[
+			{
+				srcgroup:'<<if $stress gte $stressmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				srcgroup:'<<if $swimmingSuccess>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			}
+		],
+		'Cosmetics Store':[
+			{
+				src:'<<effects>>',
+				applyafter:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<cosmeticsicon>>',
+				applybefore:'\n<<BeforeLinkZone>>\n<<ModShopZone>>'
+			}
+		],
+		'Hairdressers':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'\n<div id="addAfterMsg"></div>\n'
+			},
+			{
+				src:'<<if Time.hour is 21>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			},
+			{
+				scr:'<<getouticon>>',
+				applybefore:'\n<<ModShopZone>>\n'
+			}
+		],
+		'Shopping Centre Top':[
+			{
+				src:'<br><br>',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
+			},
+			{
+				srcgroup:'<<if $clothingShop.ban ',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+			},
+		],
+		'Shopping Centre':[
+			{
+				src:'<br><br>',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
+			},
+			{
+				src:'<<if $exposed lte 0>>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+
+			},
+			{
+				src:'<<if Time.dayState is "night">>',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+
+			}
+		],
+		'Pet Shop':[
+			{
+				src:'<br><br>',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
+			},
+
+			{
+				src:'<<if Time.dayState is "night"',
+				applybefore:'\n<<BeforeLinkZone>>\n'
+
+			},
+			{
+				scr:'<<getouticon>>',
+				applybefore:'\n<<ModShopZone>>\n'
+			}
+		],
+		'Tattoo Parlour':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'<div id="addAfterMsg"></div>\n',
+			},
+			{
+				src:'<<if Time.hour is 21>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
+			}
+		],
+		'Tattoo Choice':[
+			{
+				src:'<span class="lewd">',
+				applybefore:'\n<<ModShopZone>>\n'
+			}
+		],
+		'Toy Shop':[
+			{
+				src:'<<if $stress gte 10000>>',
+				applybefore:'<div id="addAfterMsg"></div>\n',
+			},
+			{
+				scr:'<<if $pregnancyStats.humanToysUnlocked>>',
+				applybefore:'\n<<ModShopZone>>\n'
+			}
+		],
+		'Spa':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'<div id="addAfterMsg"></div>\n',
+			},
+			{
+				src:'<<if $openinghours is 1 and $exposed lt 1>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
+			}
+		],
+		'Strip Club':[
+			{
+				src:'<br><br>',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
+			},
+			{
+				srcgroup:'<<shopicon "clothing">>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
+			},
+			{
+				src:'<<if Time.dayState isnot "dawn" and ',
+				applybefore:'\n<<BeforeLinkZone>>\n',
+			}
+		],
+
+		'Strip Club Dressing Room':[
+			{
+				src:'<br><br>',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
+			},
+			{
+				src:'<<wardrobeicon>>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
+			},
+		],
+
+		'Strip Club Shower':[
+			{
+				src:'<br><br>',
+				to:'<br><br><div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n',
+			},
+			{
+				src:'<<getouticon>>',
+				applybefore:'\n<<ExtraLinkZone>>\n',
+			},
+		],
+
+		'Temple':[
+			{
+				src:'<br><br>',
+				to:'<br><br><div id="addAfterMsg"></div>\n',
+			},
+			{
+				src:'\t<<if Time.weekDay is 1 and Time.hour',
+				applybefore:'\n<<BeforeLinkZone>>\n',
+			},
+			{
+				src:'<<wolficon>><<link',
+				applybefore:'\n<<ExtraLinkZone>>\n',
+			}
+		],
+		'Temple Garden':[
+			{
+				src:'<<if $stress gte $stressmax>>',
+				applybefore:'<div id="addAfterMsg"></div>\n',
+			},
+			{
+				src:'<<if Time.dayState is "night">>',
+				applybefore:'\n<<BeforeLinkZone>>\n',
+			},
+			{
+				src:'<<wolficon>><<link',
+				applybefore:'\n<<ExtraLinkZone>>\n',
+			}
+		],
+		'Temple Confess Self':[
+			{
+				src:'<br><br>\n\n\n',
+				to:'<br><br>\n<div id="addAfterMsg"></div>\n\n\n',
+			},
+			{
+				src:'<<link',
+				applybefore:'<<BeforeLinkZone>>'
+			}
+		],
+		'Temple Cloister':[
+			{
+				src:'<<if isPlayerNonparasitePregnancyEnding()',
+				applybefore:'<div id="addAfterMsg"></div>\n\n',
+			},
+			{
+				src:'<<if $temple_cloister_progress is ',
+				applybefore:'<<BeforeLinkZone>>'
+			}
+		],
+		'Temple Cloister Showers':[
+			{
+				src:'<br><br>\n',
+				to:'<br><br>\n<div id="addAfterMsg"></div>\n',
+			},
+			{
+				src:'<<ind>><<link',
+				applybefore:'<<ExtraLinkZone>>'
+			}
 		]
+
 	}
 	
 	const widgetPassage = {
@@ -690,9 +1277,30 @@
 				srcgroup:'<<print _npcData.nam',
 				to:'<<print _npcData.description'
 			}
+		],
+		'Widgets Cabin':[
+			{
+				src:'<<link [[Settings|Asylum Settings]]>><</link>>',
+				applybefore:'<<ExtraLinkZone>>\n'
+			},
+			{
+				src:'<<link [[设置|Asylum Settings]]>><</link>>',
+				applybefore:'<<ExtraLinkZone>>\n'
+			}
 		]
 	}
 	
+	function checkBJX(source){
+
+		if(source.includes('<<support>>')){
+			source = source.replace('\t\t/* 北极星模组 */\n\t\t<<support>>\n\t\t/* 北极星 */', '')
+			source = `<<if $passage isnot 'Start'>><div style="position:fixed; top:1px; font-size:smaller; left:180px"><<support>></div><</if>>\n` + source
+			console.log('北极星样式表检测', source)
+		}
+		
+		return source
+	}
+
 	//能批处理的批处理。街道和地点，以及战斗场景
 	function patchScene(passage, title){
 		let source = String(passage.content)
@@ -722,7 +1330,15 @@
 					}
 				}
 			})
+			
+			if(title === 'StoryCaption'){
+				source = checkBJX(source)
+			}
+
 			passage.content = source
+
+			
+
 			patchedPassage[title] = 1
 	
 			return passage
@@ -730,7 +1346,6 @@
 	
 		if(source.includes('<<if $options.mapTop is true>>')){
 			source = source.replace('<<if $options.mapTop is true>>', '<<BeforeLinkZone>>\n<<if $options.mapTop is true>>')
-			passage.content = source
 		}
 	
 		if(source.includes('<<streeteffects>>')){
@@ -741,24 +1356,22 @@
 	
 		if(source.includes('<<drainlinks>>')){
 			source = source.replace('<<drainlinks>>', '<<BeforeLinkZone>>\n<<drainlinks>>')
-			passage.content = source
 		}
 	
 		if(source.includes('<<island_tide_options>>')){
 			source = source.replace('<<island_tide_options>>', '<<BeforeLinkZone>>\n<<island_tide_options>>')
-			passage.content = source
 		}
 	
 		if(source.includes('<<stall_actions>>')){
 			source = source.replace('<<stall_actions>>', '<<BeforeLinkZone>>\n<<stall_actions>>')
-			passage.content = source
 		}
 	
 		if(source.includes('<<stateman>>')){
-			source = source.replace('<<stateman>>', '<<stateman>>\n<div id="addAfterMsg"></div>')
-			passage.content = source
+			source = source.replace('<<stateman>>', '<div id="addAfterMsg"></div>\n<<stateman>>')
 			patchedPassage[title] = 1
 		}
+
+		passage.content = source
 	
 		return passage
 	}
@@ -810,16 +1423,14 @@
 		txt = txt.join('\n')
 	
 		if(!patch && txt.includes('<br><br>')){
-			if(txt.includes('<<if') === false && txt.count('<br><br>') > 1 ){
+			if(txt.includes('<<if') === false && txt.count('<br><br>') >= 1 ){
 				txt = txt.split('<br><br>')
 				txt[txt.length-1] = txt[txt.length-1]  + "\n<div id='addAfterMsg'></div>"
 				txt.join('<br><br>')
+
+				patch = true
 	
 			}
-			else{
-				txt.replace('<br><br>', `<br>\n<div id='addAfterMsg'></div><br>`)
-			}
-			patch = true
 		}
 	
 		if(!patch){
