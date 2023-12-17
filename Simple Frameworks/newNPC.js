@@ -140,6 +140,10 @@ class NamedNPC {
                 npc.displayname_lan = npc.description_lan
                 npc.displayname = lanSwitch(npc.displayname_lan)
             }
+            else if(npc.displayname == undefined){
+                npc.displayname_lan = [npc.nam, npc.description]
+                npc.displayname = npc.nam
+            }
         })
     }
     static switchlan() {
@@ -417,8 +421,10 @@ setup.ModLoveInterest = function(){
     T.loveInterestSelections[non] = 'None'
     
     T.potentialLoveInterests.forEach((nnpc)=>{
-        let key = C.npc[nnpc].displayname
-        T.loveInterestSelections[key] = nnpc
+        if(nnpc !== 'None'){
+            let key = C.npc[nnpc].displayname
+            T.loveInterestSelections[key] = nnpc
+        }
     })
     
 }

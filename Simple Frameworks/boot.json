@@ -12,6 +12,7 @@
   "styleFileList": [
   ],
   "scriptFileList": [
+    "CNCodeResolver.js",
     "selectcase.js",
     "util.js",
     "newNPC.js"
