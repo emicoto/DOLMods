@@ -143,7 +143,7 @@ const cntv = {
     },
 
     '变量加减':function(prop, value){
-        V.iModEvent[prop] += value
+        V.iModValues[prop] += value
     },
 
     '删除变量':function(prop){
@@ -245,3 +245,13 @@ function CNCodeTrans(key, ...args){
 
 
 DefineMacroS('cntv', CNCodeTrans)
+
+$(document).on(':passageready', ()=>{
+    if(!V.iModValues){
+        V.iModValues = {}
+    }
+
+    if(!V.iModNPC){
+        V.iModNPC = {}
+    }
+})
