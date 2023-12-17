@@ -52,49 +52,49 @@ const check = {
     },
 
     '阴道处女': function(npc){
-        if(npc){ 
+        if(npc !== 'pc'){ 
             return C.npc[npc].virginity.vaginal 
         }
         return V.player.virginity.vaginal
     },
 
     '肛门处女': function(npc){
-        if(npc){ 
+        if(npc !== 'pc'){ 
             return C.npc[npc].virginity.anal 
         }
         return V.player.virginity.anal
     },
 
     '初吻':function(npc){
-        if(npc){ 
+        if(npc !== 'pc'){ 
             return C.npc[npc].virginity.kiss 
         }
         return V.player.virginity.kiss
     },
 
     '初次握手':function(npc){
-        if(npc){
+        if(npc !== 'pc'){
             return C.npc[npc].virginity.handholding
         }
         return V.player.virginity.handholding
     },
 
     '初次口交':function(npc){
-        if(npc){
+        if(npc !== 'pc'){
             return C.npc[npc].virginity.oral
         }
         return V.player.virginity.oral
     },
 
     '阴茎童贞':function(npc){
-        if(npc){
+        if(npc !== 'pc'){
             return C.npc[npc].virginity.penile
         }
         return V.player.virginity.penile
     },
 
     '誓约':function(npc){
-        if(npc){
+        if(npc !== 'pc'){
             return C.npc[npc].virginity.temple
         }
         return V.player.virginity.temple && V.templePromised
@@ -105,7 +105,7 @@ const check = {
     },
 
     '纯洁之躯':function(npc){
-       if(npc){
+       if(npc !== 'pc'){
             return C.npc[npc].virginity.vaginal && C.npc[npc].virginity.penile
        }
        return V.player.virginity.vaginal && C.npc[npc].virginity.penile
@@ -138,6 +138,10 @@ const cntv = {
         return V.iModValues[prop]
     },
 
+    '变量':function(prop){
+        return V.iModValues[prop]
+    },
+
     '变量加减':function(prop, value){
         V.iModEvent[prop] += value
     },
@@ -150,6 +154,9 @@ const cntv = {
         return V.iModNPC[npc][prop]
     },
 
+    'npc变量':function(npc, prop){
+        return V.iModNPC[npc][prop]
+    },
     'npc变量加减':function(npc, prop, value){
         if(!V.iModNPC[npc]){
             V.iModNPC[npc] = {}
