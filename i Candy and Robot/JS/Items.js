@@ -1,7 +1,22 @@
 class CandyItems{
 	static data = {}
 	/**
-	 * 
+	 * 将OBJ格式化到数据库中
+	 * @param {{id:string, name:string, price:number, num:number, type:string}} obj 
+	 * @returns {CandyItems}
+	 */
+	static set(obj){
+		const {id, name, price, num, type} = obj
+		this.data[id] = new CandyItems(id, name, price, num, type)
+		for(let i in obj){
+			if(this.data[i] == undefined){
+				this.data[i] = obj[i]
+			}
+		}
+		return this.data[id]
+	}
+	/**
+	 * 添加物品
 	 * @param {string} type 
 	 * @param {string} id 
 	 * @param {[string, string]} name 
@@ -13,6 +28,12 @@ class CandyItems{
 		this.data[id] = new CandyItems(id, name, price, num, type)
 		return this.data[id]
 	}
+	/**
+	 * 确认物品和对应数据确切存在并返回数据
+	 * @param {string} id 
+	 * @param {string} prop 
+	 * @returns {CandyItems}
+	 */
 	static check(id, prop){
 		let data = this.data[id]
 		if(!data) throw new Error('no such item:', id)
@@ -22,7 +43,7 @@ class CandyItems{
 		else return data
 	}
 	/**
-	 * 
+	 * 获取物品或物品内的某个值
 	 * @param {string} id 
 	 * @param {string} prop 
 	 * @returns {CandyItems | void}
@@ -36,6 +57,10 @@ class CandyItems{
 		else return data
 	}
 	/**
+	 * 初始化游戏物品
+	 */
+	static init = setupVanillaItems
+	/**
 	 * 
 	 * @param {string} type 
 	 * @param {string} id 
@@ -43,7 +68,6 @@ class CandyItems{
 	 * @param {number} price 
 	 * @param {number} num 
 	 */
-	static init = setupVanillaItems
 	constructor(id, name, price, num, type='items'){
 		this.type = type
 		this.id = id
@@ -55,32 +79,65 @@ class CandyItems{
 		this.tags = []
 		this.usage = 1
 	}
+	/**
+	 * 获取对应的值
+	 * @param {string} prop 
+	 * @param {number} val 
+	 * @returns
+	 */
 	get(prop, val){
 		if(!this[prop]){
 			this[prop] = val
 		}
 		return this[prop]
 	}
+	/**
+	 * 更新或设置对应的值
+	 * @param {string} prop 
+	 * @param {number} val 
+	 * @returns {CandyItems}
+	 */
 	set(prop, val){
 		this[prop] = val
 		return this
 	}
+	/**
+	 * 一键设置药丸
+	 * @returns {CandyItems}
+	 */
 	isPill(){
 		this.tags.push('pill')
 		this.size = 'pill'
 		return this
 	}
+
+	/**
+	 * 一键设置针剂
+	 * @returns {CandyItems}
+	 */
 	isInject(){
 		this.tags.push('inject')
 		this.size = 'inject'
 		return this
 	}
+
+	/**
+	 * 设置物品说明
+	 * @returns {CandyItems}
+	 */
 	setInfo(EN, CN){
 		this.info = [EN ?? CN, CN ?? EN]
 		return this
 	}
-
-	//安全剂量/短期内嗑多少上瘾/引起戒断反应的时间（小时）/彻底戒断所需日数/起效时长（小时）
+	/**
+	 * 设置上瘾相关各数值
+	 * @param {number} threshold 安全剂量
+	 * @param {number} maxOD 短期内多少嗑多少上瘾
+	 * @param {number} withdraw 引起戒断反应所需时间（小时）
+	 * @param {number} clear 彻底戒断所需日数
+	 * @param {number} hours 起效时长（小时）
+	 * @returns 
+	 */
 	setAddict(threshold=1, maxOD=5, withdraw=3*24, clear=7, hours=1){
 		this.threshold = threshold
 		this.maxOD = maxOD
@@ -90,37 +147,67 @@ class CandyItems{
 		return this
 	}
 
-	//日常效果
+	/**
+	 * 设置每日效果
+	 * @param {function} callback 
+	 * @returns 
+	 */
 	setDayEffect(callback){
 		this.onDay = callback
 		return this
 	}
-	//戒断反应
+	/**
+	 * 设置戒断反应
+	 * @param {function} callback 
+	 * @returns 
+	 */
 	setWithdraw(callback){
 		this.withdraw = callback
 		return this
 	}
-	//药效上头时的效果
+	/**
+	 * 药效起作用时的持续效果
+	 * @param {function} callback 
+	 * @returns 
+	 */
 	setHigh(callback){
 		this.onHigh = callback
 		return this
 	}
-	//药效失效时的副作用
+	/**
+	 * 药效失效时的副作用效果
+	 * @param {funciton} callback 
+	 * @returns 
+	 */
 	setAfter(callback){
 		this.onAfter = callback
 		return this
 	}
 
-	//使用时的效果
+	/**
+	 * 使用时的常规效果
+	 * @param  {Array<[string, number]|[string, number, 'p']>} effects 
+	 * @returns 
+	 */
 	setEffect(...effects){
 		this.effects = effects
 		return this
 	}
-
+	/**
+	 * 设置标签
+	 * @param  {string[]} tags 
+	 * @returns 
+	 */
 	setTags(...tags){
 		this.tags.push(...tags)
 		return this
 	}
+	/**
+	 * 使用效果的处理
+	 * @param {string} param 
+	 * @param {number} value 
+	 * @param {'p'|void} method 
+	 */
 	doDelta(param, value, method){
 		if(this.type == 'drugs' || this.type == 'medicine'){
 			let { taken } = V.candyDrug[this.id]
@@ -138,6 +225,9 @@ class CandyItems{
 			else wikifier(param,-value);
 		}
 	}
+	/**
+	 * 使用效果的处理
+	 */
 	onUse(){
 		this.effects.forEach((set)=>{
 			let [param, min, method] = set;

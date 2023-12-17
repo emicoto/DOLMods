@@ -13,6 +13,13 @@ V.iManager = {
     global : 1, //堆叠倍率
     disableStack: false, //关闭堆叠限制
     disablePockets: false, //关闭格子限制，同时禁用背包功能。道具栏直接从V.iStorage.home使用所有物品，但依然有仓储功能
+    status:{
+        body:'naked',
+        bag:'none',
+        cart:'none',
+        hole:'none',
+        wallet:'none',
+    }
 }
 
 function getItemInfo(count,pos){
@@ -26,7 +33,7 @@ function getItemInfo(count,pos){
         pos:[pos]
     })
 }
-const ItemPocket = ["body","bag","cart","hole"]
+const ItemPocket = ["bag","body","cart","hole"]
 
 
 /**
@@ -42,13 +49,14 @@ function pocketItem(itemId, num){
     this.id = data.id
     this.name = lanSwitch(data.name)
     this.count = num
+    this.pocket = 'body'
 }
 
 const iManager = {
     /**
      * 获取物品的可堆叠大小
      * @param {string} itemId 
-     * @returns {CandyItems}
+     * @returns {number}
      */
     getStackSize : function(itemId){
         let item = CandyItems.get(itemId)
@@ -61,7 +69,7 @@ const iManager = {
             return 1
         }
         else if(V.iManager.disableStack === true ){
-            return 10000000000000000 //应该完全禁用，但麻烦，干脆弄个除了作弊不会到达的数字。
+            return Math.pow(10, 20) //应该完全禁用，但麻烦，干脆弄个除了作弊不会到达的数字。
         }
 
         //默认最大可能得堆叠上限为1k
@@ -206,17 +214,16 @@ const iManager = {
 
     /**
      * 转移物品时显示用文本。 重复的物品会预先合并好
-     * @param {string} pos 
-     * @param {Array<{name, count}>} itemlist 
+     * @param {Array<{pos:string, item:pocketItem}> transferDetail
      * @returns {string}
      */
-    transferMessage : function(pos, itemlist){
-        const message = this.transferMsg[pos];
-        if( typeof message !== "function") return '';
-        return itemlist.reduce((res,item)=>{
-            res+= message(item)
+    transferMessage : function(transferDetail){
+        return transferDetail.reduce((res, {pos, item})=>{
+            const message = this.transferMsg[pos]
+            if(typeof message !== "function" ) return res;
+            res += message(item);
             return res;
-        },"")
+        }, '')
     },
     /**
      * 检测身上可用物品格
@@ -241,7 +248,7 @@ const iManager = {
      */
     MaxSlots : {
         body(){
-            return this.checkBodySlots()
+            return iManager.checkBodySlots()
         },
         hole(){
             return currentSkillValue('promiscuity') > 80 ? 2 : 0
@@ -338,6 +345,26 @@ const iManager = {
         }, { slots:[ ], total: 0 })
     },
 
+    objPocket(items){
+        let obj = {};
+        items.forEach((item)=>{
+            if(!obj[item.id]){
+                obj[item.id] = {
+                    type: item.type,
+                    id: item.id,
+                    name: item.name,
+                    count: item.count,
+                    pocekt: item.pocekt
+                }
+            }
+            else{
+                obj[item.id].count += item.count
+            }
+        })
+
+        return obj
+    },
+
     shiftStacks : function(stacks, amount){
         stacks.reduce((left, item)=>{
             if(left == 0) return left;
@@ -358,13 +385,14 @@ const iManager = {
             let item
             for(let i=0; i < count; i++){
                 item = result.items.pop()
+                item.pocekt = pos
                 pocket.push(item)
+                result.details.push({ pos, item })
                 if(result.items.length == 0) break
             }
-            result.lastPos = pos;
-            result.lastCount = item.count
+            result.last = item;
             return result
-        }, { lastPos: '' , items, lastCount:0 })
+        }, { items, last:null, details:[]})
     },
     /**
      * 物品获得时的处理。将返回显示用文本。
@@ -405,16 +433,17 @@ const iManager = {
         if (Slots.total > 0){          
             leftItems = this.shiftSlots(Slots.slots, clone(items))
 
-            //如果这里已经处理完了，根据最后处理的口袋抛个提示
+            //如果这里已经处理完了，根据最后处理的位置抛个提示
             if(leftItems.items.length == 0 ){
-                leftitem = leftItems.lastCount
-                return this.transferMsg[leftItems.lastPos](leftitem)
+                return this.transferMsg[leftItems.last.pocket](last)
             }
         }
 
         //处理溢出的部分。
         //先统计一下总数
-        leftitem.count = leftItems.reduce((total, item)=>{ total += item.count; return total }, 0)
+        leftitem.count = leftItems.items.reduce((result, item)=>{
+            result += item.count; return result
+        }, 0)
 
         //根据所在地点判断获取提示信息
         return this.dropOrTransferItems(leftitem)
@@ -457,7 +486,7 @@ const iManager = {
         //学校的储物柜是免费的。
         if(getLocation() == 'school') return true;
         //其他地方的储物柜需要解锁。
-        if(V.iStorage.lockerOwned[getLocation()] == 0) return false;
+        return V.iStorage.lockerOwned[getLocation()] == 1
     },
 
     //获取所在地的藏物点。
@@ -474,6 +503,29 @@ const iManager = {
         return (itemlist.length < 20 && !itemlist.includes(itemId)) || itemlist.includes(itemId)
     },
 
+    sortPocket(pocket, max){
+        let items = []
+        let leftItems = []
+        for( let i=0; i < max; i++ ){
+            let item = pocket[i]
+            let size = iManager.getStackSize(item.id)
+            if(item.count > size){
+                let left = clone(item)
+                item.count = size
+                left.count -= size
+
+                left = iManager.splitItems(left)
+                leftItems.push(...left)
+            }
+            items.push(pocket.deleteAt[i])
+        }
+        if(pocket.length > 0){
+            leftItems.push(...pocket)
+        }
+
+        return { items, leftItems }
+    },
+
     //定期更新口袋和容器的堆叠，并进行爆衣检测。
     updatePockets(situation){
         //初始化
@@ -487,23 +539,95 @@ const iManager = {
         this.saveSlotsStatus()
 
         //更新背包堆叠情况。如果爆了就清除多的物品并扔出提示文本
+        let leftItems = []
+
+        for(let i in V.pockets){
+            let res = this.sortPocket(V.pockets[i], this.MaxSlots[i]())
+            V.pockets[i] = res.items
+            leftItems.push(...res.leftItems)
+        }
+
+        //如果物品没有溢出就在这里结束，没有额外提示消息。
+        if(leftItems.length == 0) return;
+
+        //如果背包、手推车遗失，会在遗失判定时同时清理掉物品。
+        //先整理多余物品到已有堆叠中
+        leftItems.forEach((item)=>{
+            let { total, stacks } = this.getStackFromPockets(item.id)
+            if( total > 0 ){
+                item.count = this.shiftStacks(stacks, item.count)
+            }
+        })
+        //清理掉已清空的物品
+        leftItems = leftItems.filter(item => item.count > 0)
+        
+        //看看有无空间塞多出来的物品
+        let empty = this.getEmptySlots()
+
+        //如果有空位就先转移
+        if(empty.total > 0){
+            let result = this.shiftSlots(empty.slots, leftItems)
+            leftItems = result.items
+
+            if(leftItems.length == 0){
+                return this.transferMessage(result.details)
+            }
+        }
+
+        //如果有剩余，或者上面检测时没有空余位置的，就看看是就地转移物品到安全点或爆掉落
+        if(leftItems.length > 0){
+            let html = ''
+
+            leftItems.forEach((item)=>{
+                if(item.pocekt == 'body' && V.iManager.textevent.body == 1){
+                    html += lanSwitch('', '装在衣服口袋里的物品，伴随着衣服的破碎掉落到地上了。')
+                    V.iManager.textevent.body = 0
+                }
+
+                if(item.pocekt == 'body' && V.iManager.textevent.body == 2){
+                    html += lanSwitch('', '你更换了衣服，多余的物品被你整理出来。')
+                    V.iManager.textevent.body = 0
+                }
+
+                if(V.iManager.textevent.bag == 1 && item.pocekt == 'bag'){
+                    html += lanSwitch('', '你更换了个更小的背包，多余的物品被你整理出来。')
+                    V.iManager.textevent.bag = 0
+                }
+
+                if(V.iManager.textevent.cart == 1 && item.pocekt == 'cart'){
+                    html += lanSwitch('', '你更换了个更小的推车，多余的物品被你整理出来。')
+                    V.iManager.textevent.cart = 0
+                }
+
+                if(V.iManager.textevent.hole == 1 && item.pocekt == 'hole'){
+                    html += lanSwitch('', '你的淫荡度不足以将物品继续存放在肠道里。因为受到刺激，存放在肠内的物品被排放了出来。')
+                    V.iManager.textevent.hole = 0
+                }
+
+                html += this.dropOrTransferItems(item)
+            })
+
+            new Wikifier(null, `<<append #addMsg transition>>${html}<</append>>`)
+        }
 
     },
 
-    onEquipBag(itemId){
-
-
+    onEquip(pos, itemId){
+        V.pocekt[pos+'type'] = itemId
         this.updatePockets()
     },
 
-    onUnEquipBag(itemId){
-        
-        
+    onUnEquip(pos){
+        V.pocket[pos+'type'] = 'none'
         this.updatePockets()
     },
 
     checkBroken(){
-        if( this.MaxSlots.body() < V.iManager.temp.body){
+        if (this.MaxSlots.body() < V.iManager.temp.body && this.MaxSlots.body() == 4 ){
+            V.iManager.status.body = 'changed';
+            V.iManager.textevent.body = 2;
+        }
+        else if( this.MaxSlots.body() < V.iManager.temp.body){
             V.iManager.status.body = 'broken';
             V.iManager.textevent.body = 1;
         }
@@ -511,16 +635,23 @@ const iManager = {
             V.iManager.status.body = 'clotheson'
         }
         
-        if( this.MaxSlots.bag() < V.iManager.temp.bag && this.MaxSlots.bag() == 0 ){
-            V.iManager.status.bag = 'lost';
-            V.iManager.textevent.bag = 1;
+        if( this.MaxSlots.bag() < V.iManager.temp.bag && this.MaxSlots.bag() > 0 ){
+            V.iManager.status.bag = 'changed';
+            V.iManager.textevent.bag = 1
         }
-        else if( this.MaxSlots.bag() < V.iManager.temp.bag && this.MaxSlots.bag() > 0 ){
-            V.iManager.status.bag = 'change';
-            V.iManager.textevent.bag = 2
+        else if(this.MaxSlots.bag() >= V.iManager.temp.bag  && this.MaxSlots.bag() > 0){
+            V.iManager.status.bag = 'equiped';
         }
 
-        else if( this.MaxSlots.hole < V.iManager.temp.hole ){
+        if( this.MaxSlots.cart() < V.iManager.temp.cart && this.MaxSlots.cart() > 0 ){
+            V.iManager.status.cart = 'changed'
+            V.iManager.textevent.cart = 1
+        }
+        else if(this.MaxSlots.bag() >= V.iManager.temp.cart && this.MaxSlots.cart() > 0){
+            V.iManager.status.cart = 'equiped'
+        }
+
+        if( this.MaxSlots.hole < V.iManager.temp.hole ){
             V.iManager.status.hole = 'fit';
             V.iManager.textevent.hole = 1;
         }

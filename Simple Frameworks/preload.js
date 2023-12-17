@@ -1259,7 +1259,7 @@
 		'Widgets Settings':[
 			{
 				src:'$NPCName[_npcId].nam',
-				to:'$NPCName[_npcId].description'
+				to:'$NPCName[_npcId].displayname'
 			}
 		],
 		'Widgets Named Npcs':[
@@ -1271,11 +1271,11 @@
 		'Widgets':[
 			{
 				srcgroup:'\t_npcData.nam',
-				to:'\t_npcData.description'
+				to:'\t_npcData.displayname'
 			},
 			{
 				srcgroup:'<<print _npcData.nam',
-				to:'<<print _npcData.description'
+				to:'<<print _npcData.displayname'
 			}
 		],
 		'Widgets Cabin':[
@@ -1292,6 +1292,24 @@
 			{
 				src:'<<widget "undergroundCellOptions">>',
 				applyafter:'\n<<ExtraLinkZone>>\n'
+			}
+		],
+		'Widgets Attitudes':[
+			{
+				src:'<<if _potentialLoveInterests.length lte 1>>',
+				applybefore:'\n<<run setup.ModLoveInterest()>>\n',
+			},
+			{
+				srcgroup:'<<optionsfrom _potentialLoveInterests>>',
+				to:'<<optionsfrom _loveInterestSelections>>'
+			},
+			{
+				srcgroup:'<<optionsfrom _loveInterestcn>>',
+				to:'<<optionsfrom _loveInterestSelections>>'
+			},
+			{
+				src:'<<run _potentialLoveInterests.delete($loveInterest.primary)>>',
+				applyafter:'<<run let key = C.npc[$loveInterest.primary].displayname; delete _loveInterestSelections[key]>>'
 			}
 		]
 	}
