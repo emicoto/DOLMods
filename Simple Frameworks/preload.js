@@ -1450,7 +1450,7 @@
 			if(txt.includes('<<if') === false && txt.count('<br><br>') >= 1 ){
 				txt = txt.split('<br><br>')
 				txt[txt.length-1] = txt[txt.length-1]  + "\n<div id='addAfterMsg'></div>"
-				txt.join('<br><br>')
+				txt = txt.join('<br><br>')
 
 				patch = true
 	
@@ -1458,7 +1458,7 @@
 		}
 	
 		if(!patch){
-			txt.replace('<<effects>>', "<<effects>><div id='addAfterMsg'></div>")
+			txt = txt.replace('<<effects>>', "<<effects>><div id='addAfterMsg'></div>")
 		}
 	
 		if(patch){
