@@ -10,6 +10,8 @@ function simpleEjaculation(){
         else
             wikifier('famerape', 1);
 
+        wikifier('personselect', i)
+
         if(wearingCondom(i)){
             if(V.NPCList[i].condom.state == 'defective')
                 T.condomResult = 'leaked';
@@ -127,9 +129,9 @@ function simpleEjaculation(){
                 words = [
                     lanSwitch(`Even <<he>> just cum but <<his>> $NPCList[${i}].penisdesc still hard, hard enough to continues fuck you.`, 
                               `明明射了但<<his>>的$NPCList[${i}].penisdesc依旧坚挺，继续操弄着你。`),
-                    lanSwitch(`Even thos <<he>> still not satisfied, <<his>> $NPCList[${i}].penisdesc even fucks harder and harder, with a low growls he continues to shake his hips and fuck you hard.`,
+                    lanSwitch(`Even those <<he>> still not satisfied, <<his>> $NPCList[${i}].penisdesc even fucks harder and harder, with a low growls he continues to shake his hips and fuck you hard.`,
                               `即使如此<<he>>依然不满足，<<his>> $NPCList[${i}].penisdesc 甚至越战越猛，越战越坚挺，他低吼一声继续摆动腰身狠狠地操干你。`),
-                    lanSwitch(`Although he has just cum, but <<he>> quickly recovers and vigorously slaps your ass then continues his move.`,
+                    lanSwitch(`Although he has just cum, but <<he>> quickly recovers and vigorously slaps your ass then continues <<his>> move.`,
                               `虽然刚射精，但<<he>>很快又恢复了过来，大力拍了拍你的屁股然后继续刚才的动作。`)
                 ]
 
@@ -154,7 +156,8 @@ function simpleEjaculation(){
     }
 
     if(html.length > 2){
-        new Wikifer(null, `<<append #addAfterMsg transition>>${html}<br><</append>>`)
+        console.log(html)
+        T.outputHtml = html
     }
 }
 
@@ -218,5 +221,11 @@ $(document).on(':passageinit', ()=>{
         setTimeout(()=>{
             iModManager.setCf('longerMult', 2.5)
         }, 80)
+    }
+})
+
+$(document).on(":passagedisplay", ()=>{
+    if(T.outputHtml){
+        new Wikifier(null, `<<append #addAfterMsg transition>>${T.outputHtml}<br><</append>>`)
     }
 })
