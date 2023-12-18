@@ -122,6 +122,39 @@ const check = {
 
 window.check = check
 
+
+function sexSwitch(npc, female,male){
+    let gender = 'f'
+    if(npc !== 'pc'){
+        gender = C.npc[npc].gender
+    }
+    else{
+        gender = V.player.gender_appearance
+    }
+
+    if(gender == 'm'){
+        return male
+    }
+
+    return female
+}
+
+window.sexSwitch = sexSwitch
+DefineMacroS('sexSwitch', sexSwitch)
+
+
+function cond(...condtxt){
+    for(let i=0; i<condtxt.length; i++){
+        if(condtxt[i][0]){
+            return condtxt[i][1]
+        }
+
+        return condtxt[condtxt.length-1][1]
+    }
+}
+window.cond
+DefineMacroS('cond', cond)
+
 const cntv = {
     '设置':function(prop, value){
         V.iModValues[prop] = value;
@@ -173,31 +206,11 @@ const cntv = {
             return meek
     },
 
-    '性别差分':function(npc, female, male){
-        let gender = 'f'
-        if(npc !== 'pc'){
-            gender = C.npc[npc].gender
-        }
-        else{
-            gender = V.player.gender
-        }
+    '性别差分': sexSwitch,
 
-        if(gender == 'm'){
-            return male
-        }
+    '条件分支': cond,
 
-        return female
-    },
-
-    '条件分支':function(...condtxt){
-        for(let i=0; i<condtxt.length; i++){
-            if(condtxt[i][0]){
-                return condtxt[i][1]
-            }
-
-            return condtxt[condtxt.length-1][1]
-        }
-    },
+    '概率差分': window.maybe,
 
     '好感变化':function(npc, value){
         C.npc[npc].love += value
@@ -243,8 +256,8 @@ function CNCodeTrans(key, ...args){
     return cntv[key](...args)
 }
 
-
 DefineMacroS('cntv', CNCodeTrans)
+
 
 $(document).on(':passageready', ()=>{
     if(!V.iModValues){
@@ -253,5 +266,9 @@ $(document).on(':passageready', ()=>{
 
     if(!V.iModNPC){
         V.iModNPC = {}
+    }
+
+    if(!V.iModOptions){
+        V.iModOptions = {}
     }
 })

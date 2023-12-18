@@ -42,7 +42,7 @@
 			},
 			{
 				src:'<<goo>>',
-				applybefore:'\n\t\t\t<<ModCaptionAfterDescription>>\n\t\t\t<<goo>>\n\t\t</div>'
+				to:'\n\t\t\t<<ModCaptionAfterDescription>>\n\t\t\t<<goo>>\n\t\t</div>'
 			}
 		],
 		'Bath':[

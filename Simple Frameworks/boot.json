@@ -12,9 +12,9 @@
   "styleFileList": [
   ],
   "scriptFileList": [
-    "CNCodeResolver.js",
     "selectcase.js",
     "util.js",
+    "CNCodeResolver.js",
     "newNPC.js"
   ],
   "tweeFileList": [],

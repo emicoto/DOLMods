@@ -446,7 +446,10 @@ const iManager = {
         }, 0)
 
         //根据所在地点判断获取提示信息
-        return this.dropOrTransferItems(leftitem)
+       let html = this.dropOrTransferItems(leftitem)
+       if(html){
+        new Wikifier(null, `<<append #addMsg transition>>${html}<</append>>`)
+       }
 
     },
 
