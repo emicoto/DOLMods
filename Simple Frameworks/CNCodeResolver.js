@@ -307,7 +307,7 @@ const iModManager = {
             this.init(type)
         }
 
-        return V[type][prop]
+        return V['iMod'+type][prop]
     }
 
 }

@@ -197,10 +197,26 @@ function longerCombat(){
 
 DefineMacroS('longerCombat', longerCombat)
 
+function checkLCM(){
+    setup.longerCombatInit = true
+}
 
-$(document).on(':passagestart', ()=>{
+Save.onLoad.add(checkLCM)
+
+$(document).on(':passageinit', ()=>{
     //初始化
-    if(!iModManager.has('Options', 'longerMult')){
-        iModManager.setCf('longerMult', 2.5)
+    if(setup.longerCombatInit === true ){
+        setTimeout(()=>{
+            if(!iModManager.has('Configs', 'longerMult')){
+                iModManager.setCf('longerMult', 2.5)
+            }
+    
+            delete setup.longerCombatInit
+        }, 30)
+    }
+    else if(passage() == 'Start'){
+        setTimeout(()=>{
+            iModManager.setCf('longerMult', 2.5)
+        }, 80)
     }
 })
