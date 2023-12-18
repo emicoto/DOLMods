@@ -161,10 +161,10 @@ const cntv = {
     },
 
     'npc设置':function(npc, prop, value){
-        if(!V.iModNPC[npc]){
-            V.iModNPC[npc] = {}
+        if(!V.iModNpc[npc]){
+            V.iModNpc[npc] = {}
         }
-        V.iModNPC[npc][prop] = value
+        V.iModNpc[npc][prop] = value
     },
 
     '获取变量':function(prop){
@@ -184,17 +184,17 @@ const cntv = {
     },
 
     '获取npc变量':function(npc, prop){
-        return V.iModNPC[npc][prop]
+        return V.iModNpc[npc][prop]
     },
 
     'npc变量':function(npc, prop){
-        return V.iModNPC[npc][prop]
+        return V.iModNpc[npc][prop]
     },
     'npc变量加减':function(npc, prop, value){
-        if(!V.iModNPC[npc]){
-            V.iModNPC[npc] = {}
+        if(!V.iModNpc[npc]){
+            V.iModNpc[npc] = {}
         }
-        V.iModNPC[npc][prop] += value
+        V.iModNpc[npc][prop] += value
     },
 
     '态度差分':function(bratty, neutral, meek){
@@ -259,16 +259,64 @@ function CNCodeTrans(key, ...args){
 DefineMacroS('cntv', CNCodeTrans)
 
 
-$(document).on(':passageready', ()=>{
-    if(!V.iModValues){
-        V.iModValues = {}
+const iModManager = {
+    setCf: function(prop, value){
+       this.init('iModConfigs')
+        V.iModConfigs[prop] = value;
+    },
+
+    setV: function(prop, value){
+        this.init('iModValues')
+        V.iModValues[prop] = value;
+    },
+
+    setNpc: function(prop, value){
+        this.init('iModNpc')
+        V.iModNpc[prop] = value;
+    },
+
+    init: function(type){
+
+        if(['iModConfigs', 'iModValues', 'iModNpc'].includes(type) == false){
+            return
+        }
+
+        if(!V[type]){
+            V[type] = {}
+        }
+
+        if(typeof V[type].set !== 'function'){
+            V[type].set = function(prop, value){
+                V[type][prop] = value;
+            }
+        }
+
+        if(typeof V[type].get !== 'function'){
+            V[type].get = function(prop, value){
+                if(!V[type][prop]){
+                    V[type][prop] = value ?? 0
+                }
+                return V[type][prop]
+            }
+        }
+    },
+
+    has:function(type, prop){
+
+        if(!V['iMod'+type]){
+            this.init(type)
+        }
+
+        return V[type][prop]
     }
 
-    if(!V.iModNPC){
-        V.iModNPC = {}
-    }
+}
 
-    if(!V.iModOptions){
-        V.iModOptions = {}
-    }
-})
+window.iModManager = iModManager
+
+function iModonReady(){
+    iModManager.init('iModConfigs');
+    iModManager.init('iModValues');
+    iModManager.init('iModNpc');
+}
+DefineMacroS('iModonReady', iModonReady)

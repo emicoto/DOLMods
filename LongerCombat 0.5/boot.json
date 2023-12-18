@@ -2,6 +2,8 @@
   "name": "LongerCombat",
   "version": "2.0.0",
   "styleFileList": [],
+  "scriptFileList_inject_early": [
+  ],
   "scriptFileList": [
     "longercombat.js"
   ],
@@ -32,6 +34,10 @@
     },
     {
       "modName": "ReplacePatcher",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "Simple Frameworks",
       "version": "^1.0.0"
     }
   ]

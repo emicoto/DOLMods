@@ -80,6 +80,10 @@ window.simpleFrameworks = {
         iModInit:()=>{
             return `<<iModInitFunction>>\n\n`
         },
+        iModReady:()=>{
+            return `<<iModonReady>>\n\n`
+        },
+        
         iModsOptions:()=>{
 		return `
 <<setupOptions>>
