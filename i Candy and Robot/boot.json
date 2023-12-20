@@ -9,7 +9,7 @@
     "JS/ItemFrameworks.js",
     "JS/ItemManager.js",
     "JS/ItemList.js",
-    "JS/Utils.js",
+    "JS/UtilWidget.js",
     "JS/Setup.js",
     "JS/processCheck.js",
     "JS/newNPC.js"

@@ -16,8 +16,8 @@ const Foods = [
 	size: "tiny",
 
 	effects: [
-	["trauma", 5],
-	["hunger", 10],
+		["trauma", 5],
+		["hunger", 10],
 	],
 },
 
@@ -38,8 +38,8 @@ const Foods = [
 	size: "small",
 
 	effects: [
-	["trauma", 5],
-	["hunger", 10],
+		["trauma", 5],
+		["hunger", 10],
 	],
 },
 
@@ -59,7 +59,9 @@ const Foods = [
 	num: 1,
 	size: "big",
 
-	effects: [["tiredness", 64]],
+	effects: [
+		["tiredness", 64]
+	],
 },
 
 {
@@ -79,8 +81,8 @@ const Foods = [
 	num: 1,
 
 	effects: [
-	["tiredness", 40],
-	["hunger", 100],
+		["tiredness", 40],
+		["hunger", 100],
 	],
 },
 
@@ -101,9 +103,9 @@ const Foods = [
 	size: "medium",
 
 	effects: [
-	["trauma", 16],
-	["hunger", 16],
-	["stress", 1],
+		["trauma", 16],
+		["hunger", 16],
+		["stress", 1],
 	],
 },
 
@@ -178,8 +180,8 @@ const Foods = [
 	tags: ["drink", "canned"],
 
 	id: "cola",
-	name: ["Cola", "可乐"],
-	plural:"Colas",
+	name: ["Can of Cola", "可乐"],
+	plural:"Cans of Cola",
 
 	num: 1,
 	price: 200,
@@ -194,7 +196,7 @@ const Foods = [
 
 Items.addItems(Foods, 'foods')
 
-const Specal = [
+const Special = [
 {
 	type: "items",
 	tags: ["liquid", "lubricant"],
@@ -245,7 +247,7 @@ const Specal = [
 ]
 
 
-Items.addItems(Specal)
+Items.addItems(Special)
 
 const Containers = [
 	{
@@ -253,6 +255,7 @@ const Containers = [
 
 	  id: "satchel",
 	  name: ["Small Satchel", "小挎包"],
+	  plural:"Small Satchels",
 
 	  info: ["A small, cute satchel.", "一个小巧可爱的挎包。"],
 
@@ -267,6 +270,7 @@ const Containers = [
 
 	  id: "leathersatchel",
 	  name: ["Leather Satchel", "皮包"],
+	  plural:"Leather Satchels",
 
 	  info: ["A stylish designed, leather satchel.", "一个时尚的皮包。"],
 
@@ -281,6 +285,7 @@ const Containers = [
 
 	  id: "schoolbag",
 	  name: ["School Bag", "书包"],
+	  plural:"School Bags",
 
 	  info: ["A common school bag used by students.", "学生常用的书包。"],
 
@@ -295,6 +300,7 @@ const Containers = [
 
 	  id: "backpack",
 	  name: ["Backpack", "大背包"],
+	  plural:"Backpacks",
 
 	  info: [
 		"A large backpack with plenty of capacity.",
@@ -313,6 +319,7 @@ const Containers = [
 
 	  id: "hikingpack",
 	  name: ["Hiking Backpack", "登山包"],
+	  plural:"Hiking Backpacks",
 
 	  info: [
 		"Extra large capacity backpack for hikinA collapsible cartg.",
@@ -330,6 +337,7 @@ const Containers = [
 
 	  id: "cart",
 	  name: ["Simple Cart", "简易手推车"],
+	  plural:"Simple Carts",
 
 	  num: 1,
 	  price: 13620,
@@ -343,7 +351,8 @@ const Containers = [
 	  tags: ["cart"],
 
 	  id: "xlcart",
-	  name: ["XL Outdoor Cart", "可折叠户外手推车"],
+	  name: ["Outdoor Cart", "可折叠户外手推车"],
+	  plural:"Outdoor Carts",
 
 	  num: 1,
 	  price: 38960,
@@ -364,7 +373,8 @@ const Addictive = [
 	tags: ["addiction","smoke", "nicotine"],	
 
 	id: "cigarettes",
-	name: ["Cigarettes", "香烟"],
+	name: ["Cigarette", "香烟"],
+	plural:"Cigarettes",
 
 	info: ["Cheap cigarettes, smells burnt", "廉价的香烟，一股烧焦味"],
 
@@ -385,10 +395,11 @@ const Addictive = [
 
 	id: "marlboro",
 	name: ["Marlboro 100%", "马宝龙香烟"],
+	plural:"Box of Marlboro 100%",
 
 	info: [
-	"A brand cigarettes with great flavor", 
-	"一个品牌香烟，味道香醇"
+		"A brand cigarettes with great flavor", 
+		"一个品牌香烟，味道香醇"
 	],	 
 
 	num: 18,
@@ -406,11 +417,12 @@ const Addictive = [
 	tags: ["addiction","drink","alcohol","canned"],	 
 
 	id: "beer",
-	name: ["Beer", "啤酒"],
+	name: ["Can of Beer", "啤酒"],
+	plural:"Cans of Bear",
 
 	info: [
-	"Cheep beer, tastes like alcohol",
-	"便宜的啤酒，尝起来跟和酒精没两样",
+		"Cheep beer, tastes like alcohol",
+		"便宜的啤酒，尝起来跟和酒精没两样",
 	],	
 
 	num: 1,
@@ -427,7 +439,8 @@ const Addictive = [
 	tags: ["addiction","drink","alcohol", "canned"],
 
 	id: "blackbeer",
-	name: ["Black Beer", "黑啤酒"],
+	name: ["Can of Black Beer", "黑啤酒"],
+	plural:"Cans of Black Beer",
 
 	info: ["Black bear, a strong flavor", "黑啤，味道浓郁十分上头"],
 
@@ -442,9 +455,8 @@ const Addictive = [
 	],
 },
 ];
-  
-  
-Items.addItems(Addictive, "items")
+
+Items.addItems(Addictive)
 
 
 function onUseDrags(){
@@ -483,6 +495,7 @@ const Medicines = [
 		
 		id: "serotonin",
 		name: ["Serotonin", "羟色胺"],
+		plural:"Bottle of Serotonin",
 
 		info: ["Help you relax and uplifit your mood", "具有放松和提振心情的作用"],		
 
@@ -505,6 +518,7 @@ const Medicines = [
 
 		id: "melatonin",
 		name: ["Melatonin", "褪黑素"],
+		plural:"Bottle of Melatonin",
 
 		info: ["Help for sleep and reduce stress", "能帮助睡眠以及消减压力"],
 		
@@ -527,6 +541,7 @@ const Medicines = [
 		
 		id: "neuroOptimization",
 		name: ["Neuro Optimization", "神经优化片"],
+		plural:"Bottle of Neuro Optimization",
 
 		info: ["Improves the brain and memory", "提神醒脑，增强记忆力"],
 
@@ -550,6 +565,7 @@ const Medicines = [
 
 		id: "aminobutyric",
 		name: ["Aminobutyric", "氨基丁酸"],
+		plural:"Bottle of Aminobutyric",
 
 		info: [
 		"Help for against depression and anxiety",
@@ -576,6 +592,7 @@ const Medicines = [
 
 		id: "painreduce",
 		name: ["Painkiller", "止痛药"],
+		plural:"Bottle of Painkiller",
 
 		info: ["Fast-acting painkiller", "速效止痛药"],		
 
@@ -598,6 +615,7 @@ const Drugs = [
 
 	id: "nzt_48",
 	name: ["NZT-48", "NZT-48"],
+	plural:"Pack of NZT48",
 
 	info: [
 	"Fabled smart drug, concentration and memory dramatically improved after taking it. But it is addictive.",
@@ -635,6 +653,7 @@ const Drugs = [
 	tags: ["risky", "addiction", "pill"],	
 	id: "heroin",
 	name: ["Heroin", "海洛因"],
+	plural:"Pack of Heroin",
 
 	info: [
 	"Recreational drugs, take away your stress and bring you peace",
@@ -675,6 +694,7 @@ const Drugs = [
 
 	id: "mdma",
 	name: ["MDMA", "摇头丸"],
+	plural:"Pack of MDMA",
 
 	info: [
 	"Stimulant drugs to eliminate pain and fatigue",
@@ -715,6 +735,7 @@ const Drugs = [
 
 	id: "amhetamine",
 	name: ["Amphetamine", "安非他命"],
+	plural:"Pack of Amphetamine",
 
 	info: [
 	"Central stimulant, will get you high to heaven",
@@ -743,8 +764,7 @@ const Drugs = [
 		wikifier("arousal", 1000, "genital");
 
 		let list = ["genital", "bottom", "breast", "mouth"];
-		let i = random(0, 4);
-		getExtraSens(list[i], 0.001 * min, 300); //时间单位：分钟
+		iUtil.getExtraSens(list.random(), 0.001 * min, 300); //时间单位：分钟
 	
 		let html =
 		  lanSwitch(
@@ -760,6 +780,7 @@ const Drugs = [
 
 	id: "canabitabacco",
 	name: ["Cannabi Tabacco", "大麻烟"],
+	plural:"Box of Cannabi Tabacco",
 
 	info: [
 	"Cigarettes made of cannabis. Have a smoke to be happy",
@@ -800,6 +821,7 @@ const Drugs = [
 
 	id: "cocaine",
 	name: ["Cocaine", "可卡因"],
+	plural:"Pack of Cocaine",
 
 	info: [
 	"Fast-acting nerve stimulant that eliminates all pain and worries.",
@@ -869,6 +891,7 @@ const Drugs = [
 
 	id: "angelpowder",
 	name: ["Angel Powder", "天使粉"],
+	plural:"Pack of Angel Powder",
 
 	info: [
 		"Fast-acting psychotropic drugs, takes you fly to heaven",
@@ -919,7 +942,7 @@ const Drugs = [
 	},
 	onDay:function(){
 		let physique = random(80, 160);
-		getPhysique(physique);
+		iUtil.getPhysique(physique);
 	
 		let will = random(10, 20);
 		wikifier("willpower", will);
@@ -959,3 +982,5 @@ const Drugs = [
 	}
 },
 ];
+
+Items.addItems(Drugs, "drugs")

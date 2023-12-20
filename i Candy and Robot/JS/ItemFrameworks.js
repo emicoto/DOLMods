@@ -542,10 +542,10 @@ class Items {
 	 */
 	doDelta(param, value, method) {
 		if (param == 'drugs') {
-			getPalam('drugged', value)
+			iUtil.getPalam('drugged', value)
 		}
 		else if (param == 'alcohol') {
-			getPalam('drunk', value)
+			iUtil.getPalam('drunk', value)
 		}
 		else {
 			if (method == 'p') wikifier(param, value, param == 'arousal' ? 'genital' : null);

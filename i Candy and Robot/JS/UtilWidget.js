@@ -96,3 +96,33 @@ const iUtil = {
 		return target
 	}
 }
+
+
+function wetAnusLub(arg){
+	V.player.bodyliquid.anus.goo += arg
+}
+DefineMacroS('anusgoo', wetAnusLub)
+
+function printMedicineLink(itemId){
+	if(!itemId) return ;
+
+	let drug = Items.get(itemId)
+	let linkname = ''
+
+	if(drug.tags.includes('pill')){
+		linkname = `${drug.name}(${drug.num}${lanSwitch('pills per bottle', '粒/瓶')})`
+	}
+	else if(drug.tags.includes('liquid')){
+		linkname = `${drug.name}(${drug.num}ml${lanSwitch(' bottle','装')})`
+	}
+	else if(drug.tags.includes('inject')){
+		linkname = `${drug.name}(${drug.num}${lanSwitch('shots per pack','管/盒')})`
+	}
+	else{
+		linkname = drug.name
+	}
+
+	return `<<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to Items.data["${key}"]>><</link>><br>`
+}
+
+DefineMacroS('iMedicineLink', printMedicineLink)
