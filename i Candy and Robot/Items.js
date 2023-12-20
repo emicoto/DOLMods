@@ -1,27 +1,3 @@
-function iRecipe(id, time = 10, ...args) {
-  this.id = id;
-  this.production = id;
-  this.givenum = 1;
-  this.time = time;
-  this.list = args;
-  this.methods = ["craft"];
-  /*
-	this.difficult = 100
-	this.skill = 'craft'
-	this.lock = true/false
-	this.requirement = ()=>{return V.iRecipe[id] !== undefined }
-	this.failproduction = itemId
-	this.failnum = 1
-	this.onSucces = callback
-	this.onFail = callback
-	this.customtext = {
-		onCraft:['', ''],
-		onSucces:['', ''],
-		onFail:['', '']
-	}
-
-*/
-}
 class Items {
   static data = {};
   static recipes = {};
@@ -357,34 +333,6 @@ function setupVanillaItems() {
 }
 
 let c = Items;
-//----------------------------------------------
-//  普通成瘾物
-//----------------------------------------------
-c.add("cigarettes", ["Cigarettes", "香烟"], 3600, 18)
-  .setInfo("Cheap cigarettes, smells burnt", "廉价的香烟，一股烧焦味")
-  .setEffect(["stress", 8], ["trauma", 8], ["nicotine", 100, "p"])
-  .set("size", "tiny")
-  .setTags("addiction", "smoke", "nicotine");
-
-c.add("marlboro", ["Marlboro 100%", "马宝龙香烟"], 6400, 18)
-  .setInfo("A brand cigarettes with great flavor", "一个品牌香烟，味道香醇")
-  .set("size", "tiny")
-  .setEffect(["stress", 12], ["trauma", 16], ["nicotine", 180, "p"])
-  .setTags("addiction", "smoke", "nicotine");
-
-c.add("beer", ["Beer", "啤酒"], 540)
-  .setInfo(
-    "Cheep beer, tastes like alcohol",
-    "便宜的啤酒，尝起来跟和酒精没两样"
-  )
-  .setEffect(["drunk", 100, "p"], ["stress", 5])
-  .setTags("addiction", "alcohol");
-
-c.add("blackbeer", ["Black Beer", "黑啤酒"], 780)
-  .setInfo("Black bear, a strong flavor", "黑啤，味道浓郁十分上头")
-  .setEffect(["drunk", 160, "p"], ["stress", 10], ["fatigue", 60])
-  .setTags("addiction", "alcohol");
-
 //----------------------------------------------
 //  普通药物（依赖性低）
 //----------------------------------------------

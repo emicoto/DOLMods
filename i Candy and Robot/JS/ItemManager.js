@@ -810,33 +810,7 @@ function lostItemsAfterRape(){
 
 }
 
-//数组和对象在DOL内部传递有蜜汁错误。所以从背包里传递过来的，是具体位置信息。
-function useItems(pocket, pos){
-	let item = V.iPockets[pocket][pos]
-	let data = Items.get(item.id)
 
-	if(data?.effects.length > 0 && typeof data.onUse !== 'function'){
-		data.effects.forEach((set)=>{
-			let [param, value, method] = set;
-
-			if(this.type == 'drugs' || this.type == 'medicine'){
-				let { taken } = V.candyDrug[this.id]
-				value = value * Math.max(1-(taken*0.1), 0.2)
-			}
-
-			data.doDelta(param, value, method);
-		})
-	}
-	else if(typeof data.onUse == 'function'){
-		data.onUse()
-	}
-
-	item.count -= data.usage
-
-	if(item.count <= 0){
-		pocket.deleteAt(pos)
-	}
-}
 
 //tending_pick, tending_harvest收获/拾取农作物时的处理
 function harvestHandle(){

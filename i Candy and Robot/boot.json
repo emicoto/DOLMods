@@ -6,8 +6,10 @@
  "scriptFileList_inject_early": [],
  "scriptFileList_preload": [],
  "scriptFileList": [
-    "JS/Items.js",
-    "JS/itemManager.js",
+    "JS/ItemFrameworks.js",
+    "JS/ItemManager.js",
+    "JS/ItemList.js",
+    "JS/Utils.js",
     "JS/Setup.js",
     "JS/processCheck.js",
     "JS/newNPC.js"
