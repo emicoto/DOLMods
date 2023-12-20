@@ -8,7 +8,8 @@
    "scriptFileList_preload": [ ],
   "styleFileList": [],
   "scriptFileList": [
-    "newNPC.js"
+    "newNPC.js",
+    "test.js"
   ],
   "tweeFileList": [
     "test.twee"

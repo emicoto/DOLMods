@@ -1,7 +1,7 @@
 function printMedicineLink(itemId){
 	if(!itemId) return ;
 
-	let drug = CandyItems.get(itemId)
+	let drug = Items.get(itemId)
 	let linkname = ''
 
 	if(drug.tags.includes('pill')){
@@ -17,7 +17,7 @@ function printMedicineLink(itemId){
 		linkname = drug.name
 	}
 
-	return `<<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to CandyItems.data["${key}"]>><</link>><br>`
+	return `<<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to Items.data["${key}"]>><</link>><br>`
 }
 
 DefineMacroS('iMedicineLink', printMedicineLink)

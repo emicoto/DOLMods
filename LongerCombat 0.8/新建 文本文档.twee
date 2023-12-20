@@ -1,0 +1,35 @@
+:: LongerCombat MidEjaculate
+<longerCombat>
+<li>
+<en>
+"Your {1} is so good, damn, I'm cumming!"
+As $NPCList[{0}].fullDescription thrust, <<he>> ejaculate deep into your womb.
+</en>
+
+<cn>
+"你的{1}实在太舒服了，该死，要射了。"
+$NPCList[{0}].fullDescription 一边抽插着，一边在你子宫深处射出了种子液。
+</cn>
+</li>
+
+<li>
+<en>
+<<He>> grabs your hair and thrusts <<his>> $NPCList[{0}].penisdesc deep into your {1} as <<he>> cums. You feel semen splash inside.
+</en>
+
+<cn>
+<<He>>拉住你的头发并用<<his>>的$NPCList[{0}].penisdesc深深地在你{1}里灌注精液。你感觉到大量的精液在从你体内迸溅而出。
+</cn>
+</li>
+
+<li>
+<en>
+<<He>> <span class="purple">grasps your throat</span> and pounds <<his>> $NPCList[{0}].penisdesc into you as <<he>> cums. Semen fills your {1} as you gasp for air.
+</en>
+
+<cn>
+<<He>><span class="purple">紧紧地握紧你的喉咙</span>并用<<his>>$NPCList[{0}].penisdesc重重地插入你的子宫深处射精。趁着精液灌满了你的{1}的空档，你大大喘了口气。
+</cn>
+
+</li>
+</longerCombat>

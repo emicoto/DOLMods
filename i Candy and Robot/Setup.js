@@ -83,7 +83,7 @@ function iCandyStatus(){
 		cv.iCandyStory[key] = {}
 	})
 
-	cv.pockets = {
+	cV.iPockets = {
 		body: [],
 		bags: [],
 		cart: [],
@@ -117,8 +117,8 @@ function iCandyStatus(){
 		}
 	}
 
-	for(let i in CandyItems.data){
-		let item = CandyItems.data[i]
+	for(let i in Items.data){
+		let item = Items.data[i]
 
 		if(item.tags.includes('addiction') && item.tags.containsAny('nicotine', 'alcohol') == false ){
 			cv.iCandyStats.drugs[i] = new addiction()
@@ -259,7 +259,7 @@ function updateObj(objname, defaultvar){
 }
 
 function updateItemObj(){
-	for(let i in CandyItems.data){
+	for(let i in Items.data){
 		if(V.candyDrug[i]?.owned > 0){
 			V.iStorage.homeItems[i] = V.candyDrug[i].owned
 			delete V.candyDrug[i].owned

@@ -46,7 +46,7 @@ setup.maxStacks = {
 
 
 function getStackSize(itemId){
-    let item = CandyItems.data[itemId]
+    let item = Items.data[itemId]
     return setup.maxStacks[item.size]
 }
 
@@ -226,7 +226,7 @@ function checkItemAvailability(item){
     let data = clone(item)
     let size = getStackSize(item.id)
 
-    let pockets = V.pockets
+    let pockets = V.iPockets
     let { body, bag, hole, cart } = pockets
 
     let stacks = {}    
@@ -299,7 +299,7 @@ function checkItemAvailability(item){
 
 //检测是否有足够空格放置物品
 function checkEmptySlots(itemlist){
-    let { body, bag, hole, cart} = V.pockets
+    let { body, bag, hole, cart} = V.iPockets
     let slots = {
         body: getMaxSlots('body') - body.length,
         bag: getMaxSlots('bag') - bag.length,
@@ -340,7 +340,7 @@ function checkEmptySlots(itemlist){
 
 //转移物品
 function makeItemTransfer(items, availability){
-    let pockets = V.pockets
+    let pockets = V.iPockets
     let msg
     let _items
 
@@ -411,7 +411,7 @@ function updatePockets(){
         let msg = ''
         let availableSlots
 
-        let leftItem = sortPockets(V.pockets[pos], getMaxSlots(pos))
+        let leftItem = sortPockets(V.iPockets[pos], getMaxSlots(pos))
         if(leftItem.length > 0){
             availableSlots = checkEmptySlots(leftItem.length)
 
@@ -463,16 +463,16 @@ function getMaxSlots(pos){
         return currentSkillValue('promiscuity') > 80 ? 2 : 0
     }
     if(pos=='bag'){
-        if(V.pockets.bagtype == 'none' || V.pockets.bagtype == 0 || V.pockets.bagtype == ''){
+        if(V.iPockets.bagtype == 'none' || V.iPockets.bagtype == 0 || V.iPockets.bagtype == ''){
             return 0
         }
-        return CandyItems.data[V.pockets.bagtype].capacity
+        return Items.data[V.iPockets.bagtype].capacity
     }
     if(pos=='cart'){
-        if(V.pockets.carttype == 'none' || V.pockets.carttype == 0 || V.pockets.carttype == ''){
+        if(V.iPockets.carttype == 'none' || V.iPockets.carttype == 0 || V.iPockets.carttype == ''){
             return 0
         }
-        return CandyItems.data[V.pockets.carttype].capacity
+        return Items.data[V.iPockets.carttype].capacity
     }
     return 0
 }
@@ -498,14 +498,14 @@ function lostItemsAfterRape(){
 
     for(let i=0; i < lost; i++){
         //优先丢身上的物品。
-        if(V.pockets.body.length > 0){
-            V.pockets.body.pop()
+        if(V.iPockets.body.length > 0){
+            V.iPockets.body.pop()
         }
-        else if(V.pockets.bag.length > 0){
-            V.pockets.bag.pop()
+        else if(V.iPockets.bag.length > 0){
+            V.iPockets.bag.pop()
         }
-        else if(V.pockets.cart.length > 0){
-            V.pockets.cart.pop()
+        else if(V.iPockets.cart.length > 0){
+            V.iPockets.cart.pop()
         }
     }
 }
@@ -513,7 +513,7 @@ function lostItemsAfterRape(){
 
 //获得物品时的处理
 function getItems(itemId, num){
-    let data = CandyItems.data[itemId]
+    let data = Items.data[itemId]
     let stack = findPockets(itemId)
     let stacksize = getStackSize(itemId)
     let msg = ''
@@ -541,7 +541,7 @@ function getItems(itemId, num){
 
 //在身上搜索物品，并返回对应obj
 function findAllPockets(itemId){
-    let { body, bag, cart, hole } = V.pockets
+    let { body, bag, cart, hole } = V.iPockets
     let _resItem
 
     const find = (obj)=>{
@@ -568,7 +568,7 @@ function findAllPockets(itemId){
 
 //在身上按类别搜索所有物品，并返回对应位置
 function findAllPocketsByType(type){
-    let { body, bag, cart } = V.pockets
+    let { body, bag, cart } = V.iPockets
     let _res
     let res = {
         body:[],
@@ -610,25 +610,25 @@ function usePocketItems(itemId){
     let item = findAllPockets(itemId)
     if(item){
         item.count --
-        CandyItems.data[item.id].onUse()
+        Items.data[item.id].onUse()
     }
 }
 
 //使用储物柜物品
 function useLockerItems(itemId){
     V.iStorage.lockers[itemId] --
-    CandyItems.data[itemId].onUse()
+    Items.data[itemId].onUse()
 }
 
 //在家使用物品
 function useItems(itemId){
     V.iStorage.home[itemId] --
-    CandyItems.data[itemId].onUse()
+    Items.data[itemId].onUse()
 }
 
 //检测是否能使用
 function checkItemUsage(itemId){
-    let data = CandyItems.data[itemId]
+    let data = Items.data[itemId]
     return data.effects?.length > 0
 }
 
@@ -650,7 +650,7 @@ function takeStorage(storage, itemId, pocket, num){
 }
 
 
-V.pockets = {
+V.iPockets = {
     body: [],
     bags: [],
     cart: [],

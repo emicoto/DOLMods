@@ -441,22 +441,14 @@ setup.addModTrait = function () {
     ]
 
     console.log(Traits)
-
-    setup.ModTraitTitle.forEach((option) => {
-        if (String(option) == `[object Object]`) {
-            T.traitLists.push({
-                title: lanSwitch(option.display),
-                traits: Array.isArray(option.traits) ? option.traits : []
-            })
-
-            Traits.push(option.title)
-        }
-    })
-
-    setup.ModTraits.forEach((trait) => {
+    const initTraits = function(trait){
         let { addto, name, cond, text, colour } = trait;
+        let index;
 
-        let index = Traits.indexOf(addto)
+        if(addto){
+            index = Traits.indexOf(addto)
+        }
+
         let option = {
             name: lanSwitch(name),
             has: typeof cond == 'function' ? cond() : cond,
@@ -464,9 +456,33 @@ setup.addModTrait = function () {
             colour,
         }
 
-        console.log(option, addto, index)
+        return [option, index]
+    }
 
-        T.traitLists[index].traits.push(option)
+    setup.ModTraitTitle.forEach((option) => {
+        if (String(option) == `[object Object]`) {
+
+            let traits = []
+
+            if(Array.isArray(option.traits)){
+                option.traits.forEach((trait)=>{
+                    const [data, index] = initTraits(trait)
+                    traits.push(data)
+                })
+            }
+
+            T.traitLists.push({
+                title: lanSwitch(option.display),
+                traits
+            })
+
+            Traits.push(option.title)
+        }
+    })
+
+    setup.ModTraits.forEach((trait) => {
+        const [data, index ] = initTraits(trait)
+        T.traitLists[index].traits.push(data)
     })
 
 }
@@ -488,7 +504,6 @@ $(document).on(':passageinit', () => {
         }, 60)
         setup.NPCFrameworkOnLoad = false
     }
-
 })
 
 $(document).on(':switchlanguage', () => {

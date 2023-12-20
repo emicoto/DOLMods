@@ -65,8 +65,12 @@ function combatEffect(){
 	//合意场景也返回.
 	if(V.consensual==0) return
 
+	if(!T.drugHtml){
+		T.drugHtml = ''
+	}
+
 	//当PC创伤高于一定程度时，NPC有一定概率会PC喂天使之吻。
-	if(V.trauma >= 2000 && V.mouthuse !== 'penis'){
+	if( V.mouthuse !== 'penis' && ( V.trauma >= 1000 || V.stress >= 1000 )){
 		for(let i=0; i < V.enemynomax; i++){
 			let npc = V.NPCList[i]
 			if(npc.stance == 'defeated' || npc.type !== 'human')
@@ -74,7 +78,7 @@ function combatEffect(){
 
 				if(random(100) > 70){
 					setup.candyDrug.angelkiss.ontake(1)
-					new Wikifier(null, `<<append #addMsg transition>>${npc.fullDescription}给你喂了颗甜甜的糖果，你感觉整个人变得轻松愉快。<<gggdrugged>><<ggghallucinogens>><</append>>`)
+					T.drugHtml += `${npc.fullDescription}给你喂了颗甜甜的糖果，你感觉整个人变得轻松愉快。<<gggdrugged>><<ggghallucinogens>><br>`
 					break
 				}
 		}
@@ -87,15 +91,21 @@ function combatEffect(){
             continue
 
 			if(npc.penis.includes('anus') && (npc.penis !== 'anus' || npc.penis !== 'anusdouble') ){
-				if(random(100) > 50){
+				if(random(100) >= 50){
 					setup.candyDrug.lubricantSP.onuse(1)
-					new Wikifier(null, `<<append #addMsg transition>>${npc.fullDescription}在你的菊部涂抹了催情润滑油。 <<gggdrugged>><</append>>`)
+					T.drugHtml +=  `${npc.fullDescription}在你的菊部涂抹了催情润滑油。 <<gggdrugged>><br>`
 				}
 			}
 	}
 
 
 }
+
+$(document).on(":passagedisplay", ()=>{
+    if(T.drugHtml.length > 2){
+        new Wikifier(null, `<<append #addMsg transition>>${T.drugHtml}<br><</append>>`)
+    }
+})
 
 function addictionPross(){
 	let Stats = V.iCandyStats

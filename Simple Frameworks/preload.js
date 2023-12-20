@@ -14,13 +14,13 @@
 		'PassageHeader':[
 			{
 				src:"<<unset $bypassHeader>>",
-				to:"<<unset $bypassHeader>>\n<<iModHeader>><div id='headerPopUp'></div>"
+				to:"<<unset $bypassHeader>>\n<div id='headerPopUp'></div><<iModHeader>>"
 			}
 		],
 		'PassageFooter':[
 			{
 				src:"<div id=\"gameVersionDisplay\">",
-				to:"<<iModFooter>><div id='footerMsg'></div>\n<div id=\"gameVersionDisplay\">"
+				to:"<div id='footerMsg'></div><<iModFooter>>\n<div id=\"gameVersionDisplay\">"
 			}
 		],
 		'StoryCaption':[
@@ -1220,8 +1220,8 @@
 		],
 		'npcNamed':[
 			{
-				src:"<</widget>>",
-				to:"<<run NamedNPC.init()>>\n\n<</widget>>",
+				src:"<<generateNPCNameHairAndEyeColors",
+				applybefore:"\n<<run NamedNPC.init()>>\n",
 			}
 		],
 		'Widgets variablesStatic':[
