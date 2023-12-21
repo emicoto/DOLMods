@@ -1,6 +1,9 @@
 :: Lune Pocket Items [widget]
+<<widget "showItemButton">>
+	<<button lanSwitch('ITEMS','道具')>><<iModReplace "pocketItems">><</button>>
+<</widget>>
 
-<<widget "ItemsOverlaySettings">>
+<<widget "pocketItems">>
 	<<replace #customOverlayTitle>><<titlePocketItems>><</replace>>
 	<<replace #customOverlayContent>><<pocketItems>><</replace>>
 <</widget>>
@@ -21,20 +24,6 @@
 	<<closeButton>>
 <</widget>>
 
-
-<<widget "printCandyItems">>
-<<if $candyItems[$args[0]] > 0 >>
-	<<set _output to lanSwitch('Eat', '吃')>>
-<<print setup.candyDrug[$args[0]].name>> x <<print $candyItems[$args[0]]>> | <<if $combat is 0>><<link _output $passage>><<run setup.candyDrug[$args[0]].onuse()>><</link>><</if>> <span class="steel"><<print setup.candyDrug[$args[0]].info>></span><br>
-<</if>>
-<</widget>>
-
-<<widget "printLuneDrug">>
-<<if $candyDrug[$args[0]].owned > 0 >>
-	<<set _output to lanSwitch('Take', '吞服')>>
-<<print setup.candyDrug[$args[0]].name>> x <<print $candyDrug[$args[0]].owned>> 粒 | <<if $combat is 0>><<link _output $passage>><<run setup.candyDrug[$args[0]].ontake()>><</link>><</if>> <span class="steel"><<print setup.candyDrug[$args[0]].info>></span><br>
-<</if>>
-<</widget>>
 
 <<widget "pocketItems">>
 <br>

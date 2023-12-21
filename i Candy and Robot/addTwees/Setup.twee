@@ -11,27 +11,76 @@
 
 <</widget>>
 
+<<widget "iCandyReady">>
+<!-- 在PassageReady里的处理  -->
+
+
+<</widget>>
+
+
+<<widget "iCandyDone">>
+<!-- 在PassageDone里的处理  -->
+
+
+<</widget>>
+
+<<widget "iCandyOptions">>
+<!-- 设置项目  -->
+
+
+<</widget>>
+
+<<widget "hungerBar">>
+<!-- 饥饿条 -->
+
+
+<</widget>>
+
+<<widget "captionPhone">>
+<!-- 左边栏电话事件 -->
+
+
+<</widget>>
+
+<<widget "captionDrugs">>
+<!-- 左边栏药物效果  -->
+
+
+<</widget>>
+
+<<widget "charadesDrugs">>
+<!-- 角色面板药物效果  -->
+
+
+<</widget>>
+
+<<widget "candySkills">>
+<!-- 角色面板技能栏  -->
+
+
+<</widget>>
+
 <<widget "lactationchange">>
-	<<if $natural_lactation is 1>>
+	<<if R.trait.naturalLactation is 1>>
 		<<if $lactating is 0>>
 			<<set $lactating to 1>><<set $lactation_pressure to 120>><<set $milk_amount to 120*$breastsize>>
 		<<elseif $args[0]>>
 			<<set $lactation_pressure += $args[0]>>
 		<<elseif $lactation_pressure lte 12>>
-			<<set $lactation_pressure += $natural_lactation*120>>
+			<<set $lactation_pressure += R.trait.naturalLactation*120>>
 		<</if>>
 	<</if>>
 <</widget>>
 
 <<widget "daisoicon">>
 	<<if $images is 1>>
-		<img id="icon" src="img/misc/icon/daiso.png">
+		<img id="icon" src="img/daiso.png">
 	<</if>>
 <</widget>>
 
 <<widget "repairicon">>
 	<<if $images is 1>>
-		<img id="icon" src="img/misc/icon/repair.png">
+		<img id="icon" src="img/repair.png">
 	<</if>>
 <</widget>>
 
@@ -58,24 +107,5 @@
 <<widget "lllwillpower">>
 	<<if $statdisable is "f">> |
 		<span class="red">- - - <<lanSwitch 'Willpower' '意志'>></span>
-	<</if>>
-<</widget>>
-
-<<widget "lphysique">>
-	<<if $statdisable is "f">> |
-		<span class="red">-<<lanSwitch 'Physique' '体质'>></span>
-	<</if>>
-<</widget>>
-
-<<widget "llphysique">>
-	<<if $statdisable is "f">> |
-		<span class="red">- -<<lanSwitch 'Physique' '体质'>></span>
-	<</if>>
-<</widget>>
-
-
-<<widget "lllphysique">>
-	<<if $statdisable is "f">> |
-		<span class="red">- - -<<lanSwitch 'Physique' '体质'>></span>
 	<</if>>
 <</widget>>

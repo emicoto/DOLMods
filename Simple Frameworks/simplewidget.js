@@ -21,7 +21,6 @@ window.simpleFrameworks = {
     initFunction:[],
 
     data : {
-
         ModSkillsBox:[],
         ModCharaDescription:[],
         ModCaptionDescription:[],

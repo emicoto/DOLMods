@@ -69,31 +69,41 @@ const iUtil = {
 	},
 
 	updateObj : function(source, target, prop){
-		if(typeof source !== typeof target){
-			return source
-		}
+		if(!prop){
+			if(typeof target !== typeof source){
+				return source
+			}
 
-		if(prop && typeof source[prop] !== typeof target[prop]){
-			if(source[prop] !== undefined){
-				target[prop] = source[prop]
+			if(String(source) == '[object Object]'){
+				for(let key in source){
+					iUtil.updateObj(source, target, key)
+				}
+				for(let key in target){
+					iUtil.updateObj(source, target, key)
+				}
+
+				return target
 			}
 			else{
-				delete target[prop]
-			}
-			return target
-		}
-
-		if(prop && String(source[prop]) == '[object Object]' ){
-			return iUtil.updateObj(source[prop], target[prop])
-		}
-
-		if(!prop && String(source) == '[object Object]' ){
-			for(let key in source){
-				iUtil.updateObj(source, target, key)
+				return target
 			}
 		}
 
-		return target
+		if(prop){
+			//更新变量，如果type完全不一样就直接更新了。 弃用变量的删除或type一致但版号更新之类的用精准手术法。
+			if(typeof target[prop] !== typeof source[prop] && source[prop] !== undefined){
+				target[prop] = source[prop]
+			}
+			if(String(source[prop]) == '[object Object]'){
+				for(let key in source[prop]){
+					iUtil.updateObj(source[prop], target[prop], key)
+				}
+				for(let key in target[prop]){
+					iUtil.updateObj(source[prop], target[prop], key)
+				}
+			}
+		}
+
 	}
 }
 
@@ -114,6 +124,9 @@ function printMedicineLink(itemId){
 	}
 	else if(drug.tags.includes('liquid')){
 		linkname = `${drug.name}(${drug.num}ml${lanSwitch(' bottle','装')})`
+	}
+	else if(drug.tags.includes('cream')){
+		linkname = `${drug.name}(${drug.num}ml${lanSwitch(' box','装')})`
 	}
 	else if(drug.tags.includes('inject')){
 		linkname = `${drug.name}(${drug.num}${lanSwitch('shots per pack','管/盒')})`

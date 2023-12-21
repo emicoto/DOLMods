@@ -1,27 +1,3 @@
-//各种大小物品的最大堆叠限制
-setup.maxStacks = {
-	pill  : 50,
-	inject: 10,
-
-	micro : 36,
-	tiny  : 18,
-	small : 9,
-	medium: 3,
-	big   : 1,
-}
-
-V.iManager = {
-	global : 1, //堆叠倍率
-	disableStack: false, //关闭堆叠限制
-	disablePockets: false, //关闭格子限制，同时禁用背包功能。道具栏直接从V.iStorage.home使用所有物品，但依然有仓储功能
-	status:{
-		body:'naked',
-		bag:'none',
-		cart:'none',
-		hole:'none',
-		wallet:'none',
-	}
-}
 
 function getItemInfo(count,pos){
 	return Object.assign({count:0,pos:[],
@@ -71,15 +47,37 @@ const iManager = {
 		else if(!item.size){
 			return 1
 		}
-		else if(V.iManager.disableStack === true ){
+		else if(iCandy.getConfig('disableStack') === true ){
 			return Math.pow(10, 20) //应该完全禁用，但麻烦，干脆弄个除了作弊不会到达的数字。
 		}
-
 		//默认最大可能得堆叠上限为1k
-		return Math.clamp(setup.maxStacks[item.size] * V.iManager.global, 1, 1000)
+		return Math.clamp(setup.maxStacks[item.size] * iCandy.getConfig('globalStack'), 1, 1000)
 
 	},
 
+	getEquip(pos){
+		return V.iPockets[pos + 'type']
+	},
+
+	getPocket(pos){
+		return V.iPockets[pos]
+	},
+
+	getEvent(pos){
+		return V.iPockets.event[pos]
+	},
+
+	setEvent(pos, value){
+		V.iPockets.event[pos] = value
+	},
+
+	setState(pos, value){
+		V.iPockets.state[pos] = value
+	},
+
+	getState(pos, value){
+		V.iPockets.state[pos] = value
+	},
 	/**
 	 * 按堆叠限制切割物品堆
 	 * @param {pocketItem} item 
@@ -240,14 +238,21 @@ const iManager = {
 	 */
 	checkBodySlots : function(){
 		let count = 2
-		const {worn} = V
-		if(worn.upper.name !== 'naked' || worn.over_upper !== 'naked'){
+		const {upper, over_upper, lower } = V.worn
+		if(upper.name !== 'naked' || over_upper !== 'naked'){
 			count += 1
 		}
 
-		if(worn.lower.name !== 'naked'){
+		if(lower.name !== 'naked'){
 
-			count += worn.lower.name == worn.upper.name ? 1 :2
+			count += lower.name == upper.name ? 1 :2
+		}
+
+		if(this.getEquip('wallet') !== 'none'){
+			let wallet = Items.get(this.getEquip('wallet'))
+			if(wallet.tags.includes('extraspace')){
+				count += 1
+			}
 		}
 		return count
 	},
@@ -270,11 +275,11 @@ const iManager = {
 			return 0
 		},
 		bag(){
-			const bag = Items.data[V.iPockets.bagtype];
+			const bag = Items.data[this.getEquip('bag')];
 			return bag?.capacity ?? 0
 		},
 		cart(){
-			const cart = Items.data[V.iPockets.carttype];
+			const cart = Items.data[this.getEquip('cart')];
 			return cart?.capacity ?? 0
 		}
 	},
@@ -297,7 +302,7 @@ const iManager = {
 	getStackFromPockets : function(itemId){
 		return ItemPocket.reduce((result, key)=>{
 
-			const pocket = V.iPockets[key]
+			const pocket = this.getPocket(key)
 			//防意外
 			if(!Array.isArray(pocket)) return result;
 
@@ -321,7 +326,7 @@ const iManager = {
 	*/
 	getEmptySlots(){
 		return ItemPocket.reduce((result, key)=>{
-			let pocket = V.iPockets[key]
+			let pocket = this.getPocket(key)
 			let max = this.getMaxSlots(key)
 			if(pocket.length < max ){
 				let count = max - pocket.length
@@ -367,7 +372,7 @@ const iManager = {
 	
 	shiftSlots : function(slots, items){
 		return slots.reduce((result, { pos, count})=>{
-			let pocket = V.iPockets[pos]
+			let pocket = this.getPocket(pos)
 			let item
 			for(let i=0; i < count; i++){
 				item = result.items.pop()
@@ -518,7 +523,7 @@ const iManager = {
 	//定期更新口袋和容器的堆叠，并进行爆衣检测。
 	updatePockets(situation){
 		//初始化
-		if(!V.iManager.temp){
+		if(!V.iPockets.temp){
 			this.saveSlotsStatus()
 		}
 
@@ -568,29 +573,29 @@ const iManager = {
 			let html = ''
 
 			leftItems.forEach((item)=>{
-				if(item.pocekt == 'body' && V.iManager.textevent.body == 1){
+				if(item.pocekt == 'body' && this.getEvent('body') == 1){
 					html += lanSwitch('', '装在衣服口袋里的物品，伴随着衣服的破碎掉落到地上了。')
-					V.iManager.textevent.body = 0
+					this.setEvent('body', 0)
 				}
 
-				if(item.pocekt == 'body' && V.iManager.textevent.body == 2){
+				if(item.pocekt == 'body' && this.getEvent('body') == 2){
 					html += lanSwitch('', '你更换了衣服，多余的物品被你整理出来。')
-					V.iManager.textevent.body = 0
+					this.setEvent('body', 0)
 				}
 
-				if(V.iManager.textevent.bag == 1 && item.pocekt == 'bag'){
+				if(this.getEvent('bag') == 1 && item.pocekt == 'bag'){
 					html += lanSwitch('', '你更换了个更小的背包，多余的物品被你整理出来。')
-					V.iManager.textevent.bag = 0
+					this.setEvent('bag', 0)
 				}
 
-				if(V.iManager.textevent.cart == 1 && item.pocekt == 'cart'){
+				if(this.getEvent('cart') == 1 && item.pocekt == 'cart'){
 					html += lanSwitch('', '你更换了个更小的推车，多余的物品被你整理出来。')
-					V.iManager.textevent.cart = 0
+					this.setEvent('cart', 0)
 				}
 
-				if(V.iManager.textevent.hole == 1 && item.pocekt == 'hole'){
+				if(this.getEvent('hole') == 1 && item.pocekt == 'hole'){
 					html += lanSwitch('', '你的淫荡度不足以将物品继续存放在肠道里。因为受到刺激，存放在肠内的物品被排放了出来。')
-					V.iManager.textevent.hole = 0
+					this.setEvent('hole', 0)
 				}
 
 				html += this.dropOrTransferItems(item)
@@ -613,50 +618,50 @@ const iManager = {
 
 	//检测装备状态并记录
 	checkBroken(){
-		if (this.getMaxSlots('body') < V.iManager.temp.body && this.getMaxSlots('body') >=4 ){
-			V.iManager.status.body = 'changed';
-			V.iManager.textevent.body = 2;
+		if (this.getMaxSlots('body') < V.iPockets.temp.body && this.getMaxSlots('body') >=4 ){
+			this.setState('body', 'changed')
+			this.setEvent('body', 2)
 		}
-		else if( this.getMaxSlots('body') < V.iManager.temp.body){
-			V.iManager.status.body = 'broken';
-			V.iManager.textevent.body = 1;
+		else if( this.getMaxSlots('body') < V.iPockets.temp.body){
+			V.iPockets.state.body = 'broken';
+			V.iPockets.event.body = 1;
 		}
-		else if( this.getMaxSlots('body') >= V.iManager.temp.body && this.getMaxSlots('body') > 2 ){
-			V.iManager.status.body = 'clotheson'
+		else if( this.getMaxSlots('body') >= V.iPockets.temp.body && this.getMaxSlots('body') > 2 ){
+			V.iPockets.state.body = 'clotheson'
 		}
 		
-		if( this.getMaxSlots('bag') < V.iManager.temp.bag && this.getMaxSlots('bag') > 0 ){
-			V.iManager.status.bag = 'changed';
-			V.iManager.textevent.bag = 1
+		if( this.getMaxSlots('bag') < V.iPockets.temp.bag && this.getMaxSlots('bag') > 0 ){
+			V.iPockets.state.bag = 'changed';
+			V.iPockets.event.bag = 1
 		}
-		else if(this.getMaxSlots('bag') >= V.iManager.temp.bag  && this.getMaxSlots('bag') > 0){
-			V.iManager.status.bag = 'equiped';
-		}
-
-		if( this.getMaxSlots('cart') < V.iManager.temp.cart && this.getMaxSlots('cart') > 0 ){
-			V.iManager.status.cart = 'changed'
-			V.iManager.textevent.cart = 1
-		}
-		else if(this.getMaxSlots('bag') >= V.iManager.temp.cart && this.getMaxSlots('cart') > 0){
-			V.iManager.status.cart = 'equiped'
+		else if(this.getMaxSlots('bag') >= V.iPockets.temp.bag  && this.getMaxSlots('bag') > 0){
+			V.iPockets.state.bag = 'equiped';
 		}
 
-		if( this.getMaxSlots('hole') < V.iManager.temp.hole ){
-			V.iManager.status.hole = 'fit';
-			V.iManager.textevent.hole = 1;
+		if( this.getMaxSlots('cart') < V.iPockets.temp.cart && this.getMaxSlots('cart') > 0 ){
+			V.iPockets.state.cart = 'changed'
+			V.iPockets.event.cart = 1
+		}
+		else if(this.getMaxSlots('bag') >= V.iPockets.temp.cart && this.getMaxSlots('cart') > 0){
+			V.iPockets.state.cart = 'equiped'
+		}
+
+		if( this.getMaxSlots('hole') < V.iPockets.temp.hole ){
+			V.iPockets.state.hole = 'fit';
+			V.iPockets.event.hole = 1;
 		}
 		else if(this.getMaxSlots('hole') > 0 ){
-			V.iManager.status.hole = 'loose'
+			V.iPockets.state.hole = 'loose'
 		}
 
 	},
 
 	saveSlotsStatus(){
-		V.iManager.temp = {
-			body: this.getMaxSlots('body'),
-			bag:this.getMaxSlots('bag'),
-			hole:this.getMaxSlots('hole'),
-			cart:this.getMaxSlots('cart'),
+		V.iPockets.temp = {
+			body	: this.getMaxSlots('body'),
+			bag		: this.getMaxSlots('bag'),
+			hole	: this.getMaxSlots('hole'),
+			cart	: this.getMaxSlots('cart'),
 		}
 	},
 
@@ -711,7 +716,7 @@ const iMoney = {
 	max : function(){
 		let wallet = V.iPockets.wallettype
 		let bag = Items.data[wallet]
-		return  bag?.capacity ?? 500000
+		return  bag?.capacity + 250000 ?? 250000
 	},
 
 	/**

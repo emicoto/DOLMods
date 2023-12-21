@@ -64,8 +64,8 @@ function simpleEjaculation(){
                     break
                 case 'anus':
                 case 'anusdouble':
-                    V.hunger -= 200
-                    V.thirst -= 200
+                    //V.thirst -= 200
+                    wikifier('hunger', -200)
                     wikifier('analejacstat')
                     wikifier('bodyliquid', 'anus', 'semen')
                     wikifier('recordAnusSperm', 'pc', `$NPCList[${i}]`, `($enemytype is "man" ? "human" : $NPCList[${i}].type)`)
@@ -85,8 +85,8 @@ function simpleEjaculation(){
 
                     break
                 case 'mouth':
-                    V.hunger -= 200
                     V.thirst -= 200
+                    wikifier('hunger', -200)
                     wikifier('oralejacstat')
                     wikifier('cumswallow', V.NPCList[i].type, null, npcSemenMod(V.NPCList[i].penissize) )
 
@@ -116,13 +116,13 @@ function simpleEjaculation(){
                     wikifier('bottomejacstat');
                     wikifier('bodyliquid', 'bottom', 'semen');
                     wikifier('bodyliquid', 'thigh', 'semen');
+                    wikifier('hunger', -200)
 
                     _html = lanSwitch(`While <<He>> is still rubbing <<his>> $NPCList[${i}].penisdesc on your butts, as moan <<he>> cum out a small amount of semen to coat on your cheeks.`,
                                      `<<He>>还在外部磨蹭着的时候，舒服地射出少量精液涂抹在你的股沟上。`)
-                    V.hunger -= 200;
             }
             
-            V.hygiene += 500
+            //V.hygiene += 500
             wikifier('ejacstat')
 
             if(_html.length > 0 && more){
@@ -146,7 +146,7 @@ function simpleEjaculation(){
         }
 
         if( !V.gloryhole  && ( V.NPCList[i].penis.includes('penis') ||V.NPCList[i].penis == 0) ){
-            V.hygiene += 500            
+            //V.hygiene += 500            
             wikifier('tummyejacstat')
             wikifier('ejacstat')
             wikifier('bodyliquid', 'tummy', 'semen')

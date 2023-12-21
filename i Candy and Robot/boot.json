@@ -1,6 +1,6 @@
 {
  "name": "i, Candy + Robot",
- "version": "1.5.0",
+ "version": "1.8.0",
  "styleFileList": [],
  "scriptFileList_earlyload": [],
  "scriptFileList_inject_early": [],
@@ -54,12 +54,12 @@
     {
         "passage":"Widgets Difficulty",
         "findString":"<<set $skulduggeryroll to random(1, 1000)>>",
-        "replace":"<<set $skulduggeryroll to random(1, 1000)>>\n<<if $mechaItems.tool is 1>><<set $skulduggeryroll *= 1.1>><<set $skulduggerydifficulty *= 0.95>><</if>>"
+        "replace":"<<set $skulduggeryroll to random(1, 1000)>>\n<<if R.mechStats.toolset is 1>><<set $skulduggeryroll *= 1.1>><<set $skulduggerydifficulty *= 0.95>><</if>>"
     },
     {
         "passage":"Widgets Sleep",
         "findString" :"<<if $ruffledisable is \"f\">>\n\t\t<<set $_hair to",
-        "replace":"<<if $ruffledisable is \"f\" and $iCandyStats.keepHairs is \"f\">>\n\t\t<<set $_hair to"   
+        "replace":"<<if $ruffledisable is \"f\" and iCandy.getConfig('keepHairs') is false >>\n\t\t<<set $_hair to"   
     },
 	{
         "passage": "Widgets",

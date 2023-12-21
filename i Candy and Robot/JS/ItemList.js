@@ -218,6 +218,11 @@ const Special = [
 	effects: [
 		["anusgoo", 50, "p"]
 	],
+
+	imgdiff:{
+		displayname:['new package', '新包装'],
+		img:'items/lubricant_new.png'
+	}
 },
 
 {
@@ -251,7 +256,7 @@ Items.addItems(Special)
 
 const Containers = [
 	{
-	  tags: ["bag"],
+	  tags: ["equip","bag"],
 
 	  id: "satchel",
 	  name: ["Small Satchel", "小挎包"],
@@ -263,10 +268,13 @@ const Containers = [
 	  price: 4200,
 	  size: "big",
 	  capacity: 4,
+	  imgdiff:{
+		girl:{ displayname:['girl', '女款'], img:'container/satchel_girl.png'}
+	  }
 	},
   
 	{
-	  tags: ["bag"],
+	  tags: ["equip","bag"],
 
 	  id: "leathersatchel",
 	  name: ["Leather Satchel", "皮包"],
@@ -278,10 +286,14 @@ const Containers = [
 	  price: 6800,
 	  size: "big",
 	  capacity: 6,
+	  imgdiff:{
+		femini:{ displayname:['femini', '女款'], img:'container/leathersatchel_girl.png'},
+		manly:{ displayname:['manly', '男款'], img:'container/leathersatchel_boy.png'}
+	  }
 	},
   
 	{
-	  tags: ["bag"],
+	  tags: ["equip","bag"],
 
 	  id: "schoolbag",
 	  name: ["School Bag", "书包"],
@@ -293,10 +305,14 @@ const Containers = [
 	  price: 9680,
 	  size: "big",
 	  capacity: 8,
+	  imgdiff:{
+		black:{ displayname:['black', '黑色'], img:'container/schoolbag_black.png'},
+		pink:{ displayname:['pink', '粉色'], img:'container/schoolbag_pink.png'}
+	  }
 	},
   
 	{
-	  tags: ["bag"],
+	  tags: ["equip","bag"],
 
 	  id: "backpack",
 	  name: ["Backpack", "大背包"],
@@ -315,7 +331,7 @@ const Containers = [
 	},
   
 	{
-	  tags: ["bag"],
+	  tags: ["equip","bag"],
 
 	  id: "hikingpack",
 	  name: ["Hiking Backpack", "登山包"],
@@ -333,7 +349,7 @@ const Containers = [
 	},
   
 	{
-	  tags: ["cart"],
+	  tags: ["equip","cart"],
 
 	  id: "cart",
 	  name: ["Simple Cart", "简易手推车"],
@@ -348,7 +364,7 @@ const Containers = [
 	},
   
 	{
-	  tags: ["cart"],
+	  tags: ["equip","cart"],
 
 	  id: "xlcart",
 	  name: ["Outdoor Cart", "可折叠户外手推车"],
@@ -361,6 +377,63 @@ const Containers = [
 	  info: ["A normal, collapsible cart", "一个普通的，可折叠的手推车。"],
 	  capacity: 50,
 	},
+
+	{
+		tags: ["equip","wallet"],
+
+		id:"pouch",
+		name: ["Coin Pouch", "小荷包"],
+		plural:"Coin Pouches",
+
+		num:1,
+		price: 4800,
+		size:"big",
+
+		info:[
+			"A purse for holds your coins. Small, but can hold more than your expect.",
+			"看起来有点小的零钱包。明明很小，意外的很能装东西。"
+		],
+
+		capacity: 50000
+	},
+
+	{
+		tags: ["equip", "wallet", "cardslot"],
+
+		id:"wallet",
+		name: ["Wallet", "钱包"],
+		plural:"Wallets",
+
+		num:1,
+		price: 12800,
+		size:"big",
+
+		info:[
+			"A simple wallet. Average capacity with a small coin pocket and a card slot.",
+			"一个普通的单夹层钱包。容量一般，但附带一个小小的零钱口袋与卡槽。"
+		],
+
+		capacity: 500000
+	},
+
+	{
+		tags:["equip", "wallet", "cardslot", "extraspace"],
+
+		id:"purse",
+		name:["Handheld Purse", "手持包"],
+		plural:"Handheld Purses",
+
+		num:1,
+		price: 26800,
+		size: "big",
+
+		info:[
+			"A rectangular, stylish handheld purse. With planty capacity to carry bundles of cash, store many coins and cell phone.",
+			"一个长方形的时尚手持包。充足的容量让你随时带着上万现金，还有足够的空间存放大量零钱以及手机。"
+		],
+
+		capacity: 2500000
+	}
   ];
   
   
@@ -601,6 +674,27 @@ const Medicines = [
 		size: "pill",
 
 		effects: [["pain", 30]],
+
+		onUse: onUseDrags,
+	},
+	{
+		tags: ["cream"],
+
+		id: "bruiserelief",
+		name: ["Bruise Relief Cream", "淤青霜"],
+		plural:"Bruise Relief Cream",
+
+		info: [
+			"A cream for helps relieve pain, swelling, bruise.", 
+			"一款有助于缓解疼痛、肿胀、瘀伤的药膏。"],		
+
+		num: 120,
+		usage: 6,
+
+		price: 3474,
+		size: "pill",
+
+		effects: [["pain", 12]],
 
 		onUse: onUseDrags,
 	},

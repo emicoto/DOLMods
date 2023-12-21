@@ -391,6 +391,9 @@ class Items {
 		this.size = size
 		this.tags = []
 		this.usage = 1
+		this.img = `${type}/${id}.png`
+
+		this.imgdiff = {}
 	}
 
 	/**
