@@ -733,8 +733,12 @@ const iMoney = {
 	},
 
 	lost : function(value){
-		V.money1 -= Math.clamp(V.money1 - value, 0, this.max());
+		V.money1 = Math.clamp(V.money1 - value, 0, this.max());
 		T.addMsg += this.giveMsg.lost(value)
+	},
+
+	use : function(value){
+		V.money1 -= value
 	},
 
 	giveMsg :{
@@ -793,7 +797,7 @@ function lostItemsAfterRape(){
 	let lostitem = lost('body')
 	//然后背包里的
 	if(!lostitem){
-		lost('bag')
+		lostitem = lost('bag')
 	}
 	//最后是手推车的
 	if(!lostitem){

@@ -1,5 +1,7 @@
 sugarcube-2:
   macros:
+    iMedicineLink:
+      name: iMedicineLink
     lanSwitch:
       name: lanSwitch
     A_pillory_person:

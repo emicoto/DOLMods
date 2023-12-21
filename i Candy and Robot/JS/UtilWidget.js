@@ -118,21 +118,22 @@ function printMedicineLink(itemId){
 
 	let drug = Items.get(itemId)
 	let linkname = ''
+	let name = lanSwitch(drug.name)
 
 	if(drug.tags.includes('pill')){
-		linkname = `${drug.name}(${drug.num}${lanSwitch('pills per bottle', '粒/瓶')})`
+		linkname = `${name}(${drug.num}${lanSwitch('pills per bottle', '粒/瓶')})`
 	}
 	else if(drug.tags.includes('liquid')){
-		linkname = `${drug.name}(${drug.num}ml${lanSwitch(' bottle','装')})`
+		linkname = `${name}(${drug.num}ml${lanSwitch(' bottle','瓶装')})`
 	}
 	else if(drug.tags.includes('cream')){
-		linkname = `${drug.name}(${drug.num}ml${lanSwitch(' box','装')})`
+		linkname = `${name}(${drug.num}ml${lanSwitch('','支装')})`
 	}
 	else if(drug.tags.includes('inject')){
-		linkname = `${drug.name}(${drug.num}${lanSwitch('shots per pack','管/盒')})`
+		linkname = `${name}(${drug.num}${lanSwitch('shots per pack','管/盒')})`
 	}
 	else{
-		linkname = drug.name
+		linkname = name
 	}
 
 	return `<<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to Items.data["${key}"]>><</link>><br>`

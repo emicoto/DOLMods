@@ -21,7 +21,10 @@
     "addTwees/Pharmacy.twee",
     "addTwees/PassageReady.twee"
  ],
- "imgFileList": [],
+ "imgFileList": [
+    "img/daiso.png",
+    "img/repair.png"
+ ],
  "additionFile": [
     "replaceFiles/bedroomWidget.txt",
     "replaceFiles/drugsWidget.txt",

@@ -7,6 +7,7 @@
 	<<iMedicineLink 'neuroOptimization'>>
 	<<iMedicineLink 'aminobutyric'>>
 	<<iMedicineLink 'painreduce'>>
+	<<iMedicineLink 'bruiserelief'>>
 	<br>
 
 	<<lanSwitch 'Special' '特殊'>>：
@@ -46,7 +47,11 @@
 		"Painkillers can be taken one pill at a time, or more than one if you really painful."
 		"止痛药一次一片，如果真的很痛可以吃多一片。"
 		>>
-		
+	<<case 'bruiserelief'>>
+		<<lanSwitch
+		"This is for skin, please apply to bruise after clean your skin."
+		"这个是外用的，在清洗后涂抹在患处上。"
+		>>
 	<<case 'lubricant'>>
 		<<lanSwitch
 		"Before using the lubricant, you'd better to take a shower."
@@ -56,25 +61,14 @@
 <</switch>>
 ”<br><br>
 
-<<if $money gte $pharmacyItem.price and $pharmacyItem.type is 'drugs'>>
-    <<set _linkname to lanSwitch(`Spend ${T.printmoney} to buy ${V.pharmacyItem.name}`, `花费${T.printmoney}购买${V.pharmacyItem.name}`)>>
+<<if $money gte $pharmacyItem.price>>
+    <<set _linkname to lanSwitch(`Spend ${T.printmoney} to buy ${V.pharmacyItem.name[0]}`, `花费${T.printmoney}购买${V.pharmacyItem.name[1]}`)>>
 	<<link _linkname 'Pharmacy'>>
 		<<run
 			console.log('buy',V.pharmacyItem.id,' x ', V.pharmacyItem.num)
-			console.log('already owned:', V.candyDrug[V.pharmacyItem.id].owned)
-			V.money -= V.pharmacyItem.price;
-			V.candyDrug[V.pharmacyItem.id].owned += V.pharmacyItem.num;
+			iManager.getItems(V.pharmacyItem.id, V.pharmacyItem.num)
 		>>
-	<</link>><br>
-<<elseif $money gte $pharmacyItem.price>>
-    <<set _linkname to lanSwitch(`Spend ${T.printmoney} to buy ${V.pharmacyItem.name}`, `花费${T.printmoney}购买${V.pharmacyItem.name}`)>>
-	<<link _linkname 'Pharmacy'>>
-		<<run
-			console.log('buy ',V.pharmacyItem.id,' x ', V.pharmacyItem.num)
-			console.log('already owned:', V.candyItems[V.pharmacyItem.id])
-			V.money -= V.pharmacyItem.price;
-			V.candyItems[V.pharmacyItem.id] += V.pharmacyItem.num;
-		>>
+		<<set $money -= $pharmacyItem.price>>
 	<</link>><br>
 <<else>>
 	<span class='purple'>
