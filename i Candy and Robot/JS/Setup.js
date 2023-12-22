@@ -463,37 +463,36 @@ const iCandy = {
 }
 window.iCandy = iCandy
 
-
 const tatoos = [
 	{
 		key:'fifty_whore', 
 		name:'£50', 
-		sp:'prostitution', 
+		special:'prostitution', 
 		degree:5000
 	},
 	{
 		key:'drug_eater', 
 		name:'Drug Eater', 
 		cn:'瘾君子', 
-		sp:'drugs'
+		special:'drugs'
 	},
 	{
 		key:'drug_whore', 
 		name:'Drug Whore', 
 		cn:'毒娼', 
-		sp:'prostitution'
+		special:'prostitution'
 	},
 	{
 		key:'sell_for_drug', 
 		name:'Sell body for drugs', 
 		cn:'为药卖身', 
-		sp:'prostitution'
+		special:'prostitution'
 	},
 	{
 		key:'drug_slut', 
 		name:'Drug Slut', 
 		cn:'药瘾婊子', 
-		sp:'drugs'
+		special:'drugs'
 	}
 ]
 	

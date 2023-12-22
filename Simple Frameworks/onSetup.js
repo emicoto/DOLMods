@@ -541,8 +541,8 @@ setup.addBodyWriting = function(){
             writing: obj.name,
             type: obj.type ?? 'text',
             writ_cn: obj.cn ?? obj.name,
-            arrow: obj.arrow ? 1 : 0,
-            special: obj.sp ?? 'none',
+            arrow: obj.arrow ?? 0,
+            special: obj.special ?? 'none',
             gender: obj.gender ?? 'n',
             lewd: obj.lewd ?? 1,
             degree: obj.degree ?? 0,
@@ -617,6 +617,15 @@ const iModManager = {
 window.iModManager = iModManager
 
 function iModonReady(){
+    //读档时的处理
+    if (setup.NPCFrameworkOnLoad === true && V.passage !== 'Start') {
+        setTimeout(() => {
+            NamedNPC.clear()
+            NamedNPC.update()
+        }, 60)
+        setup.NPCFrameworkOnLoad = false
+    }
+    
     iModManager.init('iModConfigs');
     iModManager.init('iModValues');
     iModManager.init('iModNpc');
@@ -635,16 +644,6 @@ function checkUpdate() {
 
 Save.onLoad.add(checkUpdate)
 
-//读档时的处理
-$(document).on(':passageinit', () => {
-    if (setup.NPCFrameworkOnLoad === true && V.passage !== 'Start') {
-        setTimeout(() => {
-            NamedNPC.clear()
-            NamedNPC.update()
-        }, 60)
-        setup.NPCFrameworkOnLoad = false
-    }
-})
 
 $(document).on(':switchlanguage', () => {
     NamedNPC.switchlan()

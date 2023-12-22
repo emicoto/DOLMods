@@ -60,3 +60,23 @@ Items.add(
     "You take a bite the bread you just made, you can't say it's delicious but it's not that bad.",
     '你咬了一口你刚做好的面包，或许它并不足以说好吃，但也不算难吃。'
 )
+
+//define an array to setup your tattoos.
+//almost same as vanilla, but you can skip some keys. skipped key will set to default var
+const newTatoos =[
+	{
+		key:"two_hundred_pound_whore",
+		name:"£200",
+		special:"prostitution",
+		degree:20000
+	},
+	{
+		key:"ultimate_bitch",
+		name:"Ultimate Bitch",
+		cn:"终极婊子",
+		special:"sex",
+	}
+]
+
+//then push to modTatoos list
+setup.modTattoos.push(...newTatoos)

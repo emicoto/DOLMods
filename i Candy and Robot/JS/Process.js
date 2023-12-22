@@ -1,4 +1,5 @@
 const oldPass = Time.pass
+
 Time.pass = function(sec){
     oldPass(sec)
     console.log('passed time:',sec)
