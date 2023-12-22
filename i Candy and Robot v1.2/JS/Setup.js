@@ -380,55 +380,40 @@ $(document).one('languageChecked', ()=>{
 	
 })
 
-
-function newBodyWrite(obj){
-	let item = {
-		index: Object.keys(setup.bodywriting).length,
-		writing: obj.name,
-		type: obj.type ?? 'text',
-		writ_cn: obj.cn ?? obj.name,
-		arrow: obj.arrow ? 1 : 0,
-		special: obj.sp ?? 'none',
-		gender: obj.gender ?? 'n',
-		lewd: 1,
-		degree: obj.degree ?? 0,
-		key: obj.key,
-		sprites:[],		
+const tatoos = [
+	{
+		key:'fifty_whore', 
+		name:'£50', 
+		special:'prostitution', 
+		degree:5000
+	},
+	{
+		key:'drug_eater', 
+		name:'Drug Eater', 
+		cn:'瘾君子', 
+		special:'drugs'
+	},
+	{
+		key:'drug_whore', 
+		name:'Drug Whore', 
+		cn:'毒娼', 
+		special:'prostitution'
+	},
+	{
+		key:'sell_for_drug', 
+		name:'Sell body for drugs', 
+		cn:'为药卖身', 
+		special:'prostitution'
+	},
+	{
+		key:'drug_slut', 
+		name:'Drug Slut', 
+		cn:'药瘾婊子', 
+		special:'drugs'
 	}
-
-	setup.bodywriting[obj.key] = item
-	setup.bodywriting_namebyindex[obj.index] = obj.key
-
-	return item
-}
-
-function addBodyWriting(){
-	setup.newTattos = [
-
-		newBodyWrite({
-			key:'fifty_whore', name:'£50', sp:'prostitution', degree:5000, 
-		}),
-
-		newBodyWrite({
-			key:'drug_eater', name:'Drug Eater', cn:'瘾君子', sp:'drugs', 
-		}),
-
-		newBodyWrite({
-			key:'drug_whore', name:'Drug Whore', cn:'毒娼', sp:'prostitution', 
-		}),
-
-		newBodyWrite({
-			key:'sell_for_drug', name:'Sell body for drugs', cn:'为药卖身', sp:'prostitution', 
-		}),
-
-		newBodyWrite({
-			key:'drug_slut', name:'Drug Slut', cn:'药瘾婊子', sp:'drugs', 
-		})
-
-	]
-	console.log(setup.newTattos)
-}
-
+]
+	
+setup.modTattoos.push(...tatoos)
 
 function updateObj(objname, defaultvar){
 	if(V[objname] == undefined){
@@ -496,13 +481,3 @@ function iCandyInit(){
 }
 
 DefineMacroS('iCandyInit', iCandyInit)
-
-
-$(document).one(':storyready',()=>{
-	let check = setInterval(()=>{
-		if( setup.bodywriting ){
-			addBodyWriting()
-			clearInterval(check)
-		}
-	}, 100)
-})

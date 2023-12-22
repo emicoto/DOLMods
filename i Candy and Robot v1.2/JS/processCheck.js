@@ -17,6 +17,8 @@ function printIDrugsLink(key){
 DefineMacroS('printIDrugsLink', printIDrugsLink)
 
 function checkDayPass(){
+	T.drugHtml = ''
+	
 	if(!V.iCandyStats){
 		return ''
 	}
@@ -50,9 +52,9 @@ function checkDayPass(){
 	}
 
 	let html = addctionEvent()
-	if(html && html.length > 1)
-		new wikifier(null, `<<append #addMsg transition>>${html}<</append>>`)
-
+	if(html && html.length > 1){
+		T.drugHtml += html
+	}
 	return ''
 }
 

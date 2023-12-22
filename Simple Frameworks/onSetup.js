@@ -117,8 +117,7 @@ class NamedNPC {
         let newnpcs = []
         for (let i = 0; i < V.NPCName.length; i++) {
             let npc = V.NPCName[i]
-
-            if (setup.NPCNameList.includes(npc.nam)) {
+            if ( setup.NPCNameList.includes(npc.nam) ){
                 newnpcs.push(V.NPCName[i])
             }
         }
@@ -129,9 +128,13 @@ class NamedNPC {
         return this.database.findIndex((npc) => { return npc.nam == name })
     }
     static update() {
+        const hasnpc =(name)=>{
+            return V.NPCName.filter( npc => npc.nam == name)[0]
+        }
+
         this.database.forEach((data) => {
             let npc = clone(data)
-            if (V.NPCNameList.includes(npc.nam) === false) {
+            if (V.NPCNameList.includes(npc.nam) === false || !hasnpc(npc.nam)) {
                 npc.title = lanSwitch(npc.title_lan)
                 npc.displayname = lanSwitch(npc.displayname_lan)
 
@@ -170,7 +173,7 @@ class NamedNPC {
         V.NPCName = npcs;
         V.NPCNameList = list
         
-
+        //更新显示名称
         V.NPCName.forEach((npc) => {
             if (npc.displayname == undefined && setup.DOLNPCNames[npc.nam]) {
                 npc.displayname = npc.nam
@@ -616,16 +619,7 @@ const iModManager = {
 }
 window.iModManager = iModManager
 
-function iModonReady(){
-    //读档时的处理
-    if (setup.NPCFrameworkOnLoad === true && V.passage !== 'Start') {
-        setTimeout(() => {
-            NamedNPC.clear()
-            NamedNPC.update()
-        }, 60)
-        setup.NPCFrameworkOnLoad = false
-    }
-    
+function iModonReady(){ 
     iModManager.init('iModConfigs');
     iModManager.init('iModValues');
     iModManager.init('iModNpc');
@@ -644,6 +638,14 @@ function checkUpdate() {
 
 Save.onLoad.add(checkUpdate)
 
+$(document).on(":passagedisplay",()=>{
+    //读档时的处理
+    if (setup.NPCFrameworkOnLoad === true && V.passage !== 'Start') {
+        NamedNPC.clear()
+        NamedNPC.update()
+        setup.NPCFrameworkOnLoad = false
+    }
+})
 
 $(document).on(':switchlanguage', () => {
     NamedNPC.switchlan()

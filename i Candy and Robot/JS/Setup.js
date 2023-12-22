@@ -516,6 +516,40 @@ Object.defineProperty(window, 'R', {
 	}
 })
 
+function setupFeatsBoost(){
+	V.featsBoosts.upgrades = {
+		money:0,
+		grades:0,
+		skulduggery:0,
+		dancing:0,
+		swimming:0,
+		athletics:0,
+		tending:0,
+		housekeeping:0,
+		cooking:0,
+		mechanical:0,
+		chemical:0,
+		greenThumb:0,
+		seduction:0,
+		purity:0,
+		impurity:0,
+		newLife:0,
+		aNewBestFriend:0,
+		tattoos:0,
+		defaultMoves: 0,
+		randomClothing:0,
+		specialClothing:0,
+		sexToys:0,
+	}
+
+	const { upgradeDetails, missing, name } = V.featsBoosts
+
+	upgradeDetails.grades.cost = 10;
+	upgradeDetails.greenThumb.cost = 30;
+	
+}
+
+
 function iCRInit(){
 	for(let i in modVariables){
 		V[i] = modVariables[i]
