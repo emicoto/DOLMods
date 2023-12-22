@@ -15,7 +15,7 @@
     "selectcase.js",
     "util.js",
     "CNCodeResolver.js",
-    "newNPC.js"
+    "onSetup.js"
   ],
   "tweeFileList": [],
   "imgFileList": [],

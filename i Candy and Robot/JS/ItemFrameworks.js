@@ -235,9 +235,10 @@ function setupVanillaItems() {
 	}
 
 	const spray = {
-		type: "items",
+		type: "consumable",
 		id: "spray",
 		name: ["Pepper Spray", "防狼喷雾"],
+		plural:"Pepper Sprays",
 		num: 1,
 		price: 1000,
 		size: "big",
@@ -393,7 +394,7 @@ class Items {
 		this.usage = 1
 		this.img = `${type}/${id}.png`
 
-		this.imgdiff = {}
+		this.diff = {}
 	}
 
 	/**
@@ -544,10 +545,10 @@ class Items {
 	 * @param {'p'|void} method 
 	 */
 	doDelta(param, value, method) {
-		if (param == 'drugs') {
+		if (param == 'aphrod') {
 			iUtil.getPalam('drugged', value)
 		}
-		else if (param == 'alcohol') {
+		else if (param == 'drunk') {
 			iUtil.getPalam('drunk', value)
 		}
 		else {
@@ -783,12 +784,6 @@ function useItems(pocket, pos){
 	if(data?.effects.length > 0 && typeof data.onUse !== 'function'){
 		data.effects.forEach((set)=>{
 			let [param, value, method] = set;
-
-			if(this.type == 'drugs' || this.type == 'medicine'){
-				let { taken } = V.candyDrug[this.id]
-				value = value * Math.max(1-(taken*0.1), 0.2)
-			}
-
 			data.doDelta(param, value, method);
 		})
 	}

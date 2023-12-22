@@ -77,7 +77,7 @@ window.simpleFrameworks = {
 
     default : {
         iModInit:()=>{
-            return `<<iModInitFunction>>\n\n`
+            return `<<iModInitFunction>><<run setup.addBodyWriting()>>\n\n`
         },
         iModReady:()=>{
             return `<<iModonReady>>\n\n`

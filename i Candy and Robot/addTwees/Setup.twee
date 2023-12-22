@@ -24,11 +24,6 @@
 
 <</widget>>
 
-<<widget "iCandyOptions">>
-<!-- 设置项目  -->
-
-
-<</widget>>
 
 <<widget "hungerBar">>
 <!-- 饥饿条 -->
@@ -73,21 +68,29 @@
 <</widget>>
 
 <<widget "daisoicon">>
-	<<if $images is 1>>
+	<<if $options.images is 1>>
 		<img id="icon" src="img/daiso.png">
 	<</if>>
 <</widget>>
 
 <<widget "repairicon">>
-	<<if $images is 1>>
+	<<if $options.images is 1>>
 		<img id="icon" src="img/repair.png">
+	<</if>>
+<</widget>>
+
+<<widget "itemIcon">>
+	<<if $options.images is 1>>
+		<<set _path = 'img/items/'>>
+		<<set _img = $args[0]>>
+		<img id="icon" @src="_path + _img">
 	<</if>>
 <</widget>>
 
 <<widget "nicotine">>
 	<<if $args[0]>>
 		<<set $nicotine += $args[0]>>
-		<<set $iCandyStat.nicotine.take += Math.max(Math.floor($args[0]/100+0.5), 1)>>
+		<<run iCandy.take('nicotine', $args[0])>>
 		<<set $nicotine to Math.clamp($nicotine, 0, 1000)>>
 	<</if>>
 <</widget>>

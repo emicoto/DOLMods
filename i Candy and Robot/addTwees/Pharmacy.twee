@@ -21,7 +21,7 @@
 <<set $outside to 0>><<set $location to 'hospital'>><<effects>>
 <<formatmoney $pharmacyItem.price>>
 
-<<= lanSwitch(`The <<person>> looks at what you're pointing, the price is ${T.printmoney}.`, `<<person>>看向你所指的药说：“价格是${T.printmoney}。`)>>
+<<=lanSwitch(`The <<person>> looks at what you're pointing, the price is ${T.printmoney}.`, `<<person>>看向你所指的药说，价格是${T.printmoney}。`)>>
 
 <<switch $pharmacyItem.id>>
 	<<case 'serotonin'>>
@@ -59,21 +59,24 @@
 		>>
 		
 <</switch>>
-”<br><br>
+<br><br>
 
-<<if $money gte $pharmacyItem.price>>
+<<if iM.checkItemOnGet($pharmacyItem.id, $pharmacyItem.num) isnot true >>
+	<span class='yellow'>
+	<<lanSwitch "You don't have any slot for hold it." "你身上没有空位了。">>
+	</span><br>
+<<elseif $money gte $pharmacyItem.price>>
     <<set _linkname to lanSwitch(`Spend ${T.printmoney} to buy ${V.pharmacyItem.name[0]}`, `花费${T.printmoney}购买${V.pharmacyItem.name[1]}`)>>
 	<<link _linkname 'Pharmacy'>>
 		<<run
 			console.log('buy',V.pharmacyItem.id,' x ', V.pharmacyItem.num)
-			iManager.getItems(V.pharmacyItem.id, V.pharmacyItem.num)
+			iM.getItems(V.pharmacyItem.id, V.pharmacyItem.num)
 		>>
 		<<set $money -= $pharmacyItem.price>>
 	<</link>><br>
 <<else>>
 	<span class='purple'>
 	<<lanSwitch "You cannot afford them" "你负担不起购买。">>
-	
 	</span><br>
 <</if>>
 
@@ -83,9 +86,9 @@
 :: Brothel Drugs [widget]
 
 <<widget "brothelDrugs">>
-	<<if $iCandyStory.brothel.intro is undefined>>
+	<<if R.flags.brothel.intro is undefined>>
 		当你走在妓院过道里时，偶尔能看到一些瘾君子哆嗦着身体匆匆路过。<br>
-		<<set $iCandyStory.brothel.intro to 1>>
+		<<set R.flags.brothel.introto 1>>
 	<<else>>
 	<</if>>
 <</widget>>

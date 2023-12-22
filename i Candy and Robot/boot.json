@@ -3,23 +3,25 @@
  "version": "1.8.0",
  "styleFileList": [],
  "scriptFileList_earlyload": [],
- "scriptFileList_inject_early": [],
+ "scriptFileList_inject_early": [
+    "JS/SFRegist.js"
+  ],
  "scriptFileList_preload": [],
  "scriptFileList": [
     "JS/ItemFrameworks.js",
     "JS/ItemManager.js",
     "JS/ItemList.js",
     "JS/UtilWidget.js",
-    "JS/Setup.js",
-    "JS/processCheck.js",
-    "JS/newNPC.js"
+    "JS/newNPC.js",
+    "JS/Setup.js"
  ],
  "tweeFileList": [
     "addTwees/Setup.twee",
+    "addTwees/Widgets.twee",
+    "addTwees/ModOption.twee",
     "addTwees/Pocket.twee",
     "addTwees/Robot.twee",
-    "addTwees/Pharmacy.twee",
-    "addTwees/PassageReady.twee"
+    "addTwees/Pharmacy.twee"
  ],
  "imgFileList": [
     "img/daiso.png",
@@ -29,9 +31,7 @@
     "replaceFiles/bedroomWidget.txt",
     "replaceFiles/drugsWidget.txt",
     "replaceFiles/drunkWidget.txt",
-    "replaceFiles/journal.txt",
-    "replaceFiles/skillsetting.txt",
-    "replaceFiles/options.txt"
+    "replaceFiles/journal.txt"
  ],
  "addonPlugin": [
   {

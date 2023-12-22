@@ -130,7 +130,9 @@ const iPockets = {
 		cart:0,
 		hole:0,
 		wallet:0,
-	}
+	},
+
+	global:{}
 }
 
 const iStorage = {
@@ -154,15 +156,8 @@ const iStorage = {
 		beach: 0,
 	}
 }
-for(const [Id, iData] of Object.entries(Items.data)){
-	if(iData.tags.includes('addiction') && iData.tags.containsAny('nicotine', 'alcohol') == false ){
-		candyStats.addict.drugs[Id] = new addiction()
-		candyStats.event.drugs[Id] = new drugsEvent()
-	}
-	iStorage.home[Id] = 0
-}
 
-const iRecipe = {
+const Recipe = {
 	books:{},
 	craft:{},
 	cooking:{},
@@ -228,11 +223,10 @@ const iMechStats = {
 //
 //--------------------------------------------------------
 const iDrugStats = {
-	version : modversion,
 
 	addict:{
 		general:{
-			drugs	: new addiction(),
+			aphrod	: new addiction(),
 			alcohol	: new addiction(),
 			nicotine: new addiction()
 		},
@@ -240,7 +234,7 @@ const iDrugStats = {
 	},
 	event:{
 		general:{
-			drugs	: new drugsEvent(),
+			aphrod	: new drugsEvent(),
 			alcohol	: new drugsEvent(),
 			nicotine: new drugsEvent()
 		},
@@ -254,12 +248,16 @@ const iDrugStats = {
 		mouth 	: exSense()
 	},
 
-	traits : {
-
-	},
 
 }
 
+for(const [Id, iData] of Object.entries(Items.data)){
+	if(iData.tags.includes('addiction') && iData.tags.containsAny('nicotine', 'alcohol', 'aphrod') == false ){
+		iDrugStats.addict.drugs[Id] = new addiction()
+		iDrugStats.event.drugs[Id] = new drugsEvent()
+	}
+	iStorage.home[Id] = 0
+}
 
 C.hunger = {
 	max : 2000,
@@ -316,9 +314,6 @@ const iCandyRobot = {
 		keepHairs: true,
 	},
 
-	//pocket stats
-	pStats: pocketStats,
-
 	//mechanical module stats
 	robot: iRobot,
 	mechStats:iMechStats,
@@ -328,6 +323,9 @@ const iCandyRobot = {
 
 	//mod traits
 	traits:{},
+
+	//equip effects
+	equipEf:{},
 	
 	bank:{
 		money: 0,		//存款
@@ -361,60 +359,13 @@ const modVariables = {
 	//通用变量
 	iPockets,
 	iStorage,
-	iRecipe,
+	iRecipe : Recipe,
 
 	//技能
 	chemical	: 0, 
 	mechanical	: 0, 
 	cooking		: 0,
 
-}
-
-
-function newBodyWrite(obj){
-	let item = {
-		index: Object.keys(setup.bodywriting).length,
-		writing: obj.name,
-		type: obj.type ?? 'text',
-		writ_cn: obj.cn ?? obj.name,
-		arrow: obj.arrow ? 1 : 0,
-		special: obj.sp ?? 'none',
-		gender: obj.gender ?? 'n',
-		lewd: 1,
-		degree: obj.degree ?? 0,
-		key: obj.key,
-		sprites:[],		
-	}
-
-	setup.bodywriting[obj.key] = item
-	setup.bodywriting_namebyindex[obj.index] = obj.key
-
-	return item
-}
-const tattoos = []
-
-setup.addBodyWriting = function(){
-	tattoos.push(
-		newBodyWrite({
-			key:'fifty_whore', name:'£50', sp:'prostitution', degree:5000, 
-		}),
-
-		newBodyWrite({
-			key:'drug_eater', name:'Drug Eater', cn:'瘾君子', sp:'drugs', 
-		}),
-
-		newBodyWrite({
-			key:'drug_whore', name:'Drug Whore', cn:'毒娼', sp:'prostitution', 
-		}),
-
-		newBodyWrite({
-			key:'sell_for_drug', name:'Sell body for drugs', cn:'为药卖身', sp:'prostitution', 
-		}),
-
-		newBodyWrite({
-			key:'drug_slut', name:'Drug Slut', cn:'药瘾婊子', sp:'drugs', 
-		})
-	)
 }
 
 //Mod Data
@@ -439,11 +390,114 @@ const iCandy = {
 	//temporary variables
 	temp: {},
 
-	getConfig(prop){
+	getConfig: function(prop){
 		return V.iCandyRobot.config[prop]
+	},
+
+	checkStat: function(item){
+		const data = Items.get(item)
+
+		if(R.drugStats.addict.drugs[item]){
+			return true
+		}
+
+		if(data && data.tags.includes('addiction')){
+			R.drugStats.addict.drugs[item] = new addiction()
+			return true
+		}
+
+		return false
+	},
+
+	getStat: function(item, prop){
+		const general = ['aphrod', 'alcohol', 'nicotine']
+		if(general.includes(item)){
+			if(prop) return R.drugStats.addict.general[item][prop]
+			return R.drugStats.addict.general[item]
+		}
+
+		if(this.checkStat(item)){
+			if(prop) return R.drugStats.addict.drugs[item][prop]
+			return R.drugStats.addict.drugs[item]			
+		}
+	},
+	setValue: function(item, prop, value){
+		const general = ['aphrod', 'alcohol', 'nicotine']
+		if(general.includes(item)){
+			R.drugStats.addict.general[item][prop] += value
+			return R.drugStats.addict.general[item][prop]
+		}
+
+		if(this.checkStat(item)){
+			R.drugStats.addict.drugs[item][prop] += value
+			return R.drugStats.addict.drugs[item][prop]
+		}
+	},
+
+	take: function(item, value){
+		value = Number(value)
+		if(!value) return;
+
+		R.drugStats.addict.general[item].taken += Math.max(Math.floor(value/100+0.5), 1)
+	},
+
+	setEvent: function(item, prop, value){
+		if(!R.drugStats.event.drugs[item]){
+			R.drugStats.event.drugs[item] = new drugsEvent()
+		}
+		R.drugStats.addict.drugs[item][prop] += value
+		return R.drugStats.addict.drugs[item][prop]
+	},
+
+	setEquipEf(efId){
+		if(!R.equipEf[efId]){
+			R.equipEf[efId] = 1
+			return
+		}
+		R.equipEf[efId] = Math.min(R.equipEf[efId] + 1, 10)	
+	},
+
+	unsetEquipEf(efId){
+		R.equipEf[efId] = Math.max(R.equipEf[efId] - 1, 0)
 	}
 }
 window.iCandy = iCandy
+
+
+const tatoos = [
+	{
+		key:'fifty_whore', 
+		name:'£50', 
+		sp:'prostitution', 
+		degree:5000
+	},
+	{
+		key:'drug_eater', 
+		name:'Drug Eater', 
+		cn:'瘾君子', 
+		sp:'drugs'
+	},
+	{
+		key:'drug_whore', 
+		name:'Drug Whore', 
+		cn:'毒娼', 
+		sp:'prostitution'
+	},
+	{
+		key:'sell_for_drug', 
+		name:'Sell body for drugs', 
+		cn:'为药卖身', 
+		sp:'prostitution'
+	},
+	{
+		key:'drug_slut', 
+		name:'Drug Slut', 
+		cn:'药瘾婊子', 
+		sp:'drugs'
+	}
+]
+	
+setup.modTattoos.push(...tatoos)
 
 //mirror
 for(let i in modVariables){
@@ -468,7 +522,6 @@ function iCRInit(){
 		V[i] = modVariables[i]
 
 	}
-	addBodyWriting()
 	setup.iCandyMod = "variable init"
 }
 DefineMacroS('iCandyInit', iCRInit)
@@ -510,7 +563,7 @@ setup.iCandyUpdate = function(){
 			}
 		}
 	}
-	else if(V.icandyRobot.version !== iCandy.version ){
+	else if(V.iCandyRobot.version !== iCandy.version ){
 		V.iCandyRobot = iUtil.updateObj(iCandyRobot, V.iCandyRobot)
 		V.iPockets = iUtil.updateObj(iPockets, V.iPockets)
 		V.iStorage = iUtil.updateObj(iStorage, V.iStorage)
@@ -528,4 +581,19 @@ $(document).one(':storyready',()=>{
 			clearInterval(check2)
 		}
 	}, 100)
+})
+
+
+$(document).on(':passageinit', ()=>{
+	T.addMsg = ''; //效果区的显示信息
+	T.afterMsg = '';//addAfterMsg区的显示信息
+})
+
+$(document).on(':passagedisplay', ()=>{
+	if(T.addMsg.length > 2){
+		new Wikifier(null, `<<append #addMsg transition>>${T.addMsg}<br><</append>>`)
+	}
+	if(T.afterMsg.length > 2){
+		new Wikifier(null, `<<append #addAfterMsg transition>>${T.afterMsg}<br><</append>>`)
+	}
 })

@@ -198,7 +198,7 @@ Items.addItems(Foods, 'foods')
 
 const Special = [
 {
-	type: "items",
+	type: "consumable",
 	tags: ["liquid", "lubricant"],
 
 	id: "lubricant",
@@ -219,14 +219,14 @@ const Special = [
 		["anusgoo", 50, "p"]
 	],
 
-	imgdiff:{
+	diff:{
 		displayname:['new package', '新包装'],
 		img:'items/lubricant_new.png'
 	}
 },
 
 {
-	type: "items",
+	type: "consumable",
 	tags: ["liquid", "lubricant"],
 
 	id: "druglubricant",
@@ -244,7 +244,7 @@ const Special = [
 	],
 	effects: [
 		["anusgoo", 50, "p"],
-		["drugged", 200, "p"],
+		["drugs", 200, "p"],
 		["hunger", 50, "p"],
 	],
 },
@@ -253,6 +253,47 @@ const Special = [
 
 
 Items.addItems(Special)
+
+function onEquip(item){
+	let pos = 'bag'
+	if(this.tags.includes('cart')){
+		pos = 'cart'
+	}
+	else if(this.tags.includes('wallet')){
+		pos = 'wallet'
+	}
+
+	if(item.diff && this.diff){
+		const diff = this.diff[item.diff]
+
+		if(diff.sp){
+			iCandy.setEquipEf(diff.sp)
+		}
+	}
+	
+	iM.onEquip(pos, this.id)
+}
+
+function onUnEquip(item){
+	let pos = 'bag'
+	if(this.tags.includes('cart')){
+		pos = 'cart'
+	}
+	else if(this.tags.includes('wallet')){
+		pos = 'wallet'
+	}
+
+	if(item.diff && this.diff){
+		const diff = this.diff[item.diff]
+
+		if(diff.sp){
+			iCandy.unsetEquipEf(diff.sp)
+		}
+	}
+
+	iM.onUnEquip(pos, this.id)
+}
+
 
 const Containers = [
 	{
@@ -268,9 +309,12 @@ const Containers = [
 	  price: 4200,
 	  size: "big",
 	  capacity: 4,
-	  imgdiff:{
-		girl:{ displayname:['girl', '女款'], img:'container/satchel_girl.png'}
-	  }
+	  diff:{
+		girlish:{ displayname:['girlish', '女款'], img:'container/satchel_girl.png', sp:'girlish'}
+	  },
+
+	  onEquip,
+	  onUnEquip
 	},
   
 	{
@@ -286,10 +330,13 @@ const Containers = [
 	  price: 6800,
 	  size: "big",
 	  capacity: 6,
-	  imgdiff:{
-		femini:{ displayname:['femini', '女款'], img:'container/leathersatchel_girl.png'},
-		manly:{ displayname:['manly', '男款'], img:'container/leathersatchel_boy.png'}
-	  }
+	  diff:{
+		girlish:{ displayname:['girlish', '女款'], img:'container/leathersatchel_girl.png', sp:'girlish'},
+		boyish:{ displayname:['boyish', '男款'], img:'container/leathersatchel_boy.png', sp:'boyish'}
+	  },
+
+	  onEquip,
+	  onUnEquip
 	},
   
 	{
@@ -305,10 +352,13 @@ const Containers = [
 	  price: 9680,
 	  size: "big",
 	  capacity: 8,
-	  imgdiff:{
+	  diff:{
 		black:{ displayname:['black', '黑色'], img:'container/schoolbag_black.png'},
-		pink:{ displayname:['pink', '粉色'], img:'container/schoolbag_pink.png'}
-	  }
+		pink:{ displayname:['pink', '粉色'], img:'container/schoolbag_pink.png', sp:'girlish'}
+	  },
+	  
+	  onEquip,
+	  onUnEquip
 	},
   
 	{
@@ -328,6 +378,9 @@ const Containers = [
 	  size: "big",
 
 	  capacity: 12,
+	  
+	  onEquip,
+	  onUnEquip
 	},
   
 	{
@@ -343,9 +396,12 @@ const Containers = [
 	  ],
 	  	  
 	  num: 1,
-	  price: 13620,
+	  price: 28420,
 	  size: "big",
 	  capacity: 20,
+	  
+	  onEquip,
+	  onUnEquip
 	},
   
 	{
@@ -356,13 +412,34 @@ const Containers = [
 	  plural:"Simple Carts",
 
 	  num: 1,
-	  price: 13620,
+	  price: 3200,
 	  size: "big",
 
 	  info: ["A simple, collapsible cart", "一个简易的，可折叠的手推车。"],
 	  capacity: 36,
+	  
+	  onEquip,
+	  onUnEquip
 	},
   
+	{
+		tags: ["equip","cart"],
+  
+		id: "bucket",
+		name: ["Rolling Bucket", "便携垃圾桶"],
+		plural:"Rolling Buckets",
+  
+		num: 1,
+		price: 27620,
+		size: "big",
+  
+		info: ["A smart, stylish rolling buckets.", "一个智能的，时尚的便携式垃圾桶。"],
+		capacity: 25,
+		
+		onEquip,
+		onUnEquip
+	},
+
 	{
 	  tags: ["equip","cart"],
 
@@ -371,11 +448,14 @@ const Containers = [
 	  plural:"Outdoor Carts",
 
 	  num: 1,
-	  price: 38960,
+	  price: 45960,
 	  size: "big",
 
 	  info: ["A normal, collapsible cart", "一个普通的，可折叠的手推车。"],
 	  capacity: 50,
+	  
+	  onEquip,
+	  onUnEquip
 	},
 
 	{
@@ -394,7 +474,10 @@ const Containers = [
 			"看起来有点小的零钱包。明明很小，意外的很能装东西。"
 		],
 
-		capacity: 50000
+		capacity: 50000,
+		
+		onEquip,
+		onUnEquip
 	},
 
 	{
@@ -413,7 +496,10 @@ const Containers = [
 			"一个普通的单夹层钱包。容量一般，但附带一个小小的零钱口袋与卡槽。"
 		],
 
-		capacity: 500000
+		capacity: 500000,
+		
+		onEquip,
+		onUnEquip
 	},
 
 	{
@@ -432,7 +518,10 @@ const Containers = [
 			"一个长方形的时尚手持包。充足的容量让你随时带着上万现金，还有足够的空间存放大量零钱以及手机。"
 		],
 
-		capacity: 2500000
+		capacity: 2500000,
+		
+		onEquip,
+		onUnEquip
 	}
   ];
   
@@ -442,7 +531,7 @@ Items.addItems(Containers, "container")
 //普通成瘾品，烟酒类
 const Addictive = [
 {
-	type:"items",
+	type:"consumable",
 	tags: ["addiction","smoke", "nicotine"],	
 
 	id: "cigarettes",
@@ -463,7 +552,7 @@ const Addictive = [
 },
 
 {
-	type:"items",
+	type:"consumable",
 	tags: ["addiction","smoke", "nicotine"],	
 
 	id: "marlboro",
@@ -503,7 +592,7 @@ const Addictive = [
 	size: "medium",
 
 	effects: [
-		["drunk", 100, "p"],
+		["alcohol", 100, "p"],
 		["stress", 5],
 	],
 },
@@ -522,7 +611,7 @@ const Addictive = [
 	size: "medium",
 
 	effects: [
-		["drunk", 160, "p"],
+		["alcohol", 160, "p"],
 		["stress", 10],
 		["fatigue", 60],
 	],
@@ -533,31 +622,30 @@ Items.addItems(Addictive)
 
 
 function onUseDrags(){
-	const effects = this.effects;
+	const { id, tags, effects, doDelta } = this
 	effects.forEach((effect) => {
 		const [palam, min, method] = effect;
-		const { taken } = V.candyDrug[this.id];	
+		const take = iCandy.getStat(id, 'taken') ?? 0
 
 		let max = Math.floor(value*1.2 + 1.5);
 		let value = random(min, max);
 
-		value = value * Math.max(1 - taken * 0.1, 0.2);
+		value = value * Math.max(1 - take * 0.1, 0.2);
 
-		this.doDelta(palam, value, method);
+		doDelta(palam, value, method);
 	});
 
 
-	if(this.tags.includes('risky')){
-		V.iCandyStats.tempflag.candy[this.id] = 1;
-	}
-	else if(this.tags.includes('strong')){
-		V.iCandyStats.tempflag.candy[this.id] = 2;
+	if(tags.has('risky', 'strong')){
+		iCandy.setValue(id, 'efTimer', this.hours*60);
 	}
 
-	if(V.candyDrug[this.id]){
-		V.candyDrug[this.id].taken ++;
-		if(V.candyDrug[this.id].taken >= this.threshold){
-			V.candyDrug[this.id].overdose++
+	if(iCandy.checkStat(id)){
+		iCandy.setValue(id, 'taken', 1)
+
+		let take = iCandy.getStat(id, 'taken')
+		if(take >= this.threshold){
+			iCandy.setValue(id, 'overdose', 1)
 		}
 	}
 }
@@ -760,9 +848,9 @@ const Drugs = [
 
 	effects: [
 		["trauma", 60],
-		["drugs", 1000],
+		["aphrod", 1000],
 		["arousal", 1000, "p"],
-		["hallucinations", 100],
+		["hallucinogen", 100],
 	],
 
 	threshold: 1,
@@ -844,7 +932,7 @@ const Drugs = [
 		["pain", 20],
 		["tiredness", 80],
 		["arousal", 1000, "p"],
-		["drugs", 1000],
+		["aphrod", 1000],
 	],
 
 	threshold: 0,
@@ -929,7 +1017,7 @@ const Drugs = [
 	effects: [
 		["pain", 100],
 		["trauma", 200],
-		["drugs", 1000],
+		["aphrod", 1000],
 	],
 
 	threshold: 0,
@@ -1000,8 +1088,8 @@ const Drugs = [
 		["pain", 100],
 		["trauma", 320],
 		["stress", 36],
-		["drugs", 1000],
-		["alcohol", 1000],
+		["aphrod", 1000],
+		["drunk", 1000],
 	],
 
 	threshold: 0,

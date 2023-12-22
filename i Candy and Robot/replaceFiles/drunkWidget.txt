@@ -1,4 +1,4 @@
 
         <<set _drink = Math.floor(_args[0] * _drunk_mod)>>
-        <<set $iCandyStats.alcohol.drunk += Math.max(Math.floor(_drink/100+0.5), 1)>>
+        <<run iCandy.take('alcohol', _drink)>>
 		<<set $drunk += _drink>>

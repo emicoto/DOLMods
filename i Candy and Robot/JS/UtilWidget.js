@@ -136,7 +136,7 @@ function printMedicineLink(itemId){
 		linkname = name
 	}
 
-	return `<<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to Items.data["${key}"]>><</link>><br>`
+	return `<<itemIcon '${drug.img}'>><<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to Items.data["${key}"]>><</link>><br>`
 }
 
 DefineMacroS('iMedicineLink', printMedicineLink)

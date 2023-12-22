@@ -18,17 +18,23 @@ const ItemPocket = ["bag","body","cart","hole"]
  * @param {string} itemId
  * @param {number} num
  */
-function pocketItem(itemId, num){
+function pocketItem(itemId, num, diff){
 	let data = Items.get(itemId);
 	if(!data){
 		throw new Error('no such item:', itemId)
 	}
 
 	this.type = data.type
+	this.uid = data.id
 	this.id = data.id
 	this.name = lanSwitch(data.name)
 	this.count = num
 	this.pocket = 'body'
+
+	if(diff){
+		this.diff = diff
+		this.uid = data.id + '_' + diff
+	}
 }
 
 const iManager = {
@@ -37,7 +43,7 @@ const iManager = {
 	 * @param {string} itemId 
 	 * @returns {number}
 	 */
-	getStackSize (itemId){
+	getStackSize (itemId, org){
 		let item = Items.get(itemId)
 
 		if(!item){
@@ -47,9 +53,17 @@ const iManager = {
 		else if(!item.size){
 			return 1
 		}
-		else if(iCandy.getConfig('disableStack') === true ){
-			return Math.pow(10, 20) //应该完全禁用，但麻烦，干脆弄个除了作弊不会到达的数字。
+
+		//获取原始堆叠大小
+		else if(org){
+			return setup.maxStacks[item.size]
 		}
+
+		//应该完全禁用，但麻烦，干脆弄个除了作弊不会到达的数字。
+		else if(iCandy.getConfig('disableStack') === true ){
+			return Math.pow(10, 20)
+		}
+
 		//默认最大可能得堆叠上限为1k
 		return Math.clamp(setup.maxStacks[item.size] * iCandy.getConfig('globalStack'), 1, 1000)
 
@@ -114,14 +128,14 @@ const iManager = {
 	 * @param {Array<pocketItem>} pocket 
 	 */
 	mergeSameItems (pocket){
-	const sameItems = pocket.reduce((nowItem, { id, count } ,i)=>{
-			if(nowItem.has(id)){
-				var item = nowItem.get(id)
+		const sameItems = pocket.reduce((nowItem, { uid, count } ,i)=>{
+			if(nowItem.has(uid)){
+				var item = nowItem.get(uid)
 				item.addItem(count,i)
 				return nowItem;
 			}
 
-			nowItem.set(id, getItemInfo(count, i))
+			nowItem.set(uid, getItemInfo(count, i))
 			return nowItem;
 		},new Map())
 		
@@ -307,7 +321,7 @@ const iManager = {
 			if(!Array.isArray(pocket)) return result;
 
 			let stack = pocket.filter((item, index)=>{
-				if(item.id==itemId) {
+				if(item.uid==itemId) {
 					result.total += item.count;
 					result.path.push({ pos: key, index })
 					return item;
@@ -339,17 +353,18 @@ const iManager = {
 	objPocket(items){
 		let obj = {};
 		items.forEach((item)=>{
-			if(!obj[item.id]){
-				obj[item.id] = {
+			if(!obj[item.uid]){
+				obj[item.uid] = {
 					type: item.type,
 					id: item.id,
+					uid: item.uid,
 					name: item.name,
 					count: item.count,
 					pocekt: item.pocekt
 				}
 			}
 			else{
-				obj[item.id].count += item.count
+				obj[item.uid].count += item.count
 			}
 		})
 
@@ -385,20 +400,60 @@ const iManager = {
 			return result
 		}, { items, last:null, details:[]})
 	},
+
+	/**
+	 * 物品获得前的检测。
+	 * 返回boolean
+	 */
+	checkItemOnGet : function(itemId, num){
+		//如果没有格子限制的话直接返回true
+		if(iCandy.getConfig('disablePockets') == true ) return true;
+
+		const size = this.getStackSize(itemId)
+		const { total, stacks } = this.getStackFromPockets(itemId);
+
+		//先检查即存堆叠是否有足够空位，有就直接返回true
+		if(stacks.length * size - total >= num){
+			return true
+		}
+
+		const slots = this.getEmptySlots()
+
+		//看看有无足够空余位置
+		if( slots.total >= Math.ceil(num/size) ){
+			return true
+		}
+
+		return false
+	},
+
 	/**
 	 * 物品获得时的处理。将返回显示用文本。
 	 * @param {string} itemId 
 	 * @param {number} num
 	 * @return {string} 
 	 */
-	getItems : function(itemId, num){
-		let newItem = new pocketItem(itemId, num)
+	getItems : function(itemId, num, diff){
+		let newItem = new pocketItem(itemId, num, diff)
 		let size = this.getStackSize(itemId)
 		let msg = ''
 		let leftNum = 0
+		let ID = newItem.uid
+
+		//如果没有格子限制，则直接扔pockets.global
+		if(iCandy.getConfig('disablePockets') == true ){
+
+			if(!V.iPockets.global[ID]){
+				V.iPockets.global[ID] = newItem;
+			}
+			else{
+				V.iPockets.global[ID].count += num;
+			}
+			
+		}
 
 		//先进行是否存在即存堆叠的检测。如果即存堆叠有足够空间，就直接加上。  
-		let {total, stacks} = this.getStackFromPockets(itemId)
+		let {total, stacks} = this.getStackFromPockets(ID)
 
 		if(total > 0){
 			//先整合看看有无剩余
@@ -426,7 +481,8 @@ const iManager = {
 
 			//如果这里已经处理完了，根据最后处理的位置抛个提示
 			if(leftItems.items.length == 0 ){
-				return this.transferMsg[leftItems.last.pocket](last)
+				let { last } = leftItems
+				return this.transferMsg[last.pocket](last)
 			}
 		}
 
@@ -437,10 +493,10 @@ const iManager = {
 		}, 0)
 
 		//根据所在地点判断获取提示信息
-	let html = this.dropOrTransferItems(leftitem)
-	if(html){
-		new Wikifier(null, `<<append #addMsg transition>>${html}<</append>>`)
-	}
+		let html = this.dropOrTransferItems(leftitem)
+		if(html){
+			new Wikifier(null, `<<append #addMsg transition>>${html}<</append>>`)
+		}
 
 	},
 
@@ -448,23 +504,23 @@ const iManager = {
 		//根据所在地点判断
 		if(V.location == 'home'){
 			//在家就转移到家里仓库。
-			this.storeItems('home', item.id, item.count)
+			this.storeItems('home', item.uid, item.count)
 			return this.transferMsg.home(item)
 		}
 		else if(V.location == 'farm'){
 			//在农场里就转移到农场仓库
-			this.storeItems('farmbarns', item.id, item.count)
+			this.storeItems('farmbarns', item.uid, item.count)
 			return this.transferMsg.farm(item)
 		}
 		//如果所在地有储物柜
-		else if(this.hasLockers() && this.canStoreLockers(item.id)){
-			this.storeItems('lockers', item.id, item.count)
+		else if(this.hasLockers() && this.canStoreLockers(item.uid)){
+			this.storeItems('lockers', item.uid, item.count)
 			return this.transferMsg.lockers(item)
 		}
 		//如果所在地有藏物点
 		else if(this.hidePoint[getLocation()]){
 			let [place, storage] = this.hidePoint[getLocation()]
-			this.storeItems(storage, item.id, item.count)
+			this.storeItems(storage, item.uid, item.count)
 			return this.transferMsg[place](item)
 		}
 		//其他情况就无了。
@@ -502,7 +558,7 @@ const iManager = {
 		let leftItems = []
 		for( let i=0; i < max; i++ ){
 			let item = pocket[i]
-			let size = iManager.getStackSize(item.id)
+			let size = this.getStackSize(item.id)
 			if(item.count > size){
 				let left = clone(item)
 				item.count = size
@@ -547,7 +603,7 @@ const iManager = {
 		//如果背包、手推车遗失，会在遗失判定时同时清理掉物品。
 		//先整理多余物品到已有堆叠中
 		leftItems.forEach((item)=>{
-			let { total, stacks } = this.getStackFromPockets(item.id)
+			let { total, stacks } = this.getStackFromPockets(item.uid)
 			if( total > 0 ){
 				item.count = this.shiftStacks(stacks, item.count)
 			}
@@ -676,6 +732,8 @@ const iManager = {
 	}
 
 }
+
+window.iM = iManager
 
 /**
  * 
@@ -825,17 +883,3 @@ function lostItemsAfterRape(){
 function harvestHandle(){
 
 }
-
-$(document).on(':passageinit', ()=>{
-	T.addMsg = ''; //弹出区的显示信息
-	T.afterMsg = '';//addAfterMsg区的显示信息
-})
-
-$(document).on(':passagedisplay', ()=>{
-	if(T.addMsg.length > 2){
-		new Wikifier(null, `<<append #headerPopUp transition>>${T.addMsg}<br><</append>>`)
-	}
-	if(T.afterMsg.length > 2){
-		new Wikifier(null, `<<append #addAfterMsg transition>>${T.afterMsg}<br><</append>>`)
-	}
-})

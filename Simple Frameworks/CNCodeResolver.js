@@ -122,39 +122,6 @@ const check = {
 
 window.check = check
 
-
-function sexSwitch(npc, female,male){
-    let gender = 'f'
-    if(npc !== 'pc'){
-        gender = C.npc[npc].gender
-    }
-    else{
-        gender = V.player.gender_appearance
-    }
-
-    if(gender == 'm'){
-        return male
-    }
-
-    return female
-}
-
-window.sexSwitch = sexSwitch
-DefineMacroS('sexSwitch', sexSwitch)
-
-
-function cond(...condtxt){
-    for(let i=0; i<condtxt.length; i++){
-        if(condtxt[i][0]){
-            return condtxt[i][1]
-        }
-
-        return condtxt[condtxt.length-1][1]
-    }
-}
-window.cond
-DefineMacroS('cond', cond)
-
 const cntv = {
     '设置':function(prop, value){
         V.iModValues[prop] = value;
@@ -258,65 +225,3 @@ function CNCodeTrans(key, ...args){
 
 DefineMacroS('cntv', CNCodeTrans)
 
-
-const iModManager = {
-    setCf: function(prop, value){
-       this.init('iModConfigs')
-        V.iModConfigs[prop] = value;
-    },
-
-    setV: function(prop, value){
-        this.init('iModValues')
-        V.iModValues[prop] = value;
-    },
-
-    setNpc: function(prop, value){
-        this.init('iModNpc')
-        V.iModNpc[prop] = value;
-    },
-
-    init: function(type){
-
-        if(['iModConfigs', 'iModValues', 'iModNpc'].includes(type) == false){
-            return
-        }
-
-        if(!V[type]){
-            V[type] = {}
-        }
-
-        if(typeof V[type].set !== 'function'){
-            V[type].set = function(prop, value){
-                V[type][prop] = value;
-            }
-        }
-
-        if(typeof V[type].get !== 'function'){
-            V[type].get = function(prop, value){
-                if(!V[type][prop]){
-                    V[type][prop] = value ?? 0
-                }
-                return V[type][prop]
-            }
-        }
-    },
-
-    has:function(type, prop){
-
-        if(!V['iMod'+type]){
-            this.init(type)
-        }
-
-        return V['iMod'+type][prop]
-    }
-
-}
-
-window.iModManager = iModManager
-
-function iModonReady(){
-    iModManager.init('iModConfigs');
-    iModManager.init('iModValues');
-    iModManager.init('iModNpc');
-}
-DefineMacroS('iModonReady', iModonReady)

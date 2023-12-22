@@ -1,16 +1,17 @@
 :: iCandyRobot ModOptions[widget]
 <<widget "iCandyOptions">>
-<span class="gold"><<lanSwitch "Settings" "功能设定" >></span>
+<span class="gold"><<lanSwitch "i Candy Robot" "爱糖机" >></span>
 <div>
 
+<!-- 设置项目  -->
 <div class="settingsToggle">
     <label>
-    <<checkbox "$iCandyOptions." false true autocheck>>
+    <<checkbox "$iCandyRobot.config.keepHairs" false true autocheck>>
     <mouse class="tooltip-small linkBlue">(?)
     <span>
         <<=lanSwitch(
-            "english hints",
-            "中文提示"
+            "disable random ruffle hairs",
+            "禁止自动弄乱头发"
         )>>
     </span>
     </mouse>

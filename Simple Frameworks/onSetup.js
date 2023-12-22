@@ -32,6 +32,11 @@ setup.DOLNPCNames = {
     Zephyr: ["Zephyr", "泽菲尔"],
   };
 
+//------------------------------------------------------
+//
+//  widget： 语言切换，性别切换，条件切换
+//
+//------------------------------------------------------
 function lanSwitch(...lan) {
     let [EN, CN] = lan
     if (Array.isArray(lan[0]))
@@ -45,6 +50,37 @@ function lanSwitch(...lan) {
 window.lanSwitch = lanSwitch
 DefineMacroS('lanSwitch', lanSwitch)
 
+function sexSwitch(npc, female,male){
+    let gender = 'f'
+    if(npc !== 'pc'){
+        gender = C.npc[npc].gender
+    }
+    else{
+        gender = V.player.gender_appearance
+    }
+
+    if(gender == 'm'){
+        return male
+    }
+
+    return female
+}
+
+window.sexSwitch = sexSwitch
+DefineMacroS('sexSwitch', sexSwitch)
+
+
+function cond(...condtxt){
+    for(let i=0; i<condtxt.length; i++){
+        if(condtxt[i][0]){
+            return condtxt[i][1]
+        }
+
+        return condtxt[condtxt.length-1][1]
+    }
+}
+window.cond
+DefineMacroS('cond', cond)
 
 let lancheck = setInterval(() => {
     if (typeof setup !== 'object') { return }
@@ -62,7 +98,11 @@ let lancheck = setInterval(() => {
     }
 }, 60)
 
-
+//------------------------------------------------------
+//
+//  新增NPC支持框架
+//
+//------------------------------------------------------
 class NamedNPC {
     static database = []
     /**
@@ -352,8 +392,6 @@ setup.addNPCList = [];
 setup.ModNpcSetting = {};
 setup.ModNpcImportant = [];
 setup.ModNpcSpecial = [];
-setup.ModTraits = [];
-setup.ModTraitTitle = [];
 
 setup.ModSocialSetting = function () {
     //make a bakup
@@ -429,6 +467,13 @@ setup.ModLoveInterest = function(){
     
 }
 
+//------------------------------------------------------
+//
+//  新增特征与刺青支持
+//
+//------------------------------------------------------
+setup.ModTraits = [];
+setup.ModTraitTitle = [];
 setup.addModTrait = function () {
     let Traits = [
         'General Traits',
@@ -487,8 +532,103 @@ setup.addModTrait = function () {
 
 }
 
-setup.NPCFrameworkOnLoad = false
 
+setup.modTattoos = [];
+setup.addBodyWriting = function(){
+    setup.modTattoos.forEach((obj)=>{
+        const item = {
+            index: Object.keys(setup.bodywriting).length,
+            writing: obj.name,
+            type: obj.type ?? 'text',
+            writ_cn: obj.cn ?? obj.name,
+            arrow: obj.arrow ? 1 : 0,
+            special: obj.sp ?? 'none',
+            gender: obj.gender ?? 'n',
+            lewd: obj.lewd ?? 1,
+            degree: obj.degree ?? 0,
+            key: obj.key,
+            sprites: obj.sprites?? [],		
+        }
+
+        setup.bodywriting[obj.key] = item;
+        setup.bodywriting_namebyindex[item.index] = obj.key;
+
+    })
+}
+
+
+//------------------------------------------------------
+//
+//  模组变量管理
+//
+//------------------------------------------------------
+const iModManager = {
+    setCf: function(prop, value){
+       this.init('iModConfigs')
+        V.iModConfigs[prop] = value;
+    },
+
+    setV: function(prop, value){
+        this.init('iModValues')
+        V.iModValues[prop] = value;
+    },
+
+    setNpc: function(prop, value){
+        this.init('iModNpc')
+        V.iModNpc[prop] = value;
+    },
+
+    init: function(type){
+
+        if(['iModConfigs', 'iModValues', 'iModNpc'].includes(type) == false){
+            return
+        }
+
+        if(!V[type]){
+            V[type] = {}
+        }
+
+        if(typeof V[type].set !== 'function'){
+            V[type].set = function(prop, value){
+                V[type][prop] = value;
+            }
+        }
+
+        if(typeof V[type].get !== 'function'){
+            V[type].get = function(prop, value){
+                if(!V[type][prop]){
+                    V[type][prop] = value ?? 0
+                }
+                return V[type][prop]
+            }
+        }
+    },
+
+    has:function(type, prop){
+
+        if(!V['iMod'+type]){
+            this.init(type)
+        }
+
+        return V['iMod'+type][prop]
+    }
+
+}
+window.iModManager = iModManager
+
+function iModonReady(){
+    iModManager.init('iModConfigs');
+    iModManager.init('iModValues');
+    iModManager.init('iModNpc');
+}
+DefineMacroS('iModonReady', iModonReady)
+
+//------------------------------------------------------
+//
+//  进程处理
+//
+//------------------------------------------------------
+setup.NPCFrameworkOnLoad = false
 function checkUpdate() {
     setup.NPCFrameworkOnLoad = true
 }
