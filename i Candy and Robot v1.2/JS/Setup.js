@@ -41,8 +41,8 @@ function setupCandyVar(){
 			withdraw: 5,
 			ontake	: function(){
 				let drug = V.candyDrug[this.id]
-				let truama =  40 * Math.max(1-(drug.taken*0.1), 0.2)
-				wikifier('trauma', -truama)
+				let trauma =  40 * Math.max(1-(drug.taken*0.1), 0.2)
+				wikifier('trauma', -trauma)
 				drug.owned --
 				drug.taken ++
 			},

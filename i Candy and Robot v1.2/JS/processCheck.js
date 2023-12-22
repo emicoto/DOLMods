@@ -173,7 +173,7 @@ function addictionPross(){
 	}
 
 	//春药戒断中，起码14天才能完全戒断
-	if(Stats.drugs.take == 0){
+	if(Stats.drugs.addict == 1 && Stats.drugs.take == 0){
 		Stats.drugs.withdraw ++
 
 		//确认戒断状态
@@ -201,7 +201,7 @@ function addictionPross(){
 	}
 
 	//酒精戒断中，起码30天才能完全戒断
-	if(Stats.alcohol.drunk == 0){
+	if(Stats.alcohol.addict && Stats.alcohol.drunk == 0){
 		Stats.alcohol.withdraw ++
 
 		//确认戒断状态
@@ -248,7 +248,7 @@ function addctionEvent(){
 			html += `你今天没吃${setup.candyDrug[i].name}感到些许心慌。<<ggstress>><<stress 12>>`
 		}
 		else if(candy[i].withdraw == 1 && i == 'angelkiss'){
-			html += `你今天没嗑天使之吻，感到浑身发烫难受。<<gggstress>><<stress 60>><<gtruama>><<truama 8>><<arousal 240 'genital'>>`
+			html += `你今天没嗑天使之吻，感到浑身发烫难受。<<gggstress>><<stress 60>><<gtruama>><<trauma 8>><<arousal 240 'genital'>>`
 		}
 		candy[i].withdraw = 0
 	}
@@ -261,7 +261,7 @@ function addctionEvent(){
 	}
 
 	if(drugs.withdraw == 1){
-		html += `你今天没吸收性奋类药物，你感到十分空虚难受。<<ggstress>><<gtruama>><<stress 16>><<truama 4>>`
+		html += `你今天没吸收性奋类药物，你感到十分空虚难受。<<ggstress>><<gtruama>><<stress 16>><<trauma 4>>`
 	}
 
 	drugs.addict = 0
@@ -274,7 +274,7 @@ function addctionEvent(){
 		html += '你已经彻底戒除了酒精。<br>'
 	}
 
-	if(drugs.withdraw == 1){
+	if(alcohol.withdraw == 1){
 		html += '你今天没喝过酒，你感到十分烦躁。<<ggstress>><<stres 12>>'
 	}
 

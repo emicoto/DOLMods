@@ -19,7 +19,9 @@
   ],
   "tweeFileList": [],
   "imgFileList": [],
-  "additionFile": [],
+  "additionFile": [
+    "readme.txt"
+  ],
   "addonPlugin": [
     {
       "modName": "TweeReplacer",
