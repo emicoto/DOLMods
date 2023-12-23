@@ -77,6 +77,7 @@ function drugState(){
 	this.withdraw = 0;			//是否处于戒断状态
 	this.clearedTimes = 0;		//戒除次数
 	this.efTimer = 0;			//药效到期时间(timeStamp + timer)
+	this.process = 0;			//上瘾进度
 }
 
 /**

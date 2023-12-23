@@ -921,7 +921,7 @@ const Drugs = [
 	maxOD: 2,		//最大过量值，超过这个值会上瘾
 	withdraw: 24+18, //出现戒断反应所需时间，单位是小时
 	clear: 28,		//戒除需求时间，单位是天
-	hours: 1,		//药效持续时间，单位是小时
+	hours: 2,		//药效持续时间，单位是小时
 
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
@@ -963,7 +963,7 @@ const Drugs = [
 	maxOD: 2,		//最大过量值，超过这个值会上瘾
 	withdraw: 24+16,//出现戒断反应所需时间，单位是小时
 	clear: 28,		//戒除需求时间，单位是天
-	hours: 1,		//药效持续时间，单位是小时
+	hours: 2,		//药效持续时间，单位是小时
 
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
@@ -1008,7 +1008,7 @@ const Drugs = [
 	maxOD: 2, 		//最大过量值，超过这个值会上瘾
 	withdraw: 20,	//出现戒断反应所需时间，单位是小时
 	clear: 32,		//戒除需求时间，单位是天
-	hours: 2,		//药效持续时间，单位是小时
+	hours: 4,		//药效持续时间，单位是小时
 
 	_onUse: onUseDrags,
 	onUse: function(){
@@ -1113,7 +1113,7 @@ const Drugs = [
 },
 
 {
-	tags: ["strong", "addiction", "inject"],
+	tags: ["strong", "addiction", "inject", "super"],
 
 	id: "cocaine",
 	name: ["Cocaine", "可卡因"],
@@ -1135,7 +1135,7 @@ const Drugs = [
 	],
 
 	threshold: 0,
-	maxOD: 0,
+	maxOD: 1,
 	withdraw: 18,
 	clear: 52,
 	hours: 2,
@@ -1186,7 +1186,7 @@ const Drugs = [
 },
 
 {
-	tags: ["strong", "addiction", "inject"],
+	tags: ["strong", "addiction", "inject", "immediate"],
 
 	id: "angelpowder",
 	name: ["Angel Powder", "天使粉"],

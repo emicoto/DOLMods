@@ -240,8 +240,38 @@ function dayProcess(sec, day, weekday){
             stats.overdose ++
         }
 
-        //当近期过量次数大于最大过量值时，设置上瘾状态
-        if(maxOD >= 0 && stats.overdose >= maxOD && stats.addict == 0){
+        //当超量时，根据进度增加隐形上瘾值。
+        if(stats.overdose > 0 && stats.addict == 0){
+            if(tags.includes('immediate')){
+                stats.process += 2
+            }
+
+            else if(tags.includes('super')){
+                stats.process += 0.75
+            }
+
+            else if(tags.includes('strong')){
+                stats.process += 0.5
+            }
+            else if(tags.includes('risky')){
+                stats.process += 0.2
+            }
+            //其他情况每日增加1.5点上瘾值
+            else{
+                stats.process += 0.1
+            }
+        }
+
+
+        //当近期过量次数大于最大过量值时，并且隐形上瘾值大于1，设置上瘾状态
+        if(stats.overdose > maxOD && stats.addict == 0 && stats.process >= 2){
+            stats.addict = 1
+            //设置上瘾事件flag
+            drugFlags[drug].addiction = 1
+        }
+
+        //如果maxOd跟threshold都是0， 说明是必上瘾的特效药物，直接设置上瘾状态
+        if(maxOD == 0 && threshold == 0 && stats.taken > 0 && stats.addict == 0){
             stats.addict = 1
             //设置上瘾事件flag
             drugFlags[drug].addiction = 1
