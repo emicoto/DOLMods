@@ -334,14 +334,34 @@ function addictionEvent(item){
         ) + '<br>'
     }
     else{
+        
+
 
     }
 }
 
+//彻底戒除时的通知文本与相关事件。
 function ClearEvent(item){
     const general = ['alcohol', 'nicotine', 'aphrod']
     if(general.includes(item)){
-
+        const word = {
+            alcohol: lanSwitch(
+                `alcohol`,
+                `酒精`,
+            ),
+            nicotine: lanSwitch(
+                `nicotine`,
+                `尼古丁`,
+            ),
+            aphrod: lanSwitch(
+                `aphrodisiacs`,
+                `催情类物质`,
+            )
+        }
+        return lanSwitch(
+            `You have completely quit ${word[item]}, as long as you don't touch ${word[item]} again, your body will gradually recover.`,
+            `你已经彻底戒除了${word[item]}，只要不再沾染上${word[item]}你的身体将会逐渐恢复健康。`,
+        ) + '<br>'
     }
     else{
 
