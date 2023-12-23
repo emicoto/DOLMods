@@ -16,7 +16,7 @@ const iUtil = {
 	},
 
 	getPalam : function(key, value){
-		let list = ['trauma', 'pain', 'tiredness', 'drunk', 'hallucinations','control','corruption','stress', 'drugged']
+		let list = ['trauma', 'pain', 'tiredness', 'drunk', 'hallucinogen','control','corruption','stress', 'drugged']
 		if(!V.statFreeze && list.includes(key))
 			V[key] += value
 	},
@@ -24,47 +24,6 @@ const iUtil = {
 	getPhysique : function(value){
 		if(V.statFreeze){
 			V.physique = Math.clamp(V.physique + value, 0, V.physiquesize)
-		}
-	},
-
-	getExtraSens: function(type, num, timer){
-		let sens = V.iCandyStats.extraSens
-	
-		//获取原始值
-		if(sens[type].add == 0 && sens[type].timer == 0){
-			sens[type].base = V[type+'sensitivity']
-			sens[type].add = num
-			sens[type].timer = timer
-		}
-		else{
-			sens[type].add += num
-			if(sens[type].timer < timer/2 ){
-				sens[type].timer = timer
-			}
-		}
-	},
-
-	updateSens: function(pass){
-		let list = ['genital', 'bottom', 'breast', 'mouth']
-		let sens = V.iCandyStats.extraSens
-		let init
-	
-		list.forEach((type)=>{
-			if(sens[type].add > 0 && sens[type].timer > 0){
-				V[type+'sensitivity'] = sens[type].base + sens[type].add
-				sens[type].timer = Math.max( sens[type].timer - pass, 0)
-			}
-			else if(sens[type].timer <= 0 && sens.init == 1){
-				V[type+'sensitivity'] = sens[type].base
-			}
-			else if(!sens.init){
-				sens[type].base = V[type+'sensitivity']
-				init = true
-			}
-		})
-	
-		if (init){
-			sens.init = 1
 		}
 	},
 

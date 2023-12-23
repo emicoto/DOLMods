@@ -32,6 +32,16 @@ Time.pass = function(sec){
      if(!V.test){
         V.test = 0
      }
+     
+     const min = currentDate.minute - prevDate.minute,
+     hour = currentDate.hour - prevDate.hour,
+     day = currentDate.day - prevDate.day,
+     month = currentDate.month - prevDate.month,
+     year = currentDate.year - prevDate.year,
+     weekday = [prevDate.weekDay, currentDate.weekDay];
+
+     console.log('passed min:',min, ', hour:',hour, ', day:', day, ', month:', month, ', year:', year)
+     console.log('weekday', weekday)
 
      V.test ++
      wikifier('hallucinogen', 1)

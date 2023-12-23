@@ -267,9 +267,7 @@ class Items {
 		}
 
 		const _data = new Items(type, id, name)
-		for (let i in obj) {
-			_data[i] = obj[i]
-		}
+		Object.assign(_data, obj)
 		this.data[id] = _data
 
 		return this.data[id]
@@ -305,9 +303,7 @@ class Items {
 			}
 
 			const _data = new Items( type ?? defaultType, id, name, price, num, size)
-			for (let i in item) {
-				_data[i] = item[i]
-			}
+			Object.assign(_data, item)
 			this.data[item.id] = _data;
 		})
 	}
@@ -354,13 +350,19 @@ class Items {
 
 	/**
 	 * 同时根据物品分类 以及 标签（所选标签任意一个）筛选物品
-	 * @param {string} type;
-	 * @param {string[]} tags;
+	 * @param {string} type 物品的分类
+	 * @param { 'and' | 'or' } andor 需要匹配所有标签还是任一标签
+	 * @param {string[]} tags 标签（可多选）
 	 * @returns { Array<[string, Items]> }
 	 */
-	static search(type, ...tags) {
+	static search(type, andor, ...tags) {
 		const database = Object.entries(this.data)
-		return database.filter(([key, item]) => item.type == type && item.tag.containsAny(...tags))
+		if(andor == 'and'){
+			return database.filter(([key, item]) => item.type == type && item.tag.containsAll(...tags))
+		}
+		else{
+			return database.filter(([key, item]) => item.type == type && item.tag.containsAny(...tags))
+		}
 	}
 
 	/**
@@ -394,7 +396,7 @@ class Items {
 		this.usage = 1
 		this.img = `${type}/${id}.png`
 
-		this.diff = {}
+		//this.diff = {}
 	}
 
 	/**
@@ -521,8 +523,8 @@ class Items {
 	 * @param {funciton} callback 
 	 * @returns 
 	 */
-	After(callback) {
-		this.onAfter = callback
+	Wake(callback) {
+		this.onWake = callback
 		return this
 	}
 

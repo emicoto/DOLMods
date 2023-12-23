@@ -118,11 +118,13 @@ class NamedNPC {
         for (let i = 0; i < V.NPCName.length; i++) {
             let npc = V.NPCName[i]
             if ( setup.NPCNameList.includes(npc.nam) ){
+                console.log('resloving npcs...', npc.nam)
                 newnpcs.push(V.NPCName[i])
             }
         }
         V.NPCName = newnpcs
         V.NPCNameList = setup.NPCNameList
+        console.log('npcs resloving done!')
     }
     static has(name) {
         return this.database.findIndex((npc) => { return npc.nam == name })
@@ -131,10 +133,12 @@ class NamedNPC {
         const hasnpc =(name)=>{
             return V.NPCName.filter( npc => npc.nam == name)[0]
         }
+        console.log('start to update npcs....')
 
         this.database.forEach((data) => {
             let npc = clone(data)
             if (V.NPCNameList.includes(npc.nam) === false || !hasnpc(npc.nam)) {
+                console.log('update npcs:', npc.nam)
                 npc.title = lanSwitch(npc.title_lan)
                 npc.displayname = lanSwitch(npc.displayname_lan)
 
@@ -148,7 +152,7 @@ class NamedNPC {
                     V.NPCNameList.push(npc.nam)
                 }
 
-                if (!C.npc[npc.nam]) {
+                if (!C.npc.hasOwnProperty(npc.nam)) {
                     Object.defineProperty(C.npc, npc.nam, {
                         get() {
                             return V.NPCName[setup.NPCNameList.indexOf(npc.nam)];
@@ -619,7 +623,7 @@ const iModManager = {
 }
 window.iModManager = iModManager
 
-function iModonReady(){ 
+function iModonReady(){
     iModManager.init('iModConfigs');
     iModManager.init('iModValues');
     iModManager.init('iModNpc');

@@ -411,7 +411,7 @@ c.add("heroin", ["Heroin", "海洛因"], 6800, 4, "drugs")
     ["trauma", 60],
     ["drugs", 1000],
     ["arousal", 1000, "p"],
-    ["hallucinations", 100]
+    ["hallucinogen", 100]
   )
   .setTags("risky", "addiction")
   .isPill()

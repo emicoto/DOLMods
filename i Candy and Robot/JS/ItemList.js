@@ -19,6 +19,8 @@ const Foods = [
 		["trauma", 5],
 		["hunger", 10],
 	],
+
+	stacksprites:[25, 50, 100]//百分比值，当前堆叠数/堆叠上限 >= 数值时，在uid后加_num.png
 },
 
 {
@@ -220,8 +222,10 @@ const Special = [
 	],
 
 	diff:{
-		displayname:['new package', '新包装'],
-		img:'items/lubricant_new.png'
+		new:{
+			displayname:['new package', '新包装'],
+			img:'items/lubricant_new.png'
+		}
 	}
 },
 
@@ -461,17 +465,39 @@ const Containers = [
 	{
 		tags: ["equip","wallet"],
 
-		id:"pouch",
-		name: ["Coin Pouch", "小荷包"],
+		id:"coinpouch",
+		name: ["Coin Pouch", "零钱袋"],
 		plural:"Coin Pouches",
 
 		num:1,
-		price: 4800,
+		price: 1200,
+		size:"big",
+
+		info:[
+			"A small pouch for holding coins.",
+			"一个用来装零钱的布袋。"
+		],
+
+		capacity: 10000,
+		
+		onEquip,
+		onUnEquip
+	},
+
+	{
+		tags: ["equip","wallet"],
+
+		id:"pouch",
+		name: ["Pouch", "荷包"],
+		plural:"Pouches",
+
+		num:1,
+		price: 3640,
 		size:"big",
 
 		info:[
 			"A purse for holds your coins. Small, but can hold more than your expect.",
-			"看起来有点小的零钱包。明明很小，意外的很能装东西。"
+			"看起来有点小的荷包。明明很小，意外的很能装东西。"
 		],
 
 		capacity: 50000,
@@ -488,7 +514,7 @@ const Containers = [
 		plural:"Wallets",
 
 		num:1,
-		price: 12800,
+		price: 9680,
 		size:"big",
 
 		info:[
@@ -510,7 +536,7 @@ const Containers = [
 		plural:"Handheld Purses",
 
 		num:1,
-		price: 26800,
+		price: 16800,
 		size: "big",
 
 		info:[
@@ -637,15 +663,19 @@ function onUseDrags(){
 
 
 	if(tags.has('risky', 'strong')){
-		iCandy.setValue(id, 'efTimer', this.hours*60);
+		iCandy.setValue(id, 'efTimer', V.timeStamp + this.hours*60*60);
 	}
 
 	if(iCandy.checkStat(id)){
 		iCandy.setValue(id, 'taken', 1)
+		iCandy.setValue(id, 'lastTime', V.timeStamp)
 
-		let take = iCandy.getStat(id, 'taken')
 		if(take >= this.threshold){
 			iCandy.setValue(id, 'overdose', 1)
+		}
+		//如果有戒断状态，清除戒断状态
+		if(iCandy.getStat(id, 'withdraw') > 0){
+			iCandy.setStat(id, 'withdraw', 1)
 		}
 	}
 }
@@ -666,11 +696,11 @@ const Medicines = [
 
 		effects: [["trauma", 16]],
 
-		threshold: 4,
-		maxOD: 12,
-		withdraw: 4,
-		clear: 7,
-		hours: 1,
+		threshold: 4,	//安全使用次数，超过这个值会涨overdose
+		maxOD: 12,		//最大过量值，超过这个值会上瘾
+		withdraw: 4*24,	//出现戒断反应所需时间，单位是小时
+		clear: 7,		//戒除需求时间，单位是天
+		hours: 1,		//药效持续时间，单位是小时
 
 		onUse: onUseDrags,
 	},
@@ -689,11 +719,11 @@ const Medicines = [
 
 		effects: [["stress", 6]],
 
-		threshold: 2,
-		maxOD: 18,
-		withdraw: 4,
-		clear: 5,
-		hours: 1,
+		threshold: 2,	//安全使用次数，超过这个值会涨overdose
+		maxOD: 18,		//最大过量值，超过这个值会上瘾
+		withdraw: 4*24, //出现戒断反应所需时间，单位是小时
+		clear: 5,		//戒除需求时间，单位是天
+		hours: 1,		//药效持续时间，单位是小时
 
 		onUse: onUseDrags,
 	},
@@ -712,11 +742,11 @@ const Medicines = [
 
 		effects: [["control", 30]],
 
-		threshold: 4,
-		maxOD: 20,
-		withdraw: 1.2,
-		clear: 5,
-		hours: 1,
+		threshold: 4,	//安全使用次数，超过这个值会涨overdose
+		maxOD: 20,		//最大过量值，超过这个值会上瘾
+		withdraw: 30,	//出现戒断反应所需时间，单位是小时
+		clear: 5,		//戒除需求时间，单位是天
+		hours: 1,		//药效持续时间，单位是小时
 
 		onUse: onUseDrags,
 	},
@@ -739,11 +769,11 @@ const Medicines = [
 
 		effects: [["trauma", 50]],
 
-		threshold: 2,
-		maxOD: 10,
-		withdraw: 3,
-		clear: 5,
-		hours: 1,
+		threshold: 2,	//安全使用次数，超过这个值会涨overdose
+		maxOD: 10,		//最大过量值，超过这个值会上瘾
+		withdraw: 3*24,	//出现戒断反应所需时间，单位是小时
+		clear: 5,		//戒除需求时间，单位是天
+		hours: 1,		//药效持续时间，单位是小时
 
 		onUse: onUseDrags,
 	},
@@ -812,22 +842,54 @@ const Drugs = [
 		["stress", 10]
 	],
 
-	threshold: 1,
-	maxOD: 4,
-	withdraw: 1,
-	clear: 14,
-	hours: 12,
+	threshold: 1,	//安全使用次数，超过这个值会涨overdose
+	maxOD: 4,		//最大过量值，超过这个值会上瘾
+	withdraw: 1*24,	//出现戒断反应所需时间，单位是小时
+	clear: 14,		//戒除需求时间，单位是天
+	hours: 12,		//药效持续时间，单位是小时
 
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
 		//如果在学习，会获得更好的学习效果。
-		wikifier("control", 1 * min);
+		min = Math.max(min, 1);
+		iUtil.getPalam("control", 2 * min);
+
+
+		let flag = iCandy.getFlag(this.id, 'highonce')
+		//如果已经设置过flag，不再重复显示提醒
+		if(flag == 1) return '';
+
+		iCandy.setFlag(this.id, 'highonce', 1)
 		let html =
 			lanSwitch(
 			"The effects of NZT-48 is on, you're feeling full of confident.",
 			"NZT-48正在起作用，你感觉充满了自信。"
 			) + `<<gcontrol>>`;
+		
 		return html;
+	},
+	onWake:function(){
+		//药效下头后会变疲劳
+		iUtil.getPalam("tiredness", 20 * min);
+
+		let html =
+		  lanSwitch(
+			"The effects of NZT-48 is wearing off, you feel a little tired.",
+			"NZT-48的效果正在消退，你感觉有些疲劳。"
+		  ) + `<<ltiredness>>`;
+		
+		  return html;
+	},
+	onWithdraw:function(){
+		wikifier("control", -80);
+		wikifier("stress", 80)
+		let html =
+		  lanSwitch(
+			"Without NZT-48, you feel frustrated and lose your confidence.",
+			"没有嗑NZT-48，你感觉心烦意乱，失去了自信。"
+		  ) + `<<llcontrol>><<ggstress>>`;
+		return html;
+	
 	}
 },
 
@@ -853,20 +915,23 @@ const Drugs = [
 		["hallucinogen", 100],
 	],
 
-	threshold: 1,
-	maxOD: 2,
-	withdraw: 2,
-	clear: 28,
-	hours: 1,
+	threshold: 1,	//安全使用次数，超过这个值会涨overdose
+	maxOD: 2,		//最大过量值，超过这个值会上瘾
+	withdraw: 24+18, //出现戒断反应所需时间，单位是小时
+	clear: 28,		//戒除需求时间，单位是天
+	hours: 1,		//药效持续时间，单位是小时
 
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
-		getPalam("stress", -(2 * min));
+		min = Math.max(min, 1);
+		iUtil.getPalam("stress", -(2 * min));
+
 		let html =
 		  lanSwitch(
 			"The effects of Heroin is on, you're feeling easy.",
 			"海洛因正在起作用，你感觉心情愉快。"
 		  ) + `<<gcontrol>>`;
+
 		return html;
 	}
 },
@@ -892,16 +957,18 @@ const Drugs = [
 		["tiredness", 200],
 	],
 
-	threshold: 1,
-	maxOD: 2,
-	withdraw: 2,
-	clear: 28,
-	hours: 1,
+	threshold: 1,	//安全使用次数，超过这个值会涨overdose
+	maxOD: 2,		//最大过量值，超过这个值会上瘾
+	withdraw: 24+16,//出现戒断反应所需时间，单位是小时
+	clear: 28,		//戒除需求时间，单位是天
+	hours: 1,		//药效持续时间，单位是小时
 
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
-		getPalam("pain", -(5 * min));
-		getPalam("tiredness", -(5 * min));
+		min = Math.max(min, 1);
+
+		iUtil.getPalam("pain", -(5 * min));
+		iUtil.getPalam("tiredness", -(5 * min));
 	
 		let html =
 		  lanSwitch(
@@ -915,7 +982,7 @@ const Drugs = [
 {
 	tags: ["risky", "addiction", "inject"],
 
-	id: "amhetamine",
+	id: "amphetamine",
 	name: ["Amphetamine", "安非他命"],
 	plural:"Pack of Amphetamine",
 
@@ -935,24 +1002,63 @@ const Drugs = [
 		["aphrod", 1000],
 	],
 
-	threshold: 0,
-	maxOD: 2,
-	withdraw: 2,
-	clear: 32,
-	hours: 2,
+	threshold: 0, 	//安全使用次数，超过这个值会涨overdose
+	maxOD: 2, 		//最大过量值，超过这个值会上瘾
+	withdraw: 20,	//出现戒断反应所需时间，单位是小时
+	clear: 32,		//戒除需求时间，单位是天
+	hours: 2,		//药效持续时间，单位是小时
 
-	onUse: onUseDrags,
+	_onUse: onUseDrags,
+	onUse: function(){
+		this._onUse();
+		
+		//随机设置两个感官
+		let list = ["genital", "bottom", "breast", "mouth"]
+		let type = list.random()
+		iCandy.senseSet(type, this.id, 0.1,  this.hours*60*60 , 0.02);
+
+		//去掉已经设置好的，再随机一个
+		list.delete(type)
+		type = list.random()
+		iCandy.senseSet(type, this.id, 0.1,  this.hours*60*60 , 0.02);
+
+
+	},
 	onHigh:function(min = 1){
-		wikifier("arousal", 1000, "genital");
+		min = Math.max(min, 1);
 
-		let list = ["genital", "bottom", "breast", "mouth"];
-		iUtil.getExtraSens(list.random(), 0.001 * min, 300); //时间单位：分钟
-	
+		wikifier("arousal", 300*min, "genital");
+		iUtil.getPalam("hallucinogen", 5*min);
+
+		let flag = iCandy.getFlag(this.id, 'highonce')
+		if(flag == 0){
+			iCandy.setFlag(this.id, 'highonce', 1)
+		}
+
+		//第一次显示与持续显示有差分
 		let html =
 		  lanSwitch(
 			"The effects of Amphetamine is on. A strong sensatons hit your whole body like an electric, making your body even more sensitive.",
 			"安非他命的效果上来了，强烈的快感如电流般袭击全身，让你的身体更加敏感了。"
 		  ) + `<<gggarousal>>`;
+		
+		if(flag == 1){
+			html =
+			  lanSwitch(
+				"The amphetamine drown you in the storm of pleasure. Your body becomes more sensitive as the drug effect increases.",
+				"安非他命让你沉浸在快感的风暴中。你的身体随着药效增强变得更加敏感了。"
+			  ) + `<<gggarousal>>`;
+		}
+		return html;
+	},
+	onWake:function(){
+		//感度逐步恢复
+		let html =
+		  lanSwitch(
+			"The effects of Amphetamine is wearing off, you feel your body gradually calming down",
+			"安非他命的效果正在消退，你感觉身体逐渐平复下来。"
+		  );
+		
 		return html;
 	}
 },
@@ -978,16 +1084,22 @@ const Drugs = [
 		["stress", 5],
 	],
 
-	threshold: 1,
-	maxOD: 5,
-	withdraw: 2,
-	clear: 24,
-	hours: 1,
+	threshold: 1, 	//安全使用次数，超过这个值会涨overdose
+	maxOD: 5,		//最大过量值，超过这个值会上瘾
+	withdraw: 2*24+4, //出现戒断反应所需时间，单位是小时
+	clear: 24,		 //戒除需求时间，单位是天
+	hours: 0.3,		 //药效持续时间，单位是小时
 
 
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
-		getPalam("stress", -(5 * min));
+		min = Math.max(min, 1);
+		if(V.combat == 1) return;
+
+		iUtil.getPalam("stress", -(5 * min));
+
+		let flag = iCandy.getFlag(this.id, 'highonce')
+		if(flag == 1) return '';
 
 		let html =
 		  lanSwitch(
@@ -1022,13 +1134,16 @@ const Drugs = [
 
 	threshold: 0,
 	maxOD: 0,
+	withdraw: 18,
 	clear: 52,
 	hours: 2,
 
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
+		min = Math.max(min, 1);
+
 		wikifier("drunk", 10 * min);
-		wikifier("arousal", 1000, "genital");
+		wikifier("arousal", 4000, "genital");
 		let html =
 		  lanSwitch(
 			"A strong ecstacy thrills your whole body, as you are dancing on the clouds.",
@@ -1036,7 +1151,7 @@ const Drugs = [
 		  ) + `<<ggdrunk>><<ghallucinogens>><<ggarousal>>`;
 		return html;
 	},
-	onAfter:function(){
+	onWake:function(){
 		wikifier("drunk", -200);
 		wikifier("control", -30);
 		wikifier("stress", 80);
@@ -1092,15 +1207,26 @@ const Drugs = [
 		["drunk", 1000],
 	],
 
-	threshold: 0,
-	maxOD: 0,
-	clear: 64,
-	hours: 1,
+	threshold: 0, //安全使用次数，超过这个值会涨overdose
+	maxOD: 0,	  //最大过量值，超过这个值会上瘾
+	withdraw: 16, //出现戒断反应所需时间，单位是小时
+	clear: 64,  //戒除需求时间，单位是天
+	hours: 1,   //药效持续时间，单位是小时
 
-	onUse: onUseDrags,
+	_onUse: onUseDrags,
+	onUse: function(){
+		this._onUse();
+		//提升全部感官
+		iCandy.senseSet("genital", this.id, 0.5,  3*60*60 , 0.01);
+		iCandy.senseSet("bottom", this.id, 0.5,  3*60*60 , 0.01);
+		iCandy.senseSet("breast", this.id, 0.5,  3*60*60 , 0.01);
+		iCandy.senseSet("mouth", this.id, 0.5,  3*60*60 , 0.01);
+	
+	},
 	onHigh:function (min = 1){
+		min = Math.max(min, 1);
 		wikifier("hallucinogen", 5 * min);
-		wikifier("arousal", 1000, "genital");
+		wikifier("arousal", 4000, "genital");
 		let html =
 		  lanSwitch(
 			"An indescribable thrill of pleasure erupts from the depths of your soul.",
@@ -1108,7 +1234,7 @@ const Drugs = [
 		  ) + `<<ghallucinogens>><<gggarousal>>`;
 		return html;
 	},
-	onAfter:function(){
+	onWake:function(){
 		let physique = random(30, 60) / 10;
 		wikifier("physique_loss", physique);
 	
