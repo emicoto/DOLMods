@@ -4,33 +4,42 @@ setup.iCandyMod = "start"
 
 const addictions = { 
 	alcohol:{
+		name: ['alcohol', '酒精'],
 		threshold: 3,
 		maxOD: 10,
-		withdraw: 72,
-		clear: 28,
-		hours: 0
+		withdraw: 60,
+		quit: 28,
+		hours: 0,
+		process: 0.2,
+		methods: ['drink', '喝']
 	},
 
-	drug:{
-		threshold: 1,
-		maxOD: 8,
-		withdraw: 24,
-		clear: 28,
+	aphrod:{
+		name: ['aphrodisiacs', '催情剂'],
+		threshold: 0,
+		maxOD: 4,
+		withdraw: 30,
+		quit: 28,
 		hours: 0,
+		process: 0.4,
+		methods:['take', '吸收']
 	},
 	nicotine:{
-		threshold: 1,
+		name: ['nicotine', '尼古丁'],
+		threshold: 0,
 		maxOD: 6,
 		withdraw: 36,
-		clear: 28,
+		quit: 28,
 		hours: 0,
+		process: 0.3,
+		methods: ['smoke', '吸']
 	},
 
 	medicine:{
 		threshold: 4,
 		maxOD: 12,
 		withdraw: 72,
-		clear: 7,
+		quit: 7,
 		hours: 0,
 	},
 
@@ -38,7 +47,7 @@ const addictions = {
 		threshold: 1,
 		maxOD: 3,
 		withdraw: 24,
-		clear: 30,
+		quit: 30,
 		hours: 1,
 	},
 
@@ -46,7 +55,7 @@ const addictions = {
 		threshold: 0,
 		maxOD: 1,
 		withdraw: 12,
-		clear: 48,
+		quit: 48,
 		hours: 2,
 	}
 }
@@ -66,6 +75,30 @@ const maxStacks = {
 }
 setup.maxStacks = maxStacks
 
+const drugConfig = {
+    immediate: {
+        process: 2,
+        recover: 0.05,
+    },
+    super:{
+        process: 0.8,
+        recover: 0.2,
+    },
+    strong:{
+        process: 0.6,
+        recover: 0.5,
+    },
+    risky:{
+        process: 0.3,
+        recover: 1,
+    },
+    normal:{
+        process: 0.07,
+        recover: 3,
+    }
+}
+setup.drugConfig = drugConfig
+
 /**
  * 状态flag， 用于记录和判断
  */
@@ -75,7 +108,7 @@ function drugState(){
 	this.overdose = 0;			//超量剂次数，也是上瘾倒计时
 	this.addict = 0;			//是否上瘾状态
 	this.withdraw = 0;			//是否处于戒断状态
-	this.clearedTimes = 0;		//戒除次数
+	this.quitTimes = 0;		//戒除次数
 	this.efTimer = 0;			//药效到期时间(timeStamp + timer)
 	this.process = 0;			//上瘾进度
 }
@@ -86,7 +119,7 @@ function drugState(){
 function drugFlag(){
 	this.addiction = 0;	//上瘾
 	this.withdraw = 0;	//戒断
-	this.cleared = 0;	//戒除
+	this.quit = 0;	//戒除
 	this.high = 0;		//上头作用
 	this.after = 0;		//下头副作用
 	this.daily = 0;		//每日作用
@@ -386,6 +419,7 @@ const iCandy = {
 		addictions,
 		maxStacks,
 		tattoos,
+		drugConfig
 	},
 
 	//temporary variables

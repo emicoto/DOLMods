@@ -662,7 +662,7 @@ function onUseDrags(){
 	});
 
 
-	if(tags.has('risky', 'strong')){
+	if(tags.has('risky', 'strong', 'super', 'immediate')){
 		iCandy.setValue(id, 'efTimer', V.timeStamp + this.hours*60*60);
 	}
 
@@ -699,7 +699,7 @@ const Medicines = [
 		threshold: 4,	//安全使用次数，超过这个值会涨overdose
 		maxOD: 12,		//最大过量值，超过这个值会上瘾
 		withdraw: 4*24,	//出现戒断反应所需时间，单位是小时
-		clear: 7,		//戒除需求时间，单位是天
+		quit: 7,		//戒除需求时间，单位是天
 		hours: 1,		//药效持续时间，单位是小时
 
 		onUse: onUseDrags,
@@ -722,7 +722,7 @@ const Medicines = [
 		threshold: 2,	//安全使用次数，超过这个值会涨overdose
 		maxOD: 18,		//最大过量值，超过这个值会上瘾
 		withdraw: 4*24, //出现戒断反应所需时间，单位是小时
-		clear: 5,		//戒除需求时间，单位是天
+		quit: 5,		//戒除需求时间，单位是天
 		hours: 1,		//药效持续时间，单位是小时
 
 		onUse: onUseDrags,
@@ -745,7 +745,7 @@ const Medicines = [
 		threshold: 4,	//安全使用次数，超过这个值会涨overdose
 		maxOD: 20,		//最大过量值，超过这个值会上瘾
 		withdraw: 30,	//出现戒断反应所需时间，单位是小时
-		clear: 5,		//戒除需求时间，单位是天
+		quit: 5,		//戒除需求时间，单位是天
 		hours: 1,		//药效持续时间，单位是小时
 
 		onUse: onUseDrags,
@@ -772,7 +772,7 @@ const Medicines = [
 		threshold: 2,	//安全使用次数，超过这个值会涨overdose
 		maxOD: 10,		//最大过量值，超过这个值会上瘾
 		withdraw: 3*24,	//出现戒断反应所需时间，单位是小时
-		clear: 5,		//戒除需求时间，单位是天
+		quit: 5,		//戒除需求时间，单位是天
 		hours: 1,		//药效持续时间，单位是小时
 
 		onUse: onUseDrags,
@@ -845,7 +845,7 @@ const Drugs = [
 	threshold: 1,	//安全使用次数，超过这个值会涨overdose
 	maxOD: 4,		//最大过量值，超过这个值会上瘾
 	withdraw: 1*24,	//出现戒断反应所需时间，单位是小时
-	clear: 14,		//戒除需求时间，单位是天
+	quit: 14,		//戒除需求时间，单位是天
 	hours: 12,		//药效持续时间，单位是小时
 
 	onUse: onUseDrags,
@@ -920,7 +920,7 @@ const Drugs = [
 	threshold: 1,	//安全使用次数，超过这个值会涨overdose
 	maxOD: 2,		//最大过量值，超过这个值会上瘾
 	withdraw: 24+18, //出现戒断反应所需时间，单位是小时
-	clear: 28,		//戒除需求时间，单位是天
+	quit: 28,		//戒除需求时间，单位是天
 	hours: 2,		//药效持续时间，单位是小时
 
 	onUse: onUseDrags,
@@ -962,7 +962,7 @@ const Drugs = [
 	threshold: 1,	//安全使用次数，超过这个值会涨overdose
 	maxOD: 2,		//最大过量值，超过这个值会上瘾
 	withdraw: 24+16,//出现戒断反应所需时间，单位是小时
-	clear: 28,		//戒除需求时间，单位是天
+	quit: 28,		//戒除需求时间，单位是天
 	hours: 2,		//药效持续时间，单位是小时
 
 	onUse: onUseDrags,
@@ -1007,7 +1007,7 @@ const Drugs = [
 	threshold: 0, 	//安全使用次数，超过这个值会涨overdose
 	maxOD: 2, 		//最大过量值，超过这个值会上瘾
 	withdraw: 20,	//出现戒断反应所需时间，单位是小时
-	clear: 32,		//戒除需求时间，单位是天
+	quit: 32,		//戒除需求时间，单位是天
 	hours: 4,		//药效持续时间，单位是小时
 
 	_onUse: onUseDrags,
@@ -1089,7 +1089,7 @@ const Drugs = [
 	threshold: 1, 	//安全使用次数，超过这个值会涨overdose
 	maxOD: 5,		//最大过量值，超过这个值会上瘾
 	withdraw: 2*24+4, //出现戒断反应所需时间，单位是小时
-	clear: 24,		 //戒除需求时间，单位是天
+	quit: 24,		 //戒除需求时间，单位是天
 	hours: 0.3,		 //药效持续时间，单位是小时
 
 
@@ -1113,7 +1113,7 @@ const Drugs = [
 },
 
 {
-	tags: ["strong", "addiction", "inject", "super"],
+	tags: ["addiction", "inject", "super"],
 
 	id: "cocaine",
 	name: ["Cocaine", "可卡因"],
@@ -1137,7 +1137,7 @@ const Drugs = [
 	threshold: 0,
 	maxOD: 1,
 	withdraw: 18,
-	clear: 52,
+	quit: 52,
 	hours: 2,
 
 	onUse: onUseDrags,
@@ -1186,7 +1186,7 @@ const Drugs = [
 },
 
 {
-	tags: ["strong", "addiction", "inject", "immediate"],
+	tags: ["addiction", "inject", "immediate"],
 
 	id: "angelpowder",
 	name: ["Angel Powder", "天使粉"],
@@ -1212,7 +1212,7 @@ const Drugs = [
 	threshold: 0, //安全使用次数，超过这个值会涨overdose
 	maxOD: 0,	  //最大过量值，超过这个值会上瘾
 	withdraw: 16, //出现戒断反应所需时间，单位是小时
-	clear: 64,  //戒除需求时间，单位是天
+	quit: 64,  //戒除需求时间，单位是天
 	hours: 1,   //药效持续时间，单位是小时
 
 	_onUse: onUseDrags,

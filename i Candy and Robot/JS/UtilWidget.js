@@ -66,6 +66,13 @@ const iUtil = {
 	}
 }
 
+function printTemplet(string, ...args){
+    for(let i = 0; i < args.length; i++){
+        string = string.replaceAll(`{${i}}`, args[i])
+    }
+    return string
+}
+window.printTemplet = printTemplet
 
 function wetAnusLub(arg){
 	V.player.bodyliquid.anus.goo += arg

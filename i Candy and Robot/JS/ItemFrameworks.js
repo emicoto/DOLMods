@@ -455,15 +455,15 @@ class Items {
 	 * @param {number} threshold 安全剂量
 	 * @param {number} maxOD 短期内多少嗑多少上瘾
 	 * @param {number} withdraw 引起戒断反应所需时间（小时）
-	 * @param {number} clear 彻底戒断所需日数
+	 * @param {number} quit 彻底戒断所需日数
 	 * @param {number} hours 起效时长（小时）
 	 * @returns 
 	 */
-	Addiction({ threshold = 1, maxOD = 5, withdraw = 3 * 24, clear = 7, hours = 1 }) {
+	Addiction({ threshold = 1, maxOD = 5, withdraw = 3 * 24, quit = 7, hours = 1 }) {
 		this.threshold = threshold
 		this.maxOD = maxOD
 		this.withdraw = withdraw
-		this.clear = clear
+		this.quit = quit
 		this.hours = hours
 		return this
 	}
