@@ -329,8 +329,8 @@ function addictionEvent(item){
             aphrod: 30,
         }
         return lanSwitch(
-            `You are addicted to ${word[item]}, you need to take ${word[item]} to maintain normal life. If you don't take ${word[item]} within ${hours[item]} hours, you will have withdrawal symptoms.`,
-            `你已经对${word[item]}上瘾了，你需要吸食${word[item]}来维持正常的生活。如果${hours[item]}小时内没有吸食${word[item]}，你将会出现戒断症状。`,
+            `You are completed addicted to ${word[item]}, you need to take ${word[item]} to maintain normal life. If you don't take ${word[item]} within ${hours[item]} hours, you will have withdrawal symptoms.`,
+            `你已经对${word[item]}彻底上瘾了，你需要吸食${word[item]}来维持正常的生活。如果${hours[item]}小时内没有吸食${word[item]}，你将会出现戒断症状。`,
         ) + '<br>'
     }
     else{

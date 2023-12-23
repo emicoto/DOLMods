@@ -883,11 +883,13 @@ const Drugs = [
 	onWithdraw:function(){
 		wikifier("control", -80);
 		wikifier("stress", 80)
+		wikifier("willpower", -50)
+
 		let html =
 		  lanSwitch(
 			"Without NZT-48, you feel frustrated and lose your confidence.",
 			"没有嗑NZT-48，你感觉心烦意乱，失去了自信。"
-		  ) + `<<llcontrol>><<ggstress>>`;
+		  ) + `<<llcontrol>><<ggstress>><<lllwillpower>>`;
 		return html;
 	
 	}
