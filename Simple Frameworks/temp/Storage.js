@@ -652,7 +652,7 @@ function takeStorage(storage, itemId, pocket, num){
 
 V.iPockets = {
     body: [],
-    bags: [],
+    bag: [],
     cart: [],
     hole: [],
     bagtype : 'none',

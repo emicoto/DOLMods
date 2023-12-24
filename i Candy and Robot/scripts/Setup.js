@@ -146,15 +146,19 @@ function exSense(type){
 //--------------------------------------------------------
 const iPockets = {
 	body: [],
-	bags: [],
+	held: [],	
+	bag: [],
 	cart: [],
 	hole: [],
+
+	heldtype: 'none',
 	bagtype : 'none',
 	carttype: 'none',
 	wallettype: 'none',
 	
 	states:{
 		body:'naked',
+		held:'none',
 		bag:'none',
 		cart:'none',
 		hole:'none',
@@ -163,6 +167,7 @@ const iPockets = {
 
 	event:{
 		body:0,
+		held:0,
 		bag:0,
 		cart:0,
 		hole:0,
@@ -171,6 +176,11 @@ const iPockets = {
 
 	global:{}
 }
+
+iPockets.body.push(
+	new pocketItem('plasticbag', 1),
+	new pocketItem('coinpouch', 1),
+)
 
 const iStorage = {
 	home	 : {},	//只要在孤儿院就能使用	
@@ -184,6 +194,7 @@ const iStorage = {
 	hideout:{},
 
 	warehouseOwned: 0,
+	warehouseCapacity: 1000,
 	lockerOwned:{
 		school: 1,
 		strip_club: 0,
@@ -212,6 +223,7 @@ const iRobot = {
 	power:0,
 
 	location:"",
+	condition: 0,
 
 	components:{
 		condition:{
@@ -253,6 +265,15 @@ const iMechStats = {
 
 	tools:{
 		parts: 0,
+		wrench: 0,
+		hammer: 0,
+		screwdriver: 0,
+		spanner: 0,
+		pliers: 0,
+		tweezers: 0,
+		cuttingknife: 0,
+		weldingtool: 0,
+		weldermask: 0,
 	}
 }
 
@@ -402,6 +423,8 @@ const modVariables = {
 	mechanical	: 0, 
 	cooking		: 0,
 
+	hungermax	: 2000,
+
 }
 
 const tattoos = [
@@ -518,9 +541,14 @@ const iCandy = {
 	take: function(item, value){
 		value = Number(value)
 		if(!value) return;
+		const data = setup.addiction[item]
 
 		R.drugStates.general[item].taken += Math.max(Math.floor(value/100+0.5), 1)
 		R.drugStates.general[item].lastTime = V.timeStamp
+
+		if(R.drugStates.general[item].taken > data.threshold){
+			R.drugStates.general[item].overdose ++
+		}
 	},
 
 	setFlag: function(item, prop, value){
@@ -712,7 +740,7 @@ function setupFeatsBoost(){
 
 function iCandyInit(){
 	for(let i in modVariables){
-		V[i] = modVariables[i]
+		V[i] = clone(modVariables[i])
 
 	}
 	setup.iCandyMod = "variable init"
@@ -778,15 +806,33 @@ $(document).one(':storyready',()=>{
 
 
 $(document).on(':passageinit', ()=>{
+	if(!V.addMsg){
+		V.addMsg = ''
+	}
+	if(!V.afterMsg){
+		V.afterMsg = ''
+	}
 	T.addMsg = ''; //效果区的显示信息
 	T.afterMsg = '';//addAfterMsg区的显示信息
 })
 
 $(document).on(':passagedisplay', ()=>{
-	if(T.addMsg.length > 2){
-		new Wikifier(null, `<<append #addMsg transition>>${T.addMsg}<br><</append>>`)
-	}
-	if(T.afterMsg.length > 2){
-		new Wikifier(null, `<<append #addAfterMsg transition>>${T.afterMsg}<br><</append>>`)
-	}
+	setTimeout(()=>{
+		if(T.addMsg.length > 2){
+			new Wikifier(null, `<<append #addMsg transition>>${T.addMsg}<</append>>`)
+		}
+		if(T.afterMsg.length > 2){
+			new Wikifier(null, `<<append #addAfterMsg transition>>${T.afterMsg}<br><</append>>`)
+		}
+
+		if(V.addMsg.length > 2){
+			new Wikifier(null, `<<append #addMsg>>${V.addMsg}<</append>>`)
+			V.addMsg = ''
+		}
+
+		if(V.afterMsg.length > 2){
+			new Wikifier(null, `<<append #addAfterMsg>>${V.afterMsg}<br><</append>>`)
+			V.afterMsg = ''
+		}
+	}, 30)
 })

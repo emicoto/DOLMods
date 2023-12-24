@@ -125,6 +125,15 @@ function dayProcess(sec, day, weekday){
 	iCandy.DrugsProcess.eventCount()
 	iCandy.DrugsProcess.eventCount('general')
 
+	//-------------------------------------------------------------
+	// 其他每日处理
+	//-------------------------------------------------------------
+	if(R.robot.power > 0){
+		R.robot.power = Math.max(0, R.robot.power - 1)
+	}
+
+	R.flags.repairshop.today = 0;
+
 }
 
 function iCombatHandle(){
@@ -145,7 +154,9 @@ function iCombatHandle(){
 
 		//当PC创伤或压力高于安全阈值时，NPC高概率喂PC天使粉
 		if(V.trauma >= V.traumamax * 0.6 || V.stress >= V.stressmax * 0.6 ){
-
+			if(random(100) > 40){
+				Items.data['angelpowder']
+			}
 
 		}
 		//其他情况根据创伤，疼痛，压力计算概率，随机喂PC毒品 

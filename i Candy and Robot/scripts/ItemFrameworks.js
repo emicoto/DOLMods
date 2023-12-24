@@ -232,6 +232,7 @@ function setupVanillaItems() {
 		else {
 			item.Tags('dol', 'production')
 		}
+		item.set('img', `misc/icon/tending/${plant.icon}`)
 	}
 
 	const spray = {
@@ -358,10 +359,10 @@ class Items {
 	static search(type, andor, ...tags) {
 		const database = Object.entries(this.data)
 		if(andor == 'and'){
-			return database.filter(([key, item]) => item.type == type && item.tag.containsAll(...tags))
+			return database.filter(([key, item]) => item.type == type && item.tags.containsAll(...tags))
 		}
 		else{
-			return database.filter(([key, item]) => item.type == type && item.tag.containsAny(...tags))
+			return database.filter(([key, item]) => item.type == type && item.tags.containsAny(...tags))
 		}
 	}
 
@@ -393,8 +394,9 @@ class Items {
 		this.price = price
 		this.size = size
 		this.tags = []
+		this.effects = []
 		this.usage = 1
-		this.img = `${type}/${id}.png`
+		this.img = `items/${type}/${id}.png`
 
 		//this.diff = {}
 	}
@@ -778,20 +780,69 @@ class iRecipe {
 
 }
 window.iRecipe = iRecipe
+function printPalams(palam, value, method){
+	let gl = 'l';
+	let count = 1;
+	if (method === 'p') {
+		gl = 'g';
+	}
+	if (value > 30) {
+		count = 3;
+	} else if (value > 20) {
+		count = 2;
+	}
+
+	return `<<${gl.repeat(count)}${palam}>>`;
+}
+
+window.printPalams = printPalams
+
+function useMethods(tags){
+	let methods = ['use', '使用']
+	if(tags.includes('pill')){
+		methods = ['take', '吞下']
+	}
+	if(tags.includes('inject')){
+		methods = ['inject', '注射']
+	}
+	if(tags.includes('food')){
+		methods = ['ate', '吃']
+	}		
+	if(tags.includes('drink')){
+		methods = ['drink', '喝']
+	}
+	if(tags.includes('smoke')){
+		methods = ['smoke', '抽']
+	}
+	if(tags.includes('cream')){
+		methods = ['apply', '涂抹']
+	}
+	return methods
+}
+window.useMethods = useMethods
 
 //数组和对象在DOL内部传递有蜜汁错误。所以从背包里传递过来的，是具体位置信息。
 function useItems(pocket, pos){
 	let item = V.iPockets[pocket][pos]
 	let data = Items.get(item.id)
+	let html = ''
 
-	if(data?.effects.length > 0 && typeof data.onUse !== 'function'){
+	if(data.effects.length > 0 && typeof data.onUse !== 'function'){
+		let params = ''
 		data.effects.forEach((set)=>{
 			let [param, value, method] = set;
 			data.doDelta(param, value, method);
+			params += printPalams(param, value, method);
 		})
+		let methods = useMethods(data.tags)
+
+		html = lanSwitch(
+			`You ${methods[0]} ${data.name[0]}. `,
+			`你${methods[1]}了${data.name[1]}。 `
+		) + params;
 	}
 	else if(typeof data.onUse == 'function'){
-		data.onUse()
+		html = data.onUse()
 	}
 
 	item.count -= data.usage
@@ -799,6 +850,8 @@ function useItems(pocket, pos){
 	if(item.count <= 0){
 		pocket.deleteAt(pos)
 	}
+	
+	return html
 }
 
 window.useItems = useItems

@@ -1,0 +1,90 @@
+.pocket-container{
+    display: flex;
+    width: 98%;
+    height: fit-content;
+    flex-wrap: wrap;
+}
+
+.bag-container{
+    display: flex;
+    width: 80%;
+    height: fit-content;
+    flex-wrap: wrap;
+    padding: .3em;
+}
+
+.pocket-header {
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    margin-bottom: .5em;
+    padding-left: .3em;
+}
+
+.pocket-content{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    flex-wrap: wrap;
+    padding: .2em;
+}
+
+.equipslot {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    border: 1px gray dashed;
+    padding: 6px;
+    margin-right: .5em;
+}
+
+.pocketslot {
+    display: block;
+    width: 30%;
+    height: 4.5em;
+    border: 1px solid gray;
+    padding: .3em;
+    position: relative;
+    margin: 3px;
+}
+
+.itemicon {
+    border: 1px dashed white;
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+    margin: 2px;
+    left: 0px;
+    bottom: 0px;
+    position: absolute;
+}
+
+.itemname {
+    display: block;
+    left: 4px;
+    top: 4px;
+    position: absolute;
+    color: orange;
+    font-size: smaller;
+}
+
+.itemcount {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    display: block;
+    font-size: smaller;
+}
+
+.pocketaction {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    font-size: small;
+}
+
+.itemaction{
+    margin-right: 2px;
+    margin-left: 2px;
+    border-right: 1px solid gray;
+}

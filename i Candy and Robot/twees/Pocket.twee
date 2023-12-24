@@ -1,0 +1,223 @@
+:: Lune Pocket Items [widget]
+<<widget "showItemButton">>
+	<<button lanSwitch('ITEMS','道具')>><<iModReplace "pocketItemsOverlay">><</button>>
+<</widget>>
+
+<<widget "pocketItemsOverlay">>
+	<<replace #customOverlayTitle>><<titlePocketItems>><</replace>>
+	<<replace #customOverlayContent>><<pocketItems>><</replace>>
+<</widget>>
+
+<<widget "titlePocketItems">>
+	<<setupTabs>>
+	<div id="overlayTabs" class="tab">
+		<<closeButtonMobile>>
+		<<button lanSwitch('ITEMS',"道具")>>
+			<<toggleTab>>
+			<<replace #customOverlayContent>><<pocketItems>><</replace>>
+		<</button>>
+		<<button lanSwitch('Storage',"库存")>>
+			<<toggleTab>>
+			<<replace #customOverlayContent>><<storageItems>><</replace>>
+		<</button>>
+	</div>
+	<<closeButton>>
+<</widget>>
+
+<<widget "pocketItems">>
+<div id='equipment' class='pocket-container'>
+	<div id='equipment-header' class='pocket-header'>
+		<span class="gold bold"><<lanSwitch 'Equipment' '装备'>></span>
+	</div>
+	<div id='equipment-content' class='pocket-content'>
+		<<=iUtil.printEquipment()>>
+	</div>
+</div>
+<br>
+
+<div id='bodypockets' class='pocket-container'>
+	<div id='bodypockets-header' class='pocket-header'>
+		<span class="gold bold"><<lanSwitch 'Body Pockets' '身上的口袋'>></span>
+	</div>
+	<div id='bodypockets-content' class='pocket-content'>
+		<<=iUtil.printPocket('body')>>
+	</div>
+</div>
+<br>
+
+<<if $iPockets.heldtype isnot 'none'>>
+<div id='handheld' class='pocket-container'>
+	<div id='handheld-header' class='pocket-header'>
+		<span class="gold bold"><<lanSwitch 'Handheld' '手持'>></span>
+	</div>
+	<div id='handheld-content' class='pocket-content'>
+		<<=iUtil.printPocket('held')>>
+	</div>
+</div>
+<br>
+<</if>>
+
+<<if currentSkillValue('promiscuity') >= 75>>
+<div id='secretpocket' class='pocket-container'>
+	<div id='secretpocket-header' class='pocket-header'>
+		<span class="gold bold"><<lanSwitch 'Secret Pocket' '秘密口袋'>></span>
+	</div>
+	<div id='secretpocket-content' class='pocket-content'>
+		<<=iUtil.printPocket('hole')>>
+	</div>
+</div>
+<br>
+
+<<if $iPockets.bagtype isnot 'none'>>
+	<<set _link = lanSwitch('Open your backpack', '打开背包')>>
+	<<link _link 'iCandyMod Storage'>><<set $openstorage to 'bag'>><</link>>
+	<br><br>
+<</if>>
+
+<<if $iPockets.carttype isnot 'none'>>
+	<<set _link = lanSwitch('Check the items in your cart', '检查手推车里的物品')>>
+	<<link _link 'iCandyMod Storage'>><<set $openstorage to 'cart'>><</link>>
+	<br><br>
+<</if>>
+
+<</if>>
+
+<</widget>>
+
+
+<<widget "storageItems">>
+<br>
+<<=lanSwitch('Spray','防狼喷雾')>>: <<print $spray>> | <span class="steel"><<lanSwitch 'You only can use during combat.' '你只能在战斗中使用。'>> </span><br>
+<br>
+
+<<if R.mechStats.toolbox is 1>>
+<hr>
+<div id='toolbox' class='pocket-container'>
+	<div id='toolbox-header' class='pocket-header'>
+		<span class="gold bold"><<lanSwitch 'Tool Box' '工具箱'>></span>
+		<span class=''> | <span class="steel">+10% <<lanSwitch 'skulduggery' '诡术成功率'>></span></span>
+	</div>
+	<div id='toolbox-content' class='pocket-content'>
+	<<=iUtil.printToolBox()>>
+	</div>
+</div>
+<br>
+<</if>>
+
+<<if R.mechStats.robot is 1>>
+<hr>
+<div id='robot' class='pocket-container'>
+	<div id='robot-header' class='pocket-header'>
+		<span class="gold bold"><<lanSwitch 'Robot' '机器人'>></span>
+	</div>
+<<if R.mechStats.robotProcess == 100>>
+	<div id='robot-content'>
+		<div id='robot-info'>
+		<li><<lanSwitch 'Name: ' '名字：'>> <<print R.robot.name>></li>
+		<li><<lanSwitch 'Condition:' '状态：'>> <<print R.robot.condition>>%</li>
+		</div>
+
+		<div id='components' class='robot-components'>
+		</div>
+	</div>
+<<else>>
+	<div id='robot-content'>
+		<<lanSwitch 'Robot Assembly Kit', '机器人组装套件'>> | <span class="steel">
+		<<if R.mechStats.robotProcess  isnot 0>><<lanSwitch 'progress: ' '组装进度：'>> <<print R.mechStats.robotProcess >>% |<</if>> 
+		<<=lanSwitch(
+			'You can improve your mechanical skill by assembling robots.',
+			'你能通过组装机器人来提升机械技能。'
+		)>>
+		</span><br>
+	</div>
+<</if>>
+</div>
+<br>
+<</if>>
+
+<hr>
+<span class="gold bold"><<lanSwitch 'Storage' '库存'>></span>
+<br>
+<<if $iStorage.warehouseOwned is 1>>
+	<li>
+		<<=lanSwitch('You owned a warehouse located at ', '你拥有一个位于')>><span class="gold"><<lanSwitch 'Harvest Street' '丰收街'>></span>
+		<<=lanSwitch(' which can store up to ', '的仓库，最多可存放')>><span class="green"><<print $iStorage.warehouseCapacity>></span>
+		<<=lanSwitch(' boxes of items.', '箱物品。')>>
+	</li>
+<</if>>
+<ul style="margin-top:10px;margin-left:-5px;">
+<<if $antiquemoney gt 0>>
+	<li>
+	<<=lanSwitch('You have', '你有价值')>> <span class="green">£<<print $antiquemoney>></span>
+	<<=lanSwitch('in antiques.', '的古董。')>>
+	<<=lanSwitch('You can sell them to the museum.', '你可以在博物馆里卖掉它。')>>
+	</li>
+<</if>>
+
+<<if $blackmoney gt 0>>
+	<li>
+	<<=lanSwitch('You have', '你有价值')>> <span class="green">£<<print $blackmoney>></span>
+	<<=lanSwitch('in stolen goods.', '的赃物。')>>
+	<<=lanSwitch('You can sell them to someone on the black market.', '你可以在黑市上卖掉它。')>>
+	</li>
+<</if>>
+
+<<if $phials_held gt 0>>
+	<li>
+	<<=lanSwitch('You have', '你有')>> <span class="green">$phials_held</span>
+	<<=lanSwitch( $phials_held > 1 ? 'phials of aphrodisiac.' : 'phial of aphrodisiac.', '瓶催情剂。')>>
+	<<=lanSwitch('You can sell on Elk Street.', '你可以在麋鹿街上卖掉它。')>>
+	</li>
+<</if>>
+
+<<if $lurkers_held gt 0>>
+	<li>
+	<<=lanSwitch('You have', '你有')>> <span class="green">$lurkers_held</span>
+	<<=lanSwitch( V.lurkers_held > 1 ? 'lurkers.' : 'lurker.', '潜伏者。')>>
+	</li>
+<</if>>
+
+<<if $milkshake gte 1>>
+	<li>
+	<<=lanSwitch('You have', '你有')>><span class="green"> $milkshake</span>
+	<<print lanSwitch( $milkshake == 1 ?' milkshake.' : ' milkshakes.', '杯奶昔。')>>
+	</li>
+<</if>>
+
+<<if $popcorn gte 1>>
+	<li>
+	<<=lanSwitch('You have', '你有')>><span class="green"> $popcorn</span>
+	<<print lanSwitch( $popcorn == 1 ?' bag of popcorn.' : ' bags of popcorn.', '袋爆米花。')>>
+	</li>
+<</if>>
+</ul>
+
+<<set _plant_keys to Object.keys($plants)>>
+<<if _plant_keys.length gt 0>>
+	<hr>
+	<span class="gold bold"><<=lanSwitch('Produce', '可出售产品')>></span>
+	<br>
+	<<=lanSwitch('You have:', '你有：')>>
+	<<for _t to 0; _t lt _plant_keys.length; _t++>>
+		<<if $plants[_plant_keys[_t]].amount gte 1>><<set _plant_temp to 1>>
+			<span class="green"><<print $plants[_plant_keys[_t]].amount>></span>
+			<<if $options.images is 1 and setup.plants[_plant_keys[_t]].icon>>
+				<img class="tending_icon" @src="`img/misc/icon/tending/` + setup.plants[_plant_keys[_t]].icon">
+			<</if>>
+			<<if setup.plants[$plants[_plant_keys[_t]].name].singular and $plants[_plant_keys[_t]].amount === 1>>
+				<<print setup.plants[$plants[_plant_keys[_t]].name].singular>> |
+			<<else>>
+				<<print $plants[_plant_keys[_t]].plural>> |
+			<</if>>
+		<</if>>
+	<</for>>
+	<br><br>
+
+	<<if _plant_temp is 1>>
+	<<=lanSwitch(
+		'You can sell them by renting a stand on <span class="gold">Connudatus Street</span> at dawn.', 
+		'你可以在黎明时分前往<span class="gold">康努达塔斯街</span>租用摊位来进行出售。'
+	)>>
+	<</if>>
+<</if>>
+<</widget>>

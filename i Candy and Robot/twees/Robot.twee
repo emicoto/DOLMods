@@ -67,7 +67,7 @@
 <<widget "iRobotMechchoptions">>
     <br>
     道具：<br>
-	<<if $iRobot.condition lt 10>>
+	<<if R.robot.condition lt 10>>
 		<<link [[打开工具盒|Room Robot]]>><</link>>
 	<<else>>
 		<<link [[检查机器人|Room Robot]]>><</link>>
@@ -77,9 +77,9 @@
 
 <<widget "robotoption">>
 
-<<if $iRobot.condition lte 1>>
-    <<trauma 5>><<set $iRobot.condition to 0>> <<set $iRobot.build  to 0>>
-    Your robot friend <<print $iRobot.name>> is completely broken. It can't play with you anymore. If you still want <<print $iRobot.name>>, you need to rebuild it. <<gtrauma>> <<lllhumanity>> <br>
+<<if R.Robot.condition lte 1>>
+    <<trauma 5>><<set R.Robot.condition to 0>> <<set R.mechStats.robotprocess  to 0>>
+    Your robot friend <<print R.Robot.name>> is completely broken. It can't play with you anymore. If you still want <<print $iRobot.name>>, you need to rebuild it. <<gtrauma>> <<lllhumanity>> <br>
     <br>
 <<else>>
 
@@ -113,7 +113,7 @@ You look at your robot friend <<print $iRobot.name>>.<<characteristic-text _robo
 
 :: Room Robot
 <<effects>><br>
-<<if $iRobot.condition lt 5>>
+<<if R.Robot.condition lt 5>>
     <<= lanSwitch('You opend your tool box.', '你打开了工具盒。')>><br>
 <<else>>
     <<= lanSwitch('You step to your iRobot.', '你从机器人身边离开了。')>><br>

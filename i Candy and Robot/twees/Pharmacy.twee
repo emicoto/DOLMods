@@ -70,7 +70,7 @@
 	<<link _linkname 'Pharmacy'>>
 		<<run
 			console.log('buy',V.pharmacyItem.id,' x ', V.pharmacyItem.num)
-			iM.getItems(V.pharmacyItem.id, V.pharmacyItem.num)
+			V.addMsg = iM.getItems(V.pharmacyItem.id, V.pharmacyItem.num)
 		>>
 		<<set $money -= $pharmacyItem.price>>
 	<</link>><br>

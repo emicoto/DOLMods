@@ -25,7 +25,7 @@
 <</widget>>
 
 
-<<widget "pocketItems">>
+<<widget "olditems">>
 <br>
 <<=lanSwitch('Spray','防狼喷雾')>>: <<print $spray>> | <span class="steel"><<lanSwitch 'You only can use during combat.' '你只能在战斗中使用。'>> </span><br>
 <br>

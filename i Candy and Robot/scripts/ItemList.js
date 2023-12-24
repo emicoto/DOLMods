@@ -46,7 +46,7 @@ const Foods = [
 },
 
 {
-	tags: ["bottle", "drink"],
+	tags: ["drink", "bottle"],
 
 	id: "ramune",
 	name: ["Ramune", "波子水"],
@@ -71,7 +71,7 @@ const Foods = [
 
 	id: "potachips",
 	name: ["Bag of Potato Chips", "薯片"],
-	plural: "Bags of Potato Chips",
+	plural: "bag of Potato Chips",
 
 	info: [
 	"Pack of crunchy chips for some hungry",
@@ -134,7 +134,7 @@ const Foods = [
 },
 
 {
-	tags: ["food", "candy"],
+	tags: ["candy", "food"],
 
 	id: "candyfloss",
 	name: ["Candyfloss", "棉花糖"],
@@ -179,7 +179,7 @@ const Foods = [
 },
 
 {
-	tags: ["drink", "canned"],
+	tags: ["canned", "drink"],
 
 	id: "cola",
 	name: ["Can of Cola", "可乐"],
@@ -224,9 +224,11 @@ const Special = [
 	diff:{
 		new:{
 			displayname:['new package', '新包装'],
-			img:'items/lubricant_new.png'
+			img:'items/consumable/lubricant_new.png'
 		}
-	}
+	},
+
+	require:"bathroom",
 },
 
 {
@@ -251,6 +253,8 @@ const Special = [
 		["drugs", 200, "p"],
 		["hunger", 50, "p"],
 	],
+
+	require:"bathroom",
 },
 
 ]
@@ -258,16 +262,21 @@ const Special = [
 
 Items.addItems(Special)
 
-function onEquip(item){
+function onEquip(pocket, slot){
+	const item = V.iPockets[pocket][slot]
+
 	let pos = 'bag'
-	if(this.tags.includes('cart')){
+	if(this.tags.includes('held')){
+		pos = 'held'
+	}
+	else if(this.tags.includes('cart')){
 		pos = 'cart'
 	}
 	else if(this.tags.includes('wallet')){
 		pos = 'wallet'
 	}
 
-	if(item.diff && this.diff){
+	if(item?.diff && this.diff){
 		const diff = this.diff[item.diff]
 
 		if(diff.sp){
@@ -275,17 +284,22 @@ function onEquip(item){
 		}
 	}
 	
-	iM.onEquip(pos, this.id)
+	iM.onEquip(pos, pocket, slot)
 }
 
-function onUnEquip(item){
+function onUnEquip(){
 	let pos = 'bag'
-	if(this.tags.includes('cart')){
+	if(this.tags.includes('held')){
+		pos = 'held'
+	}
+	else if(this.tags.includes('cart')){
 		pos = 'cart'
 	}
 	else if(this.tags.includes('wallet')){
 		pos = 'wallet'
 	}
+
+	const item = V.iPockets[pos+'type']
 
 	if(item.diff && this.diff){
 		const diff = this.diff[item.diff]
@@ -295,11 +309,53 @@ function onUnEquip(item){
 		}
 	}
 
-	iM.onUnEquip(pos, this.id)
+	iM.onUnEquip(pos)
 }
 
 
 const Containers = [
+	{
+		tags: ["equip","held"],
+  
+		id: "plasticbag",
+		name: ["Plastic Bag", "塑料袋"],
+		plural:"Plastic bag",
+  
+		info: [
+		  "A plastic bag that can hold things.",
+		  "一个稍微能装东西的塑料袋。",
+		],	  
+  
+		num: 1,
+		price: 100,
+		size: 10,
+  
+		capacity: 3,
+		
+		onEquip,
+		onUnEquip
+	},
+	{
+		tags: ["equip","held"],
+  
+		id: "trashbag",
+		name: ["Trash Bag", "垃圾袋"],
+		plural:"Trash bag",
+  
+		info: [
+		  "A black plastic bag that can hold a lot of trash.",
+		  "一个能装大量垃圾的黑色塑料袋。",
+		],	  
+  
+		num: 1,
+		price: 300,
+		size: 10,
+  
+		capacity: 6,
+		
+		onEquip,
+		onUnEquip
+	},
 	{
 	  tags: ["equip","bag"],
 
@@ -314,7 +370,7 @@ const Containers = [
 	  size: "big",
 	  capacity: 4,
 	  diff:{
-		girlish:{ displayname:['girlish', '女款'], img:'container/satchel_girl.png', sp:'girlish'}
+		girlish:{ displayname:['girlish', '女款'], img:'items/container/satchel_girl.png', sp:'girlish'}
 	  },
 
 	  onEquip,
@@ -335,8 +391,8 @@ const Containers = [
 	  size: "big",
 	  capacity: 6,
 	  diff:{
-		girlish:{ displayname:['girlish', '女款'], img:'container/leathersatchel_girl.png', sp:'girlish'},
-		boyish:{ displayname:['boyish', '男款'], img:'container/leathersatchel_boy.png', sp:'boyish'}
+		girlish:{ displayname:['girlish', '女款'], img:'items/container/leathersatchel_girl.png', sp:'girlish'},
+		boyish:{ displayname:['boyish', '男款'], img:'items/container/leathersatchel_boy.png', sp:'boyish'}
 	  },
 
 	  onEquip,
@@ -348,7 +404,7 @@ const Containers = [
 
 	  id: "schoolbag",
 	  name: ["School Bag", "书包"],
-	  plural:"School Bags",
+	  plural:"School bag",
 
 	  info: ["A common school bag used by students.", "学生常用的书包。"],
 
@@ -357,8 +413,8 @@ const Containers = [
 	  size: "big",
 	  capacity: 8,
 	  diff:{
-		black:{ displayname:['black', '黑色'], img:'container/schoolbag_black.png'},
-		pink:{ displayname:['pink', '粉色'], img:'container/schoolbag_pink.png', sp:'girlish'}
+		black:{ displayname:['black', '黑色'], img:'items/container/schoolbag_black.png'},
+		pink:{ displayname:['pink', '粉色'], img:'items/container/schoolbag_pink.png', sp:'girlish'}
 	  },
 	  
 	  onEquip,
@@ -386,7 +442,6 @@ const Containers = [
 	  onEquip,
 	  onUnEquip
 	},
-  
 	{
 	  tags: ["equip","bag"],
 
@@ -558,7 +613,7 @@ Items.addItems(Containers, "container")
 const Addictive = [
 {
 	type:"consumable",
-	tags: ["addiction","smoke", "nicotine"],	
+	tags: ["smoke", "addiction","nicotine"],	
 
 	id: "cigarettes",
 	name: ["Cigarette", "香烟"],
@@ -580,7 +635,7 @@ const Addictive = [
 
 {
 	type:"consumable",
-	tags: ["addiction","smoke", "nicotine"],	
+	tags: ["smoke", "addiction","nicotine"],	
 
 	id: "marlboro",
 	name: ["Marlboro 100%", "马宝龙香烟"],
@@ -604,7 +659,7 @@ const Addictive = [
 },
 {
 	type:"foods",
-	tags: ["addiction","drink","alcohol","canned"],	 
+	tags: ["canned", "addiction","drink","alcohol",],	 
 
 	id: "beer",
 	name: ["Can of Beer", "啤酒"],
@@ -626,7 +681,7 @@ const Addictive = [
 },
 {
 	type:"foods",
-	tags: ["addiction","drink","alcohol", "canned"],
+	tags: ["canned", "addiction","drink","alcohol", ],
 
 	id: "blackbeer",
 	name: ["Can of Black Beer", "黑啤酒"],
@@ -648,19 +703,21 @@ const Addictive = [
 
 Items.addItems(Addictive)
 
-
 function onUseDrags(){
 	const { id, tags, effects, doDelta } = this
+	let palams = '';
+
 	effects.forEach((effect) => {
 		const [palam, min, method] = effect;
-		const take = iCandy.getStat(id, 'taken') ?? 0
+		const take = iCandy.getStat(id, 'taken') ?? 0;
 
-		let max = Math.floor(value*1.2 + 1.5);
+		let max = Math.floor(min * 1.2 + 1.5);
 		let value = random(min, max);
 
 		value = value * Math.max(1 - take * 0.1, 0.2);
 
 		doDelta(palam, value, method);
+		palams += printPalams(palam, value, method);
 	});
 
 
@@ -672,7 +729,9 @@ function onUseDrags(){
 		iCandy.setValue(id, 'taken', 1)
 		iCandy.setValue(id, 'lastTime', V.timeStamp)
 
-		if(take >= this.threshold){
+		const take = iCandy.getStat(id, 'taken')
+
+		if(take > this.threshold){
 			iCandy.setValue(id, 'overdose', 1)
 		}
 		//如果有戒断状态，清除戒断状态
@@ -680,11 +739,20 @@ function onUseDrags(){
 			iCandy.setStat(id, 'withdraw', 1)
 		}
 	}
+
+	let methods = useMethods(tags)
+
+	const html = lanSwitch(
+		`You ${methods[0]} the ${this.name[0]}.`,
+		`你${methods[1]}了${this.name[1]}。`
+	) + ' ' + palams;
+
+	return html;
 }
 
 const Medicines = [
 	{
-		tags: ["addiction", "pill"],
+		tags: ["pill", "addiction", ],
 		
 		id: "serotonin",
 		name: ["Serotonin", "羟色胺"],
@@ -707,7 +775,7 @@ const Medicines = [
 		onUse: onUseDrags,
 	},
 	{
-		tags: ["addiction", "pill"],
+		tags: ["pill", "addiction", ],
 
 		id: "melatonin",
 		name: ["Melatonin", "褪黑素"],
@@ -719,7 +787,7 @@ const Medicines = [
 		price: 4800,
 		size: "pill",
 
-		effects: [["stress", 6]],
+		effects: [["stress", 6],[ "tiredness", 20]],
 
 		threshold: 2,	//安全使用次数，超过这个值会涨overdose
 		maxOD: 18,		//最大过量值，超过这个值会上瘾
@@ -730,7 +798,7 @@ const Medicines = [
 		onUse: onUseDrags,
 	},
 	{
-		tags: ["addiction", "pill"],
+		tags: ["pill", "addiction", ],
 		
 		id: "neuroOptimization",
 		name: ["Neuro Optimization", "神经优化片"],
@@ -754,7 +822,7 @@ const Medicines = [
 	},
 
 	{
-		tags: ["addiction", "pill"],
+		tags: ["pill", "addiction", ],
 
 		id: "aminobutyric",
 		name: ["Aminobutyric", "氨基丁酸"],
@@ -1014,7 +1082,7 @@ const Drugs = [
 
 	_onUse: onUseDrags,
 	onUse: function(){
-		this._onUse();
+		const html = this._onUse();
 		
 		//随机设置两个感官
 		let list = ["genital", "bottom", "breast", "mouth"]
@@ -1026,6 +1094,7 @@ const Drugs = [
 		type = list.random()
 		iCandy.senseSet(type, this.id, 0.1,  this.hours*60*60 , 0.02);
 
+		return html;
 
 	},
 	onHigh:function(min = 1){
@@ -1219,12 +1288,13 @@ const Drugs = [
 
 	_onUse: onUseDrags,
 	onUse: function(){
-		this._onUse();
+		const html = this._onUse();
 		//提升全部感官
 		iCandy.senseSet("genital", this.id, 0.5,  3*60*60 , 0.01);
 		iCandy.senseSet("bottom", this.id, 0.5,  3*60*60 , 0.01);
 		iCandy.senseSet("breast", this.id, 0.5,  3*60*60 , 0.01);
 		iCandy.senseSet("mouth", this.id, 0.5,  3*60*60 , 0.01);
+		return html
 	
 	},
 	onHigh:function (min = 1){

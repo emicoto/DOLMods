@@ -1,0 +1,71 @@
+:: iCandyMod Palam Widgets [widget]
+
+<<widget "nicotine">>
+	<<if $args[0]>>
+		<<set $nicotine += $args[0]>>
+		<<run iCandy.take('nicotine', $args[0])>>
+		<<set $nicotine to Math.clamp($nicotine, 0, 1000)>>
+	<</if>>
+<</widget>>
+
+<<widget "lwillpower">>
+	<<if $statdisable is "f">> |
+		<span class="red">- <<lanSwitch 'Willpower' '意志'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "llwillpower">>
+	<<if $statdisable is "f">> |
+		<span class="red">- - <<lanSwitch 'Willpower' '意志'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "lllwillpower">>
+	<<if $statdisable is "f">> |
+		<span class="red">- - - <<lanSwitch 'Willpower' '意志'>></span>
+	<</if>>
+<</widget>>
+
+
+<<widget "lactationchange">>
+	<<if R.trait.naturalLactation is 1>>
+		<<if $lactating is 0>>
+			<<set $lactating to 1>><<set $lactation_pressure to 120>><<set $milk_amount to 120*$breastsize>>
+		<<elseif $args[0]>>
+			<<set $lactation_pressure += $args[0]>>
+		<<elseif $lactation_pressure lte 12>>
+			<<set $lactation_pressure += R.trait.naturalLactation*120>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "hungerBar">>
+<!-- 饥饿条 -->
+	<<if Number.isFinite($hunger)>>
+		<div id="hungercaption" @title="'Hunger: ' + $hunger.toFixed(2)">
+			<div @class="($options.showCaptionText is true ? '' : 'rightMeterText')">
+				<<lanSwitch "Hunger:" "饥饿：">>
+				<<if $options.showCaptionText is true>>
+					<<if $hunger gte $hungermax>>
+						<span class="red"><<lanSwitch "You are starving!" "你快饿死了！">></span>
+					<<elseif $hunger gte ($hungermax / 5) * 4>>
+						<span class="pink"><<lanSwitch "You are famished." "你饿坏了。">></span>
+					<<elseif $hunger gte ($hungermax / 5) * 3>>
+						<span class="purple"><<lanSwitch "You are ravenous." "你很饿了。">></span>
+					<<elseif $hunger gte ($hungermax / 5) * 2>>
+						<span class="blue"><<lanSwitch "You are hungry." "你饿了。">></span>
+					<<elseif $hunger gte ($hungermax / 5) * 1>>
+						<span class="lblue"><<lanSwitch "You are peckish." "你有点小饿。">></span>
+					<<elseif $hunger gte 1>>
+						<span class="teal"><<lanSwitch "You are satiated." "你吃饱了。">></span>
+					<<else>>
+						<span class="green"><<lanSwitch "You are full." "你很饱了。">></span>
+					<</if>>
+				<</if>>
+			</div>
+			<<set _showCaptionText to !$options.showCaptionText>>
+			<<statbar $hunger $hungermax _showCaptionText>>
+			<div style="clear:both;"></div>
+		</div>
+	<</if>>
+<</widget>>

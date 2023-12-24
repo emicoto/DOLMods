@@ -66,7 +66,7 @@ const DrugsProcess = {
 	
 				//运行药物效果并获得通知
 				if(typeof drugItem.onHigh == 'function'){
-					T.addMsg += drugItem.onHigh(sec/60) + '<br>'
+					V.addMsg += drugItem.onHigh(sec/60) + '<br>'
 				}
 			}
 			else{
@@ -79,7 +79,7 @@ const DrugsProcess = {
 	
 					//如果药物有清醒效果，运行清醒效果并获得通知
 					if(typeof drugItem.onWake == 'function'){
-						T.addMsg += drugItem.onWake() + '<br>'
+						V.addMsg += drugItem.onWake() + '<br>'
 					}
 				}
 			}
@@ -111,12 +111,12 @@ const DrugsProcess = {
 			if(withdrawTimer >= withdraw){
 				//如果设置了function，运行function
 				if(typeof data.onWithdraw == 'function'){
-					T.addMsg += data.onWithdraw() + '<br>'
+					V.addMsg += data.onWithdraw() + '<br>'
 				}
 				//没有则运行默认的戒断效果
 				else{
 					const name = type == 'general' ? item : data.name
-					T.addMsg += this.generalWithdraw(name) + '<br>'
+					V.addMsg += this.generalWithdraw(name) + '<br>'
 				}
 				//设置戒断状态
 				stats.withdraw = 1
@@ -134,15 +134,10 @@ const DrugsProcess = {
 
 			//获取上瘾阈值，最大过量值，戒除需求时间(day)，引起戒断反应所需时间(hour)
 			const { threshold, maxOD, quit, tags } = drugItem
-		
-			//先进行过量检测，当日使用量大于安全阈值时，增加过量计数
-			if(threshold >= 0 && stats.taken >= threshold ){
-				stats.overdose ++
-			}
 
 			//当超量时，根据进度增加隐形上瘾值。
 			const process = type == 'general' ? data.process : getDrugsConfig(tags, 'process')
-			if(maxOD >= 0 && stats.addict == 0 && stats.overdose > 0){
+			if(maxOD >= 0 && stats.overdose > 0 && stats.addict == 0){
 				stats.process += process
 			}
 
@@ -198,7 +193,7 @@ const DrugsProcess = {
 
 			if(flag.daily == 1){
 				if(typeof data.onDay == 'function'){
-					T.addMsg += data.onDay() + '<br>'
+					V.addMsg += data.onDay() + '<br>'
 				}
 				else{
 					
@@ -207,22 +202,22 @@ const DrugsProcess = {
 			}
 
 			if(flag.addiction == 1){
-				T.addMsg += this.addictionEvent(item) + '<br>'
+				V.addMsg += this.addictionEvent(item) + '<br>'
 
 				//如果设置了专用事件，在通知后运行专用事件
 				if(typeof data.addictionEvent == 'function'){
-					T.addMsg += data.addictionEvent() + '<br>'
+					V.addMsg += data.addictionEvent() + '<br>'
 				}
 				flag.addiction = 0
 			}
 
 			//如果当日有戒除，运行戒除效果并获得通知
 			if(flag.quit == 1){
-				T.addMsg += this.QuitEvent(item) + '<br>'
+				V.addMsg += this.QuitEvent(item) + '<br>'
 
 				//如果设置了专用事件，在通知后运行专用事件
 				if(typeof data.quitEvent == 'function'){
-					T.addMsg += data.quitEvent() + '<br>'
+					V.addMsg += data.quitEvent() + '<br>'
 				}
 				flag.quit = 0
 			}
