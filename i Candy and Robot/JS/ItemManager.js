@@ -45,6 +45,7 @@ const iManager = {
 	 */
 	getStackSize (itemId, org){
 		let item = Items.get(itemId)
+		let size = typeof item.size === "number" ? item.size : setup.maxStacks[item.size]
 
 		if(!item){
 			console.error('error from get items stack size, id:', itemId)
@@ -56,7 +57,7 @@ const iManager = {
 
 		//获取原始堆叠大小
 		else if(org){
-			return setup.maxStacks[item.size]
+			return size
 		}
 
 		//应该完全禁用，但麻烦，干脆弄个除了作弊不会到达的数字。
@@ -65,7 +66,7 @@ const iManager = {
 		}
 
 		//默认最大可能得堆叠上限为1k
-		return Math.clamp(setup.maxStacks[item.size] * iCandy.getConfig('globalStack'), 1, 1000)
+		return Math.clamp(size * iCandy.getConfig('globalStack'), 1, 1000)
 
 	},
 

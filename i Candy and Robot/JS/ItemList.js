@@ -20,7 +20,7 @@ const Foods = [
 		["hunger", 10],
 	],
 
-	stacksprites:[25, 50, 100]//百分比值，当前堆叠数/堆叠上限 >= 数值时，在uid后加_num.png
+	//stacksprites:[25, 50, 100]百分比值，当前堆叠数/堆叠上限 >= 数值时，在uid后加_num.png
 },
 
 {
@@ -209,7 +209,7 @@ const Special = [
 
 	num: 200,
 	price: 3000,
-	size: "liquid",
+	size: 200,
 
 	usage: 10,
 	info: [
@@ -239,7 +239,7 @@ const Special = [
 
 	num: 200,
 	price: 3000,
-	size: "liquid",
+	size: 200,
 
 	usage: 10,
 	info: [
@@ -566,15 +566,16 @@ const Addictive = [
 
 	info: ["Cheap cigarettes, smells burnt", "廉价的香烟，一股烧焦味"],
 
-	num: 18,
+	num: 20,
 	price: 3600,
-	size: "tiny",
+	size: 40,
 
 	effects: [
 		["stress", 8],
 		["trauma", 8],
 		["nicotine", 100, "p"],
 	],
+	stacksprites:[50, 100]
 },
 
 {
@@ -590,15 +591,16 @@ const Addictive = [
 		"一个品牌香烟，味道香醇"
 	],	 
 
-	num: 18,
+	num: 20,
 	price: 6400,
-	size: "tiny",
+	size: 40,
 
 	effects: [
 		["stress", 12],
 		["trauma", 16],
 		["nicotine", 180, "p"],
 	],
+	stacksprites:[10, 25, 50, 75, 100]
 },
 {
 	type:"foods",
