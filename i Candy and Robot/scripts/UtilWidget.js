@@ -174,7 +174,7 @@ const iUtil = {
 				}
 				else{
 					_html += `<<link "${method}" $passage>>
-					<<useItem "${slot}" ${i}>>
+					<<set $addMsg to useItems("${slot}",${i})>>
 					<</link>>`
 				}
 				
