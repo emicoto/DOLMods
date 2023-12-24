@@ -1,4 +1,5 @@
-:: iCandyMod Widgets[widget]
+:: iCandyMod Widgets [widget]
+
 <<widget "candySkills">>
 <<set _mechanicConfig = { 
     name : lanSwitch('Mechanic','机械'),	
@@ -11,7 +12,7 @@
 
 <<set _chemicalConfig = { 
     name : lanSwitch('Chemical','化学'),
-    displayType : "grade"，
+    displayType : "grade",
     currentValue : $chemical,
     modifier: 100,
     modTypes: { good: [], bad: [] },
@@ -20,7 +21,7 @@
 
 <<set _cookingConfig = { 
     name : lanSwitch('Cooking','烹饪'),
-    displayType : "grade"，
+    displayType : "grade",
     currentValue : $cooking,
     modifier: 100,
     modTypes: { good: [], bad: [] },

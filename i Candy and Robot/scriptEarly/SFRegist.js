@@ -13,7 +13,6 @@ simpleFrameworks.addto('ModSkillsBox', 'candySkills')
 
 simpleFrameworks.addto('iModsOptions', 'iCandyOptions')
 
-
 simpleFrameworks.addto('ModShopZone', {
     passage:'Pharmacy',
     widget:'ExtraPharmacy'

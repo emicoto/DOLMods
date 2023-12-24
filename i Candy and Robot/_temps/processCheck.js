@@ -1,6 +1,4 @@
 
-
-
 function checkDayPass(){
 	if(!V.iCandyStats.lastdaycheck){
 		V.iCandyStats.lastdaycheck = Time.days

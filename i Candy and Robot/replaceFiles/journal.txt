@@ -31,7 +31,7 @@
 	<hr>
 		<span class="gold bold"><<lanSwitch 'Seeds' '种子'>></span>
 		<br>
-		<<landSwitch 'You can grow' '你可以种植'>>：
+		<<lanSwitch 'You can grow' '你可以种植'>>：
 		<<set _plant_keys to Object.keys(setup.plants)>>
 		<<for _i to 0; _i lt _plant_keys.length; _i++>>
 			<<if setup.plants[_plant_keys[_i]].type is "flower" or setup.plants[_plant_keys[_i]].type is "vegetable">>

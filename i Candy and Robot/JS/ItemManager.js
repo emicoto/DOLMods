@@ -10,7 +10,7 @@ function getItemInfo(count,pos){
 		pos:[pos]
 	})
 }
-const ItemPocket = ["bag","body","cart","hole"]
+const ItemPocket = ["bags","body","cart","hole"]
 
 
 /**
@@ -169,6 +169,18 @@ const iManager = {
 				`你身上所有地方都没有空位放置了，你只好把${item.name} x ${item.count}扔地上。`
 			)+'<br>';
 		},
+		body(item){
+			if(iManager.getMaxSlots('body') == 2){
+				return lanSwitch(
+					`You take ${item.name} into your hands.`,
+					`你把${item.name}拿好了。`
+				)
+			}
+			return lanSwitch(
+				`You put ${item.name} into your clothes pocket.`,
+				`你把${item.name}放进了衣服口袋里。`
+			)+'<br>';
+		},
 		bag(item){
 			return lanSwitch(
 				`Your pockets are full, so you put ${item.name} to your bag.`,
@@ -289,11 +301,11 @@ const iManager = {
 			return 0
 		},
 		bag(){
-			const bag = Items.data[this.getEquip('bag')];
+			const bag = Items.data[iManager.getEquip('bag')];
 			return bag?.capacity ?? 0
 		},
 		cart(){
-			const cart = Items.data[this.getEquip('cart')];
+			const cart = Items.data[iManager.getEquip('cart')];
 			return cart?.capacity ?? 0
 		}
 	},
@@ -347,6 +359,7 @@ const iManager = {
 				result.slots.push( { pos: key, count } )
 				result.total += count
 			}
+			return result
 		}, { slots:[ ], total: 0 })
 	},
 
@@ -360,7 +373,7 @@ const iManager = {
 					uid: item.uid,
 					name: item.name,
 					count: item.count,
-					pocekt: item.pocekt
+					pocket: item.pocket
 				}
 			}
 			else{
@@ -372,26 +385,32 @@ const iManager = {
 	},
 
 	shiftStacks : function(stacks, amount){
-		stacks.reduce((left, item)=>{
+		return stacks.reduce((left, item)=>{
 			if(left == 0) return left;
+			let size = this.getStackSize(item.id)
+
 			//如果开启了无限堆叠模式……到这步骤都不影响。
 			if(item.count < size){
 				//万一amount比size要小得多呢……？限制一下！
 				let get = Math.clamp(size - item.count, 0, left);
 				item.count += get;
-				left = get;
+				left = left - get;
 			}
 			return left
 		}, amount)
 	},
 	
 	shiftSlots : function(slots, items){
+		//console.log('shiftSlots:', slots, items)
+
 		return slots.reduce((result, { pos, count})=>{
 			let pocket = this.getPocket(pos)
+			console.log('pocket:', pocket, 'pos:', pos, 'count:', count, 'result:',result)
+
 			let item
 			for(let i=0; i < count; i++){
 				item = result.items.pop()
-				item.pocekt = pos
+				item.pocket = pos
 				pocket.push(item)
 				result.details.push({ pos, item })
 				if(result.items.length == 0) break
@@ -411,6 +430,8 @@ const iManager = {
 
 		const size = this.getStackSize(itemId)
 		const { total, stacks } = this.getStackFromPockets(itemId);
+		console.log('size:', size, 'num:', num)
+		console.log('total:', total, 'stacks:', stacks)
 
 		//先检查即存堆叠是否有足够空位，有就直接返回true
 		if(stacks.length * size - total >= num){
@@ -418,6 +439,7 @@ const iManager = {
 		}
 
 		const slots = this.getEmptySlots()
+		console.log('slots:', slots)
 
 		//看看有无足够空余位置
 		if( slots.total >= Math.ceil(num/size) ){
@@ -459,11 +481,11 @@ const iManager = {
 			//先整合看看有无剩余
 			leftNum = this.shiftStacks(stacks, num)
 			//如果这里已经没剩余数了，直接返回没有额外信息。
+			console.log('leftNum:', leftNum)
 			if(leftNum == 0) return msg
+			//先更新物品数量。如果上一步即存堆叠都是满的话，leftNum现在跟num是一致的.
+			newItem.count = leftNum
 		}
-		
-		//先更新物品数量。如果上一步即存堆叠都是满的话，leftNum现在跟num是一致的.
-		newItem.count = leftNum
 
 		//然后根据堆叠限制切割
 		let items = this.splitItems(newItem, size)
@@ -482,6 +504,7 @@ const iManager = {
 			//如果这里已经处理完了，根据最后处理的位置抛个提示
 			if(leftItems.items.length == 0 ){
 				let { last } = leftItems
+				
 				return this.transferMsg[last.pocket](last)
 			}
 		}
@@ -604,6 +627,7 @@ const iManager = {
 		//先整理多余物品到已有堆叠中
 		leftItems.forEach((item)=>{
 			let { total, stacks } = this.getStackFromPockets(item.uid)
+			let size = this.getStackSize(item.id)
 			if( total > 0 ){
 				item.count = this.shiftStacks(stacks, item.count)
 			}
@@ -629,27 +653,27 @@ const iManager = {
 			let html = ''
 
 			leftItems.forEach((item)=>{
-				if(item.pocekt == 'body' && this.getEvent('body') == 1){
+				if(item.pocket == 'body' && this.getEvent('body') == 1){
 					html += lanSwitch('', '装在衣服口袋里的物品，伴随着衣服的破碎掉落到地上了。')
 					this.setEvent('body', 0)
 				}
 
-				if(item.pocekt == 'body' && this.getEvent('body') == 2){
+				if(item.pocket == 'body' && this.getEvent('body') == 2){
 					html += lanSwitch('', '你更换了衣服，多余的物品被你整理出来。')
 					this.setEvent('body', 0)
 				}
 
-				if(this.getEvent('bag') == 1 && item.pocekt == 'bag'){
+				if(this.getEvent('bag') == 1 && item.pocket == 'bag'){
 					html += lanSwitch('', '你更换了个更小的背包，多余的物品被你整理出来。')
 					this.setEvent('bag', 0)
 				}
 
-				if(this.getEvent('cart') == 1 && item.pocekt == 'cart'){
+				if(this.getEvent('cart') == 1 && item.pocket == 'cart'){
 					html += lanSwitch('', '你更换了个更小的推车，多余的物品被你整理出来。')
 					this.setEvent('cart', 0)
 				}
 
-				if(this.getEvent('hole') == 1 && item.pocekt == 'hole'){
+				if(this.getEvent('hole') == 1 && item.pocket == 'hole'){
 					html += lanSwitch('', '你的淫荡度不足以将物品继续存放在肠道里。因为受到刺激，存放在肠内的物品被排放了出来。')
 					this.setEvent('hole', 0)
 				}
@@ -663,7 +687,7 @@ const iManager = {
 	},
 
 	onEquip(pos, itemId){
-		V.pocekt[pos+'type'] = itemId
+		V.pocket[pos+'type'] = itemId
 		this.updatePockets()
 	},
 
@@ -819,7 +843,7 @@ const iMoney = {
 		}
 	}
 }
-
+window.iMoney = iMoney
 
 //被强奸后随机丢失物品，一定概率丢失背包钱包手推车
 function lostItemsAfterRape(){

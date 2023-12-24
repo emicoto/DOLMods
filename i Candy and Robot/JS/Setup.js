@@ -65,7 +65,7 @@ setup.addictions = addictions
 const maxStacks = {
 	pill  : 50,
 	inject: 10,
-
+	liquid: 500, // ml
 	powder: 80,//oz, 1lb=16oz, 1bread = 12oz uses
 	micro : 36,
 	tiny  : 18,
@@ -244,13 +244,16 @@ const iRobot = {
 }
 const iMechStats = {
 	toolbox: 0,
-	toolset: 0,
 	robot: 0,
 	robotProcess:0,
 
 	research:{}, //进行中项目
 	archived:{}, //已完成项目
 	unlocked:{}, //解锁科技	
+
+	tools:{
+		parts: 0,
+	}
 }
 
 
@@ -386,7 +389,6 @@ const iCandyRobot = {
 }
 
 const modVariables = {
-
 	//总控
 	iCandyRobot,
 
@@ -401,6 +403,41 @@ const modVariables = {
 	cooking		: 0,
 
 }
+
+const tattoos = [
+	{
+		key:'fifty_whore', 
+		name:'£50', 
+		special:'prostitution', 
+		degree:5000
+	},
+	{
+		key:'drug_eater', 
+		name:'Drug Eater', 
+		cn:'瘾君子', 
+		special:'drugs'
+	},
+	{
+		key:'drug_whore', 
+		name:'Drug Whore', 
+		cn:'毒娼', 
+		special:'prostitution'
+	},
+	{
+		key:'sell_for_drug', 
+		name:'Sell body for drugs', 
+		cn:'为药卖身', 
+		special:'prostitution'
+	},
+	{
+		key:'drug_slut', 
+		name:'Drug Slut', 
+		cn:'药瘾婊子', 
+		special:'drugs'
+	}
+]
+	
+setup.modTattoos.push(...tattoos)
 
 //Mod Data
 const iCandy = {
@@ -621,41 +658,6 @@ const iCandy = {
 }
 window.iCandy = iCandy
 
-const tatoos = [
-	{
-		key:'fifty_whore', 
-		name:'£50', 
-		special:'prostitution', 
-		degree:5000
-	},
-	{
-		key:'drug_eater', 
-		name:'Drug Eater', 
-		cn:'瘾君子', 
-		special:'drugs'
-	},
-	{
-		key:'drug_whore', 
-		name:'Drug Whore', 
-		cn:'毒娼', 
-		special:'prostitution'
-	},
-	{
-		key:'sell_for_drug', 
-		name:'Sell body for drugs', 
-		cn:'为药卖身', 
-		special:'prostitution'
-	},
-	{
-		key:'drug_slut', 
-		name:'Drug Slut', 
-		cn:'药瘾婊子', 
-		special:'drugs'
-	}
-]
-	
-setup.modTattoos.push(...tatoos)
-
 //mirror
 for(let i in modVariables){
 	Object.defineProperty(iCandy.variables, i, {
@@ -708,17 +710,17 @@ function setupFeatsBoost(){
 }
 
 
-function iCRInit(){
+function iCandyInit(){
 	for(let i in modVariables){
 		V[i] = modVariables[i]
 
 	}
 	setup.iCandyMod = "variable init"
 }
-DefineMacroS('iCandyInit', iCRInit)
+DefineMacroS('iCandyInit', iCandyInit)
 
 setup.iCandyBakItem = {}
-setup.iCandyUpdate = function(){
+function iCandyUpdate(){
 	if(passage() == 'Start') return;
 
 	if(V.iCandyStats){
@@ -746,7 +748,7 @@ setup.iCandyUpdate = function(){
 		delete V.candyItems
 		delete V.iCandyStats
 
-		iCRInit()
+		iCandyInit()
 		for(let i in setup.iCandyBakItem){
 			let item = setup.iCandyBakItem[i];
 			if(item > 0){
@@ -761,7 +763,7 @@ setup.iCandyUpdate = function(){
 		V.iRecipe = iUtil.updateObj(iRecipe, V.iRecipe)
 	}
 }
-
+iCandy.modUpdate = iCandyUpdate
 DefineMacroS('iCandyUpdate', iCandyUpdate)
 
 $(document).one(':storyready',()=>{

@@ -15,6 +15,9 @@ window.simpleFrameworks = {
             if(typeof widget === 'string'){
                 this.data[zone].push(widget)
             }
+            if(String(widget) == '[object Object]' && widget.passage && widget.widget){
+                this.data[zone].push(widget)
+            }
         })
     },
 

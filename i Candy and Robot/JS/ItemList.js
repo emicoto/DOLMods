@@ -209,7 +209,7 @@ const Special = [
 
 	num: 200,
 	price: 3000,
-	size: "big",
+	size: "liquid",
 
 	usage: 10,
 	info: [
@@ -239,7 +239,7 @@ const Special = [
 
 	num: 200,
 	price: 3000,
-	size: "big",
+	size: "liquid",
 
 	usage: 10,
 	info: [
@@ -549,7 +549,7 @@ const Containers = [
 		onEquip,
 		onUnEquip
 	}
-  ];
+];
   
   
 Items.addItems(Containers, "container")

@@ -9,8 +9,8 @@ const iUtil = {
 
 	countMechaItems : function(){
 		let count = 0
-		for(let i in V.mechaItems){
-			count += V.mechaItems[i]
+		for(let i in R.mechStats.tools){
+			count += R.mechStats[i]
 		}
 		return count
 	},
@@ -65,6 +65,7 @@ const iUtil = {
 
 	}
 }
+window.iUtil = iUtil
 
 function printTemplet(string, ...args){
     for(let i = 0; i < args.length; i++){
@@ -102,7 +103,7 @@ function printMedicineLink(itemId){
 		linkname = name
 	}
 
-	return `<<itemIcon '${drug.img}'>><<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to Items.data["${key}"]>><</link>><br>`
+	return `<<itemIcon '${drug.img}'>><<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to Items.get("${itemId}")>><</link>><br>`
 }
 
 DefineMacroS('iMedicineLink', printMedicineLink)

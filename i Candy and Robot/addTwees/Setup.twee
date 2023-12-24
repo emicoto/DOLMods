@@ -49,11 +49,6 @@
 
 <</widget>>
 
-<<widget "candySkills">>
-<!-- 角色面板技能栏  -->
-
-
-<</widget>>
 
 <<widget "lactationchange">>
 	<<if R.trait.naturalLactation is 1>>

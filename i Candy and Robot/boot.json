@@ -4,7 +4,7 @@
  "styleFileList": [],
  "scriptFileList_earlyload": [],
  "scriptFileList_inject_early": [
-    "JS/SFRegist.js"
+    "scriptEarly/SFRegist.js"
   ],
  "scriptFileList_preload": [],
  "scriptFileList": [
@@ -13,7 +13,9 @@
     "JS/ItemList.js",
     "JS/UtilWidget.js",
     "JS/newNPC.js",
-    "JS/Setup.js"
+    "JS/Setup.js",
+    "JS/drugProcess.js",
+    "JS/Process.js"
  ],
  "tweeFileList": [
     "addTwees/Setup.twee",

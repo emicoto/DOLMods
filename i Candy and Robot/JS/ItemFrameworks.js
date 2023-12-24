@@ -559,7 +559,7 @@ class Items {
 		}
 	}
 }
-
+window.Items = Items
 class iRecipe {
 	static data = {};
 
@@ -777,6 +777,7 @@ class iRecipe {
 	}
 
 }
+window.iRecipe = iRecipe
 
 //数组和对象在DOL内部传递有蜜汁错误。所以从背包里传递过来的，是具体位置信息。
 function useItems(pocket, pos){
@@ -801,4 +802,4 @@ function useItems(pocket, pos){
 }
 
 window.useItems = useItems
-DefineMacroS('useItem', useItem)
+DefineMacroS('useItem', useItems)
