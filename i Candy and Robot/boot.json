@@ -27,7 +27,10 @@
  ],
  "imgFileList": [
     "img/daiso.png",
-    "img/repair.png"
+    "img/repair.png",
+    "img/items/bag_none.png",
+    "img/items/cart_none.png",
+    "img/items/wallet_none.png"
  ],
  "additionFile": [
     "replaceFiles/bedroomWidget.txt",
