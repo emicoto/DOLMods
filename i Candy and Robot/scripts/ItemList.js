@@ -703,7 +703,7 @@ const Addictive = [
 
 Items.addItems(Addictive)
 
-function onUseDrags(){
+function onUseDrags(enemy){
 	const { id, tags, effects, doDelta } = this
 	let palams = '';
 
@@ -746,6 +746,10 @@ function onUseDrags(){
 		`You ${methods[0]} the ${this.name[0]}.`,
 		`你${methods[1]}了${this.name[1]}。`
 	) + ' ' + palams;
+
+	if(enemy){
+		return palams;
+	}
 
 	return html;
 }
@@ -924,7 +928,6 @@ const Drugs = [
 		min = Math.max(min, 1);
 		iUtil.getPalam("control", 2 * min);
 
-
 		let flag = iCandy.getFlag(this.id, 'highonce')
 		//如果已经设置过flag，不再重复显示提醒
 		if(flag == 1) return '';
@@ -940,20 +943,21 @@ const Drugs = [
 	},
 	onWake:function(){
 		//药效下头后会变疲劳
-		iUtil.getPalam("tiredness", 20 * min);
+		iUtil.getPalam("tiredness", 400);
 
 		let html =
 		  lanSwitch(
 			"The effects of NZT-48 is wearing off, you feel a little tired.",
 			"NZT-48的效果正在消退，你感觉有些疲劳。"
-		  ) + `<<ltiredness>>`;
+		  ) + `<<ggtiredness>>`;
 		
 		  return html;
 	},
 	onWithdraw:function(){
 		wikifier("control", -80);
 		wikifier("stress", 80)
-		wikifier("willpower", -50)
+		let will = random(60, 180);
+		wikifier("willpower", -will)
 
 		let html =
 		  lanSwitch(
@@ -987,8 +991,8 @@ const Drugs = [
 		["hallucinogen", 100],
 	],
 
-	threshold: 1,	//安全使用次数，超过这个值会涨overdose
-	maxOD: 2,		//最大过量值，超过这个值会上瘾
+	threshold: 0,	//安全使用次数，超过这个值会涨overdose
+	maxOD: 3,		//最大过量值，超过这个值会上瘾
 	withdraw: 24+18, //出现戒断反应所需时间，单位是小时
 	quit: 28,		//戒除需求时间，单位是天
 	hours: 2,		//药效持续时间，单位是小时
@@ -1002,7 +1006,7 @@ const Drugs = [
 		  lanSwitch(
 			"The effects of Heroin is on, you're feeling easy.",
 			"海洛因正在起作用，你感觉心情愉快。"
-		  ) + `<<gcontrol>>`;
+		  ) + `<<lstress>>`;
 
 		return html;
 	}
@@ -1029,8 +1033,8 @@ const Drugs = [
 		["tiredness", 200],
 	],
 
-	threshold: 1,	//安全使用次数，超过这个值会涨overdose
-	maxOD: 2,		//最大过量值，超过这个值会上瘾
+	threshold: 0,	//安全使用次数，超过这个值会涨overdose
+	maxOD: 4,		//最大过量值，超过这个值会上瘾
 	withdraw: 24+16,//出现戒断反应所需时间，单位是小时
 	quit: 28,		//戒除需求时间，单位是天
 	hours: 2,		//药效持续时间，单位是小时
@@ -1081,8 +1085,8 @@ const Drugs = [
 	hours: 4,		//药效持续时间，单位是小时
 
 	_onUse: onUseDrags,
-	onUse: function(){
-		const html = this._onUse();
+	onUse: function(enemy){
+		const html = this._onUse(enemy);
 		
 		//随机设置两个感官
 		let list = ["genital", "bottom", "breast", "mouth"]
@@ -1287,8 +1291,8 @@ const Drugs = [
 	hours: 2,   //药效持续时间，单位是小时
 
 	_onUse: onUseDrags,
-	onUse: function(){
-		const html = this._onUse();
+	onUse: function(enemy){
+		const html = this._onUse(enemy);
 		//提升全部感官
 		iCandy.senseSet("genital", this.id, 0.5,  3*60*60 , 0.01);
 		iCandy.senseSet("bottom", this.id, 0.5,  3*60*60 , 0.01);
@@ -1309,7 +1313,7 @@ const Drugs = [
 		return html;
 	},
 	onWake:function(){
-		let physique = random(30, 60) / 10;
+		let physique = random(30, 80) / 10;
 		wikifier("physique_loss", physique);
 	
 		wikifier("control", -20);
@@ -1349,7 +1353,7 @@ const Drugs = [
 		let physique = random(60, 120) / 10;
 		wikifier("physique_loss", physique);
 	
-		let will = random(10, 20);
+		let will = random(20, 40);
 		wikifier("willpower", -will);
 	
 		let stress = random(12, 18);

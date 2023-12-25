@@ -784,6 +784,9 @@ function iCandyUpdate(){
 			}
 		}
 	}
+	else if(!V.iCandyRobot){
+		iCandyInit()
+	}
 	else if(V.iCandyRobot.version !== iCandy.version ){
 		V.iCandyRobot = iUtil.updateObj(iCandyRobot, V.iCandyRobot)
 		V.iPockets = iUtil.updateObj(iPockets, V.iPockets)
