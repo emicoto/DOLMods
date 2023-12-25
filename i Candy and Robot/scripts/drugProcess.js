@@ -92,7 +92,7 @@ const DrugsProcess = {
 
 		for(const[item, stats] of Object.entries(itemStats)){
 			//获取药物的信息
-			const data =  type == 'general' ? setup.addiction[item] : Items.get(item)
+			const data =  type == 'general' ? setup.addictions[item] : Items.get(item)
 			if(!data) continue;
 	
 			//获取戒断需求时间(hour)
@@ -129,7 +129,7 @@ const DrugsProcess = {
 
 		for(const[item, stats] of Object.entries(itemStats)){
 			//获取药物的信息
-			const data =  type == 'general' ? setup.addiction[item] : Items.get(item)
+			const data =  type == 'general' ? setup.addictions[item] : Items.get(item)
 			if(!data) continue;
 
 			//获取上瘾阈值，最大过量值，戒除需求时间(day)，引起戒断反应所需时间(hour)
@@ -187,7 +187,7 @@ const DrugsProcess = {
 		const flags = type == 'general' ? R.drugFlags.general : R.drugFlags.drugs
 
 		for(const[item, flag] of Object.entries(flags)){
-			const data = type == 'general' ? setup.addiction[item] : Items.get(item)
+			const data = type == 'general' ? setup.addictions[item] : Items.get(item)
 			const name = type == 'general' ? item : data.name
 			if(!data) continue;
 

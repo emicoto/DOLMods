@@ -1,4 +1,4 @@
-:: iCandyRobot ModOptions [widget]
+:: iCandyMod ModOptions [widget]
 
 <<widget "iCandyOptions">>
 <span class="gold"><<lanSwitch "i Candy Robot" "爱糖机" >></span>

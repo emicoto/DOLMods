@@ -1,5 +1,7 @@
 sugarcube-2:
   macros:
+    useItem:
+      name: useItems
     iMedicineLink:
       name: iMedicineLink
     lanSwitch:

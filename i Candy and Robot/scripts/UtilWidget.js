@@ -240,7 +240,7 @@ function printMedicineLink(itemId, diff){
 
 
 
-	return `<<itemIcon '${img}'>><<link '${linkname}' 'Pharmacy Sale EX'>><<set $pharmacyItem to Items.get("${itemId}")>><</link>><br>`
+	return `<<itemIcon '${img}'>><<link '${linkname}' 'iCandyMod Pharmacy Sale'>><<set $pharmacyItem to Items.get("${itemId}")>><</link>><br>`
 }
 
 DefineMacroS('iMedicineLink', printMedicineLink)

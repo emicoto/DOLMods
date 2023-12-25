@@ -1,4 +1,4 @@
-:: Pharmacy Items [widget]
+:: iCandyMod PharmacyItems [widget]
 <<widget "ExtraPharmacy">>
 	<<lanSwitch 'General Medicine' '常规药'>>:
 	<br>
@@ -17,7 +17,7 @@
 <</widget>>
 
 
-:: Pharmacy Sale EX
+:: iCandyMod Pharmacy Sale
 <<set $outside to 0>><<set $location to 'hospital'>><<effects>>
 <<formatmoney $pharmacyItem.price>>
 

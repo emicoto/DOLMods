@@ -1,0 +1,22 @@
+:: iCandyMod UseItems
+<div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
+
+<<useItem $usedItem[0] $usedItem[1]>>
+<br><br>
+
+<<if _usedItem.customtxt isnot undefined>>
+    <<print lanSwitch(_usedItem.customtxt)>>
+<br><br>
+<</if>>
+
+<<link 'back' $exitPassage>>
+    <<pass 5>>
+<</link>>
+
+:: iCandyMod TransferItems
+<div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
+
+
+
+:: iCandyMod Storage
+<div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>

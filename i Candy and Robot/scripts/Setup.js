@@ -541,7 +541,7 @@ const iCandy = {
 	take: function(item, value){
 		value = Number(value)
 		if(!value) return;
-		const data = setup.addiction[item]
+		const data = setup.addictions[item]
 
 		R.drugStates.general[item].taken += Math.max(Math.floor(value/100+0.5), 1)
 		R.drugStates.general[item].lastTime = V.timeStamp
