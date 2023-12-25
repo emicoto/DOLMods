@@ -119,25 +119,25 @@ You look at your robot friend <<print R.robot.name>>.<<characteristic-text _robo
     <<= lanSwitch('You step to your iRobot.', '你从机器人身边离开了。')>><br>
 <</if>><br>
 
-<<if R.mechaStats.puzzle isnot 0>>
-<<link [[Play unlocking puzzle (0:10)|Room puzzle]]>><<pass 10>><<set R.mechaStats.puzzle -= 1>><</link>><<llstress>><br>
+<<if R.mechStats.puzzle isnot 0>>
+<<link [[Play unlocking puzzle (0:10)|Room puzzle]]>><<pass 10>><<set R.mechStats.puzzle -= 1>><</link>><<llstress>><br>
 <</if>>
 
-<<if R.mechaStats.box isnot 0>>
-<<link [[Figure up the mechanism from box (0:20)|Room Mechanism box]]>><<pass 20>><<set R.mechaStats.box -= 1>><</link>><<llstress>> | <span class="lblue">+ mechanic</span><br>
+<<if R.mechStats.box isnot 0>>
+<<link [[Figure up the mechanism from box (0:20)|Room Mechanism box]]>><<pass 20>><<set R.mechStats.box -= 1>><</link>><<llstress>> | <span class="lblue">+ mechanic</span><br>
 <</if>>
 
-<<if R.mechaStats.robot is 1>>
-    <<if R.mechaStats.tool is 0>>
+<<if R.mechStats.robot is 1>>
+    <<if R.mechStats.tool is 0>>
         <br>You look at your robot building set, but you need some tools to build it.<br>
     <<elseif R.robot.build  gte 100>>
         <br><br>
         <<robotoption>>
-    <<elseif R.robot.build  isnot 0 and R.mechaStats.part lt 1>>
+    <<elseif R.robot.build  isnot 0 and R.mechStats.part lt 1>>
         <br>You look at your robot building set, but you need a parts to continue.<br>
     <<else>>
         <br>You look at your robot building set.<br>
-        <<link [[Build the robot(0:30)|Room Mechanism robot]]>><<pass 30>><<set R.robot.build  += 1>><<if R.robot.build  gte 10>><<set R.mechaStats.parts -= 1>><</if>><</link>> <<gtiredness>> | <span class="lblue">+ mechanic</span>
+        <<link [[Build the robot(0:30)|Room Mechanism robot]]>><<pass 30>><<set R.robot.build  += 1>><<if R.robot.build  gte 10>><<set R.mechStats.parts -= 1>><</if>><</link>> <<gtiredness>> | <span class="lblue">+ mechanic</span>
     <</if>>
     <br>
 <</if>>
@@ -185,7 +185,7 @@ You played the puzzle for 10 minutes. <<lstress>><br>
 <</if>>
 <br>
 
-<<if R.mechaStats.puzzle is 0>>
+<<if R.mechStats.puzzle is 0>>
 <br>Maybe it's been played too many times, the puzzle buckle is completely broken.<br>
 <</if>>
 
@@ -227,7 +227,7 @@ You played the puzzle for 10 minutes. <<lstress>><br>
 . <<gwillpower>><br>
 
 
-<<if R.mechaStats.box is 0>>
+<<if R.mechStats.box is 0>>
  Maybe it's been played too many times, the mechanism box is completely broken.<br>
 <</if>>
 
@@ -396,12 +396,12 @@ The mechanic voice from <<print R.robot.name>> sounds a little bit angry.
 
 :: Robot Fix
 
-<<if R.mechaStats.parts lt 5>>
+<<if R.mechStats.parts lt 5>>
     You need some part to fix your iRobot.<br>
 
 <<else>>
 
-    <<tiredness 5>><<set R.mechaStats.parts -= 5>>
+    <<tiredness 5>><<set R.mechStats.parts -= 5>>
     You spend time for fix your robot friend. <<ltiredness>> <<gcondition>> <br>
 
 <</if>>
