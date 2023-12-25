@@ -538,24 +538,24 @@ c.add("cocaine", ["Cocaine", "可卡因"], 12860, 2, "drugs")
     return html;
   })
   .setHigh((min = 1) => {
-    wikifier("drunk", 10 * min);
+    wikifier("alcohol", 10 * min);
     wikifier("arousal", 1000, "genital");
     let html =
       lanSwitch(
         "A strong ecstacy thrills your whole body, as you are dancing on the clouds.",
         "你全身上下都感到十分愉悦，仿佛在云端跳舞。"
-      ) + `<<ggdrunk>><<ghallucinogens>><<ggarousal>>`;
+      ) + `<<ggalcohol>><<ghallucinogens>><<ggarousal>>`;
     return html;
   })
   .setAfter(() => {
-    wikifier("drunk", -200);
+    wikifier("alcohol", -200);
     wikifier("control", -30);
     wikifier("stress", 80);
     let html =
       lanSwitch(
         "After the cocaine wears off, you feel like falling off from the clouds.",
         "可卡因的药效过后，你感觉从云端掉了下来。"
-      ) + `<<llldrunk>><<ggstress>><<llcontrol>>`;
+      ) + `<<lllalcohol>><<ggstress>><<llcontrol>>`;
     return html;
   });
 //----------------------------------------------

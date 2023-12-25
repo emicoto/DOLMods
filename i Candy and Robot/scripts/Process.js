@@ -29,8 +29,10 @@ Time.pass = function(sec){
 	TimeHandle.prevDate = prevDate
 	TimeHandle.currentDate = currentDate
 
+	if(V.combat == 1){
+		iCombatHandle()
+	}
 	iTimeHandle(sec)
-	iCombatHandle()
 
 	console.log('fragment:', fragment)
 	if(fragment !== undefined){
@@ -146,10 +148,17 @@ function iCombatHandle(){
 	if(V.combat == 0) return;
 	//合意场景的情况看对象是谁
 	if(V.consensual == 1 && V.npc_name !== 0) return;
+	//当pc处于反抗状态且处于优势时，跳过事件。
+	if( V.pain < V.painmax * 0.8 
+		&& V.enemyhealth < V.enemyhealthmax * 0.5 
+		&& V.orgasmdown < 1 && V.rightarm !== 'bound' && V.leftarm !== 'bound' 
+		&& V.leftleg !== 'bound' && V.rightleg !=='bound'
+	) return;
 
 	let rate = V.trauma/60 + V.stress/150
 	const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter( item => item.id !== 'angelpowder' )
 	let html = ''
+
 
 	//当敌人是触手或史莱姆时，概率给pc上特殊分泌物
 	if(V.enemytype == 'slime' || V.enemytype == 'tentacles'){
@@ -162,6 +171,11 @@ function iCombatHandle(){
 		if(npc.stance == 'defeated' || npc.type !== 'human' || npc.feed >= 2){
 			continue;
 		}
+		//如果pc有行动能力且npc血量过低，跳过
+		if(V.pain < V.painmax && npc.health < npc.healthmax * 0.3 &&  V.orgasmdown < 1 && V.rightarm !== 'bound' && V.leftarm !== 'bound' && V.leftleg !== 'bound' && V.rightleg !=='bound'){
+			continue;
+		}
+
 		if(npc.feed == undefined){
 			npc.feed = 0
 		}
@@ -213,9 +227,10 @@ function iCombatHandle(){
 		}
 
 		//嘴巴空着的话，概率投喂春药、致幻剂
-
 		
 	}
+
+	console.log(html)
 
 	if(html.length > 2){
 		V.afterMsg += html

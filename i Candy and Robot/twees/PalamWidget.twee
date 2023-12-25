@@ -26,6 +26,23 @@
 	<</if>>
 <</widget>>
 
+<<widget "lalcohol">>
+	<<if $statdisable is "f">> |
+		<span class="green">- <<lanSwitch 'Alcohol' '酒精'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "llalcohol">>
+	<<if $statdisable is "f">> |
+		<span class="green">- - <<lanSwitch 'Alcohol' '酒精'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "lllalcohol">>
+	<<if $statdisable is "f">> |
+		<span class="green">- - - <<lanSwitch 'Alcohol' '酒精'>></span>
+	<</if>>
+<</widget>>
 
 <<widget "lactationchange">>
 	<<if R.trait.naturalLactation is 1>>
