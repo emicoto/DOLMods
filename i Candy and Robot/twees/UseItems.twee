@@ -1,7 +1,7 @@
 :: iCandyMod UseItems
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
-<<useItem $usedItem[0] $usedItem[1]>>
+<<useItem $iMod.useItem[0] $iMod.useItem[1]>>
 <br><br>
 
 <<if _usedItem.customtxt isnot undefined>>

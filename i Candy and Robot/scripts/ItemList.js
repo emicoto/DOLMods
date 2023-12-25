@@ -1209,7 +1209,7 @@ const Drugs = [
 	maxOD: 1,
 	withdraw: 18,
 	quit: 52,
-	hours: 2,
+	hours: 1.5,
 
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
@@ -1284,7 +1284,7 @@ const Drugs = [
 	maxOD: 0,	  //最大过量值，超过这个值会上瘾
 	withdraw: 16, //出现戒断反应所需时间，单位是小时
 	quit: 64,  //戒除需求时间，单位是天
-	hours: 1,   //药效持续时间，单位是小时
+	hours: 2,   //药效持续时间，单位是小时
 
 	_onUse: onUseDrags,
 	onUse: function(){

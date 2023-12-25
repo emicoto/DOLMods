@@ -31,7 +31,11 @@ Time.pass = function(sec){
 
 	iTimeHandle(sec)
 
-	if(sec <= 0 ) return fragment 
+	console.log('fragment:', fragment)
+	if(fragment !== undefined){
+		return fragment 
+	}
+	return ""
 }
 
 function getDrugsConfig(tags, type){
