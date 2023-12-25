@@ -20,6 +20,16 @@ const Foods = [
 		["hunger", 10],
 	],
 
+	customtxt:{
+		onUse: [
+			`You unwrap the candy, and the crystal-clear sugar ball reflects an enticing light.<br>
+			You pop the candy into your mouth, delicately lick its surface with your tongue. <br>
+			The sweet and sour taste immediately spreads on the tip of your tongue, bringing an inexplicable sense of comfort to your heart.`,
+			`你剥开糖纸，晶莹剔透的糖块反射着诱人的光芒。<br>
+			你把糖果塞进口里，用舌头小心地舔舐着它的表面，酸酸甜甜的味道马上在你的舌尖上晕开，一阵莫名的舒心涌上你的心头。`
+		]
+	}
+
 	//stacksprites:[25, 50, 100]百分比值，当前堆叠数/堆叠上限 >= 数值时，在uid后加_num.png
 },
 
@@ -43,6 +53,16 @@ const Foods = [
 		["trauma", 5],
 		["hunger", 10],
 	],
+
+	customtxt:{
+		onUse: [
+			`The rich and silky texture of chocolate spreads in your mouth. <br>
+			With each bite, your teeth feel like they are being gently embraced by smooth silk. <br>
+			A warmth, akin to sunlight, envelops you, and you experience a moment of relaxation throughout your body.`,
+			`巧克力那醇厚丝滑的口感在你口中扩散开来，每咬下一口，牙齿都像在被柔顺的丝绸温柔地拥抱着。<br>
+			阳光般的温暖感笼罩了你，你感到身体一阵放松。`
+		]
+	}
 },
 
 {
@@ -86,6 +106,17 @@ const Foods = [
 		["tiredness", 40],
 		["hunger", 100],
 	],
+
+	customtxt:{
+		onUse: [
+			`You tear up the packaged and take a chip, put it in your mouth.<br>
+			Each chip is crispy and delicious, emitting a delightful and unforgettable sweetness, along with a sense of happiness. <br>
+			You quickly devour all the chips, feeling a bit disappointed that the package was too big for the relatively few chips it contained.`,
+			`你撕开包装，拿起薯片送进嘴里。<br>
+			每一片都酥脆可口，散发出令人回味无穷的香甜，以及幸福感。<br>
+			你很快把这些薯片消灭一空，有些遗憾包装太大而薯片太少。`
+		]
+	}
 },
 
 {
@@ -109,6 +140,18 @@ const Foods = [
 		["hunger", 16],
 		["stress", 1],
 	],
+
+	customtxt:{
+		onUse:[
+			`You peel up the candy wrapper, revealing the colorful swirls of the lollipop.<br>
+			You lick it slowly, savoring each moment. Eating this kind of candy requires patience, as the sweetness lingers with you for quite a while, even after it's gone.<br><br>
+			Suddenly, memories of childhood flash back to you. <br>
+			It's a distant recollection, almost hazy, but the image of enjoying this type of candy from your younger days brings a smile to your face.`,
+			`你掀开糖纸，露出下面五彩斑斓的波板糖。<br>
+			你一点一点舔着它，吃这种糖需要耐心，糖果的甜味将会陪伴着你好一会儿，即使吃完了也不会马上消散。<br>
+			你突然想起小时候吃这种糖的情景，那已经是十分遥远的记忆了，模糊至极，但你还是莫名地笑了一下。`
+		]
+	}
 },
 
 {
@@ -155,6 +198,17 @@ const Foods = [
 		["stress", 3],
 		["hunger", 12],
 	],
+
+	customtxt:{
+		onUse:[
+			`You pick up a candyfloss, it's light as a feather, as if it could float away if you let go.<br>
+			You delicately lick it, and the sensation is peculiar. It feels as if there's nothing there, yet the subtle and comforting sweetness is undeniably real.<br>
+			As the thread-like syrup dissolves in your mouth, your mind also relaxes significantly.`,
+			`你拿起一朵棉花糖，它轻飘飘的，像是一松手就会升上天去。<br>
+			你小心地舔舐着它，口感非常奇妙，仿佛空无一物，但细腻舒心的甜味却又真实无比。<br>
+			随着丝线般的糖浆在口中化开，你的精神也放松了许多。`
+		]
+	}
 },
 
 {
@@ -191,8 +245,20 @@ const Foods = [
 
 	info: ["A regular canned cola", "一罐普通的罐装可乐"],
 	effects: [
-		["stress", 1]
+		["stress", 2]
 	],
+
+	customtxt:{
+		onUse:[
+			`With a gentle lift, a "pop" echoes as the pull tab opens.<br>
+			The black liquid eagerly surges forth, much like your current desire to drink off it.<br><br>
+			You take a sip, feeling the cola dance in your mouth. Not lingering too long on the sensation, you let it slide down your throat. <br>
+			The refreshing coldness spreads from your stomach throughout your body, invigorating your spirit.`,
+			`你轻轻一提，噗的一声，拉环应声而开。<br>
+			黑色的液体急切地涌动着，就像你现在想要喝掉它的心情。<br><br>
+			你啜饮了一口，感受可乐在你的口腔里跳动。没有让这种感觉停留太久，你让它滑进胃里，冰凉的舒心感从胃部传到全身，你的精神为之一振。<br>`
+		]
+	}
 },
 ];
 
@@ -702,671 +768,3 @@ const Addictive = [
 ];
 
 Items.addItems(Addictive)
-
-function onUseDrags(enemy){
-	const { id, tags, effects, doDelta } = this
-	let palams = '';
-
-	effects.forEach((effect) => {
-		const [palam, min, method] = effect;
-		const take = iCandy.getStat(id, 'taken') ?? 0;
-
-		let max = Math.floor(min * 1.2 + 1.5);
-		let value = random(min, max);
-
-		value = value * Math.max(1 - take * 0.1, 0.2);
-
-		doDelta(palam, value, method);
-		palams += printPalams(palam, value, method);
-	});
-
-
-	if(tags.has('risky', 'strong', 'super', 'immediate')){
-		iCandy.setValue(id, 'efTimer', V.timeStamp + this.hours*60*60);
-	}
-
-	if(iCandy.checkStat(id)){
-		iCandy.setValue(id, 'taken', 1)
-		iCandy.setValue(id, 'lastTime', V.timeStamp)
-
-		const take = iCandy.getStat(id, 'taken')
-
-		if(take > this.threshold){
-			iCandy.setValue(id, 'overdose', 1)
-		}
-		//如果有戒断状态，清除戒断状态
-		if(iCandy.getStat(id, 'withdraw') > 0){
-			iCandy.setStat(id, 'withdraw', 1)
-		}
-	}
-
-	let methods = useMethods(tags)
-
-	const html = lanSwitch(
-		`You ${methods[0]} the ${this.name[0]}.`,
-		`你${methods[1]}了${this.name[1]}。`
-	) + ' ' + palams;
-
-	if(enemy){
-		return palams;
-	}
-
-	return html;
-}
-
-const Medicines = [
-	{
-		tags: ["pill", "addiction", ],
-		
-		id: "serotonin",
-		name: ["Serotonin", "羟色胺"],
-		plural:"Bottle of Serotonin",
-
-		info: ["Help you relax and uplifit your mood", "具有放松和提振心情的作用"],		
-
-		num: 20,
-		price: 6200,
-		size: "pill",
-
-		effects: [["trauma", 16]],
-
-		threshold: 4,	//安全使用次数，超过这个值会涨overdose
-		maxOD: 12,		//最大过量值，超过这个值会上瘾
-		withdraw: 4*24,	//出现戒断反应所需时间，单位是小时
-		quit: 7,		//戒除需求时间，单位是天
-		hours: 1,		//药效持续时间，单位是小时
-
-		onUse: onUseDrags,
-	},
-	{
-		tags: ["pill", "addiction", ],
-
-		id: "melatonin",
-		name: ["Melatonin", "褪黑素"],
-		plural:"Bottle of Melatonin",
-
-		info: ["Help for sleep and reduce stress", "能帮助睡眠以及消减压力"],
-		
-		num: 30,
-		price: 4800,
-		size: "pill",
-
-		effects: [["stress", 6],[ "tiredness", 20]],
-
-		threshold: 2,	//安全使用次数，超过这个值会涨overdose
-		maxOD: 18,		//最大过量值，超过这个值会上瘾
-		withdraw: 4*24, //出现戒断反应所需时间，单位是小时
-		quit: 5,		//戒除需求时间，单位是天
-		hours: 1,		//药效持续时间，单位是小时
-
-		onUse: onUseDrags,
-	},
-	{
-		tags: ["pill", "addiction", ],
-		
-		id: "neuroOptimization",
-		name: ["Neuro Optimization", "神经优化片"],
-		plural:"Bottle of Neuro Optimization",
-
-		info: ["Improves the brain and memory", "提神醒脑，增强记忆力"],
-
-		num: 20,
-		price: 6400,
-		size: "pill",
-
-		effects: [["control", 30]],
-
-		threshold: 4,	//安全使用次数，超过这个值会涨overdose
-		maxOD: 20,		//最大过量值，超过这个值会上瘾
-		withdraw: 30,	//出现戒断反应所需时间，单位是小时
-		quit: 5,		//戒除需求时间，单位是天
-		hours: 1,		//药效持续时间，单位是小时
-
-		onUse: onUseDrags,
-	},
-
-	{
-		tags: ["pill", "addiction", ],
-
-		id: "aminobutyric",
-		name: ["Aminobutyric", "氨基丁酸"],
-		plural:"Bottle of Aminobutyric",
-
-		info: [
-		"Help for against depression and anxiety",
-		"对抑郁症和焦虑症有一定抵御效果",
-		],
-
-		num: 20,
-		price: 8600,
-		size: "pill",
-
-		effects: [["trauma", 50]],
-
-		threshold: 2,	//安全使用次数，超过这个值会涨overdose
-		maxOD: 10,		//最大过量值，超过这个值会上瘾
-		withdraw: 3*24,	//出现戒断反应所需时间，单位是小时
-		quit: 5,		//戒除需求时间，单位是天
-		hours: 1,		//药效持续时间，单位是小时
-
-		onUse: onUseDrags,
-	},
-
-	{
-		tags: ["pill"],
-
-		id: "painreduce",
-		name: ["Painkiller", "止痛药"],
-		plural:"Bottle of Painkiller",
-
-		info: ["Fast-acting painkiller", "速效止痛药"],		
-
-		num: 20,
-		price: 4750,
-		size: "pill",
-
-		effects: [["pain", 30]],
-
-		onUse: onUseDrags,
-	},
-	{
-		tags: ["cream"],
-
-		id: "bruiserelief",
-		name: ["Bruise Relief Cream", "淤青霜"],
-		plural:"Bruise Relief Cream",
-
-		info: [
-			"A cream for helps relieve pain, swelling, bruise.", 
-			"一款有助于缓解疼痛、肿胀、瘀伤的药膏。"],		
-
-		num: 120,
-		usage: 6,
-
-		price: 3474,
-		size: "pill",
-
-		effects: [["pain", 12]],
-
-		onUse: onUseDrags,
-	},
-];
-
-Items.addItems(Medicines, "medicine")
-
-
-const Drugs = [
-{
-	tags: ["risky", "addiction", "pill"],
-
-	id: "nzt_48",
-	name: ["NZT-48", "NZT-48"],
-	plural:"Pack of NZT48",
-
-	info: [
-	"Fabled smart drug, concentration and memory dramatically improved after taking it. But it is addictive.",
-	"传说中的聪明药，吃了后集中力与记忆力大幅提高。但具备成瘾性。",
-	],
-
-	num: 12,
-	price: 12600,
-	size: "pill",
-
-	effects: [
-		["stress", 10]
-	],
-
-	threshold: 1,	//安全使用次数，超过这个值会涨overdose
-	maxOD: 4,		//最大过量值，超过这个值会上瘾
-	withdraw: 1*24,	//出现戒断反应所需时间，单位是小时
-	quit: 14,		//戒除需求时间，单位是天
-	hours: 12,		//药效持续时间，单位是小时
-
-	onUse: onUseDrags,
-	onHigh:function(min = 1){
-		//如果在学习，会获得更好的学习效果。
-		min = Math.max(min, 1);
-		iUtil.getPalam("control", 2 * min);
-
-		let flag = iCandy.getFlag(this.id, 'highonce')
-		//如果已经设置过flag，不再重复显示提醒
-		if(flag == 1) return '';
-
-		iCandy.setFlag(this.id, 'highonce', 1)
-		let html =
-			lanSwitch(
-			"The effects of NZT-48 is on, you're feeling full of confident.",
-			"NZT-48正在起作用，你感觉充满了自信。"
-			) + `<<gcontrol>>`;
-		
-		return html;
-	},
-	onWake:function(){
-		//药效下头后会变疲劳
-		iUtil.getPalam("tiredness", 400);
-
-		let html =
-		  lanSwitch(
-			"The effects of NZT-48 is wearing off, you feel a little tired.",
-			"NZT-48的效果正在消退，你感觉有些疲劳。"
-		  ) + `<<ggtiredness>>`;
-		
-		  return html;
-	},
-	onWithdraw:function(){
-		wikifier("control", -80);
-		wikifier("stress", 80)
-		let will = random(60, 180);
-		wikifier("willpower", -will)
-
-		let html =
-		  lanSwitch(
-			"Without NZT-48, you feel frustrated and lose your confidence.",
-			"没有嗑NZT-48，你感觉心烦意乱，失去了自信。"
-		  ) + `<<llcontrol>><<ggstress>><<lllwillpower>>`;
-		return html;
-	
-	}
-},
-
-{
-	tags: ["risky", "addiction", "pill"],	
-	id: "heroin",
-	name: ["Heroin", "海洛因"],
-	plural:"Pack of Heroin",
-
-	info: [
-	"Recreational drugs, take away your stress and bring you peace",
-	"娱乐性药物，消除烦恼，给你带来快乐",
-	],
-
-	num: 4,
-	price: 6800,
-	size: "pill",
-
-	effects: [
-		["trauma", 60],
-		["aphrod", 1000],
-		["arousal", 1000, "p"],
-		["hallucinogen", 100],
-	],
-
-	threshold: 0,	//安全使用次数，超过这个值会涨overdose
-	maxOD: 3,		//最大过量值，超过这个值会上瘾
-	withdraw: 24+18, //出现戒断反应所需时间，单位是小时
-	quit: 28,		//戒除需求时间，单位是天
-	hours: 2,		//药效持续时间，单位是小时
-
-	onUse: onUseDrags,
-	onHigh:function(min = 1){
-		min = Math.max(min, 1);
-		iUtil.getPalam("stress", -(2 * min));
-
-		let html =
-		  lanSwitch(
-			"The effects of Heroin is on, you're feeling easy.",
-			"海洛因正在起作用，你感觉心情愉快。"
-		  ) + `<<lstress>>`;
-
-		return html;
-	}
-},
-
-{
-	tags: ["risky", "addiction", "pill"],
-
-	id: "mdma",
-	name: ["MDMA", "摇头丸"],
-	plural:"Pack of MDMA",
-
-	info: [
-	"Stimulant drugs to eliminate pain and fatigue",
-	"兴奋类药物，消除痛苦与疲劳",
-	],
-
-	num: 5,
-	price: 5600,
-	size: "pill",
-
-	effects: [
-		["pain", 20],
-		["tiredness", 200],
-	],
-
-	threshold: 0,	//安全使用次数，超过这个值会涨overdose
-	maxOD: 4,		//最大过量值，超过这个值会上瘾
-	withdraw: 24+16,//出现戒断反应所需时间，单位是小时
-	quit: 28,		//戒除需求时间，单位是天
-	hours: 2,		//药效持续时间，单位是小时
-
-	onUse: onUseDrags,
-	onHigh:function(min = 1){
-		min = Math.max(min, 1);
-
-		iUtil.getPalam("pain", -(5 * min));
-		iUtil.getPalam("tiredness", -(5 * min));
-	
-		let html =
-		  lanSwitch(
-			"The effects of MDMA is on, you feel all the pains and tiredness are gone.",
-			"摇头丸的效果上头了，你感觉浑身都很轻松。"
-		  ) + `<<lpain>><<ltiredness>>`;
-		return html;
-	}
-},
-
-{
-	tags: ["risky", "addiction", "inject"],
-
-	id: "amphetamine",
-	name: ["Amphetamine", "安非他命"],
-	plural:"Pack of Amphetamine",
-
-	info: [
-	"Central stimulant, will get you high to heaven",
-	"中枢兴奋剂，让你从头爽到尾。",
-	],	
-
-	num: 2,
-	price: 7260,
-	size: "inject",
-
-	effects: [
-		["pain", 20],
-		["tiredness", 80],
-		["arousal", 1000, "p"],
-		["aphrod", 1000],
-	],
-
-	threshold: 0, 	//安全使用次数，超过这个值会涨overdose
-	maxOD: 2, 		//最大过量值，超过这个值会上瘾
-	withdraw: 20,	//出现戒断反应所需时间，单位是小时
-	quit: 32,		//戒除需求时间，单位是天
-	hours: 4,		//药效持续时间，单位是小时
-
-	_onUse: onUseDrags,
-	onUse: function(enemy){
-		const html = this._onUse(enemy);
-		
-		//随机设置两个感官
-		let list = ["genital", "bottom", "breast", "mouth"]
-		let type = list.random()
-		iCandy.senseSet(type, this.id, 0.1,  this.hours*60*60 , 0.02);
-
-		//去掉已经设置好的，再随机一个
-		list.delete(type)
-		type = list.random()
-		iCandy.senseSet(type, this.id, 0.1,  this.hours*60*60 , 0.02);
-
-		return html;
-
-	},
-	onHigh:function(min = 1){
-		min = Math.max(min, 1);
-
-		wikifier("arousal", 300*min, "genital");
-		iUtil.getPalam("hallucinogen", 5*min);
-
-		let flag = iCandy.getFlag(this.id, 'highonce')
-		if(flag == 0){
-			iCandy.setFlag(this.id, 'highonce', 1)
-		}
-
-		//第一次显示与持续显示有差分
-		let html =
-		  lanSwitch(
-			"The effects of Amphetamine is on. A strong sensatons hit your whole body like an electric, making your body even more sensitive.",
-			"安非他命的效果上来了，强烈的快感如电流般袭击全身，让你的身体更加敏感了。"
-		  ) + `<<gggarousal>>`;
-		
-		if(flag == 1){
-			html =
-			  lanSwitch(
-				"The amphetamine drown you in the storm of pleasure. Your body becomes more sensitive as the drug effect increases.",
-				"安非他命让你沉浸在快感的风暴中。你的身体随着药效增强变得更加敏感了。"
-			  ) + `<<gggarousal>>`;
-		}
-		return html;
-	},
-	onWake:function(){
-		//感度逐步恢复
-		let html =
-		  lanSwitch(
-			"The effects of Amphetamine is wearing off, you feel your body gradually calming down",
-			"安非他命的效果正在消退，你感觉身体逐渐平复下来。"
-		  );
-		
-		return html;
-	}
-},
-
-{
-	tags: ["risky", "addiction", "smoke"],	
-
-	id: "canabitabacco",
-	name: ["Cannabi Tabacco", "大麻烟"],
-	plural:"Box of Cannabi Tabacco",
-
-	info: [
-	"Cigarettes made of cannabis. Have a smoke to be happy",
-	"大麻制成的香烟，吸一口快乐好逍遥",
-	],	
-
-	num: 12,
-	price: 5760,
-	size: "small",
-
-	effects: [
-		["pain", 5],
-		["stress", 5],
-	],
-
-	threshold: 1, 	//安全使用次数，超过这个值会涨overdose
-	maxOD: 5,		//最大过量值，超过这个值会上瘾
-	withdraw: 2*24+4, //出现戒断反应所需时间，单位是小时
-	quit: 24,		 //戒除需求时间，单位是天
-	hours: 0.3,		 //药效持续时间，单位是小时
-
-
-	onUse: onUseDrags,
-	onHigh:function(min = 1){
-		min = Math.max(min, 1);
-		if(V.combat == 1) return;
-
-		iUtil.getPalam("stress", -(5 * min));
-
-		let flag = iCandy.getFlag(this.id, 'highonce')
-		if(flag == 1) return '';
-
-		let html =
-		  lanSwitch(
-			"As the smoke of canabis around your head, you feel like your worries have gone.",
-			"当大麻的烟雾旋绕在你头上，你感觉烦恼都烟消云去了。"
-		  ) + `<<lstress>>`;
-		return html;
-	}
-},
-
-{
-	tags: ["addiction", "inject", "super"],
-
-	id: "cocaine",
-	name: ["Cocaine", "可卡因"],
-	plural:"Pack of Cocaine",
-
-	info: [
-	"Fast-acting nerve stimulant that eliminates all pain and worries.",
-	"速效神经兴奋剂，消除所有痛苦与烦恼。",
-	],
-
-	num: 2,
-	price: 12860,
-	size: "inject",
-
-	effects: [
-		["pain", 100],
-		["trauma", 200],
-		["aphrod", 1000],
-	],
-
-	threshold: 0,
-	maxOD: 1,
-	withdraw: 18,
-	quit: 52,
-	hours: 1.5,
-
-	onUse: onUseDrags,
-	onHigh:function(min = 1){
-		min = Math.max(min, 1);
-
-		iUtil.getPalam("drunk", 10 * min);
-		wikifier("arousal", 4000, "genital");
-		let html =
-		  lanSwitch(
-			"A strong ecstacy thrills your whole body, as you are dancing on the clouds.",
-			"你全身上下都感到十分愉悦，仿佛在云端跳舞。"
-		  ) + `<<ggalcohol>><<ghallucinogens>><<ggarousal>>`;
-		return html;
-	},
-	onWake:function(){
-		wikifier("alcohol", -200);
-		wikifier("control", -30);
-		wikifier("stress", 80);
-		let html =
-		  lanSwitch(
-			"After the cocaine wears off, you feel like falling off from the clouds.",
-			"可卡因的药效过后，你感觉从云端掉了下来。"
-		  ) + `<<lllalcohol>><<ggstress>><<llcontrol>>`;
-		return html;
-	},
-	onDay:function(){
-		wikifier("control", 30);
-		let html =
-		  lanSwitch(
-			"Continuously taking cocaine makes your confidence grow.",
-			"持续吸取可卡因让你信心增长。"
-		  ) + `<<ggcontrol>>`;
-		return html;
-	},
-	onWithdraw:function(){
-		wikifier("control", -60);
-		wikifier("stress", 60);
-		let html =
-		  lanSwitch(
-			"Cocaine withdrawal makes you feel empty and lost.",
-			"可卡因的戒断反应让你感到空虚难受。"
-		  ) + `<<lllcontrol>><<gggstress>>`;
-		return html;
-	}
-},
-
-{
-	tags: ["addiction", "inject", "immediate"],
-
-	id: "angelpowder",
-	name: ["Angel Powder", "天使粉"],
-	plural:"Pack of Angel Powder",
-
-	info: [
-		"Fast-acting psychotropic drugs, takes you fly to heaven",
-		"速效精神药物，带你直上天国。",
-	],
-
-	num: 2,
-	price: 28680,
-	size: "inject",
-	
-	effects: [
-		["pain", 100],
-		["trauma", 320],
-		["stress", 36],
-		["aphrod", 1000],
-		["drunk", 1000],
-	],
-
-	threshold: 0, //安全使用次数，超过这个值会涨overdose
-	maxOD: 0,	  //最大过量值，超过这个值会上瘾
-	withdraw: 16, //出现戒断反应所需时间，单位是小时
-	quit: 64,  //戒除需求时间，单位是天
-	hours: 2,   //药效持续时间，单位是小时
-
-	_onUse: onUseDrags,
-	onUse: function(enemy){
-		const html = this._onUse(enemy);
-		//提升全部感官
-		iCandy.senseSet("genital", this.id, 0.5,  3*60*60 , 0.01);
-		iCandy.senseSet("bottom", this.id, 0.5,  3*60*60 , 0.01);
-		iCandy.senseSet("breast", this.id, 0.5,  3*60*60 , 0.01);
-		iCandy.senseSet("mouth", this.id, 0.5,  3*60*60 , 0.01);
-		return html
-	
-	},
-	onHigh:function (min = 1){
-		min = Math.max(min, 1);
-		wikifier("hallucinogen", 5 * min);
-		wikifier("arousal", 4000, "genital");
-		let html =
-		  lanSwitch(
-			"An indescribable thrill of pleasure erupts from the depths of your soul.",
-			"一股无法描述的快感从你的灵魂深处迸发。"
-		  ) + `<<ghallucinogens>><<gggarousal>>`;
-		return html;
-	},
-	onWake:function(){
-		let physique = random(30, 80) / 10;
-		wikifier("physique_loss", physique);
-	
-		wikifier("control", -20);
-		wikifier("stress", 120);
-	
-		let html =
-		  lanSwitch(
-			"After the angel powder wears off, you feel weak and powerless.",
-			"天使粉的药效过后，你感到虚弱无力。"
-		  ) + `<<lcontrol>><<lphysique>><<gggstress>>`;
-		return html;
-	},
-	onDay:function(){
-		let physique = random(80, 160);
-		iUtil.getPhysique(physique);
-	
-		let will = random(10, 20);
-		wikifier("willpower", will);
-	
-		wikifier("awareness", -6);
-		wikifier("pain", -20);
-		wikifier("trauma", -20);
-		wikifier("stress", -10);
-		wikifier("tiredness", -30);
-	
-		wikifier("arousal", 300);
-	
-		let html =
-		  lanSwitch(
-			"The Angel powder in your body inspries you, makes you feeling easy and happy.",
-			"体内的天使粉鼓舞着你，让你感到轻松愉快。"
-		  ) +
-		  `<<ggphysique>><<gwillpower>><<llawareness>><<lllpain>><<lltrauma>><<llstress>><<lltiredness>><<ggarousal>>`;
-		return html;
-	},
-	onWithdraw:function(){
-		let physique = random(60, 120) / 10;
-		wikifier("physique_loss", physique);
-	
-		let will = random(20, 40);
-		wikifier("willpower", -will);
-	
-		let stress = random(12, 18);
-		wikifier("stress", stress);
-	
-		let html =
-		  lanSwitch(
-			"You're feeling a little weak without the Angel Powder.",
-			"没有吸食天使粉的你感到身体有些虚弱……"
-		  ) + `<<lphysique>><<lwillpower>><<ggstress>>`;
-		return html;
-	}
-},
-];
-
-Items.addItems(Drugs, "drugs")

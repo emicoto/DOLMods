@@ -10,14 +10,15 @@
   ],
  "scriptFileList_preload": [],
  "scriptFileList": [
-    "scripts/ItemFrameworks.js",
-    "scripts/ItemManager.js",
-    "scripts/ItemList.js",
-    "scripts/UtilWidget.js",
+    "scripts/itemFrameworks.js",
+    "scripts/itemManager.js",
+    "scripts/utilWidget.js",
+    "scripts/itemList.js",
+    "scripts/drugItems.js",
     "scripts/newNPC.js",
-    "scripts/Setup.js",
+    "scripts/onSetup.js",
     "scripts/drugProcess.js",
-    "scripts/Process.js"
+    "scripts/timeProcess.js"
  ],
  "tweeFileList": [
     "twees/PalamWidget.twee",
@@ -29,11 +30,6 @@
     "twees/Pharmacy.twee"
  ],
  "imgFileList": [
-    "img/daiso.png",
-    "img/repair.png",
-    "img/items/bag_none.png",
-    "img/items/cart_none.png",
-    "img/items/wallet_none.png"
  ],
  "additionFile": [
     "replaceFiles/bedroomWidget.txt",

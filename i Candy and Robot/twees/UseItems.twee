@@ -1,22 +1,43 @@
-:: iCandyMod UseItems
+:: iCandyMod UseItems [scene]
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
-<<useItem $iMod.useItem[0] $iMod.useItem[1]>>
-<br><br>
-
-<<if _usedItem.customtxt isnot undefined>>
-    <<print lanSwitch(_usedItem.customtxt)>>
-<br><br>
+<<if $tvar.itemdata.customtxt isnot undefined>>
+    <<print lanSwitch(_usedItem.customtxt.onUse)>>
+    <<=useItems($tvar.useItem[0], $tvar.useItem[1], 'custom')>>
+    <br><br>
+<<else>>
+    <<=useItems($tvar.useItem[0], $tvar.useItem[1])>>
+    <br><br>
 <</if>>
 
-<<link 'back' $exitPassage>>
+<<set _link = lanSwitch('Back', '返回')>>
+<<link _link $tvar.exitPassage>>
+    <<set $tvar.exitPassage to null>>
     <<pass 5>>
 <</link>>
 
-:: iCandyMod TransferItems
+:: iCandyMod TransferItems [scene]
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
 
 
-:: iCandyMod Storage
+:: iCandyMod Storage [scene]
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
+
+
+
+:: iCandyMod Druggs Event [scene]
+<div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
+
+<<include $tvar.eventPassage>>
+
+<<if $tvar.endevent is true>>
+    <<set _link = lanSwitch('Back', '返回')>>
+    <<link 'Back' $tvar.exitPassage>>
+        <<set $tvar.exitPassage to null>>
+        <<pass 10>>
+    <</link>>
+<<else>>
+    <<set _link = lanSwitch('Next', '继续')>>
+    <<link 'Next' $passage>><<pass 1>><</link>>
+<</if>>

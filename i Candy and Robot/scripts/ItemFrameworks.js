@@ -551,14 +551,22 @@ class Items {
 	doDelta(param, value, method) {
 		if (param == 'aphrod') {
 			iUtil.getPalam('drugged', value)
+			param = 'drugged'
 		}
 		else if (param == 'drunk') {
 			iUtil.getPalam('drunk', value)
+			param = 'alcohol'
 		}
 		else {
-			if (method == 'p') wikifier(param, value, param == 'arousal' ? 'genital' : null);
-			else wikifier(param, -value);
+			if (method == 'p'){
+				wikifier(param, value, param == 'arousal' ? 'genital' : null)
+			}
+			else{
+				value = -value
+				wikifier(param, value)
+			}
 		}
+		return printPalams(param, value)
 	}
 }
 window.Items = Items
@@ -780,15 +788,17 @@ class iRecipe {
 
 }
 window.iRecipe = iRecipe
-function printPalams(palam, value, method){
+
+
+function printPalams(palam, value){
 	let gl = 'l';
 	let count = 1;
-	if (method === 'p') {
+	if (value > 0) {
 		gl = 'g';
 	}
-	if (value > 30) {
+	if (Math.abs(value) > 30) {
 		count = 3;
-	} else if (value > 20) {
+	} else if (Math.abs(value) > 20) {
 		count = 2;
 	}
 
@@ -822,17 +832,16 @@ function useMethods(tags){
 window.useMethods = useMethods
 
 //数组和对象在DOL内部传递有蜜汁错误。所以从背包里传递过来的，是具体位置信息。
-function useItems(pocket, pos){
+function useItems(pocket, pos, custom){
 	let item = V.iPockets[pocket][pos]
 	let data = Items.get(item.id)
 	let html = ''
+	let params = ''
 
 	if(data.effects.length > 0 && typeof data.onUse !== 'function'){
-		let params = ''
 		data.effects.forEach((set)=>{
 			let [param, value, method] = set;
-			data.doDelta(param, value, method);
-			params += printPalams(param, value, method);
+			params += data.doDelta(param, value, method);
 		})
 		let methods = useMethods(data.tags)
 
@@ -850,7 +859,10 @@ function useItems(pocket, pos){
 	if(item.count <= 0){
 		pocket.deleteAt(pos)
 	}
-	
+
+	if(custom){
+		return params
+	}
 	return html
 }
 

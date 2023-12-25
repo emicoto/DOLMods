@@ -163,19 +163,25 @@ const iUtil = {
 					_html += `<img src="img/items/item_none.png">`
 				}
 			_html += `</div>`
-			if(item && V.combat == 0 && !V.event){
+			if(item && V.combat == 0 && !V.event && !data.require){
 				_html += `<div id='action' class='pocketaction'>
 				<span class='itemaction'>`
 
 				if(data.tags.includes('equip')){
 					_html += `<<link "${lanSwitch('equip', '装备')}" $passage>>
-					<<run Items.get('${item.id}').onEquip('${slot}', '${i}');>>
+						<<run Items.get('${item.id}').onEquip('${slot}', '${i}');>>
 					<</link>>`
 				}
 				else{
+					 _html += `<<link "${method}" "iCandyMod UseItems">>
+					 	<<set $tvar.useItem to [${slot}, ${i}]>>
+						<<set $tvar.itemdata to Items.get("${item.id}"")>>
+						<<set $tvar.exitPassage to $passage>>
+					 <</link>>`
+					/*
 					_html += `<<link "${method}" $passage>>
 					<<set $addMsg to useItems("${slot}",${i})>>
-					<</link>>`
+					<</link>>`*/
 				}
 				
 				_html += `</span>
