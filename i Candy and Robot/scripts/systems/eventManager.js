@@ -1,4 +1,5 @@
 const eventManager = {
+    data : {},
     setFlag: function (event, prop, value) {
         if(!R.flags[event]){
             R.flags[event] = {}
@@ -14,11 +15,12 @@ const eventManager = {
     },
 
     setScene: function(event, obj){
-        R.tvar.scene[event] = {
+        V.tvar.scene = {
+            event: event,
             passage: obj.passage,
-            eventnext: obj.eventnext,
             nextcode: obj.nextcode
         }
+        V.tvar.eventnext = obj.eventnext
     },
 
     unsetEvent: function(event){
@@ -31,24 +33,31 @@ const eventManager = {
     },
 
     registEvent: function(event, ...events){
-        if(!R.events[event]){
-            R.events[event] = []
+        if(!this.data[event]){
+            this.data[event] = []
         }
-        R.events[event].push(...events)
+        this.data[event].push(...events)
     },
 
     eventProcess: function(event){
-        if(R.scene && V.passage.containsAll(R.scene, 'Scene')){
+        console.log('event:', event)
+        if(R.scene && passage().has(R.scene, 'BaseScene') == 2){
             //筛选事件
-            for(let i = 0; i < R.events[event].length; i++){
-                const data = R.events[event][i]
+            const eventList = this.data[event]
+            console.log('eventlist:',eventList)
+
+            for(let i = 0; i < eventList.length; i++){
+                const data = eventList[i]
+                console.log('eventdata:', data)
+
                 if(data.require()){
-                    data.passage = `iCandyMod ${data.type} ${event} ${data.episode}`
+                    const _event = clone(data)
+                    _event.passage = `iCandyMod ${data.type} ${event} ${data.episode}`
                     if(data.branch){
-                        data.passage += ` ${data.branch}`
+                        _event.passage += ` ${data.branch}`
                     }
-                    
-                    this.setScene(event, data)
+                    this.setScene(event, _event)
+                    break
                 }
             }
         }

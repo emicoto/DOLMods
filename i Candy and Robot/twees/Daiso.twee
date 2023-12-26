@@ -1,53 +1,34 @@
-:: iCandyMod Script DaisoShop [script]
-iEvent.registEvent('DaisoShop',
-    { 
-        episode: 'Intro',
-        type: 'Event',
-        eventnext: true,
-        nextcode: '<<set $tvar.eventnext to false>><<endevent>>',
-        require: ()=>{ return iEvent.getFlag('DaisoShop', 'intro') !== 1}
-    },
-    {
-        episode: 'General',
-        type: 'Scene'
-        eventnext: false,
-        nextcode: '',
-        require: ()=>{ return iEvent.getFlag('DaisoShop', 'intro') === 1}
-    }
-)
-
 :: iCandyMod Widget DaisoShop [widget]
 <<widget "daisoEntrance">>
     <<set _link to lanSwitch("Daiso General Shop", "大创百货商店")>>
-    <<link _link "iCandyMod Scene DaisoShop">>
+    <<daisoicon>><<link _link "iCandyMod BaseScene DaisoShop">>
         <<set R.scene to "DaisoShop">>
     <</link>>
 <</widget>>
 
-:: iCandyMod Scene DaisoShop
+:: iCandyMod BaseScene DaisoShop [scene]
 <<set $outside to 0>><<set $location to "shopping_centre">><<effects>>
 
-
 <<if iEvent.getFlag('DaisoShop', 'intro') is 1>>
-    <<lanSwitch
-        "You are in the Daiso General Shop."
+    <<=lanSwitch(
+        "You are in the Daiso General Shop.",
         "你在大创百货商店里。"
-    >>
+    )>>
     <<if Time.dayState is "night">>
-    <<lanSwitch
-        "The store is closed at this time, and there is no one inside."
+    <<=lanSwitch(
+        "The store is closed at this time, and there is no one inside.",
         "这个时间商店已经关门了，里面空荡荡，一个人都没有。"
-    >>
+    )>>
     <<elseif Time.dayState is "day">>
-    <<lanSwitch
-        "The store is open at this time, and you can see the clerk is busy, and there are many people browsing inside."
+    <<=lanSwitch(
+        "The store is open at this time, and you can see the clerk is busy, and there are many people browsing inside.",
         "现在是营业时间，你能看到店员在忙碌着，有不少人在里面逛着。"
-    >>
+    )>>
     <<else>>
-    <<lanSwitch
-        "Although it's business hours, it's not crowded and the clerk can see you at a glance."
+    <<=lanSwitch(
+        "Although it's business hours, it's not crowded and the clerk can see you at a glance.",
         "虽然是营业时间，但人不多，店员一眼就能看到你。"
-    >>
+    )>>
     <</if>>
 <</if>>
 <br>
@@ -62,7 +43,7 @@ iEvent.registEvent('DaisoShop',
     <<set _link = lanSwitch('Next', '继续')>>
     <<link 'Next' $passage>>
         <<pass 1>>
-        <<=iEvent.getScene('DaisoShop').nextcode>>
+        <<=V.tvar.scene.nextcode>>
     <</link>>
 <<else>>
     <<set _link = lanSwitch('Leave', '离开')>>
@@ -79,111 +60,110 @@ iEvent.registEvent('DaisoShop',
 iEvent.setFlag('DaisoShop', 'intro', 1)
 >>
 
-
-<<lanSwitch
-    "You step into the Daiso General Shop, and as soon as you push the door open, you're greeted with a warm welcome."
+<<=lanSwitch(
+    "You step into the Daiso General Shop, and as soon as you push the door open, you're greeted with a warm welcome.",
     "你踏入了Daiso百货商店，刚推开门就听到了热情友好的欢迎问候。"
->>
+)>>
 <br><br>
 
-<<lanSwitch
-    `"Welcome to Daiso General Shop! Is there anything I can help you with?"`
+<<=lanSwitch(
+    `"Welcome to Daiso General Shop! Is there anything I can help you with?"`,
     "“欢迎光临！有什么需要帮忙的吗？”"
->>
+)>>
 <br>
 
 <<if $exposed >= 2>>
-<<lanSwitch
+<<=lanSwitch(
     `However, as soon as the store clerk notices your naked appearance, their well-trained professional smile immediately freeze, 
-    and <<he>> say somewhat nervously, "Uh, I'm sorry, it looks like you do need some help..."`
+    and <<he>> say somewhat nervously, "Uh, I'm sorry, it looks like you do need some help..."`,
     "然而店员刚看到你裸露的模样，训练有素的职业微笑也立刻变得僵硬，略显慌张地说道：“啊，对不起，看来你确实需要一些帮助……。”"
->><br>
+)>><br>
 
-<<lanSwitch
-    `The clerk then reaches for a towel from a nearby shelf and hands it to you, suggesting that you wrap it around yourself.`
+<<=lanSwitch(
+    `The clerk then reaches for a towel from a nearby shelf and hands it to you, suggesting that you wrap it around yourself.`,
     "店员这么说着，顺手就从一旁的架子上拿了一条毛巾，让你把它裹在身上。"
->>
+)>>
 <<if $leftarm is "bound" and $rightarm is "bound">>
-    <<lanSwitch
-        "Then <<he>> also help you untie your hands."
+    <<=lanSwitch(
+        "Then <<he>> also help you untie your hands.",
         "并顺便帮你解开手上的束缚。"
-    >>
+    )>>
 <</if>>
 <br>
 
 <<towelup>>
-<<lanSwitch
-    `After you awkwardly thank <<him>>, you wrapped by towel makes you look much more presentable.<br>`
+<<=lanSwitch(
+    `After you awkwardly thank <<him>>, you wrapped by towel makes you look much more presentable.<br>`,
     "你尴尬地道了谢，然后给自己裹上毛巾后，你看起来好多了。"
->><br><br>
+)>><br><br>
 
-<<lanSwitch
+<<=lanSwitch(
     `Although the begining was quite awkward, you're relieved that the store clerk here is kind, which makes you feel a bit warmer.<br>
-    You relax and decide to take a moment to browse through the store before you leaving.`
+    You relax and decide to take a moment to browse through the store before you leaving.`,
     `虽然这个开端十分尴尬，但幸好这里的店员人很好让你感到一丝温暖。<br>
     你放下心来，在离开前你打算稍微浏览一下这个商店。`
->>
+)>>
 <br>
 <<elseif $exposed == 1>>
-<<lanSwitch
-    `However, as soon as the store clerk notices your exposed appearance, <<his>> face looks embarrassed and gives you a cardboard to cover up.`
+<<=lanSwitch(
+    `However, as soon as the store clerk notices your exposed appearance, <<his>> face looks embarrassed and gives you a cardboard to cover up.`,
     "然而当店员注意到你暴露的穿着，脸上的表情也显得尴尬起来，给了你块纸板遮挡一下。"
->>
+)>>
 <<if $leftarm is "bound" and $rightarm is "bound">>
-    <<lanSwitch
-        "Then they also help you untie your hands."
+    <<=lanSwitch(
+        "Then they also help you untie your hands.",
         "并顺便帮你解开手上的束缚。"
-    >>
+    )>>
 <</if>>
-<<lanSwitch
-    `Ater you awkwardly thank <<him>>, you cover your over-exposed areas with cardboard.<br>`
+<<=lanSwitch(
+    `Ater you awkwardly thank <<him>>, you cover your over-exposed areas with cardboard.<br>`,
     "你尴尬地道了谢，然后用纸板遮挡住自己过分暴露的地方。"
->>
+)>>
 <br>
 
-<<lanSwitch
+<<=lanSwitch(
     `It's an awkward start, but thankfully the nice people at the store make you feel a tinge of warmth. <br>
-    You relax and decide to take a moment to browse through the store.`
+    You relax and decide to take a moment to browse through the store.`,
     `虽然这个开端很尴尬，但幸好这里的店员人很好让你感到一丝温暖。<br>
     你放下心来，并决定稍微浏览一下这个商店。`
->>
+)>>
 <br><br>
 
 <<else>>
-<<lanSwitch
-    `You smile and nod at the clerk, then start to explore the shop.`
+<<=lanSwitch(
+    `You smile and nod at the clerk, then start to explore the shop.`,
     "你微笑着向店员点了点头，然后开始参观这个商店。"
->>
+)>>
 <br><br>
 <</if>>
 
-<<lanSwitch
-    `You look around and notice a wide variety of goods, from daily essentials to small decorations, all beautifully displayed.`
+<<=lanSwitch(
+    `You look around and notice a wide variety of goods, from daily essentials to small decorations, all beautifully displayed.`,
     `你环顾四周，发现这里的商品种类繁多，从生活用品到小装饰品，琳琅满目。`
->><br>
+)>><br>
 
-<<lanSwitch
-    `As you casually exploring the store, you come across some unique decorations that you've never seen before, filled with an East Asian aesthetic.`
+<<=lanSwitch(
+    `As you casually exploring the store, you come across some unique decorations that you've never seen before, filled with an East Asian aesthetic.`,
     `你随意地逛着，看到了一些有趣的装饰，都是你没见过的，充满东亚风格的小物件。`
->><br>
+)>><br>
 
-<<lanSwitch
-    `What's more, you also notice that the prices of the items here are quite affordable, with most of them being under 10 pounds, though there are a few pricier items as well. `
+<<=lanSwitch(
+    `What's more, you also notice that the prices of the items here are quite affordable, with most of them being under 10 pounds, though there are a few pricier items as well. `,
     `不仅如此，你还注意到这里的商品价格都很便宜，大多数在10英镑以下，只有少数商品较为昂贵。`
->><br>
+)>><br>
 
-<<lanSwitch
-    `This excites you, and you can't wait to make a purchase or two.`
+<<=lanSwitch(
+    `This excites you, and you can't wait to make a purchase or two.`,
     `这些都让你感到很兴奋，迫不及待地想要买一些东西。`
->>
+)>>
 <br><br>
 
 :: iCandyMod Scene DaisoShop General
 
-<<lanSwitch
-    "Here are many goods for sale, you can browse around and find something you like."
+<<=lanSwitch(
+    "Here are many goods for sale, you can browse around and find something you like.",
     "这里有很多商品出售，你随意逛着寻找合心意的物品。"
->>
+)>>
 <br><br>
 
 <<lanSwitch 'Snacks:' '零食：'>><br>

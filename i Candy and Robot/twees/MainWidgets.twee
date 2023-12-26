@@ -2,7 +2,7 @@
 <<widget "iCandyHeader">>
 <!-- 在PassageHeader里的处理  -->
 <<run console.log('check passage in header:',passage())>>
-<<run iEvent.eventProcess(R.scene)>>
+
 
 <</widget>>
 
@@ -15,6 +15,7 @@
 <<widget "iCandyReady">>
 <!-- 在PassageReady里的处理  -->
 <<run console.log('check passage in ready:',passage())>>
+<<run iEvent.eventProcess(R.scene)>>
 
 <</widget>>
 

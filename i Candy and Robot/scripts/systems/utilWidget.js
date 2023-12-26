@@ -1,7 +1,7 @@
 const iUtil = {
 	resetTvar : function(...args){
 		args.forEach((arg)=>{
-			$vars[arg] = null
+			V.tvar[arg] = null
 		})
 	},
 	countHomeStorage : function(){

@@ -277,7 +277,10 @@ function iCandyInit(){
 
 	}
 	setup.iCandyMod = "variable init"
-	Items.init()
+	if(V.passage == 'Start'){
+		Items.init()
+	}
+	
 }
 DefineMacroS('iCandyInit', iCandyInit)
 

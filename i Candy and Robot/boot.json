@@ -28,10 +28,13 @@
 
     "scripts/systems/itemManager.js",
     "scripts/systems/utilWidget.js",
+    "scripts/systems/eventManager.js",
 
     "scripts/systems/drugProcess.js",
     "scripts/systems/timeProcess.js",
-    "scripts/systems/jQueryEvent.js"
+    "scripts/systems/jQueryEvent.js",
+
+    "scripts/database/SceneRegist.js"
 
  ],
  "tweeFileList": [
