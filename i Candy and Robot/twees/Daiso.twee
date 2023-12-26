@@ -1,3 +1,6 @@
+:: iCandyMod Script DaisoShop [script]
+console.log('iCandyMod Script DaisoShop [script]')
+
 :: iCandyMod Widget DaisoShop [widget]
 <<widget "daisoEntrance">>
     <<set _link to lanSwitch("Daiso General Shop", "大创百货商店")>>
