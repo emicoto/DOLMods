@@ -10,35 +10,8 @@ function getItemInfo(count,pos){
 		pos:[pos]
 	})
 }
-window.getItemInfo = getItemInfo
 
-const pocketlist = ["body","held","bag","cart","hole"]
-window.pocketlist = pocketlist
 
-/**
- * @class
- * @param {string} itemId
- * @param {number} num
- */
-function pocketItem(itemId, num, diff){
-	let data = Items.get(itemId);
-	if(!data){
-		throw new Error('no such item:', itemId)
-	}
-
-	this.type = data.type
-	this.uid = data.id
-	this.id = data.id
-	this.name = lanSwitch(data.name)
-	this.count = num
-	this.pocket = 'body'
-
-	if(diff){
-		this.diff = diff
-		this.uid = data.id + '_' + diff
-	}
-}
-window.pocketItem = pocketItem
 
 const iManager = {
 	/**
@@ -165,104 +138,13 @@ const iManager = {
 	},
 
 	/**
-	 * 转移物品时显示的文本
-	 */
-	transferMsg  : {
-		ground(item){
-			return lanSwitch(
-				`There's no slot for the ${item.name} x ${item.count} on any containers on your body, so you have to leave it to the ground.`,
-				`你身上所有地方都没有空位放置了，你只好把${item.name} x ${item.count}扔地上。`
-			)+'<br>';
-		},
-		body(item){
-			if(iManager.getMaxSlots('body') == 2){
-				return lanSwitch(
-					`You take ${item.name} into your hands.`,
-					`你把${item.name}拿好了。`
-				)+'<br>'
-			}
-			return lanSwitch(
-				`You put ${item.name} into your clothes pocket.`,
-				`你把${item.name}放进了衣服口袋里。`
-			)+'<br>';
-		},
-		held(item){
-			const held = Items.data[iManager.getEquip('held')];
-			return lanSwitch(
-				`You put ${item.name} into ${held.name[0]}.`,
-				`你把${item.name}放进了${held.name[1]}。`
-			)+'<br>';
-		},
-		bag(item){
-			return lanSwitch(
-				`Your pockets are full, so you put ${item.name} to your bag.`,
-				`你的口袋装满了，所以你将${item.name}放进了背包。`
-			)+'<br>'
-		},
-		cart(item){
-			return lanSwitch(
-				`Your bag are full, so you put ${item.name} to your cart.`,
-				`你的背包满了，所以你将${item.name}放进了折叠推车里。`
-			)+'<br>'
-		},
-		hole(item){
-			return lanSwitch(
-				`Your hands and available container all full. With no other choice, you put ${item.name} into your asshole.`,
-				`你双手以及可用的容器都已经装满了，无可奈何下，你把${item.name}塞进你的屁眼里。`
-			)+'<br>'
-		},
-		home(item){
-			let it = item.count > 1 ? 'them' : 'it'
-			return lanSwitch(
-				`There's no slot for the ${item.name} for any containers on your body, but it doesn't bother you.You calmly take ${it} to your storage.`,
-				`你身上所有地方都没有空位放置了，不过这不影响你。你从容地把${item.name}收入了储物柜。`
-			)+'<br>';
-		},
-		farm(item){
-			let it = item.count > 1 ? 'them' : 'it'
-			return lanSwitch(
-				`There's no slot for the ${item.name} for any containers on your body, but it doesn't bother you.You calmly take ${it} to farmbarns.`,
-				`你身上所有地方都没有空位放置了，不过这不影响你。你从容地把${item.name}收入了谷仓。`
-			)+'<br>';
-		},
-		lockers(item){
-			let it = item.count > 1 ? 'them' : 'it'
-			return lanSwitch(
-				`There's no slot for the ${item.name} for any containers on your body, so you stored ${it} to your locker.`,
-				`你身上所有地方都没有空位放置了，你只好把${item.name}收进自己的储物柜里。`
-			)+'<br>';
-		},
-		bushes(item){
-			let it = item.count > 1 ? 'them' : 'it'
-			return lanSwitch(
-				`There's no slot for the ${item.name}x${item.count} for any containers on your body, so you hide ${it} to the bushes.`,
-				`你身上所有地方都没有空位放置了，你只好把${item.name}x${item.count}藏到一处树丛里。`
-			)+'<br>';
-		},
-		trashbin(item){
-			let it = item.count > 1 ? 'them' : 'it'
-			return lanSwitch(
-				`There's no slot for the ${item.name}x${item.count} for any containers on your body, so you hide ${it} to the trashbin.`,
-				`你身上所有地方都没有空位放置了，你只好把${item.name}x${item.count}藏到垃圾桶里。`
-			)+'<br>';
-		},
-		hideout(item){
-			let it = item.count > 1 ? 'them' : 'it'
-			return lanSwitch(
-				`There's no slot for the ${item.name}x${item.count} for any containers on your body, so you take ${it} to your hideout.`,
-				`你身上所有地方都没有空位放置了，你只好把${item.name}x${item.count}放回你的藏身处。`
-			)+'<br>';
-		}
-	},
-
-	/**
 	 * 转移物品时显示用文本。 重复的物品会预先合并好
 	 * @param {Array<{pos:string, item:pocketItem}> transferDetail
 	 * @returns {string}
 	 */
 	transferMessage : function(transferDetail){
 		return transferDetail.reduce((res, {pos, item})=>{
-			const message = this.transferMsg[pos]
+			const message = transferMsg[pos]
 
 			if(typeof message !== "function" ) return res;
 			res += message(item);
@@ -282,7 +164,6 @@ const iManager = {
 		}
 
 		if(lower.name !== 'naked'){
-
 			count += lower.name == upper.name ? 1 :2
 		}
 
@@ -345,7 +226,7 @@ const iManager = {
 	 * @returns { {total: number, stacks: Array<pocketItem>, path:Array<{ pos:string, index: number }>} }
 	 */
 	getStackFromPockets : function(itemId){
-		return pocketlist.reduce((result, key)=>{
+		return pocketsList.reduce((result, key)=>{
 
 			const pocket = this.getPocket(key)
 			//防意外
@@ -370,7 +251,7 @@ const iManager = {
 	* @return {{ slots: Array<{ pos:string, count:number }>, total: number }}
 	*/
 	getEmptySlots(){
-		return pocketlist.reduce((result, key)=>{
+		return pocketsList.reduce((result, key)=>{
 			let pocket = this.getPocket(key)
 			let max = this.getMaxSlots(key)
 			if(pocket.length < max ){
@@ -526,7 +407,7 @@ const iManager = {
 			//如果这里已经处理完了，根据最后处理的位置抛个提示
 			if(leftItems.items.length == 0 ){
 				let { last } = leftItems
-				return this.transferMsg[last.pocket](last)
+				return transferMsg[last.pocket](last)
 			}
 		}
 
@@ -547,27 +428,27 @@ const iManager = {
 		if(V.location == 'home'){
 			//在家就转移到家里仓库。
 			this.storeItems('home', item.id, item.count, item.diff)
-			return this.transferMsg.home(item)
+			return transferMsg.home(item)
 		}
 		else if(V.location == 'farm'){
 			//在农场里就转移到农场仓库
 			this.storeItems('farmbarns', item.id, item.count, item.diff)
-			return this.transferMsg.farm(item)
+			return transferMsg.farm(item)
 		}
 		//如果所在地有储物柜
 		else if(this.hasLockers() && this.canStoreLockers()){
 			this.storeItems('lockers', item.id, item.count, item.diff)
-			return this.transferMsg.lockers(item)
+			return transferMsg.lockers(item)
 		}
 		//如果所在地有藏物点
 		else if(this.hidePoint[getLocation()]){
 			let [place, storage] = this.hidePoint[getLocation()]
 			this.storeItems(storage, item.id, item.count, item.diff)
-			return this.transferMsg[place](item)
+			return transferMsg[place](item)
 		}
 		//其他情况就无了。
 		else{
-			return this.transferMsg.ground(item)
+			return transferMsg.ground(item)
 		}
 	},
 
@@ -635,7 +516,7 @@ const iManager = {
 		}
 
 		//先做爆衣检测
-		pocketlist.forEach((pos)=>{    
+		pocketsList.forEach((pos)=>{    
 			this.checkBroken(pos)
 		})
 
@@ -645,7 +526,7 @@ const iManager = {
 		//更新背包堆叠情况。如果爆了就清除多的物品并扔出提示文本
 		let leftItems = []
 
-		pocketlist.forEach((pos)=>{
+		pocketsList.forEach((pos)=>{
 			console.log('pocket:',pos,  V.iPockets[pos])
 			let res = this.sortPocket(V.iPockets[pos], this.getMaxSlots(pos))
 			console.log('sort result:',res)
@@ -688,65 +569,13 @@ const iManager = {
 			let html = ''
 
 			leftItems.forEach((item)=>{
-				html += this.sortOutMsg(item)
+				html += sortOutMsg(item)
 				html += this.dropOrTransferItems(item)
 			})
 
 			return html
 		}
 
-	},
-
-	sortOutMsg(item){
-		let html = ''
-		if(item.pocket == 'body' && this.getEvent('body') == 1){
-			html += lanSwitch(
-				'The items in your clothes pockets fall to the ground as your clothes are torn apart.', 
-				'装在衣服口袋里的物品，伴随着衣服的破碎掉落到地上了。'
-			)
-			this.setEvent('body', 0)
-		}
-
-		if(item.pocket == 'body' && this.getEvent('body') == 2){
-			html += lanSwitch(
-				'You change your clothes, and the extra items are sorted out.', 
-				'你更换了衣服，多余的物品被你整理出来。'
-			)
-			this.setEvent('body', 0)
-		}
-
-		if(this.getEvent('bag') == 1 && item.pocket == 'bag'){
-			html += lanSwitch(
-				'You change your bag, and the extra items are sorted out.', 
-				'你更换了个更小的背包，多余的物品被你整理出来。'
-			)
-			this.setEvent('bag', 0)
-		}
-
-		if(this.getEvent('held') == 1 && item.pocket == 'held'){
-			html += lanSwitch(
-				'You change your handheld bag, and the extra items are sorted out.', 
-				'你更换了个更小的手提袋后，多余的物品被你整理出来。'
-			) + '<br>'
-			this.setEvent('held', 0)
-		}
-
-		if(this.getEvent('cart') == 1 && item.pocket == 'cart'){
-			html += lanSwitch(
-				'You change your cart, and the extra items are sorted out.', 
-				'你更换了个更小的推车，多余的物品被你整理出来。'
-			)
-			this.setEvent('cart', 0)
-		}
-
-		if(this.getEvent('hole') == 1 && item.pocket == 'hole'){
-			html += lanSwitch(
-				'Your promiscuity is not enough to keep the items in your asshole. The items are expelled from your body.', 
-				'你的淫荡度不足以将物品继续存放在肠道里。因为受到刺激，存放在肠内的物品被排放了出来。'
-			)
-			this.setEvent('hole', 0)
-		}
-		return html + '<br>'
 	},
 
 	onEquip(pos, pocket, slot){
@@ -837,8 +666,6 @@ const iManager = {
 
 }
 
-window.iM = iManager
-
 /**
  * 
  * @returns {string}
@@ -868,7 +695,6 @@ function getLocation(){
 	return V.location
 }
 
-window.getLocation = getLocation
 
 const iMoney = {
 	/**
@@ -923,7 +749,7 @@ const iMoney = {
 		}
 	}
 }
-window.iMoney = iMoney
+
 
 //被强奸后随机丢失物品，一定概率丢失背包钱包手推车
 function lostItemsAfterRape(){
@@ -987,3 +813,19 @@ function lostItemsAfterRape(){
 function harvestHandle(){
 
 }
+
+
+Object.defineProperties(window, {
+	getItemInfo : {
+		value : getItemInfo
+	},
+	iM : {
+		value : iManager
+	},
+	iMoney : {
+		value : iMoney
+	},
+	getLocation : {
+		value : getLocation
+	}
+})	

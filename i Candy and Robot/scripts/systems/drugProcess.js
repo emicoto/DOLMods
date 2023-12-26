@@ -17,35 +17,8 @@ function getDrugsConfig(tags, type){
 	}
 }
 
+
 const DrugsProcess = {
-	generalWithdraw(drugItem){
-		wikifier('stress', 30)
-		const html = {
-			alcohol: lanSwitch(
-						`You haven't drunk for a while, you feel irritable and start to have withdrawal symptoms.`,
-						`有一段时间没喝酒了，你感到烦躁难受。`,
-			),
-			aphrod: lanSwitch(
-						`You haven't taken aphrodisiac for a while, you're feeling lost and empty.`,
-						`你有一段时间没吸收催情类物质了，你感到空虚寂寞以及难受。`,
-			),
-			nicotine: lanSwitch(
-						`You haven't smoked for a while, your mouth feels empty and you feel irritable.`,
-						`你有一段时间没吸烟了，你的嘴感觉落空空的，心情有些烦躁。`,
-			),
-		}
-	
-		if(html[drugItem]){
-			return html[drugItem] + '<<gggstress>>'
-		}
-		else{
-			let html = lanSwitch(
-				`You haven't taken ${drugItem[0]} for a while, you feel irritable and start to have withdrawal symptoms.`,
-				`你有一段时间没吃${drugItem[1]}了，你感到烦躁，并开始出现戒断症状。`,
-			)
-			return html + '<<gggstress>>'
-		}
-	},
 	minuteProcess: function(sec){
 		const drugStats = R.drugStates.drugs
 		const drugFlags = R.drugFlags.drugs
@@ -68,6 +41,9 @@ const DrugsProcess = {
 				if(typeof drugItem.onHigh == 'function'){
 					V.addMsg += drugItem.onHigh(sec/60) + '<br>'
 				}
+				else if(drugMsg[drug].onHigh){
+					V.addMsg += lanSwitch(drugMsg[drug].onHigh) + '<br>'
+				}
 			}
 			else{
 				//如果药效过去，取消flag并检测是否有清醒效果
@@ -80,6 +56,9 @@ const DrugsProcess = {
 					//如果药物有清醒效果，运行清醒效果并获得通知
 					if(typeof drugItem.onWake == 'function'){
 						V.addMsg += drugItem.onWake() + '<br>'
+					}
+					else if(drugMsg[drug].onWake){
+						V.addMsg += lanSwitch(drugMsg[drug].onWake) + '<br>'
 					}
 				}
 			}
@@ -113,10 +92,13 @@ const DrugsProcess = {
 				if(typeof data.onWithdraw == 'function'){
 					V.addMsg += data.onWithdraw() + '<br>'
 				}
+				else if(drugMsg[item].onWithdraw){
+					V.addMsg += lanSwitch(drugMsg[item].onWithdraw) + '<br>'
+				}
 				//没有则运行默认的戒断效果
 				else{
 					const name = type == 'general' ? item : data.name
-					V.addMsg += this.generalWithdraw(name) + '<br>'
+					V.addMsg += generalWithdraw(name) + '<br>'
 				}
 				//设置戒断状态
 				stats.withdraw = 1
@@ -194,6 +176,9 @@ const DrugsProcess = {
 			if(flag.daily == 1){
 				if(typeof data.onDay == 'function'){
 					V.addMsg += data.onDay() + '<br>'
+				}
+				else if(drugMsg[item].onDay){
+					V.addMsg += lanSwitch(drugMsg[item].onDay) + '<br>'
 				}
 				else{
 					

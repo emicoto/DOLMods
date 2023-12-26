@@ -1,8 +1,9 @@
 :: iCandyMod UseItems [scene]
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
-<<if $tvar.itemdata.customtxt isnot undefined>>
-    <<print lanSwitch(_usedItem.customtxt.onUse)>>
+<<itemIcon $tvar.img>>  
+<<if $tvar.itemdata.msg isnot undefined>>
+    <<print lanSwitch($tvar.itemdata.msg)>>
     <<=useItems($tvar.useItem[0], $tvar.useItem[1], 'custom')>>
     <br><br>
 <<else>>

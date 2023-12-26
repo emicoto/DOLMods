@@ -10,9 +10,29 @@ NamedNPC.add(
     .isImportant(),
 
     new NamedNPC(
-        'Qing', 
+        'Hadley', 
         ['mechanist', '机械师'], 
+        ['Hadley', '哈德利'], 
+        'human'
+    )
+    .setValue('insecurity', 'skill')
+    .setColour('black', 'black', 'black')
+    .Init('m', 'adult'),
+
+    new NamedNPC(
+        'Qing', 
+        ['assistant', '助手'], 
         ['Qing', '晴'], 
+        'human'
+    )
+    .setValue('insecurity', 'skill')
+    .setColour('ylight', 'grey', 'grey')
+    .Init('m', 'adult'),
+
+    new NamedNPC(
+        'Lam', 
+        ['professor', '教授'], 
+        ['Lam', '林'], 
         'human'
     )
     .setValue('insecurity', 'skill')

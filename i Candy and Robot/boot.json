@@ -10,15 +10,29 @@
   ],
  "scriptFileList_preload": [],
  "scriptFileList": [
-    "scripts/itemFrameworks.js",
-    "scripts/itemManager.js",
-    "scripts/utilWidget.js",
-    "scripts/itemList.js",
-    "scripts/drugItems.js",
-    "scripts/newNPC.js",
-    "scripts/onSetup.js",
-    "scripts/drugProcess.js",
-    "scripts/timeProcess.js"
+    "scripts/0_framework/0_modversion.js",
+    "scripts/0_framework/1_setupdata.js",
+    "scripts/0_framework/2_itemFrameworks.js",
+
+    "scripts/database/systemMsg.js",
+    "scripts/database/ItemMsg.js",
+    "scripts/database/drugMsg.js",
+
+    "scripts/database/itemList.js",
+    "scripts/database/drugItems.js",
+
+    "scripts/database/npcSetup.js",
+    "scripts/database/modVariables.js",
+
+    "scripts/mainModule.js",
+
+    "scripts/systems/itemManager.js",
+    "scripts/systems/utilWidget.js",
+
+    "scripts/systems/drugProcess.js",
+    "scripts/systems/timeProcess.js",
+    "scripts/systems/jQueryEvent.js"
+
  ],
  "tweeFileList": [
     "twees/PalamWidget.twee",
@@ -27,7 +41,8 @@
     "twees/ModOption.twee",
     "twees/Pocket.twee",
     "twees/Robot.twee",
-    "twees/Pharmacy.twee"
+    "twees/Pharmacy.twee",
+    "twees/UseItems.twee"
  ],
  "imgFileList": [
  ],

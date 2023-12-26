@@ -1,6 +1,7 @@
 :: iCandyMod [widget]
 <<widget "iCandyHeader">>
 <!-- 在PassageHeader里的处理  -->
+<<run console.log('check passage in header:',passage())>>
 
 
 <</widget>>
@@ -13,7 +14,7 @@
 
 <<widget "iCandyReady">>
 <!-- 在PassageReady里的处理  -->
-
+<<run console.log('check passage in ready:',passage())>>
 
 <</widget>>
 

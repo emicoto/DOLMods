@@ -16,7 +16,7 @@ const iUtil = {
 	},
 
 	getPalam : function(key, value){
-		let list = ['trauma', 'pain', 'tiredness', 'drunk', 'hallucinogen','control','corruption','stress', 'drugged']
+		let list = ['trauma', 'pain', 'tiredness', 'drunk', 'hallucinogen','control','corruption','stress', 'drugged', 'awareness']
 		if(!V.statFreeze && list.includes(key))
 			V[key] += value
 	},
@@ -75,7 +75,7 @@ const iUtil = {
 				if(item !== 'none'){
 					const data = Items.get(item.id)
 					let img = data.img
-					let onclick = ` onClick="Items.get('${item.id}').onUnEquip(); SugarCube.Engine.play(V.passage)"`
+					let onclick = ` onClick="V.addMsg += Items.get('${item.id}').onUnEquip(); SugarCube.Engine.play(V.passage)"`
 	
 					if(!iM.checkItemOnGet(item.id, 1)){
 						onclick = ``
@@ -85,14 +85,14 @@ const iUtil = {
 						img = data.diff[item.diff].img
 					}
 					html += `<mouse class="tooltip-tiny"${onclick}>\n`
-					html += `	<img src="img/${img}">\n`
+					html += `	<img class='icon' src="img/${img}">\n`
 					html += `	<span>${lanSwitch(data.info)}\n`
 					html += `	<span class="yellow">${lanSwitch('unequip', '取消装备')}</span>`
 					html += '	</span>'
 					html += '</mouse>'
 				}
 				else{
-					html += `<img src="img/items/${slot}_none.png">`
+					html += `<img class='icon' src="img/items/${slot}_none.png">`
 				}
 	
 				html += `</div>`
@@ -150,17 +150,17 @@ const iUtil = {
 				itemname += '[' + lanSwitch(data.diff[item.diff].displayname)+']'
 			}
 
-			_html += `<div id='itemname' class='itemname'>${itemname}</div>`
-			_html += `<div id='itemcount' class='itemcount'>${itemcount}</div>`
+			_html += `<div class='itemname'>${itemname}</div>`
+			_html += `<div class='itemcount'>${itemcount}</div>`
 			_html += `<div id='${item ? item.uid : 'noitem'}' class='itemicon'>`
 				if(item){
 					_html += `<mouse class="tooltip-tiny">`
-					_html += `	<img src="img/${img}">`
+					_html += `	<img class='icon' src="img/${img}">`
 					_html += data ? `	<span>${lanSwitch(data.info)}</span>` : ''
 					_html += `</mouse>`
 				}
 				else{
-					_html += `<img src="img/items/item_none.png">`
+					_html += `<img class='icon' src="img/items/item_none.png">`
 				}
 			_html += `</div>`
 			if(item && V.combat == 0 && !V.event && !data.require){
@@ -169,13 +169,15 @@ const iUtil = {
 
 				if(data.tags.includes('equip')){
 					_html += `<<link "${lanSwitch('equip', '装备')}" $passage>>
-						<<run Items.get('${item.id}').onEquip('${slot}', '${i}');>>
+						<<set $addMsg += "<<itemIcon '${img}'>> ">>
+						<<set $addMsg += Items.get('${item.id}').onEquip('${slot}', '${i}');>>
 					<</link>>`
 				}
 				else{
 					 _html += `<<link "${method}" "iCandyMod UseItems">>
-					 	<<set $tvar.useItem to [${slot}, ${i}]>>
-						<<set $tvar.itemdata to Items.get("${item.id}"")>>
+					 	<<set $tvar.useItem to ["${slot}", ${i}]>>
+						<<set $tvar.itemdata to Items.get("${item.id}")>>
+						<<set $tvar.img to "${img}">>
 						<<set $tvar.exitPassage to $passage>>
 					 <</link>>`
 					/*
@@ -187,20 +189,21 @@ const iUtil = {
 				_html += `</span>
 				<span class='itemaction'>
 					<<link "${lanSwitch('move', '转移')}">>
-						<<set $transferItem to [${slot}, ${i}]>>
-						<<set $exitPassage to "${V.passage}">>
+						<<set $tvar.transferItem to ["${slot}", ${i}]>>
+						<<set $tvar.exitPassage to $passage>>
 					<</link>>
 				</span>
 				</div>`
 			}
 			_html += `</div>`
 
+			console.log(_html)
+
 			html += _html
 		}
 		return html
 	}
 }
-window.iUtil = iUtil
 
 function printTemplet(string, ...args){
     for(let i = 0; i < args.length; i++){
@@ -208,12 +211,13 @@ function printTemplet(string, ...args){
     }
     return string
 }
-window.printTemplet = printTemplet
+
 
 function wetAnusLub(arg){
 	V.player.bodyliquid.anus.goo += arg
 }
 DefineMacroS('anusgoo', wetAnusLub)
+
 
 function printMedicineLink(itemId, diff){
 	if(!itemId) return ;
@@ -251,3 +255,9 @@ function printMedicineLink(itemId, diff){
 
 DefineMacroS('iMedicineLink', printMedicineLink)
 
+
+Object.defineProperties(window, {
+	iUtil : { value : iUtil },
+	printTemplet : { value : printTemplet },
+	
+})

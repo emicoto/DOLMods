@@ -1,4 +1,4 @@
-const Foods = [
+const iFoods = [
 {
 	tags: ["candy", "food"],
 
@@ -20,16 +20,7 @@ const Foods = [
 		["hunger", 10],
 	],
 
-	customtxt:{
-		onUse: [
-			`You unwrap the candy, and the crystal-clear sugar ball reflects an enticing light.<br>
-			You pop the candy into your mouth, delicately lick its surface with your tongue. <br>
-			The sweet and sour taste immediately spreads on the tip of your tongue, bringing an inexplicable sense of comfort to your heart.`,
-			`你剥开糖纸，晶莹剔透的糖块反射着诱人的光芒。<br>
-			你把糖果塞进口里，用舌头小心地舔舐着它的表面，酸酸甜甜的味道马上在你的舌尖上晕开，一阵莫名的舒心涌上你的心头。`
-		]
-	}
-
+	msg: itemMsg.fruitscandy,
 	//stacksprites:[25, 50, 100]百分比值，当前堆叠数/堆叠上限 >= 数值时，在uid后加_num.png
 },
 
@@ -54,15 +45,8 @@ const Foods = [
 		["hunger", 10],
 	],
 
-	customtxt:{
-		onUse: [
-			`The rich and silky texture of chocolate spreads in your mouth. <br>
-			With each bite, your teeth feel like they are being gently embraced by smooth silk. <br>
-			A warmth, akin to sunlight, envelops you, and you experience a moment of relaxation throughout your body.`,
-			`巧克力那醇厚丝滑的口感在你口中扩散开来，每咬下一口，牙齿都像在被柔顺的丝绸温柔地拥抱着。<br>
-			阳光般的温暖感笼罩了你，你感到身体一阵放松。`
-		]
-	}
+	msg: itemMsg.chocolate,
+	
 },
 
 {
@@ -79,19 +63,21 @@ const Foods = [
 
 	price: 500,
 	num: 1,
-	size: "big",
+	size: 3,
 
 	effects: [
 		["tiredness", 64]
 	],
+	
+	msg: itemMsg.ramune,
 },
 
 {
 	tags: ["snack", "food"],
 
 	id: "potachips",
-	name: ["Bag of Potato Chips", "薯片"],
-	plural: "bag of Potato Chips",
+	name: ["Potato Chip", "薯片"],
+	plural: "Potato Chips",
 
 	info: [
 	"Pack of crunchy chips for some hungry",
@@ -107,16 +93,7 @@ const Foods = [
 		["hunger", 100],
 	],
 
-	customtxt:{
-		onUse: [
-			`You tear up the packaged and take a chip, put it in your mouth.<br>
-			Each chip is crispy and delicious, emitting a delightful and unforgettable sweetness, along with a sense of happiness. <br>
-			You quickly devour all the chips, feeling a bit disappointed that the package was too big for the relatively few chips it contained.`,
-			`你撕开包装，拿起薯片送进嘴里。<br>
-			每一片都酥脆可口，散发出令人回味无穷的香甜，以及幸福感。<br>
-			你很快把这些薯片消灭一空，有些遗憾包装太大而薯片太少。`
-		]
-	}
+	msg: itemMsg.potachips,
 },
 
 {
@@ -141,17 +118,7 @@ const Foods = [
 		["stress", 1],
 	],
 
-	customtxt:{
-		onUse:[
-			`You peel up the candy wrapper, revealing the colorful swirls of the lollipop.<br>
-			You lick it slowly, savoring each moment. Eating this kind of candy requires patience, as the sweetness lingers with you for quite a while, even after it's gone.<br><br>
-			Suddenly, memories of childhood flash back to you. <br>
-			It's a distant recollection, almost hazy, but the image of enjoying this type of candy from your younger days brings a smile to your face.`,
-			`你掀开糖纸，露出下面五彩斑斓的波板糖。<br>
-			你一点一点舔着它，吃这种糖需要耐心，糖果的甜味将会陪伴着你好一会儿，即使吃完了也不会马上消散。<br>
-			你突然想起小时候吃这种糖的情景，那已经是十分遥远的记忆了，模糊至极，但你还是莫名地笑了一下。`
-		]
-	}
+	msg : itemMsg.lolipop,
 },
 
 {
@@ -199,16 +166,7 @@ const Foods = [
 		["hunger", 12],
 	],
 
-	customtxt:{
-		onUse:[
-			`You pick up a candyfloss, it's light as a feather, as if it could float away if you let go.<br>
-			You delicately lick it, and the sensation is peculiar. It feels as if there's nothing there, yet the subtle and comforting sweetness is undeniably real.<br>
-			As the thread-like syrup dissolves in your mouth, your mind also relaxes significantly.`,
-			`你拿起一朵棉花糖，它轻飘飘的，像是一松手就会升上天去。<br>
-			你小心地舔舐着它，口感非常奇妙，仿佛空无一物，但细腻舒心的甜味却又真实无比。<br>
-			随着丝线般的糖浆在口中化开，你的精神也放松了许多。`
-		]
-	}
+	msg : itemMsg.candyfloss,
 },
 
 {
@@ -248,23 +206,13 @@ const Foods = [
 		["stress", 2]
 	],
 
-	customtxt:{
-		onUse:[
-			`With a gentle lift, a "pop" echoes as the pull tab opens.<br>
-			The black liquid eagerly surges forth, much like your current desire to drink off it.<br><br>
-			You take a sip, feeling the cola dance in your mouth. Not lingering too long on the sensation, you let it slide down your throat. <br>
-			The refreshing coldness spreads from your stomach throughout your body, invigorating your spirit.`,
-			`你轻轻一提，噗的一声，拉环应声而开。<br>
-			黑色的液体急切地涌动着，就像你现在想要喝掉它的心情。<br><br>
-			你啜饮了一口，感受可乐在你的口腔里跳动。没有让这种感觉停留太久，你让它滑进胃里，冰凉的舒心感从胃部传到全身，你的精神为之一振。<br>`
-		]
-	}
+	msg: itemMsg.cola,
 },
 ];
 
-Items.addItems(Foods, 'foods')
+Items.addItems(iFoods, 'foods')
 
-const Special = [
+const iSpecial = [
 {
 	type: "consumable",
 	tags: ["liquid", "lubricant"],
@@ -325,8 +273,7 @@ const Special = [
 
 ]
 
-
-Items.addItems(Special)
+Items.addItems(iSpecial)
 
 function onEquip(pocket, slot){
 	const item = V.iPockets[pocket][slot]
@@ -349,8 +296,11 @@ function onEquip(pocket, slot){
 			iCandy.setEquipEf(diff.sp)
 		}
 	}
-	
+
+	let html = equipText[pos].equip(this.name)
 	iM.onEquip(pos, pocket, slot)
+
+	return html
 }
 
 function onUnEquip(){
@@ -374,12 +324,13 @@ function onUnEquip(){
 			iCandy.unsetEquipEf(diff.sp)
 		}
 	}
-
+	let html = equipText[pos].unequip(this.name)
 	iM.onUnEquip(pos)
+	return html
 }
 
 
-const Containers = [
+const iContainers = [
 	{
 		tags: ["equip","held"],
   
@@ -671,12 +622,11 @@ const Containers = [
 		onUnEquip
 	}
 ];
-  
-  
-Items.addItems(Containers, "container")
+ 
+Items.addItems(iContainers, "container")
 
 //普通成瘾品，烟酒类
-const Addictive = [
+const iAddictive = [
 {
 	type:"consumable",
 	tags: ["smoke", "addiction","nicotine"],	
@@ -767,4 +717,4 @@ const Addictive = [
 },
 ];
 
-Items.addItems(Addictive)
+Items.addItems(iAddictive)

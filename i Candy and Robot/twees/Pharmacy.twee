@@ -66,7 +66,7 @@
 	<<lanSwitch "You don't have any slot for hold it." "你身上没有空位了。">>
 	</span><br>
 <<elseif $money gte $pharmacyItem.price>>
-    <<set _linkname to lanSwitch(`Spend ${T.printmoney} to buy ${V.pharmacyItem.name[0]}`, `花费${T.printmoney}购买${V.pharmacyItem.name[1]}`)>>
+    <<set _linkname to lanSwitch(`Spend ${T.printmoney} to buy ${V.pharmacyItem.name[0].toLocaleLowerCase()}`, `花费${T.printmoney}购买${V.pharmacyItem.name[1]}`)>>
 	<<link _linkname 'Pharmacy'>>
 		<<run
 			console.log('buy',V.pharmacyItem.id,' x ', V.pharmacyItem.num)

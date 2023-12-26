@@ -41,25 +41,6 @@ Time.pass = function(sec){
 	return ""
 }
 
-function getDrugsConfig(tags, type){
-	const { drugConfig } = setup
-	if(tags.includes('immediate')){
-		return drugConfig.immediate[type]
-	}
-	else if(tags.includes('super')){
-		return drugConfig.super[type]
-	}
-	else if(tags.includes('strong')){
-		return drugConfig.strong[type]
-	}
-	else if(tags.includes('risky')){
-		return drugConfig.risky[type]
-	}
-	else{
-		return drugConfig.normal[type]
-	}
-}
-
 function iTimeHandle(passedSec){
 	const { min, day, hour, month, year, weekday } = TimeHandle.passTime()
 
@@ -112,6 +93,13 @@ function hourProcess(sec, hour){
 	// 检测普通成瘾品的戒断状态
 	//-------------------------------------------------------------
 	iCandy.DrugsProcess.hourProcess('general')
+
+	//-------------------------------------------------------------
+	// 其他每小时处理
+	//-------------------------------------------------------------
+	
+	//获得饥饿值
+	V.hunger = Math.max(V.hungermax, V.hunger + 100 * hour)
 }
 
 

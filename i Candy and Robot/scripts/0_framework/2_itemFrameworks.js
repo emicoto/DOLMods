@@ -1,263 +1,9 @@
-const plants = {
-	"apple": [
-		"Apple",
-		"苹果",
-		'Apples'
-	],
-	"baby_bottle_of_breast_milk": [
-		"Baby bottle of breast milk",
-		"小瓶装母乳",
-		"Baby bottles of breast milk"
-	],
-	"banana": [
-		"Banana",
-		"香蕉",
-		'Bananas'
-	],
-	"bird_egg": [
-		"Bird Egg",
-		"鸟蛋",
-		'Bird Eggs'
-	],
-	"blackberry": [
-		"Blackberry",
-		"黑莓",
-		'Blackberries'
-	],
-	"blood_lemon": [
-		"Blood Lemon",
-		"血柠",
-		'Blood Lemons'
-	],
-	"bottle_of_breast_milk": [
-		"Bottle of Breast Milk",
-		"瓶装母乳",
-		'Bottles of Breast Milk'
-	],
-	"bottle_of_milk": [
-		"Bottle of Milk",
-		"瓶装牛奶",
-		'Bottles of Milk'
-	],
-	"bottle_of_semen": [
-		"Bottle of Semen",
-		"瓶装精液",
-		'Bottles of Semen'
-	],
-	"broccoli": [
-		"Broccoli",
-		"西兰花",
-		'Braccolis'
-	],
-	"cabbage": [
-		"Cabbage",
-		"卷心菜",
-		'Cabbages'
-	],
-	"carnation": [
-		"Carnation",
-		"康乃馨",
-		'Carnations'
-	],
-	"chicken_egg": [
-		"Chicken Egg",
-		"鸡蛋",
-		'Chicken Eggs',
-	],
-	"daisy": [
-		"Daisy",
-		"雏菊",
-		'Daisies'
-	],
-	"garlic_bulb": [
-		"Garlic Bulb",
-		"大蒜",
-		'Garlic Bulbs'
-	],
-	"ghostshroom": [
-		"Ghostshroom",
-		"幽灵菇",
-		'Ghostshrooms'
-	],
-	"lemon": [
-		"Lemon",
-		"柠檬",
-		'Lemons'
-	],
-	"lily": [
-		"Lily",
-		"百合",
-		'Lilies'
-	],
-	"lotus": [
-		"Lotus",
-		"睡莲",
-		'Lotuses'
-	],
-	"mushroom": [
-		"Mushroom",
-		"普通蘑菇",
-		'Mushrooms'
-	],
-	"onion": [
-		"Onion",
-		"洋葱",
-		'Onions'
-	],
-	"orange": [
-		"Orange",
-		"橘子",
-		'Oranges'
-	],
-	"orchid": [
-		"Orchid",
-		"兰花",
-		'Orchids'
-	],
-	"peach": [
-		"Peach",
-		"桃子",
-		'Peaches'
-	],
-	"pear": [
-		"Pear",
-		"梨",
-		'Pears'
-	],
-	"plum": [
-		"Plum",
-		"李子",
-		'Plums'
-	],
-	"plumeria": [
-		"Plumeria",
-		"鸡蛋花",
-		'Plumerias'
-	],
-	"poppy": [
-		"Poppy",
-		"罂粟",
-		'Poppies'
-	],
-	"potato": [
-		"Potato",
-		"马铃薯",
-		'Potatoes'
-	],
-	"red_rose": [
-		"Red Rose",
-		"红玫瑰",
-		'Red Roses'
-	],
-	"strange_flower": [
-		"Strange Flower",
-		"诡异的花",
-		'Strange Flowers'
-	],
-	"strawberry": [
-		"Strawberry",
-		"草莓",
-		'Strawberries'
-	],
-	"truffle": [
-		"Truffle",
-		"松露",
-		'Truffles'
-	],
-	"tulip": [
-		"Tulip",
-		"郁金香",
-		'Tulips'
-	],
-	"turnip": [
-		"Turnip",
-		"萝卜",
-		'Turnips'
-	],
-	"white_rose": [
-		"White Rose",
-		"白玫瑰",
-		'White Roses'
-	],
-	"wild_carrot": [
-		"Wild Carrot",
-		"胡萝卜",
-		'Wild Carrots'
-	],
-	"wild_honeycomb": [
-		"Wild Honeycomb",
-		"野蜂巢",
-		'Wild honeycombs'
-	],
-	"wolfshroom": [
-		"Wolfshroom",
-		"狼菇",
-		'Wolfshrooms'
-	]
-}
-
-function setupVanillaItems() {
-	for (let i in setup.plants) {
-		let plant = setup.plants[i]
-
-		let item = Items.add('tending', plant.name, plants[plant.name], plant.plant_cost)
-		let hunger = {
-			fruit: 20,
-			vegetable: 30,
-			produce: 15
-		}
-
-		let size = {
-			fruit: 'medium',
-			flower: 'tiny',
-			vegetable: 'small',
-			shroom: 'small',
-		}
-
-		if (size[item.type]) {
-			item.set('size', size[item.type])
-		}
-		else if (item.special.includes('small') || item.name.includes('egg')) {
-			item.set('size', 'small')
-		}
-
-		if (item.type == 'fruit' || item.type == 'vegetable') {
-			item.Tags('dol', 'food')
-				.Effects(['hunger', hunger[item.type]])
-		}
-		else if (item.name.includes('bottle') || item.name.includes('Bottle')) {
-			item.Tags('dol', 'drink', 'production')
-				.Effects(['hunger', 10])
-		}
-		else {
-			item.Tags('dol', 'production')
-		}
-		item.set('img', `misc/icon/tending/${plant.icon}`)
-	}
-
-	const spray = {
-		type: "consumable",
-		id: "spray",
-		name: ["Pepper Spray", "防狼喷雾"],
-		plural:"Pepper Sprays",
-		num: 1,
-		price: 1000,
-		size: "big",
-		tags: ["spray", "dol"],
-		usage: 1,
-		info: [
-			"A spray made from chili pepper, is incredible effective",
-			"用辣椒水制成的防狼喷雾，效果拔群。",
-		],
-	}
-
-	Items.set(spray)
-}
 
 class Items {
 	static data = {};
 	/**
 	 * 添加完整的物品OBJ
+	 * add a complete item object
 	 * @param {Items} obj 
 	 * @returns {Items}
 	 */
@@ -276,6 +22,7 @@ class Items {
 
 	/**
 	 * 添加物品
+	 * add an item
 	 * @param {string} type 
 	 * @param {string} id 
 	 * @param {[string, string]} name 
@@ -294,6 +41,7 @@ class Items {
 
 	/**
 	 * 批量添加物品
+	 * batch add items
 	 * @param {Array<Items>} items 
 	 */
 	static addItems(items, defaultType) {
@@ -311,6 +59,7 @@ class Items {
 
 	/**
 	 * 获取物品或物品内的某个值，不存在的话会返回undefined
+	 * get an item or a value of an item, return undefined if not exist
 	 * @param {string} id 
 	 * @param {string} prop 
 	 * @returns {Items | void}
@@ -331,6 +80,7 @@ class Items {
 	}
 	/**
 	 * 根据类别筛选物品
+	 * search items by type
 	 * @param {string} type 
 	 * @returns {Array<[string, Items]>}
 	 */
@@ -341,6 +91,7 @@ class Items {
 
 	/**
 	 * 根据标签（全部）筛选物品
+	 * search items by tags (all)
 	 * @param {string} tag 
 	 * @returns {Array<[string, Items]>}
 	 */
@@ -351,9 +102,10 @@ class Items {
 
 	/**
 	 * 同时根据物品分类 以及 标签（所选标签任意一个）筛选物品
-	 * @param {string} type 物品的分类
-	 * @param { 'and' | 'or' } andor 需要匹配所有标签还是任一标签
-	 * @param {string[]} tags 标签（可多选）
+	 * search items by type and tags (any or all)
+	 * @param {string} type 物品的分类 the type of items
+	 * @param { 'and' | 'or' } andor 需要匹配所有标签还是任一标签 need to match all tags or any tag
+	 * @param {string[]} tags 标签（可多选） tags (can select multiple)
 	 * @returns { Array<[string, Items]> }
 	 */
 	static search(type, andor, ...tags) {
@@ -368,8 +120,9 @@ class Items {
 
 	/**
 	 * 初始化游戏物品
+	 * init vanilla game items
 	 */
-	static init = setupVanillaItems
+	static init = iModSetupDoLItems
 	/**
 	 * 构造新物品
 	 * @param {string} type 
@@ -454,11 +207,12 @@ class Items {
 
 	/**
 	 * 设置上瘾相关各数值
-	 * @param {number} threshold 安全剂量
-	 * @param {number} maxOD 短期内多少嗑多少上瘾
-	 * @param {number} withdraw 引起戒断反应所需时间（小时）
-	 * @param {number} quit 彻底戒断所需日数
-	 * @param {number} hours 起效时长（小时）
+	 * set addiction values
+	 * @param {number} threshold 安全剂量 safe dosage
+	 * @param {number} maxOD 短期内多少嗑多少上瘾 short term overdose
+	 * @param {number} withdraw 引起戒断反应所需时间（小时） time to cause withdraw reaction
+	 * @param {number} quit 彻底戒断所需日数 time to quit
+	 * @param {number} hours 起效时长（小时） duration of effect
 	 * @returns 
 	 */
 	Addiction({ threshold = 1, maxOD = 5, withdraw = 3 * 24, quit = 7, hours = 1 }) {
@@ -472,6 +226,7 @@ class Items {
 
 	/**
 	 * 使用时的常规效果
+	 * the effects when used
 	 * @param  {Array<[string, number]|[string, number, 'p']>} effects 
 	 * @returns 
 	 */
@@ -482,6 +237,7 @@ class Items {
 
 	/**
 	 * 使用时的特殊效果
+	 * the special effects when used
 	 * @param {function} callback 
 	 * @returns 
 	 */
@@ -492,6 +248,7 @@ class Items {
 
 	/**
 	 * 设置每日效果
+	 * set the daily effect
 	 * @param {function} callback 
 	 * @returns 
 	 */
@@ -502,6 +259,7 @@ class Items {
 
 	/**
 	 * 设置戒断反应
+	 * set the withdraw effect
 	 * @param {function} callback 
 	 * @returns 
 	 */
@@ -512,6 +270,7 @@ class Items {
 
 	/**
 	 * 药效起作用时的持续效果
+	 * set the effect when the drug on high
 	 * @param {function} callback 
 	 * @returns 
 	 */
@@ -522,6 +281,7 @@ class Items {
 
 	/**
 	 * 药效失效时的副作用效果
+	 * set the effect when the drug on low
 	 * @param {funciton} callback 
 	 * @returns 
 	 */
@@ -532,6 +292,7 @@ class Items {
 
 	/**
 	 * 设置标签
+	 * set tags
 	 * @param  {string[]} tags 
 	 * @returns 
 	 */
@@ -544,6 +305,7 @@ class Items {
 
 	/**
 	 * 通用的使用效果处理
+	 * set the general effect when used
 	 * @param {string} param 
 	 * @param {number} value 
 	 * @param {'p'|void} method 
@@ -569,12 +331,13 @@ class Items {
 		return printPalams(param, value)
 	}
 }
-window.Items = Items
+
 class iRecipe {
 	static data = {};
 
 	/**
 	 * 添加配方
+	 * add a recipe
 	 * @param {string} id 
 	 * @param {number} time 
 	 * @param  {Array<[string, number]>} args 
@@ -591,6 +354,7 @@ class iRecipe {
 
 	/**
 	 * 作为Obj添加
+	 * add a recipe as an object
 	 * @param {iRecipe} obj 
 	 * @returns 
 	 */
@@ -610,6 +374,7 @@ class iRecipe {
 
 	/**
 	 * 批量添加
+	 * batch add recipes
 	 * @param {Array<iRecipe>} recipes 
 	 */
 	static addRecipes(recipes) {
@@ -629,6 +394,7 @@ class iRecipe {
 	}
 	/**
 	 * 根据产出物和合成方法搜索配方
+	 * search recipe by production and method
 	 * @param {string} production 
 	 * @param {boolean|1} nocheck 
 	 * @returns { Array<[ string, iRecipe ]> }
@@ -650,6 +416,7 @@ class iRecipe {
 	}
 	/**
 	 * 根据合成方法搜索配方
+	 * search recipe by method
 	 * @param {string} method 
 	 * @param {boolean|1} nocheck 
 	 * @returns { Array<[ string, iRecipe ]> }
@@ -670,6 +437,7 @@ class iRecipe {
 	}
 	/**
 	 * 根据物品Id搜索配方
+	 * search recipe by item id
 	 * @param {string} itemId 
 	 * @param {boolean|1} nocheck 
 	 * @returns { Array<[ string, iRecipe ]> }
@@ -787,71 +555,54 @@ class iRecipe {
 	}
 
 }
-window.iRecipe = iRecipe
 
-
-function printPalams(palam, value){
-	let gl = 'l';
-	let count = 1;
-	if (value > 0) {
-		gl = 'g';
-	}
-	if (Math.abs(value) > 30) {
-		count = 3;
-	} else if (Math.abs(value) > 20) {
-		count = 2;
+/**
+ * 会储存到游戏里的物品数据
+ * the data of items in game
+ * @param {string} itemId
+ * @param {number} num
+ */
+function pocketItem(itemId, num, diff){
+	let data = Items.get(itemId);
+	if(!data){
+		throw new Error('no such item:', itemId)
 	}
 
-	return `<<${gl.repeat(count)}${palam}>>`;
+	this.type = data.type
+	this.uid = data.id
+	this.id = data.id
+	this.name = lanSwitch(data.name)
+	this.count = num
+	this.pocket = 'body'
+
+	if(diff){
+		this.diff = diff
+		this.uid = data.id + '_' + diff
+	}
 }
-
-window.printPalams = printPalams
-
-function useMethods(tags){
-	let methods = ['use', '使用']
-	if(tags.includes('pill')){
-		methods = ['take', '吞下']
-	}
-	if(tags.includes('inject')){
-		methods = ['inject', '注射']
-	}
-	if(tags.includes('food')){
-		methods = ['ate', '吃']
-	}		
-	if(tags.includes('drink')){
-		methods = ['drink', '喝']
-	}
-	if(tags.includes('smoke')){
-		methods = ['smoke', '抽']
-	}
-	if(tags.includes('cream')){
-		methods = ['apply', '涂抹']
-	}
-	return methods
-}
-window.useMethods = useMethods
 
 //数组和对象在DOL内部传递有蜜汁错误。所以从背包里传递过来的，是具体位置信息。
-function useItems(pocket, pos, custom){
+//for some reason, array and object can't be passed in DOL. so pass the the position of item in pocket.
+function useItems(pocket, pos, enemy){
 	let item = V.iPockets[pocket][pos]
 	let data = Items.get(item.id)
-	let html = ''
 	let params = ''
+
+	let msg = generalUseItemMsg(data.tags, data.name)
+
+	if(itemMsg[data.id]){
+		msg = lanSwitch(itemMsg[data.id])
+	}
 
 	if(data.effects.length > 0 && typeof data.onUse !== 'function'){
 		data.effects.forEach((set)=>{
 			let [param, value, method] = set;
 			params += data.doDelta(param, value, method);
 		})
-		let methods = useMethods(data.tags)
 
-		html = lanSwitch(
-			`You ${methods[0]} ${data.name[0]}. `,
-			`你${methods[1]}了${data.name[1]}。 `
-		) + params;
 	}
 	else if(typeof data.onUse == 'function'){
-		html = data.onUse()
+		msg = data.onUse()
 	}
 
 	item.count -= data.usage
@@ -860,11 +611,22 @@ function useItems(pocket, pos, custom){
 		pocket.deleteAt(pos)
 	}
 
-	if(custom){
+	if(enemy){
 		return params
 	}
-	return html
+	return msg + params
 }
 
-window.useItems = useItems
 DefineMacroS('useItem', useItems)
+
+
+
+Object.defineProperties(window,{
+	Items:{ value:Items },
+	iRecipe:{ value:iRecipe },
+	pocketItem:{ value:pocketItem },
+	useItems:{
+		value:useItems,
+		writable:true
+	}
+})

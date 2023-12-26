@@ -36,8 +36,8 @@ function onUseDrags(enemy){
 
 	let methods = useMethods(tags)
 
-	const html = lanSwitch(
-		`You ${methods[0]} the ${this.name[0]}.`,
+	let html = lanSwitch(
+		`You ${methods[0]} the ${this.name[0].toLocaleLowerCase()}.`,
 		`你${methods[1]}了${this.name[1]}。`
 	) + ' ' + palams;
 
@@ -45,10 +45,14 @@ function onUseDrags(enemy){
 		return palams;
 	}
 
+	if(drugMsg[id] && drugMsg[id]['onUse']){
+		html = lanSwitch(drugMsg[id]['onUse']) + ' ' + palams;
+	}
+
 	return html;
 }
 
-const Medicines = [
+const iMedicines = [
 	{
 		tags: ["pill", "addiction", ],
 		
@@ -186,10 +190,10 @@ const Medicines = [
 	},
 ];
 
-Items.addItems(Medicines, "medicine")
+Items.addItems(iMedicines, "medicine")
 
 
-const Drugs = [
+const iDrugs = [
 {
 	tags: ["risky", "addiction", "pill"],
 
@@ -227,25 +231,15 @@ const Drugs = [
 		if(flag == 1) return '';
 
 		iCandy.setFlag(this.id, 'highonce', 1)
-		let html =
-			lanSwitch(
-			"The effects of NZT-48 is on, you're feeling full of confident.",
-			"NZT-48正在起作用，你感觉充满了自信。"
-			) + `<<gcontrol>>`;
+		let html = lanSwitch(drugMsg[this.id]['onHigh']) + `<<ggcontrol>>`;
 		
 		return html;
 	},
 	onWake:function(){
 		//药效下头后会变疲劳
-		iUtil.getPalam("tiredness", 400);
+		iUtil.getPalam("tiredness", 400);	
+		return lanSwitch(drugMsg[this.id]['onWake']) + `<<ggtiredness>>`;
 
-		let html =
-		  lanSwitch(
-			"The effects of NZT-48 is wearing off, you feel a little tired.",
-			"NZT-48的效果正在消退，你感觉有些疲劳。"
-		  ) + `<<ggtiredness>>`;
-		
-		  return html;
 	},
 	onWithdraw:function(){
 		wikifier("control", -80);
@@ -253,12 +247,7 @@ const Drugs = [
 		let will = random(60, 180);
 		wikifier("willpower", -will)
 
-		let html =
-		  lanSwitch(
-			"Without NZT-48, you feel frustrated and lose your confidence.",
-			"没有嗑NZT-48，你感觉心烦意乱，失去了自信。"
-		  ) + `<<llcontrol>><<ggstress>><<lllwillpower>>`;
-		return html;
+		return lanSwitch(drugMsg[this.id]['onWithdraw']) + `<<llcontrol>><<ggstress>><<lllwillpower>>`;
 	
 	}
 },
@@ -296,14 +285,21 @@ const Drugs = [
 	onHigh:function(min = 1){
 		min = Math.max(min, 1);
 		iUtil.getPalam("stress", -(2 * min));
+		iUtil.getPalam("pain", -(1 * min));
 
-		let html =
-		  lanSwitch(
-			"The effects of Heroin is on, you're feeling easy.",
-			"海洛因正在起作用，你感觉心情愉快。"
-		  ) + `<<lstress>>`;
+		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<lstress>><<lpain>>`;
+	},
+	onWake:function(){
+		//药效下头时会感觉混乱和疲惫
+		iUtil.getPalam("tiredness", 400);
+		iUtil.getPalam("awareness", -5);
 
-		return html;
+		return lanSwitch(drugMsg[this.id]['onWake']) + `<<ggtiredness>><<lawareness>>`;
+	},
+	onWithdraw:function(){
+		wikifier("stress", 80);
+		wikifier("trauma", 8);
+		return lanSwitch(drugMsg[this.id]['onWithdraw']) + `<<ggstress>><<gtrauma>>`;
 	}
 },
 
@@ -340,13 +336,8 @@ const Drugs = [
 
 		iUtil.getPalam("pain", -(5 * min));
 		iUtil.getPalam("tiredness", -(5 * min));
-	
-		let html =
-		  lanSwitch(
-			"The effects of MDMA is on, you feel all the pains and tiredness are gone.",
-			"摇头丸的效果上头了，你感觉浑身都很轻松。"
-		  ) + `<<lpain>><<ltiredness>>`;
-		return html;
+
+		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<lpain>><<ltiredness>>`;
 	}
 },
 
@@ -393,7 +384,7 @@ const Drugs = [
 		type = list.random()
 		iCandy.senseSet(type, this.id, 0.1,  this.hours*60*60 , 0.02);
 
-		return html;
+		return html
 
 	},
 	onHigh:function(min = 1){
@@ -402,35 +393,16 @@ const Drugs = [
 		wikifier("arousal", 300*min, "genital");
 		iUtil.getPalam("hallucinogen", 5*min);
 
+		let html = lanSwitch(drugMsg[this.id]['onHigh'][flag])
+		 + `<<ggarousal>><<ghallucinogens>>`;
+
+
+		//第一次显示与持续显示有差分		 
 		let flag = iCandy.getFlag(this.id, 'highonce')
 		if(flag == 0){
 			iCandy.setFlag(this.id, 'highonce', 1)
 		}
 
-		//第一次显示与持续显示有差分
-		let html =
-		  lanSwitch(
-			"The effects of Amphetamine is on. A strong sensatons hit your whole body like an electric, making your body even more sensitive.",
-			"安非他命的效果上来了，强烈的快感如电流般袭击全身，让你的身体更加敏感了。"
-		  ) + `<<gggarousal>>`;
-		
-		if(flag == 1){
-			html =
-			  lanSwitch(
-				"The amphetamine drown you in the storm of pleasure. Your body becomes more sensitive as the drug effect increases.",
-				"安非他命让你沉浸在快感的风暴中。你的身体随着药效增强变得更加敏感了。"
-			  ) + `<<gggarousal>>`;
-		}
-		return html;
-	},
-	onWake:function(){
-		//感度逐步恢复
-		let html =
-		  lanSwitch(
-			"The effects of Amphetamine is wearing off, you feel your body gradually calming down",
-			"安非他命的效果正在消退，你感觉身体逐渐平复下来。"
-		  );
-		
 		return html;
 	}
 },
@@ -473,12 +445,7 @@ const Drugs = [
 		let flag = iCandy.getFlag(this.id, 'highonce')
 		if(flag == 1) return '';
 
-		let html =
-		  lanSwitch(
-			"As the smoke of canabis around your head, you feel like your worries have gone.",
-			"当大麻的烟雾旋绕在你头上，你感觉烦恼都烟消云去了。"
-		  ) + `<<lstress>>`;
-		return html;
+		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<lstress>>`;
 	}
 },
 
@@ -516,42 +483,29 @@ const Drugs = [
 
 		iUtil.getPalam("drunk", 10 * min);
 		wikifier("arousal", 4000, "genital");
-		let html =
-		  lanSwitch(
-			"A strong ecstacy thrills your whole body, as you are dancing on the clouds.",
-			"你全身上下都感到十分愉悦，仿佛在云端跳舞。"
-		  ) + `<<ggalcohol>><<ghallucinogens>><<ggarousal>>`;
-		return html;
+		wikifier("hallucinogen", 5 * min);
+
+		return lanSwitch(drugMsg[this.id]['onHigh'])
+		 + `<<ggalcohol>><<ghallucinogens>><<ggarousal>>`;
 	},
 	onWake:function(){
 		wikifier("alcohol", -200);
 		wikifier("control", -30);
 		wikifier("stress", 80);
-		let html =
-		  lanSwitch(
-			"After the cocaine wears off, you feel like falling off from the clouds.",
-			"可卡因的药效过后，你感觉从云端掉了下来。"
-		  ) + `<<lllalcohol>><<ggstress>><<llcontrol>>`;
-		return html;
+
+		return lanSwitch(drugMsg[this.id]['onWake'])
+		 + `<<lllalcohol>><<ggstress>><<llcontrol>>`;
 	},
 	onDay:function(){
 		wikifier("control", 30);
-		let html =
-		  lanSwitch(
-			"Continuously taking cocaine makes your confidence grow.",
-			"持续吸取可卡因让你信心增长。"
-		  ) + `<<ggcontrol>>`;
-		return html;
+
+		return lanSwitch(drugMsg[this.id]['onDay']) + `<<ggcontrol>>`;
 	},
 	onWithdraw:function(){
 		wikifier("control", -60);
 		wikifier("stress", 60);
-		let html =
-		  lanSwitch(
-			"Cocaine withdrawal makes you feel empty and lost.",
-			"可卡因的戒断反应让你感到空虚难受。"
-		  ) + `<<lllcontrol>><<gggstress>>`;
-		return html;
+
+		return lanSwitch(drugMsg[this.id]['onWithdraw']) + `<<lllcontrol>><<gggstress>>`;
 	}
 },
 
@@ -601,12 +555,9 @@ const Drugs = [
 		wikifier("hallucinogen", 5 * min);
 		wikifier("arousal", 4000, "genital");
 		iUtil.getPalam("stress", 30 * min);
-		let html =
-		  lanSwitch(
-			"An indescribable thrill of pleasure erupts from the depths of your soul.",
-			"一股无法描述的快感从你的灵魂深处迸发。"
-		  ) + `<<ghallucinogens>><<gggarousal>><<lstress>>`;
-		return html;
+
+		return lanSwitch( drugMsg[this.id]['onHigh'])
+		 + `<<gggarousal>><<ghallucinogens>><<lstress>>`;
 	},
 	onWake:function(){
 		let physique = random(30, 80) / 10;
@@ -614,16 +565,12 @@ const Drugs = [
 	
 		wikifier("control", -20);
 		wikifier("stress", 120);
-	
-		let html =
-		  lanSwitch(
-			"After the angel powder wears off, you feel weak and powerless.",
-			"天使粉的药效过后，你感到虚弱无力。"
-		  ) + `<<lcontrol>><<lphysique>><<gggstress>>`;
-		return html;
+
+		return lanSwitch(drugMsg[this.id]['onWake'])
+		+ `<<lcontrol>><<lphysique>><<gggstress>>`;
 	},
 	onDay:function(){
-		let physique = random(80, 160);
+		let physique = random(40, 80);
 		iUtil.getPhysique(physique);
 	
 		let will = random(10, 20);
@@ -636,14 +583,9 @@ const Drugs = [
 		wikifier("tiredness", -30);
 	
 		wikifier("arousal", 300);
-	
-		let html =
-		  lanSwitch(
-			"The Angel powder in your body inspries you, makes you feeling easy and happy.",
-			"体内的天使粉鼓舞着你，让你感到轻松愉快。"
-		  ) +
-		  `<<ggphysique>><<gwillpower>><<llawareness>><<lllpain>><<lltrauma>><<llstress>><<lltiredness>><<ggarousal>>`;
-		return html;
+
+		return lanSwitch(drugMsg[this.id]['onDay'])
+		 + `<<gphysique>><<gwillpower>><<llawareness>><<lllpain>><<lltrauma>><<llstress>><<lltiredness>><<ggarousal>>`
 	},
 	onWithdraw:function(){
 		let physique = random(60, 120) / 10;
@@ -654,15 +596,11 @@ const Drugs = [
 	
 		let stress = random(12, 18);
 		wikifier("stress", stress);
-	
-		let html =
-		  lanSwitch(
-			"You're feeling a little weak without the Angel Powder.",
-			"没有吸食天使粉的你感到身体有些虚弱……"
-		  ) + `<<lphysique>><<lwillpower>><<ggstress>>`;
-		return html;
+
+		return lanSwitch(drugMsg[this.id]['onWithdraw'])
+		 + `<<lphysique>><<lwillpower>><<ggstress>>`;
 	}
 },
 ];
 
-Items.addItems(Drugs, "drugs")
+Items.addItems(iDrugs, "drugs")

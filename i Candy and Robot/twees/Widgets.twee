@@ -38,19 +38,19 @@
 	<<if $options.images is 1>>
 		<<set _path = 'img/'>>
 		<<set _img = $args[0]>>
-		<img id="icon" @src="_path + _img">
+		<img class="icon" @src="_path + _img">
 	<</if>>
 <</widget>>
 
 
 <<widget "daisoicon">>
 	<<if $options.images is 1>>
-		<img id="icon" src="img/daiso.png">
+		<img class="icon" src="img/daiso.png">
 	<</if>>
 <</widget>>
 
 <<widget "repairicon">>
 	<<if $options.images is 1>>
-		<img id="icon" src="img/repair.png">
+		<img class="icon" src="img/repair.png">
 	<</if>>
 <</widget>>

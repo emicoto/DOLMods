@@ -72,13 +72,13 @@
 
 <<if $iPockets.bagtype isnot 'none'>>
 	<<set _link = lanSwitch('Open your backpack', '打开背包')>>
-	<<link _link 'iCandyMod Storage'>><<set $openstorage to 'bag'>><</link>>
+	<<link _link 'iCandyMod Storage'>><<set $tvar.openstorage to 'bag'>><</link>>
 	<br><br>
 <</if>>
 
 <<if $iPockets.carttype isnot 'none'>>
 	<<set _link = lanSwitch('Check the items in your cart', '检查手推车里的物品')>>
-	<<link _link 'iCandyMod Storage'>><<set $openstorage to 'cart'>><</link>>
+	<<link _link 'iCandyMod Storage'>><<set $tvar.openstorage to 'cart'>><</link>>
 	<br><br>
 <</if>>
 
