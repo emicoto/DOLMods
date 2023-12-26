@@ -2,18 +2,13 @@
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
 <<itemIcon $tvar.img>>  
-<<if $tvar.itemdata.msg isnot undefined>>
-    <<print lanSwitch($tvar.itemdata.msg)>>
-    <<=useItems($tvar.useItem[0], $tvar.useItem[1], 'custom')>>
-    <br><br>
-<<else>>
-    <<=useItems($tvar.useItem[0], $tvar.useItem[1])>>
-    <br><br>
-<</if>>
+<<=useItems($tvar.useItem[0], $tvar.useItem[1])>>
+<br><br>
+
 
 <<set _link = lanSwitch('Back', '返回')>>
 <<link _link $tvar.exitPassage>>
-    <<set $tvar.exitPassage to null>>
+    <<run iUtil.resetTvar('exitPassage', 'itemdata', 'useItem', 'img')>>
     <<pass 5>>
 <</link>>
 
@@ -32,13 +27,13 @@
 
 <<include $tvar.eventPassage>>
 
-<<if $tvar.endevent is true>>
-    <<set _link = lanSwitch('Back', '返回')>>
-    <<link 'Back' $tvar.exitPassage>>
-        <<set $tvar.exitPassage to null>>
-        <<pass 10>>
-    <</link>>
-<<else>>
+<<if $tvar.eventnext is true>>
     <<set _link = lanSwitch('Next', '继续')>>
     <<link 'Next' $passage>><<pass 1>><</link>>
+<<else>>
+    <<set _link = lanSwitch('Back', '返回')>>
+    <<link 'Back' $tvar.exitPassage>>
+        <<run iUtil.resetTvar('exitPassage')>>
+        <<pass 10>>
+    <</link>>    
 <</if>>

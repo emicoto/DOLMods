@@ -83,7 +83,7 @@ NamedNPC.add(
 
 
     new NamedNPC(
-        '凯思', 
+        'Keith', 
         ['drug dealer', '毒贩'], 
         ['Keith', '凯思'],
         'human'

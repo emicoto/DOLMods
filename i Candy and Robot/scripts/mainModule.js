@@ -277,7 +277,7 @@ function iCandyInit(){
 
 	}
 	setup.iCandyMod = "variable init"
-	//Items.init()
+	Items.init()
 }
 DefineMacroS('iCandyInit', iCandyInit)
 

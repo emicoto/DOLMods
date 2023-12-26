@@ -9,7 +9,7 @@
 
 simpleFrameworks.addto('iModHeader', 'aSimpleTest')
 simpleFrameworks.addto('ModMenuSmall', 'testButton')
-simpleFrameworks.addto('iModsOptions', 'myOptionsA', 'myOptionsB', 'myOptionsC')
+simpleFrameworks.addto('iModOptions', 'myOptionsA', 'myOptionsB', 'myOptionsC')
 simpleFrameworks.addto('ModCaptionDescription', 'TestCaption')
 simpleFrameworks.addto('ModCaptionAfterDescription', 'TestCaptionAfter')
 simpleFrameworks.addto('iModReady', 'newMoney')

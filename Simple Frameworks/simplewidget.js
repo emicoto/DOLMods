@@ -40,7 +40,8 @@ window.simpleFrameworks = {
         iModReady:[],
         iModHeader:[],
         iModFooter:[],
-        iModsOptions:[],
+        iModOptions:[],
+        iModCheats:[],
         iModStatus:[],
         iModFame:[],
         iModInit:[],
@@ -86,7 +87,7 @@ window.simpleFrameworks = {
             return `<<iModonReady>>\n\n`
         },
         
-        iModsOptions:()=>{
+        iModOptions:()=>{
 		return `
 <<setupOptions>>
 <span class="gold"><<lanSwitch "Simple Framework" "简易框架" >></span>
@@ -106,6 +107,17 @@ window.simpleFrameworks = {
 
 `
         },
+
+        iModCheats:()=>{
+            return `
+<span class="gold"><<lanSwitch "Cheats Extends Mods" "作弊扩展">></span>
+<br>
+<<set _link = lanSwitch("Dry yourself", "一键烘干")>>
+<<link _link $passage>>
+    <<set $upperwet to 0, $lowerwet to 0, $underlowerwet to 0, $underupperwet to 0>>
+<</link>>
+`    
+        }
     },
 
     createMicroWidgets : async function(){

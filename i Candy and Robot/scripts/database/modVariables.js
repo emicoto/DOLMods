@@ -348,6 +348,9 @@ const iModVariables = {
 		useItem: null,
 		exitPassage: null,
 		eventPassage: null,
+		img: null,
+		scene: {},
+		eventnext: null,
 	} 
 
 }

@@ -133,11 +133,25 @@ a small button area at UIBar
     
 <</widget>>
 
-iModsOptions
+iModCheats
+add your cheats widget here
+
+<<widget "iModCheats">>
+<span class="gold"><<lanSwitch "Cheats Extends Mods" "作弊扩展">></span>
+<br>
+<<set _link = lanSwitch("Dry yourself", "一键烘干")>>
+<<link _link $passage>>
+    <<set $upperwet to 0, $lowerwet to 0, $underlowerwet to 0, $underupperwet to 0>>
+<</link>>
+
+<</widget>>
+
+
+iModOptions
 add your mods option here
 
 //模组设置面板
-<<widget 'iModsOptions'>>
+<<widget 'iModOptions'>>
 <<setupOptions>>
 <span class="gold"><<lanSwitch "Simple Framework" "简易框架" >></span>
 <br>

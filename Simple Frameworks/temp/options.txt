@@ -1,6 +1,6 @@
 		<<button lanSwitch('Mods', '模组设置')>>
 		<<toggleTab>>
-		<<replace #customOverlayContent>><<iModsOptions>><</replace>>
+		<<replace #customOverlayContent>><<iModOptions>><</replace>>
 		<</button>>
 
 </div>

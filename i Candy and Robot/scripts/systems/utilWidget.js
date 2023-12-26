@@ -1,4 +1,9 @@
 const iUtil = {
+	resetTvar : function(...args){
+		args.forEach((arg)=>{
+			$vars[arg] = null
+		})
+	},
 	countHomeStorage : function(){
 		let count = 0
 		for(let i in V.iStorage.home){

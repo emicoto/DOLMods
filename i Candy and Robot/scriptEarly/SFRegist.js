@@ -11,9 +11,15 @@ simpleFrameworks.addto('ModCharaDescription', 'charadesDrugs')
 
 simpleFrameworks.addto('ModSkillsBox', 'candySkills')
 
-simpleFrameworks.addto('iModsOptions', 'iCandyOptions')
+simpleFrameworks.addto('iModOptions', 'iCandyOptions')
+simpleFrameworks.addto('iModCheats', 'iCandyCheats')
 
 simpleFrameworks.addto('ModShopZone', {
     passage:'Pharmacy',
     widget:'ExtraPharmacy'
+})
+
+simpleFrameworks.addto('ExtraLinkZone', {
+    passage: 'Shopping Centre',
+    widget: 'daisoEntrance'
 })

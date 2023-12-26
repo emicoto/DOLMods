@@ -1042,13 +1042,17 @@
 			},
 			{
 				src:'<<if $exposed lte 0>>',
-				applybefore:'\n<<BeforeLinkZone>>\n'
+				applybefore:'\n\t\t<<BeforeLinkZone>>\n\t\t'
 
 			},
 			{
-				src:'<<if Time.dayState is "night">>',
-				applybefore:'\n<<BeforeLinkZone>>\n'
+				src:'<<if Time.dayState is "night">>\n\t\t\t<<hairdressericon>>',
+				applybefore:'\n\t\t<<BeforeLinkZone>>\n\t\t'
 
+			},
+			{
+				src:"/*Comment out when a new shop is",
+				applybefore:'\n\t\t<<ExtraLinkZone>>\n\t\t'
 			}
 		],
 		'Pet Shop':[
@@ -1215,7 +1219,11 @@
 		'overlayReplace':[
 			{
 				src:'</div>\n\t<<closeButton>>\n<</widget>>\n\n<<widget \"titleSaves\">>',
-				to:`\t\t<<button lanSwitch('Mods', '模组设置')>>\n\t\t<<toggleTab>>\n\t\t<<replace #customOverlayContent>><<iModsOptions>><</replace>>\n\t\t<</button>>\n\n</div>\n\t<<closeButton>>\n<</widget>>\n\n<<widget "titleSaves">>`
+				to:`\t\t<<button lanSwitch('Mods', '模组设置')>>\n\t\t<<toggleTab>>\n\t\t<<replace #customOverlayContent>><<iModOptions>><</replace>>\n\t\t<</button>>\n\n</div>\n\t<<closeButton>>\n<</widget>>\n\n<<widget "titleSaves">>`
+			},
+			{
+				src:'</div>\n\t<<closeButton>>\n<</widget>>\n\n<<widget "titleOptions">>',
+				to:`\t\t<<button lanSwitch('Mods', '模组')>>\n\t\t\t<<toggleTab>>\n\t\t\t<<replace #cheatsShown>><<iModCheats>><</replace>>\n\t\t\t<<run $("#customOverlayContent").scrollTop(0);>>\n\t\t<</button>>\n`
 			}
 		],
 		'npcNamed':[

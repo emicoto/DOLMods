@@ -2,7 +2,7 @@
 <<widget "iCandyHeader">>
 <!-- 在PassageHeader里的处理  -->
 <<run console.log('check passage in header:',passage())>>
-
+<<run iEvent.eventProcess(R.scene)>>
 
 <</widget>>
 
@@ -39,6 +39,12 @@
 <</widget>>
 
 <<widget "charadesDrugs">>
+<!-- 角色面板药物效果  -->
+
+
+<</widget>>
+
+<<widget "iCandyCheats">>
 <!-- 角色面板药物效果  -->
 
 
