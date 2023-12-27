@@ -117,6 +117,38 @@ const drugMsg = {
 		],
 	},
 
+	morphine:{
+		onHigh:[
+			"The effects of morphine is on, you feel your entire body becoming pleasantly relaxed and limp.",
+			"吗啡的效果上来了，你感觉整个人瘫软下来十分放松。"
+		],
+		onWake:[
+			"As the effects of the morphine wear off, you begin to feel dizzy, nauseous, and extremely weak. It's difficult to summon any strength, and your body feels drained.",
+			"吗啡的效果在消退，你感觉头晕恶心，浑身乏力，一点力气都使不出来。"
+		]
+	},
+
+	ketamine:{
+		onHigh:[
+			"The effects of ketamine is on, you see the world in a different way.",
+			"氯胺酮的效果上来了，你看到的世界变得不一样了。"
+		]
+	},
+
+	iceshard:{
+		onHigh:[
+			"The effects of ice shard is coming up, it brings you a sense of pleasure.",
+			"冰毒的效果上来了，你感觉整个人酥酥麻麻特别舒服。"
+		]
+	},
+
+	fizzy:{
+		onHigh:[
+			"The effects of fizzy start to take hold, and you begin to feel fuzzy, and somewhat sense of invincibility, as if you can do anything.",
+			"菲仔的效果上来了，你感觉晕乎乎的，但莫名地觉得自己无所不能。"
+		]
+	},
+
 	angelpowder:{
 		onHigh:[
 			"An indescribable thrill of pleasure erupts from the depths of your soul.",

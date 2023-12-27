@@ -365,17 +365,24 @@ function printPalams(palam, value){
 	} else if (Math.abs(value) > 20) {
 		count = 2;
 	}
+	if(palam == 'hallucinogen'){
+		palam = 'hallucinogens'
+	}
 
 	return `<<${gl.repeat(count)}${palam}>>`;
 }
 
-function useMethods(tags){
+function useMethods(tags, item){
 	let methods = ['use', '使用']
 	if(tags.includes('pill')){
 		methods = ['take', '吞下']
 	}
 	if(tags.includes('inject')){
 		methods = ['inject', '注射']
+	}
+	if(tags.includes('drugpowder')){
+		methods = ['snort', '吸入']
+	
 	}
 	if(tags.includes('food')){
 		methods = ['ate', '吃']
@@ -392,17 +399,46 @@ function useMethods(tags){
 	return methods
 }
 
+function itemUnit(tags, count){
+	const unit = {
+		'pill' : ['pills', 'pill', '片'],
+		'drugpowder': ['packs', 'pack', '包'],
+		'inject' : ['shots', 'shot', '管'],
+		'canned' : ['cans', 'can', '罐'],
+		'candy' : ['pieces', 'piece', '块'],
+		'snack' : ['packs', 'pack', '包'],
+		'smoke' : ['', '', '支'],
+		'liquid' : ['ml', 'ml', 'ml'],
+		'lite' : ['oz', 'oz', 'oz'],
+		'powder' : ['lb', 'lb', 'lb'],
+		'food' : ['', '', '份'],
+		'drink' : ['bottles', 'bottle', '瓶'],
+		'equip' : ['', '', '件'],
+	}
+	let text = 'x ' + count
+
+	for(let i in unit){
+		if(tags.includes(i)){
+			text += lanSwitch(count > 1 ? unit[i][1] : unit[i][0], unit[i][2])
+			break
+		}
+	}
+
+	return text
+}
+
 const pocketsList = ["body","held","bag","cart","hole"]
 
 Object.defineProperties(setup, {
-	addictions: { value: iModAddictions, configurable:true, },
-	maxStacks: { value: iModMaxStacks, configurable:true, },
-	drugConfig: { value: iModDrugConfig, configurable:true,},
-	plantNames: { value: plantNames, configurable:true, }
+	addictions: { value: iModAddictions },
+	maxStacks: { value: iModMaxStacks },
+	drugConfig: { value: iModDrugConfig},
+	plantNames: { value: plantNames }
 })
 
 Object.defineProperties(window, {
-	pocketsList: { value: pocketsList, configurable:true, },
-	printPalams: { value: printPalams, configurable:true, },
-	useMethods: { value: useMethods, configurable:true, },
+	pocketsList: { value: pocketsList },
+	printPalams: { value: printPalams },
+	useMethods: { value: useMethods },
+	itemUnit: { value: itemUnit },
 })

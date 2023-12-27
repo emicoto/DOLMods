@@ -79,16 +79,13 @@ const iUtil = {
 	
 				if(item !== 'none'){
 					const data = Items.get(item.id)
-					let img = data.img
+					let img = this.itemImageResolve(item, data)
 					let onclick = ` onClick="V.addMsg += Items.get('${item.id}').onUnEquip(); SugarCube.Engine.play(V.passage)"`
 	
 					if(!iM.checkItemOnGet(item.id, 1)){
 						onclick = ``
 					}
-	
-					if(item.diff){
-						img = data.diff[item.diff].img
-					}
+
 					html += `<mouse class="tooltip-tiny"${onclick}>\n`
 					html += `	<img class='icon' src="img/${img}">\n`
 					html += `	<span>${lanSwitch(data.info)}\n`
@@ -106,32 +103,30 @@ const iUtil = {
 		return html
 	},
 
-	printItemCount : function(itemId, count){
-		const item = Items.get(itemId)
-		const unit = {
-			'pill' : ['pills', 'pill', '片'],
-			'inject' : ['shots', 'shot', '管'],
-			'canned' : ['cans', 'can', '罐'],
-			'candy' : ['p', 'p', '块'],
-			'snack' : ['packs', 'pack', '包'],
-			'smoke' : ['', '', '支'],
-			'liquid' : ['ml', 'ml', 'ml'],
-			'cream' : ['g', 'g', 'g'],
-			'powder' : ['oz', 'oz', 'oz'],
-			'food' : ['', '', '份'],
-			'drink' : ['bottles', 'bottle', '瓶'],
-			'equip' : ['', '', '件'],
-		}
-		let text = 'x ' + count
+	itemImageResolve : function(item, data){
+		if(!item) return 'img/items/item_none.png'
+		let size = iM.getStackSize(item.id)
 
-		for(let i in unit){
-			if(item.tags.includes(i)){
-				text += lanSwitch(count > 1 ? unit[i][1] : unit[i][0], unit[i][2])
-				break
+		let img = data.img
+		if(item.diff){
+			img = data.diff[item.diff].img
+		}
+		if(data.stacksprites){
+			let select = new SelectCase()
+
+			for(let i = 1; i <= data.stacksprites.length; i++){
+				let min = data.stacksprites[i-1]
+				let max = i == data.stacksprites.length ? 1000 :  data.stacksprites[i] - 1
+				let result = `img/items/${data.type}/${data.id}_${min}.png`
+				if(item.diff){
+					result = `img/items/${data.type}/${data.id}_${item.diff}_${min}.png`
+				}
+				select.case([min, max], result)
 			}
+			select.else(data.img)
+			img = select.has(Math.floor((item.count/size+0.5)*100))
 		}
-
-		return text
+		return img
 	},
 
 	printPocket : function(slot){
@@ -140,20 +135,18 @@ const iUtil = {
 		let maxslot = iM.getMaxSlots(slot)
 		for(let i = 0; i < maxslot; i++){
 			const item = pocket[i]
-			const data = item ? Items.get(item.id) : null
+			let data = item ? Items.get(item.id) : null
+			if(data && item.diff && data.diff[item.diff].aliasItem){
+				data = Items.get(data.diff[item.diff].aliasItem)
+			}
 
 			let itemname = data ? lanSwitch(data.name) : ''
-			let itemcount = item ? iUtil.printItemCount(item.id, item.count) : ''
+			let itemcount = item ? itemUnit(data.tags, item.count) : ''
 
 			let method = item ? lanSwitch( useMethods(data.tags) ) : ''
 
 			let _html = `<div id='${slot}-${i}' class='pocketslot'>`
-			let img = data ? data.img : 'img/items/item_none.png'
-
-			if(item && item.diff){
-				img = data.diff[item.diff].img
-				itemname += '[' + lanSwitch(data.diff[item.diff].displayname)+']'
-			}
+			let img = iUtil.itemImageResolve(item, data)
 
 			_html += `<div class='itemname'>${itemname}</div>`
 			_html += `<div class='itemcount'>${itemcount}</div>`
@@ -168,7 +161,7 @@ const iUtil = {
 					_html += `<img class='icon' src="img/items/item_none.png">`
 				}
 			_html += `</div>`
-			if(item && V.combat == 0 && !V.event && !data.require){
+			if(item && V.combat == 0 && !V.event){
 				_html += `<div id='action' class='pocketaction'>
 				<span class='itemaction'>`
 
@@ -178,12 +171,14 @@ const iUtil = {
 						<<set $addMsg += Items.get('${item.id}').onEquip('${slot}', '${i}');>>
 					<</link>>`
 				}
-				else{
+				else if(!data.require && (data.effects.length > 0 || typeof data.onUse == 'function')){
 					 _html += `<<link "${method}" "iCandyMod UseItems">>
 					 	<<set $tvar.useItem to ["${slot}", ${i}]>>
 						<<set $tvar.itemdata to Items.get("${item.id}")>>
 						<<set $tvar.img to "${img}">>
-						<<set $tvar.exitPassage to $passage>>
+						<<if $passage isnot "iCandyMod UseItems">>
+							<<set $tvar.exitPassage to $passage>>
+						<</if>>
 					 <</link>>`
 					/*
 					_html += `<<link "${method}" $passage>>

@@ -209,7 +209,7 @@ const iDrugStats = {
 }
 
 for(const [Id, iData] of Object.entries(Items.data)){
-	if(iData.tags.includes('addiction') && iData.tags.containsAny('nicotine', 'alcohol', 'aphrod') == false ){
+	if(iData.tags.includes('addiction') && iData.tags.containsAny('nicotine', 'alcohol', 'aphrod') == false && !iData.alias ){
 		iDrugStats.state.drugs[Id] = new drugState()
 		iDrugStats.flags.drugs[Id] = new drugFlag()
 	}

@@ -586,6 +586,9 @@ function pocketItem(itemId, num, diff){
 function useItems(pocket, pos, enemy){
 	let item = V.iPockets[pocket][pos]
 	let data = Items.get(item.id)
+	if(data.alias){
+		data = Items.get(data.alias)
+	}
 	let params = ''
 
 	let msg = generalUseItemMsg(data.tags, data.name)

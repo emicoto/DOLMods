@@ -6,11 +6,17 @@
 <br><br>
 
 
-<<set _link = lanSwitch('Back', '返回')>>
-<<link _link $tvar.exitPassage>>
-    <<run iUtil.resetTvar('exitPassage', 'itemdata', 'useItem', 'img')>>
-    <<pass 5>>
-<</link>>
+<<if $tvar.eventnext is true>>
+    <<set _link = lanSwitch('Next', '继续')>>
+    <<link 'Next' $passage>><<pass 1>><</link>>
+<<else>>
+    <<set _link = lanSwitch('Back', '返回')>>
+    <<link _link $tvar.exitPassage>>
+        <<set _time to iUtil.useItemPassTime(#tvar.itemdata)>>
+        <<run iUtil.resetTvar('exitPassage', 'itemdata', 'useItem', 'img')>>        
+        <<pass _time>>
+    <</link>>  
+<</if>>
 
 :: iCandyMod TransferItems [scene]
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>

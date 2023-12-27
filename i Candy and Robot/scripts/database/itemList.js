@@ -208,9 +208,265 @@ const iFoods = [
 
 	msg: itemMsg.cola,
 },
+{
+	tags: ["food", "bread"],
+	id:"sandwitchbread",
+	name:["Sandwitch Bread", "三文治面包"],
+	plural:"Sandwitch Breads",
+
+	num: 10,
+	price: 1000,
+	size:"big",
+
+	info:[
+		"A loaf of bread for making sandwitches",
+		"用来做三文治的面包"
+	],
+
+	effects:[
+		["hunger", 100]
+	]
+}
 ];
 
 Items.addItems(iFoods, 'foods')
+
+const ingredients = [
+	{
+		tags: ["liquid", "chemical", "craft"],
+		id:"blood",
+		name:["Blood", "血液"],
+		plural:"Blood",
+	
+		num: 1,
+		price: 10000,
+		size:"small",
+	
+		info:[
+			"A pack of blood",
+			"一包血液"
+		],
+	},
+	{
+		tags: ["chemical", "craft"],
+		id:"candypackage",
+		name:["Candy Package", "糖果包装"],
+		plural:"Candy Packages",
+	
+		num: 1,
+		price: 10,
+		size:"micro",
+	
+		info:[
+			"A package used to pack candies",
+			"糖果吃剩后的包装"
+		],
+	},
+	{
+		tags: ["creamy","cooking", "food"],
+		id:"cream",
+		name:["Cream", "奶油"],
+		plural:"Cream",
+	
+		num: 10,
+		price: 1265,
+		size:"micro",
+
+		usage: 2,
+		effects:[
+			["hunger", 30]
+		],
+		info:[
+			"cream, sweet and smooth",
+			"甜甜的丝滑的奶油"
+		],
+	},
+	{
+		tags: ["powder", "cooking"],
+		id:"flour",
+		name:["Flour", "面粉"],
+		plural:"Flour",
+
+		num: 25,
+		price: 3849,
+		size: "powder",
+
+		info:[
+			"flour",
+			"面粉"
+		]
+	},
+	{
+		tags: ["lite", "flavor", "cooking"],
+		id:"mayonaise",
+		name:["Mayonaise", "蛋黄酱"],
+		plural:"Mayonaise",
+
+		num: 40,
+		price: 1039,
+		size: 40,
+
+		info:[
+			"mayonaise",
+			"蛋黄酱"
+		]
+	},
+	{
+		tags:["lite", "flavor", "cooking"],
+		id:"sugar",
+		name:["Sugar", "糖"],
+		plural:"Sugar",
+
+		num: 50,
+		price: 1000,
+		size: 50,
+
+		info:[
+			"sugar",
+			"糖"
+		]
+	}
+]
+Items.addItems(ingredients)
+
+
+const Gacha = [
+	{
+		tags: ["gacha", "gachacap"],
+		id:"gacha",
+		name:["Gacha", "扭蛋"],
+		plural:"Gacha",
+	
+		num: 1,
+		price: 600,
+		size:"small",
+	
+		info:[
+			"A gacha capsule, you can get a random item from it",
+			"一个扭蛋胶囊，里面有一个随机物品"
+		],
+
+		require:"gacha",
+		openItem:"gachaopened",
+		gachaType:"random",
+
+	},
+	{
+		tags: ["gacha", "gachacap"],
+		id:"gacha_leef",
+		name:["Leef Gacha", "叶子扭蛋"],
+		plural:"Leef Gacha",
+	
+		num: 1,
+		price: 600,
+		size:"small",
+	
+		info:[
+			"A gacha capsule with leaf pattern, you can get a random item from it",
+			"一个有着叶子图案的扭蛋胶囊。里面有一个随机物品"
+		],
+
+		require:"gacha",
+		openItem:"gachaopened",
+		gachaType:"snack",
+
+	},
+	{
+		tags: ["gacha", "gachacap"],
+		id:"gacha_magic",
+		name:["Magic Gacha", "魔法扭蛋"],
+		plural:"Magic Gacha",
+	
+		num: 1,
+		price: 600,
+		size:"small",
+		
+	
+		info:[
+			"A gacha capsule with magic pattern, you can get a random item from it",
+			"一个有着魔法图案的扭蛋胶囊。里面有一个随机物品"
+		],
+
+		require:"gacha",
+		openItem:"gachaopened",
+		gachaType:"collection",
+
+	},
+	{
+		tags: ["gacha", "gachacap"],
+		id:"gacha_star",
+		name:["Star Gacha", "星星扭蛋"],
+		plural:"Star Gacha",
+	
+		num: 1,
+		price: 600,
+		size:"small",
+	
+		info:[
+			"A gacha capsule with leaf pattern, you can get a random item from it",
+			"一个有着叶子图案的扭蛋胶囊。里面有一个随机物品"
+		],
+
+		require:"gacha",
+		openItem:"gachaopened",
+		gachaType:"candy",
+
+	},
+	{
+		tags: ["gachaopened", "gachacap", "craft"],
+		id:"gacha_opened",
+		name:["Opened Gacha", "打开的扭蛋"],
+		plural:"Opened Gacha",
+	
+		num: 1,
+		price: 600,
+		size:"small",
+	
+		info:[
+			"An opened gacha capsule, the item inside has been taken out",
+			"一个被打开的扭蛋，里面的物品已经被取出"
+		],
+	},
+	{
+		tags: ["gacha", "rare","gachacap"],
+		id:"goldgacha",
+		name:["Gold Gacha", "黄金扭蛋"],
+		plural:"Gold Gacha",
+	
+		num: 1,
+		price: 600,
+		size:"small",
+	
+		info:[
+			"A golden gacha capsule, you can get a random item from it",
+			"一个金黄色的扭蛋胶囊。里面有一个随机物品"
+		],
+
+		require:"gacha",
+		openItem:"gachaopened",
+		gachaType:"rare",
+
+	},
+	{
+		tags: ["gachaopened", "rare","gachacap", "craft"],
+		id:"goldgacha_opened",
+		name:["Opened Gacha", "打开的扭蛋"],
+		plural:"Opened Gacha",
+	
+		num: 1,
+		price: 600,
+		size:"small",
+	
+		info:[
+			"An opened golden gacha capsule, the item inside has been taken out",
+			"一个被打开的黄金扭蛋，里面的物品已经被取出"
+		],
+	},
+]
+
+const GachaItems = [
+	
+]
 
 const iSpecial = [
 {
@@ -362,13 +618,34 @@ const iContainers = [
 		info: [
 		  "A black plastic bag that can hold a lot of trash.",
 		  "一个能装大量垃圾的黑色塑料袋。",
-		],	  
+		],
   
 		num: 1,
 		price: 300,
 		size: 10,
   
 		capacity: 6,
+		
+		onEquip,
+		onUnEquip
+	},
+	{
+		tags: ["equip","held"],
+  
+		id: "seedbag",
+		name: ["Seeds Bag", "种子袋"],
+		plural:"Seeds Bags",
+  
+		info: [
+		  "A bag to hold seeds.",
+		  "一个用来装种子的袋子。",
+		],	  
+  
+		num: 1,
+		price: 200,
+		size: 10,
+  
+		capacity: 2,
 		
 		onEquip,
 		onUnEquip
@@ -387,7 +664,8 @@ const iContainers = [
 	  size: "big",
 	  capacity: 4,
 	  diff:{
-		girlish:{ displayname:['girlish', '女款'], img:'items/container/satchel_girl.png', sp:'girlish'}
+		girl:{ displayname:['girlish', '女款'], img:'items/container/satchel_girl.png', sp:'girlish'},
+		cat:{ displayname:['cat', '猫'], img:'items/container/satchel_cat.png', sp:'cat'}
 	  },
 
 	  onEquip,
@@ -408,8 +686,8 @@ const iContainers = [
 	  size: "big",
 	  capacity: 6,
 	  diff:{
-		girlish:{ displayname:['girlish', '女款'], img:'items/container/leathersatchel_girl.png', sp:'girlish'},
-		boyish:{ displayname:['boyish', '男款'], img:'items/container/leathersatchel_boy.png', sp:'boyish'}
+		girl:{ displayname:['girlish', '女款'], img:'items/container/leathersatchel_girl.png', sp:'girlish'},
+
 	  },
 
 	  onEquip,
@@ -455,6 +733,9 @@ const iContainers = [
 	  size: "big",
 
 	  capacity: 12,
+	  diff:{
+		girl:{ displayname:['girlish', '女款'], img:'items/container/backpack_girl.png', sp:'girlish'}
+	  },
 	  
 	  onEquip,
 	  onUnEquip
@@ -511,6 +792,10 @@ const iContainers = [
   
 		info: ["A smart, stylish rolling buckets.", "一个智能的，时尚的便携式垃圾桶。"],
 		capacity: 25,
+		diff:{
+			blue:{ displayname:['blue', '蓝色'], img:'items/container/bucket_blue.png'},
+			yellow:{ displayname:['yellow', '黄色'], img:'items/container/bucket_yellow.png'},
+		},
 		
 		onEquip,
 		onUnEquip
@@ -573,6 +858,14 @@ const iContainers = [
 		],
 
 		capacity: 50000,
+		diff:{
+			blue:{ displayname:['blue', '蓝色'], img:'items/container/pouch_blue.png'},
+			green:{ displayname:['green', '绿色'], img:'items/container/pouch_green.png'},
+			orange:{ displayname:['orange', '橙色'], img:'items/container/pouch_orange.png'},
+			pink:{ displayname:['pink', '粉色'], img:'items/container/pouch_pink.png'},
+			purple:{ displayname:['purple', '紫色'], img:'items/container/pouch_purple.png'},
+			yellow:{ displayname:['yellow', '黄色'], img:'items/container/pouch_yellow.png'},
+		},
 		
 		onEquip,
 		onUnEquip

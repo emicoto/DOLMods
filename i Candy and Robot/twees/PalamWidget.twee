@@ -44,6 +44,24 @@
 	<</if>>
 <</widget>>
 
+<<widget "lhallucinogens">>
+	<<if $statdisable is "f">> |
+		<span class="green">- <<lanSwitch 'Hallucinogens' '幻觉'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "llhallucinogens">>
+	<<if $statdisable is "f">> |
+		<span class="green">- - <<lanSwitch 'Hallucinogens' '幻觉'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "lllhallucinogens">>
+	<<if $statdisable is "f">> |
+		<span class="green">- - - <<lanSwitch 'Hallucinogens' '幻觉'>></span>
+	<</if>>
+<</widget>>
+
 <<widget "lactationchange">>
 	<<if R.trait.naturalLactation is 1>>
 		<<if $lactating is 0>>

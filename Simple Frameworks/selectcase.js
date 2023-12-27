@@ -161,6 +161,9 @@ class SelectCase {
 	 * The isLT method is used to check if the pick value is less than the select case statement.
 	 */
 	isLT(pick) {
+		//from small to big
+		this.arr.sort((a, b) => a.cond - b.cond);
+		
 		for (const element of this.arr) {
 			const { cond, result } = element;
 			const type = this.type(cond);
@@ -178,6 +181,9 @@ class SelectCase {
 	 * The isGT method is used to check if the pick value is greater than the select case statement.
 	 */
 	isGT(pick) {
+		//from big to small
+		this.arr.sort((a, b) => b.cond - a.cond);
+
 		for (const element of this.arr) {
 			const { cond, result } = element;
 			const type = this.type(cond);
@@ -195,6 +201,9 @@ class SelectCase {
 	 * The isLTE method is used to check if the pick value is less than or equal to the select case statement.
 	 */
 	isLTE(pick) {
+		//from small to big
+		this.arr.sort((a, b) => a.cond - b.cond);
+
 		for (const element of this.arr) {
 			const { cond, result } = element;
 			const type = this.type(cond);
@@ -212,6 +221,9 @@ class SelectCase {
 	 * The isGTE method is used to check if the pick value is greater than or equal to the select case statement.
 	 */
 	isGTE(pick) {
+		//from big to small
+		this.arr.sort((a, b) => b.cond - a.cond);
+
 		for (const element of this.arr) {
 			const { cond, result } = element;
 			const type = this.type(cond);

@@ -1,6 +1,11 @@
 
 function onUseDrags(enemy){
-	const { id, tags, effects, doDelta } = this
+	const { tags, effects, doDelta } = this
+	let id = this.id
+	if(this.alias){
+		id = this.alias
+	}
+
 	let palams = '';
 
 	effects.forEach((effect) => {
@@ -168,7 +173,7 @@ const iMedicines = [
 		onUse: onUseDrags,
 	},
 	{
-		tags: ["cream"],
+		tags: ["cream", "lite"],
 
 		id: "bruiserelief",
 		name: ["Bruise Relief Cream", "淤青霜"],
@@ -178,8 +183,8 @@ const iMedicines = [
 			"A cream for helps relieve pain, swelling, bruise.", 
 			"一款有助于缓解疼痛、肿胀、瘀伤的药膏。"],		
 
-		num: 120,
-		usage: 6,
+		num: 8,
+		usage: 0.4,
 
 		price: 3474,
 		size: "pill",
@@ -259,9 +264,10 @@ const iDrugs = [
 	plural:"Pack of Heroin",
 
 	info: [
-	"Recreational drugs, take away your pain and stress and bring you peace",
-	"娱乐性药物，消除痛楚与烦恼，给你带来快乐",
-	],
+		"Stimulant drugs to eliminate pain and fatigue",
+		"兴奋类药物，消除痛苦与疲劳",
+		],
+	
 
 	num: 4,
 	price: 6800,
@@ -270,8 +276,7 @@ const iDrugs = [
 	effects: [
 		["pain", 50],
 		["trauma", 60],
-		["aphrod", 1000],
-		["arousal", 1000, "p"],
+		["tiredness", 200],
 		["hallucinogen", 300],
 	],
 
@@ -309,10 +314,9 @@ const iDrugs = [
 	id: "mdma",
 	name: ["MDMA", "摇头丸"],
 	plural:"Pack of MDMA",
-
 	info: [
-	"Stimulant drugs to eliminate pain and fatigue",
-	"兴奋类药物，消除痛苦与疲劳",
+		"Recreational drugs, take away your stress and bring you euphoria",
+		"娱乐性药物，消除烦恼，给你带来快乐",
 	],
 
 	num: 5,
@@ -321,7 +325,8 @@ const iDrugs = [
 
 	effects: [
 		["pain", 20],
-		["tiredness", 200],
+		["aphrod", 1000],
+		["arousal", 1000, "p"],
 	],
 
 	threshold: 0,	//安全使用次数，超过这个值会涨overdose
@@ -358,9 +363,9 @@ const iDrugs = [
 	size: "inject",
 
 	effects: [
-		["pain", 20],
-		["tiredness", 80],
-		["arousal", 1000, "p"],
+		["pain", 100],
+		["tiredness", 100],
+		["arousal", 200, "p"],
 		["aphrod", 1000],
 	],
 
@@ -390,11 +395,12 @@ const iDrugs = [
 	onHigh:function(min = 1){
 		min = Math.max(min, 1);
 
-		wikifier("arousal", 300*min, "genital");
 		iUtil.getPalam("hallucinogen", 5*min);
+		iUtil.getPalam("pain", -(10 * min));
+		iUtil.getPalam("stress", -(10 * min));
 
 		let html = lanSwitch(drugMsg[this.id]['onHigh'][flag])
-		 + `<<ggarousal>><<ghallucinogens>>`;
+		 + `<<ghallucinogens>><<lpain>><<lstress>>`;
 
 
 		//第一次显示与持续显示有差分		 
@@ -447,6 +453,150 @@ const iDrugs = [
 
 		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<lstress>>`;
 	}
+},
+{
+
+	tags: ["addiction", "drugpowder", "strong"],
+	id: "morphine",
+	name: ["Morphine", "吗啡"],
+	plural:"Pack of Morphine",
+
+	info:[
+		"Strong painkiller, can eliminate all pain and fatigue",
+		"强效止痛药，能消除所有痛楚与疲劳",
+	],
+
+	num: 3,
+	price: 9452,
+	size: 12,
+
+	effects:[
+		["pain", 100],
+		["tiredness", 200],
+		["aphrod", 1000],
+	],
+
+	threshold: 0,	//安全使用次数，超过这个值会涨overdose
+	maxOD: 4,		//最大过量值，超过这个值会上瘾
+	withdraw: 30, 	//出现戒断反应所需时间，单位是小时
+	quit: 40,		//戒除需求时间，单位是天
+	hours: 2,		//药效持续时间，单位是小时
+
+	onUse: onUseDrags,
+	onHigh:function(min = 1){
+		min = Math.max(min, 1);
+
+		iUtil.getPalam("pain", -(5 * min));
+		iUtil.getPalam("tiredness", -(10 * min));
+		wikifier("arousal", 300*min, "genital");
+
+		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<lpain>><<ltiredness>><<ggarousal>>`;
+	},
+	onWake:function(){
+		wikifier("tiredness", 100);
+		iUtil.getPalam("pyshique", -50);
+
+		return lanSwitch(drugMsg[this.id]['onWake']) + `<<ggtiredness>><<lllpyshique>>`;
+	
+	}
+},
+{
+	tags: ["addiction", "drugpowder", "strong"],
+	id: "ketamine",
+	name: ["Ketamine", "K粉"],
+	plural:"Pack of Ketamine",
+
+	info:[
+		"Kind of hallucinogen, bring you to a fantasy world",
+		"一种致幻剂，带你进入幻想世界",
+	],
+
+	effects:[
+		["hallucinogen", 300],
+		["aphrod", 500],
+	],
+
+	threshold: 0,	//安全使用次数，超过这个值会涨overdose
+	maxOD: 4,		//最大过量值，超过这个值会上瘾
+	withdraw: 18, 	//出现戒断反应所需时间，单位是小时
+	quit: 40,	  //戒除需求时间，单位是天
+	hours: 1,	  //药效持续时间，单位是小时
+
+	onUse: onUseDrags,
+	onHigh: function(min = 1){
+		min = Math.max(min, 1);
+
+		iUtil.getPalam("hallucinogen", 5 * min);
+		wikifier("arousal", 100*min, "genital");
+
+		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<ghallucinogens>><<ggarousal>>`;
+	}
+
+},
+{
+	tags: ["addiction", "candy", "strong"],
+	id: "iceshard",
+	name: ["Ice shard", "冰毒"],
+	plural:"Pack of Ice shard",
+
+	info:[
+		"Recreational drugs, bring you happiness and sweet dreams",
+		"娱乐类药物，给你带来快乐与美梦。"
+	],
+
+	effects:[
+		["arousal", 1000, "p"],
+		["aphrod", 4000],
+		["hallucinogen", 100],
+	],
+
+	threshold: 0,	//安全使用次数，超过这个值会涨overdose
+	maxOD: 5,		//最大过量值，超过这个值会上瘾
+	withdraw: 16, 	//出现戒断反应所需时间，单位是小时
+	quit: 42,	  //戒除需求时间，单位是天
+	hour: 2,	  //药效持续时间，单位是小时
+
+	onUse: onUseDrags,
+	onHigh:function(min = 1){
+		min = Math.max(min, 1);
+
+		iUtil.getPalam("hallucinogen", 5 * min);
+		wikifier("arousal", 500*min, "genital");
+
+		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<ghallucinogens>><<ggarousal>>`;
+	}
+},
+{
+	tags: ["addiction", "candy", "risky"],
+	id: "fizzy",
+	name: ["Fizzy", "菲仔"],
+	plural:"Pack of Fizzy",
+
+	info:[
+		"A kind of new drug, looks like a jelly bean.",
+		"一种新型毒品，看起来与跳跳糖差不多。"
+	],
+
+	effects:[
+		["aphrod", 1000],
+		["drunk", 500],
+	],
+
+	threshold: 0,	//安全使用次数，超过这个值会涨overdose
+	maxOD: 5,		//最大过量值，超过这个值会上瘾
+	withdraw: 18, 	//出现戒断反应所需时间，单位是小时
+	quit: 38,	  //戒除需求时间，单位是天
+	hours: 2,	  //药效持续时间，单位是小时
+
+	onUse: onUseDrags,
+	onHigh:function(min = 1){
+		min = Math.max(min, 1);
+
+		wikifier("drunk", 20 * min);
+		wikifier("arousal", 100*min, "genital");
+		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<ggdrunk>><<ggarousal>>`;
+	}
+
 },
 
 {
@@ -508,99 +658,153 @@ const iDrugs = [
 		return lanSwitch(drugMsg[this.id]['onWithdraw']) + `<<lllcontrol>><<gggstress>>`;
 	}
 },
-
-{
-	tags: ["addiction", "inject", "immediate"],
-
-	id: "angelpowder",
-	name: ["Angel Powder", "天使粉"],
-	plural:"Pack of Angel Powder",
-
-	info: [
-		"Fast-acting psychotropic drugs, takes you fly to heaven",
-		"速效精神药物，带你直上天国。",
-	],
-
-	num: 2,
-	price: 28680,
-	size: "inject",
-	
-	effects: [
-		["pain", 100],
-		["trauma", 320],
-		["stress", 36],
-		["aphrod", 1000],
-		["drunk", 1000],
-	],
-
-	threshold: 0, //安全使用次数，超过这个值会涨overdose
-	maxOD: 0,	  //最大过量值，超过这个值会上瘾
-	withdraw: 16, //出现戒断反应所需时间，单位是小时
-	quit: 64,  //戒除需求时间，单位是天
-	hours: 2,   //药效持续时间，单位是小时
-
-	_onUse: onUseDrags,
-	onUse: function(enemy){
-		const html = this._onUse(enemy);
-		//提升全部感官
-		iCandy.senseSet("genital", this.id, 0.5,  3*60*60 , 0.01);
-		iCandy.senseSet("bottom", this.id, 0.5,  3*60*60 , 0.01);
-		iCandy.senseSet("breast", this.id, 0.5,  3*60*60 , 0.01);
-		iCandy.senseSet("mouth", this.id, 0.5,  3*60*60 , 0.01);
-		return html
-	
-	},
-	onHigh:function (min = 1){
-		min = Math.max(min, 1);
-		wikifier("hallucinogen", 5 * min);
-		wikifier("arousal", 4000, "genital");
-		iUtil.getPalam("stress", 30 * min);
-
-		return lanSwitch( drugMsg[this.id]['onHigh'])
-		 + `<<gggarousal>><<ghallucinogens>><<lstress>>`;
-	},
-	onWake:function(){
-		let physique = random(30, 80) / 10;
-		wikifier("physique_loss", physique);
-	
-		wikifier("control", -20);
-		wikifier("stress", 120);
-
-		return lanSwitch(drugMsg[this.id]['onWake'])
-		+ `<<lcontrol>><<lphysique>><<gggstress>>`;
-	},
-	onDay:function(){
-		let physique = random(40, 80);
-		iUtil.getPhysique(physique);
-	
-		let will = random(10, 20);
-		wikifier("willpower", will);
-	
-		wikifier("awareness", -6);
-		wikifier("pain", -20);
-		wikifier("trauma", -20);
-		wikifier("stress", -10);
-		wikifier("tiredness", -30);
-	
-		wikifier("arousal", 300);
-
-		return lanSwitch(drugMsg[this.id]['onDay'])
-		 + `<<gphysique>><<gwillpower>><<llawareness>><<lllpain>><<lltrauma>><<llstress>><<lltiredness>><<ggarousal>>`
-	},
-	onWithdraw:function(){
-		let physique = random(60, 120) / 10;
-		wikifier("physique_loss", physique);
-	
-		let will = random(20, 40);
-		wikifier("willpower", -will);
-	
-		let stress = random(12, 18);
-		wikifier("stress", stress);
-
-		return lanSwitch(drugMsg[this.id]['onWithdraw'])
-		 + `<<lphysique>><<lwillpower>><<ggstress>>`;
-	}
-},
 ];
 
+function angelOnUse(enemy){
+	const html = this._onUse(enemy);
+	//提升全部感官
+	iCandy.senseSet("genital", this.id, 0.5,  3*60*60 , 0.01);
+	iCandy.senseSet("bottom", this.id, 0.5,  3*60*60 , 0.01);
+	iCandy.senseSet("breast", this.id, 0.5,  3*60*60 , 0.01);
+	iCandy.senseSet("mouth", this.id, 0.5,  3*60*60 , 0.01);
+	return html
+}
+
+function angelOnHigh(min = 1){
+	min = Math.max(min, 1);
+	wikifier("hallucinogen", 5 * min);
+	wikifier("arousal", 4000, "genital");
+	iUtil.getPalam("stress", 30 * min);
+
+	return lanSwitch( drugMsg[this.id]['onHigh'])
+	 + `<<gggarousal>><<ghallucinogens>><<lstress>>`;
+}
+
+function angelOnWake(){
+	let physique = random(30, 80) / 10;
+	wikifier("physique_loss", physique);
+
+	wikifier("control", -20);
+	wikifier("stress", 120);
+
+	return lanSwitch(drugMsg[this.id]['onWake'])
+	+ `<<lcontrol>><<lphysique>><<gggstress>>`;
+}
+
+function angelOnDay(){
+	let physique = random(40, 80);
+	iUtil.getPhysique(physique);
+
+	let will = random(10, 20);
+	wikifier("willpower", will);
+
+	wikifier("awareness", -6);
+	wikifier("pain", -20);
+	wikifier("trauma", -20);
+	wikifier("stress", -10);
+	wikifier("tiredness", -30);
+
+	wikifier("arousal", 300);
+
+	return lanSwitch(drugMsg[this.id]['onDay'])
+	 + `<<gphysique>><<gwillpower>><<llawareness>><<lllpain>><<lltrauma>><<llstress>><<lltiredness>><<ggarousal>>`
+}
+
+function angelOnWithdraw(){
+	let physique = random(60, 120) / 10;
+	wikifier("physique_loss", physique);
+
+	let will = random(20, 40);
+	wikifier("willpower", -will);
+
+	let stress = random(12, 18);
+	wikifier("stress", stress);
+
+	return lanSwitch(drugMsg[this.id]['onWithdraw'])
+	 + `<<lphysique>><<lwillpower>><<ggstress>>`;
+}
+
+const magicDrugs = [
+	{
+		tags: ["addiction", "inject", "immediate"],
+	
+		id: "angelpowder_inject",
+		alias: "angelpowder",
+		name: ["Angel Injection", "天使针剂"],
+		plural:"Angel Injection",
+	
+		info: [
+			"The injection of angel powder. Fast-acting psychotropic drugs, takes you fly to heaven",
+			"天使粉的针剂版。速效精神药物，带你直上天国。",
+		],
+	
+		num: 2,
+		price: 28680,
+		size: "inject",
+		
+		effects: [
+			["pain", 100],
+			["trauma", 320],
+			["stress", 50],
+			["aphrod", 2000],
+			["drunk", 1000],
+		],
+	
+		threshold: 0, //安全使用次数，超过这个值会涨overdose
+		maxOD: 0,	  //最大过量值，超过这个值会上瘾
+		withdraw: 16, //出现戒断反应所需时间，单位是小时
+		quit: 64,  //戒除需求时间，单位是天
+		hours: 2,   //药效持续时间，单位是小时
+	
+		_onUse: onUseDrags,
+		onUse: angelOnUse,
+		onHigh:angelOnHigh,
+		onWake: angelOnWake,
+
+		onDay:angelOnDay,
+
+		onWithdraw:angelOnWithdraw,
+
+	},
+	{
+		tags: ["addiction", "drugpowder", "immediate"],
+	
+		id: "angelpowder",
+		name: ["Angel Injection", "天使针剂"],
+		plural:"Angel Injection",
+	
+		info: [
+			"The injection of angel powder. Fast-acting psychotropic drugs, takes you fly to heaven",
+			"天使粉的针剂版。速效精神药物，带你直上天国。",
+		],
+	
+		num: 2,
+		price: 28680,
+		size: 12,
+		
+		effects: [
+			["pain", 100],
+			["trauma", 320],
+			["stress", 36],
+			["aphrod", 1000],
+			["drunk", 1000],
+		],
+	
+		threshold: 0, //安全使用次数，超过这个值会涨overdose
+		maxOD: 0,	  //最大过量值，超过这个值会上瘾
+		withdraw: 16, //出现戒断反应所需时间，单位是小时
+		quit: 64,  //戒除需求时间，单位是天
+		hours: 2,   //药效持续时间，单位是小时
+	
+		_onUse: onUseDrags,
+		onUse: angelOnUse,
+		onHigh:angelOnHigh,
+		onWake: angelOnWake,
+
+		onDay:angelOnDay,
+		onWithdraw:angelOnWithdraw,
+	},
+]
+
 Items.addItems(iDrugs, "drugs")
+Items.addItems(magicDrugs, "drugs")
