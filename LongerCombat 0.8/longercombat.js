@@ -162,7 +162,7 @@ function simpleEjaculation(){
 }
 
 function longerCombat(){
-    if(V.combat == 1){
+    if(V.combat == 1 && V.stalk !== true){
 
         if(!setup.longerCombat){
             console.log('longer combat is running.')

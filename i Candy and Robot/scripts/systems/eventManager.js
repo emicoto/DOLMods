@@ -23,8 +23,8 @@ const eventManager = {
         V.tvar.eventnext = obj.eventnext
     },
 
-    unsetEvent: function(event){
-        delete R.tvar.scene[event]
+    unsetEvent: function(){
+        R.tvar.scene={}
     },
 
     getEvent: function(event){
@@ -55,6 +55,9 @@ const eventManager = {
                     _event.passage = `iCandyMod ${data.type} ${event} ${data.episode}`
                     if(data.branch){
                         _event.passage += ` ${data.branch}`
+                    }
+                    if(Story.has(_event.passage + ` ${setup.language}`)){
+                        _event.passage += ` ${setup.language}`
                     }
                     this.setScene(event, _event)
                     break

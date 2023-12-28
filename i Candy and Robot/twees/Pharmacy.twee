@@ -88,7 +88,7 @@
 <<widget "brothelDrugs">>
 	<<if R.flags.brothel.intro is undefined>>
 		当你走在妓院过道里时，偶尔能看到一些瘾君子哆嗦着身体匆匆路过。<br>
-		<<set R.flags.brothel.introto 1>>
+		/*<<set R.flags.brothel.intro to 1>>*/
 	<<else>>
 	<</if>>
 <</widget>>

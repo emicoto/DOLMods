@@ -15,7 +15,9 @@
 <<widget "iCandyReady">>
 <!-- 在PassageReady里的处理  -->
 <<run console.log('check passage in ready:',passage())>>
+<<if passage() isnot 'Start' or passage() isnot 'Staet2'>>
 <<run iEvent.eventProcess(R.scene)>>
+<</if>>
 
 <</widget>>
 

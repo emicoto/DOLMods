@@ -134,6 +134,7 @@ function dayProcess(sec, day, weekday){
 function iCombatHandle(){
 	//非战斗场景跳过
 	if(V.combat == 0) return;
+	if(V.stalk == true) return
 	//合意场景的情况看对象是谁
 	if(V.consensual == 1 && V.npc_name !== 0) return;
 	//当pc处于反抗状态且处于优势时，跳过事件。

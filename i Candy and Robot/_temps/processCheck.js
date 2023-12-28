@@ -41,6 +41,7 @@ DefineMacroS('checkDayPass', checkDayPass)
 
 function combatEffect(){
 	if(V.combat == 0) return
+	if(V.stalk == true) return
 	//合意场景对象不是惠特尼也返回.
 	if(V.consensual==0) return
 

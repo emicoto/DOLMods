@@ -1273,7 +1273,7 @@
 		'Widgets Named Npcs':[
 			{
 				src:'<<relationshiptext>>',
-				to:'<<if NamedNPC.has($NPCName[_i].nam) >= 0>><<ModaddNPCRelationText>><<else>><<relationshiptext>><</if>>'
+				to:'<<if NamedNPC.has($NPCName[_i].nam) >= 0 or SugarCube.Macro.has($NPCName[_i].nam+"Opinion")>><<ModaddNPCRelationText>><<else>><<relationshiptext>><</if>>'
 			}
 		],
 		'Widgets':[
