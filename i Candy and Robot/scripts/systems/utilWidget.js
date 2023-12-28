@@ -70,6 +70,18 @@ const iUtil = {
 
 	},
 
+	useItemPassTime : function(itemdata){
+		const { type, tags } = itemdata
+		const time = {
+			consumable : 5,
+			foods : 5,
+			cooking : 10,
+			drugs: 3,
+			medicine : 2,
+		}
+		return time[type] || 1
+	},
+
 	printEquipment : function (){
 		let html = ``
 		const equip = ['held', 'bag', 'wallet', 'cart']
@@ -172,11 +184,11 @@ const iUtil = {
 					<</link>>`
 				}
 				else if(!data.require && (data.effects.length > 0 || typeof data.onUse == 'function')){
-					 _html += `<<link "${method}" "iCandyMod UseItems">>
+					 _html += `<<link "${method}" "iMod UseItems">>
 					 	<<set $tvar.useItem to ["${slot}", ${i}]>>
 						<<set $tvar.itemdata to Items.get("${item.id}")>>
 						<<set $tvar.img to "${img}">>
-						<<if $passage isnot "iCandyMod UseItems">>
+						<<if $passage isnot "iMod UseItems">>
 							<<set $tvar.exitPassage to $passage>>
 						<</if>>
 					 <</link>>`
@@ -250,7 +262,7 @@ function printMedicineLink(itemId, diff){
 
 
 
-	return `<<itemIcon '${img}'>><<link '${linkname}' 'iCandyMod Pharmacy Sale'>><<set $pharmacyItem to Items.get("${itemId}")>><</link>><br>`
+	return `<<itemIcon '${img}'>><<link '${linkname}' 'iMod Pharmacy Sale'>><<set $pharmacyItem to Items.get("${itemId}")>><</link>><br>`
 }
 
 DefineMacroS('iMedicineLink', printMedicineLink)

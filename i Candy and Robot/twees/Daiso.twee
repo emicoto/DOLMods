@@ -1,15 +1,13 @@
-:: iCandyMod Script DaisoShop [script]
-console.log('iCandyMod Script DaisoShop [script]')
-
-:: iCandyMod Widget DaisoShop [widget]
+:: iMod Widget DaisoShop [widget]
 <<widget "daisoEntrance">>
-    <<set _link to lanSwitch("Daiso General Shop", "大创百货商店")>>
-    <<daisoicon>><<link _link "iCandyMod BaseScene DaisoShop">>
+    <<set _link to lanSwitch("Daiso General Shop", "大创百货商店") + '(00:01)'>>
+    <<daisoicon>><<link _link "iMod BaseScene DaisoShop">>
         <<set R.scene to "DaisoShop">>
+        <<pass 1>>
     <</link>>
 <</widget>>
 
-:: iCandyMod BaseScene DaisoShop [scene]
+:: BaseScene DaisoShop [scene]
 <<set $outside to 0>><<set $location to "shopping_centre">><<effects>>
 
 <<if iEvent.getFlag('DaisoShop', 'intro') is 1>>
@@ -38,25 +36,32 @@ console.log('iCandyMod Script DaisoShop [script]')
 
 <<if $stress gte $stressmax>>
 	<<passoutshop>>
-<<else>>
+<<elseif $tvar.scene.passage>>
     <<include $tvar.scene.passage>>
+<<else>>
+    <<include 'Scene DaisoShop General'>>
 <</if>>
 
 <<if $tvar.eventnext is true>>
     <<set _link = lanSwitch('Next', '继续')>>
     <<link 'Next' $passage>>
+        <<run iEvent.initScene()>>
         <<pass 1>>
-        <<=V.tvar.scene.nextcode>>
+        <<if $tvar.scene.nextcode>>
+            <<=$tvar.scene.nextcode>>
+        <</if>>
     <</link>>
+<<elseif $tvar.onselect is true>>
+    <<set $tvar.onselect to false>>
 <<else>>
     <<set _link = lanSwitch('Leave', '离开')>>
     <<getouticon>><<link _link "Shopping Centre">>
-        <<run iUtil.resetTvar('exitPassage')>>
-        <<pass 10>>
+        <<run iUtil.resetTvar('exitPassage'); iEvent.unsetEvent()>>
+        <<pass 1>>
     <</link>>    
 <</if>>
 
-:: iCandyMod Event DaisoShop Intro
+:: Event DaisoShop Intro
 <<generateRole 0 0 "clerk">><<person1>>
 
 <<run 
@@ -161,7 +166,7 @@ iEvent.setFlag('DaisoShop', 'intro', 1)
 )>>
 <br><br>
 
-:: iCandyMod Scene DaisoShop General
+:: Scene DaisoShop General
 
 <<=lanSwitch(
     "Here are many goods for sale, you can browse around and find something you like.",

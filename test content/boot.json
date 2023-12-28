@@ -2,14 +2,13 @@
   "name": "test",
   "version": "1.0.0",
   "scriptFileList_inject_early": [
+    "test1.js"
   ],
   "scriptFileList_earlyload": [ ],
    "scriptFileList_preload": [ ],
   "styleFileList": [],
   "scriptFileList": [
-    "test1.js",
-    "test2.js",
-    "test3.js"
+    "test2.js"
   ],
   "tweeFileList": [
   ],

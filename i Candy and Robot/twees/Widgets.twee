@@ -1,4 +1,4 @@
-:: iCandyMod Widgets [widget]
+:: iMod Widgets [widget]
 
 <<widget "candySkills">>
 <<set _mechanicConfig = { 

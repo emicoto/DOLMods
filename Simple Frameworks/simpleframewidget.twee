@@ -181,6 +181,11 @@
 <</if>>
 <</widget>>
 
+<<widget "ModOpinionIcon">>
+<<if SugarCube.Macro.has($args[0]+'OpinionIcon')>>
+    <<print '<<'+$args[0]+'OpinionIcon>>'>>
+<</if>>
+<</widget>>
 
 <<widget "iModReplace">>
 	<<set _key to _args[0]>>
@@ -202,6 +207,7 @@
 	<</script>>
 	<<print '<<'+_key+'>>'>>
 <</widget>>
+
 
 <<widget "ModShopZone">>
     

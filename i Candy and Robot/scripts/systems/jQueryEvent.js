@@ -20,17 +20,18 @@ $(document).on(':passageinit', ()=>{
 	T.addMsg = ''; //效果区的显示信息
 	T.afterMsg = '';//addAfterMsg区的显示信息
 
-	if(V.iCandyRobot){
-		if(!R.combat){
-			R.combat = {
-				angel:0, total:0,
-			}
-		}
-		else if(V.combat == 0){
-			R.combat = null
+	if(!V.iCandyRobot) return
+
+	if(!R.combat){
+		R.combat = {
+			angel:0, total:0,
 		}
 	}
+	else if(V.combat == 0){
+		R.combat = {}
+	}
 	console.log('check passage in init:', passage())
+	R.lastPassage = passage()
 })
 
 

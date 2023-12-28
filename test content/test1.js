@@ -1,2 +1,2 @@
-const modTestContent = 'test1.js'
-console.log(modTestContent)
+simpleFrameworks.addto('iModReady','testReady')
+simpleFrameworks.addto('iModHeader','testHeader')

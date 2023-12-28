@@ -44,11 +44,6 @@ window.dlog = function (type = "log", ...args) {
 		return x >= min && x <= max;
 	}
 
-	//check x is between min and max
-	function between(x, min, max) {
-		return x > min && x < max;
-	}
-
 	//make a random number
 	function random(min, max) {
 		if (!max) {
@@ -218,7 +213,6 @@ window.dlog = function (type = "log", ...args) {
 
 	Object.defineProperties(window, {
 		inrange: { value: inrange },
-		between: { value: between },
 		random: { value: random },
 		maybe: { value: maybe },
 		compares: { value: compares },

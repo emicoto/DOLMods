@@ -1,4 +1,4 @@
-:: iCandyMod PharmacyItems [widget]
+:: iMod PharmacyItems [widget]
 <<widget "ExtraPharmacy">>
 	<<lanSwitch 'General Medicine' '常规药'>>:
 	<br>
@@ -17,7 +17,7 @@
 <</widget>>
 
 
-:: iCandyMod Pharmacy Sale
+:: iMod Pharmacy Sale
 <<set $outside to 0>><<set $location to 'hospital'>><<effects>>
 <<formatmoney $pharmacyItem.price>>
 
@@ -83,16 +83,5 @@
 <<set _output to lanSwitch("Don't buy", "不买了")>>
 <<link _output 'Pharmacy'>><</link>>
 
-:: Brothel Drugs [widget]
 
-<<widget "brothelDrugs">>
-	<<if R.flags.brothel.intro is undefined>>
-		当你走在妓院过道里时，偶尔能看到一些瘾君子哆嗦着身体匆匆路过。<br>
-		/*<<set R.flags.brothel.intro to 1>>*/
-	<<else>>
-	<</if>>
-<</widget>>
 
-:: Brothel Drugs Ask
-
-<<link '返回' 'Brothel'>><<pass 1>><</link>>

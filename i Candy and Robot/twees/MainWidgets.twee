@@ -1,4 +1,4 @@
-:: iCandyMod [widget]
+:: iMod [widget]
 <<widget "iCandyHeader">>
 <!-- 在PassageHeader里的处理  -->
 <<run console.log('check passage in header:',passage())>>
@@ -14,9 +14,9 @@
 
 <<widget "iCandyReady">>
 <!-- 在PassageReady里的处理  -->
-<<run console.log('check passage in ready:',passage())>>
-<<if passage() isnot 'Start' or passage() isnot 'Staet2'>>
-<<run iEvent.eventProcess(R.scene)>>
+<<run console.log('check passage in ready:', passage())>>
+<<if passage() isnot 'Start' or passage() isnot 'Start2'>>
+    <<run iEvent.eventReady()>>
 <</if>>
 
 <</widget>>
@@ -24,7 +24,10 @@
 
 <<widget "iCandyDone">>
 <!-- 在PassageDone里的处理  -->
-
+<<if $tvar.jump>>
+    <<set $tvar.jump to false>>
+    <<run SugarCube.Engine.play($tvar.scene.scenestage)>>
+<</if>>
 
 <</widget>>
 

@@ -276,7 +276,7 @@ function iCandyInit(){
 		V[i] = clone(iModVariables[i])
 
 	}
-	setup.iCandyMod = "variable init"
+	setup.iCandyMod = "ready"
 	if(V.passage == 'Start'){
 		Items.init()
 	}

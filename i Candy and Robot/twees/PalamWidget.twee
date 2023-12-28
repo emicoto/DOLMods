@@ -1,4 +1,4 @@
-:: iCandyMod Palam Widgets [widget]
+:: iMod Palam Widgets [widget]
 
 <<widget "nicotine">>
 	<<if $args[0]>>

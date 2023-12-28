@@ -1,4 +1,4 @@
-:: iCandyMod UseItems [scene]
+:: iMod UseItems [scene]
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
 <<itemIcon $tvar.img>>  
@@ -12,23 +12,23 @@
 <<else>>
     <<set _link = lanSwitch('Back', '返回')>>
     <<link _link $tvar.exitPassage>>
-        <<set _time to iUtil.useItemPassTime(#tvar.itemdata)>>
+        <<set _time to iUtil.useItemPassTime($tvar.itemdata)>>
         <<run iUtil.resetTvar('exitPassage', 'itemdata', 'useItem', 'img')>>        
         <<pass _time>>
     <</link>>  
 <</if>>
 
-:: iCandyMod TransferItems [scene]
+:: iMod TransferItems [scene]
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
 
 
-:: iCandyMod Storage [scene]
+:: iMod Storage [scene]
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
 
 
-:: iCandyMod Druggs Event [scene]
+:: iMod Druggs Event [scene]
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
 <<include $tvar.eventPassage>>

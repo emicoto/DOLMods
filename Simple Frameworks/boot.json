@@ -2,7 +2,8 @@
   "name": "Simple Frameworks",
   "version": "1.3.0",
   "scriptFileList_inject_early": [
-    "simplewidget.js"
+    "simplewidget.js",
+    "util.js"
   ],
   "scriptFileList_earlyload": [
     "preload.js"
@@ -13,7 +14,7 @@
   ],
   "scriptFileList": [
     "selectcase.js",
-    "util.js",
+
     "CNCodeResolver.js",
     "onSetup.js"
   ],

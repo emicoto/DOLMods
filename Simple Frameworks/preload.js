@@ -1273,7 +1273,7 @@
 		'Widgets Named Npcs':[
 			{
 				src:'<<relationshiptext>>',
-				to:'<<if NamedNPC.has($NPCName[_i].nam) >= 0 or SugarCube.Macro.has($NPCName[_i].nam+"Opinion")>><<ModaddNPCRelationText>><<else>><<relationshiptext>><</if>>'
+				to:'<<if NamedNPC.has($NPCName[_i].nam) >= 0 or SugarCube.Macro.has($NPCName[_i].nam+"Opinion")>><<ModaddNPCRelationText>><<else>><<relationshiptext>><</if>><<if SugarCube.Macro.has($NPCName[_i].nam+"OpinionIcon")>><<ModOpinionIcon $NPCName[_i].nam>><</if>>'
 			}
 		],
 		'Widgets':[
@@ -1527,6 +1527,30 @@
 		return passage
 	}
 	
+	//patchlocationtag
+	function patchLocationTag(passage, title){
+		let source = passage.content
+		const Keys = ['Accept', 'Approach', 'Arrest', 'Ask', 'Avoid', 'Away','Assault', 'Box', 'Break', 'Buy', 'Cat', 'Chase', 'Chastity', 'Chat', 'Christmas', 'Clean', 'Cow', 'Cuddle', 'Daydream', 'Dinner', 'Dog', 'Drink', 'End', 'Escape', 'Event', 'Ex ', 'Exam', 'Exhibit', 'Exposed', 'Finish', 'Flirt', 'Fox', 'Gift', 'Halloween', 'Hand', 'Harpy', 'Help', 'Hide', 'Horse', 'Hug', 'Ignore', 'Intro', 'Job', 'Join', 'Kiss', 'Leash', 'Leave', 'Lesson', 'Lichen', 'Lock', 'Look', 'Lunch', 'Masturb', 'Meek', 'Milk', 'Molestation', 'Nude', 'Obey', 'Offer', 'Okay', 'Oral', 'Party', 'Pay', 'Pet', 'Pill', 'Play', 'Pose', 'Punish', 'Push', 'Rage', 'Rape', 'Refuse', 'Rescue', 'Resist', 'Rest', 'Return', 'Sale', 'Seduce', 'Sell', 'Sex', 'Shove', 'Shy', 'Sit ', 'Slime', 'Snake', 'Sneak', 'Spit', 'Start', 'Steal', 'Strip', 'Struggle', 'Study', 'Sub', 'Swarm', 'Swim', 'Swin', 'Talk', 'Tease', 'Test', 'Towel', 'Wait', "Wash", "Watch", "Whore", "Work", "Tutorial"]
+		const actions = ['<<voreactions>>', '<<swarmactions>>','<<masturbationactions>>','<<farm_milk_actions>>', '<<danceactions>>', '<<machine_actions>>','<<chikanmolestactions>>','<<meetingmolestactions>>','<<meetingpetactions>>','<<spa_actions>>','<<dancestripactions>>']
+
+		if(
+			source.has('<<set $location', '<<location') &&
+			!source.has('<<man>>', '<<endcombat>>', '<<actions') &&
+			!source.has(...actions) &&
+			!source.mach(/<<set \$phase to (2|3|4|5|6|7|8|9|10|11|12)/) &&
+			!passage.name.match(/\d+/) &&
+			!passage.name.has(...Keys)
+		){
+			if(passage.tags[0] == ''){
+				passage.tags[0] = 'location'
+			}
+			else{
+				passage.tags.push('location')
+			}
+		}
+		return passage
+	}
+
 	function patchPasssage2(passage, title){
 	
 		if(passage.tags.includes('widget')){
@@ -1534,7 +1558,8 @@
 		}
 		else{
 			patchScene(passage, title)
-			patchPassage(passage, title)		
+			patchPassage(passage, title)	
+			patchLocationTag(passage, title)	
 		}
 	
 	}
