@@ -281,6 +281,9 @@ function iCandyInit(){
 		Items.init()
 	}
 	
+	for(const [key, datas] of Object.entries(iEvent.data)){
+		datas.sort((a, b)=>{ b.priority - a.priority })
+	}
 }
 DefineMacroS('iCandyInit', iCandyInit)
 
