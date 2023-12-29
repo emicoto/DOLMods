@@ -25,6 +25,8 @@ const eventManager = {
     unsetEvent: function(){
         V.tvar.scene = {}
         V.phase = 0
+        V.tvar.eventnext = false
+        V.tvar.onselect = false
         wikifier('endevent')
     },
 
