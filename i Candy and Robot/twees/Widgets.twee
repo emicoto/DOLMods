@@ -45,12 +45,12 @@
 
 <<widget "daisoicon">>
 	<<if $options.images is 1>>
-		<img class="icon" src="img/daiso.png">
+		<img class="icon" src="img/misc/daiso.png">
 	<</if>>
 <</widget>>
 
 <<widget "repairicon">>
 	<<if $options.images is 1>>
-		<img class="icon" src="img/repair.png">
+		<img class="icon" src="img/misc/repair.png">
 	<</if>>
 <</widget>>

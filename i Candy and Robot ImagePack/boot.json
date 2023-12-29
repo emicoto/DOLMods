@@ -12,23 +12,23 @@
  "tweeFileList": [
  ],
  "imgFileList": [
-    "img/candyflossmachine.png",
-    "img/chinatown.png",
-    "img/cook.png",
-    "img/craft.png",
-    "img/daiso.png",
-    "img/firepan.png",
-    "img/Gachapon_empty.png",
-    "img/Gachapon_full.png",
-    "img/Gachapon_half.png",
-    "img/land_shrine.png",
-    "img/medicine.png",
-    "img/qian.png",
-    "img/repair.png",
-    "img/researchInstitute.png",
-    "img/takeblood.png",
-    "img/toolbox.png",
-    "img/xianglu.png",
+    "img/misc/candyflossmachine.png",
+    "img/misc/chinatown.png",
+    "img/misc/cook.png",
+    "img/misc/craft.png",
+    "img/misc/daiso.png",
+    "img/misc/firepan.png",
+    "img/misc/Gachapon_empty.png",
+    "img/misc/Gachapon_full.png",
+    "img/misc/Gachapon_half.png",
+    "img/misc/land_shrine.png",
+    "img/misc/medicine.png",
+    "img/misc/qian.png",
+    "img/misc/repair.png",
+    "img/misc/researchInstitute.png",
+    "img/misc/takeblood.png",
+    "img/misc/toolbox.png",
+    "img/misc/xianglu.png",
     "img/items/bag_none.png",
     "img/items/cart_none.png",
     "img/items/held_none.png",
@@ -161,6 +161,13 @@
    "modVersion": "1.0.0",
    "params": [
    ]
+  },
+  {
+   "modName": "ModLoader DoL ImageLoaderHook",
+   "addonName": "ImageLoaderHookAddon",
+   "modVersion": "^2.3.0",
+   "params": [
+   ]
   }
  ],
  "dependenceInfo": [
@@ -174,7 +181,7 @@
   },
   {
    "modName": "i, Candy + Robot",
-   "version": ">=1.8.0"
+   "version": ">=2.1.0"
   }
  ]
 }
