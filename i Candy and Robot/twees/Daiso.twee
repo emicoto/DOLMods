@@ -66,7 +66,7 @@
 <<run iEvent.setFlag('DaisoShop', 'intro', 1)>>
 
 
-当你踏入了Daiso百货商店，刚推开门就听到了热情友好的欢迎问候。"
+当你踏入了Daiso百货商店，刚推开门就听到了热情友好的欢迎问候。
 <br><br>
 
 “欢迎光临！有什么需要帮忙的吗？”
@@ -138,9 +138,9 @@ You step into the Daiso General Shop, and as soon as you push the door open, you
 
     The clerk then reaches for a towel from a nearby shelf and hands it to you, suggesting that you wrap it around yourself.
 
-        <<if $leftarm is "bound" and $rightarm is "bound">>
-        Then <<he>> also help you untie your hands.
-        <</if>>
+    <<if $leftarm is "bound" and $rightarm is "bound">>
+    Then <<he>> also help you untie your hands.
+    <</if>>
     <br>
 
     <<towelup>>
@@ -153,7 +153,7 @@ You step into the Daiso General Shop, and as soon as you push the door open, you
     <br>
 
 <<elseif $exposed == 1>>
-    然而当店员注意到你暴露的穿着，脸上的表情也显得尴尬起来，给了你块纸板遮挡一下。
+    However, as soon as the store clerk notices your exposed appearance, <<his>> face looks embarrassed and gives you a cardboard to cover up.
     <<if $leftarm is "bound" and $rightarm is "bound">>
     Then they also help you untie your hands.
     <</if>>
