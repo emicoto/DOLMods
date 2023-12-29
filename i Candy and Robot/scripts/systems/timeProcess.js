@@ -143,12 +143,6 @@ function iCombatHandle(){
 		&& V.orgasmdown < 1 && V.rightarm !== 'bound' && V.leftarm !== 'bound' 
 		&& V.leftleg !== 'bound' && V.rightleg !=='bound'
 	) return;
-	if(R.combat == undefined){
-		R.combat = {
-			angel: 0,
-			total: 0
-		}
-	}
 
 	let rate = V.trauma/80 + V.stress/200
 	const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter( item => item.id !== 'angelpowder' )

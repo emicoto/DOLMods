@@ -1327,7 +1327,6 @@
 		if(source.includes('<<support>>')){
 			source = source.replace('\t\t/* 北极星模组 */\n\t\t<<support>>\n\t\t/* 北极星 */', '')
 			source = `<<if $passage isnot 'Start'>><div style="position:fixed; top:1px; font-size:smaller; left:180px"><<support>></div><</if>>\n` + source
-			console.log('北极星检测', source)
 		}
 
 		if(source.includes('"帕鲁提"')){
@@ -1337,6 +1336,8 @@
 			let [txt1, code] = widget.match(/\/\* 北极星模组 \*\/(.+)\/\* 北极星 \*\//)
 			code = code.replace(/\[n\]/g, '\n')
 			source = source.replace(code, '\t\t<<run\n\t\t\tconst bjxnpc = {\n\t\t\t\t"泰勒": {nam : "泰勒", title: "探险家", insecurity: "weak", teen: 1},\n\t\t\t\t"凯西": {nam : "凯西", title: "逃学者", insecurity: "weak", teen: 1},\n\t\t\t\t"塞伦": {nam : "塞伦", title: "见习信徒", insecurity: "skill", teen: 1},\n\t\t\t\t"帕鲁提": {nam : "帕鲁提", title: "巫师", insecurity: "skill", teen: 1, type: "cat", claws: "claws"}\n\t\t\t};\n\n\t\t\tObject.assign(_newNNPCs, bjxnpc)\n\t\t>>\n\t\t<<for _npc range Object.keys(_newNNPCs)>>\n\t\t\t<<if !$NPCNameList.includes(_newNNPCs[_npc].nam)>>\n\t\t\t\t<<newNamedNpc _newNNPCs[_npc]>>\n\t\t\t\t<<set _npcsAdded to true>>\n\t\t\t<</if>>\n\t\t<</for>>\n\t\t')
+			console.log('北极星检测', source)
+
 		}
 		
 		return source
@@ -1537,7 +1538,7 @@
 			source.has('<<set $location', '<<location') &&
 			!source.has('<<man>>', '<<endcombat>>', '<<actions') &&
 			!source.has(...actions) &&
-			!source.mach(/<<set \$phase to (2|3|4|5|6|7|8|9|10|11|12)/) &&
+			!source.match(/<<set \$phase to (2|3|4|5|6|7|8|9|10|11|12)/) &&
 			!passage.name.match(/\d+/) &&
 			!passage.name.has(...Keys)
 		){

@@ -22,7 +22,7 @@ $(document).on(':passageinit', ()=>{
 
 	if(!V.iCandyRobot) return
 
-	if(!R.combat){
+	if(!R.combat || V.combat == 1 ){
 		R.combat = {
 			angel:0, total:0,
 		}

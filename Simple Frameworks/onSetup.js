@@ -114,6 +114,7 @@ class NamedNPC {
     }
     static clear() {
         //- 清理非法NPC
+        console.log('start to reslove npcs....', clone(V.NPCName) , clone(setup.NPCNameList))
         let newnpcs = []
         for (let i = 0; i < V.NPCName.length; i++) {
             let npc = V.NPCName[i]
@@ -644,10 +645,19 @@ Save.onLoad.add(checkUpdate)
 
 $(document).on(":passagedisplay",()=>{
     //读档时的处理
-    if (setup.NPCFrameworkOnLoad === true && V.passage !== 'Start') {
+    if (setup.NPCFrameworkOnLoad === true && V.passage !== 'Start' && V.passage !== 'Downgrade Waiting Room') {
+            NamedNPC.clear()
+            NamedNPC.update()
+        setup.NPCFrameworkOnLoad = false
+    }
+    else if(setup.NPCFrameworkOnLoad === true && V.passage == 'Downgrade Waiting Room'){
+        setup.NPCFrameworkOnLoad = false
+        setup.NPCFrameworkOnDowngrade = true
+    }
+    else if(setup.NPCFrameworkOnDowngrade === true && V.passage !== 'Downgrade Waiting Room'){
         NamedNPC.clear()
         NamedNPC.update()
-        setup.NPCFrameworkOnLoad = false
+        setup.NPCFrameworkOnDowngrade = false
     }
 })
 

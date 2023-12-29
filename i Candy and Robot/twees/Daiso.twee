@@ -1,7 +1,7 @@
 :: iMod Widget DaisoShop [widget]
 <<widget "daisoEntrance">>
     <<set _link to lanSwitch("Daiso General Shop", "大创百货商店") + '(00:01)'>>
-    <<daisoicon>><<link _link "iMod BaseScene DaisoShop">>
+    <<daisoicon>><<link _link "BaseScene DaisoShop">>
         <<set R.scene to "DaisoShop">>
         <<pass 1>>
     <</link>>

@@ -154,7 +154,6 @@ const eventManager = {
                     if(data.scene){
                         _event.scenestage = `BaseScene ${data.scene}`
                     }
-                    _event.type = 'Location'
                     _event.location = passage
                     this.setScene(data.passage, _event)
                     break

@@ -272,15 +272,16 @@ function setupFeatsBoost(){
 
 
 function iCandyInit(){
-	for(let i in iModVariables){
-		V[i] = clone(iModVariables[i])
+	console.log('on iCandyInit')
 
+	for(let i in iModVariables){
+		V[i] =clone(iModVariables[i])
 	}
+
 	setup.iCandyMod = "ready"
 	if(V.passage == 'Start'){
 		Items.init()
 	}
-	
 	for(const [key, datas] of Object.entries(iEvent.data)){
 		datas.sort((a, b)=>{ b.priority - a.priority })
 	}
@@ -289,7 +290,7 @@ DefineMacroS('iCandyInit', iCandyInit)
 
 setup.iCandyBakItem = {}
 function iCandyUpdate(){
-	if(passage() == 'Start') return;
+	if(passage() == 'Start' && V.iCandyRobot) return;
 
 	if(V.iCandyStats){
 		delete V.iCandyStory

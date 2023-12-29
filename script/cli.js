@@ -33,7 +33,7 @@ function buildZip(){
       console.log(modVersionJs);
       fs.writeFileSync(path.join(file, boot.modVersionJs.file), modVersionJs);
     }
-    const output = fs.createWriteStream(path.join("build", `${file}.zip`));
+    const output = fs.createWriteStream(path.join("build", `${file} ${boot.version}.zip`));
     zip.pipe(output);
     zip.directory(file, false);
     zip.finalize();
