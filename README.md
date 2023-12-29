@@ -1,15 +1,22 @@
 # DOLMods
 一些DOL的ML版MOD
 
+下载请到右边release下载，不要从master下载！！
+
+Please download from relase, DO NOT DOWNLOAD FROM MASTER!!
+
+MOD的讨论、反馈用Q群：257791727
+
 ## LongerCombat
 更长的遭遇战。彻底根治NPC们的阳痿和早射。
 
 不但加长了AP，还会随机再来一次，并且会中途射精。
 
+Increase the max arousal for NPCs(both none name npc and named npc), the best solution of premature ejaculation issues among NPCs.
 
-Longer Combat. A solution for impotence and premature ejaculation of NPCs.
+Add a mid-combat ejaculation mechanism, along with ejaculate dialog text.
 
-Bigger AP bar and random probability makes AP bars go backwards and ejaculate during combat.
+There will be a chance for the NPC's arousal to regress and recover to around 30%, but this won't occur more than three times.
 
 ## free attitudes
 自由选择态度。
@@ -28,9 +35,9 @@ you can choose your attitude without requirement.
 这个MOD必须在排序最前面，但同时必须在汉化MOD之后（避免存在覆盖错误）
 
 
-A simple new content framework. support to add: NPC, items, text/button/statusbar/widget to UIBar, mod option in panel
+A simple new content framework, designed to support additions such as:
 
-new map entrance or new links at locations..etc
+events, items, NPCs, tattoos, explorable locations, interactions in existing locations, and the addition of goods to existing stores, etc.
 
 you can check all supportted zone at widget copy.twee
 
@@ -49,7 +56,7 @@ this mod need to be load very early, but need to be load after i18n(if you are u
 
 很多内容都是很久以前做的，正在逐步更新中。
 
-安装前需要安装简易框架。
+安装前需要安装简易框架。加载顺序：简易框架（尽量靠前）=>更长遭遇战（任意位置）=>爱糖机（尽量靠后）
 
 
 A original content mod about love, candy(drugs), robot.
@@ -60,7 +67,7 @@ new story, new skill(mechanic, chemical),new job(repair), new save house(your ap
 
 most content builded on old version, need update to ML version now.
 
-before install need install Simple framework.
+before install need install Simple framework. loadorder: Simple Frameworks(as earlier as possible)=> longer combat => i Candy Robot(as later ad possible)
 
 ## Snake Transform
 蛇的转化。目前只完成显示逻辑。

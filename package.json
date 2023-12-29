@@ -1,0 +1,36 @@
+{
+  "name": "lune-mod",
+  "version": "1.0.0",
+  "description": "一些DOL的ML版MOD",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node ./script/cli.js build",
+    "cli": "node ./script/cli.js",
+    "mod-major": "node ./script/cli.js major",
+    "mod-minor": "node ./script/cli.js minor",
+    "mod-patch": "node ./script/cli.js patch",
+    "mod-update": "node ./script/cli.js update"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emicoto/DOLMods.git"
+  },
+  "author": "Lunefox",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emicoto/DOLMods/issues"
+  },
+  "homepage": "https://github.com/emicoto/DOLMods#readme",
+  "dependencies": {
+    "archiver": "^6.0.1",
+    "commander": "^11.1.0",
+    "execa": "^8.0.1",
+    "inquirer": "^9.2.12",
+    "ora": "^8.0.1",
+    "ora-classic": "^5.4.2",
+    "semver": "^7.5.4",
+    "yargs": "^17.7.2"
+  }
+}

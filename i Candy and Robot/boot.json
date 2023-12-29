@@ -1,43 +1,39 @@
 {
- "name": "i, Candy + Robot",
- "version": "1.8.0",
- "styleFileList": [
+  "name": "i, Candy + Robot",
+  "version": "2.1.2",
+  "modVersionJs": {
+    "file": "scripts/0_framework/0_modversion.js",
+    "regex": "^(const iCandyModVersion =)(.*)"
+  },
+  "styleFileList": [
     "css/items.css"
- ],
- "scriptFileList_earlyload": [],
- "scriptFileList_inject_early": [
+  ],
+  "scriptFileList_earlyload": [],
+  "scriptFileList_inject_early": [
     "scriptEarly/SFRegist.js"
   ],
- "scriptFileList_preload": [],
- "scriptFileList": [
+  "scriptFileList_preload": [],
+  "scriptFileList": [
     "scripts/0_framework/0_modversion.js",
     "scripts/0_framework/1_setupdata.js",
     "scripts/0_framework/2_itemFrameworks.js",
-
     "scripts/database/systemMsg.js",
     "scripts/database/ItemMsg.js",
     "scripts/database/drugMsg.js",
-
     "scripts/database/itemList.js",
     "scripts/database/drugItems.js",
-
     "scripts/database/npcSetup.js",
     "scripts/database/modVariables.js",
-
     "scripts/mainModule.js",
-
     "scripts/systems/itemManager.js",
     "scripts/systems/utilWidget.js",
     "scripts/systems/eventManager.js",
-
     "scripts/systems/drugProcess.js",
     "scripts/systems/timeProcess.js",
     "scripts/systems/jQueryEvent.js",
-
     "scripts/database/SceneRegist.js"
-
- ],
- "tweeFileList": [
+  ],
+  "tweeFileList": [
     "twees/PalamWidget.twee",
     "twees/MainWidgets.twee",
     "twees/Widgets.twee",
@@ -48,104 +44,103 @@
     "twees/UseItems.twee",
     "twees/Daiso.twee",
     "twees/Brothel.twee"
- ],
- "imgFileList": [
- ],
- "additionFile": [
+  ],
+  "imgFileList": [],
+  "additionFile": [
     "replaceFiles/bedroomWidget.txt",
     "replaceFiles/drugsWidget.txt",
     "replaceFiles/drunkWidget.txt",
     "replaceFiles/journal.txt"
- ],
- "addonPlugin": [
-  {
-   "modName": "TweeReplacer",
-   "addonName": "TweeReplacerAddon",
-   "modVersion": "1.0.0",
-   "params": [
+  ],
+  "addonPlugin": [
     {
-        "passage":"PassageHeader",
-        "findString":"<<unset $bypassHeader>>",
-        "replace":"<<unset $bypassHeader>>\n<<iCandyHeader>><div id='addMsg'></div>"
-    },
-    {
-        "passage":"PassageFooter",
-        "findString":"<div id=\"gameVersionDisplay\">",
-        "replace":"<<iCandyFooter>>\n<div id=\"gameVersionDisplay\">"
-    },
-    {
-        "passage":"Widgets Journal",
-        "findRegex":"<<if\\s\\$antiquemoney[\\s\\S]+<br><<\/if>>\n<<\/widget>>",
-        "replaceFile":"replaceFiles/journal.txt"
-    },
-    {
-        "passage":"Widgets Difficulty",
-        "findString":"<<set $skulduggeryroll to random(1, 1000)>>",
-        "replace":"<<set $skulduggeryroll to random(1, 1000)>>\n<<if R.mechStats.toolset is 1>><<set $skulduggeryroll *= 1.1>><<set $skulduggerydifficulty *= 0.95>><</if>>"
-    },
-    {
-        "passage":"Widgets Sleep",
-        "findString" :"<<if $ruffledisable is \"f\">>\n\t\t<<set $_hair to",
-        "replace":"<<if $ruffledisable is \"f\" and iCandy.getConfig('keepHairs') is false >>\n\t\t<<set $_hair to"   
-    },
-	{
-        "passage": "Widgets",
-        "findString": "<</if>>\n<</widget>>\n\n\n<<widget \"tableText\">>",
-        "replaceFile": "replaceFiles/bedroomWidget.txt"
-    },
-	{
-        "passage": "Widgets Stats",
-        "findString": "\n\t\t<<set $drugged += Math.floor(_args[0] * _drugged_mod)>>\n",
-        "replaceFile": "replaceFiles/drugsWidget.txt"
-    },
-    {
-        "passage": "Widgets Stats",
-        "findString": "\n\t\t<<set $drunk += Math.floor(_args[0] * _drunk_mod)>>\n",
-        "replaceFile": "replaceFiles/drunkWidget.txt"
-    },
-    {
-        "passage": "Widgets Bodywriting",
-        "findString": "<<if (($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200)) gte 1000)>>",
-        "replace": "<<if (($enemyarousal + ($enemytrust * 5.5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 100)) gte 880)>>"
-    },
-    {
-        "passage": "Widgets Bodywriting",
-        "findString": "<<elseif (($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200)) gte 500)>>",
-        "replace": "<<elseif (($enemyarousal + ($enemytrust * 5.5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 100)) gte 440)>>"
-    },
-    {
-        "passage": "Widgets Bodywriting",
-        "findString": "<<elseif $skin[_args[0]].degree lte ($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200))>>",
-        "replace": "<<elseif $skin[_args[0]].degree lte ($enemyarousal * 2 + ($enemytrust * 5) - $enemyanger + ($attractiveness / 5) * (currentSkillValue(\"seductionskill\") / 100))>>"
-    },
-    {
-        "passage": "Brothel",
-        "findString": "<<if $brotheljob is 1>>",
-        "replace": "\n<<if $brotheljob is 1>>\n<<brothelDrugs>>"
+      "modName": "TweeReplacer",
+      "addonName": "TweeReplacerAddon",
+      "modVersion": "1.0.0",
+      "params": [
+        {
+          "passage": "PassageHeader",
+          "findString": "<<unset $bypassHeader>>",
+          "replace": "<<unset $bypassHeader>>\n<<iCandyHeader>><div id='addMsg'></div>"
+        },
+        {
+          "passage": "PassageFooter",
+          "findString": "<div id=\"gameVersionDisplay\">",
+          "replace": "<<iCandyFooter>>\n<div id=\"gameVersionDisplay\">"
+        },
+        {
+          "passage": "Widgets Journal",
+          "findRegex": "<<if\\s\\$antiquemoney[\\s\\S]+<br><</if>>\n<</widget>>",
+          "replaceFile": "replaceFiles/journal.txt"
+        },
+        {
+          "passage": "Widgets Difficulty",
+          "findString": "<<set $skulduggeryroll to random(1, 1000)>>",
+          "replace": "<<set $skulduggeryroll to random(1, 1000)>>\n<<if R.mechStats.toolset is 1>><<set $skulduggeryroll *= 1.1>><<set $skulduggerydifficulty *= 0.95>><</if>>"
+        },
+        {
+          "passage": "Widgets Sleep",
+          "findString": "<<if $ruffledisable is \"f\">>\n\t\t<<set $_hair to",
+          "replace": "<<if $ruffledisable is \"f\" and iCandy.getConfig('keepHairs') is false >>\n\t\t<<set $_hair to"
+        },
+        {
+          "passage": "Widgets",
+          "findString": "<</if>>\n<</widget>>\n\n\n<<widget \"tableText\">>",
+          "replaceFile": "replaceFiles/bedroomWidget.txt"
+        },
+        {
+          "passage": "Widgets Stats",
+          "findString": "\n\t\t<<set $drugged += Math.floor(_args[0] * _drugged_mod)>>\n",
+          "replaceFile": "replaceFiles/drugsWidget.txt"
+        },
+        {
+          "passage": "Widgets Stats",
+          "findString": "\n\t\t<<set $drunk += Math.floor(_args[0] * _drunk_mod)>>\n",
+          "replaceFile": "replaceFiles/drunkWidget.txt"
+        },
+        {
+          "passage": "Widgets Bodywriting",
+          "findString": "<<if (($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200)) gte 1000)>>",
+          "replace": "<<if (($enemyarousal + ($enemytrust * 5.5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 100)) gte 880)>>"
+        },
+        {
+          "passage": "Widgets Bodywriting",
+          "findString": "<<elseif (($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200)) gte 500)>>",
+          "replace": "<<elseif (($enemyarousal + ($enemytrust * 5.5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 100)) gte 440)>>"
+        },
+        {
+          "passage": "Widgets Bodywriting",
+          "findString": "<<elseif $skin[_args[0]].degree lte ($enemyarousal + ($enemytrust * 5) - $enemyanger + ($attractiveness / 10) * (currentSkillValue(\"seductionskill\") / 200))>>",
+          "replace": "<<elseif $skin[_args[0]].degree lte ($enemyarousal * 2 + ($enemytrust * 5) - $enemyanger + ($attractiveness / 5) * (currentSkillValue(\"seductionskill\") / 100))>>"
+        },
+        {
+          "passage": "Brothel",
+          "findString": "<<if $brotheljob is 1>>",
+          "replace": "\n<<if $brotheljob is 1>>\n<<brothelDrugs>>"
+        }
+      ]
     }
-   ]
-  }
- ],
- "dependenceInfo": [
-  {
-   "modName": "ModLoader",
-   "version": ">=1.1.0"
-  },
-  {
-   "modName": "ModLoader DoL ImageLoaderHook",
-   "version": ">=1.0.0"
-  },
-  {
-   "modName": "TweeReplacer",
-   "version": ">=1.0.0"
-  },
-  {
-   "modName": "ReplacePatcher",
-   "version": ">=1.0.0"
-  },
-  {
-   "modName": "Simple Frameworks",
-   "version": ">=1.3.0"
-  }
- ]
+  ],
+  "dependenceInfo": [
+    {
+      "modName": "ModLoader",
+      "version": ">=1.1.0"
+    },
+    {
+      "modName": "ModLoader DoL ImageLoaderHook",
+      "version": ">=1.0.0"
+    },
+    {
+      "modName": "TweeReplacer",
+      "version": ">=1.0.0"
+    },
+    {
+      "modName": "ReplacePatcher",
+      "version": ">=1.0.0"
+    },
+    {
+      "modName": "Simple Frameworks",
+      "version": ">=1.5.0"
+    }
+  ]
 }
