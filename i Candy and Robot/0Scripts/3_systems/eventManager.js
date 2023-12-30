@@ -1,6 +1,7 @@
 const eventManager = {
     data : {},
     widget : {},
+
     setFlag: function (event, prop, value) {
         if(!R.flags[event]){
             R.flags[event] = {}
@@ -25,23 +26,28 @@ const eventManager = {
         return prop ? R.flags[event][prop] : R.flags[event]
     },
 
-    setScene: function(event, obj){
-        console.log('setScene:', event, obj)
-        V.tvar.scene = obj
-        V.tvar.scene.passage = obj.title
-        V.tvar.eventnext = obj.eventnext
-        V.tvar.exitPassage = obj.exit ?? V.passage
-        this.initEvent(V.tvar.scene)
+    //regist event for static location event
+    registEvent: function(event, ...events){
+        if(!this.data[event]){
+            this.data[event] = []
+        }
+        this.data[event].push(...events)
     },
 
-    unsetEvent: function(){
-        V.tvar.scene = {}
-        V.phase = 0
-        V.tvar.eventnext = false
-        V.tvar.onselect = false
-        V.tvar.exitPassage = null
-        R.scene = null
-        wikifier('endevent')
+    //regist event for none static location event
+    registEvent2: function(type, event, ...events){
+        if(!this.data[type]){
+            this.data[type] = {}
+        }
+        if(!this.data[type][event]){
+            this.data[type][event] = []
+        }
+        this.data[type][event].push(...events)
+    },
+
+    //regist a process function for certain passage
+    registPsg: function(passage, callback){
+        this.widget[passage] = callback
     },
 
     getEvent: function(event){
@@ -85,78 +91,40 @@ const eventManager = {
         }
 
         if(data){
-            data.title = `${data.type} ${event} ${data.episode}`
-            if(data.branch){
-                data.title += ` ${data.branch}`
-            }
-            if(data.scene){
-                data.scenestage = `BaseScene ${data.scene}`
-            }
             this.setScene(event, data)
         }
     },
 
-    //regist event for static location event
-    registEvent: function(event, ...events){
-        if(!this.data[event]){
-            this.data[event] = []
-        }
-        this.data[event].push(...events)
+    unsetEvent: function(){
+        V.tvar.scene = {}
+        V.phase = 0
+        V.tvar.eventnext = false
+        V.tvar.onselect = false
+        V.tvar.exitPassage = null
+        R.scene = null
+        wikifier('endevent')
     },
 
-    //regist event for none static location event
-    registEvent2: function(type, event, ...events){
-        if(!this.data[type]){
-            this.data[type] = {}
-        }
-        if(!this.data[type][event]){
-            this.data[type][event] = []
-        }
-        this.data[type][event].push(...events)
-    },
-
-    registPsg: function(passage, callback){
-        this.widget[passage] = callback
-    },
-
-    //check event when enter a scene
-    eventReady: function(){
-        let title = passage()
-        if(R?.scene){
-            this.checkEvent(R.scene)
-        }
-        else{
-            const data = Story.get(title)
-            const keys = data.title.split(' ')
-
-            if(keys.has('Passout') && (keys.indexOf('Passout') == 0 && !data.text.includes('combat') || keys.indexOf('Passout') == key.length)){
-                this.checkEvent('Passout')
-            }
-            else if(keys.has('Sleep') && data.text.includes('<<sleep>>') ){
-                this.checkEvent('Sleep')
-            }
-            else if(title == 'Bath' || title == 'Cabin Bath' || keys.indexOf('Shower') == keys.length - 1){
-                this.checkEvent('Bath')
-            }
-            else{
-                this.checkEvent2(data.title)
-            }
+    setScene: function(event, data){
+        data.title = `${data.type} ${event} ${data.episode}`
+        if(data.branch){
+            data.title += ` ${data.branch}`
         }
 
-        if(this.widget[title]){
-            this.widget[title]()
+        if(data.scene){
+            data.scenestage = `BaseScene ${data.scene}`
+        }
+        else if(data.toward){
+            data.scenestage = `${data.type} data.toward`
         }
 
-    },
+        console.log('setScene:', event, data)
 
-    eventDone: function(){
-        let title = passage()
-        if(R?.scene && this.widget[R.scene]){
-            this.widget[R.scene]()
-        }
-        else if(this.widget[title]){
-            this.widget[title]()
-        }
+        V.tvar.scene = obj
+        V.tvar.scene.passage = obj.title
+        V.tvar.eventnext = obj.eventnext
+        V.tvar.exitPassage = obj.exit ?? V.passage
+        this.initEvent(V.tvar.scene)
     },
 
     initEvent: function(scene){
@@ -215,6 +183,42 @@ const eventManager = {
 
     },
 
+    //check event when enter a scene
+    eventReady: function(){
+        let title = passage()
+        if(R?.scene){
+            this.checkEvent(R.scene)
+        }
+        else{
+            const data = Story.get(title)
+            const keys = data.title.split(' ')
+
+            if(keys.has('Passout') && (keys.indexOf('Passout') == 0 && !data.text.includes('combat') || keys.indexOf('Passout') == key.length)){
+                this.checkEvent('Passout')
+            }
+            else if(keys.has('Sleep') && data.text.includes('<<sleep>>') ){
+                this.checkEvent('Sleep')
+            }
+            else if(title == 'Bath' || title == 'Cabin Bath' || keys.indexOf('Shower') == keys.length - 1){
+                this.checkEvent('Bath')
+            }
+            else{
+                this.checkEvent2(data.title)
+            }
+        }
+
+    },
+
+    eventDone: function(){
+        let title = passage()
+        if(R?.scene && this.widget[R.scene]){
+            this.widget[R.scene]()
+        }
+        else if(this.widget[title]){
+            this.widget[title]()
+        }
+    },
+
     //原有地点的事件监测
     checkEvent2: function(passage){
         const eventlist = this.data.location
@@ -229,17 +233,6 @@ const eventManager = {
              ){
                 if(typeof data.require == 'function' && data.require()){
                     const _event = clone(data)
-
-                    _event.title = `${data.type} ${data.passage} ${data.episode}`
-
-                    if(data.branch){
-                        _event.title += ` ${data.branch}`
-                    }
-
-                    if(data.scene){
-                        _event.scenestage = `BaseScene ${data.scene}`
-                    }
-                    _event.location = passage
                     this.setScene(data.passage, _event)
                     break
                 }
@@ -260,13 +253,6 @@ const eventManager = {
             //console.log('eventdata:', data)
             if(typeof data.require == 'function' && data.require()){
                 const _event = clone(data)
-
-                _event.title = `${data.type} ${event} ${data.episode}`
-
-                if(data.branch){
-                    _event.title += ` ${data.branch}`
-                }
-
                 this.setScene(event, _event)
                 break
             }

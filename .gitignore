@@ -14,4 +14,3 @@ doc/*
 
 #!.yarn/cache
 .pnp.*
-build/
