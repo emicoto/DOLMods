@@ -77,7 +77,7 @@
 
 :: Scene AlmondPath General CN
 
-<<if iModNpc.get('Xinyu', 'location') == 'almond_path'>>
+<<if $iModNpc.get('Xinyu', 'location') == 'almond_path'>>
 “尘归尘……，土归土……”
 <br><br>
 一个穿着<<=sexSwitch('Xinyu', '蓝色民国风学生装的小女孩', '灰色中山装的小男孩')>>蹲坐在火盆旁，手里拿着一捆花花绿绿的纸钱，一张张地投放入火中。
@@ -98,7 +98,7 @@
 
 
 :: Scene AlmondPath General EN
-<<if iModNpc.get('Xinyu', 'location') == 'almond_path'>>
+<<if $iModNpc.get('Xinyu', 'location') == 'almond_path'>>
 "尘归尘， 土归土..."<br>
 <br>
 

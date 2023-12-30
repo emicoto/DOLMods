@@ -2,7 +2,6 @@
 <<widget "daisoEntrance">>
 	<<set _link to lanSwitch("Daiso General Shop", "大创百货商店") + '(00:01)'>>
 	<<localIcon 'daiso'>><<link _link "BaseScene DaisoShop">>
-		<<set R.scene to "DaisoShop">>
 		<<pass 1>>
 	<</link>>
 <</widget>>

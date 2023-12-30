@@ -3,7 +3,6 @@
 <<if iEvent.getFlag('Chinatown', 'known') is 1>>
     <<set _link to lanSwitch("Go to Chinatown", "前往唐人街")+' (00:05)'>>
     <<localIcon 'chinatown_entry'>><<link _link "BaseScene AlmondPath">>
-        <<set R.scene to "AlmondPath">>
         <<pass 5>>
     <</link>>
     <br>
@@ -13,7 +12,6 @@
 <<localIcon 'warehouse'>>
 <<set _link to lanSwitch('Warehouse Area', '仓库区') + ' (00:03)'>>
 <<link _link "BaseScene Warehouse">>
-    <<set R.scene to 'Warehouse'>>
     <<pass 3>>
 <</link>>
 <br>
@@ -24,8 +22,7 @@
 <<if iEvent.getFlag('Chinatown', 'known') isnot 1 and Time.dayState isnot 'night'>>
     <<set _link to lanSwitch('Find the entrance of Chinatown', '寻找通向唐人街的入口')>>
     <<localIcon 'chinatown_entry'>><<link _link "BaseScene AlmondPath">>
-        <<set R.scene to "AlmondPath">>
-        <<pass 10>>
+         <<pass 10>>
     <</link>>
     <br><br>
 <</if>>
@@ -36,7 +33,6 @@
     <<localIcon 'chinatown'>>
     <<set _link = lanSwitch('Enter Chinatown', '进入唐人街') + ' (00:01)'>>
     <<link _link 'BaseScene Chinatown'>>
-        <<set R.scene = 'Chinatown'>>
         <<pass 1>>
     <</link>>
     <br>

@@ -15,7 +15,7 @@ iEvent.registEvent('AlmondPath',{
     episode: 'Intro',
     phase: 2,
 
-    endcode: '<<run iEvent.setFlag("Chinatown", "known", 1)>><<set R.scene = "Chinatown">>',
+    endcode: '<<run iEvent.setFlag("Chinatown", "known", 1)>>',
     priority: 1000,
 
     leaveLink: ['Enter the Chinatown', '进入唐人街'],
@@ -31,8 +31,7 @@ iEvent.registEvent('Xinyu', {
 
     episode: 'Talk',
     branch: 'Intro',
-    eventnext: true,
-    nextcode: '<<run iEvent.setFlag("Xinyu", "intro", 1); iEvent.unsetEvent()>>',
+    phase: 5,
     priority: 1000,
     require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == undefined },
 },

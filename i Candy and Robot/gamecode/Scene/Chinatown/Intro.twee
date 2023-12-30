@@ -24,7 +24,7 @@
 牌坊上面龙飞凤舞地写着四个汉字——“<span class='gold'>众生平等</span>”，但可惜的是，你并看不懂汉字，只知道这几个字写得很漂亮。
 <br><br>
 
-<<if Time.dayState is 'dusk' and [1,4,6,7].includes(Time.weekDay)>>
+<<if $iModNpc.get('Xinyu', 'location') == 'almond_path'>>
     “尘归尘……土归土……”
     <br><br>
 
@@ -80,7 +80,7 @@ Above the archway, four Chinese characters are beautifully written in a ornate f
 Unfortunately, you can't read Chinese characters. Nonetheless, you appreciate the aesthetics of the characters.
 <br><br>
 
-<<if Time.dayState is 'dusk' and [1,4,6,7].includes(Time.weekDay)>>
+<<if $iModNpc.get('Xinyu', 'location') == 'almond_path'>>
     "尘归尘……土归土……"(Dust to dust...earth to earth...)
     <br><br>
 

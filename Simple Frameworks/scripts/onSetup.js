@@ -641,17 +641,15 @@ const iModManager = {
     },
 
     init: function(type){
-
-        if(['iModConfigs', 'iModVar', 'iModNpc'].includes(type) == false){
-            return
+        if(eval(`V.${type}`) == undefined){
+            eval(`V.${type} = {}`)
         }
 
-        if(!V[type]){
-            V[type] = {}
-        }
+        const modvar = eval(`V.${type}`)
 
-        if(typeof V[type].set !== 'function'){
-            V[type].set = function(prop, args1, args2){
+        if(typeof modvar.set !== 'function' || modvar.initver !== 1){
+            console.log('init on ready:', type)
+            modvar.set = function(prop, args1, args2){
                 if(!this[prop] && args2){
                     this[prop] = {
                         [args1] : args2
@@ -664,8 +662,8 @@ const iModManager = {
             }
         }
 
-        if(typeof V[type].get !== 'function'){
-            V[type].get = function(prop, prop2){
+        if(typeof modvar.get !== 'function'|| modvar.initver !== 1){
+            modvar.get = function(prop, prop2){
                 if(!this[prop] && prop2){
                     this[prop] = {}
                 }
@@ -673,6 +671,8 @@ const iModManager = {
                 return prop2 ? this[prop][prop2] : this[prop]
             }
         }
+
+        modvar.initver = 1
     },
 
     has:function(type, prop){

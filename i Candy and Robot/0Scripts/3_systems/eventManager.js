@@ -204,6 +204,14 @@ const eventManager = {
 
     },
 
+    initBaseScene: function(){
+        const psg = Story.get(passage())
+        if(psg.tags.includes('scene')){
+            R.scene = psg.title.replace('BaseScene ', '')
+        }
+        console.log('initBaseScene:', R.scene)
+    },
+
     //check event when enter a scene
     eventReady: function(){
         let title = passage()
@@ -238,6 +246,8 @@ const eventManager = {
     eventDone: function(){
         let title = passage()
         let func = this.widget[title]
+        console.log('eventDone:', title, R.scene, func)
+        
         if(R?.scene && this.widget[R.scene]){
             this.widget[R.scene]()
         }

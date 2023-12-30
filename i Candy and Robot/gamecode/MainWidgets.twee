@@ -17,9 +17,12 @@
 <!-- 在PassageReady里的处理  -->
 <<run console.log('check passage in ready:', passage())>>
 <<if passage() isnot 'Start' or passage() isnot 'Start2'>>
-    <<run iEvent.eventReady()>>
+<<run 
+    iEvent.initBaseScene();
+    iEvent.eventReady();
+    iChara.XinyuCheck()
+>>
 <</if>>
-<<run iChara.XinyuCheck()>>
 
 <</widget>>
 
