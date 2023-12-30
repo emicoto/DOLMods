@@ -37,6 +37,7 @@
     "0Scripts/1_database/npcSetup.js",
     "0Scripts/1_database/systemMsg.js",
     "0Scripts/2_mainModule/mainModule.js",
+    "0Scripts/3_systems/charaManager.js",
     "0Scripts/3_systems/drugProcess.js",
     "0Scripts/3_systems/eventManager.js",
     "0Scripts/3_systems/itemManager.js",
