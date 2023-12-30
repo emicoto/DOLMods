@@ -3,7 +3,7 @@
 <<set $outside to 1>><<set $location to "almond_path">><<effects>>
 
 <div id='locationdes'>
-<<if iEvent.getFlag('Chinatown', 'prologue') is 1 and iEvent.getFlag('Chinatown', 'known') is 1 and $phase is 0>>
+<<if (!$tvar.scene.passage || $tvar.scene.type == 'Scene') and $phase is 0>>
     <<=lanSwitch(
        "You've come to an almond boulevard in front of the Chinatown. At the entrance of Chinatown, ",
        "你来到了唐人街外的杏林小道。在唐人街入口处，"
@@ -75,9 +75,9 @@
 </div>
 
 
-:: Scene AlmondPath Genral CN
+:: Scene AlmondPath General CN
 
-<<if Time.dayState is 'dusk' and [1,4,6,7].include(Time.weekDay)>>
+<<if iModNpc.get('Xinyu', 'location') == 'almond_path'>>
 “尘归尘……，土归土……”
 <br><br>
 一个穿着<<=sexSwitch('Xinyu', '蓝色民国风学生装的小女孩', '灰色中山装的小男孩')>>蹲坐在火盆旁，手里拿着一捆花花绿绿的纸钱，一张张地投放入火中。
@@ -85,7 +85,7 @@
 <<=sexSwitch('Xinyu', '女孩', '男孩')>>的嘴唇轻轻地动着，反复念诵着东方的神秘语言。
 <br><br>
 
-<<localIcon 'chat'>><<link '试图搭话'>><<run iEvent.setEvent('check', 'Xinyu', 'Talk')>><</link>>
+<<localIcon 'chat'>><<link '试图搭话' $passage>><<run iEvent.setEvent('check', 'Xinyu', 'Talk')>><</link>>
 <br><br>
 
 <<elseif Time.dayState is 'night'>>
@@ -98,14 +98,14 @@
 
 
 :: Scene AlmondPath General EN
-<<if Time.dayState is 'dusk' and [1,4,6,7].include(Time.weekDay)>>
+<<if iModNpc.get('Xinyu', 'location') == 'almond_path'>>
 "尘归尘， 土归土..."<br>
 <br>
 
 A <<=sexSwitch('Xinyu', 'girl wears blue chinese style clothes', 'boy wears gray chiense style clothes')>> is sitting by the braziers, burning a bundle of colorful paper money.<br>
 <<nnpc_He 'Xinyu'>> is chanting in a mysterious oriental language.<br>
 
-<<localIcon 'chat'>><<link 'Try to talk to her'>><<run iEvent.setEvent('Chara', 'Xinyu', 'Talk')>><</link>>
+<<localIcon 'chat'>><<link 'Try to talk to her' $passage>><<run iEvent.setEvent('check', 'Xinyu', 'Talk')>><</link>>
 <br><br>
 
 <<elseif Time.dayState is 'night'>>

@@ -33,13 +33,6 @@
 
 <</widget>>
 
-
-<<widget "itemIcon">>
-	<<if $options.images is 1>>
-		<<=iUtil.itemIcon($args[0], $args[1])>>
-	<</if>>
-<</widget>>
-
 <<widget "imgIcon">>
 	<<if $options.images is 1>>
 		<<=`<img class='icon' src='${$args[0]}'>`>>

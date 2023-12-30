@@ -51,14 +51,16 @@ const eventManager = {
     },
 
     getEvent: function(event){
-        if(!R.events[event]) return
-        return R.events[event]
+        if(!this.data[event]) return
+        return this.data[event]
     },
 
     //set event by certain keys
     setEvent: function(type, event, key, branch){
         const eventdata = this.getEvent(event)
         if(!eventdata) return
+
+        console.log('setEvent:', type, event, key, branch, eventdata)
 
         let data
 
@@ -93,6 +95,8 @@ const eventManager = {
         if(data){
             this.setScene(event, data)
         }
+
+        console.log('setEvent:', data)
     },
 
     unsetEvent: function(){
@@ -121,7 +125,14 @@ const eventManager = {
         
         V.tvar.scene = data
         V.tvar.scene.passage = data.title
-        V.tvar.eventnext = data.eventnext
+
+        if(data.eventnext !== undefined){
+            V.tvar.eventnext = data.eventnext
+        }
+        else{
+            data.eventnext = (data.phase > 0)
+        }
+
         V.tvar.exitPassage = data.exit ?? V.passage
         V.tvar.endcode = data.endcode
 
@@ -149,17 +160,18 @@ const eventManager = {
     initScene: function(){
         const scene = V.tvar.scene
 
-        if(scene?.chara){
-            wikifier('nnpc', scene.chara)
+        if(!scene.init && scene?.chara){
+            wikifier('npc', scene.chara)
             wikifier('person1')
         }
-        if(scene?.initfunc){
+        if(!scene.init && scene?.initfunc){
             scene.initfunc()
         }
-        if(scene?.initcode){
+        if(!scene.init && scene?.initcode){
             new Wikifier(null, scene.initcode)
         }
 
+        //combine the passage title
         scene.passage = scene.title
 
         if(scene.phase > 0 && V.phase < scene.phase){
@@ -170,6 +182,8 @@ const eventManager = {
         if(Story.has(scene.passage+` ${setup.language}`)){
             scene.passage += ` ${setup.language}`
         }
+
+        //do phase
         if(!scene.init){
             scene.init = true
             //需要跳转的从0开始
@@ -220,13 +234,15 @@ const eventManager = {
 
     },
 
+    //run the post-process function for passage event
     eventDone: function(){
         let title = passage()
+        let func = this.widget[title]
         if(R?.scene && this.widget[R.scene]){
             this.widget[R.scene]()
         }
-        else if(this.widget[title]){
-            this.widget[title]()
+        else if(typeof func == 'function'){
+            func()
         }
     },
 
@@ -234,7 +250,7 @@ const eventManager = {
     checkEvent2: function(passage){
         console.log('checkevent2:', passage)
 
-        const eventlist = this.data.location
+        const eventlist = this.getEvent('location')
         if(!eventlist) return
 
         for(let i = 0; i < eventlist.length; i++){
@@ -257,7 +273,7 @@ const eventManager = {
     checkEvent: function(event){
         console.log('checkevent:', event)
         //筛选事件
-        const eventList = this.data[event]
+        const eventList = this.getEvent(event)
         //console.log('eventlist:',eventList)
         if(!eventList) return
 

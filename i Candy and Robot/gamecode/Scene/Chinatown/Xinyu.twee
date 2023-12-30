@@ -1,10 +1,23 @@
 :: Chara Xinyu Talk General
 
-你试着跟<<=sexSwitch('Xinyu', '小女孩', '小男孩')>>搭话。<br>
+你试着跟<<xinyu>>搭话。<br>
 <br><br>
 
 “……”
 <br><br>
 
-但是<<=sexSwitch('Xinyu', '她', '他')>>撇了你一眼后，就继续烧纸钱了。<br>
+但是<<xinyu>>撇了你一眼后，就继续烧纸钱了。<br>
 一张又一张，慢慢地被添加到火盆中，烟雾缭绕，散发着一股独特的气味。<br>
+
+:: Chara Xinyu Talk Intro
+你试着跟<<=sexSwitch('Xinyu', '小女孩', '小男孩')>>搭话。<br>
+<br><br>
+
+<<=cntv['态度差分'](
+    "“喂！你在这里做什么？”",
+    "“你好，你在这里做什么？”",
+    "“……你好，请问你在这里做什么呀？”"
+)>>
+<br>
+
+<<=sexSwitch('Xinyu', '小女孩', '小男孩')>>

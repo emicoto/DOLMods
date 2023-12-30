@@ -238,6 +238,14 @@ function wetAnusLub(arg){
 }
 DefineMacroS('anusgoo', wetAnusLub)
 
+function itemIcon(itemId, diff){
+	if(diff == 'undefined') diff = undefined	
+	if(V.options.images == 1){
+		return iUtil.itemIcon(itemId, diff)
+	}
+	return ''
+}
+DefineMacroS('itemIcon', itemIcon)
 
 function printMedicineLink(itemId, diff){
 	if(!itemId) return ;

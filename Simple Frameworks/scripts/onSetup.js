@@ -651,23 +651,31 @@ const iModManager = {
         }
 
         if(typeof V[type].set !== 'function'){
-            V[type].set = function(prop, value){
-                V[type][prop] = value;
+            V[type].set = function(prop, args1, args2){
+                if(!this[prop] && args2){
+                    this[prop] = {
+                        [args1] : args2
+                    }
+                }
+                else if(!this[prop] && !args2){
+                    this[prop] = args1 ?? 0
+                }
+                return this[prop]
             }
         }
 
         if(typeof V[type].get !== 'function'){
-            V[type].get = function(prop, value){
-                if(!V[type][prop]){
-                    V[type][prop] = value ?? 0
+            V[type].get = function(prop, prop2){
+                if(!this[prop] && prop2){
+                    this[prop] = {}
                 }
-                return V[type][prop]
+
+                return prop2 ? this[prop][prop2] : this[prop]
             }
         }
     },
 
     has:function(type, prop){
-
         if(!V['iMod'+type]){
             this.init(type)
         }

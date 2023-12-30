@@ -11,7 +11,7 @@
 <<set $outside to 0>><<set $location to "shopping_centre">><<effects>>
 
 <div id='locationdes'>
-<<if iEvent.getFlag('DaisoShop', 'intro') is 1 && $phase is 0>>
+<<if (!$tvar.scene.passage || $tvar.scene.type == 'Scene') and $phase is 0>>
 	<<=lanSwitch(
 		"You've come to the Daiso General Shop.",
 		"你来到了在大创百货商店。"

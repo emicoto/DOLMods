@@ -19,6 +19,7 @@
 <<if passage() isnot 'Start' or passage() isnot 'Start2'>>
     <<run iEvent.eventReady()>>
 <</if>>
+<<run iChara.XinyuCheck()>>
 
 <</widget>>
 
