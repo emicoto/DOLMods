@@ -4,12 +4,13 @@ iEvent.registEvent('location',
     {
         passage: 'Brothel Basement',
         scene: 'Brothel Basement',
+        exit: 'Brothel Basement',
+
         episode: 'DrugsIntro',
         type: 'Event',
         phase: 3,
         eventnext: true,
-        nextcode: '',
-        require: (data)=>{ return iEvent.getFlag('Brothel', 'drugsintro') !== 1 && V.brothel_basement_intro == 1 && R.lastPassage == 'Brothel' && iEvent.getFlag('Brothel', 'prostitution') >= 1 }
+        require: (data)=>{ return iEvent.getFlag('Brothel', 'drugsintro') !== 1 && V.brothel_basement_intro == 1 && V.tvar.lastPassage == 'Brothel' && iEvent.getFlag('Brothel', 'prostitution') >= 1 }
     },
 )
 

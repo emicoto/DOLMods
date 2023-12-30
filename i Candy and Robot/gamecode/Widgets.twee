@@ -50,6 +50,6 @@
 
 <<widget "localIcon">>
 	<<if $options.images is 1>>
-		<<=`<img class="icon" @src='img/misc/${$args[0]}.png'>`>>
+		<<=`<img class="icon" src='img/misc/${$args[0]}.png'>`>>
 	<</if>>
 <</widget>>

@@ -234,7 +234,7 @@ let flaglist = [
 	'repairshop', 'snackshop', 'sewer', 'bank',
 	'apartment',
 	// 角色事件flag	
-	'xinyu', 'robot', 'foxlady', 
+	'Xinyu', 'robot', 'foxlady', 
 	//特殊事件flag记录	
 	'mainevent', 'special'
 ]

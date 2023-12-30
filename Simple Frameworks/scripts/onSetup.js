@@ -609,18 +609,40 @@ const iModManager = {
     },
 
     setV: function(prop, value){
-        this.init('iModValues')
-        V.iModValues[prop] = value;
+        this.init('iModVar')
+        V.iModVar[prop] = value;
     },
 
-    setNpc: function(prop, value){
+    setNpcV: function(prop, value){
         this.init('iModNpc')
         V.iModNpc[prop] = value;
+    },
+    
+    npcV: function(prop, value){
+        this.init('iModNpc')
+        if(!V.iModNpc[prop]){
+            V.iModNpc[prop] = value
+        }
+        else{
+            if(typeof V.iModNpc[prop] == 'number'){
+                V.iModNpc[prop] += value
+            }
+            else if(Array.isArray(V.iModNpc[prop])){
+                V.iModNpc[prop].push(value)
+            }
+            else if(typeof V.iModNpc[prop] == 'object'){
+                V.iModNpc[prop] = Object.assign(V.iModNpc[prop], value)
+            }
+            else{
+                V.iModNpc[prop] = value
+            }
+        }
+        return V.iModNpc[prop]
     },
 
     init: function(type){
 
-        if(['iModConfigs', 'iModValues', 'iModNpc'].includes(type) == false){
+        if(['iModConfigs', 'iModVar', 'iModNpc'].includes(type) == false){
             return
         }
 
@@ -654,12 +676,12 @@ const iModManager = {
     }
 
 }
-window.iModManager = iModManager
+window.iMod = iModManager
 
 function iModonReady(){
-    iModManager.init('iModConfigs');
-    iModManager.init('iModValues');
-    iModManager.init('iModNpc');
+    iMod.init('iModConfigs');
+    iMod.init('iModVar');
+    iMod.init('iModNpc');
 }
 DefineMacroS('iModonReady', iModonReady)
 

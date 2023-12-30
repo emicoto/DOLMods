@@ -10,7 +10,7 @@ iEvent.registEvent('DaisoShop',
     {
         episode: 'Night',
         type: 'Scene',
-        eventnext: false,
+
         nextcode: '',
         initcode:'',
         require: ()=>{ return !between(Time.hour, 7, 19) }
@@ -19,6 +19,10 @@ iEvent.registEvent('DaisoShop',
         episode: 'Exposed',
         type: 'Event',
         branch: 'Naked',
-        require: ()=>{ return V.exposed >= 2 && R.lastPassage != 'BaseScene DaisoShop' }
+
+        priority: 10,
+        nextcode: '<<=iEvent.unsetEvent()>>',
+
+        require: ()=>{ return V.exposed >= 2 && V.tvar.lastPassage != 'BaseScene DaisoShop' }
     }
 )

@@ -1,0 +1,23 @@
+<<link [[Offer your body|Brothel Raid Arrest Sex]]>><<set $sexstart to 1>><<generatePolice 1>><<generatePolice 2>><</link>><<promiscuous3>>
+<<link [[用肉体交易|Brothel Raid Arrest Sex]]>><<set $sexstart to 1>><<generatePolice 1>><<generatePolice 2>><</link>><<promiscuous3>>
+
+<<link [[Reluctantly offer your body|Brothel Raid Arrest Sex]]>><<set $sexstart to 1>><<generatePolice 1>><<generatePolice 2>><<set $desperateaction to 2>><</link>><<promiscuous3>>
+<<link [[不情愿地用肉体交易|Brothel Raid Arrest Sex]]>><<set $sexstart to 1>><<generatePolice 1>><<generatePolice 2>><<set $desperateaction to 2>><</link>><<promiscuous3>>
+
+<<link [[Get arrested|Brothel Raid Arrest 2]]>><</link>>
+<<link [[接受逮捕|Brothel Raid Arrest 2]]>><</link>>
+
+<<link [[Next|Brothel Raid Arrest]]>><</link>>
+<<link [[继续|Brothel Raid Arrest]]>><</link>>
+
+<span id="next"><<link [[Next|Brothel Raid Arrest Sex Finish]]>><</link>></span><<nexttext>>
+<span id="next"><<link [[继续|Brothel Raid Arrest Sex Finish]]>><</link>></span><<nexttext>>
+
+<span id="next"><<link [[Next|Brothel Raid Arrest Sex]]>><</link>></span><<nexttext>>
+<span id="next"><<link [[继续|Brothel Raid Arrest Sex]]>><</link>></span><<nexttext>>
+
+<<link [[Next|Brothel Raid Arrest 2]]>><</link>>
+<<link [[继续|Brothel Raid Arrest 2]]>><</link>>
+
+<<link [[Next|Brothel Raid Arrest 3]]>><</link>>
+<<link [[继续|Brothel Raid Arrest 3]]>><</link>>

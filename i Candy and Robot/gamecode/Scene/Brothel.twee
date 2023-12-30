@@ -32,6 +32,7 @@
 	<<set _link = lanSwitch('Next', '继续')>>
 	<<if $tvar.onselect is true>>
 		<<set $tvar.onselect to false>>
+
 	<<elseif $tvar.eventnext is true>>
 		<<link _link $passage>>
 			<<pass 1>>
@@ -39,8 +40,16 @@
 				<<=$tvar.scene.nextcode>>
 			<</if>>
 		<</link>>
+		
 	<<else>>
-		<<link _link "Brothel Basement">>
+		<<set _exit to "Brothel">>
+		<<if $tvar.scene.exit>>
+			<<set _exit to $tvar.scene.exit>>
+		<</if>>
+		<<if $tvar.scene.leavelink>>
+			<<set _link to lanSwitch($tvar.scene.leavelink)>>
+		<</if>>
+		<<link _link _exit>>
 			<<run iUtil.resetTvar('exitPassage'); iEvent.unsetEvent()>>
 			<<if _passtime>>
 				<<pass _passtime>>

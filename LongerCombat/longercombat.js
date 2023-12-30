@@ -210,8 +210,8 @@ $(document).on(':passageinit', ()=>{
     //初始化
     if(setup.longerCombatInit === true ){
         setTimeout(()=>{
-            if(!iModManager.has('Configs', 'longerMult')){
-                iModManager.setCf('longerMult', 2.5)
+            if(!iMod.has('Configs', 'longerMult')){
+                iMod.setCf('longerMult', 2.5)
             }
     
             delete setup.longerCombatInit
@@ -219,7 +219,7 @@ $(document).on(':passageinit', ()=>{
     }
     else if(passage() == 'Start'){
         setTimeout(()=>{
-            iModManager.setCf('longerMult', 2.5)
+            iMod.setCf('longerMult', 2.5)
         }, 80)
     }
 })

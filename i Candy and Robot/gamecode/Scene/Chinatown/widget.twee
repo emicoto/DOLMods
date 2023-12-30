@@ -1,0 +1,74 @@
+:: iMod Widget Chinatown [widget]
+<<widget "almondPathEntry">>
+<<if iEvent.getFlag('Chinatown', 'known') is 1>>
+    <<set _link to lanSwitch("Go to Chinatown", "前往唐人街")+' (00:05)'>>
+    <<localIcon 'chinatown_entry'>><<link _link "BaseScene AlmondPath">>
+        <<set R.scene to "AlmondPath">>
+        <<pass 5>>
+    <</link>>
+    <br>
+<</if>>
+<br>
+
+<<localIcon 'warehouse'>>
+<<set _link to lanSwitch('Warehouse Area', '仓库区') + ' (00:03)'>>
+<<link _link "BaseScene Warehouse">>
+    <<set R.scene to 'Warehouse'>>
+    <<pass 3>>
+<</link>>
+<br>
+
+<</widget>>
+
+<<widget "chinatownExplore">>
+<<if iEvent.getFlag('Chinatown', 'known') isnot 1 and Time.dayState isnot 'night'>>
+    <<set _link to lanSwitch('Find the entrance of Chinatown', '寻找通向唐人街的入口')>>
+    <<localIcon 'chinatown_entry'>><<link _link "BaseScene AlmondPath">>
+        <<set R.scene to "AlmondPath">>
+        <<pass 10>>
+    <</link>>
+    <br><br>
+<</if>>
+<</widget>>
+
+
+<<widget "almondLinkLocation">>
+    <<localIcon 'chinatown'>>
+    <<set _link = lanSwitch('Enter Chinatown', '进入唐人街') + ' (00:01)'>>
+    <<link _link 'BaseScene Chinatown'>>
+        <<set R.scene = 'Chinatown'>>
+        <<pass 1>>
+    <</link>>
+    <br>
+    
+    <<harvesticon>>
+    <<set _link = lanSwitch('Leave', '离开')+'(00:05)'>>
+    <<link _link "Harvest Street">>
+        <<run iUtil.resetTvar('exitPassage'); iEvent.unsetEvent()>>
+        <<pass 3>>
+    <</link>>
+<</widget>>
+
+
+<<widget "almondLinkEventEnd">>
+    <<set _link = lanSwitch('Next', '继续')>>
+    <<if $tvar.scene.leaveLink>>
+        <<set _link = lanSwitch($tvar.scene.leaveLink)>>
+    <</if>>
+
+    <<set _exit = $tvar.exitPassage>>
+    <<if _exit is undefined and $tvar.lastPassage isnot $passage>>
+        <<set _exit = $tvar.lastPassage>>
+    <<else>>
+        <<set _exit = 'Harvest Street'>>
+    <</if>>
+
+    <<link _link _exit>>
+        <<run iEvent.unsetEvent()>>
+        <<if $tvar.scene.endcode>>
+            <<=$tvar.scene.endcode>>
+        <</if>>
+        <<pass 1>>
+    <</link>>
+
+<</widget>>

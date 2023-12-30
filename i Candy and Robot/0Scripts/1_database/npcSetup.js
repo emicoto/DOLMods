@@ -50,9 +50,9 @@ NamedNPC.add(
 
 
     new NamedNPC(
-        'XinYu', 
+        'Xinyu', 
         ['door keeper', '门童'], 
-        ['XinYu', '心语'], 
+        ['Xinyu', '心语'], 
         'human' 
     )
     .setValue('insecurity', 'weak')
@@ -123,7 +123,7 @@ let npcSetting = {
         loveInterest: ()=>{ return V.iRobot.condition > 80 && V.iRobot.aware > 2 }
     },
 
-    XinYu : {
+    Xinyu : {
         dom : {
             displayname:['Confidence', '自信心']
         },

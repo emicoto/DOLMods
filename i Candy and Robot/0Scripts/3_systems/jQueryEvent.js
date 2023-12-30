@@ -31,7 +31,7 @@ $(document).on(':passageinit', ()=>{
 		R.combat = {}
 	}
 	console.log('check passage in init:', passage())
-	R.lastPassage = passage()
+	V.tvar.lastPassage = passage()
 })
 
 

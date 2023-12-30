@@ -1349,9 +1349,19 @@
 	
 		if(locationPassage[title]){
 			locationPassage[title].forEach((set)=>{
-				if(set.src || set.srcmatch){
-					let matcher = set.srcmatch || set.src
-					let [txt, txt1] = source.match(matcher)
+				if(set.src){
+					if(set.to){
+						source = source.replace(set.src, set.to)
+					}
+					else if(set.applyafter){
+						source = source.replace(set.src, set.src + set.applyafter)
+					}
+					else if(set.applybefore){
+						source = source.replace(set.src, set.applybefore + set.src)
+					}
+				}
+				if(set.srcmatch){
+					let [txt, txt1] = source.match(set.srcmatch)
 					if(set.to){
 						source = source.replace(txt, set.to)
 					}
@@ -1389,15 +1399,12 @@
 		}
 	
 		if(source.includes('<<if $options.mapTop is true>>')){
-			let match = source.match(/<<if \$options\.mapTop is true>>[\s\S]+<<\/if>>[\s\S]+(Place of Interest|可访问地点)/)
-			let [txt, txt1] = match
-			let res = txt.replace(txt1, `<<BeforeLinkZone>>\n\t\t${txt1}`)
-			source = source.replace(txt, res)
-		}
+			source = source.replace('<<if $options.mapTop is true>>', '<<BeforeLinkZone>>\n\t\t<<if $options.mapTop is true>>')
+			if(source.match(/(Places of Interest|Places of interest|Points of Interest|可访问地点)\n(.+)<br>/)){
+				let [txt, txt1]  = source.match(/(Places of Interest|Places of interest|Points of Interest|可访问地点)\n(.+)<br>/)
+				source = source.replace(txt, txt + '\n\t\t<<ExtraLinkZone>>')
+			}
 
-		if(source.match(/<<add_link "(.+)">><<hideDisplay>>/)){
-			let [txt, txt1] = source.match(/<<add_link "(.+)">><<hideDisplay>>/)
-			source = source.replace(txt,'\n\t\t<<ExtraLinkZone>>\n\t\t' + txt)
 		}
 	
 		if(source.includes('<<streeteffects>>')){

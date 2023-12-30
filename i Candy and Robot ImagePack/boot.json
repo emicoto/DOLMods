@@ -34,10 +34,6 @@
     {
       "modName": "ModLoader DoL ImageLoaderHook",
       "version": "^2.3.0"
-    },
-    {
-      "modName": "i, Candy + Robot",
-      "version": ">=2.1.0"
     }
   ]
 }

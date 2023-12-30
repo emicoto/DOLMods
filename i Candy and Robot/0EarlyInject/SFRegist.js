@@ -22,4 +22,12 @@ simpleFrameworks.addto('ModShopZone', {
 simpleFrameworks.addto('ExtraLinkZone', {
     passage: 'Shopping Centre',
     widget: 'daisoEntrance'
+},{
+    passage: 'Harvest Street',
+    widget: 'almondPathEntry'
+})
+
+simpleFrameworks.addto('BeforeLinkZone', {
+    passage:'Harvest Street',
+    widget:'chinatownExplore'
 })

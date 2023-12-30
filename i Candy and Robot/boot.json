@@ -43,8 +43,9 @@
     "0Scripts/3_systems/jQueryEvent.js",
     "0Scripts/3_systems/timeProcess.js",
     "0Scripts/3_systems/utilWidget.js",
-    "0Scripts/4_register/SceneRegist.js",
-    "gamecode/Scene/Daiso/eventRegist.js"
+    "gamecode/Scene/Chinatown/eventRegist.js",
+    "gamecode/Scene/Daiso/eventRegist.js",
+    "gamecode/Scene/SceneRegist.js"
   ],
   "tweeFileList": [
     "gamecode/EventLoop.twee",
@@ -54,6 +55,12 @@
     "gamecode/Pocket.twee",
     "gamecode/Robot.twee",
     "gamecode/Scene/Brothel.twee",
+    "gamecode/Scene/Chinatown/Entry.twee",
+    "gamecode/Scene/Chinatown/Intro.twee",
+    "gamecode/Scene/Chinatown/Main.twee",
+    "gamecode/Scene/Chinatown/Passout.twee",
+    "gamecode/Scene/Chinatown/Xinyu.twee",
+    "gamecode/Scene/Chinatown/widget.twee",
     "gamecode/Scene/Daiso/Event.twee",
     "gamecode/Scene/Daiso/Intro.twee",
     "gamecode/Scene/Daiso/Main.twee",
@@ -104,6 +111,11 @@
           "passage": "Widgets",
           "findString": "<</if>>\n<</widget>>\n\n\n<<widget \"tableText\">>",
           "replaceFile": "replaceFiles/bedroomWidget.txt"
+        },
+        {
+          "passage": "Widgets",
+          "findString": "<img id=\"location\" @src=\"_imgLoc + _weather_display + '/wolf_cave'+_dayState+'.png'\">",
+          "replaceFile": "replaceFiles/locationImage.txt"
         },
         {
           "passage": "Widgets Stats",
@@ -157,7 +169,7 @@
     },
     {
       "modName": "Simple Frameworks",
-      "version": ">=1.5.1"
+      "version": ">=1.6.0"
     }
   ]
 }

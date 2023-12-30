@@ -7,7 +7,10 @@
 </div>
 
 <div id='linkzone'>
-	<<if $tvar.eventnext is true>>
+	<<if $tvar.onselect is true>>
+		<<set $tvar.onselect to false>>
+
+	<<elseif $tvar.eventnext is true>>
 		<<set _link = lanSwitch('Next', '继续')>>
         <<if $tvar.scene.nextLink>>
             <<set _link = lanSwitch($tvar.scene.nextLink)>>
@@ -17,19 +20,20 @@
                 <<=$tvar.scene.nextcode>>
             <</if>>
 		<</link>>
-	<<elseif $tvar.onselect is true>>
+
 	<<else>>
-        <<if $tvar.scene.endCommand>>
-		    <<print $tvar.scene.endCommand>>
+        <<if $tvar.scene.endcode>>
+		    <<=$tvar.scene.endcode>>
         <</if>>
-		<<set _link = lanSwitch('Back', '返回')>>
+
+		<<set _link = lanSwitch('Next', '继续')>>
         <<if $tvar.scene.leaveLink>>
             <<set _link = lanSwitch($tvar.scene.leaveLink)>>
         <</if>>
+
 		<<link _link $tvar.exitPassage>>
-			<<run iUtil.resetTvar('exitPassage'); iEvent.unsetEvent()>>
+			<<run iEvent.unsetEvent()>>
 			<<pass 5>>
-			<<endevent>>
 		<</link>>    
 	<</if>>
 </div>

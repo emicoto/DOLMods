@@ -58,6 +58,7 @@
 	<</link>>
 <<else>>
 	<<set _link = lanSwitch('Leave', '离开')>>
+	
 	<<getouticon>><<link _link "Shopping Centre">>
 		<<run iUtil.resetTvar('exitPassage'); iEvent.unsetEvent()>>
 		<<pass 1>>

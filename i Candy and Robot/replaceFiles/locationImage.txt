@@ -1,0 +1,4 @@
+<img id="location" @src="_imgLoc + _weather_display + '/wolf_cave'+_dayState+'.png'">
+
+        <<case "almond_path" "chinatown" "land_shrine" "research_institute" >>
+            <img id="location" @src="_imgLoc +  _weather_display + '/'+ $location + _dayState + '.png' ">

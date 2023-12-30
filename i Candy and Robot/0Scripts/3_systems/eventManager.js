@@ -30,6 +30,7 @@ const eventManager = {
         V.tvar.scene = obj
         V.tvar.scene.passage = obj.title
         V.tvar.eventnext = obj.eventnext
+        V.tvar.exitPassage = obj.exit ?? V.passage
         this.initEvent(V.tvar.scene)
     },
 
@@ -38,6 +39,7 @@ const eventManager = {
         V.phase = 0
         V.tvar.eventnext = false
         V.tvar.onselect = false
+        V.tvar.exitPassage = null
         R.scene = null
         wikifier('endevent')
     },
@@ -47,11 +49,70 @@ const eventManager = {
         return R.events[event]
     },
 
+    //set event by certain keys
+    setEvent: function(type, event, key, branch){
+        const eventdata = this.getEvent(event)
+        if(!eventdata) return
+
+        let data
+
+        //get the branch event
+        if(type == 'check' && key){
+            for(let i = 0; i < eventdata.length; i++){
+                const _data = eventdata[i]
+                if(eventdata[i].episode == key && _data.require() ){
+                    data = clone(_data)
+                    break
+                }
+            }
+        }
+
+        //get the event by certain key
+        if(type == 'get' && key){
+            const _data = eventdata.filter( data => (data.episode == key && !branch )|| (data.episode == key && data.branch == branch ))
+            data = clone(_data[0])
+        }
+        
+        //check events
+        if(!data && !key && !branch){
+            for(let i = 0; i < eventdata.length; i++){
+                const _data = eventdata[i]
+                if(_data.require()){
+                    data = clone(_data)
+                    break
+                }
+            }
+        }
+
+        if(data){
+            data.title = `${data.type} ${event} ${data.episode}`
+            if(data.branch){
+                data.title += ` ${data.branch}`
+            }
+            if(data.scene){
+                data.scenestage = `BaseScene ${data.scene}`
+            }
+            this.setScene(event, data)
+        }
+    },
+
+    //regist event for static location event
     registEvent: function(event, ...events){
         if(!this.data[event]){
             this.data[event] = []
         }
         this.data[event].push(...events)
+    },
+
+    //regist event for none static location event
+    registEvent2: function(type, event, ...events){
+        if(!this.data[type]){
+            this.data[type] = {}
+        }
+        if(!this.data[type][event]){
+            this.data[type][event] = []
+        }
+        this.data[type][event].push(...events)
     },
 
     registPsg: function(passage, callback){

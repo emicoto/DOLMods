@@ -289,11 +289,15 @@ function destinationeventend(){
 		return '<<harvesteventend>><br><br>'
 }
 
+function setupMaps(){
+	
+}
+
 function iCandyInit(){
 	console.log('on iCandyInit')
 
 	for(let i in iModVariables){
-		V[i] =clone(iModVariables[i])
+		V[i] = clone(iModVariables[i])
 	}
 
 	setup.iCandyMod = "ready"
