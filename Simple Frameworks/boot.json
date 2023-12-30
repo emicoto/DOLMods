@@ -1,22 +1,19 @@
 {
   "name": "Simple Frameworks",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "scriptFileList_inject_early": [
-    "simplewidget.js",
-    "util.js"
+    "lib/util.js",
+    "lib/selectcase.js",
+    "scripts/simplewidget.js"
   ],
   "scriptFileList_earlyload": [
-    "preload.js"
+    "scripts/preload.js"
   ],
-  "scriptFileList_preload": [
-  ],
-  "styleFileList": [
-  ],
+  "scriptFileList_preload": [],
+  "styleFileList": [],
   "scriptFileList": [
-    "selectcase.js",
-
-    "CNCodeResolver.js",
-    "onSetup.js"
+    "scripts/CNCodeResolver.js",
+    "scripts/onSetup.js"
   ],
   "tweeFileList": [],
   "imgFileList": [],

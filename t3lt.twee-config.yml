@@ -1,5 +1,11 @@
 sugarcube-2:
   macros:
+    imgIcon:
+      name: imgIcon
+    localIcon:
+      name: localIcon
+    itemIcon:
+      name: itemIcon  
     useItem:
       name: useItems
     iMedicineLink:

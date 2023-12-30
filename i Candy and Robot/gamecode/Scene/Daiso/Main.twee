@@ -1,0 +1,90 @@
+:: iMod Widget DaisoShop [widget]
+<<widget "daisoEntrance">>
+	<<set _link to lanSwitch("Daiso General Shop", "大创百货商店") + '(00:01)'>>
+	<<localIcon 'daiso'>><<link _link "BaseScene DaisoShop">>
+		<<set R.scene to "DaisoShop">>
+		<<pass 1>>
+	<</link>>
+<</widget>>
+
+:: BaseScene DaisoShop [scene]
+<<set $outside to 0>><<set $location to "shopping_centre">><<effects>>
+
+<div id='locationdes'>
+<<if iEvent.getFlag('DaisoShop', 'intro') is 1 && $phase is 0>>
+	<<=lanSwitch(
+		"You've come to the Daiso General Shop.",
+		"你来到了在大创百货商店。"
+	)>>
+	<<if Time.dayState is "night">>
+	<<=lanSwitch(
+		"The store is closed at this time, and there is no one inside.",
+		"这个时间商店已经关门了，里面空荡荡，一个人都没有。"
+	)>>
+	<<elseif Time.dayState is "day">>
+	<<=lanSwitch(
+		"The store is open at this time, and you can see the clerk is busy, and there are many people browsing inside.",
+		"现在是营业时间，你能看到店员在里忙碌着，有不少人在里面逛着。"
+	)>>
+	<<else>>
+	<<=lanSwitch(
+		"Although it's business hours, it's not crowded and the clerk can see you at a glance.",
+		"虽然是营业时间，但人不多，店员一眼就能看到你。"
+	)>>
+	<</if>>
+	<br><br>
+<</if>>
+</div>
+
+<div id='content'>
+	<<if $stress gte $stressmax>>
+		<<passoutshop>>
+	<<elseif $tvar.scene.passage>>
+		<<include $tvar.scene.passage>>
+	<<else>>
+		<<include 'Scene DaisoShop General'>>
+	<</if>>
+</div>
+
+<<if $tvar.onselect is true>>
+	<<set $tvar.onselect to false>>
+<<elseif $tvar.eventnext is true>>
+	<<set _link = lanSwitch('Next', '继续')>>
+	<<link 'Next' $passage>>
+		<<pass 1>>
+		<<if $tvar.scene.nextcode>>
+			<<=$tvar.scene.nextcode>>
+		<</if>>
+	<</link>>
+<<else>>
+	<<set _link = lanSwitch('Leave', '离开')>>
+	<<getouticon>><<link _link "Shopping Centre">>
+		<<run iUtil.resetTvar('exitPassage'); iEvent.unsetEvent()>>
+		<<pass 1>>
+	<</link>>    
+<</if>>
+
+
+
+:: Scene DaisoShop General
+<<=lanSwitch(
+	"Here are many goods for sale, you can browse around and find something you like.",
+	"这里有很多商品出售，你随意逛着寻找合心意的物品。"
+)>>
+<br><br>
+
+<<lanSwitch 'Snacks:' '零食：'>><br>
+
+<br><br>
+
+<<lanSwitch 'Drinks:' '饮料：'>><br>
+
+<br><br>
+
+<<lanSwitch 'Sundries:' '杂物：'>><br>
+
+<br><br>
+
+
+<<ModShopZone>>
+<br><br>

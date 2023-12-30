@@ -1,0 +1,33 @@
+
+//Brothel Basement
+iEvent.registEvent('location',
+    {
+        passage: 'Brothel Basement',
+        scene: 'Brothel Basement',
+        episode: 'DrugsIntro',
+        type: 'Event',
+        phase: 3,
+        eventnext: true,
+        nextcode: '',
+        require: (data)=>{ return iEvent.getFlag('Brothel', 'drugsintro') !== 1 && V.brothel_basement_intro == 1 && R.lastPassage == 'Brothel' && iEvent.getFlag('Brothel', 'prostitution') >= 1 }
+    },
+)
+
+iEvent.registPsg('Brothel Basement Sex', ()=>{
+    iEvent.addFlag('Brothel', 'prostitution', 1)
+})
+
+/*
+iEvent.registEvent('Passout',
+{
+    episode: 'HungerPassout',
+    type: 'Event',
+    eventnext: true,
+    nextcode: '<<set $tvar.eventnext to false>><<endevent>>',
+    require: (data)=>{ 
+        
+        return V.hunger >= V.hungermax 
+    }
+}
+)
+*/

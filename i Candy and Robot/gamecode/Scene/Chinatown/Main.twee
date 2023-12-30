@@ -1,0 +1,85 @@
+:: iMod Widget Chinatown [widget]
+<<widget "chinatownEntrance">>
+<<if iEvent.getFlag('Chinatown', 'intro') is 1 and iEvent.getFlag('Chinatown', 'known') is 1>>
+    <<set _link to lanSwitch("Go to Chinatown", "前往唐人街")+'(00:05)'>>
+    <<localIcon 'chinatown'>><<link _link "BaseScene ChinatownEntrance">>
+        <<set R.scene to "ChinatownEntrance">>
+        <<pass 5>>
+    <</link>>
+<</if>>
+
+<</widget>>
+
+<<widget "chinatownIntro">>
+<<if iEvent.getFlag('Chinatown', 'intro') is 1 and iEvent.getFlag('Chinatown', 'known') isnot 1>>
+    <<set _link to lanSwitch('Find the entrance of Chinatown', '寻找通向唐人街的入口')>>
+    <<link _link "BaseScene ChinatownEntrance">>
+        <<set R.scene to "ChinatownEntrance">>
+        <<pass 10>>
+    <</link>>
+<</if>>
+<</widget>>
+
+:: BaseScene ChinatownEntrance [scene]
+<<set $outside to 1>><<set $location to "chinatown">><<effects>>
+
+<div id='locationdes'>
+<<if iEvent.getFlag('Chinatown', 'intro') is 1 and iEvent.getFlag('Chinatown', 'known') is 1 and $phase is 0>>
+    <<=lanSwitch(
+       "You've come to the entrance of Chinatown,",
+       "你来到了唐人街的入口, "
+    )>>
+
+    <<if Time.dayState is "day">>
+        <<=lanSwitch(
+           "the chinese archway is shining brightly in the sun.",
+           "巨大的牌坊在阳光下熠熠生辉。"
+        )>>
+    <<elseif Time.dayState is "night">>
+        <<=lanSwitch(
+           "the chinese archway is illuminated by the light of lanterns.",
+           "巨大的牌坊被灯笼的光芒照亮。"
+        )>>
+    <<else>>
+        <<=lanSwitch(
+            'the chinese archway is infront of you.',
+            "巨大的牌坊耸立在眼前。"
+        )>>
+    <</if>>
+    <br><br>
+<</if>>
+</div>
+
+<div id='content'>
+    <<if $stress gte $stressmax>>
+        <<passoutstreet>>
+    <<elseif $tvar.scene.passage>>
+        <<include $tvar.scene.passage>>
+    <<else>>
+        <<include 'Scene ChinatownEntrance Genral'>>
+    <</if>>
+</div>
+
+<div id='linkzone'>
+
+<<if $tvar.onselect is true>>
+    <<set $tvar.onselect to false>>
+<<elseif $tvar.eventnext is true>>
+    <<set _link = lanSwitch('Next', '继续')>>
+    <<link 'Next' $passage>>
+        <<pass 1>>
+        <<if $tvar.scene.nextcode>>
+            <<=$tvar.scene.nextcode>>
+        <</if>>
+    <</link>>
+<<else>>
+    <<set _link = lanSwitch('Harvest Street', '丰收街')+'(00:02)'>>
+    <<link _link "Harvest Street">>
+        <<run iUtil.resetTvar('exitPassage'); iEvent.unsetEvent()>>
+        <<pass 3>>
+    <</link>>    
+<</if>>
+</div>
+
+
+:: Scene ChinatownEntrance Genral

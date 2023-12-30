@@ -1,0 +1,51 @@
+:: iMod Widget Chinatown Passout [widget]
+<<widget "passoutchinatown">>
+	<<if isPlayerNonparasitePregnancyEnding()>>
+		<<pregnancyWatersBrokenPassout "street">>
+	<<else>>
+        <<set _link to lanSwitch("Everything fade to black...", "眼前一切都变得模糊起来……")>>
+		<<link _link "Scene Chinatown Passout">><</link>>
+	<</if>>
+<</widget>>
+
+:: Scene Chinatown Passout
+<<=lanSwitch(
+    "You've pushed yourself too much.",
+    '你把自己逼得太紧了。'
+)>>
+<br><br>
+<<if $worn.face.type.includes("blindfold") or $worn.face.type.includes("gag")>>
+	<<set $worn.face.type.push("broken")>>
+	<<faceruined>>
+<</if>>
+<<passout>>
+<<set $safestreet to 0>>
+<<set $dangerstreet to 0>>
+<<set $danger to random(1, 10000)>>
+<<if $danger gte (9900 - $allure)>><<set $dangerstreet to random(1, 100)>><</if>>
+<<if $danger lt (9900 - $allure)>><<set $safestreet to random(1, 100)>><</if>>
+
+<<set _link = lanSwitch('Wake up', '醒来')>>
+<<if $dangerstreet gte 1 and $wolfgirl gte 6 and random(1, 2) is 2>>
+    <<link _link 'Pound Abduction'>><</link>>
+	<br>
+<<elseif $dangerstreet gte 91>>
+	<<link _link "Abduction">><<set $molestationstart to 1>><</link>>
+<<elseif $dangerstreet gte 65>>
+	<<link _link "Street Wake">><</link>>
+<<elseif $dangerstreet gte 45>>
+	<<link _link "Molestation alley">><<set $molestationstart to 1>><</link>>
+<<elseif $dangerstreet gte 25>>
+	<<link _link "Street Wake Shackle">><</link>>
+<<elseif $dangerstreet gte 1>>
+	<<link _link "Street Wake Blindfold">><</link>>
+<</if>>
+
+<<if $safestreet gte 86>>
+	<<ambulance>>
+<<elseif $safestreet gte 1>>
+	<<ambulance>>
+<</if>>
+
+<<pass 1 hour>>
+<<trauma 6>><<set $stress -= 2000>>

@@ -1,2 +1,3 @@
-simpleFrameworks.addto('iModReady','testReady')
-simpleFrameworks.addto('iModHeader','testHeader')
+console.log('test1.js')
+
+simpleFrameworks.addto('iModInit', 'testInit')

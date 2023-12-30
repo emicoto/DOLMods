@@ -1,0 +1,11 @@
+:: Scene DaisoShop Lock
+<<set $tvar.onselect to true>>
+<<set _lock to 700>>
+现在是Time.dayState, 不在营业时间段内。
+大创百货商店的门锁了，你无法进入。
+
+<<if currentSkillValue('skulduggery') gte _lock and R.mechStats.tool.digitalSet is 1>>
+    <span class="green">这些锁看起来似乎很容易打开。</span>
+<<else>>
+
+<</if>>
