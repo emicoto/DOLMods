@@ -49,17 +49,29 @@
     <</link>>
 <</widget>>
 
+<<widget "chinatownLinkLocation">>
+
+    <<localIcon 'chinatown_entry'>>
+    <<set _link = lanSwitch('Leave', '离开')+'(00:05)'>>
+    <<link _link "Harvest Street">>
+        <<run iUtil.resetTvar('exitPassage'); iEvent.unsetEvent()>>
+        <<pass 3>>
+    <</link>>
+<</widget>>
+
 
 <<widget "almondLinkEventEnd">>
     <<set _link = lanSwitch('Next', '继续')>>
     <<if $tvar.scene.leaveLink>>
         <<set _link = lanSwitch($tvar.scene.leaveLink)>>
+        <<run console.log('set leavelink:', _link)>>
     <</if>>
 
     <<set _exit = $tvar.exitPassage>>
-    <<if _exit is undefined and $tvar.lastPassage isnot $passage>>
+
+    <<if !_exit is and $tvar.lastPassage isnot $passage>>
         <<set _exit = $tvar.lastPassage>>
-    <<else>>
+    <<elseif !_exit>>
         <<set _exit = 'Harvest Street'>>
     <</if>>
 

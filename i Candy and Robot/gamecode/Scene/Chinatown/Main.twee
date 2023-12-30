@@ -8,11 +8,36 @@
 
 
 <div id='content'>
-
+    <<if $stress gte $stressmax>>
+        <<passoutstreet>>
+    <<elseif $tvar.scene.passage>>
+        <<include $tvar.scene.passage>>
+    <<else>>
+        <<set _title = 'Scene Chinatown'>>
+        <<include _title>>
+    <</if>>
 
 </div>
 
 
 <div id='linkzone'>
+<<if $tvar.onselect is true>>
+    <<set $tvar.onselect to false>>
 
+<<elseif $tvar.eventnext is true>>
+    <<set _link = lanSwitch('Next', '继续')>>
+    <<link 'Next' $passage>>
+        <<pass 1>>
+        <<if $tvar.scene.nextcode>>
+            <<=$tvar.scene.nextcode>>
+        <</if>>
+    <</link>>
+
+<<elseif !$tvar.scene.passage or $tvar.scene.type is 'Scene'>>
+    <<chinatownLinkLocation>>
+
+<<else>>
+    <<chinatownLinkEventEnd>>
+
+<</if>>
 </div>

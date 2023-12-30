@@ -1,5 +1,15 @@
 sugarcube-2:
   macros:
+    getouticon:
+      name: getouticon
+    ModShopZone:
+      name: ModShopZone
+    passoutchinatown:
+      name: passoutchinatown
+    almondLinkLocation:
+      name: almondLinkLocation
+    almondLinkEventEnd:
+      name: almondLinkEventEnd
     imgIcon:
       name: imgIcon
     localIcon:

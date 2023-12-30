@@ -5,26 +5,26 @@
 <div id='locationdes'>
 <<if iEvent.getFlag('Chinatown', 'prologue') is 1 and iEvent.getFlag('Chinatown', 'known') is 1 and $phase is 0>>
     <<=lanSwitch(
-       "You've come to an almond boulevard in front of the Chinatown.",
-       "你来到了唐人街入口前的杏林小道。"
+       "You've come to an almond boulevard in front of the Chinatown. At the entrance of Chinatown, ",
+       "你来到了唐人街外的杏林小道。在唐人街入口处，"
     )>>
-
     <<if Time.dayState is "day">>
         <<=lanSwitch(
-           "At the entrance of Chinatown, a Chinese archway adorned with four brilliant chinese characters in a dragon dance style, exuding an eastern charm in the sun.",
-           "唐人街入口处，写着“众生平等”四个大字的中式牌坊在阳光下熠熠生辉。"
+           "a Chinese archway adorned with four brilliant chinese characters in a dragon dance style, exuding an eastern charm in the sun.",
+           "写着“众生平等”四个大字的中式牌坊在阳光下熠熠生辉。"
         )>>
     <<elseif Time.dayState is "night">>
         <<=lanSwitch(
-           "the chinese archway is illuminated by the light of lanterns.",
+           "a Chinese archway is illuminated by the light of lanterns.",
            "巨大的牌坊被灯笼的光芒照亮。"
         )>>
     <<else>>
         <<=lanSwitch(
-            'the chinese archway is towering in front of you. ',
+            'a Chinese archway is towering in front of you. ',
             "巨大的牌坊耸立在眼前。"
         )>>
     <</if>>
+    <br>
     <<if Time.dayState is "night">>
         <<=lanSwitch(
             'On this dark and cold night, the burning braziers in front of the archway provide you a touch of warmth.',
@@ -36,7 +36,7 @@
             '在两旁的巨大杏树的阴影下，你无法直接观察到牌坊背后的街市。'
         )>>
     <</if>>
-    <br>
+    <br><br>
 <</if>>
 </div>
 
@@ -64,12 +64,12 @@
         <</if>>
     <</link>>
 
-<<elseif !$tvar.scene.passae or $tvar.scene.type is 'Scene'>>
+<<elseif !$tvar.scene.passage or $tvar.scene.type is 'Scene'>>
     <<almondLinkLocation>>
 
 <<else>>
     <<almondLinkEventEnd>>
-    
+
 <</if>>
 <br>
 </div>
@@ -97,7 +97,7 @@
 <</if>>
 
 
-:: Scene AlmondPath Genral EN
+:: Scene AlmondPath General EN
 <<if Time.dayState is 'dusk' and [1,4,6,7].include(Time.weekDay)>>
 "尘归尘， 土归土..."<br>
 <br>

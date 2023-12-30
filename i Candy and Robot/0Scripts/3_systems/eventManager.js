@@ -227,7 +227,7 @@ const eventManager = {
                 ( data.match && data.match(passage) ) ||
                 ( data.keys && passage.has(data.keys) == data.keyrequire )
              ){
-                if(data.require()){
+                if(typeof data.require == 'function' && data.require()){
                     const _event = clone(data)
 
                     _event.title = `${data.type} ${data.passage} ${data.episode}`
@@ -258,7 +258,7 @@ const eventManager = {
         for(let i = 0; i < eventList.length; i++){
             const data = eventList[i]
             //console.log('eventdata:', data)
-            if(data.require()){
+            if(typeof data.require == 'function' && data.require()){
                 const _event = clone(data)
 
                 _event.title = `${data.type} ${event} ${data.episode}`

@@ -18,6 +18,18 @@ iEvent.registPsg('Brothel Basement Sex', ()=>{
     iEvent.addFlag('Brothel', 'prostitution', 1)
 })
 
+
+iEvent.registEvent('Location',{
+    passage: 'Harvest Street',
+    scene: 'Harvest Street',
+    exit: 'Harvest Street',
+
+    episode: 'ChinatownRescue',
+    type: 'Event',
+    require: (data)=>{ return iEvent.getFlag('Chinatown', 'prologue') === undefined && iEvent.getFlag('Harvest', 'passout') >= 3 },
+
+})
+
 /*
 iEvent.registEvent('Passout',
 {

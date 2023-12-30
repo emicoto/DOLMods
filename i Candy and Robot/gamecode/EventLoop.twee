@@ -22,10 +22,6 @@
 		<</link>>
 
 	<<else>>
-        <<if $tvar.scene.endcode>>
-		    <<=$tvar.scene.endcode>>
-        <</if>>
-
 		<<set _link = lanSwitch('Next', '继续')>>
         <<if $tvar.scene.leaveLink>>
             <<set _link = lanSwitch($tvar.scene.leaveLink)>>
@@ -33,6 +29,9 @@
 
 		<<link _link $tvar.exitPassage>>
 			<<run iEvent.unsetEvent()>>
+			<<if $tvar.scene.endcode>>
+				<<=$tvar.scene.endcode>>
+			<</if>>
 			<<pass 5>>
 		<</link>>    
 	<</if>>

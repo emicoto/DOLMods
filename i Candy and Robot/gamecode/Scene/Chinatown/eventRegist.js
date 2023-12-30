@@ -3,18 +3,23 @@ iEvent.registEvent('Chinatown',{
     episode: 'Intro',
     eventnext: true,
     nextcode: '<<run iEvent.setFlag("Chinatown", "intro", 1); iEvent.unsetEvent()>>',
+    require: ()=>{ return iEvent.getFlag('Chinatown', 'intro') == undefined },
 })
+
 
 iEvent.registEvent('AlmondPath',{
     type: 'Event',
     episode: 'Intro',
+    phase: 2,
+    eventnext: true,
+
     endcode: '<<run iEvent.setFlag("Chinatown", "known", 1)>><<set R.scene = "Chinatown">>',
     priority: 1000,
 
     leaveLink: ['Enter the Chinatown', '进入唐人街'],
     exit: 'BaseScene Chinatown',
 
-    require: ()=>{ return iEvent.getFlag('Chinatown', 'known') == undefined && V.passage == 'BaseScene AlmondPath' },
+    require: ()=>{ return iEvent.getFlag('Chinatown', 'known') == undefined },
 
 })
 
