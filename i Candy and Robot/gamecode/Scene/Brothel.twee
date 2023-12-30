@@ -50,12 +50,7 @@
 			<<set _link to lanSwitch($tvar.scene.leavelink)>>
 		<</if>>
 		<<link _link _exit>>
-			<<run iUtil.resetTvar('exitPassage'); iEvent.unsetEvent()>>
-			<<if _passtime>>
-				<<pass _passtime>>
-			<<else>>
-				<<pass 1>>
-			<</if>>
+			<<endscene>>
 		<</link>>    
 	<</if>>
 </div>

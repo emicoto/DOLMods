@@ -53,3 +53,16 @@
 		<<=`<img class="icon" src='img/misc/${$args[0]}.png'>`>>
 	<</if>>
 <</widget>>
+
+<<widget "endscene">>
+<<if _passtime or $tvar.scene.passtime>>
+    <<pass _passtime>>
+<<else>>
+    <<pass 1>>
+<</if>>
+<<run iEvent.unsetEvent()>>
+<<if $tvar.endcode>>
+    <<=$tvar.endcode>>
+    <<set $tvar.endcode to null>>
+<</if>>
+<</widget>>

@@ -52,12 +52,12 @@
 </div>
 
 <div id='linkzone'>
+<<set _link = lanSwitch('Next', '继续')>>
 <<if $tvar.onselect is true>>
     <<set $tvar.onselect to false>>
 
 <<elseif $tvar.eventnext is true>>
-    <<set _link = lanSwitch('Next', '继续')>>
-    <<link 'Next' $passage>>
+    <<link _link $passage>>
         <<pass 1>>
         <<if $tvar.scene.nextcode>>
             <<=$tvar.scene.nextcode>>
@@ -68,7 +68,7 @@
     <<almondLinkLocation>>
 
 <<else>>
-    <<almondLinkEventEnd>>
+    <<linkEventEnd 'Harvest Street'>>
 
 <</if>>
 <br>

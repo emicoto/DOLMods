@@ -29,8 +29,8 @@
 
 		<<link _link $tvar.exitPassage>>
 			<<run iEvent.unsetEvent()>>
-			<<if $tvar.scene.endcode>>
-				<<=$tvar.scene.endcode>>
+			<<if $tvar.endcode>>
+				<<=$tvar.endcode>>
 			<</if>>
 			<<pass 5>>
 		<</link>>    

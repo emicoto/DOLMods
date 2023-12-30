@@ -37,7 +37,9 @@
     <<chinatownLinkLocation>>
 
 <<else>>
-    <<chinatownLinkEventEnd>>
+    <<linkEventEnd 'BaseScene AlmondPath'>>
 
 <</if>>
 </div>
+
+:: Scene Chinatown

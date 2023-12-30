@@ -101,7 +101,6 @@ const eventManager = {
         V.tvar.eventnext = false
         V.tvar.onselect = false
         V.tvar.exitPassage = null
-        R.scene = null
         wikifier('endevent')
     },
 
@@ -119,11 +118,13 @@ const eventManager = {
         }
 
         console.log('setScene:', event, data)
+        
+        V.tvar.scene = data
+        V.tvar.scene.passage = data.title
+        V.tvar.eventnext = data.eventnext
+        V.tvar.exitPassage = data.exit ?? V.passage
+        V.tvar.endcode = data.endcode
 
-        V.tvar.scene = obj
-        V.tvar.scene.passage = obj.title
-        V.tvar.eventnext = obj.eventnext
-        V.tvar.exitPassage = obj.exit ?? V.passage
         this.initEvent(V.tvar.scene)
     },
 
@@ -171,7 +172,13 @@ const eventManager = {
         }
         if(!scene.init){
             scene.init = true
-            V.phase = 0
+            //需要跳转的从0开始
+            if(scene.scenestage || scene.toward){
+                V.phase = 0
+            }
+            else{
+                V.phase = 1
+            }
         }
         else if(scene.phase > 0 && V.phase < scene.phase){
             V.phase ++
@@ -186,6 +193,10 @@ const eventManager = {
     //check event when enter a scene
     eventReady: function(){
         let title = passage()
+        if(typeof V.tvar.scene.passage == 'string') return
+
+        console.log('eventReady:', title, R?.scene)
+
         if(R?.scene){
             this.checkEvent(R.scene)
         }
@@ -221,6 +232,8 @@ const eventManager = {
 
     //原有地点的事件监测
     checkEvent2: function(passage){
+        console.log('checkevent2:', passage)
+
         const eventlist = this.data.location
         if(!eventlist) return
 
@@ -242,7 +255,7 @@ const eventManager = {
 
     //模组地点事件检测
     checkEvent: function(event){
-        //console.log('event:', event)
+        console.log('checkevent:', event)
         //筛选事件
         const eventList = this.data[event]
         //console.log('eventlist:',eventList)

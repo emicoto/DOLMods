@@ -2,6 +2,7 @@ iEvent.registEvent('Chinatown',{
     type: 'Event',
     episode: 'Intro',
     eventnext: true,
+    phase: 2,
     nextcode: '<<run iEvent.setFlag("Chinatown", "intro", 1); iEvent.unsetEvent()>>',
     require: ()=>{ return iEvent.getFlag('Chinatown', 'intro') == undefined },
 })
@@ -19,7 +20,7 @@ iEvent.registEvent('AlmondPath',{
     leaveLink: ['Enter the Chinatown', '进入唐人街'],
     exit: 'BaseScene Chinatown',
 
-    require: ()=>{ return iEvent.getFlag('Chinatown', 'known') == undefined },
+    require: ()=>{ return iEvent.getFlag('Chinatown', 'known') == undefined && V.tvar.lastPassage !== 'BaseScene AlmondPath' },
 
 })
 
