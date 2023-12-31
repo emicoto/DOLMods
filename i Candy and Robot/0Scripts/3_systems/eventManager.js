@@ -121,7 +121,7 @@ const eventManager = {
             data.scenestage = `${data.type} data.toward`
         }
 
-        console.log('setScene:', event, data)
+        
         
         V.tvar.scene = data
         V.tvar.scene.passage = data.title
@@ -131,10 +131,13 @@ const eventManager = {
         }
         else{
             data.eventnext = (data.phase > 0)
+            V.tvar.eventnext = data.eventnext
         }
 
         V.tvar.exitPassage = data.exit ?? V.passage
         V.tvar.endcode = data.endcode
+        
+        console.log('setScene:', event, data)
 
         this.initEvent(V.tvar.scene)
     },
@@ -201,6 +204,7 @@ const eventManager = {
         if(V.phase >= scene.phase){
             V.tvar.eventnext = false
         }
+        console.log('initScene:', scene, V.phase, V.tvar.eventnext)
 
     },
 

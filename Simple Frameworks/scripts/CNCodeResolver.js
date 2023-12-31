@@ -124,7 +124,7 @@ window.check = check
 
 const cntv = {
     '设置':function(prop, value){
-        V.iModValues[prop] = value;
+        V.iModVar[prop] = value;
     },
 
     'npc设置':function(npc, prop, value){
@@ -135,19 +135,19 @@ const cntv = {
     },
 
     '获取变量':function(prop){
-        return V.iModValues[prop]
+        return V.iModVar[prop]
     },
 
     '变量':function(prop){
-        return V.iModValues[prop]
+        return V.iModVar[prop]
     },
 
     '变量加减':function(prop, value){
-        V.iModValues[prop] += value
+        V.iModVar[prop] += value
     },
 
     '删除变量':function(prop){
-        delete V.iModValues[prop]
+        delete V.iModVar[prop]
     },
 
     '获取npc变量':function(npc, prop){
@@ -164,14 +164,7 @@ const cntv = {
         V.iModNpc[npc][prop] += value
     },
 
-    '态度差分':function(bratty, neutral, meek){
-        if(V.speech_attitude == 'bratty')
-            return bratty;
-        if(V.speech_attitude == 'neutral')
-            return neutral
-        if(V.speech_attitude == 'meek')
-            return meek
-    },
+    '态度差分': speachDif,
 
     '性别差分': sexSwitch,
 

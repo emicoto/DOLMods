@@ -1,5 +1,10 @@
 sugarcube-2:
   macros:
+    randomdata:
+      name: randomdata
+      container: true
+    datas:
+      name: datas
     getouticon:
       name: getouticon
     ModShopZone:

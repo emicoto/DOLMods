@@ -86,16 +86,18 @@
 <br><br>
 
 <<localIcon 'chat'>><<link '试图搭话' $passage>><<run iEvent.setEvent('check', 'Xinyu', 'Talk')>><</link>>
-<br><br>
+<br>
 
 <<elseif Time.dayState is 'night'>>
-冷风吹过，周围的树木絮絮作响，不时还能听到远处传来的狗叫声。<br>
+冷风吹过，周围的树木絮絮作响，不时还能听到远处传来的狗叫声。
+<br>
 
 <<else>>
-两个长相奇怪、穿着唐装的机器人在牌坊前打扫落叶。<br>
+两个长相奇怪、穿着唐装的机器人在牌坊前打扫落叶。
+<br>
 
 <</if>>
-
+<br>
 
 :: Scene AlmondPath General EN
 <<if $iModNpc.get('Xinyu', 'location') == 'almond_path'>>
@@ -106,7 +108,7 @@ A <<=sexSwitch('Xinyu', 'girl wears blue chinese style clothes', 'boy wears gray
 <<nnpc_He 'Xinyu'>> is chanting in a mysterious oriental language.<br>
 
 <<localIcon 'chat'>><<link 'Try to talk to her' $passage>><<run iEvent.setEvent('check', 'Xinyu', 'Talk')>><</link>>
-<br><br>
+<br>
 
 <<elseif Time.dayState is 'night'>>
 The cold wind blows, the trees around rustle, and you can hear the barking of dogs in the distance.
@@ -117,3 +119,4 @@ Two strange robots in chinese style clothes are sweeping the fallen leaves in fr
 <br>
 
 <</if>>
+<br>

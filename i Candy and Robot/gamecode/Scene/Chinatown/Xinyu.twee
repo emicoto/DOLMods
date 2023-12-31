@@ -11,19 +11,69 @@
 一张又一张，慢慢地被添加到火盆中，烟雾缭绕，散发着一股独特的气味。
 <br><br>
 
-:: Chara Xinyu Talk Intro
+:: Chara Xinyu Talk Intro 1
 <<set $tvar.onselect to true>>
-你试着跟<<=sexSwitch('Xinyu', '小女孩', '小男孩')>>搭话。<br>
+你试着跟<<=sexSwitch('Xinyu', '女孩', '男孩')>>搭话。<br>
 <br><br>
 
-<<=cntv['态度差分'](
+<<=speachDif(
     "“喂！你在这里做什么？”",
     "“你好，你在这里做什么？”",
     "“……你好，请问你在这里做什么呀？”"
 )>>
 <br>
 
-<<=sexSwitch('Xinyu', '小女孩', '小男孩')>>并没有搭理你，只是默默地烧着纸钱。
+<<=sexSwitch('Xinyu', '女孩', '男孩')>>并没有搭理你，只是默默地烧着纸钱。
+<br>
+一张又一张，慢慢地被添加到火盆中，烟雾缭绕，散发着一股独特的气味。
+<br><br>
+
+<<link "试着沟通" $passage>>
+    <<run iEvent.addFlag('Xinyu', 'ask', 1)>>
+<</link>>
+<br>
+<<link "算了" $passage>>
+    <<run iEvent.unsetEvent()>>
+<</link>>
+
+:: Chara Xinyu Talk Intro 2
+<<set $tvar.onselect to true>>
+你尝试着跟<<=sexSwitch('Xinyu', '女孩', '男孩')>>沟通。<br>
+<br><br>
+
+<<=speachDif(
+    "“喂！你是不是听不懂我说的话啊？”",
+    "“难道你听不懂英文？”",
+    "“……你是不是听不懂英文呀？我可以教你。”"
+)>>
+<br>
+
+<<=sexSwitch('Xinyu', '女孩', '男孩')>>并没有搭理你，只是默默地烧着纸钱。
+<br>
+一张又一张，慢慢地被添加到火盆中，烟雾缭绕，散发着一股独特的气味。
+<br><br>
+
+<<link "试着接触" $passage>>
+    <<run iEvent.addFlag('Xinyu', 'ask', 1)>>
+<</link>>
+<br>
+<<link "算了" $passage>>
+    <<run iEvent.unsetEvent()>>
+<</link>>
+
+:: Chara Xinyu Talk Intro 3
+<<set $tvar.onselect to true>>
+你尝试着与<<=sexSwitch('Xinyu', '女孩', '男孩')>>接触。<br>
+<br><br>
+
+<<=speachDif(
+    "“喂！听不听得到啊！听不懂也多少理一下啊！”<br>你这么说着，推了<<nnpc_he Xinyu>>一下。",
+    "“听不懂的话，这样总算知道我在跟你搭话了吧？”<br>你这么说着，轻轻地拍了拍<<nnpc_he Xinyu>>的肩膀。",
+    "“……你好？听不懂的话，这样行吗？”<br>你这么说着，在<<nnpc_he Xinyu>>的面前挥了挥手。"
+)>>
+<br>
+
+<<=sexSwitch('Xinyu', '女孩', '男孩')>>撇了你一眼，但很快又继续烧纸钱了。
 <br>
 一张又一张，慢慢地被添加到火盆中，烟雾缭绕，散发着一股独特的气味。
 <br><br>

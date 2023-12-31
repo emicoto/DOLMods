@@ -9,7 +9,16 @@
 
 <<widget "iCandyFooter">>
 <!-- 在PassageFooter里的处理  -->
-
+<<randomdata>>
+<<datas>>
+一个测试A
+<<datas>>
+一个测试B
+<<datas>>
+一个测试C
+<<datas>>
+一个测试D
+<</randomdata>>
 
 <</widget>>
 
