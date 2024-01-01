@@ -11,7 +11,7 @@
     <<if Time.dayState is "day">>
         <<=lanSwitch(
            "a Chinese archway adorned with four brilliant chinese characters in a dragon dance style, exuding an eastern charm in the sun.",
-           "写着“众生平等”四个大字的中式牌坊在阳光下熠熠生辉。"
+           "写着“众生平等”四个大字的牌坊在阳光下熠熠生辉。"
         )>>
     <<elseif Time.dayState is "night">>
         <<=lanSwitch(

@@ -9,6 +9,12 @@ iEvent.registEvent('Chinatown',{
     require: ()=>{ return iEvent.getFlag('Chinatown', 'intro') == undefined && V.tvar.lastPassage !== 'BaseScene Chinatown' },
 })
 
+iEvent.registEvent('Passout', {
+    type: 'Event',
+    toward: 'Chinatown Prologue',
+    
+    require: ()=>{ return iEvent.getFlag('Chinatown', 'prologue') == undefined && V.bus == 'harvest' && iEvent.getFlag('harvest', 'passout') >= 3 },
+})
 
 iEvent.registEvent('AlmondPath',{
     type: 'Event',

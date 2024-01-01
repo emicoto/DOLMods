@@ -1,0 +1,77 @@
+:: Event Chinatown Prologue
+
+<<set _passage to 'Event Chinatown PrologueText' + setup.language>>
+<<include _passage>>
+
+<<set _link to lanSwitch('Next', '继续')>>
+<<link _link 'Hospital Bed'>><<run iEvent.unsetEvent()>><<pass 12 hour>><</link>>
+
+:: Event Chinatown PrologueText CN
+
+“……怎么有个孩子倒在这里？头很烫，似乎在发高烧。”
+<br>
+你隐约听到一把充满磁性的声音用神秘的东方语言说着些什么，但你听不懂。
+<br>
+然后你感觉到一个宽大的手掌抚摸着你的额头。
+<br><br>
+
+“……这面孔……好像是孤儿院的孩子。可怜见的，能帮一把就帮一把吧。”
+<br>
+接着你听到另一把声音，是个带着苍老岁月的女性声音。
+<br>
+你依然听不懂在说什么，但你能感觉到声音中所释放的善意。
+<br><br>
+
+接着你感觉自己被人抱起，然后你就失去了意识。
+<br><br>
+
+因为高烧，这段时间你的意识一直处于模糊状态，你能感觉到有人在照顾自己。
+<br><br>
+
+你闻到了很香的食物味道，有人给自己喂食时你会自然而然地张开嘴巴。
+<br>
+你也闻到了一些很独特的香味，类似香薰或者是药材的味道。
+<br><br>
+
+而当你退烧后，你再次醒来时却发现自己躺在了小镇医院的病床上。
+<br><br>
+
+
+
+:: Event Chinatown PrologueText EN
+
+“……怎么有个孩子倒在这里？头很烫，似乎在发高烧。”
+<br>
+<span class='blue'>("...wait, a <<girl>> passout there. <<=sexSwitch('pc', 'Her', 'His')>>  forehead is so hot, seems to have a fever.")</span>
+<br><br>
+
+In a haze of consciousness, you hear a magnetic voice saying something in a mysterious oriental language.
+<br>
+Then, you feel a large hand gently touching your forehead.
+<br><br>
+
+“……这面孔……好像是孤儿院的孩子。可怜见的，能帮一把就帮一把吧。”
+<br>
+<span class='blue'>("...I know <<=sexSwitch('pc', 'her', 'him')>>, seems like the kid from orphanage.")
+<br>
+("Poor kid, let's help <<=sexSwitch('pc', 'her', 'him')>> if we can.")</span>
+<br><br>
+
+Next you hear another voice, a woman's voice filled with the wisdom of years. 
+<br>
+You still can't understand what they're saying, but you can sense the kindness in their voices.
+<br><br>
+
+Then, you feel yourself being lifted, and you lose consciousness.
+<br><br>
+
+Because of the high fever, your consciousness remains in a hazy state, but you can feel someone taking care of you. 
+<br><br>
+
+You smell delicious food, and when someone feeds you, you naturally open your mouth. 
+<br>
+You also catch whiffs of some unique scents, reminiscent of aromatherapy or medicinal herbs.
+<br><br>
+
+When your fever gone, you fully awaken but findout you're lying in a hospital bed in town.
+<br><br>

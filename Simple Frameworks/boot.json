@@ -1,43 +1,43 @@
 {
-	"name": "Simple Frameworks",
-	"version": "1.6.2",
-	"scriptFileList_inject_early": [
-		"lib/util.js",
-		"lib/selectcase.js",
-		"lib/simplewidget.js"
-	],
-	"scriptFileList_earlyload": [
-		"earlyload/patchpassage.js"
-	],
-	"scriptFileList_preload": [],
-	"styleFileList": [],
-	"scriptFileList": [
-		"scripts/simpleMacros.js",
-		"scripts/NamedNPC.js",
-		"scripts/onSetup.js",
-		"scripts/CNCodeResolver.js"
-	],
-	"tweeFileList": [],
-	"imgFileList": [],
-	"additionFile": [
-		"readme.txt"
-	],
-	"addonPlugin": [
-		{
-			"modName": "TweeReplacer",
-			"addonName": "TweeReplacerAddon",
-			"modVersion": "1.0.0",
-			"params": []
-		}
-	],
-	"dependenceInfo": [
-		{
-			"modName": "TweeReplacer",
-			"version": "^1.0.0"
-		},
-		{
-			"modName": "ReplacePatcher",
-			"version": "^1.0.0"
-		}
-	]
+  "name": "Simple Frameworks",
+  "version": "1.6.3",
+  "scriptFileList_inject_early": [
+    "lib/util.js",
+    "lib/selectcase.js",
+    "lib/simplewidget.js"
+  ],
+  "scriptFileList_earlyload": [
+    "earlyload/patchpassage.js"
+  ],
+  "scriptFileList_preload": [],
+  "styleFileList": [],
+  "scriptFileList": [
+    "scripts/simpleMacros.js",
+    "scripts/NamedNPC.js",
+    "scripts/onSetup.js",
+    "scripts/CNCodeResolver.js"
+  ],
+  "tweeFileList": [],
+  "imgFileList": [],
+  "additionFile": [
+    "readme.txt"
+  ],
+  "addonPlugin": [
+    {
+      "modName": "TweeReplacer",
+      "addonName": "TweeReplacerAddon",
+      "modVersion": "1.0.0",
+      "params": []
+    }
+  ],
+  "dependenceInfo": [
+    {
+      "modName": "TweeReplacer",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "ReplacePatcher",
+      "version": "^1.0.0"
+    }
+  ]
 }

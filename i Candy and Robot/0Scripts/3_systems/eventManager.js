@@ -120,6 +120,10 @@ const eventManager = {
         }
         else if(data.toward){
             data.scenestage = `${data.type} ${data.toward}`
+            
+            if(Story.has(data.scenestage+` ${setup.language}`)){
+                data.scenestage += ` ${setup.language}` 
+            }
         }      
         
         V.tvar.scene = data

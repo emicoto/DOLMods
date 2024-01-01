@@ -1,6 +1,6 @@
 {
   "name": "i, Candy + Robot",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "modPacker": {
     "modVersionJs": {
       "file": "0Scripts/0_framework/0_modversion.js",
@@ -58,13 +58,14 @@
     "gamecode/Scene/Brothel.twee",
     "gamecode/Scene/Chinatown/Almond.twee",
     "gamecode/Scene/Chinatown/Grocers.twee",
+    "gamecode/Scene/Chinatown/HKCafe.twee",
     "gamecode/Scene/Chinatown/Institude.twee",
     "gamecode/Scene/Chinatown/Intro.twee",
     "gamecode/Scene/Chinatown/Main.twee",
-    "gamecode/Scene/Chinatown/Park.twee",
     "gamecode/Scene/Chinatown/Passout.twee",
-    "gamecode/Scene/Chinatown/Restraunt.twee",
-    "gamecode/Scene/Chinatown/Shrine.twee",
+    "gamecode/Scene/Chinatown/Prologue.twee",
+    "gamecode/Scene/Chinatown/Shingwong.twee",
+    "gamecode/Scene/Chinatown/TaichiPark.twee",
     "gamecode/Scene/Chinatown/Xinyu Intro cn.twee",
     "gamecode/Scene/Chinatown/Xinyu Intro en.twee",
     "gamecode/Scene/Chinatown/Xinyu.twee",
@@ -74,6 +75,7 @@
     "gamecode/Scene/Daiso/Main.twee",
     "gamecode/Scene/Daiso/Scene.twee",
     "gamecode/Scene/Pharmacy.twee",
+    "gamecode/Scene/Warehouse.twee",
     "gamecode/UseItems.twee",
     "gamecode/Widgets.twee"
   ],
