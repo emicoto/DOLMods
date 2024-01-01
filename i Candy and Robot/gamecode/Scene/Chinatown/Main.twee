@@ -3,8 +3,16 @@
 
 <div id='locationdes'>
 <<if $phase is 0 and (!$tvar.scene.passage || $tvar.scene.type == 'Scene')>>
-你站在唐人街，熙熙攘攘的街道上挂满了红色和金色的灯笼，营造出喜庆的氛围。<br>
-东方风格的建筑与现代商店交相辉映，街头飘荡着各种美食的香气。<br>
+    <<=lanSwitch(
+        `You stand in Chinatown, where the bustling streets are adorned with colorful paper lanterns, creating a festive atmosphere.`,
+        `你站在唐人街，熙熙攘攘的街道上挂满了各色的纸灯笼，营造出喜庆的氛围。`
+    )>>
+<br>
+    <<=lanSwitch(
+        `The streets are lined with oriental-style buildings, interspersed with modern shops, and the air is filled with the aroma of various delicacies.`,
+        `街道两旁是东方风格的建筑与现代商店交相辉映，街头飘荡着各种美食的香气。`
+    )>>
+<br>
 <</if>>
 </div>
 
@@ -15,7 +23,7 @@
     <<elseif $tvar.scene.passage>>
         <<include $tvar.scene.passage>>
     <<else>>
-        <<set _title = 'Scene Chinatown'>>
+        <<set _title = 'Scene Chinatown General ' + setup.language>>
         <<include _title>>
     <</if>>
 </div>
@@ -43,4 +51,38 @@
 <</if>>
 </div>
 
-:: Scene Chinatown
+:: Scene Chinatown General CN
+<<randomdata>>
+<<datas>>
+远处你会看到一些小孩在路边玩着穿着唐装的牵线娃娃，一些老人<<if Time.season is 'winter'>>裹着厚厚的棉被<<elseif Time.season is 'summer'>>光着膀子<<else>>穿着太极服<</if>>在路边的棋盘一边扎着马步一边下着棋。
+
+<<datas>>
+一些摊贩在吆喝叫卖推销他们的商品。
+
+<<datas>>
+一些小孩跑过，一边吃着糖葫芦一边玩着纸扎娃娃。
+
+<<datas>>
+几个老人在树下打着麻将，一边吵着一边笑着。
+
+<</randomdata>>
+<br>
+
+
+:: Scene Chinatown General EN
+<<randomdata>>
+<<datas>>
+In the distance, you will see some children playing with Chinese puppets on the side of the road;
+some elderly people <<if Time.season is 'winter'>>wrapped in thick blankets<<elseif Time.season is 'summer'>>half-naked<<else>>wearing Tai Chi attire<</if>>, practicing Tai Chi and playing Go on the side of the road.
+
+<<datas>>
+Some vendors are shouting and selling their goods.
+
+<<datas>>
+Some children ran by, eating candied haws and playing with paper dolls.
+
+<<datas>>
+Some old people are playing mahjong under the tree, arguing and laughing.
+
+<</randomdata>>
+<br>

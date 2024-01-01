@@ -1,4 +1,10 @@
 <!-- 港式茶餐厅 -->
 :: BaseScene KongfuCafe [scene]
+“欢迎光临。”
+<br>
+进门时你会听到一把奇怪的声音欢迎你，你一看，原来是一个端着盘子穿着奇怪的中式服装的机器人。
+<br>
+你注意到里面都坐满了人，似乎来的不是时候。
+<br>
 
-<<link 'Leave' 'BaseScene Chinatown'>><</link>>
+<<link '离开' 'BaseScene Chinatown'>><</link>>

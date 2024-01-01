@@ -1,5 +1,6 @@
 <!-- 太极公园 -->
 :: BaseScene TaichiPark [scene]
-
+你来到了太极公园，这里是老年人的聚集地，你看到了很多老年人在这里打太极拳。
+<br>
 
 <<link 'Leave' 'BaseScene Chinatown'>><</link>>

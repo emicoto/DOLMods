@@ -1,4 +1,11 @@
 :: BaseScene Warehouse [scene]
 
+<<=lanSwitch(
+    `You see some people working, they are building a new warehouse.<br>
+    It seems you came at the wrong time.`,
+    `你看到一些人正在施工，他们正在建造一个新的仓库。<br>
+    看来你来的不是时候。`
+)>>
+<br><br>
 
 <<link 'Leave' 'Harvest Street'>><</link>>

@@ -1,6 +1,6 @@
 :: Event DaisoShop Intro CN
 <<generateRole 0 0 "clerk">><<person1>>
-<<run iEvent.setFlag('DaisoShop', 'intro', 1)>>
+<<run iEvent.setFlag('daiso', 'intro', 1)>>
 
 当你踏入了Daiso百货商店，刚推开门就听到了热情友好的欢迎问候。
 <br><br>
@@ -61,7 +61,7 @@
 
 :: Event DaisoShop Intro EN
 <<generateRole 0 0 "clerk">><<person1>>
-<<run iEvent.setFlag('DaisoShop', 'intro', 1)>>
+<<run iEvent.setFlag('daiso', 'intro', 1)>>
 
 You step into the Daiso General Shop, and as soon as you push the door open, you're greeted with a warm welcome.
 <br><br>

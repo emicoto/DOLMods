@@ -66,10 +66,23 @@ const iCandy = {
 	setValue: function(item, prop, value){
 		const general = ['aphrod', 'alcohol', 'nicotine']
 		if(general.includes(item)){
-			R.drugStates.general[item][prop] += value
+			R.drugStates.general[item][prop] = value
 			return R.drugStates.general[item][prop]
 		}
 
+		if(this.checkStat(item)){
+			R.drugStates.drugs[item][prop] = value
+			return R.drugStates.drugs[item][prop]
+		}
+	},
+
+	addValue: function(item, prop, value){
+		const general = ['aphrod', 'alcohol', 'nicotine']
+		if(general.includes(item)){
+			R.drugStates.general[item][prop] += value
+			return R.drugStates.general[item][prop]
+		}
+		
 		if(this.checkStat(item)){
 			R.drugStates.drugs[item][prop] += value
 			return R.drugStates.drugs[item][prop]

@@ -1,4 +1,3 @@
-
 //Brothel Basement
 iEvent.registEvent('location',
     {
@@ -10,31 +9,26 @@ iEvent.registEvent('location',
         type: 'Event',
         phase: 3,
         eventnext: true,
-        require: (data)=>{ return iEvent.getFlag('Brothel', 'drugsintro') !== 1 && V.brothel_basement_intro == 1 && V.tvar.lastPassage == 'Brothel' && iEvent.getFlag('Brothel', 'prostitution') >= 1 }
+        require: (data)=>{ return iEvent.getFlag('brothel', 'drugsintro') !== 1 && V.brothel_basement_intro == 1 && V.tvar.lastPassage == 'Brothel' && iEvent.getFlag('brothel', 'prostitution') >= 1 }
     },
 )
 
 iEvent.registPsg('Brothel Basement Sex', ()=>{
-    iEvent.addFlag('Brothel', 'prostitution', 1)
+    iEvent.addFlag('brothel', 'prostitution', 1)
 })
 
-
-iEvent.registEvent('Passout',{
-    exit: 'Harvest Street',
-
-    type: 'Event',    
+iEvent.registEvent('Passout', {
+    type: 'Event',
     toward: 'Chinatown Rescue',
 
-    require: (data)=>{ return iEvent.getFlag('Chinatown', 'prologue') === undefined && iEvent.getFlag('Harvest', 'passout') >= 3 },
-
+    require: ()=>{ return iEvent.getFlag('chinatown', 'prologue') == undefined && V.bus == 'harvest' && iEvent.getFlag('harvest', 'passout') >= 3 },
 })
 
-iEvent.registPsg('Passout street', ()=>{
-    if(V.bus == 'harvest'){
-        iEvent.addFlag('Harvest', 'passout', 1)
+iEvent.registPsg('Harvest Street',()=>{
+    if(V.stress >= V.stressmax){
+        iEvent.addFlag('harvest', 'passout', 1)
     }
 })
-
 /*
 iEvent.registEvent('Passout',
 {

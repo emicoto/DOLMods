@@ -25,13 +25,13 @@ function onUseDrags(enemy){
 	}
 
 	if(iCandy.checkStat(id)){
-		iCandy.setValue(id, 'taken', 1)
+		iCandy.addValue(id, 'taken', 1)
 		iCandy.setValue(id, 'lastTime', V.timeStamp)
 
 		const take = iCandy.getStat(id, 'taken')
 
 		if(take > this.threshold){
-			iCandy.setValue(id, 'overdose', 1)
+			iCandy.addValue(id, 'overdose', 1)
 		}
 		//如果有戒断状态，清除戒断状态
 		if(iCandy.getStat(id, 'withdraw') > 0){

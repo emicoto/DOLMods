@@ -1,11 +1,33 @@
 :: Scene DaisoShop Lock
 <<set $tvar.onselect to true>>
 <<set _lock to 700>>
-现在是Time.dayState, 不在营业时间段内。
-大创百货商店的门锁了，你无法进入。
 
-<<if currentSkillValue('skulduggery') gte _lock and R.mechStats.tool.digitalSet is 1>>
-    <span class="green">这些锁看起来似乎很容易打开。</span>
+你来到大创百货的门口。
+<<if between(Time.hour, 0, 6) or Time.hour >= 22>>
+    周围黑漆漆的，商场里一片寂静。
 <<else>>
-
+    周围只有零星几个行人，他们行色匆匆，没有人注意到你。
 <</if>>
+<br>
+厚重的卷帘门遮住了商场的内部景象，门上挂了一个牌子
+<br><br>
+<span class='blue'>【营业时间 8:00 - 19:00】</span> 
+<br><br>
+
+<<linkreplace "仔细观察">>
+    你仔细观察眼前的门，试图找到门锁。
+    <br>
+    它和其他建筑的锁并不相同，一个先进的密码锁隐藏在卷帘门的左下角。
+    <br>
+    你回想起上次来到这里时看到的琳琅满目的商品，如果你能打开这个门，那你或许可以收获许多东西。
+    <br><br>
+
+    <<if currentSkillValue('skulduggery') gte _lock and R.mechStats.tool.digitalSet is 1>>
+        <span class="green">这锁你或许有办法打开。</span>
+    <<elseif R.mechStats.tool.digitalSet is 1>>
+        <span class="orange">你或许有办法打开，但这十分考验你。</span>
+    <<else>>
+        <span class="red">这锁你无法打开。</span>
+    <</if>>
+    <<set $tvar.daisolock = 'checked'>>
+<</linkreplace>>

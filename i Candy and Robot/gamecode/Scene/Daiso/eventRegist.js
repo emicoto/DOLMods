@@ -5,15 +5,15 @@ iEvent.registEvent('DaisoShop',
         type: 'Event',
         eventnext: true,
         nextcode: '<<=iEvent.unsetEvent()>>',
-        require: ()=>{ return iEvent.getFlag('DaisoShop', 'intro') !== 1 && between(Time.hour, 9, 19) && !iEvent.getFlag('DaisoShop', 'thief') }
+        require: ()=>{ return iEvent.getFlag('daiso', 'intro') !== 1 && between(Time.hour, 9, 19) && !iEvent.getFlag('daiso', 'thief') }
     },
     {
-        episode: 'Night',
+        episode: 'Lock',
         type: 'Scene',
 
         nextcode: '',
-        initcode:'',
-        require: ()=>{ return !between(Time.hour, 7, 19) }
+        initcode: '',
+        require: ()=>{ return !between(Time.hour, 8, 19) }
     },
     {
         episode: 'Exposed',

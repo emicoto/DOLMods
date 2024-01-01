@@ -1,4 +1,6 @@
 <!-- 城隍庙 -->
 :: BaseScene ShingWong [scene]
+看起来是个寺庙，雾气弥漫，你看不清楚里面的情况。
+<br>
 
 <<link 'Leave' 'BaseScene Chinatown'>><</link>>

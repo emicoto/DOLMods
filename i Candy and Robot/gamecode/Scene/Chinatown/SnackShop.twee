@@ -1,4 +1,4 @@
 <!-- 杂货店 -->
-:: BaseScene Grocers [scene]
+:: BaseScene SnackShop [scene]
 
 <<link 'Leave' 'BaseScene Chinatown'>><</link>>

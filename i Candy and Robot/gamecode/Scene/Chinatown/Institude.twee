@@ -1,4 +1,6 @@
 <!-- 机器人研究所 -->
-:: BaseScene RobotScience [scene]
+:: BaseScene InstitudeEntry [scene]
+两个长相吓人穿着中式服装的机器人把你挡在了门外。
+<br>
 
 <<link 'Leave' 'BaseScene Chinatown'>><</link>>

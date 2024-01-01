@@ -4,30 +4,24 @@ iEvent.registEvent('Chinatown',{
     phase: 2,
     
     exit: 'BaseScene Chinatown',
-    endcode: '<<run iEvent.setFlag("Chinatown", "intro", 1)>>',
+    endcode: '<<run iEvent.setFlag("chinatown", "intro", 1)>>',
     priority: 1000,
-    require: ()=>{ return iEvent.getFlag('Chinatown', 'intro') == undefined && V.tvar.lastPassage !== 'BaseScene Chinatown' },
+    require: ()=>{ return iEvent.getFlag('chinatown', 'intro') == undefined && V.tvar.lastPassage !== 'BaseScene Chinatown' },
 })
 
-iEvent.registEvent('Passout', {
-    type: 'Event',
-    toward: 'Chinatown Prologue',
-    
-    require: ()=>{ return iEvent.getFlag('Chinatown', 'prologue') == undefined && V.bus == 'harvest' && iEvent.getFlag('harvest', 'passout') >= 3 },
-})
 
 iEvent.registEvent('AlmondPath',{
     type: 'Event',
     episode: 'Intro',
     phase: 2,
 
-    endcode: '<<run iEvent.setFlag("Chinatown", "known", 1)>>',
+    endcode: '<<run iEvent.setFlag("chinatown", "known", 1)>>',
     priority: 1000,
 
     leaveLink: ['Enter the Chinatown', '进入唐人街'],
     exit: 'BaseScene Chinatown',
 
-    require: ()=>{ return iEvent.getFlag('Chinatown', 'known') == undefined && V.tvar.lastPassage !== 'BaseScene AlmondPath' },
+    require: ()=>{ return iEvent.getFlag('chinatown', 'known') == undefined && V.tvar.lastPassage !== 'BaseScene AlmondPath' },
 
 })
 

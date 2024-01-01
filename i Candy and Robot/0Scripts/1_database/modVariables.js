@@ -229,7 +229,7 @@ C.hunger = {
 const iEventFlags = {}
 let flaglist = [
 	//地点事件flag
-	'barbstreet', 'harvestreet', 'chinatown', 
+	'barbs', 'harvest', 'chinatown', 
 	'brothel', 'pub', 'orphanage', 'hospital',
 	'repairshop', 'snackshop', 'sewer', 'bank',
 	'apartment',
