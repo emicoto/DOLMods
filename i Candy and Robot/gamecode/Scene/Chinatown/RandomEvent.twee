@@ -1,0 +1,45 @@
+:: Event Chinatown Random_Vendor
+一位热情的小贩向你招手，<<he>>手中托着一盘散发着诱人香气的小吃。
+<br><br>
+
+“这位客人，要来尝尝看吗？”
+<br>
+正说着，<<he>>将一个托盘端到你的面前。而在托盘之上，
+他们店的特色小吃，被分成了十几个小碟子。看起来很好吃的样子。
+<br>
+“免费的哦。”
+<br><br>
+
+<<goBranchEnd '尝尝' 'Try'>>
+<<goBranchEnd '拒绝' 'Refuse'>>
+
+:: Event Chinatown Random_Vendor Try
+
+你好奇地接过小吃，用牙签插着将那小吃塞进嘴里。
+<br>
+
+<<randomdata>>
+<<datas>>
+<<stress -2>>
+这个小吃出乎意料地美味，让你忍不住多吃了几口。在经过了一阵交谈过后，你才与<<he>>告别。
+<br>
+你感觉心情莫名的舒畅。<<lstress>>
+
+<<datas>>
+尝过之后，你觉得味道还可以，但并没有特别吸引你，就像是普通的街头小吃。 
+
+<<datas>>
+<<hallucinogen 60>><<stress 8>>
+小吃虽然美味，但你突然感到一阵晕眩和幻觉。
+<br>
+意识到可能被放了一些不寻常的东西，或许这是他们用来诱骗客人的手段。
+<br>
+你警惕起来，急忙远离这个推销员。 <<gstress>><<ghallucinogens>>
+
+<</randomdata>>
+<br><br>
+
+:: Event Chinatown Random_Vendor Refuse
+
+你礼貌地摇头拒绝， 继续你的行程。
+<br><br>

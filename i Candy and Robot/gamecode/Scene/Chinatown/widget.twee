@@ -49,7 +49,7 @@
     <br>
     <<=lanSwitch('Place of Interest', '可访问地点')>>
     <br>
-    <<localIcon 'park'>>
+    <<localIcon 'taipark'>>
     <<set _link = lanSwitch('Taichi Park', '太极公园')+'(00:02)'>>
     <<link _link "BaseScene TaichiPark">>
         <<run iEvent.unsetEvent()>>
@@ -85,6 +85,13 @@
     <</link>>
 
     <br><br>
+    <<loitericon>>
+    <<set _link = lanSwitch('Loiter', '闲逛')+'(00:15)'>>
+    <<link _link "BaseScene Chinatown">>
+        <<run iEvent.unsetEvent()>>
+        <<pass 15>>
+    <</link>>
+
     <<localIcon 'chinatown_entry'>>
     <<set _link = lanSwitch('Leave', '离开')+'(00:05)'>>
     <<link _link "BaseScene AlmondPath">>
@@ -110,9 +117,7 @@
 
     <<set _exit = $tvar.exitPassage>>
 
-    <<if not _exit and $tvar.lastPassage isnot $passage>>
-        <<set _exit = $tvar.lastPassage>>
-    <<elseif !_exit>>
+    <<if not _exit>>
         <<set _exit = _defaultExit>>
     <</if>>
 

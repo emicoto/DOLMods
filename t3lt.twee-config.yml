@@ -1,5 +1,13 @@
 sugarcube-2:
   macros:
+    pcpn:
+      name: pcpn
+    goBranchEnd:
+      name: goBranchEnd
+    goBranch:
+      name: goBranch
+    goEnd:
+      name: goEnd
     nnpcboy:
       name: nnpcboy
     nnpcBoy:

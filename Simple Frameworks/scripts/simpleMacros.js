@@ -58,6 +58,29 @@ function nnpcBoy(npc){
  }
  DefineMacroS('nnpcBoy', nnpcBoy)
 
+ function pcpn(pronun){
+    switch(pronun){
+        case 'him':
+            return lanSwitch(sexSwitch('pc', 'him', 'her'), sexSwitch('pc', '他', '她'))
+        case 'his':
+            return lanSwitch(sexSwitch('pc', 'his', 'her'), sexSwitch('pc', '他的', '她的'))
+        case 'he':
+            return lanSwitch(sexSwitch('pc', 'he', 'she'), sexSwitch('pc', '他', '她'))
+        case 'himself':
+            return lanSwitch(sexSwitch('pc', 'himself', 'herself'), sexSwitch('pc', '他自己', '她自己'))
+        case 'Him':
+            return lanSwitch(sexSwitch('pc', 'Him', 'Her'), sexSwitch('pc', '他', '她'))
+        case 'His':
+            return lanSwitch(sexSwitch('pc', 'His', 'Her'), sexSwitch('pc', '他的', '她的'))
+        case 'He':
+            return lanSwitch(sexSwitch('pc', 'He', 'She'), sexSwitch('pc', '他', '她'))
+        case 'Himself':
+            return lanSwitch(sexSwitch('pc', 'Himself', 'Herself'), sexSwitch('pc', '他自己', '她自己'))
+    }
+ }
+
+DefineMacroS('pcpn', pcpn)
+
 function speechDif(bratty, neutral, meek){
     if(V.speech_attitude == 'bratty')
         return bratty;

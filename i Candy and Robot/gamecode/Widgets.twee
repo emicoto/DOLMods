@@ -59,3 +59,17 @@
     <<set $tvar.endcode to null>>
 <</if>>
 <</widget>>
+
+<<widget "goEnd">>
+<<set $tvar.onselect to false>>
+<<set $tvar.eventnext to false>>
+<</widget>>
+
+<<widget "goBranchEnd">>
+<<link $args[0] $passage>>
+    <<goBranch $args[1]>>
+    <<set $tvar.onselect to false>>
+    <<set $tvar.eventnext to false>>
+<</link>>
+<br>
+<</widget>>

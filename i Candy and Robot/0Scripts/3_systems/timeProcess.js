@@ -65,6 +65,11 @@ function iTimeHandle(passedSec){
 		dayProcess(passedSec, day, weekday)
 	}
 
+	//每周的处理
+	if(weekday[1] == 1 && weekday[0] !== 1){
+		weekProcess(passedSec, day, weekday)
+	}
+
 }
 
 function minuteProcess(sec){
@@ -129,6 +134,17 @@ function dayProcess(sec, day, weekday){
 
 	R.flags.repairshop.today = 0;
 
+	//事件flag的清理
+	iEvent.setFlag('chinatown', 'vendortoday', 0)
+	iEvent.setFlag('chinatown', 'showtoday', 0)
+
+}
+
+
+function weekProcess(sec, day, weekday){
+
+	//事件flag的清理
+	iEvent.setFlag('chinatown', 'goatweek', 0)
 }
 
 function iCombatHandle(){

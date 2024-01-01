@@ -99,14 +99,27 @@ const eventManager = {
         console.log('setEvent:', data)
     },
 
-    unsetEvent: function(){
+    unsetEvent: function(skip){
         V.tvar.scene = {}
         V.phase = 0
         V.tvar.eventnext = false
         V.tvar.onselect = false
         V.tvar.exitPassage = null
         V.tvar.selected = null
+        if(skip){
+            V.eventskip = 1
+        }
         wikifier('endevent')
+    },
+
+    goBranch: function(branch){
+        if(!V.tvar.scene.branch){
+            V.tvar.scene.branch = branch
+        }
+        else{
+            V.tvar.scene.branch += ` ${branch}`
+        }
+        V.tvar.scene.title += ` ${branch}`
     },
 
     setScene: function(event, data){
@@ -234,6 +247,8 @@ const eventManager = {
         //already in combat
         if(V.combat == 1) return 
 
+        const data = Story.get(title)
+
         console.log('eventReady:', title, R?.scene)
 
         //passout event always in the highest priority
@@ -248,7 +263,7 @@ const eventManager = {
         }
         else{
             //check event from passage
-            const data = Story.get(title)
+            
             const keys = data.title.split(' ')
 
             if(keys.has('Passout') && (keys.indexOf('Passout') == 0 && !data.text.includes('combat') || keys.indexOf('Passout') == key.length)){
@@ -265,6 +280,11 @@ const eventManager = {
             }
         }
 
+        if(data.tags.includes('scene') && V.eventskip == 0){
+            V.danger = random(1, 10000)
+            V.dangerevent = 0
+        }
+
     },
 
     //run the post-process function for passage event
@@ -278,6 +298,10 @@ const eventManager = {
         }
         else if(typeof func == 'function'){
             func()
+        }
+
+        if(Story.get(title).tags.includes('scene') && V.eventskip == 1){
+            V.eventskip = 0
         }
     },
 
@@ -322,6 +346,8 @@ const eventManager = {
         
     }
 }
+
+DefineMacroS("goBranch", eventManager.goBranch)
 
 Object.defineProperties(window,{
     iEvent: {

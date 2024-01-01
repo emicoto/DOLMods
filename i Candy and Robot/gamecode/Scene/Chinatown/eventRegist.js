@@ -7,7 +7,35 @@ iEvent.registEvent('Chinatown',{
     endcode: '<<run iEvent.setFlag("chinatown", "intro", 1)>>',
     priority: 1000,
     require: ()=>{ return iEvent.getFlag('chinatown', 'intro') == undefined && V.tvar.lastPassage !== 'BaseScene Chinatown' },
-})
+},
+{
+    type: 'Event',
+    episode: 'Random_Vendor',
+    eventnext: true,
+    initcode: '<<set $tvar.onselect to true>><<generateRole 0 0 "vendor">><<person1>>',
+    endcode: '<<set $eventskip to 1>>',
+    
+    require: ()=>{ return iCandy.config.debug == 'vendor' || (V.tvar.lastPassage == 'BaseScene Chinatown' && between(Time.hour, 6, 21) && V.eventskip == 0 && random(100) < 30 && iEvent.getFlag('chinatown', 'vendortoday') < 3) },
+},
+{
+    type: 'Scene',
+    episode: 'Random_Show',
+
+    require: ()=>{ return iCandy.config.debug == 'show' || (V.tvar.lastPassage == 'BaseScene Chinatown' && between(Time.hour, 10, 16) && random(100) < 50 && iEvent.getFlag('chinatown', 'showtoday') < 3) },
+},
+{
+    type: 'Event',
+    episode: 'Random_Goat',
+
+    require: ()=>{ return iCandy.config.debug == 'goat' || (V.tvar.lastPassage == 'BaseScene Chinatown' && between(Time.hour, 10, 18) && V.eventskip == 0 && random(100) < 20 && iEvent.getFlag('chinatown', 'goatweek') < 2) },
+},
+{
+    type: 'Event',
+    episode: 'Random_Beliver',
+
+    require: ()=>{ return iCandy.config.debug == 'beliver' ||( V.tvar.lastPassage == 'BaseScene Chinatown' && between(Time.hour, 9, 17) && V.eventskip == 0 && random(100) < 20) },
+}
+)
 
 
 iEvent.registEvent('AlmondPath',{

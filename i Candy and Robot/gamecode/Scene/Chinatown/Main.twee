@@ -42,14 +42,15 @@
         <</if>>
     <</link>>
 
-<<elseif !$tvar.scene.passage or $tvar.scene.type is 'Scene'>>
+<<elseif !$tvar.scene.passage or $tvar.scene.type == 'Scene'>>
     <<chinatownLinkLocation>>
 
 <<else>>
-    <<linkEventEnd 'BaseScene AlmondPath'>>
+    <<linkEventEnd 'BaseScene Chinatown'>>
 
 <</if>>
 </div>
+
 
 :: Scene Chinatown General CN
 <<randomdata>>

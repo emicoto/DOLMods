@@ -42,7 +42,7 @@
 
 “……怎么有个孩子倒在这里？头很烫，似乎在发高烧。”
 <br>
-<span class='blue'>("...wait, a <<girl>> passout there. <<=sexSwitch('pc', 'Her', 'His')>>  forehead is so hot, seems to have a fever.")</span>
+<span class='blue'>("...wait, a <<girl>> passout there. <<pcpn 'His'>>  forehead is so hot, seems to have a fever.")</span>
 <br><br>
 
 In a haze of consciousness, you hear a magnetic voice saying something in a mysterious oriental language.
@@ -52,9 +52,9 @@ Then, you feel a large hand gently touching your forehead.
 
 “……这面孔……好像是孤儿院的孩子。可怜见的，能帮一把就帮一把吧。”
 <br>
-<span class='blue'>("...I know <<=sexSwitch('pc', 'her', 'him')>>, seems like the kid from orphanage.")
+<span class='blue'>("...I know <<pcpn 'him'>>, seems like the kid from orphanage.")
 <br>
-("Poor kid, let's help <<=sexSwitch('pc', 'her', 'him')>> if we can.")</span>
+("Poor kid, let's help <<pcpn 'him'>> if we can.")</span>
 <br><br>
 
 Next you hear another voice, a woman's voice filled with the wisdom of years. 
