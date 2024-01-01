@@ -105,6 +105,7 @@ const eventManager = {
         V.tvar.eventnext = false
         V.tvar.onselect = false
         V.tvar.exitPassage = null
+        V.tvar.selected = null
         wikifier('endevent')
     },
 
@@ -118,10 +119,8 @@ const eventManager = {
             data.scenestage = `BaseScene ${data.scene}`
         }
         else if(data.toward){
-            data.scenestage = `${data.type} data.toward`
-        }
-
-        
+            data.scenestage = `${data.type} ${data.toward}`
+        }      
         
         V.tvar.scene = data
         V.tvar.scene.passage = data.title
@@ -140,6 +139,8 @@ const eventManager = {
         console.log('setScene:', event, data)
 
         this.initEvent(V.tvar.scene)
+
+        return V.tvar.scene
     },
 
     initEvent: function(scene){
@@ -156,6 +157,9 @@ const eventManager = {
         if(scene.scenestage && Story.has(scene.scenestage) && !V.tvar.scene.init){
             console.log('scene.scenestage:', scene.scenestage)
             V.tvar.jump = true
+        }
+        else{
+            V.tvar.scene.start = true
         }
       
     },
@@ -177,20 +181,22 @@ const eventManager = {
         //combine the passage title
         scene.passage = scene.title
 
-        if(scene.phase > 0 && V.phase < scene.phase){
-            console.log('phase:', V.phase)
+        if(scene.phase > 0 && V.phase < scene.phase && scene.phasetype !== 'inframe'){
+           
             scene.passage = `${scene.title} ${V.phase+1}`
         }
+        console.log('phase:', V.phase)
 
         if(Story.has(scene.passage+` ${setup.language}`)){
             scene.passage += ` ${setup.language}`
         }
+        console.log('title:', scene.passage)
 
         //do phase
         if(!scene.init){
             scene.init = true
             //需要跳转的从0开始
-            if(scene.scenestage || scene.toward){
+            if(scene.scenestage){
                 V.phase = 0
             }
             else{
@@ -204,7 +210,7 @@ const eventManager = {
         if(V.phase >= scene.phase){
             V.tvar.eventnext = false
         }
-        console.log('initScene:', scene, V.phase, V.tvar.eventnext)
+        console.log('initScene:', scene, V.phase, V.tvar.eventnext, V.onselect)
 
     },
 
@@ -219,14 +225,25 @@ const eventManager = {
     //check event when enter a scene
     eventReady: function(){
         let title = passage()
+        //already in event
         if(typeof V.tvar.scene.passage == 'string') return
+        //already in combat
+        if(V.combat == 1) return 
 
         console.log('eventReady:', title, R?.scene)
 
-        if(R?.scene){
+        //passout event always in the highest priority
+        if( V.stress >= V.stressmax ){
+            console.log('eventReady, check passout event:', title, R?.scene)
+            return this.checkEvent('Passout')
+        }
+
+        //check event from new scene
+        if(R && typeof R.scene === 'string'){
             this.checkEvent(R.scene)
         }
         else{
+            //check event from passage
             const data = Story.get(title)
             const keys = data.title.split(' ')
 
@@ -276,8 +293,7 @@ const eventManager = {
              ){
                 if(typeof data.require == 'function' && data.require()){
                     const _event = clone(data)
-                    this.setScene(data.passage, _event)
-                    break
+                    return this.setScene(data.passage, _event)
                 }
             }
         }
@@ -296,8 +312,7 @@ const eventManager = {
             //console.log('eventdata:', data)
             if(typeof data.require == 'function' && data.require()){
                 const _event = clone(data)
-                this.setScene(event, _event)
-                break
+                return this.setScene(event, _event)
             }
         }
         

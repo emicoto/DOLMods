@@ -1,87 +1,108 @@
+:: Chara Widget Xinyu [widget]
+<<widget "XinyuReactionLowGeneral">>
+
+<<if setup.language isnot 'EN'>>
+<<=either("轻轻瞟了你一眼，继续","抬头看了你一眼后，继续","挪了挪位置，继续","没搭理你，只是","无视你的存在，只是","麻木地凝视了你一会，然后","对你的行为毫无反应，继续")>>
+<<else>>
+<<=either("glanced at you, then","looked at you, then","moved a little, then","didn't response to you, just","ignored your existence, just","stared at you for a while, then","didn't response to your action, just")>>
+<</if>>
+
+<</widget>>
+
+<<widget "XinyuIntroAsk">>
+    <<set _link = lanSwitch('Try to approuch',"试着沟通" )>>
+    <<link _link $passage>>
+        <<run iEvent.addFlag('Xinyu', 'ask', 1)>>
+    <</link>>
+    <br>
+    <<set _link = lanSwitch('Maybe next time', '算了')>>
+    <<link _link $passage>>
+    <<run iEvent.unsetEvent(); iEvent.setEvent('get', 'Xinyu', 'Talk', 'Intro GiveUp')>>
+    <</link>>
+<</widget>>
+
 :: Chara Xinyu Talk General
 
-你试着跟<<xinyu>>搭话。<br>
+你试着跟<<xinyu>>搭话。
 <br><br>
 
 “……”
 <br><br>
 
-但是<<xinyu>>撇了你一眼后，就继续烧纸钱了。
+但是<<xinyu>><<XinyuReactionLowGeneral>>，就继续烧纸钱了。
 <br>
 一张又一张，慢慢地被添加到火盆中，烟雾缭绕，散发着一股独特的气味。
 <br><br>
 
-:: Chara Xinyu Talk Intro 1
+:: Chara Xinyu Talk Intro
 <<set $tvar.onselect to true>>
-你试着跟<<=sexSwitch('Xinyu', '女孩', '男孩')>>搭话。<br>
-<br><br>
 
-<<=speachDif(
-    "“喂！你在这里做什么？”",
-    "“你好，你在这里做什么？”",
-    "“……你好，请问你在这里做什么呀？”"
-)>>
-<br>
+<!-- inframe setting -->
+<div id='inframe'>
+<<set _passage to `Chara Xinyu Talk IntroText ${$phase}`>>
+<<if Story.has(_passage + ' ' + setup.language)>>
+    <<set _passage to _passage + ' ' + setup.language>>
+<</if>>
 
-<<=sexSwitch('Xinyu', '女孩', '男孩')>>并没有搭理你，只是默默地烧着纸钱。
-<br>
-一张又一张，慢慢地被添加到火盆中，烟雾缭绕，散发着一股独特的气味。
-<br><br>
+<<include _passage>>
 
-<<link "试着沟通" $passage>>
+</div>
+
+<div id='selection'>
+<<if iEvent.getFlag('Xinyu', 'ask') < 10 >>
+<<set _link = lanSwitch('Try to approach',"试着沟通" )>>
+<<link _link $passage>>
     <<run iEvent.addFlag('Xinyu', 'ask', 1)>>
+    <<if $phase is 4 and iEvent.getFlag('Xinyu', 'ask') lt 10>>
+        <<set $phase -= 1>>
+    <</if>>
 <</link>>
 <br>
-<<link "算了" $passage>>
-    <<run iEvent.unsetEvent()>>
+
+<<set _link = lanSwitch('Maybe next time', '算了')>>
+<<link _link $passage>>
+<<run iEvent.unsetEvent(); iEvent.setEvent('get', 'Xinyu', 'Talk', 'Intro GiveUp')>>
 <</link>>
 
-:: Chara Xinyu Talk Intro 2
+<<else>>
+<<set _link = lanSwitch('Ask name', '询问名字')>>
+<<link _link $passage>><</link>>
+<</if>>
+</div>
+
+
+:: Chara Xinyu Talk Intro Again
 <<set $tvar.onselect to true>>
-你尝试着跟<<=sexSwitch('Xinyu', '女孩', '男孩')>>沟通。<br>
-<br><br>
 
-<<=speachDif(
-    "“喂！你是不是听不懂我说的话啊？”",
-    "“难道你听不懂英文？”",
-    "“……你是不是听不懂英文呀？我可以教你。”"
-)>>
-<br>
+<div id='inframe'>
+<<set _passage to `Chara Xinyu Talk IntroText ${4+$phase}`>>
+<<if Story.has(_passage + ' ' + setup.language)>>
+    <<set _passage to _passage + ' ' + setup.language>>
+<</if>>
 
-<<=sexSwitch('Xinyu', '女孩', '男孩')>>并没有搭理你，只是默默地烧着纸钱。
-<br>
-一张又一张，慢慢地被添加到火盆中，烟雾缭绕，散发着一股独特的气味。
-<br><br>
+<<include _passage>>
 
-<<link "试着接触" $passage>>
+</div>
+
+
+<div id='selection'>
+<<if iEvent.getFlag('Xinyu', 'ask') < 10 >>
+<<set _link = lanSwitch('Try to approach',"试着沟通" )>>
+<<link _link $passage>>
     <<run iEvent.addFlag('Xinyu', 'ask', 1)>>
+    <<if iEvent.getFlag('Xinyu', 'ask') lt 10>>
+        <<set $phase -= 1>>
+    <</if>>
 <</link>>
 <br>
-<<link "算了" $passage>>
-    <<run iEvent.unsetEvent()>>
+
+<<set _link = lanSwitch('Maybe next time', '算了')>>
+<<link _link $passage>>
+<<run iEvent.unsetEvent(); iEvent.setEvent('get', 'Xinyu', 'Talk', 'Intro GiveUp')>>
 <</link>>
 
-:: Chara Xinyu Talk Intro 3
-<<set $tvar.onselect to true>>
-你尝试着与<<=sexSwitch('Xinyu', '女孩', '男孩')>>接触。<br>
-<br><br>
-
-<<=speachDif(
-    "“喂！听不听得到啊！听不懂也多少理一下啊！”<br>你这么说着，推了<<nnpc_he Xinyu>>一下。",
-    "“听不懂的话，这样总算知道我在跟你搭话了吧？”<br>你这么说着，轻轻地拍了拍<<nnpc_he Xinyu>>的肩膀。",
-    "“……你好？听不懂的话，这样行吗？”<br>你这么说着，在<<nnpc_he Xinyu>>的面前挥了挥手。"
-)>>
-<br>
-
-<<=sexSwitch('Xinyu', '女孩', '男孩')>>撇了你一眼，但很快又继续烧纸钱了。
-<br>
-一张又一张，慢慢地被添加到火盆中，烟雾缭绕，散发着一股独特的气味。
-<br><br>
-
-<<link "试着沟通" $passage>>
-    <<run iEvent.addFlag('Xinyu', 'ask', 1)>>
-<</link>>
-<br>
-<<link "算了" $passage>>
-    <<run iEvent.unsetEvent()>>
-<</link>>
+<<else>>
+<<set _link = lanSwitch('Ask name', '询问名字')>>
+<<link _link $passage>><</link>>
+<</if>>
+</div>

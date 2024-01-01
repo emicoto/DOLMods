@@ -2,9 +2,10 @@
 <<set $outside to 1>><<set $location to "chinatown">><<effects>>
 
 <div id='locationdes'>
+<<if $phase is 0 and (!$tvar.scene.passage || $tvar.scene.type == 'Scene')>>
 你站在唐人街，熙熙攘攘的街道上挂满了红色和金色的灯笼，营造出喜庆的氛围。<br>
 东方风格的建筑与现代商店交相辉映，街头飘荡着各种美食的香气。<br>
-
+<</if>>
 </div>
 
 
@@ -17,7 +18,6 @@
         <<set _title = 'Scene Chinatown'>>
         <<include _title>>
     <</if>>
-
 </div>
 
 

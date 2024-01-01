@@ -1,37 +1,38 @@
-function testReady(){
-    if(passage() == 'Start') return;
-    console.time('testReady')
-    const arr = new Array(100000)
-    for(let i=0; i<arr.length; i++){
-        arr[i] = random(100000)
+window.bak = {}
+
+$(document).on(":passageinit", ({passage})=>{
+    if(V.options && V.options.maxStates <= 1){
+
+        V.options.maxStates = 2
+        updatehistorycontrols()
     }
-    console.timeEnd('testReady')
-    T.test = arr[arr.length-1]
-}
 
-DefineMacroS('testReady', testReady)
 
-function testHeader(){
-    console.log('testHeader', passage(), T.test)
-    return T.test
-}
-DefineMacroS('testHeader', testHeader)
-
-function destination(){
-    if(V.bus == 'sea') return '<<seamovequick>>'
-    if(Macro.has(V.bus+'quick'))
-        return `<<${V.bus}quick>>`
-    else
-        return '<<domusquick>>'
-}
-
-function testInit(){
-    console.log('destination check:', Macro.has('destination'))
-
-    if(Macro.has('destination')){
-        Macro.delete('destination')
-        DefineMacroS('destination', destination)
+    if(!V.test){
+        V.test = 0
     }
-}
 
-DefineMacroS('testInit', testInit)
+    console.log(passage)
+    console.log('link', V.link, V.nextPassage, V.nextPassageIntended)
+    if(passage.title == 'Domus Street'){
+        console.log('jump to bedroom test!!!!')
+        console.time('clone test')
+            for(let i in V){
+                window.bak[i] = clone(V[i])
+            }
+        console.timeend('clone test')
+        
+        setTimeout(() => {
+            console.time('restore test')
+            for(let i in window.bak){
+                V[i] = window.bak[i]
+            }
+            console.timeend('restore test')
+
+            Engine.play('Bedroom');
+            console.log('test var:', V.test);
+    }, 
+        30)
+
+    }
+})

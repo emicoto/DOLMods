@@ -36,7 +36,29 @@ function sexSwitch(npc, female,male){
 window.sexSwitch = sexSwitch
 DefineMacroS('sexSwitch', sexSwitch)
 
-function speachDif(bratty, neutral, meek){
+function nnpcboy(npc){
+   let gender = C.npc[npc].pronoun
+
+   if(gender == 'm'){
+        return lanSwitch('boy', '男孩')
+   }
+
+   return lanSwitch('girl', '女孩')
+}
+DefineMacroS('nnpcboy', nnpcboy)
+
+function nnpcBoy(npc){
+    let gender = C.npc[npc].pronoun
+
+    if(gender == 'm'){
+         return lanSwitch('Boy', '男孩')
+    }
+ 
+    return lanSwitch('Girl', '女孩')
+ }
+ DefineMacroS('nnpcBoy', nnpcBoy)
+
+function speechDif(bratty, neutral, meek){
     if(V.speech_attitude == 'bratty')
         return bratty;
     if(V.speech_attitude == 'neutral')
@@ -44,7 +66,7 @@ function speachDif(bratty, neutral, meek){
     if(V.speech_attitude == 'meek')
         return meek
 }
-window.speachDif = speachDif
+window.speechDif = speechDif
 
 
 function cond(...condtxt){

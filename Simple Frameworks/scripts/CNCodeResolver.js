@@ -164,7 +164,7 @@ const cntv = {
         V.iModNpc[npc][prop] += value
     },
 
-    '态度差分': speachDif,
+    '态度差分': speechDif,
 
     '性别差分': sexSwitch,
 

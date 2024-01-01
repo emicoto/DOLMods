@@ -1,0 +1,169 @@
+
+:: Chara Xinyu Talk IntroText 1 CN
+你试着跟<<nnpcboy 'Xinyu'>>搭话。
+<br><br>
+
+<<=speechDif(
+    "“喂！你在这里做什么？”",
+    "“你好，你在这里做什么？”",
+    "“……你好，请问你在这里做什么呀？”"
+)>>
+<br>
+
+<<nnpcboy 'Xinyu'>>并没有搭理你，只是默默地烧着纸钱。
+<br>
+一张又一张，慢慢地被添加到火盆中，烟雾缭绕，散发着一股独特的气味。
+<br><br>
+
+
+:: Chara Xinyu Talk IntroText 2 CN
+你尝试着跟<<nnpcboy 'Xinyu'>>沟通。
+<br><br>
+
+<<=speechDif(
+    "“喂！你是不是听不懂我说的话啊？”",
+    "“难道你听不懂英文？”",
+    "“……你是不是听不懂英文呀？我可以教你。”"
+)>>
+<br>
+
+<<nnpcboy 'Xinyu'>>仿佛不知道你的存在似的，默默地烧着纸钱。
+<br>
+一张又一张，慢慢地被添加到火盆中，烟雾缭绕，散发着一股独特的气味。
+<br><br>
+
+
+:: Chara Xinyu Talk IntroText 3 CN
+你尝试着与<<nnpcboy 'Xinyu'>>接触。
+<br><br>
+
+<<=speechDif(
+    "“喂！听不听得到啊！听不懂也多少理一下啊！”<br>你这么说着，推了<<nnpc_he Xinyu>>一下。",
+    "“听不懂的话，这样总算知道我在跟你搭话了吧？”<br>你这么说着，轻轻地拍了拍<<nnpc_he Xinyu>>的肩膀。",
+    "“……你好？听不懂的话，这样行吗？”<br>你这么说着，在<<nnpc_he Xinyu>>的面前挥了挥手。"
+)>>
+<br>
+
+<<nnpcboy 'Xinyu'>>轻轻瞟了你一眼，然后继续烧纸钱了。
+<br>
+一张又一张，慢慢地被添加到火盆中，烟雾缭绕，散发着一股独特的气味。
+<br><br>
+
+
+:: Chara Xinyu Talk IntroText 4 CN
+你<<=either('不弃不馁','锲而不舍','坚持不懈')>>地继续试着与<<nnpcboy 'Xinyu'>>沟通。
+<br><br>
+<<randomdata>>
+<<datas>>
+<<=speechDif(
+    "“喂！在这里烧东西很危险哎！！”<br>你这么说着，在<<nnpc_he Xinyu>>的面前晃了晃显示着火警号码的手机。",
+    "“你不觉得这样很危险吗？不要在这里烧比较好。”<br>你比划着叉号说着，然后指了指显示着火警号码的手机。",
+    "“……不，不要烧了啦。这很危险的。”<br>你比划着叉号说着，又指了指显示着火警号码的手机。"
+)>>
+<<datas>>
+<<=speechDif(
+    "“喂！看这里！”<br>你在<<nnpc_he Xinyu>>的面前做了个鬼脸。",
+    "“看过来。”<br>你在<<nnpc_he Xinyu>>面前挥挥手，并做了个古怪的表情。",
+    "“请你看看我。”<br>你试着拉住<<nnpc_he Xinyu>>的手，并向<<nnpc_he Xinyu>>释放了笑容。",
+)>>
+<<datas>>
+<<=speechDif(
+    "“喂！你知道吗？小孩独自一个在森林里是会被女巫带走的。”<br>你做了个吓人的表情试图引起<<nnpcboy 'Xinyu'>>的注意。",
+    "“你知道吗？大人们说森林里有可怕的怪物。”<br>你做了个吓唬人的动作试图引起<<nnpcboy 'Xinyu'>>的注意。",
+    "“天色不亮了，总觉得森林里有点吓人。你不会害怕吗？”<br>你摇了摇<<nnpcboy 'Xinyu'>>的肩膀，试图引起<<nnpc_he Xinyu>>的注意。",
+)>>
+<<datas>>
+<<=speechDif(
+    "“chang quit chang？ too quit too？”<br>你以古怪的语调试着模仿<<nnpcboy 'Xinyu'>>的话语来引起<<nnpc_he Xinyu>>的反应。",
+    "“cheng gui cheng？ tu gui tu？”<br>你试着模仿<<nnpcboy 'Xinyu'>>的话来引起<<nnpc_he Xinyu>>的反应。",
+    "“chen…gui……chen？ tu…gui tu？”<br>你磕磕绊绊地模仿<<nnpcboy 'Xinyu'>>的话来引起<<nnpc_he Xinyu>>的反应。"
+)>>
+<<datas>>
+    你唱起了歌，那是<<=speechDif("一首古怪的德国童谣，听起来像在骂人", "一首经典儿歌，鹅妈妈童谣","一首经典儿歌，伦敦的桥要倒了")>>。
+<<datas>>
+    你绕着火盆跳起了<<=speechDif("嚣张的舞","搞怪的舞","舞")>>。
+<</randomdata>>
+<br><br>
+
+<<nnpcboy 'Xinyu'>>
+<<XinyuReactionLowGeneral>>默默烧着纸钱。
+<br>
+一张又一张，小心翼翼地被添加到火盆中，烟雾缭绕，散发着一股独特的烧焦味。
+<br><br>
+
+
+:: Chara Xinyu Talk IntroText 5 CN
+你坚持不懈地继续试着与<<nnpcboy 'Xinyu'>>沟通。
+<br><br>
+<<=speechDif(
+    "“喂！不许不理人！！”你用手强行转动<<nnpcboy 'Xinyu'>>的脸，让<<nnpc_he Xinyu>>看向你。",
+    "“不要不理人啊。”无奈，你只好强行拉住<<nnpcboy 'Xinyu'>>的手，让<<nnpc_he Xinyu>>暂停动作看向你。",
+    "“……不要不理人嘛。”你有点想哭了，但依然坚强地拉起<<nnpc_he Xinyu>>的手，让<<nnpc_he Xinyu>>看向你。",
+)>>
+<br><br>
+
+<<nnpcboy 'Xinyu'>>冷不丁地用你能听得懂的语言说了句，“你好烦。”
+<br>
+但不管怎么说，她总算停下烧纸钱，正眼看向你了。
+<br><br>
+
+你本来以为<<nnpc_he Xinyu>>听不懂你说的话，所以你试图引起<<nnpc_he Xinyu>>的注意时有点肆无忌惮。
+<br>
+此时你们的距离很近，你能清楚地看到<<nnpc_he Xinyu>>的的眼睛，那是一双很漂亮的眼睛。
+<br>
+虽然是深邃的黑色，却清晰地倒影着你的身影。
+<br><br>
+
+“我以为你听不懂英文。”你这么说。
+<br><br>
+
+“……这里并不欢迎小镇上的人。”<<nnpcboy 'Xinyu'>>转过头，静静地看着还在燃烧的火盆。
+<br>
+“你最好快点离开这里。”
+<br><br>
+
+“我只是……” 你回想了下之前在外头晕倒，被这里的人救了的那一幕，试图解释自己的来意。
+<br>
+“我只是想找到帮助我的人，然后道谢。”
+<br><br>
+
+“那你找到之后，就回去吧。” <<nnpcboy 'Xinyu'>>说着，又开始烧纸钱了。
+<br><br>
+
+<<link "询问名字" $passage>><</link>>
+
+
+:: Chara Xinyu Talk IntroText 6 CN
+<<set $tvar.onselect to false>>
+<<=speechDif(
+    "“喂，你叫什么名字？”",
+    "“我是镇上孤儿院的，请问你叫什么名字？”",
+    "“……我可以知道你的名字吗？”"
+)>>
+<br>
+在离开前，你简单地向<<nnpcboy 'Xinyu'>>介绍了自己，然后问<<nnpc_he Xinyu>>的名字。
+<br><br>
+
+<<nnpcboy 'Xinyu'>>抬头望了你一眼，良久，慢慢开口。
+<br>
+“<span class='yellow'>Xinyu，</span><<=sexSwitch('Xinyu', '汉字写作心之语。','Xinyu，汉字写作心的宇宙。')>>”
+<br><br>
+
+“好了，你该走了。”
+<br>
+
+
+:: Chara Xinyu Talk Intro GiveUp CN
+<<set _asktimes to iEvent.getFlag('Xinyu', 'ask')>>
+
+<<=
+    let select = new SelectCase()
+    select
+    .case(1, `算了，有空再来吧。<br>你果断地放弃了与<<nnpcboy 'Xinyu'>>的沟通。`)
+    .case([2, 4], `算了。<br>你中断了与<<nnpcboy 'Xinyu'>>的接触尝试。`)
+    .case([5, 8], `哎算了，有空再说吧。<br>无奈，你只好放弃了与<<nnpcboy 'Xinyu'>>的沟通。`)
+    .else(`算了算了，不理人就不理人吧。<br>你放弃了与<<nnpcboy 'Xinyu'>>的沟通。`)
+
+    select.has(_asktimes)
+>>
+<br><br>

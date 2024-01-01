@@ -84,4 +84,4 @@
     <</link>>
 <</widget>>
 
-<<widget "xinyu">><<if C.npc.Xinyu.pronoun is 'm'>>新宇<<else>>心语<</if>><</widget>>
+<<widget "xinyu">><<if C.npc.Xinyu.pronoun is 'm'>>心宇<<else>>心语<</if>><</widget>>

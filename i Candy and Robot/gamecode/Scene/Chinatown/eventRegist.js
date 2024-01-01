@@ -31,8 +31,12 @@ iEvent.registEvent('Xinyu', {
 
     episode: 'Talk',
     branch: 'Intro',
-    phase: 5,
+
+    phasetype: 'inframe',
+    phase: 6,
     priority: 1000,
+
+    endcode: '<<run if( iEvent.getFlag("Xinyu", "ask") >= 10) { iEvent.setFlag("Xinyu", "intro", 2) } else { iEvent.setFlag("Xinyu", "intro", 1) } >>',
     require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == undefined },
 },
 {
@@ -40,8 +44,29 @@ iEvent.registEvent('Xinyu', {
     chara: 'Xinyu',
 
     episode: 'Talk',
+    branch: 'Intro Again',
+    phase: 2,
+    priority: 1000,
+
+    endcode: '<<run if( iEvent.getFlag("Xinyu", "ask") >= 10) { iEvent.setFlag("Xinyu", "intro", 2) }>>',
+    require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == 1 },
+},
+{
+    type: 'Chara',
+    chara: 'Xinyu',
+
+    episode: 'Talk',
+    branch: 'Intro GiveUp',
+    
+    endcode: '<<run iEvent.setFlag("Xinyu", "intro", 1)>>',
+},
+{
+    type: 'Chara',
+    chara: 'Xinyu',
+
+    episode: 'Talk',
     branch: 'Friend',
-    require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == 1 && C.npc['Xinyu'].love >= 40 },
+    require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == 2 && C.npc['Xinyu'].love >= 40 },
 },
 {
     type: 'Chara',
@@ -49,7 +74,7 @@ iEvent.registEvent('Xinyu', {
 
     episode: 'Talk',
     branch: 'Hate',
-    require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == 1 && C.npc['Xinyu'].love <= -5},
+    require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') >= 1 && C.npc['Xinyu'].love <= -5},
 },
 {
     type: 'Chara',

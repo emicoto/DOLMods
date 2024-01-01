@@ -1,0 +1,180 @@
+:: Chara Xinyu Talk IntroText 1 EN
+You try to approach to the Asian <<nnpcboy 'Xinyu'>>.
+<br><br>
+
+<<=speechDif(
+    "Hey! What are you doing here?”",
+    "“Hello, what are you doing here?”",
+    "“...Hello, could you tell me what are you doing here?”"
+)>>
+<br>
+
+The Asian <<nnpcboy 'Xinyu'>> did't response to you, just keep burning the paper money.
+<br>
+One by one, slowly and carefuly added to the brazier, the smoke filled, emitting a unique smell.
+<br><br>
+
+
+:: Chara Xinyu Talk IntroText 2 EN
+You try to approach to the Asian <<nnpcboy 'Xinyu'>>.
+<br><br>
+
+<<=speechDif(
+    "Hey! Do you understand what I'm saying?",
+    "Do you understand English?",
+    "...Maybe.. you just don't understand English? I can teach you."
+)>>
+<br>
+
+The Asian <<nnpcboy 'Xinyu'>> seems like don't know your existence, just keep burning the paper money.
+<br>
+One by one, slowly and carefuly added to the brazier, the smoke filled, emitting a unique smell.
+<br><br>
+
+
+:: Chara Xinyu Talk IntroText 3 EN
+You keep trying to approach to the Asian <<nnpcboy 'Xinyu'>>.
+<br><br>
+
+<<=speechDif(
+    "Hey! Can you hear me? Even if you don't understand, at least respond to me!",
+    "If you don't understand, at least you know I'm talking to you, right?",
+    "...Hello? If you don't understand, is this okay?"
+)>>
+<br>
+<<=speechDif(
+    "You said, gently push <<nnpc_he Xinyu>>'s shoulder.",
+    "You said, gently pat <<nnpc_he Xinyu>>'s shoulder.",
+    "You said, waving your hand in front of <<nnpc_he Xinyu>>."
+)>>
+<br>
+
+The Asian <<nnpcboy 'Xinyu'>> glanced at you, then continue to burn the paper money.
+<br>
+One by one, slowly and carefuly added to the brazier, the smoke filled, emitting a unique smell.
+<br><br>
+
+:: Chara Xinyu Talk IntroText 4 EN
+You keep trying to approach to the Asian <<nnpcboy 'Xinyu'>> and try to communicate with <<nnpc_he Xinyu>>.
+<br><br>
+
+<<randomdata>>
+<<datas>>
+<<=speechDif(
+    `"Hey! It's dangerous to burn things here!"<br>You said, waving your phone with the fire alarm number in front of <<nnpc_him Xinyu>>.`,
+    `"Don't you think it's dangerous to burn things here?"<br>You said, making a cross sign, then pointing to the phone with the fire alarm number.`,
+    `""...No, don't burn it. It's dangerous."<br>You said, making a cross sign, then pointing to the phone with the fire alarm number.`
+)>>
+<<datas>>
+<<=speechDif(
+    `"Hey! Look here!"<br>You scowl in front of <<nnpc_him Xinyu>>.`,
+    `"Look here."<br>You waved your hand in front of <<nnpc_him Xinyu>> and made a strange face.`,
+    `"Please look at me."<br>You tried to hold <<nnpc_he Xinyu>>'s hand and released a smile to <<nnpc_him Xinyu>>.`,
+)>>
+<<datas>>
+<<=speechDif(
+    `"Hey! Do you know? In the forest, children will be taken away by the witch."<br>You made a scary face to try to get <<nnpc_his Xinyu>> attention.`,
+    `"Do you know? The people say there are terrible monsters in the forest."<br>You made a scary action to try to get the <<nnpc_his Xinyu>> attention.`,
+    `"It's getting dark, and it's a bit scary in the forest. Aren't you afraid?"<br>You shook <<=sexSwitch('Xinyu', 'the Asian girl's', 'the Asian boy's')>> shoulder and tried to get <<nnpc_his Xinyu>> attention.`,
+)>>
+<<datas>>
+<<=speechDif(
+    "“chang quit chang？ too quit too？”<br>You try to mimic <<nnpc_his 'Xinyu'>> words with a strange tone to get <<nnpc_his Xinyu>> response.",
+    "“cheng gui cheng？ tu gui tu？”<br>You try to mimic <<nnpc_his 'Xinyu'>> words to get <<nnpc_his Xinyu>> response.",
+    "“chen…gui……chen？ tu…gui tu？”<br>You try hard to mimic <<nnpc_his 'Xinyu'>> words to get <<nnpc_his Xinyu>> response."
+)>>
+<<datas>>
+You start singing a <<=speechDif("quirky German nursery rhyme that sounds like an insult", "classic children's song, '<i>Mother Goose Nursery Rhyme</i>'", "classic children's song, '<i>London Bridge Is Falling Down</i>'")>>.
+<<datas>>
+You start dancing a <<=speechDif("arrogant dance", "funny dance", "dance")>> around the brazier.
+<</randomdata>>
+<br><br>
+
+But the Asian <<nnpcboy 'Xinyu'>> <<XinyuReactionLowGeneral>> keep burning the paper money.
+<br>
+One by one, slowly and carefuly added to the brazier, the smoke filled, emitting a unique smell.
+<br><br>
+
+
+:: Chara Xinyu Talk IntroText 5 EN
+You persistently keep trying to approach to the Asian <<nnpcboy 'Xinyu'>>, and try to communicate with <<nnpc_he Xinyu>>.
+<br><br>
+
+<<=speechDif(
+    `Hey! Don't ignore me!!"<br>You forcibly turn <<nnpc_his Xinyu>> face to look at you.`,
+    `"Don't ignore me."<br>Helplessly, you have to grab <<nnpc_his Xinyu>> hand, let <<nnpc_him Xinyu>> stop and look at you.`,
+    `"...Just don't ignore me, please.."<br>You want to cry, but still take <<nnpc_his Xinyu>> hand strongly, let <<nnpc_him Xinyu>> look at you.`,
+)>>
+<br><br>
+
+Out of nowhere, the Asian <<nnpcboy 'Xinyu'>> said in a language you can understand, "You are so annoying."
+<br>
+But anyway, she finally stopped burning the paper money and looked at you.
+<br><br>
+
+You initially thought that the Asian <<nnpcboy 'Xinyu'>> couldn't understand what you were saying, 
+so you were a bit bold in trying to get <<nnpc_his 'Xinyu'>> attention.
+<br>
+
+At this moment, you're very close, and you can clearly see <<nnpc_his 'Xinyu'>> eyes, which are quite beautiful. 
+<br>
+<<nnpc_His>> eyes both deep and black, which reflect your figure with astonishing clarity.
+<br><br>
+
+"I thought you didn't understand English." You say.
+<br><br>
+
+"...This place doesn't welcome people from the town."
+<br>
+<<nnpcboy 'Xinyu'>> turned <<nnpc_his 'Xinyu'>> head and looked at the brazier that was still burning.
+<br>
+"You'd better leave here as soon as possible."
+<br><br>
+
+"I just..." You recalled the scene where you passout and was saved by the people from here, 
+and tried to explain your intentions.
+<br>
+"I just want to find the person who helped me and thank them."
+<br><br>
+
+"Then you can go back after you find them."
+<br>
+<<nnpcboy 'Xinyu'>> said, and started burning the paper money again.
+<br><br>
+
+<<link "Ask name" $passage>><</link>>
+
+
+:: Chara Xinyu Talk IntroText 6 EN
+<<set $tvar.onselect to false>>
+<<=speechDif(
+    "Hey, what's your name?",
+    "I'm from the orphanage in town, what's your name?",
+    "...Can I know your name?"
+)>>
+<br>
+Before leaving, you briefly introduced yourself to the Asian <<nnpcboy 'Xinyu'>> and asked <<nnpc_his Xinyu>> name.
+<br><br>
+
+<<nnpcboy 'Xinyu'>> looked up at you for a while, then slowly opened <<nnpc_his Xinyu>> mouth.
+<br>
+"<span class='yellow'>Xinyu,</span><<=sexSwitch('Xinyu', 'Chinese writing is <i>the words of heart<i>.', 'Xinyu, Chinese writing is <i>the universe of heart</i>.')>>"
+<br><br>
+
+"Okay, you should go now."
+<br>
+
+
+:: Chara Xinyu Talk Intro GiveUp EN
+<<set _asktimes to iEvent.getFlag('Xinyu', 'ask')>>
+<<=
+    let select = new SelectCase()
+    select
+    .case(1, `Fine, maybe next time.<br>You decisivly give up to approach to the Asian <<nnpcboy 'Xinyu'>>.`)
+    .case([2, 4], `Fine, maybe next time.<br>You stop to approach to the Asian <<nnpcboy 'Xinyu'>>.`)
+    .case([5, 8], `Never mind. Just wait for next time.<br>Helplessly, you give up to approach to the Asian <<nnpcboy 'Xinyu'>>.`)
+    .else(`Okay fine, just let her alone.<br>You give up to approach to the Asian <<nnpcboy 'Xinyu'>>.`)
+
+    select.has(_asktimes)
+>>
+<br><br>

@@ -1,5 +1,9 @@
 sugarcube-2:
   macros:
+    nnpcboy:
+      name: nnpcboy
+    nnpcBoy:
+      name: nnpcBoy
     randomdata:
       name: randomdata
       container: true

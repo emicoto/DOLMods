@@ -112,7 +112,7 @@ When the robots notice you, they only nod at you and continue their duties.
 <br><br>
 
 
-:: Event Chinatown Intro 1
+:: Event Chinatown Intro 1 CN
 你从巨大庄严的牌坊下穿梭而过，走进了熙熙攘攘的唐人街。
 <br>
 周围的建筑风格与你熟悉的城市风格完全不同，充满了浓郁的东方色彩——砖瓦砌成的屋顶，刷得粉白却已经褪色的墙壁，还有那些木制的门窗。
@@ -139,7 +139,53 @@ When the robots notice you, they only nod at you and continue their duties.
 <</if>>
 <br><br>
 
-:: Event Chinatown Intro 2
+:: Event Chinatown Intro 1 EN
+
+You pass under the grand and solemn archway, entering the bustling Chinatown.
+<br>
+The architectural style around you is completely different from the cityscape you're familiar with, 
+<br>
+brimming with rich Eastern colors - tiled roofs, walls painted a faded shade of white, and wooden doors and windows.
+<br><br>
+
+On both sides of the street, there are various stalls, mostly filled with aromatic street food. 
+<br>
+Many of the foods being sold are unfamiliar to you, but they all look delicious.
+<br>
+The other half of the stalls display an array of handcrafted goods.
+<br>
+While you're not sure of their purpose, they all appear to be intricately made.
+<br><br>
+
+
+There aren't too many people on the street, certainly fewer than in the city, but it's not sparsely populated either. 
+<br>
+Most of the people are of Asian descent, with the occasional sighting of a white or black individual.
+<br><br>
+
+Your visibly Western European appearance makes you stand out conspicuously in the crowd. 
+<br>
+As people catch sight of you, an unspoken sense of distance seems to emerge collectively. 
+<br>
+Their gazes fluctuate between curiosity and caution, as if silently passing judgment on your presence.
+<br><br>
+
+<<if $speech_attitude is 'bratty'>>
+However, you pay no mind to it, as your attention is captivated by the sights of the street. 
+<br>
+You boldly explore at this isolated little world with curiosity, unaffected by their glances.
+<br>
+<<elseif $speech_attitude is 'meek'>>
+You dare not meet their eyes, keeping your head down and trying not to draw their attention. You watch your surroundings carefully.
+<br>
+<<else>>
+In your mind, you draw a line separating them from yourself, then keep a close eye on your surroundings.
+<br>
+<</if>>
+<br><br>
+
+
+:: Event Chinatown Intro 2 CN
 你穿梭在人群之间，有时会看到周围的人对着你指指点点。
 <br>
 你不知道他们在说什么，但你能感觉到他们的目光中充满了好奇与警惕。
@@ -167,3 +213,35 @@ When the robots notice you, they only nod at you and continue their duties.
 
 虽然你的到来引起了一些小小的骚动，但随着时间的推移，他们总会逐渐接受你的存在，就如他们的原生文化，总会在不知不觉之间同化周围，并吸纳成为自身文化的一部分。
 <br><br>
+
+:: Event Chinatown Intro 2 EN
+You walk through the crowd, occasionally noticing people gesturing and whispering about you. 
+<br>
+You don't understand what they're saying, but you can sense the curiosity and caution in their eyes.
+<br><br>
+
+“看起来像是镇上的人……<span class='blue'>(It looks like someone from the town...)</span>”
+<br>
+Two elderly people sitting by the street, sipping tea and pointing at you, converse in hushed tones.
+<br><br>
+
+“好像是之前晕倒在外面的孩子……<span class='blue'>(Seems like that kid who passout outside before...)</span>”
+<br>
+Another elderly person look at you, their tone tinged with a hint of sympathy.
+<br>
+“希望不要给我们这里添麻烦……<span class='blue'>(Hope <<=sexSwitch('pc', 'she', 'he')>> don't cause any trouble for us...)</span>”
+<br><br>
+
+Since you don't understand what they're talking about, you're not hurt by their words.
+You just feel a little uncomfortable with their attitude.
+<br>
+Occasionally, a vendor would try to sell you their goods in broken English, but after showing some interest, you politely decline.
+<br><br>
+
+In the distance, you will see some children playing with Chinese puppets on the side of the road;
+some elderly people <<if Time.season is 'winter'>>wrapped in thick blankets<<elseif Time.season is 'summer'>>half-naked<<else>>wearing Tai Chi attire<</if>>, practicing Tai Chi and playing Go on the side of the road.
+<br>
+
+Each scene is brimming with a unique cultural touch, making you want to stop and appreciate it.
+<br><br>
+

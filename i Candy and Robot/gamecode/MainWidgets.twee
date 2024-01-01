@@ -2,13 +2,13 @@
 <<widget "iCandyHeader">>
 <!-- 在PassageHeader里的处理  -->
 <<run console.log('check passage in header:',passage())>>
-<<if $tvar.scene.passage>>
+<<if $tvar.scene.start>>
     <<run iEvent.initScene()>>
 <</if>>
 <</widget>>
 
 <<widget "iCandyFooter">>
-<!-- 在PassageFooter里的处理  -->
+<!-- 在PassageFooter里的处理
 <<randomdata>>
 <<datas>>
 一个测试A
@@ -19,7 +19,8 @@
 <<datas>>
 一个测试D
 <</randomdata>>
-
+  -->
+  
 <</widget>>
 
 <<widget "iCandyReady">>
@@ -40,6 +41,7 @@
 <!-- 在PassageDone里的处理  -->
 <<if $tvar.jump and !$event>>
     <<set $tvar.jump to false>>
+    <<set $tvar.scene.start to true>>
     <<run SugarCube.Engine.play($tvar.scene.scenestage)>>
 <</if>>
 <<run iEvent.eventDone()>>
