@@ -49,7 +49,7 @@
 </div>
 
 <div id='selection'>
-<<if iEvent.getFlag('Xinyu', 'ask') < 10 >>
+<<if iEvent.getFlag('Xinyu', 'ask') isnot 10 and $phase lte 4>>
 <<set _link = lanSwitch('Try to approach',"试着沟通" )>>
 <<link _link $passage>>
     <<run iEvent.addFlag('Xinyu', 'ask', 1)>>
@@ -64,9 +64,6 @@
 <<run iEvent.unsetEvent(); iEvent.setEvent('get', 'Xinyu', 'Talk', 'Intro GiveUp')>>
 <</link>>
 
-<<else>>
-<<set _link = lanSwitch('Ask name', '询问名字')>>
-<<link _link $passage>><</link>>
 <</if>>
 </div>
 
@@ -101,8 +98,5 @@
 <<run iEvent.unsetEvent(); iEvent.setEvent('get', 'Xinyu', 'Talk', 'Intro GiveUp')>>
 <</link>>
 
-<<else>>
-<<set _link = lanSwitch('Ask name', '询问名字')>>
-<<link _link $passage>><</link>>
 <</if>>
 </div>

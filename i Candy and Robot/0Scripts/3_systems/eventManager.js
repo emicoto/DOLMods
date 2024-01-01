@@ -68,7 +68,7 @@ const eventManager = {
         if(type == 'check' && key){
             for(let i = 0; i < eventdata.length; i++){
                 const _data = eventdata[i]
-                if(eventdata[i].episode == key && _data.require() ){
+                if(eventdata[i].episode == key && typeof _data == 'function' && _data.require() ){
                     data = clone(_data)
                     break
                 }
@@ -85,7 +85,7 @@ const eventManager = {
         if(!data && !key && !branch){
             for(let i = 0; i < eventdata.length; i++){
                 const _data = eventdata[i]
-                if(_data.require()){
+                if(typeof _data == 'function' && _data.require()){
                     data = clone(_data)
                     break
                 }

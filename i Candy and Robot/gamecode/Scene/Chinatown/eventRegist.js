@@ -51,6 +51,9 @@ iEvent.registEvent('Xinyu', {
     endcode: '<<run if( iEvent.getFlag("Xinyu", "ask") >= 10) { iEvent.setFlag("Xinyu", "intro", 2) }>>',
     require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == 1 },
 },
+
+//没有require的事件不会出现在筛选队列中，只能通过setEvent来触发。
+//the event without require won't go to the queue, and can only be triggered by setEvent.
 {
     type: 'Chara',
     chara: 'Xinyu',
@@ -65,7 +68,7 @@ iEvent.registEvent('Xinyu', {
     chara: 'Xinyu',
 
     episode: 'Talk',
-    branch: 'Friend',
+    branch: 'GeneralFriendly',
     require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == 2 && C.npc['Xinyu'].love >= 40 },
 },
 {
@@ -73,8 +76,8 @@ iEvent.registEvent('Xinyu', {
     chara: 'Xinyu',
 
     episode: 'Talk',
-    branch: 'Hate',
-    require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') >= 1 && C.npc['Xinyu'].love <= -5},
+    branch: 'GeneralHateful',
+    require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == 2 && C.npc['Xinyu'].love <= -5},
 },
 {
     type: 'Chara',
@@ -82,5 +85,5 @@ iEvent.registEvent('Xinyu', {
 
     episode: 'Talk',
     branch: 'General',
-    require: ()=>{ return true },
+    require: ()=>{ iEvent.getFlag('Xinyu', 'intro') == 2 },
 })

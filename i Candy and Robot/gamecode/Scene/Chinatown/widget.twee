@@ -19,7 +19,7 @@
 <</widget>>
 
 <<widget "chinatownExplore">>
-<<if iEvent.getFlag('Chinatown', 'known') isnot 1 and Time.dayState isnot 'night'>>
+<<if iEvent.getFlag('Chinatown', 'known') isnot 1 and Time.dayState isnot 'night' and iEvent.getFlag('Chinatown', 'prologue') is 1>>
     <<set _link to lanSwitch('Find the entrance of Chinatown', '寻找通向唐人街的入口')>>
     <<localIcon 'chinatown_entry'>><<link _link "BaseScene AlmondPath">>
          <<pass 10>>
@@ -46,13 +46,49 @@
 <</widget>>
 
 <<widget "chinatownLinkLocation">>
+    <<=lanSwitch('Place of Interest', '可访问地点')>>
+    <br>
+    <<localIcon 'park'>>
+    <<set _link = lanSwitch('Taichi Park', '太极公园')+'(00:02)'>>
+    <<link _link "BaseScene TaichiPark">>
+        <<run iEvent.unsetEvent()>>
+        <<pass 2>>
+    <</link>>
+    <br>
+    <<localIcon 'grocers'>>
+    <<set _link = lanSwitch('Grocers', '杂货店')+'(00:03)'>>
+    <<link _link "BaseScene Grocers">>
+        <<run iEvent.unsetEvent()>>
+        <<pass 3>>
+    <</link>>
+    <br>
+    <<localIcon 'shingwong'>>
+    <<set _link = lanSwitch('Shing Wong Temple', '城隍庙')+'(00:03)'>>
+    <<link _link "BaseScene ShingWong">>
+        <<run iEvent.unsetEvent()>>
+        <<pass 3>>
+    <</link>>
+    <br>
+    <<localIcon 'kongfu_cafe'>>
+    <<set _link = lanSwitch('Kongfu Café', '功夫茶餐厅')+'(00:02)'>>
+    <<link _link "BaseScene KongfuCafe">>
+        <<run iEvent.unsetEvent()>>
+        <<pass 2>>
+    <</link>>
+    <br>
+    <<localIcon 'kongfu_cafe'>>
+    <<set _link = lanSwitch('Suspicious Institude', '可疑的研究所')+'(00:05)'>>
+    <<link _link "BaseScene RobotScience">>
+        <<run iEvent.unsetEvent()>>
+        <<pass 5>>
+    <</link>>
 
     <br><br>
     <<localIcon 'chinatown_entry'>>
     <<set _link = lanSwitch('Leave', '离开')+'(00:05)'>>
     <<link _link "BaseScene AlmondPath">>
         <<run iEvent.unsetEvent()>>
-        <<pass 3>>
+        <<pass 5>>
     <</link>>
     <br>
 <</widget>>

@@ -1,0 +1,4 @@
+<!-- 城隍庙 -->
+:: BaseScene ShingWong [scene]
+
+<<link 'Leave' 'BaseScene Chinatown'>><</link>>

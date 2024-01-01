@@ -1,0 +1,4 @@
+:: BaseScene Warehouse [scene]
+
+
+<<link 'Leave' 'Harvest Street'>><</link>>

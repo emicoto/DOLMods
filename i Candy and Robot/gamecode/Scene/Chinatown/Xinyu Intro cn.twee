@@ -146,7 +146,7 @@
 
 <<nnpcboy 'Xinyu'>>抬头望了你一眼，良久，慢慢开口。
 <br>
-“<span class='yellow'>Xinyu，</span><<=sexSwitch('Xinyu', '汉字写作心之语。','Xinyu，汉字写作心的宇宙。')>>”
+“<span class='green'>Xinyu，</span><<=sexSwitch('Xinyu', `汉字写作 <b>心语</b>。`,`汉字写作 <b>心宇</b>。`)>>。”
 <br><br>
 
 “好了，你该走了。”

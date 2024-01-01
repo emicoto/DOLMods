@@ -3,11 +3,11 @@ You try to approach to the Asian <<nnpcboy 'Xinyu'>>.
 <br><br>
 
 <<=speechDif(
-    "Hey! What are you doing here?”",
-    "“Hello, what are you doing here?”",
-    "“...Hello, could you tell me what are you doing here?”"
+    `"Hey! What are you doing here?"`,
+    `"Hello, what are you doing here?"`,
+    `"...Hello, could you tell me what are you doing here?"`
 )>>
-<br>
+<br><br>
 
 The Asian <<nnpcboy 'Xinyu'>> did't response to you, just keep burning the paper money.
 <br>
@@ -20,11 +20,11 @@ You try to approach to the Asian <<nnpcboy 'Xinyu'>>.
 <br><br>
 
 <<=speechDif(
-    "Hey! Do you understand what I'm saying?",
-    "Do you understand English?",
-    "...Maybe.. you just don't understand English? I can teach you."
+    `"Hey! Do you understand what I'm saying?"`,
+    `"Do you understand English?"`,
+    `"...Maybe.. you just don't understand English? I can teach you."`
 )>>
-<br>
+<br><br>
 
 The Asian <<nnpcboy 'Xinyu'>> seems like don't know your existence, just keep burning the paper money.
 <br>
@@ -37,9 +37,9 @@ You keep trying to approach to the Asian <<nnpcboy 'Xinyu'>>.
 <br><br>
 
 <<=speechDif(
-    "Hey! Can you hear me? Even if you don't understand, at least respond to me!",
-    "If you don't understand, at least you know I'm talking to you, right?",
-    "...Hello? If you don't understand, is this okay?"
+    `"Hey! Can you hear me? Even if you don't understand, at least respond to me!"`,
+    `"If you don't understand, at least you know I'm talking to you, right?"`,
+    `"...Hello? If you don't understand, is this okay?"`
 )>>
 <br>
 <<=speechDif(
@@ -47,7 +47,7 @@ You keep trying to approach to the Asian <<nnpcboy 'Xinyu'>>.
     "You said, gently pat <<nnpc_he Xinyu>>'s shoulder.",
     "You said, waving your hand in front of <<nnpc_he Xinyu>>."
 )>>
-<br>
+<br><br>
 
 The Asian <<nnpcboy 'Xinyu'>> glanced at you, then continue to burn the paper money.
 <br>
@@ -63,7 +63,7 @@ You keep trying to approach to the Asian <<nnpcboy 'Xinyu'>> and try to communic
 <<=speechDif(
     `"Hey! It's dangerous to burn things here!"<br>You said, waving your phone with the fire alarm number in front of <<nnpc_him Xinyu>>.`,
     `"Don't you think it's dangerous to burn things here?"<br>You said, making a cross sign, then pointing to the phone with the fire alarm number.`,
-    `""...No, don't burn it. It's dangerous."<br>You said, making a cross sign, then pointing to the phone with the fire alarm number.`
+    `"...No, don't burn it. It's dangerous."<br>You said, making a cross sign, then pointing to the phone with the fire alarm number.`
 )>>
 <<datas>>
 <<=speechDif(
@@ -79,9 +79,9 @@ You keep trying to approach to the Asian <<nnpcboy 'Xinyu'>> and try to communic
 )>>
 <<datas>>
 <<=speechDif(
-    "“chang quit chang？ too quit too？”<br>You try to mimic <<nnpc_his 'Xinyu'>> words with a strange tone to get <<nnpc_his Xinyu>> response.",
-    "“cheng gui cheng？ tu gui tu？”<br>You try to mimic <<nnpc_his 'Xinyu'>> words to get <<nnpc_his Xinyu>> response.",
-    "“chen…gui……chen？ tu…gui tu？”<br>You try hard to mimic <<nnpc_his 'Xinyu'>> words to get <<nnpc_his Xinyu>> response."
+    `"chang quit chang？ too quit too？"<br>You try to mimic <<nnpc_his 'Xinyu'>> words with a strange tone to get <<nnpc_his Xinyu>> response.`,
+    `"cheng gui cheng？ tu gui tu？"<br>You try to learn <<nnpc_his 'Xinyu'>> words to get <<nnpc_his Xinyu>> response.`,
+    `"chen…gui……chen？ tu…gui tu？"<br>You try to learn <<nnpc_his 'Xinyu'>> words hardly to get <<nnpc_his Xinyu>> response.`
 )>>
 <<datas>>
 You start singing a <<=speechDif("quirky German nursery rhyme that sounds like an insult", "classic children's song, '<i>Mother Goose Nursery Rhyme</i>'", "classic children's song, '<i>London Bridge Is Falling Down</i>'")>>.
@@ -118,7 +118,7 @@ so you were a bit bold in trying to get <<nnpc_his 'Xinyu'>> attention.
 
 At this moment, you're very close, and you can clearly see <<nnpc_his 'Xinyu'>> eyes, which are quite beautiful. 
 <br>
-<<nnpc_His>> eyes both deep and black, which reflect your figure with astonishing clarity.
+<<nnpc_His 'Xinyu'>> eyes both deep and black, which reflect your figure with astonishing clarity.
 <br><br>
 
 "I thought you didn't understand English." You say.
@@ -158,7 +158,7 @@ Before leaving, you briefly introduced yourself to the Asian <<nnpcboy 'Xinyu'>>
 
 <<nnpcboy 'Xinyu'>> looked up at you for a while, then slowly opened <<nnpc_his Xinyu>> mouth.
 <br>
-"<span class='yellow'>Xinyu,</span><<=sexSwitch('Xinyu', 'Chinese writing is <i>the words of heart<i>.', 'Xinyu, Chinese writing is <i>the universe of heart</i>.')>>"
+"<span class='yellow'>Xinyu,</span><<=sexSwitch('Xinyu', 'Chinese writing is <i>the words of heart</i>.', 'Xinyu, Chinese writing is <i>the universe of heart</i>.')>>"
 <br><br>
 
 "Okay, you should go now."

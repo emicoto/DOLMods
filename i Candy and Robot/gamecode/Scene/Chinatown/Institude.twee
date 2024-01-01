@@ -1,2 +1,4 @@
 <!-- 机器人研究所 -->
-:: BaseScene RobotInstitute [scene]
+:: BaseScene RobotScience [scene]
+
+<<link 'Leave' 'BaseScene Chinatown'>><</link>>

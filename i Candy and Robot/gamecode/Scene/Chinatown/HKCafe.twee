@@ -1,0 +1,4 @@
+<!-- 港式茶餐厅 -->
+:: BaseScene KongfuCafe [scene]
+
+<<link 'Leave' 'BaseScene Chinatown'>><</link>>

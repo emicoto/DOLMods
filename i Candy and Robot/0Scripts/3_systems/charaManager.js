@@ -6,7 +6,7 @@ const iChara = {
 		//update name when language or gender changed
 		if(C.npc.Xinyu.displayname_lan){
 			if(C.npc.Xinyu.pronoun == 'm'){
-				C.npc.Xinyu.displayname_lan[1] = '新宇'
+				C.npc.Xinyu.displayname_lan[1] = '心宇'
 				C.npc.Xinyu.displayname = lanSwitch(C.npc.Xinyu.displayname_lan)
 			}
 			else{
@@ -23,7 +23,7 @@ const iChara = {
 			V.iModNpc.set('Xinyu', 'location', 'chinatown')
 		}
 		else{
-			V.iModNpc.set('Xinyu', 'location', 'land_shrine')
+			V.iModNpc.set('Xinyu', 'location', 'shingwong')
 		}
 	}
 }

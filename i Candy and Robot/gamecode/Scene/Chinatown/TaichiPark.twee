@@ -1,2 +1,5 @@
 <!-- 太极公园 -->
 :: BaseScene TaichiPark [scene]
+
+
+<<link 'Leave' 'BaseScene Chinatown'>><</link>>
