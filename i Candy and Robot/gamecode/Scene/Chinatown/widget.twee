@@ -1,6 +1,20 @@
 :: iMod Widget Chinatown [widget]
 <<widget "almondPathEntry">>
-<<if iEvent.getFlag('chinatown', 'known') is 1>>
+<br>
+<<localIcon 'warehouse'>>
+<<set _link to lanSwitch('Warehouse Area', '仓库区') + ' (00:03)'>>
+<<link _link "BaseScene Warehouse">>
+    <<pass 3>>
+<</link>>
+<br>
+<<if iEvent.getFlag('chinatown', 'known') == 1 && !between(Time.hour, 9, 12)>>
+    <span class='lunepower'>
+    <<=lanSwitch(
+        'A gust of wind blows a leaf of almond tree to you.',
+        '一道远风向你吹来了一片杏树的叶子。'
+    )>>
+    </span>
+    <br>
     <<set _link to lanSwitch("Go to Chinatown", "前往唐人街")+' (00:05)'>>
     <<localIcon 'chinatown_entry'>><<link _link "BaseScene AlmondPath">>
         <<pass 5>>
@@ -8,17 +22,24 @@
     <br>
 <</if>>
 
-<<localIcon 'warehouse'>>
-<<set _link to lanSwitch('Warehouse Area', '仓库区') + ' (00:03)'>>
-<<link _link "BaseScene Warehouse">>
-    <<pass 3>>
-<</link>>
-<br>
-
 <</widget>>
 
-<<widget "chinatownExplore">>
-<<if iEvent.getFlag('chinatown', 'known') isnot 1 and Time.dayState isnot 'night' and iEvent.getFlag('chinatown', 'prologue') is 1>>
+<<widget "chinatownExplore">> 
+<<if iEvent.getFlag('chinatown', 'known') !== 1 && (
+     (Time.dayState !== 'night' && iEvent.getFlag('chinatown', 'prologue') == 1) || 
+     (Time.dayState == 'dust' && iEvent.getFlag('chinatown', 'rumors') >= 3)
+)>>
+    <span class='lunepower'>
+    <<=lanSwitch(
+        'A gust of wind blows a leaf of almond tree to you,',
+        '一道远风向你吹来了一片杏树的叶子，'
+    )>>
+    <<=lanSwitch(
+        'you feel something is calling you betwen of Harvest Street and Mel Street.',
+        '你感觉到丰收街与梅尔街的交汇处有什么在呼唤着你。'
+    )>>
+    </span>
+    <br>
     <<set _link to lanSwitch('Find the entrance of Chinatown', '寻找通向唐人街的入口')>>
     <<localIcon 'chinatown_entry'>><<link _link "BaseScene AlmondPath">>
          <<pass 10>>
@@ -30,9 +51,9 @@
 
 <<widget "almondLinkLocation">>
     <<localIcon 'chinatown'>>
-    <<set _link = lanSwitch('Enter Chinatown', '进入唐人街') + ' (00:01)'>>
+    <<set _link = lanSwitch('Enter Chinatown', '进入唐人街') + ' (00:02)'>>
     <<link _link 'BaseScene Chinatown'>>
-        <<pass 1>>
+        <<pass 2>>
     <</link>>
     <br>
     

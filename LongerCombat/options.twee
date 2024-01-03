@@ -1,43 +1,57 @@
 :: Config Widger longerCombat [widget]
+
+<<widget "showlongerConfig">>
+    <div class="numberslider-inline">
+        <label>
+        <<checkbox "$iModConfigs.longerCombat.midEjac" false true autocheck>>
+            <<=lanSwitch(
+                "Mid Combat Ejaculation",
+                "中途射精"
+            )>>
+        </label>
+    </div>
+    <br>
+    <div class="numberslider-inline">
+    <label><span><<lanSwitch 'AP Multiple' 'AP倍率'>>: </span>
+    <<numberslider "$iModConfigs.longerCombat.mult" $iModConfigs.longerCombat.mult 1 5 0.1>>
+    </label>
+    </div>
+
+    <div class="numberslider-inline">
+    <label><span><<lanSwitch 'Ejaculate Rate' '射精概率'>>: </span>
+    <<numberslider "$iModConfigs.longerCombat.ejacRate" $iModConfigs.longerCombat.ejacRate 5 100 5>>
+    </label>
+    </div>
+
+    <div class="numberslider-inline">
+    <label><span><<lanSwitch 'OneMoreTime Rate' '再来一发概率'>>: </span>
+    <<numberslider "$iModConfigs.longerCombat.moreRate" $iModConfigs.longerCombat.moreRate 5 100 5>>
+    </label>
+    </div>
+
+    <div class="numberslider-inline">
+    <label><span><<lanSwitch 'Max OneMoreTime' '再来一发次数'>>: </span>
+    <<numberslider "$iModConfigs.longerCombat.moreTimes" $iModConfigs.longerCombat.moreTimes 1 10 1>>
+    </label>
+    </div>
+<</widget>>
+
 <<widget "longerCombatConfig">>
 <br>
-<span class='gold'><<lanSwitch "Longer Combat" "更长遭遇战">></span>
-<div>
-<div class="numberslider-inline">
-    <label>
-    <<checkbox "$iModConfigs.longerCombat.midEjac" false true autocheck>>
-        <<=lanSwitch(
-            "Mid Combat Ejaculation",
-            "中途射精"
-        )>>
-    </label>
-</div>
+<span class='gold'><<lanSwitch "Longer Combat" "更长遭遇战">></span> : 
+<<set _link to lanSwitch('▼ expand', '▼ 展开')>>
+<span class='smallbutton'><<button _link>>
+    <<if _configExpand>>
+        <<replace #longerCombat>> <</replace>>
+        <<unset _configExpand>>
+    <<else>>
+        <<replace #longerCombat>><<showlongerConfig>><</replace>>
+        <<set _configExpand to true>>
+    <</if>>
+<</button>>
+</span>
 <br>
-<div class="numberslider-inline">
-<label><span><<lanSwitch 'AP Multiple' 'AP倍率'>>: </span>
-<<numberslider "$iModConfigs.longerCombat.mult" $iModConfigs.longerCombat.mult 1 5 0.1>>
-</label>
-</div>
-
-<div class="numberslider-inline">
-<label><span><<lanSwitch 'Ejaculate Rate' '射精概率'>>: </span>
-<<numberslider "$iModConfigs.longerCombat.ejacRate" $iModConfigs.longerCombat.ejacRate 5 100 5>>
-</label>
-</div>
-
-<div class="numberslider-inline">
-<label><span><<lanSwitch 'OneMoreTime Rate' '再来一发概率'>>: </span>
-<<numberslider "$iModConfigs.longerCombat.moreRate" $iModConfigs.longerCombat.moreRate 5 100 5>>
-</label>
-</div>
-
-<div class="numberslider-inline">
-<label><span><<lanSwitch 'Max OneMoreTime' '再来一发次数'>>: </span>
-<<numberslider "$iModConfigs.longerCombat.moreTimes" $iModConfigs.longerCombat.moreTimes 1 10 1>>
-</label>
-</div>
-
-
+<div id="longerCombat">
 
 </div>
 <</widget>>

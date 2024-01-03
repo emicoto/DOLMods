@@ -22,22 +22,31 @@ const DrugsProcess = {
 	minuteProcess: function(sec){
 		const drugStats = R.drugStates.drugs
 		const drugFlags = R.drugFlags.drugs
+
+		//遍历前修复错误，将angelpowder_inject的数据合并到angelpowder
+		if(drugStats.angelpowder_inject){
+			for(const[key, value] of Object.entries(drugStats.angelpowder_inject)){
+				if(groupmatch(key, 'efTimer', 'lastTime') && value > V.timeStamp ){
+					drugStats.angelpowder[key] = value
+				}
+				else if(!groupmatch(key, 'efTimer', 'lastTime') && value > 0 ){
+					drugStats.angelpowder[key] += value
+				}
+			}
+			delete drugStats.angelpowder_inject
+		}
 	
 		for(const[drug, stats] of Object.entries(drugStats)){
 			//获取药物的信息
 			console.log('drug states', drug, stats, drugFlags[drug])
 			const drugItem = Items.get(drug)
-			if(!drugItem) continue;
-			if(!drugFlags[drug]){
-				drugFlags[drug] = new drugFlag()
-			}
-			
+			if(!drugItem) continue;		
 	
 			//如果时间戳小于药物效果到期时间，运行药物效果
 			if( V.timeStamp <= stats.efTimer){
 	
 				//如果药物的效果时间大于0，还没设置flag的话，设置flag
-				if(drugFlags[drug]?.high == 0){
+				if(drugFlags[drug].high == 0){
 					drugFlags[drug].high = 1
 				}
 	
@@ -53,7 +62,7 @@ const DrugsProcess = {
 				//如果药效过去，取消flag并检测是否有清醒效果
 				stats.efTimer = 0
 	
-				if(drugFlags[drug]?.high == 1){
+				if(drugFlags[drug].high == 1){
 					drugFlags[drug].high = 0;
 					drugFlags[drug].highonce = 0
 	
@@ -75,6 +84,7 @@ const DrugsProcess = {
 
 		for(const[item, stats] of Object.entries(itemStats)){
 			//获取药物的信息
+			console.log('hourProcess, item check', type, item, stats, itemFlags[item])
 			const data =  type == 'general' ? setup.addictions[item] : Items.get(item)
 			if(!data) continue;
 	

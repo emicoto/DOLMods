@@ -182,7 +182,9 @@ function iCombatHandle(){
 	) return;
 
 	let rate = V.trauma/80 + V.stress/200
-	const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter( item => item.id !== 'angelpowder' && iCandy.getStat(item.id, 'efTimer') - V.timeStamp <= 1800 )
+	const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter( (key, item) => !item.id.has('angelpowder') && iCandy.getStat(item.id, 'efTimer') - V.timeStamp <= 1800 )
+	console.log('combat feed drugs:',drugs)
+
 	let html = ''
 
 
@@ -217,7 +219,7 @@ function iCombatHandle(){
 		//当PC创伤或压力高于安全阈值时，NPC高概率喂PC天使粉。如果已经处于药效范围内，跳过
 		if(V.trauma >= V.traumamax * 0.8 || V.stress >= V.stressmax * 0.65 ){
 
-			if( iCandy.getStat('angelpowder', 'efTimer') > V.timeStamp || iCandy.getStat('angelpowder_inject', 'efTimer') > V.timeStamp ){
+			if( iCandy.getStat('angelpowder', 'efTimer') > V.timeStamp ){
 				continue;
 			}
 

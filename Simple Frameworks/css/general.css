@@ -1,0 +1,19 @@
+.smallbutton button {
+    width: 80px;
+    height: 26px;
+    font-size: smaller;
+    margin:  0px 6px;
+    padding: 0px;
+}
+
+.Abc {
+    text-transform: capitalize;
+}
+  
+.ABC {
+    text-transform: uppercase;
+}
+
+.abc {
+    text-transform: lowercase;
+}

@@ -104,7 +104,9 @@ function nnpcBoy(npc){
             himself: '他自己'
         }
     }
-    return pronun[0] == 'h' ? lan[setup.language][pronun] : lan[setup.language][pronun].toUpperCaseFirst()
+    let pron = pronun.toLowerCase()
+
+    return pronun[0] == 'H' ? lan[setup.language][pron].toUpperCaseFirst() : lan[setup.language][pron]
  }
 
 DefineMacroS('pcpn', pcpn)

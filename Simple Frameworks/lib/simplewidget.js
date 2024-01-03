@@ -103,6 +103,10 @@ window.simpleFrameworks = {
 	<</if>>
     <<run $(document).trigger(':switchlanguage')>>
 <</link>>
+　　
+<<set _output to lanSwitch("Confirm", "确认")>>
+<<link _output $passage>>
+<</link>>
 <br><br>
 
 `
@@ -116,6 +120,7 @@ window.simpleFrameworks = {
 <<link _link $passage>>
     <<set $upperwet to 0, $lowerwet to 0, $underlowerwet to 0, $underupperwet to 0>>
 <</link>>
+<br><br>
 `    
         }
     },

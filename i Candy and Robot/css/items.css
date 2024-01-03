@@ -47,6 +47,11 @@
     position: relative;
     margin: 3px;
 }
+@media screen and (max-width: 640px) {
+    .pocketslot {
+        width: 50%;
+    }
+  }
 
 .itemicon {
     border: 1px dashed white;
@@ -87,4 +92,12 @@
     margin-right: 2px;
     margin-left: 2px;
     border-right: 1px solid gray;
+}
+
+.lunepower{
+    background: var(--150);
+    text-shadow: 0 0 7px var(--150), 0 0 22px var(--orange), 0 0 32px var(--orange);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
 }

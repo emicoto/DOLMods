@@ -28,6 +28,6 @@ simpleFrameworks.addto('ExtraLinkZone', {
 })
 
 simpleFrameworks.addto('BeforeLinkZone', {
-    passage:'Harvest Street',
+    passage:['Harvest Street', 'Mer Street'],
     widget:'chinatownExplore'
 })

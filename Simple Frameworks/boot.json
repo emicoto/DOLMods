@@ -1,6 +1,6 @@
 {
   "name": "Simple Frameworks",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "scriptFileList_inject_early": [
     "lib/util.js",
     "lib/selectcase.js",
@@ -10,7 +10,9 @@
     "earlyload/patchpassage.js"
   ],
   "scriptFileList_preload": [],
-  "styleFileList": [],
+  "styleFileList": [
+    "css/general.css"
+  ],
   "scriptFileList": [
     "scripts/simpleMacros.js",
     "scripts/NamedNPC.js",

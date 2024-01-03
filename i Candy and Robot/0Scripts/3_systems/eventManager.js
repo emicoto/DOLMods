@@ -161,10 +161,13 @@ const eventManager = {
         }
     },
 
-    setScene: function(event, data){
-        data.title = `${data.type} ${event} ${data.episode}`
+    setScene: function(located, data){
+        data.title = `${data.type} ${located} ${data.episode}`
         if(data.branch){
             data.title += ` ${data.branch}`
+        }
+        if(data.randomBranch){
+            data.title += `_${random(data.randomBranch)}`
         }
 
         if(data.scene){
@@ -192,7 +195,7 @@ const eventManager = {
         V.tvar.exitPassage = data.exit ?? V.passage
         V.tvar.endcode = data.endcode
         
-        console.log('setScene:', event, data)
+        console.log('setScene:', located, data)
 
         this.initEvent(V.tvar.scene)
 
@@ -295,7 +298,6 @@ const eventManager = {
     //check event when enter a scene
     eventReady: function(data){
         let title = data.title
-        this.fixEvent(data)
         //already in event
         if(V.tvar.scene.start == true) return
         //already in combat
@@ -366,7 +368,7 @@ const eventManager = {
             if(
                 ( data.passage && passage == data.passage ) || 
                 ( data.match && data.match(passage) ) ||
-                ( data.keys && passage.has(data.keys) == data.keyrequire )
+                ( data.keys && passage.has(...data.keys) == data.keyrequire )
              ){
                 if(typeof data.require == 'function' && data.require()){
                     const _event = clone(data)

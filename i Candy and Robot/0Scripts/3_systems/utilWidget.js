@@ -99,7 +99,7 @@ const iUtil = {
 					}
 
 					html += `<mouse class="tooltip-tiny"${onclick}>\n`
-					html += `	<img class='icon' src="img/${img}">\n`
+					html += `	<img class='icon' src="${img}">\n`
 					html += `	<span>${lanSwitch(data.info)}\n`
 					html += `	<span class="yellow">${lanSwitch('unequip', '取消装备')}</span>`
 					html += '	</span>'

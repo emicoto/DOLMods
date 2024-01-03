@@ -41,7 +41,6 @@
 <br><br>
 
 
-
 :: Event Chinatown RescueText EN
 
 “……怎么有个孩子倒在这里？头很烫，似乎在发高烧。”
@@ -82,4 +81,195 @@ When your fever gone, you fully awaken but findout you're lying in a hospital be
 You want to thank them, but you don't know who they are.
 <br>
 The only thing you know is they are live in Chinatown.
+<br><br>
+
+
+
+:: Event Chinatown RandomRumors
+
+<<set _passage to `Event Chinatown RandomRumors_${$tvar.scene.branch} ${setup.language}`>>
+<<include _passage>>
+
+<<set _link to lanSwitch('Next', '继续')>>
+<<link _link $tvar.scene.exit>>
+    <<endscene>>
+<</link>>
+
+
+:: Event Chinatown RandomRumors_1 CN
+当你在街道上闲逛时，偶尔会听到一些奇奇怪怪的传闻。
+<br><br>
+
+“最近丰收街跟梅尔街交界的地方传来很古怪的音乐声啊。”
+<br>
+一位行人跟旁边的人低声讨论道。
+<br><br>
+
+“那些来自东方的怪胎们又开始什么神秘的仪式了吗？真是可怕。”
+<br>
+另一个人回答道。
+<br>
+“谁知道呢，反正我是不会去那里的。”
+<br><br>
+
+似乎这个镇上存在着你还不知道的地方，或许可以到丰收街或者梅尔街去看看。
+<br><br>
+
+:: Event Chinatown RandomRumors_1 EN
+When you loiter on the street, you occasionally hear some strange rumors.
+<br><br>
+
+"Have you heard the strange music near the junction of Harvest Street and Mel Street?"
+<br>
+A passerby discusses with their companion in a low voice.
+<br><br>
+
+"Are those yellow monkey doing their mysterious ritual again? It's so scary."
+<br>
+Another person replied.
+<br>   
+"Who knows, anyway I won't go there."
+<br><br>
+
+It seems that there is a place in this town that you don't know yet.
+<br>
+Maybe you can go to Harvest Street or Mel Street to explore it.
+<br><br>
+
+:: Event Chinatown RandomRumors_2 CN
+当你在街道上闲逛时，偶尔会听到一些奇奇怪怪的传闻。
+<br><br>
+
+“路过丰收街时，有时候会闻到很香的气味呢。”
+<br>
+一位行人跟旁边的人讨论着。
+<br><br>
+
+“那里的人还挺擅长烹饪的，我听说他们的烤鸭很好吃。”
+<br>
+另一个人回答道。
+<br><br>
+
+“可惜他们不太欢迎我们去哪里。搞不懂，为何他们总是抱团躲一边。”
+<br>
+“也许是因为他们是外来人吧。”
+<br><br>
+
+似乎这个镇上存在着你还不知道的地方，或许可以到丰收街去看看。
+<br><br>
+
+:: Event Chinatown RandomRumors_2 EN
+When you loiter on the street, you occasionally hear some strange rumors.
+<br><br>
+
+"Sometimes I smell a very fragrant smell when I pass Harvest Street."
+<br>
+A passerby discusses with their companion.
+<br><br>
+
+"People there are quite skilled in cooking; I've heard their roast duck is delicious," another person responds.
+<br><br>
+
+"It's a shame that they don't welcome people in town. I don't understand why they always stay away from us."
+<br>
+"Maybe because they are outsiders, I guess."
+<br><br>
+
+It seems that there is a place in this town that you don't know yet.
+<br>
+Maybe you can go to Harvest Street to explore it.
+<br><br>
+
+:: Event Chinatown RandomRumors_3 CN
+当你在街道上闲逛时，偶尔会听到一些奇奇怪怪的传闻。
+<br><br>
+
+“有时候我会看到他们从那里跑出来。既然要躲着，干嘛不一直躲着。”
+<br>
+一位行人跟旁边的人讨论着。
+<br><br>
+
+“总觉得他们不喜欢我们，都流浪到这里定居了，又不肯融入我们。”
+<br>
+另一个人回答道。
+<br><br>
+
+“我去过那里，他们对我们这些成年人的敌意很大，居然会为了那些孤儿找我们麻烦。”
+<br>
+“那些没爹没娘的孤儿能给他们什么好处？他们是傻子吗？”
+<br><br>
+
+似乎这个镇上存在着你还不知道的地方，不过那里的人好像对你这样的孤儿很友好。
+<br><br>
+
+:: Event Chinatown RandomRumors_3 EN
+When you loiter on the street, you occasionally hear some strange rumors.
+<br><br>
+
+"Sometimes I see them go out of there. If they want to hide, why don't they just stay hidden?"
+<br>
+A passerby discusses with their companion.
+<br><br>
+
+"I always feel that they don't like us. They came here as wanderes and settled down."
+<br>
+Another person responds, "but they don't want to integrate with us."
+<br><br>
+
+"I've been there." One of them says, "They show strong hostility toward us." 
+<br>
+"They even make trouble for us because of those orphans."
+<br><br>
+
+"What benefits can those orphans give them? Are they idiots?"
+<br><br>
+
+It seems that there is a place in this town that you don't know yet.
+<br>
+But the people there seem to be quite friendly to orphans like you.
+<br><br>
+
+:: Event Chinatown RandomRumors_4 CN
+当你在街道上闲逛时，偶尔会听到一些奇奇怪怪的传闻。
+<br><br>
+
+“你去过唐人街吗？那里的女孩很乖巧很听话呢。”
+<br>
+一位行人跟旁边的人讨论着。
+<br><br>
+
+“是啊，稍微凶一点就可以随意拿捏了，真的很可口。”
+<br>
+另一个人露出猥琐的笑容。
+<br><br>
+
+“不过要躲着点，那里的老大管得挺多的，被发现就不好了。”
+<br>
+“我知道，我知道，我可不想被他们扔进海里喂鱼。”
+<br><br>
+
+似乎这个镇上存在着一个叫唐人街的地方，不过你不知道入口。
+<br><br>
+
+:: Event Chinatown RandomRumors_4 EN
+When you loiter on the street, you occasionally hear some strange rumors.
+<br><br>
+
+"Have you been to Chinatown? The girls there are very easy and obedient."
+<br>
+A passerby discusses with their companion.
+<br><br>
+
+"Yeah, you can do whatever you want with them if you show your strength."
+<br>
+Another person shows a lewd smile, "they are really delightful."
+<br><br>
+
+"But be careful, the big boss of there have strong control power," the one of them says,
+"So, if you get caught you'll be in trouble."
+<br>
+"I know, I know, I wouldn't want to end up as fish food in the sea," the other responds.
+<br><br>
+
+It seems that there is a place in this town called Chinatown in this town, but you're not sure where its located.
 <br><br>
