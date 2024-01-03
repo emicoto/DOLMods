@@ -1,6 +1,7 @@
 :: iMod ModOptions [widget]
 
 <<widget "iCandyOptions">>
+<br>
 <span class="gold"><<lanSwitch "i Candy Robot" "爱糖机" >></span>
 <div>
 

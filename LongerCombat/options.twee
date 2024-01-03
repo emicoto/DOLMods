@@ -3,7 +3,7 @@
 <br>
 <span class='gold'><<lanSwitch "Longer Combat" "更长遭遇战">></span>
 <div>
-<div class="settingsToggle">
+<div class="numberslider-inline">
     <label>
     <<checkbox "$iModConfigs.longerCombat.midEjac" false true autocheck>>
         <<=lanSwitch(
