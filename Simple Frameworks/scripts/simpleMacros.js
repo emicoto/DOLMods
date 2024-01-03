@@ -1,4 +1,24 @@
-
+setup.lang = {
+    next : { EN: 'Next', CN: '继续' },
+    leave : { EN: 'Leave', CN: '离开' },
+    back : { EN: 'Back', CN: '返回' },
+    items : { EN: 'Items', CN: '物品' },
+    ITEMS : { EN: 'ITEMS', CN: '物品' },
+    unequip : { EN: 'Unequip', CN: '卸下' },
+    equip : { EN: 'Equip', CN: '装备' },
+    move : { EN: 'Move', CN: '移动' },
+    willpower : { EN: 'Willpower', CN: '意志' },
+    alcohol : { EN: 'Alcohol', CN: '酒精' },
+    hallucinogen : { EN: 'Hallucinogen', CN: '幻觉' },
+    hungry : { EN: 'Hungry', CN: '饥饿' },
+    health : { EN: 'Health', CN: '健康' },
+    storage : { EN: 'Storage', CN: '库存' },
+    mechanic : { EN: 'Mechanic', CN: '机械' },
+    chemical : { EN: 'Chemical', CN: '化学' },
+    cooking : { EN: 'Cooking', CN: '烹饪' },
+    wakeup : { EN: 'Wake up', CN: '醒来' },
+    loiter : { EN: 'Loiter', CN: '闲逛' },
+}
 //------------------------------------------------------
 //
 //  widget： 语言切换，性别切换，条件切换
@@ -16,6 +36,15 @@ function lanSwitch(...lan) {
 }
 window.lanSwitch = lanSwitch
 DefineMacroS('lanSwitch', lanSwitch)
+
+function getLan(key){
+    if(setup.lang[key][setup.language] == undefined){
+        return setup.lang[key]['EN'] ?? setup.lang[key]['CN']
+    }
+    return setup.lang[key][setup.language]
+}
+window.getLan = getLan
+DefineMacroS('getLan', getLan)
 
 function sexSwitch(npc, female,male){
     let gender = 'f'
