@@ -19,7 +19,7 @@ iEvent.registPsg('Brothel Basement Sex', ()=>{
 
 iEvent.registEvent('Passout', {
     type: 'Event',
-    toward: 'Chinatown Rescue',
+    toward: 'Harvest Chinatown Rescue',
 
     require: ()=>{ return iEvent.getFlag('chinatown', 'prologue') == undefined && V.bus == 'harvest' && iEvent.getFlag('harvest', 'passout') >= 3 },
 })

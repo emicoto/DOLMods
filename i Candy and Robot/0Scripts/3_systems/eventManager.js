@@ -274,7 +274,7 @@ const eventManager = {
     //if event has been set but didn't run, clear it
     fixEvent: function(data){
         //check the event is running in the right scene or not
-        if(!V.tvar.scene.start) return
+        if(!V.tvar.scene.start || V.tvar.scene.scenestage ) return
 
         const scene = V.tvar.scene
         const stage = scene.title.split(' ')[1]

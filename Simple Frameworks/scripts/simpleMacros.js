@@ -38,45 +38,44 @@ DefineMacroS('sexSwitch', sexSwitch)
 
 function nnpcboy(npc){
    let gender = C.npc[npc].pronoun
+   const boy = {
+        EN : 'boy',
+        CN : '男孩'
+   }
+   const girl = {
+        EN: 'girl',
+        CN: '女孩',
+    }
 
    if(gender == 'm'){
-        return lanSwitch('boy', '男孩')
+        return boy[setup.language]
    }
 
-   return lanSwitch('girl', '女孩')
+   return girl[setup.language]
 }
 DefineMacroS('nnpcboy', nnpcboy)
 
 function nnpcBoy(npc){
-    let gender = C.npc[npc].pronoun
-
-    if(gender == 'm'){
-         return lanSwitch('Boy', '男孩')
-    }
- 
-    return lanSwitch('Girl', '女孩')
+    return nnpcboy(npc).toUpperCaseFirst()
  }
  DefineMacroS('nnpcBoy', nnpcBoy)
 
  function pcpn(pronun){
-    switch(pronun){
-        case 'him':
-            return lanSwitch(sexSwitch('pc', 'him', 'her'), sexSwitch('pc', '他', '她'))
-        case 'his':
-            return lanSwitch(sexSwitch('pc', 'his', 'her'), sexSwitch('pc', '他的', '她的'))
-        case 'he':
-            return lanSwitch(sexSwitch('pc', 'he', 'she'), sexSwitch('pc', '他', '她'))
-        case 'himself':
-            return lanSwitch(sexSwitch('pc', 'himself', 'herself'), sexSwitch('pc', '他自己', '她自己'))
-        case 'Him':
-            return lanSwitch(sexSwitch('pc', 'Him', 'Her'), sexSwitch('pc', '他', '她'))
-        case 'His':
-            return lanSwitch(sexSwitch('pc', 'His', 'Her'), sexSwitch('pc', '他的', '她的'))
-        case 'He':
-            return lanSwitch(sexSwitch('pc', 'He', 'She'), sexSwitch('pc', '他', '她'))
-        case 'Himself':
-            return lanSwitch(sexSwitch('pc', 'Himself', 'Herself'), sexSwitch('pc', '他自己', '她自己'))
+    const lan = {
+        EN: {
+            him: 'him',
+            his: 'his',
+            he: 'he',
+            himself: 'himself'
+        },
+        CN: {
+            him: '他',
+            his: '他的',
+            he: '他',
+            himself: '他自己'
+        }
     }
+    return pronun[0] == 'h' ? lan[setup.language][pronun] : lan[setup.language][pronun].toUpperCaseFirst()
  }
 
 DefineMacroS('pcpn', pcpn)

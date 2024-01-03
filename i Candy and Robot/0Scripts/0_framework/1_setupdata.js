@@ -401,26 +401,81 @@ function useMethods(tags, item){
 
 function itemUnit(tags, count){
 	const unit = {
-		'pill' : ['pills', 'pill', '片'],
-		'drugpowder': ['packs', 'pack', '包'],
-		'inject' : ['shots', 'shot', '管'],
-		'canned' : ['cans', 'can', '罐'],
-		'candy' : ['pieces', 'piece', '块'],
-		'snack' : ['packs', 'pack', '包'],
-		'smoke' : ['', '', '支'],
-		'liquid' : ['ml', 'ml', 'ml'],
-		'lite' : ['oz', 'oz', 'oz'],
-		'powder' : ['lb', 'lb', 'lb'],
-		'food' : ['', '', '份'],
-		'drink' : ['bottles', 'bottle', '瓶'],
-		'equip' : ['', '', '件'],
+		pill : {
+			EN : 'pill',
+			EN_plural : 'pills',
+			CN : '片'
+		},
+		drugpowder : {
+			EN : 'pack',
+			EN_plural : 'packs',
+			CN : '包'
+		},
+		inject : {
+			EN : 'shot',
+			EN_plural : 'shots',
+			CN : '管'
+		},
+		canned : {
+			EN : 'can',
+			EN_plural : 'cans',
+			CN : '罐'
+		},
+		candy : {
+			EN : 'piece',
+			EN_plural : 'pieces',
+			CN : '块'
+		},
+		snack : {
+			EN : 'pack',
+			EN_plural : 'packs',
+			CN : '包'
+		},
+		smoke : {
+			EN : '',
+			EN_plural : '',
+			CN : '支'
+		},
+		liquid : {
+			EN : 'ml',
+			EN_plural : 'ml',
+			CN : 'ml'
+		},
+		lite : {
+			EN : 'oz',
+			EN_plural : 'oz',
+			CN : 'oz'
+		},
+		powder : {
+			EN : 'lb',
+			EN_plural : 'lb',
+			CN : 'lb'
+		},
+		food : {
+			EN : '',
+			EN_plural : '',
+			CN : '份'
+		},
+		drink : {
+			EN : 'bottle',
+			EN_plural : 'bottles',
+			CN : '瓶'
+		},
+		equip : {
+			EN : '',
+			EN_plural : '',
+			CN : '件'
+		},
+
 	}
 	let text = 'x ' + count
 
 	for(let i in unit){
 		if(tags.includes(i)){
-			text += lanSwitch(count > 1 ? unit[i][1] : unit[i][0], unit[i][2])
-			break
+			if(count > 1 && unit[i][setup.language + '_plural']) 
+				text += unit[i][setup.language + '_plural']
+			else
+				text += unit[i][setup.language]
 		}
 	}
 

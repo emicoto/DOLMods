@@ -41,10 +41,10 @@ function onUseDrags(enemy){
 
 	let methods = useMethods(tags)
 
-	let html = lanSwitch(
+	let html = [
 		`You ${methods[0]} the ${this.name[0].toLocaleLowerCase()}.`,
 		`你${methods[1]}了${this.name[1]}。`
-	) + ' ' + palams;
+	]
 
 	if(enemy){
 		return palams;
@@ -54,7 +54,7 @@ function onUseDrags(enemy){
 		html = lanSwitch(drugMsg[id]['onUse']) + ' ' + palams;
 	}
 
-	return html;
+	return lanSwitch(html) + ' ' + palams;
 }
 
 

@@ -1,4 +1,4 @@
-:: Event Chinatown Rescue
+:: Event Harvest Chinatown Rescue
 
 <<set _passage to 'Event Chinatown RescueText ' + setup.language>>
 <<include _passage>>
@@ -6,7 +6,7 @@
 <<set _link to lanSwitch('Next', '继续')>>
 <<link _link 'Hospital Bed'>><<run iEvent.setFlag('chinatown', 'prologue', 1); iEvent.unsetEvent()>><<pass 12 hour>><</link>>
 
-:: Event Chinatown RescueText CN
+:: Event Harvest Chinatown RescueText CN
 
 “……怎么有个孩子倒在这里？头很烫，似乎在发高烧。”
 <br>
