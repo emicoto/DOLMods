@@ -1,6 +1,6 @@
 {
   "name": "i, Candy + Robot",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "modPacker": {
     "modVersionJs": {
       "file": "0Scripts/0_framework/0_modversion.js",
@@ -180,7 +180,7 @@
     },
     {
       "modName": "Simple Frameworks",
-      "version": ">=1.6.0"
+      "version": ">=1.6.4"
     }
   ]
 }

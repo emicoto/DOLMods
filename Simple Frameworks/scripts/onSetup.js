@@ -1,3 +1,4 @@
+
 setup.DOLNPCNames = {
     Avery: ["Avery", "艾弗利"],
     Bailey: ["Bailey", "贝利"],
@@ -179,14 +180,49 @@ const iModManager = {
         V.iModConfigs[prop] = value;
     },
 
+    getCf: function(prop){
+        this.init('iModConfigs')
+        return V.iModConfigs[prop]
+    },
+
     setV: function(prop, value){
         this.init('iModVar')
         V.iModVar[prop] = value;
     },
 
-    setNpcV: function(prop, value){
+    addV: function(prop, value){
+        this.init('iModVar')
+        if(!V.iModVar[prop]){
+            V.iModVar[prop] = value
+        }
+        else{
+            V.iModVar[prop] += value
+        }
+        return V.iModVar[prop]
+    },
+
+    getV: function(prop){
+        this.init('iModVar')
+        return V.iModVar[prop]
+    },
+
+    setNpc: function(chara, prop, value){
         this.init('iModNpc')
-        V.iModNpc[prop] = value;
+        if(!V.iModNpc[chara]){
+            V.iModNpc[chara] = {}
+        }
+        if(prop && value){
+            V.iModNpc[chara][prop] = value
+        }
+        return V.iModNpc[chara]
+    },
+
+    getNpc: function(chara, prop){
+        this.init('iModNpc')
+        if(!V.iModNpc[chara]){
+            V.iModNpc[chara] = {}
+        }  
+        return prop ? V.iModNpc[chara][prop] : V.iModNpc[chara]
     },
     
     npcV: function(prop, value){

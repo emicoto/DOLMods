@@ -756,12 +756,12 @@ const magicDrugs = [
 	
 		id: "angelpowder_inject",
 		alias: "angelpowder",
-		name: ["Seraphic Euphoria", "天使粉"],
+		name: ["Seraphic Euphoria", "天使醉"],
 		plural:"Seraphic Euphoria",
 	
 		info: [
 			"Fast-acting psychotropic drugs, takes you fly to heaven",
-			"天使粉的针剂版。速效精神药物，带你直上天国。",
+			"速效精神药物，带你直上天国。",
 		],
 	
 		num: 2,
@@ -801,7 +801,7 @@ const magicDrugs = [
 	
 		info: [
 			"The powder of Seraphic Euphoria.Fast-acting psychotropic drugs, takes you fly to heaven",
-			"速效精神药物，带你直上天国。",
+			"天使醉的粉末版。速效精神药物，带你直上天国。",
 		],
 	
 		num: 2,

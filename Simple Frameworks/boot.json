@@ -1,6 +1,6 @@
 {
   "name": "Simple Frameworks",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "scriptFileList_inject_early": [
     "lib/util.js",
     "lib/selectcase.js",

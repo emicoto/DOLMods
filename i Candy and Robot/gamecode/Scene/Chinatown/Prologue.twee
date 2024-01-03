@@ -6,7 +6,7 @@
 <<set _link to lanSwitch('Next', '继续')>>
 <<link _link 'Hospital Bed'>><<run iEvent.setFlag('chinatown', 'prologue', 1); iEvent.unsetEvent()>><<pass 12 hour>><</link>>
 
-:: Event Harvest Chinatown RescueText CN
+:: Event Chinatown RescueText CN
 
 “……怎么有个孩子倒在这里？头很烫，似乎在发高烧。”
 <br>

@@ -1,0 +1,2 @@
+
+simpleFrameworks.addto('iModOptions', 'longerCombatConfig')

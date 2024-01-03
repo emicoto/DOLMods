@@ -76,7 +76,7 @@
         <<pass 2>>
     <</link>>
     <br>
-    <<localIcon 'institude'>>
+    <<localIcon 'institute'>>
     <<set _link = lanSwitch('Suspicious Institude', '可疑的研究所')+'(00:05)'>>
     <<link _link "BaseScene InstitudeEntry">>
         <<run iEvent.unsetEvent()>>

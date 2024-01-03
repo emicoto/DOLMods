@@ -25,15 +25,19 @@ const DrugsProcess = {
 	
 		for(const[drug, stats] of Object.entries(drugStats)){
 			//获取药物的信息
+			console.log('drug states', drug, stats, drugFlags[drug])
 			const drugItem = Items.get(drug)
 			if(!drugItem) continue;
+			if(!drugFlags[drug]){
+				drugFlags[drug] = new drugFlag()
+			}
 			
 	
 			//如果时间戳小于药物效果到期时间，运行药物效果
 			if( V.timeStamp <= stats.efTimer){
 	
 				//如果药物的效果时间大于0，还没设置flag的话，设置flag
-				if(drugFlags[drug].high == 0){
+				if(drugFlags[drug]?.high == 0){
 					drugFlags[drug].high = 1
 				}
 	
@@ -49,7 +53,7 @@ const DrugsProcess = {
 				//如果药效过去，取消flag并检测是否有清醒效果
 				stats.efTimer = 0
 	
-				if(drugFlags[drug].high == 1){
+				if(drugFlags[drug]?.high == 1){
 					drugFlags[drug].high = 0;
 					drugFlags[drug].highonce = 0
 	

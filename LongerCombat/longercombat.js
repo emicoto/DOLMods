@@ -163,6 +163,7 @@ function simpleEjaculation(){
 
 function longerCombat(){
     if(V.combat == 1 && V.stalk !== true){
+        const { mult, ejacRate, midEjac, moreRate, moreTimes } = iMod.getCf('longerCombat')
 
         if(!setup.longerCombat){
             console.log('longer combat is running.')
@@ -175,15 +176,17 @@ function longerCombat(){
         }
 
         if(V.enemyarousalmax%100 == 0){
-            V.enemyarousalmax = V.enemyarousalmax*2.5 + random(51, 501) + 1 + Math.random()
+            V.enemyarousalmax = V.enemyarousalmax * mult + random(1, 99) + Math.random()
         }
 
         if(Math.floor(V.enemyarousal/500) > Math.floor(V.lastejaculated/500) && V.NPCList[0].penis !== undefined){
             V.lastejaculated = V.enemyarousal;
-            simpleEjaculation()
+            if(midEjac == true && random(100) <= ejacRate ){
+                simpleEjaculation()
+            }
         }
 
-        if(Math.random(0, 3) == 1 && V.enemyarousal/V.enemyarousalmax >= 0.9 && V.overEjaculated < 3 ){
+        if(random(100) < moreRate && V.enemyarousal/V.enemyarousalmax >= 0.9 && V.overEjaculated < moreTimes ){
             V.enemyarousal = V.enemyarousal - (V.enemyarousalmax * 0.1 + random(50, 500))
             V.overEjaculated++
         }  
@@ -206,21 +209,32 @@ function checkLCM(){
 
 Save.onLoad.add(checkLCM)
 
+function longerCombatInit(){
+    if(!iMod.has('Configs', 'longerCombat')){
+        iMod.setCf('longerCombat', {
+            mult : 2.5,
+            midEjac : true,
+            ejacRate: 80,
+            moreRate: 25,
+            moreTimes: 3
+        })
+
+        delete V.iModConfigs.longerMult
+    }
+}
+
 $(document).on(':passageinit', ()=>{
     //初始化
     if(setup.longerCombatInit === true ){
         setTimeout(()=>{
-            if(!iMod.has('Configs', 'longerMult')){
-                iMod.setCf('longerMult', 2.5)
-            }
-    
+            longerCombatInit()
             delete setup.longerCombatInit
         }, 30)
     }
     else if(passage() == 'Start'){
         setTimeout(()=>{
-            iMod.setCf('longerMult', 2.5)
-        }, 80)
+            longerCombatInit()
+        }, 100)
     }
 })
 
