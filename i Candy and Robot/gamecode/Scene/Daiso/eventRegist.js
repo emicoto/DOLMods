@@ -21,8 +21,7 @@ iEvent.registEvent('DaisoShop',
         branch: 'Naked',
 
         priority: 10,
-        nextcode: '<<=iEvent.unsetEvent()>>',
 
-        require: ()=>{ return V.exposed >= 2 && V.tvar.lastPassage != 'BaseScene DaisoShop' }
+        require: ()=>{ return V.exposed >= 2 && V.tvar.lastPassage != 'BaseScene DaisoShop' && passage() == 'BaseScene DaisoShop' }
     }
 )

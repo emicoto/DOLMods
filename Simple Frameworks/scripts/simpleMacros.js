@@ -119,3 +119,13 @@ Macro.add("randomdata", {
 
     }
 })
+
+Macro.add("lanLink", {
+    tags:[],
+    handler: function(){
+		if (this.args.length === 0) {
+			return this.error(`no link text specified`);
+		}
+
+    }
+})

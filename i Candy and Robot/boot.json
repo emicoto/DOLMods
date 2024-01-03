@@ -1,6 +1,6 @@
 {
   "name": "i, Candy + Robot",
-  "version": "2.2.2",
+  "version": "2.2.4",
   "modPacker": {
     "modVersionJs": {
       "file": "0Scripts/0_framework/0_modversion.js",
@@ -63,6 +63,7 @@
     "gamecode/Scene/Chinatown/Main.twee",
     "gamecode/Scene/Chinatown/Passout.twee",
     "gamecode/Scene/Chinatown/Prologue.twee",
+    "gamecode/Scene/Chinatown/RandomEvent.twee",
     "gamecode/Scene/Chinatown/Shingwong.twee",
     "gamecode/Scene/Chinatown/SnackShop.twee",
     "gamecode/Scene/Chinatown/TaichiPark.twee",

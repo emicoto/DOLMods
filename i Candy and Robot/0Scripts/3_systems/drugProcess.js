@@ -227,21 +227,9 @@ const DrugsProcess = {
 			const data = Items.get(item)
 			const word = lanSwitch(data.name)
 			const hours = data.withdraw
-			let methods = ''
-			if(data.tags.includes('pill')){
-				methods = lanSwitch(
-					`take`,
-					`吃`,
-				)
-			}
-			else if(data.tags.includes('inject')){
-				methods = lanSwitch(
-					`inject`,
-					`注射`,
-				)
-			}
+			let methods = useMethods(data)
 	
-			return printTemplet(lanSwitch(template), word, methods, hours) + '<br>'
+			return printTemplet(lanSwitch(template), word, lanSwitch(methods), hours) + '<br>'
 		}
 	},
 

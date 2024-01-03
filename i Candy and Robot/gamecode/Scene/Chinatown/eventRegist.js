@@ -19,19 +19,23 @@ iEvent.registEvent('Chinatown',{
 },
 {
     type: 'Scene',
-    episode: 'Random_Show',
+    episode: 'StreetShow',
 
     require: ()=>{ return iCandy.config.debug == 'show' || (V.tvar.lastPassage == 'BaseScene Chinatown' && between(Time.hour, 10, 16) && random(100) < 50 && iEvent.getFlag('chinatown', 'showtoday') < 3) },
 },
 {
     type: 'Event',
     episode: 'Random_Goat',
+    eventnext: true,
+    initcode: '<<set $tvar.onselect to true>><<generateRole 0 0 "elder">><<generate2>><<generate3>><<person1>>',
+    endcode: '<<run delete V.tvar.debt>>',
 
     require: ()=>{ return iCandy.config.debug == 'goat' || (V.tvar.lastPassage == 'BaseScene Chinatown' && between(Time.hour, 10, 18) && V.eventskip == 0 && random(100) < 20 && iEvent.getFlag('chinatown', 'goatweek') < 2) },
 },
 {
     type: 'Event',
     episode: 'Random_Beliver',
+    initcode: '<<generate1>>',
 
     require: ()=>{ return iCandy.config.debug == 'beliver' ||( V.tvar.lastPassage == 'BaseScene Chinatown' && between(Time.hour, 9, 17) && V.eventskip == 0 && random(100) < 20) },
 }
@@ -66,6 +70,7 @@ iEvent.registEvent('Xinyu', {
 
     endcode: '<<run if( iEvent.getFlag("Xinyu", "ask") >= 10) { iEvent.setFlag("Xinyu", "intro", 2) } else { iEvent.setFlag("Xinyu", "intro", 1) } >>',
     require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == undefined },
+    location: ['almond_path'],
 },
 {
     type: 'Chara',
@@ -78,6 +83,7 @@ iEvent.registEvent('Xinyu', {
 
     endcode: '<<run if( iEvent.getFlag("Xinyu", "ask") >= 10) { iEvent.setFlag("Xinyu", "intro", 2) }>>',
     require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == 1 },
+    location: ['almond_path'],
 },
 
 //没有require的事件不会出现在筛选队列中，只能通过setEvent来触发。
@@ -98,6 +104,7 @@ iEvent.registEvent('Xinyu', {
     episode: 'Talk',
     branch: 'GeneralFriendly',
     require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == 2 && C.npc['Xinyu'].love >= 40 },
+    location: ['almond_path'],
 },
 {
     type: 'Chara',
@@ -106,6 +113,7 @@ iEvent.registEvent('Xinyu', {
     episode: 'Talk',
     branch: 'GeneralHateful',
     require: ()=>{ return iEvent.getFlag('Xinyu', 'intro') == 2 && C.npc['Xinyu'].love <= -5},
+    location: ['almond_path'],
 },
 {
     type: 'Chara',
@@ -114,4 +122,5 @@ iEvent.registEvent('Xinyu', {
     episode: 'Talk',
     branch: 'General',
     require: ()=>{ iEvent.getFlag('Xinyu', 'intro') == 2 },
+    location: ['almond_path'],
 })

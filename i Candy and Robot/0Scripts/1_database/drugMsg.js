@@ -2,16 +2,16 @@ const generalWithdraw = function(drugItem){
 	wikifier('stress', 30)
 	const html = {
 		alcohol: lanSwitch(
-					`You haven't drunk for a while, you feel irritable and start to have withdrawal symptoms.`,
-					`有一段时间没喝酒了，你感到烦躁难受。`,
+			`You haven't drunk for a while, you feel irritable and start to have withdrawal symptoms.`,
+			`有一段时间没喝酒了，你感到烦躁难受。`,
 		),
 		aphrod: lanSwitch(
-					`You haven't taken aphrodisiac for a while, you're feeling lost and empty.`,
-					`你有一段时间没吸收催情类物质了，你感到空虚寂寞以及难受。`,
+			`You haven't taken aphrodisiac for a while, you're feeling lost and empty.`,
+			`你有一段时间没吸收催情类物质了，你感到空虚寂寞以及难受。`,
 		),
 		nicotine: lanSwitch(
-					`You haven't smoked for a while, your mouth feels empty and you feel irritable.`,
-					`你有一段时间没吸烟了，你的嘴感觉落空空的，心情有些烦躁。`,
+			`You haven't smoked for a while, your mouth feels empty and you feel irritable.`,
+			`你有一段时间没吸烟了，你的嘴感觉落空空的，心情有些烦躁。`,
 		),
 	}
 
@@ -25,6 +25,78 @@ const generalWithdraw = function(drugItem){
 		)
 		return html + '<<gggstress>>'
 	}
+}
+
+const combatFeedMsg = function(npc, drugItem){
+	if(npc == 'slime' || npc == 'tentacles'){
+		const enemyname = {
+			slime: ['slime', '史莱姆'],
+			tentacles: ['tentacles', '触手'],
+			plant: ['plant', '植物妖精'],
+		}
+		let html = lanSwitch(
+			`The ${enemyname[npc][0]} secreted a sweet-smelling juice and feed to you. <<gggdrugged>><br>`,
+			`${enemyname[npc][1]}分泌出一种香甜的汁液喂给了你。<<gggdrugged>><br>`,
+		)
+
+		return html + '<br>'
+	}
+
+	const data = Items.get(drugItem)
+	const palams = data.onUse('enemy')
+	const html = {
+		angelpowder_inject: lanSwitch(
+			`${npc.fullDescription} looks at your lifeless face and finds it rather dull. So, <<He>> takes out a pink syringe and injects it directly into your body.<br>
+			<span class ='pink'>You are injected with a dose of Seraphic Euphoria.</span>`,
+			`${npc.fullDescription}看着你毫无声息的脸，觉得这样很无趣。于是<<He>>拿出一针粉色的针剂，直接打在了你身上。<br>
+			<span class ='pink'>你被注射了一针天使醉。</span>`,
+		),
+		randomInject: lanSwitch(
+			`${npc.fullDescription} takes out a ${data.name[0]} syringe and injects it directly into your body.<br>
+			<span class ='pink'>You are injected with a dose of ${data.name[0]}.</span>`,
+			`${npc.fullDescription}拿出一针${data.name[1]}，直接打在了你身上。<br>
+			<span class ='pink'>你被注射了一针${data.name[1]}。</span>`,
+		),
+		randomFeedMouth: lanSwitch(
+			`${npc.fullDescription} feeds you a <span class='pink'>${data.name[0]}</span>.`,
+			`${npc.fullDescription}往你嘴里喂了颗<span class='pink'>${data.name[1]}</span>。`,
+		),
+		randomFeedAnus: lanSwitch(
+			`${npc.fullDescription} put a <span class='pink'>${data.name[0]}</span> into your anus.`,
+			`${npc.fullDescription}往你肛门塞了颗<span class='pink'>${data.name[1]}</span>。`,
+		),
+		randomFeedKiss: lanSwitch(
+			`${npc.fullDescription} feeds you a <span class='pink'>${data.name[0]}</span> through mouth to mouth as <<he>> kiss you.`,
+			`${npc.fullDescription}亲吻你之余，通过嘴对嘴的方式喂了你一颗<span class='pink'>${data.name[1]}</span>。`,
+		),
+		randomFeedAny: lanSwitch(
+			`${npc.fullDescription} feeds you a <span class='pink'>${data.name[0]}</span> as you gasp for breath.`,
+			`${npc.fullDescription}在你喘气的空档强行喂了你一颗<span class='pink'>${data.name[1]}</span>。`,
+		),
+	}
+
+	if(drugItem == 'angelpowder_inject'){
+		return html.angelpowder_inject + ` ${palams}<br>`
+	}
+
+	if(data.tags.includes('inject')){
+		return html.randomInject + ` ${palams}<br>`
+	}
+
+	if( V.mouthuse !== 'penis' && V.mouthuse !== 'kiss' ){
+		return html.randomFeedMouth + ` ${palams}<br>`
+	}
+
+	if(V.anususe !== 'penis' && V.anususe !== 'penisdouble'){
+		return html.randomFeedAnus + ` ${palams}<br>`
+	}
+
+	if(V.mouthuse == 'kiss' && npc.mouth == 'kiss'){
+		return html.randomFeedKiss + ` ${palams}<br>`
+	}
+
+	return html.randomFeedAny + ` ${palams}<br>`
+
 }
 
 const drugMsg = {
@@ -156,16 +228,16 @@ const drugMsg = {
 		],
 
 		onWake:[
-			"After the angel powder wears off, you feel weak and powerless.",
-			"天使粉的药效过后，你感到虚弱无力。"
+			"After the Seraphic Euphoria wears off, you feel weak and powerless.",
+			"天使醉的药效过后，你感到虚弱无力。"
 		],
 		onDay:[
-			"The Angel powder in your body inspries you, makes you feeling easy and happy.",
-			"体内的天使粉鼓舞着你，让你感到轻松愉快。"
+			"The Seraphic Euphoria in your body inspries you, makes you feeling easy and happy.",
+			"体内的天使醉鼓舞着你，让你感到轻松愉快。"
 		],
 		onWithdraw:[
-			"You're feeling a little weak without the Angel Powder.",
-			"没有嗑天使粉的你感到身体有些虚弱……"
+			"You're feeling a little weak without the Seraphic Euphoria.",
+			"没有嗑天使醉的你感到身体有些虚弱……"
 		]
 	}
 }
@@ -173,4 +245,5 @@ const drugMsg = {
 Object.defineProperties(window, {
 	drugMsg: { get: ()=> drugMsg },
 	generalWithdraw: { get: ()=> generalWithdraw },
+	combatFeedMsg: { get: ()=> combatFeedMsg },	
 })

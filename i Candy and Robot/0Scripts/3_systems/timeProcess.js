@@ -148,11 +148,32 @@ function weekProcess(sec, day, weekday){
 }
 
 function iCombatHandle(){
+	const whitelistnpc = ['Avery', 'Briar', 'Darryl', 'Eden', 'Harper', 'Kylar', 'Landry', 'Morgan', 'Whitney', 'Winter', 'Remy', 'Wren', 'Keith', 'Cheng']
 	//非战斗场景跳过
 	if(V.combat == 0) return;
-	if(V.stalk == true) return
-	//合意场景的情况看对象是谁
-	if(V.consensual == 1 && V.npc_name !== 0) return;
+	if(V.stalk == true) return;
+	//非白名单NPC跳过
+	if(V.npc.length > 0 && !V.npc.has(...whitelistnpc)) return;
+
+	//如果场景在学校，则看概率跳过
+	if( V.location == 'school' && random(100) > 20) {
+		R.combat.skip = true;
+		return;
+	}
+	//如果场景在警察局，则看概率跳过
+	if(V.location == 'police_station' && random(100) > 30){
+		R.combat.skip = true;
+		return;
+	}
+	//白名单NPC看概率跳过
+	if(V.npc.length > 0 && V.npc.has(...whitelistnpc)  && V.consensual == 1 && !V.npc.has('Whitney', 'Morgan', 'Kylar') && random(100) > 40 ){
+		R.combat.skip = true;
+		return;
+	}
+	//已经跳过的，跳过
+	if(R.combat.skip == true) return;
+
+
 	//当pc处于反抗状态且处于优势时，跳过事件。
 	if( V.pain < V.painmax * 0.8 
 		&& V.enemyhealth < V.enemyhealthmax * 0.5 
@@ -161,15 +182,23 @@ function iCombatHandle(){
 	) return;
 
 	let rate = V.trauma/80 + V.stress/200
-	const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter( item => item.id !== 'angelpowder' )
+	const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter( item => item.id !== 'angelpowder' && iCandy.getStat(item.id, 'efTimer') - V.timeStamp <= 1800 )
 	let html = ''
 
 
-	//当敌人是触手或史莱姆时，概率给pc上特殊分泌物
-	if(V.enemytype == 'slime' || V.enemytype == 'tentacles'){
+	//当敌人是触手或史莱姆或植物时，概率给pc上特殊分泌物
+	if((V.enemytype == 'slime' || V.enemytype == 'tentacles' || V.enemytype == 'plant') && !iCandy.senseGet('genital', 'slime')){
+		if(random(100) < 20 ){
+			wikifier('drugs', 2000)
+			iCandy.senseSet('genital', 'slime', 1.2, 3600)
+			html += combatFeedMsg(V.enemytype, 'drugs')
+			R.combat.slime = 1
+		}
 	}
-	
+
+	if(V.enemytype !== 'man') return;	
 	//人类的情况，根据情况概率喂pc毒品
+
 	for(let i = 0; i < V.enemynomax; i++){
 		let npc = V.NPCList[i]
 		//不能行动的，不是人类的，每个npc最多喂两次
@@ -185,47 +214,27 @@ function iCombatHandle(){
 			npc.feed = 0
 		}
 
-		//当PC创伤或压力高于安全阈值时，NPC高概率喂PC天使粉
+		//当PC创伤或压力高于安全阈值时，NPC高概率喂PC天使粉。如果已经处于药效范围内，跳过
 		if(V.trauma >= V.traumamax * 0.8 || V.stress >= V.stressmax * 0.65 ){
-			if(random(100) > 40 && R.combat.angel < 1){
-				let palams = Items.get('angelpowder').onUse('enemy')
-				html += `${npc.fullDescription}看着你毫无声息的脸，觉得这样很无趣。于是<<He>>拿出一针粉色的针剂，直接打在了你身上。<br>
-				<span class ='pink'>你被注射了一针天使粉。</span>  ${palams}<br>`
+
+			if( iCandy.getStat('angelpowder', 'efTimer') > V.timeStamp || iCandy.getStat('angelpowder_inject', 'efTimer') > V.timeStamp ){
+				continue;
+			}
+
+			if(random(100) < 40 && R.combat.angel < 1){
+				html += combatFeedMsg(npc, 'angelpowder_inject')
 				npc.feed++
 				R.combat.angel++
+				R.combat.total++
 				continue;
 			}
 
 		}
 		//其他情况根据创伤，疼痛，压力计算概率，随机喂PC毒品 
-		if(random(100) <= rate && R.combat.total < 3 ){
+		if(random(100) <= rate && R.combat.total < 3 && drugs.length > 0 ){
 			let [drugId, drug] = drugs.random()
-			let tags = drug.tags
-			let drugeffect = drug.onUse('enemy')
-
-			//如果是注射的，直接打针
-			if (tags.includes('inject')){
-				html += `${npc.fullDescription}拿出一针${drug.name[1]}，直接打在了你身上。<br>
-				<span class ='pink'>你被注射了一针${drug.name[1]}。</span>  ${drugeffect}<br>`
-			}
-			//药片需要看看pc的嘴或肛门是不是空的
-			else{
-				if(V.mouthuse !== 'penis' && V.mouthuse !== 'kiss'){
-					html += `${npc.fullDescription}往你嘴里喂了颗${drug.name[1]}。`
-				}
-				else if(V.anususe !== 'penis' || V.anususe !== 'penisdouble'){
-					html += `${npc.fullDescription}往你肛门塞了颗${drug.name[1]}。`
-				}
-				else if(V.mouthuse == 'kiss' && npc.mouth == 'kiss'){
-					html += `${npc.fullDescription}亲吻你之余，通过嘴对嘴的方式喂了你一颗${drug.name[1]}。`
-				}
-				else{
-					html += `${npc.fullDescription}在你喘气的空档强行喂了你一颗${drug.name[1]}。`
-				}
-
-				html += ' ' + drugeffect +'<br>'
-
-			}
+			
+			html += combatFeedMsg(npc, drugId)
 			
 			npc.feed++
 			R.combat.total++

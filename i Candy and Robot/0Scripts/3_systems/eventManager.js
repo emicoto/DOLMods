@@ -55,6 +55,22 @@ const eventManager = {
         return this.data[event]
     },
 
+    startScene: function(){
+		setTimeout(()=>{
+
+			console.time('restore')
+			for(let i in V){
+				V[i] = clone(window.bak[i])
+			}
+			console.timeEnd('restore')
+
+			delete V.tvar.jump
+			V.tvar.scene.start = true
+			Engine.play(V.tvar.scene.scenestage)
+
+		}, Engine.minDomActionTime + 10 )
+    },
+
     //set event by certain keys
     setEvent: function(type, event, key, branch){
         const eventdata = this.getEvent(event)
@@ -68,6 +84,8 @@ const eventManager = {
         if(type == 'check' && key){
             for(let i = 0; i < eventdata.length; i++){
                 const _data = eventdata[i]
+                if(data.location && data.location.includes(V.location) == false) continue
+
                 if(eventdata[i].episode == key && typeof _data == 'function' && _data.require() ){
                     data = clone(_data)
                     break
@@ -85,6 +103,8 @@ const eventManager = {
         if(!data && !key && !branch){
             for(let i = 0; i < eventdata.length; i++){
                 const _data = eventdata[i]
+                if(data.location && data.location.includes(V.location) == false) continue
+
                 if(typeof _data == 'function' && _data.require()){
                     data = clone(_data)
                     break
@@ -120,6 +140,25 @@ const eventManager = {
             V.tvar.scene.branch += ` ${branch}`
         }
         V.tvar.scene.title += ` ${branch}`
+
+        V.phase = 0
+    },
+
+    jump: function(scene, phase){
+    },
+
+    popBranch: function(phase){
+        const branch = V.tvar.scene.branch.split(' ')
+        branch.pop()
+        V.tvar.scene.branch = branch.join(' ')
+        V.tvar.scene.title = `${V.tvar.scene.type} ${V.tvar.scene.event} ${V.tvar.scene.episode}`
+        if(V.tvar.scene.branch.length > 0 ){
+            V.tvar.scene.title += ` ${V.tvar.scene.branch}`
+        }
+
+        if(Number(phase)){
+            V.phase = Number(phase)
+        }
     },
 
     setScene: function(event, data){
@@ -212,13 +251,7 @@ const eventManager = {
         //do phase
         if(!scene.init){
             scene.init = true
-            //需要跳转的从0开始
-            if(scene.scenestage){
-                V.phase = 0
-            }
-            else{
-                V.phase = 1
-            }
+            V.phase = 1
         }
         else if(scene.phase > 0 && V.phase < scene.phase){
             V.phase ++
@@ -231,29 +264,48 @@ const eventManager = {
 
     },
 
-    initBaseScene: function(){
-        const psg = Story.get(passage())
-        if(psg.tags.includes('scene')){
-            R.scene = psg.title.replace('BaseScene ', '')
+    initBaseScene: function(passage){
+        if(passage.tags.includes('scene')){
+            R.scene = passage.title.replace('BaseScene ', '')
         }
-        console.log('initBaseScene:', R.scene)
+        console.log('initBaseScene:', R?.scene, passage)
+    },
+
+    //if event has been set but didn't run, clear it
+    fixEvent: function(data){
+        //check the event is running in the right scene or not
+        if(!V.tvar.scene.start) return
+
+        const scene = V.tvar.scene
+        const stage = scene.title.split(' ')[1]
+
+        if( data.title.includes(stage) == false && groupmatch(scene.type, 'Scene', 'Event')){
+            console.log('fixEvent:', scene, data)
+            this.unsetEvent()
+        }
+
+        if( scene.type == 'Chara' && scene.location.includes(V.location) == false){
+            console.log('fixEvent:', scene, data)
+            this.unsetEvent()
+        }
+
+ 
     },
 
     //check event when enter a scene
-    eventReady: function(){
-        let title = passage()
+    eventReady: function(data){
+        let title = data.title
+        this.fixEvent(data)
         //already in event
-        if(typeof V.tvar.scene.passage == 'string') return
+        if(V.tvar.scene.start == true) return
         //already in combat
         if(V.combat == 1) return 
-
-        const data = Story.get(title)
-
-        console.log('eventReady:', title, R?.scene)
+        
+        console.log('eventReady:', title, R?.scene, data)
 
         //passout event always in the highest priority
         if( V.stress >= V.stressmax ){
-            console.log('eventReady, check passout event:', title, R?.scene)
+            console.log('eventReady, check passout event:', title, R.scene)
             return this.checkEvent('Passout')
         }
 
@@ -290,13 +342,10 @@ const eventManager = {
     //run the post-process function for passage event
     eventDone: function(){
         let title = passage()
-        let func = this.widget[title]
+        let func = this.widget[title] ?? this.widget[R.scene]
         console.log('eventDone:', title, R.scene, func)
         
-        if(R?.scene && this.widget[R.scene]){
-            this.widget[R.scene]()
-        }
-        else if(typeof func == 'function'){
+        if(typeof func == 'function'){
             func()
         }
 
@@ -337,7 +386,7 @@ const eventManager = {
 
         for(let i = 0; i < eventList.length; i++){
             const data = eventList[i]
-            //console.log('eventdata:', data)
+            //console.log('eventdata:', data)            
             if(typeof data.require == 'function' && data.require()){
                 const _event = clone(data)
                 return this.setScene(event, _event)
@@ -348,6 +397,7 @@ const eventManager = {
 }
 
 DefineMacroS("goBranch", eventManager.goBranch)
+DefineMacroS("popBranch", eventManager.popBranch)
 
 Object.defineProperties(window,{
     iEvent: {

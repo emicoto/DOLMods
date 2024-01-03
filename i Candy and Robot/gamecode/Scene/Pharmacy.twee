@@ -21,7 +21,7 @@
 <<set $outside to 0>><<set $location to 'hospital'>><<effects>>
 <<formatmoney $pharmacyItem.price>>
 
-<<=lanSwitch(`The <<person>> looks at what you're pointing, the price is ${T.printmoney}.`, `<<person>>看向你所指的药说，价格是${T.printmoney}。`)>>
+<<=lanSwitch(`The <<person>> looks at what you're pointing says, the price is ${T.printmoney}.`, `<<person>>看向你所指的药说，价格是${T.printmoney}。`)>>
 
 <<switch $pharmacyItem.id>>
 	<<case 'serotonin'>>

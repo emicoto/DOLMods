@@ -175,6 +175,13 @@ const iCandy = {
 		return R.extraSense[type]
 	},
 
+	senseGet: function(type, src){
+		const sens = R.extraSense[type]
+		if(!sens || !sens.source[src]) return;
+
+		return sens.source[src]
+	},
+
 	// 统计所有来源的buff，减少各来源的计时器，并更新到buffed, add
 	// passtime单位为秒
 	// calculate all buffs, reduce timer, update buffed value
@@ -190,9 +197,9 @@ const iCandy = {
 				continue;
 			}
 
-			// 如果是持续性buff，且数值低于等于0，就删除这个来源
+			// 如果是持续性buff，且数值等于0，就删除这个来源
 			// if fade buff and value is 0, delete this source
-			if (buff.timer <= 0 && buff.fade !== 0 && buff.value <= 0) {
+			if (buff.timer <= 0 && buff.fade !== 0 && buff.value == 0) {
 				delete sense.source[src];
 				continue;
 			}
@@ -210,7 +217,7 @@ const iCandy = {
 			// 药效减退中，数值减少
 			// the buff is fading, then reduce value
 			if (buff.fade !== 0 && buff.timer <= 0) {
-				const multiplier = V.combat == 1 ? 0.1 : Math.max(passtime / 60, 1);
+				const multiplier = V.combat == 1 ? 0.2 : Math.max(passtime / 60, 1);
 				buff.value -= buff.fade * multiplier;
 
 				//确保数值不会高于或低于0
@@ -378,7 +385,36 @@ function iCandyUpdate(){
 		V.iPockets = iUtil.updateObj(iPockets, V.iPockets)
 		V.iStorage = iUtil.updateObj(iStorage, V.iStorage)
 		V.iRecipe = iUtil.updateObj(iRecipe, V.iRecipe)
+
+		let drugsStat = V.iCandyRobot.drugStates.drugs
+		for( const [drug, data] of Object.entries(drugsStat)){
+			const itemdata = Items.get(drug)
+			let validTimer = itemdata.hours * 3600 + V.timeStamp
+
+			if(data.efTimer > validTimer){
+				console.log('drug timer update:', drug, data.efTimer, validTimer)
+				data.efTimer = validTimer
+			}
+
+			if(data.lastTime > V.timeStamp){
+				console.log('drug lasttime update:', drug, data.lastTime, V.timeStamp)
+				data.lastTime = V.timeStamp
+			}
+		}
 	}
 }
 iCandy.modUpdate = iCandyUpdate
 DefineMacroS('iCandyUpdate', iCandyUpdate)
+
+
+function fixDrugEffect(){
+	for(let id in R.drugStates.drugs){
+		const drug = R.drugStates.drugs[id]
+		if(drug.lastTime > 0 && drug.lastTime > V.timeStamp){
+			drug.lastTime = V.timeStamp
+		}
+		drug.efTimer = 0;
+	}
+}
+
+iCandy.fixDrugEffect = fixDrugEffect;

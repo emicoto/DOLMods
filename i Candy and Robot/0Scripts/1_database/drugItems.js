@@ -57,6 +57,7 @@ function onUseDrags(enemy){
 	return html;
 }
 
+
 const iMedicines = [
 	{
 		tags: ["pill", "addiction", ],
@@ -326,14 +327,14 @@ const iDrugs = [
 	effects: [
 		["pain", 20],
 		["aphrod", 1000],
-		["arousal", 1000, "p"],
+		["trauma", 20],
 	],
 
 	threshold: 0,	//安全使用次数，超过这个值会涨overdose
 	maxOD: 4,		//最大过量值，超过这个值会上瘾
 	withdraw: 24+16,//出现戒断反应所需时间，单位是小时
 	quit: 28,		//戒除需求时间，单位是天
-	hours: 2,		//药效持续时间，单位是小时
+	hours: 1,		//药效持续时间，单位是小时
 
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
@@ -373,7 +374,7 @@ const iDrugs = [
 	maxOD: 2, 		//最大过量值，超过这个值会上瘾
 	withdraw: 20,	//出现戒断反应所需时间，单位是小时
 	quit: 32,		//戒除需求时间，单位是天
-	hours: 4,		//药效持续时间，单位是小时
+	hours: 1,		//药效持续时间，单位是小时
 
 	_onUse: onUseDrags,
 	onUse: function(enemy){
@@ -396,14 +397,17 @@ const iDrugs = [
 		min = Math.max(min, 1);
 
 		iUtil.getPalam("hallucinogen", 5*min);
-		iUtil.getPalam("pain", -(10 * min));
-		iUtil.getPalam("stress", -(10 * min));
+
+		let _mult = 1 - Math.max(iCandy.getStat(this.id, 'taken') * 0.1, 0.3);
+
+		iUtil.getPalam("pain", -(10 * min * _mult));
+		iUtil.getPalam("stress", -(20 * min * _mult));
 
 		//第一次显示与持续显示有差分		 
 		let flag = iCandy.getFlag(this.id, 'highonce')
 
 		let html = lanSwitch(drugMsg[this.id]['onHigh'][flag])
-		 + `<<ghallucinogens>><<lpain>><<lstress>>`;
+		 + `<<ghallucinogens>><<lpain>><<llstress>>`;
 
 		if(flag == 0){
 			iCandy.setFlag(this.id, 'highonce', 1)
@@ -438,7 +442,7 @@ const iDrugs = [
 	maxOD: 5,		//最大过量值，超过这个值会上瘾
 	withdraw: 2*24+4, //出现戒断反应所需时间，单位是小时
 	quit: 24,		 //戒除需求时间，单位是天
-	hours: 0.3,		 //药效持续时间，单位是小时
+	hours: 0.4,		 //药效持续时间，单位是小时
 
 
 	onUse: onUseDrags,
@@ -480,15 +484,17 @@ const iDrugs = [
 	maxOD: 4,		//最大过量值，超过这个值会上瘾
 	withdraw: 30, 	//出现戒断反应所需时间，单位是小时
 	quit: 40,		//戒除需求时间，单位是天
-	hours: 2,		//药效持续时间，单位是小时
+	hours: 1.6,		//药效持续时间，单位是小时
 
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
 		min = Math.max(min, 1);
 
-		iUtil.getPalam("pain", -(5 * min));
-		iUtil.getPalam("tiredness", -(10 * min));
-		wikifier("arousal", 300*min, "genital");
+		let _mult = 1 - Math.max(iCandy.getStat(this.id, 'taken') * 0.1, 0.3);
+
+		iUtil.getPalam("pain", -(5 * min * _mult));
+		iUtil.getPalam("tiredness", -(10 * min * _mult));
+		wikifier("arousal", 100 * min * _mult, "genital");
 
 		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<lpain>><<ltiredness>><<ggarousal>>`;
 	},
@@ -522,12 +528,25 @@ const iDrugs = [
 	quit: 40,	  //戒除需求时间，单位是天
 	hours: 1,	  //药效持续时间，单位是小时
 
-	onUse: onUseDrags,
+	_onUse: onUseDrags,
+	onUse: function(enemy){
+		const html = this._onUse(enemy);
+		
+		//随机设置感官
+		let list = ["genital", "bottom", "breast", "mouth"]
+		let type = list.random()
+		iCandy.senseSet(type, this.id, 0.1,  this.hours*60*60 , 0.01);
+
+		return html
+
+	},
 	onHigh: function(min = 1){
 		min = Math.max(min, 1);
 
+		let _mult = 1 - Math.max(iCandy.getStat(this.id, 'taken') * 0.1, 0.3);
+
 		iUtil.getPalam("hallucinogen", 5 * min);
-		wikifier("arousal", 100*min, "genital");
+		wikifier("arousal", 120 * min * _mult, "genital");
 
 		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<ghallucinogens>><<ggarousal>>`;
 	}
@@ -554,14 +573,17 @@ const iDrugs = [
 	maxOD: 5,		//最大过量值，超过这个值会上瘾
 	withdraw: 16, 	//出现戒断反应所需时间，单位是小时
 	quit: 42,	  //戒除需求时间，单位是天
-	hour: 2,	  //药效持续时间，单位是小时
+	hour: 1.5,	  //药效持续时间，单位是小时
 
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
 		min = Math.max(min, 1);
 
+		let _mult = 1 - Math.max(iCandy.getStat(this.id, 'taken') * 0.1, 0.3);
+
 		iUtil.getPalam("hallucinogen", 5 * min);
-		wikifier("arousal", 500*min, "genital");
+
+		wikifier("arousal", 500 * min * _mult, "genital");
 
 		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<ghallucinogens>><<ggarousal>>`;
 	}
@@ -586,14 +608,16 @@ const iDrugs = [
 	maxOD: 5,		//最大过量值，超过这个值会上瘾
 	withdraw: 18, 	//出现戒断反应所需时间，单位是小时
 	quit: 38,	  //戒除需求时间，单位是天
-	hours: 2,	  //药效持续时间，单位是小时
+	hours: 1.2,	  //药效持续时间，单位是小时
 
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
 		min = Math.max(min, 1);
 
-		wikifier("drunk", 20 * min);
-		wikifier("arousal", 100*min, "genital");
+		let _mult = 1 - Math.max(iCandy.getStat(this.id, 'taken') * 0.1, 0.2);
+
+		wikifier("drunk", 20 * min * _mult);
+		wikifier("arousal", 100 * min * _mult, "genital");
 		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<ggdrunk>><<ggarousal>>`;
 	}
 
@@ -631,8 +655,10 @@ const iDrugs = [
 	onHigh:function(min = 1){
 		min = Math.max(min, 1);
 
-		iUtil.getPalam("drunk", 10 * min);
-		wikifier("arousal", 4000, "genital");
+		let _mult = 1 - Math.max(iCandy.getStat(this.id, 'taken') * 0.1, 0.3);
+
+		iUtil.getPalam("drunk", 10 * min * _mult);
+		wikifier("arousal", 800 * _mult, "genital");
 		wikifier("hallucinogen", 5 * min);
 
 		return lanSwitch(drugMsg[this.id]['onHigh'])
@@ -673,11 +699,11 @@ function angelOnUse(enemy){
 function angelOnHigh(min = 1){
 	min = Math.max(min, 1);
 	wikifier("hallucinogen", 5 * min);
-	wikifier("arousal", 4000, "genital");
-	iUtil.getPalam("stress", 30 * min);
+	wikifier("arousal", 2000, "genital");
+	iUtil.getPalam("stress", -(80 * min));
 
 	return lanSwitch( drugMsg[this.id]['onHigh'])
-	 + `<<gggarousal>><<ghallucinogens>><<lstress>>`;
+	 + `<<gggarousal>><<ghallucinogens>><<llstress>>`;
 }
 
 function angelOnWake(){
@@ -730,11 +756,11 @@ const magicDrugs = [
 	
 		id: "angelpowder_inject",
 		alias: "angelpowder",
-		name: ["Angel Injection", "天使针剂"],
-		plural:"Angel Injection",
+		name: ["Seraphic Euphoria", "天使粉"],
+		plural:"Seraphic Euphoria",
 	
 		info: [
-			"The injection of angel powder. Fast-acting psychotropic drugs, takes you fly to heaven",
+			"Fast-acting psychotropic drugs, takes you fly to heaven",
 			"天使粉的针剂版。速效精神药物，带你直上天国。",
 		],
 	
@@ -754,7 +780,7 @@ const magicDrugs = [
 		maxOD: 0,	  //最大过量值，超过这个值会上瘾
 		withdraw: 16, //出现戒断反应所需时间，单位是小时
 		quit: 64,  //戒除需求时间，单位是天
-		hours: 2,   //药效持续时间，单位是小时
+		hours: 3.2,   //药效持续时间，单位是小时
 	
 		_onUse: onUseDrags,
 		onUse: angelOnUse,
@@ -770,12 +796,12 @@ const magicDrugs = [
 		tags: ["addiction", "drugpowder", "immediate"],
 	
 		id: "angelpowder",
-		name: ["Angel Injection", "天使针剂"],
-		plural:"Angel Injection",
+		name: ["Seraphic Euphoria", "天使醉"],
+		plural:"Seraphic Euphoria",
 	
 		info: [
-			"The injection of angel powder. Fast-acting psychotropic drugs, takes you fly to heaven",
-			"天使粉的针剂版。速效精神药物，带你直上天国。",
+			"The powder of Seraphic Euphoria.Fast-acting psychotropic drugs, takes you fly to heaven",
+			"速效精神药物，带你直上天国。",
 		],
 	
 		num: 2,

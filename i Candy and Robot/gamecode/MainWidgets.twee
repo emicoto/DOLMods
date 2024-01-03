@@ -28,9 +28,10 @@
 <<run console.log('check passage in ready:', passage())>>
 <<if passage() isnot 'Start' or passage() isnot 'Start2'>>
 <<run 
-    iEvent.initBaseScene();
-    iEvent.eventReady();
+    //iEvent.initBaseScene();
+    //iEvent.eventReady();
     iChara.XinyuCheck()
+
 >>
 <</if>>
 
@@ -38,12 +39,15 @@
 
 
 <<widget "iCandyDone">>
-<!-- 在PassageDone里的处理  -->
-<<if $tvar.jump and !$event>>
+<!-- 在PassageDone里的处理
+<<if $tvar.jump>>
+    <<run for(let i in V){
+        V[i] = clone(window.bak[i])
+    }>>
     <<set $tvar.jump to false>>
     <<set $tvar.scene.start to true>>
     <<run SugarCube.Engine.play($tvar.scene.scenestage)>>
-<</if>>
+<</if>>  -->
 <<run iEvent.eventDone()>>
 
 <</widget>>
@@ -68,7 +72,8 @@
 <</widget>>
 
 <<widget "iCandyCheats">>
-<!-- 角色面板药物效果  -->
-
+<!-- 作弊  -->
+<<link '一件清空药效'>><<run iCandy.fixDrugEffect()>><</link>>
+<br>
 
 <</widget>>

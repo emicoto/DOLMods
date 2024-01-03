@@ -1,4 +1,4 @@
 <!-- 杂货店 -->
 :: BaseScene SnackShop [scene]
-
+是个小卖部，里面有各种零食和饮料。
 <<link 'Leave' 'BaseScene Chinatown'>><</link>>

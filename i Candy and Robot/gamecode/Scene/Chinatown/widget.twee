@@ -7,7 +7,6 @@
     <</link>>
     <br>
 <</if>>
-<br>
 
 <<localIcon 'warehouse'>>
 <<set _link to lanSwitch('Warehouse Area', '仓库区') + ' (00:03)'>>

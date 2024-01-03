@@ -1,5 +1,7 @@
 sugarcube-2:
   macros:
+    linkEventEnd:
+      name: linkEventEnd
     pcpn:
       name: pcpn
     goBranchEnd:

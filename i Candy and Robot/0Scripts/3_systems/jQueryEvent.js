@@ -9,8 +9,14 @@ $(document).one(':storyready',()=>{
 	}, 100)
 })
 
+window.bak = {}
 
-$(document).on(':passageinit', ()=>{
+$(document).on(':passageinit', ( data )=>{
+//------------------------------------------------------------
+//
+// 数据初始化
+//
+//------------------------------------------------------------
 	if(!V.addMsg){
 		V.addMsg = ''
 	}
@@ -30,8 +36,29 @@ $(document).on(':passageinit', ()=>{
 	else if(V.combat == 0){
 		R.combat = {}
 	}
-	console.log('check passage in init:', passage())
+	if( passage() == 'Start' ) return
+//------------------------------------------------------------
+//
+// 事件系统的运作
+//
+//------------------------------------------------------------
+	const psg = data.passage
+
+	console.log('check passage in init:', passage(), psg.title)
 	V.tvar.lastPassage = passage()
+	
+    iEvent.initBaseScene(psg);
+    iEvent.eventReady(psg);
+
+	if(V.tvar.jump){
+		console.time('bakup')
+		for(let i in V){
+			window.bak[i] = clone(V[i])
+		}
+		console.timeEnd('bakup')		
+		iEvent.startScene()
+	}
+
 })
 
 
