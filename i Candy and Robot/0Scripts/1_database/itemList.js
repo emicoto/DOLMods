@@ -1,6 +1,6 @@
 const iFoods = [
 {
-	tags: ["candy", "food"],
+	tags: ["pieces", "food", "candy"],
 
 	id: "fruitscandy",
 	name: ["Fruits Candy", "水果糖"],
@@ -11,13 +11,13 @@ const iFoods = [
 	"酸酸甜甜的，提供些许幸福感",
 	],
 
-	price: 1800,
+	price: 1240,
 	num: 12,
 	size: "tiny",
 
 	effects: [
-		["trauma", 5],
-		["hunger", 10],
+		["trauma", 2],
+		["hunger", 50],
 	],
 
 	msg: itemMsg.fruitscandy,
@@ -25,7 +25,7 @@ const iFoods = [
 },
 
 {
-	tags: ["candy", "food"],
+	tags: ["pieces", "food", "candy"],
 
 	id: "chocolate",
 	name: ["Chocolate", "巧克力"],
@@ -36,72 +36,72 @@ const iFoods = [
 	"甜甜的巧克力，能缓解些许压力",
 	],
 
-	price: 1600,
+	price: 1640,
 	num: 4,
 	size: "small",
 
 	effects: [
-		["trauma", 5],
-		["hunger", 10],
+		["trauma", 2],
+		["hunger", 80],
 	],
 
 	msg: itemMsg.chocolate,
 	
 },
-
 {
-	tags: ["drink", "bottle"],
-
-	id: "ramune",
-	name: ["Ramune", "波子水"],
-	plural: "Ramunes",
-
-	info: [
-	"Cool ramune, recover a bit of stamina",
-	"清爽的波子水，能补充点体力",
-	],
-
-	price: 500,
-	num: 1,
-	size: 3,
-
-	effects: [
-		["tiredness", 64]
-	],
-	
-	msg: itemMsg.ramune,
-},
-
-{
-	tags: ["snack", "food"],
+	tags: ["packed", "food", "snack"],
 
 	id: "potachips",
-	name: ["Potato Chip", "薯片"],
+	name: ["Potato Chips", "薯片"],
 	plural: "Potato Chips",
 
 	info: [
-	"Pack of crunchy chips for some hungry",
+	"Bag of crunchy chips for some hungry",
 	"一包脆脆的薯片，补充些许体力。",
 	],
 
 	size: "big",
-	price: 540,
+	price: 380,
 	num: 1,
 
 	effects: [
-		["tiredness", 40],
-		["hunger", 100],
+		["tiredness", 12],
+		["hunger", 120],
+		["thirsty", 200, 'p']
 	],
 
 	msg: itemMsg.potachips,
 },
 
 {
-	tags: ["candy", "food"],
+	tags: ["packed", "food", "snack"],
+
+	id: "orionring",
+	name: ["Orion Rings", "洋葱圈"],
+	plural: "Orion Rings",
+
+	info: [
+	"Bag of crunchy orion rings for some hungry",
+	"一包松脆的洋葱圈，补充些许体力。",
+	],
+
+	size: "big",
+	price: 380,
+	num: 1,
+
+	effects: [
+		["tiredness", 12],
+		["hunger", 120],
+		["thirsty", 120, 'p']
+	],
+
+},
+{
+	tags: ["pieces", "food", "candy"],
 
 	id: "lolipop",
 	name: ["Lolipop", "波板糖"],
-	plural: ["Lolipops"],
+	plural: "Lolipops",
 
 	info: [
 	"Sweet, big lolipop, give you a bit of happiness",
@@ -109,18 +109,104 @@ const iFoods = [
 	],
 
 	num: 1,
-	price: 400,
+	price: 360,
 	size: "medium",
 
 	effects: [
-		["trauma", 16],
-		["hunger", 16],
-		["stress", 1],
+		["trauma", 4],
+		["hunger", 40],
+		["stress", 3],
 	],
 
 	msg : itemMsg.lolipop,
 },
+{
+	tags: ["packed", "food", "snack"],
 
+	id: "oreo",
+	name: ["Oreo", "奥利奥"],
+	plural: "Oreos",
+
+	info: [
+	"Black and white oreo, sweet and crunchy.",
+	"黑白相间的奥利奥，甜甜脆脆的。",
+	],
+
+	num: 1,
+	price: 520,
+	size: "medium",
+
+	effects: [
+		["tiredness", 20],
+		["hunger", 200],
+		["stress", 2],
+	],
+},
+{
+	tags: ["boxed", "food", "snack"],
+
+	id: "pocky",
+	name: ["Pocky", "百奇"],
+	plural: "Pack of Pocky",
+
+	info: [
+	"Long and thin pocky, too many flavors to choose.",
+	"细细长长的百奇，有太多口味可供选择了。",
+	],
+
+	num: 1,
+	price: 600,
+	size: "medium",
+
+	effects: [
+		["tiredness", 10],
+		["hunger", 80]
+	],
+},
+{
+	tags: ["canned", "food", "snack"],
+
+	id: "fruitscrisp",
+	name: ["Fruits Crisp", "干果"],
+	plural: "Pack of Fruits Crisp",
+
+	info: [
+		"Healthy and nutritious fruits crisp, sweet and salty.",
+		"健康又营养的干果，吃起来咸咸甜甜的。",
+	],
+
+	num: 1,
+	price: 1072,
+	size: "medium",
+
+	effects: [
+		["tiredness", 30],
+		["hunger", 60],
+		["thirsty", 50, 'p']
+	],
+},
+{
+	tags: ["packed", "food", "snack"],
+
+	id: "jellos",
+	name: ["Jellos", "果冻"],
+	plural: "Pack of Jellos",
+
+	info: [
+		"Smoothy and juicy Jellos, too many flavors to choose.",
+		"滑溜又多汁的果冻，有太多口味可供选择了。",
+	],
+
+	num: 6,
+	price: 1640,
+	size: 6,
+
+	effects: [
+		["stress", 1],
+		["hunger", 50],
+		["thirsty", 20]
+	],
+},
 {
 	tags: ["food", "prepared"],	
 
@@ -129,7 +215,7 @@ const iFoods = [
 	plural:"Sandwiches",
 
 	num: 1,
-	price: 1000,
+	price: 650,
 	size: "big",
 
 	info: [
@@ -139,19 +225,19 @@ const iFoods = [
 
 	effects: [
 		["tiredness", 40],
-		["hunger", 120],
+		["hunger", 800],
 	],
 },
 
 {
-	tags: ["candy", "food"],
+	tags: ["pieces", "food", "stall"],
 
 	id: "candyfloss",
 	name: ["Candyfloss", "棉花糖"],
 	plural:"Candyflosses",
 
 	num: 1,
-	price: 640,
+	price: 340,
 	size: "big",
 
 	info: [
@@ -163,7 +249,7 @@ const iFoods = [
 		["tiredness", 20],
 		["trauma", 5],
 		["stress", 3],
-		["hunger", 12],
+		["hunger", 30],
 	],
 
 	msg : itemMsg.candyfloss,
@@ -173,43 +259,68 @@ const iFoods = [
 	tags: ["food", "prepared"],
 
 	id: "lunchbox",
-	name: ["Lunch Box", "盒饭"],
-	plural:"Lunch Boxes",
+	name: ["Simple Combo", "简易套餐"],
+	plural:"Boxes of Simple Combo",
 
 	num: 1,
 	price: 1680,
 	size: "big",
 
 	info: [
-	"Ordinary boxed lunch with vegetables and meat for nutritional balance",
-	"普通的盒饭，有菜有肉营养均衡",
+	"Ordinary boxed lunch combo with vegetables and meat for nutritional balance",
+	"普通的套餐餐盒，有菜有肉营养均衡",
 	],
 	effects: [
-		["hunger", 300],
+		["hunger", 1200],
 		["tiredness", 80],
 	],
 },
 
 {
-	tags: ["canned", "drink"],
+	tags: ["boxed", "food", "cookie"],
+	id: "danishcookies",
+	name: ["Danish Cookies", "丹麦曲奇"],
+	plural:"Boxes of Danish Cookies",
 
-	id: "cola",
-	name: ["Can of Cola", "可乐"],
-	plural:"Cans of Cola",
+	num: 24,
+	price: 2464,
+	size: 24,
 
-	num: 1,
-	price: 200,
-	size: "medium",
-
-	info: ["A regular canned cola", "一罐普通的罐装可乐"],
-	effects: [
-		["stress", 2]
+	info: [
+		"Delicious Danish cookies, various styles, crispy and delicious.",
+		"美味的丹麦曲奇，款式多样，松脆可口。",
 	],
 
-	msg: itemMsg.cola,
+	effects: [
+		["stress", 1],
+		["hunger", 20],
+		["thirsty", 10, 'p']
+	],
+
 },
 {
-	tags: ["food", "bread"],
+	tags: ["boxed", "food" ,"candy"],
+	id:"ferrero",
+	name:["Ferrero", "费列罗巧克力"],
+	plural:"Boxes of Ferrero",
+
+	num: 12,
+	price: 3280,
+	size: 36,
+
+	info: [
+		"Delicious Ferrero chocolate, sweet and crunchy outside, rich hazelnut chocolate inside",
+		"美味的费列罗巧克力，甜甜脆脆的外壳内是浓郁的榛果巧克力",
+	],
+
+	effects: [
+		["stress", 1],
+		["trauma", 2],
+		["hunger", 10]
+	],
+},
+{
+	tags: ["food", "bread", "packed"],
 	id:"sandwitchbread",
 	name:["Sandwitch Bread", "三文治面包"],
 	plural:"Sandwitch Breads",
@@ -224,12 +335,233 @@ const iFoods = [
 	],
 
 	effects:[
-		["hunger", 100]
+		["hunger", 360]
 	]
-}
+},
+{
+    tags:["seasonal", "spring", "food", "mealbox"],
+
+    id:"SpringBoxedMeal",
+    name:["Spring boxed meal", "春季便当"],
+    plural:"Spring boxed meal",
+
+    info: [
+    "Filled with the deliciousness of spring, it includes Mentaiko Chirashi-Sushi, fried shrimp, and potato mash salad served with tomatoes.",
+    "满含春天的美味，内含了明太子散寿司、炸虾和马铃薯泥生菜沙拉佐番茄。",
+    ],
+
+    price: 4820,
+    num: 1,
+    effects: [
+    ["hunger" , 1200],
+    ],
+
+    msg:itemMsg.SpringBoxedMeal
+},
+{
+    tags:["seasonal", "autumn", "food", "mealbox"],
+
+    id:"CreamChestnutCake",
+    name:["Cream Chestnut Cake", "秋季便当"],
+    plural:"Cream Chestnut Cake",
+
+    info: [
+    "Inside the luxurious lacquer box are a variety of autumn specialties, including rice soaked in eel sauce, tender grilled eel, sliced matsutake mushrooms, and fresh salmon arranged like vibrant flowers. Enjoy to your heart''s content!",
+    "豪华的漆器盒子里面装载著满满的秋日特产，吸饱了蒲烧酱汁的米饭、肥嫩的蒲烧鳗、切成片的松茸，还有摆放成鲜豔花朵的当季新鲜鲑鱼，请尽情享用 ！",
+    ],
+
+    price: 4820,
+    num: 1,
+    effects: [
+    	["hunger" , 1200],
+    ],
+
+    msg:itemMsg.AutumnBoxedMeal
+},
+
+{
+    tags:["seasonal", "autumn", "food", "cake", "pieces"],
+
+    id:"ChestnutEarlGreyCake",
+    name:["Chestnut Earl Grey Cake", "栗香伯爵茶戚风蛋糕"],
+    plural:"Chestnut Earl Grey Cake",
+
+    info: [
+    "Added a generous amount of chestnut filling on top of the Earl Grey tea chiffon cake, with finely chopped chocolate surrounding the Earl Grey cream. It smells of Earl Grey tea with a hint of fruity and chestnut sweetness.",
+    "在伯爵茶戚风蛋糕的基底上加入了满满的栗子馅，细碎的巧克力围绕著红茶奶油、闻起来充满了伯爵红茶带著些微果香的芬芳与栗子馨香甜美。，"
+    ],
+
+    price: 12400,
+    num: 4,
+    effects: [
+    	["hunger" , 420],
+    ],
+
+    msg:itemMsg.ChestnutEarlGreyCake
+},
 ];
 
 Items.addItems(iFoods, 'foods')
+
+const iDrinks = [
+	{
+		tags: ["bottle", "soda"],
+	
+		id: "ramune",
+		name: ["Ramune", "波子水"],
+		plural: "Ramunes",
+	
+		info: [
+			"Cool ramune, recover a bit of stamina",
+			"清爽的波子水，能补充点体力",
+		],
+	
+		price: 520,
+		num: 1,
+		size: 3,
+	
+		effects: [
+			["tiredness", 64],
+			["thirsty", 600]
+		],
+		
+		msg: itemMsg.ramune,
+	},
+
+	{
+		tags: ["canned","soda"],
+	
+		id: "cola",
+		name: ["Can of Cola", "可乐"],
+		plural:"Cans of Cola",
+	
+		num: 1,
+		price: 200,
+		size: 4,
+	
+		info: ["A regular canned cola", "一罐普通的罐装可乐"],
+		effects: [
+			["stress", 2],
+			["thirsty", 500]
+		],
+	
+		msg: itemMsg.cola,
+	},
+	
+	{
+		tags: ["bottle", "soda"],
+	
+		id: "cola_bottle",
+		name: ["Bottle of Cola", "可乐"],
+		plural:"Bottles of Cola",
+	
+		num: 1,
+		price: 400,
+	
+		info: ["A regular bottle cola", "一瓶普通的瓶装可乐"],
+		effects: [
+			["stress", 2],
+			["thirsty", 1000]
+		],
+	
+		msg: itemMsg.cola,
+	},
+	
+	{
+		tags: ["bottle", "coffee"],
+	
+		id: "frappuccino",
+		name: ["Frappuccino", "星冰乐咖啡"],
+		plural:"Bottles of Frappuccino",
+	
+		num: 1,
+		price: 800,
+	
+		info: ["A regular glass bottle Frappuccino", "一瓶星冰乐咖啡"],
+		effects: [
+			["stress", 3],
+			["thirsty", 800]
+		],
+	},
+	{
+		tags: ["canned", "coffee"],
+	
+		id: "coffe",
+		name: ["Can of Coffe", "罐装咖啡"],
+		plural:"Cans of coffe",
+	
+		num: 1,
+		price: 640,
+	
+		info: ["A regular canned coffe", "一罐普通的咖啡"],
+		effects: [
+			["stress", 1],
+			["thirsty", 500]
+		],
+	},
+	
+	{
+		tags: ["canned", "energy"],
+	
+		id: "redbull",
+		name: ["Red Bull", "红牛"],
+		plural:"Cans of Red Bull",
+	
+		num: 1,
+		price: 800,
+	
+		info: [
+			'Energy drink, "Red Bull gives you wings"',
+			"能量饮料，红牛能让你飞起来",
+		],
+		effects: [
+			["tiredness", 50],
+			["thirsty", 500]
+		],
+	},
+	{
+		tags: ["canned", "soda"],
+	
+		id: "fruitsoda",
+		name: ["Fruit Soda", "水果苏打"],
+		plural:"Cans of Fruit Soda",
+	
+		num: 1,
+		price: 520,
+	
+		info: [
+			"Fresh and sparkling fruits soda, too many flavors to choose.",
+			"清新爽口、美味可口的水果苏打，有太多口味可供选择了",
+		],
+		effects: [
+			["tiredness", 5],
+			["stress", 1],
+			["thirsty", 500]
+		],
+	},
+	{
+		tags: ["bottle", "tea"],
+	
+		id: "milktea",
+		name: ["Milk Tea", "午后奶茶"],
+		plural:"Bottles of Milk Tea",
+	
+		num: 1,
+		price: 849,
+	
+		info: [
+			"Sweety and smooth, fragrant milk tea, makes your afternoon full of happiness",
+			"甜丝丝，滑溜溜，香醇的奶茶，让你的午后充满幸福感",
+		],
+		effects: [
+			["stress", 2],
+			["thirsty", 600]
+		],
+	},
+]
+
+Items.addItems(iFoods, 'drinks')
+
 
 const ingredients = [
 	{
@@ -248,7 +580,7 @@ const ingredients = [
 		],
 	},
 	{
-		tags: ["chemical", "craft"],
+		tags: ["chemical", "craft", "paper"],
 		id:"candypackage",
 		name:["Candy Package", "糖果包装"],
 		plural:"Candy Packages",
@@ -318,17 +650,75 @@ const ingredients = [
 		plural:"Sugar",
 
 		num: 50,
-		price: 1000,
+		price: 1200,
 		size: 50,
 
 		info:[
 			"sugar",
 			"糖"
 		]
+	},
+	{
+		tags:["lite", "flavor", "cooking"],
+		id:"salt",
+		name:["Salt", "盐"],
+		plural:"Salt",
+
+		num: 50,
+		price: 1000,
+		size: 50,
+
+		info:[
+			"salt",
+			"盐"
+		]
+	},
+	{
+		tags:["liquid", "flavor", "cooking"],
+		id:"soysauce",
+		name:["Soy Sauce", "酱油"],
+		plural:"Soy Sauce",
+
+		num: 180,
+		price: 360,
+		size: 180,
+
+		info:[
+			"soy sauce",
+			"酱油"
+		]
 	}
 ]
 Items.addItems(ingredients)
 
+const dailyConsumables = [
+	{
+		tags: ['daily', 'roll'],
+		id: 'papertowel',
+		name: ['Roll of Paper Towel', '纸巾'],
+		plural: 'Rolls of Paper towel',
+
+		num: 1,
+		price: 100,
+		size: 'medium',
+
+		info: [
+			'A roll of paper towel',
+			'一卷纸巾'
+		],
+
+		onUse: function(){
+			//清理身上所有液体
+			for(let i in V.player.bodyliquid){
+				const liquid = V.player.bodyliquid[i]
+				liquid.goo = 0;
+				liquid.seme = 0;
+				liquid.nectar = 0;
+			}
+
+		}
+	}
+]
 
 const Gacha = [
 	{
@@ -967,8 +1357,8 @@ const iAddictive = [
 	stacksprites:[10, 25, 50, 75, 100]
 },
 {
-	type:"foods",
-	tags: ["canned", "addiction","drink","alcohol",],	 
+	type:"drinks",
+	tags: ["canned", "alcohol",],	 
 
 	id: "beer",
 	name: ["Can of Beer", "啤酒"],
@@ -989,8 +1379,8 @@ const iAddictive = [
 	],
 },
 {
-	type:"foods",
-	tags: ["canned", "addiction","drink","alcohol", ],
+	type:"drinks",
+	tags: ["canned", "alcohol", ],
 
 	id: "blackbeer",
 	name: ["Can of Black Beer", "黑啤酒"],
@@ -1007,6 +1397,77 @@ const iAddictive = [
 		["stress", 10],
 		["fatigue", 60],
 	],
+},
+
+{
+	type:"drinks",
+    tags:["seasonal", "spring", "alcohol"],
+
+    id:"SakuraWineWithBox",
+    name:["Sakura wine", "盒装樱花酒"],
+    plural:"Sakura Wine",
+
+    info: [
+    "In a glass bottle is a trans pink liquor brewed with green apple and cherry blossom as its base,  with a whole cherry blossom and gold leaf inside ! It looks very dreamy.",
+    "透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔！看上去非常梦幻。",
+    ],
+
+    price: 12860,
+    num: 1,
+    effects: [
+		["alcohol", 80, "p"],
+		["stress", 6],
+		["fatigue", 40],
+    ],
+
+    msg:itemMsg.SakuraWineWithBox
+},
+
+{
+	type:"drinks",
+    tags:["seasonal", "spring", "alcohol"],
+
+    id:"BulkSakuraWine",
+    name:["bulkSakuraWine", "散装樱花酒"],
+    plural:"bulkSakuraWine",
+
+    info: [
+    "In a glass bottle is a trans pink liquor brewed with green apple and cherry blossom as its base,  with a whole cherry blossom and gold leaf inside ! It looks very dreamy.　But selling it so cheap... seems suspicious.",
+    "透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔！看上去非常梦幻。但是卖得这么便宜…有些可疑",
+    ],
+
+    price: 9670,
+    num: 1,
+    effects: [
+		["alcohol", 80, "p"],
+		["stress", 4],
+		["fatigue", 20],
+    ],
+
+    msg:itemMsg.BulkSakuraWine
+},
+{
+	type:"drinks",
+    tags:["seasonal", "autumn", "alcohol"],
+
+    id:"OsmanthusWine",
+    name:["Osmanthus wine", "桂花酒"],
+    plural:"Osmanthus wine",
+
+    info: [
+    "The liquor presents a bright amber hue, and the bottle neck is adorned with a delicate circle of pale golden osmanthus. Though unopened, it seems to emit the fragrant scent of osmanthus. Upon shaking the bottle, osmanthus blooms abundantly and cascades gracefully.",
+    "酒液呈明亮的琥珀色，瓶口装饰着一圈淡淡的金黄色桂花。虽未开瓶，却仿佛散发着芬芳的桂花香。晃动瓶身，桂花纷繁而落。",
+    ],
+
+    price: 8920,
+    num: 1,
+    effects: [
+		["alcohol", 100, "p"],
+		["stress", 3],
+		["fatigue", 80],
+    ],
+
+    msg:itemMsg.OsmanthusWine
 },
 ];
 

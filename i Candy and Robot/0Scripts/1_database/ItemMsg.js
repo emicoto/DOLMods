@@ -115,7 +115,107 @@ const itemMsg = {
 		`你轻轻一提，噗的一声，拉环应声而开。<br>
 		黑色的液体急切地涌动着，就像你现在想要喝掉它的心情。<br><br>
 		你啜饮了一口，感受可乐在你的口腔里跳动。没有让这种感觉停留太久，你让它滑进胃里，冰凉的舒心感从胃部传到全身，你的精神为之一振。<br>`
-	]
+	],
+
+	SpringBoxedMeal: [
+
+        `You first put the chirashi-sushi into your mouth, the rice dyed a tender pink color by mentaiko brings a slight spiciness, then come the flavorful eggy taste of kinshi Tamago. <br>
+        Afterwards, you chewed on the dense, delicate tuna puree, combined with seaweed to create a fresh seafood flavor. <br>
+        Then bite into a crispy deep-fried shrimp and The succulent and firm shrimp meat and crispy batter fill the entire mouth. <br>
+        Finally, put the mashed potatoes salad in your mouth and the freshness of spring vegetables removes all the fishy smell and greasiness. <br>
+        Unconsciously, you have finished the entire meal box. You feel very satisfied.`,
+
+        `你先将散寿司放入口中、被明太子染成嫩粉色的饭入口先带来微微地辣，然后是充满蛋香的蛋丝， <br>
+        之后咀嚼到了绵密细腻的鲔鱼肉泥，和海苔组合成了清新的海味。 <br>
+        再咬一口炸虾、咔滋一声，鲜甜紧实的虾肉和酥脆的面衣充盈著整个口腔。 <br>
+        最后再将马铃薯泥沙拉放入口中，春天野菜的清新扫去所有腥味与油腻。 <br>
+        不知不觉间，你已经将整份餐盒吃完。你感到十分满足。`
+
+    ],
+
+	SakuraWineWithBox: [
+        `After you open the box, take out bottle of wine. <br>
+        You shake the bottle and admire the blooming cherry blossom from different angles, and then open the bottle cap.<br>
+        The sour-sweet fragrance of green apples and the faint aroma of cherry blossoms suddenly wafted out, you took a sip.<br>
+        The alcohol content of the liquor is not high, but it effortlessly slides down the throat, <br>
+        leaving a refreshing and sweet taste as well as the aroma of cherry blossoms on the lips and teeth. <br>
+        With such fine wine accompanying, it doesn''t matter whether there is a view to enjoy. <br>
+        You have found solace in this terrible world. `,
+
+        `你打开盒子后、将瓶子拿了出来。 <br>
+        你摇晃著瓶子，换角度欣赏了一会瓶子内盛开的樱花，之后打开瓶盖。 <br>
+        青苹果的酸甜清香和微微樱花的芬芳顿时飘了出来、你饮上一口， <br>
+        酒精含量并不高的酒液轻松地滑入喉咙，清甜爽口的味道和樱花的香味却还在唇齿间。 <br>
+        有这样的美酒相伴，好像有没有景色可赏都无所谓了。 <br>
+        你感受到了在这糟糕世界里的小小幸福。`
+
+    ],
+
+	BulkSakuraWine: [        
+        `After you open the box, take out bottle of wine. <br>
+        You shake the bottle and admire the blooming cherry blossom from different angles, and then open the bottle cap.<br>
+        The sour-sweet fragrance of green apples and the faint aroma of cherry blossoms suddenly wafted out, you took a sip.<br>
+        The alcohol content of the liquor is not high, but it effortlessly slides down the throat, <br>
+        leaving a refreshing and sweet taste as well as the aroma of cherry blossoms on the lips and teeth. <br>
+        Suddenly a surge of warmth rushes from your lower abdomen, making you instantly feel light-headed. <br>
+        Your legs turn as soft as noodles, while your head feels as heavy as a stone. <br>
+        All the scenery appears to be swirling and shimmering with dazzling colors. <br>
+        What seems off to you doesn''t really matter, this wine is so good...`,
+
+
+        `你摇晃著瓶子，换角度欣赏了一会瓶子内盛开的樱花，之后打开瓶盖。 <br>
+        青苹果的酸甜清香和微微樱花的芬芳顿时飘了出来、你饮上一口， <br>
+        酒精含量并不高的酒液轻松地滑入喉咙，清甜爽口的味道和樱花的香味却还在唇齿间。 <br> 
+        一股热流从你的下腹上窜、你瞬间感到轻飘飘地，腿好像成了软成了面条、头却重的像石头。 <br> 
+        眯著眼看去所有的景物都在扭动、满是绚丽的光彩。 <br> 
+        你感到有什么事好像不太对劲，但是有什么关系呢？这酒可真好喝…`
+    ],
+
+	ChestnutEarlGreyCake: [
+        `You hold this small, dainty cake in your hand, the light brown and white pastry doesn''t look desolate in autumn, but rather warm and appealing. <br>
+        Put it in your mouth, the crisp meringue melts instantly, leaving only a light and refreshing crispness. <br>
+        Rum-infused grapes burst with a slightly intoxicating aroma and then meet a rich nutty flavor and intense caramel sweetness of chestnut puree in the mouth. <br>
+        The final cream balances the intense impact, combining smooth milk fragrance with alcohol and sweet chestnut, creating a unique and perfect whole. <br>
+        You licking off the powdered sugar on your hand, You ponder whether to get another serving.`,
+
+        `你将这个小巧的蛋糕拿在手里，浅棕色和白色的糕点看上去没有秋日的萧索、倒是显得温馨可人。 <br>
+        将它送入口中，酥脆的蛋白霜入口即化、只留下清盈和爽脆的口感， <br>
+        朗姆酒酿葡萄爆发出微醺的芬芳美味、和随后带著浓浓坚果香和强烈的焦糖滋味的香甜栗子泥在口中邂逅， <br>
+        最后的生奶油平衡了过于浓烈的冲击、嫩滑的奶香融合了酒香和甜蜜的栗子、成为一个独特完美的整体。 <br>
+        你舔掉手上的糖粉，思索著要不要再来一份？`
+
+	],
+
+	AutumnBoxedMeal: [        
+        `You first put the rice full of  unagi sauce flavor into your mouth, and the unique sauce aroma immediately fills your mouth. <br>
+        In combination with a juicy and tender grilled eel, the deliciousness of the eel and the sweetness of the sauce blend seamlessly, dancing on your taste buds. <br>
+        Taking another bite, the captivating aroma of matsutake and the exquisite taste of matsutake surprisingly resembled tender and juicy red meat, adding more layers of flavor to this meal. <br>
+        Finally, put the salmon that has been rolled into a beautiful flower into your mouth, and the tender fat and delicious salmon meat melt away, leaving only a sweet and rich flavor. <br>
+        After finishing this delicious food, it makes you feel the gift from autumn, every bite full of the bounty of nature and human ingenuity.`,
+
+        `你先将饱含蒲烧酱汁的米饭送入口中，那股独特的酱香顿时瀰漫在口中、 <br>
+        配合一口肥嫩的蒲烧鳗，鳗鱼的鲜美和甘美的酱汁配合的天衣无缝、在你的唇齿间共舞。 <br>
+        再尝一口散发著迷人香气的松茸、鲜美的菇类竟犹如红肉般醇厚多汁且充满了咬劲，为这份餐点添增了更多的层次感。 <br>
+        最后再将卷成美丽花朵的鲑鱼放入口中，滑嫩的脂肪和鲜美的鲑鱼肉在口中化开、只余下鲜甜浓郁的滋味。 <br>
+        在吃完这份美食，让你感受到了来自秋天的餽赠、每一口都充满了大自然的恩赐和人类的巧思。 `
+
+    ],
+
+	OsmanthusWine: [
+        `You shake the bottle, and before your eyes appears a farmhouse courtyard surrounded by earthen walls and wooden fences.<br>
+        In the center of the courtyard stands a osmanthus tree towering as high as a two-story building, a companion throughout your growth.<br>
+        Osmanthus blossoms profusely, their rich and somewhat overpowering fragrance continuously drifting into your nostrils as you take a sip. The lush floral aroma perfectly blends into the fragrance of the wine, diffusing in your mouth.<br>
+        You reminisce about times filled with the chirping sounds of friends engaged in idle chatter.<br>
+        Sweet memories flood in from somewhere unknown.`,
+
+        `你摇晃着瓶子，眼前出现了土墙和木篱笆围成的农家小院。<br>
+        院子中央，是一棵足有两层楼高的桂花树，它伴你长大。<br>
+        桂花纷繁盛开，浓郁到有些呛人的香气不停往鼻孔里钻，你灌下一口。<br>
+        馥郁的花香完美地融入到酒香中，在口中晕开。<br>
+        你回忆起身边充满叽叽喳喳声，朋友们无事闲谈的时光。<br>
+        不知道是来自哪里的幸福记忆。`
+
+    ],
 }
 
 

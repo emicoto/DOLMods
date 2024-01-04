@@ -78,6 +78,7 @@ class Items {
 		if (prop) return data[prop]
 		else return data
 	}
+
 	/**
 	 * 根据类别筛选物品
 	 * search items by type
@@ -86,7 +87,7 @@ class Items {
 	 */
 	static searchType(type) {
 		const database = Object.entries(this.data)
-		return database.filter(([key, item]) => item.type == type)
+		return database.filter(([key, item]) => item.type == type).map( item => item[1] )
 	}
 
 	/**
@@ -97,7 +98,7 @@ class Items {
 	 */
 	static searchTag(...tag) {
 		const database = Object.entries(this.data)
-		return database.filter(([key, item]) => item.tags.containsAll(...tag))
+		return database.filter(([key, item]) => item.tags.containsAll(...tag)).map( item => item[1] )
 	}
 
 	/**
@@ -111,10 +112,10 @@ class Items {
 	static search(type, andor, ...tags) {
 		const database = Object.entries(this.data)
 		if(andor == 'and'){
-			return database.filter(([key, item]) => item.type == type && item.tags.containsAll(...tags))
+			return database.filter(([key, item]) => item.type == type && item.tags.containsAll(...tags)).map( item => item[1] )
 		}
 		else{
-			return database.filter(([key, item]) => item.type == type && item.tags.containsAny(...tags))
+			return database.filter(([key, item]) => item.type == type && item.tags.containsAny(...tags)).map( item => item[1] )
 		}
 	}
 
@@ -366,12 +367,12 @@ class iRecipe {
 	 */
 	static addRecipes(recipes) {
 		recipes.forEach((data) => {
-			const { id, time, recipe } = data
+			const { id, time, ingredients } = data
 			if (this.data[id] !== undefined) {
 				throw new Error('recipe already exist:', id)
 			}
 
-			const _data = new iRecipe(id, time, ...recipe)
+			const _data = new iRecipe(id, time, ...ingredients)
 
 			for (let i in data) {
 				_data = data[i];
@@ -455,16 +456,25 @@ class iRecipe {
 		this.production = id;
 		this.givenum = 1;
 		this.time = time;
-		this.recipe = args;
+		this.ingredients = args;
 		this.methods = ['craft'];
 
 		/*
+		this.batchtime = time
+		this.batchnum = 10
+
 		this.difficult = 100
 		this.skill = 'craft'
 		this.lock = true/false
 		this.requirement = ()=>{return V.iRecipe[id] !== undefined }
+
 		this.failproduction = itemId
 		this.failnum = 1
+
+		this.subproduce = itemId
+		this.subnum = 1
+		this.subchance = 0.5
+
 		this.onSucces = callback
 		this.onFail = callback
 		this.customtext = {
@@ -568,8 +578,8 @@ function pocketItem(itemId, num, diff){
 	}
 }
 
-function generalUseItemMsg(tags, names){
-	let methods = useMethods(tags)
+function generalUseItemMsg(type, tags, names){
+	let methods = useMethods(type, tags)
 	let html = lanSwitch(
 		`You ${methods[0]} the ${names[0].toLocaleLowerCase()}.`, 
 		`你${methods[1]}了${names[1]}。`
@@ -587,7 +597,7 @@ function useItems(pocket, pos, enemy){
 	}
 	let params = ''
 
-	let msg = generalUseItemMsg(data.tags, data.name)
+	let msg = generalUseItemMsg(data.type, data.tags, data.name)
 
 	if(itemMsg[data.id]){
 		msg = lanSwitch(itemMsg[data.id])

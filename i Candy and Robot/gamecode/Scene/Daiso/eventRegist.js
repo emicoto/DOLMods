@@ -10,8 +10,9 @@ iEvent.registEvent('DaisoShop',
     {
         episode: 'Lock',
         type: 'Scene',
-
-        nextcode: '',
+        evebtnext: true,
+        
+        nextcode: '<<=iEvent.unsetEvent()>>',
         initcode: '',
         require: ()=>{ return !between(Time.hour, 8, 19) }
     },

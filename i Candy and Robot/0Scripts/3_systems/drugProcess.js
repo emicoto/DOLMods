@@ -245,7 +245,7 @@ const DrugsProcess = {
 			const data = Items.get(item)
 			const word = lanSwitch(data.name)
 			const hours = data.withdraw
-			let methods = useMethods(data)
+			let methods = useMethods(data.type, data.tags)
 	
 			return printTemplet(lanSwitch(template), word, lanSwitch(methods), hours) + '<br>'
 		}

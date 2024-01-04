@@ -6,6 +6,10 @@
 	<</link>>
 <</widget>>
 
+<<widget "daisoshelfsnacks">>
+	
+<</widget>>
+
 :: BaseScene DaisoShop [scene]
 <<set $outside to 0>><<set $location to "shopping_centre">><<effects>>
 
@@ -73,18 +77,41 @@
 )>>
 <br><br>
 
-<<lanSwitch 'Snacks:' '零食：'>><br>
+<div id="shopmenu">
+	<div class="shopheaderbox" onClick="iShop.getshelf('diasosnacks')">
+		<div class="shopheader">
+			<<lanSwitch 'Snacks' '零食'>>
+		</div>
+	</div>
+		
+	<div class="shopheaderbox" onClick="iUtil.shopMenu('drinks')">
+		<div class="shopheader">
+			<<lanSwitch 'Drinks' '饮料'>>
+		</div>
+	</div>
+		
+	<div class="shopheaderbox" onClick="iUtil.shopMenu('foods')">
+		<div class="shopheader">
+			<<lanSwitch 'Foods' '食物'>>
+		</div>
+	</div>
+		
+	<div class="shopheaderbox" onClick="iUtil.shopMenu('sundries')">
+		<div class="shopheader">
+			<<lanSwitch 'Sundries' '杂物'>>
+		</div>
+	</div>    
+</div>
+
+<div id="shopbanner" class="snackbanner"> 
+</div>
+
+<div class="shopshelf">
+
+</div>
+
 
 <br><br>
-
-<<lanSwitch 'Drinks:' '饮料：'>><br>
-
-<br><br>
-
-<<lanSwitch 'Sundries:' '杂物：'>><br>
-
-<br><br>
-
 
 <<ModShopZone>>
 <br><br>

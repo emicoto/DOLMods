@@ -8,6 +8,13 @@
 	<</if>>
 <</widget>>
 
+<<widget "thirsty">>
+	<<if $args[0]>>
+		<<set $thirst += $args[0]>>
+		<<set $thirst to Math.clamp($thirst, 0, 2000)>>
+	<</if>>
+<</widget>>
+
 <<widget "lwillpower">>
 	<<if $statdisable is "f">> |
 		<span class="red">- <<lanSwitch 'Willpower' '意志'>></span>

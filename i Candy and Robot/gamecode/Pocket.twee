@@ -1,5 +1,5 @@
 :: iCandy ItemPockets [widget]
-<<widget "showItemButton">>
+<<widget "showItemsButton">>
 	<<if $combat == 0 and ($event is undefined || ($event !== undefined && $passage == "Pharmacy"))>>
 	<<button lanSwitch('ITEMS','道具')>><<iModReplace "pocketItemsOverlay">><</button>>
 	<</if>>

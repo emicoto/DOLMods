@@ -325,4 +325,16 @@ Object.defineProperty(Array.prototype, "has", {
 	},
 });
 
+Object.defineProperty(Array.prototype, "randompop", {
+	configurable: true,
+	writable: true,
+	value() {
+		if (this == null) {
+			throw new TypeError("Array.prototype.randompop called on null or undefined");
+		}
+
+		return this.splice(Math.floor(Math.random() * this.length), 1)[0];
+	},
+});
+
 })();

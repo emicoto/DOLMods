@@ -372,23 +372,15 @@ function printPalams(palam, value){
 	return `<<${gl.repeat(count)}${palam}>>`;
 }
 
-function useMethods(tags){
+function useMethods(type, tags){
+	
 	let methods = ['use', '使用']
-	if(tags.includes('pill')){
-		methods = ['take', '吞下']
-	}
+
 	if(tags.includes('inject')){
 		methods = ['inject', '注射']
 	}
 	if(tags.includes('drugpowder')){
 		methods = ['snort', '吸入']
-	
-	}
-	if(tags.includes('food')){
-		methods = ['ate', '吃']
-	}		
-	if(tags.includes('drink')){
-		methods = ['drink', '喝']
 	}
 	if(tags.includes('smoke')){
 		methods = ['smoke', '抽']
@@ -396,6 +388,16 @@ function useMethods(tags){
 	if(tags.includes('cream')){
 		methods = ['apply', '涂抹']
 	}
+	if(type == 'medicine'){
+		methods = ['take', '服用']
+	}
+	if(type == 'foods'){
+		methods = ['ate', '吃']
+	}		
+	if(type == 'drinks'){
+		methods = ['drink', '喝']
+	}
+
 	return methods
 }
 
@@ -407,8 +409,8 @@ function itemUnit(tags, count){
 			CN : '片'
 		},
 		drugpowder : {
-			EN : 'pack',
-			EN_plural : 'packs',
+			EN : 'bag',
+			EN_plural : 'bags',
 			CN : '包'
 		},
 		inject : {
@@ -416,17 +418,37 @@ function itemUnit(tags, count){
 			EN_plural : 'shots',
 			CN : '管'
 		},
+		roll : {
+			EN : 'roll',
+			EN_plural : 'rolls',
+			CN : '卷'
+		},
+		bagged : {
+			EN : 'bag',
+			EN_plural : 'bags',
+			CN : '袋'
+		},
+		paper : {
+			EN : 'sheet',
+			EN_plural : 'sheets',
+			CN : '张'
+		},
+		boxed : {
+			EN : 'box',
+			EN_plural : 'boxes',
+			CN : '盒'
+		},
 		canned : {
 			EN : 'can',
 			EN_plural : 'cans',
 			CN : '罐'
 		},
-		candy : {
+		pieces : {
 			EN : 'piece',
 			EN_plural : 'pieces',
 			CN : '块'
 		},
-		snack : {
+		packed : {
 			EN : 'pack',
 			EN_plural : 'packs',
 			CN : '包'
@@ -452,8 +474,8 @@ function itemUnit(tags, count){
 			CN : 'lb'
 		},
 		food : {
-			EN : '',
-			EN_plural : '',
+			EN : 'serving',
+			EN_plural : 'servings',
 			CN : '份'
 		},
 		drink : {

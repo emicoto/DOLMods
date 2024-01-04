@@ -83,27 +83,7 @@ const iFoods = [
 
     msg:itemMsg.WatermelonIce
 },
-{
-    tags:["seasonal", "autumn", "drink"]
 
-    id:"OsmanthusWine"
-    name:["Osmanthus wine", "桂花酒"]
-    plural:"Osmanthus wine"
-
-    info: [
-    "The liquor presents a bright amber hue, and the bottle neck is adorned with a delicate circle of pale golden osmanthus. Though unopened, it seems to emit the fragrant scent of osmanthus. Upon shaking the bottle, osmanthus blooms abundantly and cascades gracefully.",
-    "酒液呈明亮的琥珀色，瓶口装饰着一圈淡淡的金黄色桂花。虽未开瓶，却仿佛散发着芬芳的桂花香。晃动瓶身，桂花纷繁而落。",
-    ],
-
-    price: 1,
-    num: 1,
-    siz: ,
-    effects: [
-    ["hunger" , 1],
-    ],
-
-    msg:itemMsg.OsmanthusWine
-},
 {
     tags:["seasonal", "spring", "food", "vegi"]
 
@@ -203,21 +183,7 @@ itemMsg = {
 
     ],
 
-    OsmanthusWine: [
-        `You shake the bottle, and before your eyes appears a farmhouse courtyard surrounded by earthen walls and wooden fences.<br>
-        In the center of the courtyard stands a osmanthus tree towering as high as a two-story building, a companion throughout your growth.<br>
-        Osmanthus blossoms profusely, their rich and somewhat overpowering fragrance continuously drifting into your nostrils as you take a sip. The lush floral aroma perfectly blends into the fragrance of the wine, diffusing in your mouth.<br>
-        You reminisce about times filled with the chirping sounds of friends engaged in idle chatter.<br>
-        Sweet memories flood in from somewhere unknown.`
-
-        `你摇晃着瓶子，眼前出现了土墙和木篱笆围成的农家小院。<br>
-        院子中央，是一棵足有两层楼高的桂花树，它伴你长大。<br>
-        桂花纷繁盛开，浓郁到有些呛人的香气不停往鼻孔里钻，你灌下一口。<br>
-        馥郁的花香完美地融入到酒香中，在口中晕开。<br>
-        你回忆起身边充满叽叽喳喳声，朋友们无事闲谈的时光。<br>
-        不知道是来自哪里的幸福记忆。`
-
-    ],
+    
 
     BasicFoodSet: [        
         `You gently stir the white rice with chopsticks, releasing a subtle fragrance of rice. The texture is full and tender, creating a harmonious blend with the side dishes.<br>

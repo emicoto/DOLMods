@@ -22,7 +22,7 @@
     你回想起上次来到这里时看到的琳琅满目的商品，如果你能打开这个门，那你或许可以收获许多东西。
     <br><br>
 
-    <<if currentSkillValue('skulduggery') gte _lock and R.mechStats.tool.digitalSet is 1>>
+    <<if currentSkillValue('skulduggery') gte _lock and R.mechStats.tools.digitalSet is 1>>
         <span class="green">这锁你或许有办法打开。</span>
     <<elseif R.mechStats.tool.digitalSet is 1>>
         <span class="orange">你或许有办法打开，但这十分考验你。</span>

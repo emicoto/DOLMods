@@ -1,27 +1,4 @@
 const iFoods = [
-
-{
-    tags:["seasonal", "spring", "food", "meat"]
-
-    id:"SpringBoxedMeal"
-    name:["Spring boxed meal", "春季便當"]
-    plural:"Spring boxed meal"
-
-    info: [
-    "Filled with the deliciousness of spring, it includes Mentaiko Chirashi-Sushi, fried shrimp, and potato mash salad served with tomatoes.",
-    "滿含春天的美味，內含了明太子散壽司、炸蝦和馬鈴薯泥生菜沙拉佐番茄。",
-    ],
-
-    price: 1,
-    num: 1,
-    siz: ,
-    effects: [
-    ["hunger" , 1],
-    ],
-
-    msg:itemMsg.SpringBoxedMeal
-},
-
 {
     tags:["seasonal", "spring", "food", "vegi"]
 
@@ -66,49 +43,8 @@ const iFoods = [
     msg:itemMsg.Sakuramochi
 },
 
-{
-    tags:["seasonal", "spring", "drink"]
 
-    id:"SakuraWineWithBox"
-    name:["Sakura wine", "盒裝櫻花酒"]
-    plural:"Sakura Wine"
 
-    info: [
-    "In a glass bottle is a trans pink liquor brewed with green apple and cherry blossom as its base,  with a whole cherry blossom and gold leaf inside ! It looks very dreamy.",
-    "透明的玻璃瓶裡是淡粉色、以青蘋果和櫻花為基底釀造的酒液，裡面有整朵櫻花和金箔！看上去非常夢幻。",
-    ],
-
-    price: 1,
-    num: 1,
-    siz: ,
-    effects: [
-    ["hunger" , 1],
-    ],
-
-    msg:itemMsg.SakuraWineWithBox
-},
-
-{
-    tags:["seasonal", "spring", "drink"]
-
-    id:"BulkSakuraWine"
-    name:["bulkSakuraWine", "散裝櫻花酒"]
-    plural:"bulkSakuraWine"
-
-    info: [
-    "In a glass bottle is a trans pink liquor brewed with green apple and cherry blossom as its base,  with a whole cherry blossom and gold leaf inside ! It looks very dreamy.　But selling it so cheap... seems suspicious.",
-    "透明的玻璃瓶裡是淡粉色、以青蘋果和櫻花為基底釀造的酒液，裡面有整朵櫻花和金箔！看上去非常夢幻。但是賣得這麼便宜…有些可疑",
-    ],
-
-    price: 1,
-    num: 1,
-    siz: ,
-    effects: [
-    ["hunger" , 1],
-    ],
-
-    msg:itemMsg.BulkSakuraWine
-},
 
 {
     tags:["seasonal", "summer", "food", "meat"]
@@ -134,28 +70,6 @@ const iFoods = [
 },
 
 {
-    tags:["seasonal", "autumn", "food", "meat"]
-
-    id:"CreamChestnutCake"
-    name:["Cream Chestnut Cake", "秋季便當"]
-    plural:"Cream Chestnut Cake"
-
-    info: [
-    "Inside the luxurious lacquer box are a variety of autumn specialties, including rice soaked in eel sauce, tender grilled eel, sliced matsutake mushrooms, and fresh salmon arranged like vibrant flowers. Enjoy to your heart's content!",
-    "豪華的漆器盒子裡面裝載著滿滿的秋日特產，吸飽了蒲燒醬汁的米飯、肥嫩的蒲燒鰻、切成片的松茸，還有擺放成鮮豔花朵的當季新鮮鮭魚，請盡情享用 ！",
-    ],
-
-    price: 1,
-    num: 1,
-    siz: ,
-    effects: [
-    ["hunger" , 1],
-    ],
-
-    msg:itemMsg.AutumnBoxedMeal
-},
-
-{
     tags:["seasonal", "autumn", "food", "vegi"]
 
     id:"MontBlancCake"
@@ -177,27 +91,6 @@ const iFoods = [
     msg:itemMsg.AutumnBoxedMeal
 },
 
-{
-    tags:["seasonal", "autumn", "food", "vegi"]
-
-    id:"ChestnutEarlGreyCake"
-    name:["Chestnut Earl Grey Cake", "栗香伯爵茶戚風蛋糕"]
-    plural:"Chestnut Earl Grey Cake"
-
-    info: [
-    "Added a generous amount of chestnut filling on top of the Earl Grey tea chiffon cake, with finely chopped chocolate surrounding the Earl Grey cream. It smells of Earl Grey tea with a hint of fruity and chestnut sweetness.",
-    "在伯爵茶戚風蛋糕的基底上加入了滿滿的栗子餡，細碎的巧克力圍繞著紅茶奶油、聞起來充滿了伯爵紅茶帶著些微果香的芬芳與栗子馨香甜美。，"
-    ],
-
-    price: 1,
-    num: 1,
-    siz: ,
-    effects: [
-    ["hunger" , 1],
-    ],
-
-    msg:itemMsg.ChestnutEarlGreyCake
-},
 
 {
     tags:["seasonal", "winter", "food", "meat"]
@@ -277,21 +170,7 @@ const iFoods = [
 
 itemMsg = {
 
-    SpringBoxedMeal: [
-
-        `You first put the chirashi-sushi into your mouth, the rice dyed a tender pink color by mentaiko brings a slight spiciness, then come the flavorful eggy taste of kinshi Tamago. <br>
-        Afterwards, you chewed on the dense, delicate tuna puree, combined with seaweed to create a fresh seafood flavor. <br>
-        Then bite into a crispy deep-fried shrimp and The succulent and firm shrimp meat and crispy batter fill the entire mouth. <br>
-        Finally, put the mashed potatoes salad in your mouth and the freshness of spring vegetables removes all the fishy smell and greasiness. <br>
-        Unconsciously, you have finished the entire meal box. You feel very satisfied.`
-
-        `你先將散壽司放入口中、被明太子染成嫩粉色的飯入口先帶來微微地辣，然後是充滿蛋香的蛋絲， <br>
-        之後咀嚼到了綿密細膩的鮪魚肉泥，和海苔組合成了清新的海味。 <br>
-        再咬一口炸蝦、咔滋一聲，鮮甜緊實的蝦肉和酥脆的麵衣充盈著整個口腔。 <br>
-        最後再將馬鈴薯泥沙拉放入口中，春天野菜的清新掃去所有腥味與油膩。 <br>
-        不知不覺間，你已經將整份餐盒吃完。你感到十分滿足。`
-
-    ],
+    ,
 
     HanamiDango: [
 
@@ -316,42 +195,8 @@ itemMsg = {
         你就這樣吃光了整個櫻餅，感到整個人被包裹在櫻花與春天的氣息裡 `
 
     ],
-    SakuraWineWithBox: [
-        `After you open the box, take out bottle of wine. <br>
-        You shake the bottle and admire the blooming cherry blossom from different angles, and then open the bottle cap.<br>
-        The sour-sweet fragrance of green apples and the faint aroma of cherry blossoms suddenly wafted out, you took a sip.<br>
-        The alcohol content of the liquor is not high, but it effortlessly slides down the throat, <br>
-        leaving a refreshing and sweet taste as well as the aroma of cherry blossoms on the lips and teeth. <br>
-        With such fine wine accompanying, it doesn't matter whether there is a view to enjoy. <br>
-        You have found solace in this terrible world. `
-
-        `你打開盒子後、將瓶子拿了出來。 <br>
-        你搖晃著瓶子，換角度欣賞了一會瓶子內盛開的櫻花，之後打開瓶蓋。 <br>
-        青蘋果的酸甜清香和微微櫻花的芬芳頓時飄了出來、你飲上一口， <br>
-        酒精含量並不高的酒液輕鬆地滑入喉嚨，清甜爽口的味道和櫻花的香味卻還在唇齒間。 <br>
-        有這樣的美酒相伴，好像有沒有景色可賞都無所謂了。 <br>
-        你感受到了在這糟糕世界裡的小小幸福。`
-
-    ],
-    BulkSakuraWine: [        
-        `After you open the box, take out bottle of wine. <br>
-        You shake the bottle and admire the blooming cherry blossom from different angles, and then open the bottle cap.<br>
-        The sour-sweet fragrance of green apples and the faint aroma of cherry blossoms suddenly wafted out, you took a sip.<br>
-        The alcohol content of the liquor is not high, but it effortlessly slides down the throat, <br>
-        leaving a refreshing and sweet taste as well as the aroma of cherry blossoms on the lips and teeth. <br>
-        Suddenly a surge of warmth rushes from your lower abdomen, making you instantly feel light-headed. <br>
-        Your legs turn as soft as noodles, while your head feels as heavy as a stone. <br>
-        All the scenery appears to be swirling and shimmering with dazzling colors. <br>
-        What seems off to you doesn't really matter, this wine is so good...`
-
-
-        `你搖晃著瓶子，換角度欣賞了一會瓶子內盛開的櫻花，之後打開瓶蓋。 <br>
-        青蘋果的酸甜清香和微微櫻花的芬芳頓時飄了出來、你飲上一口， <br>
-        酒精含量並不高的酒液輕鬆地滑入喉嚨，清甜爽口的味道和櫻花的香味卻還在唇齒間。 <br> 
-        一股熱流從你的下腹上竄、你瞬間感到輕飄飄地，腿好像成了軟成了麵條、頭卻重的像石頭。 <br> 
-        瞇著眼看去所有的景物都在扭動、滿是絢麗的光彩。 <br> 
-        你感到有什麼事好像不太對勁，但是有什麼關係呢？這酒可真好喝…`
-    ],
+    ,
+    
 
     ColdRamen: [        
         `You put the cold noodles covered in sauce into your mouth, the chilled noodles have a satisfying chewiness, the crispy and refreshing cucumber and the tangy juicy tomatoes counterbalance the mild spiciness of the sauce, making your appetite open up. <br>
@@ -377,36 +222,9 @@ itemMsg = {
         伴著紅茶與栗子的馨香、微微的苦澀完全不發膩讓你一吃就停不下來。 <br>
         不知不覺吃完了整個蛋糕，你還能回味剛才的美味。 `
     ],
-ChestnutEarlGreyCake: [
-        `You hold this small, dainty cake in your hand, the light brown and white pastry doesn't look desolate in autumn, but rather warm and appealing. <br>
-        Put it in your mouth, the crisp meringue melts instantly, leaving only a light and refreshing crispness. <br>
-        Rum-infused grapes burst with a slightly intoxicating aroma and then meet a rich nutty flavor and intense caramel sweetness of chestnut puree in the mouth. <br>
-        The final cream balances the intense impact, combining smooth milk fragrance with alcohol and sweet chestnut, creating a unique and perfect whole. <br>
-        You licking off the powdered sugar on your hand, You ponder whether to get another serving.`
-
-        `你將這個小巧的蛋糕拿在手裡，淺棕色和白色的糕點看上去沒有秋日的蕭索、倒是顯得溫馨可人。 <br>
-        將它送入口中，酥脆的蛋白霜入口即化、只留下清盈和爽脆的口感， <br>
-        朗姆酒釀葡萄爆發出微醺的芬芳美味、和隨後帶著濃濃堅果香和強烈的焦糖滋味的香甜栗子泥在口中邂逅， <br>
-        最後的生奶油平衡了過於濃烈的衝擊、嫩滑的奶香融合了酒香和甜蜜的栗子、成為一個獨特完美的整體。 <br>
-        你舔掉手上的糖粉，思索著要不要再來一份？`
-
-],
-
- AutumnBoxedMeal: [        
-        `You first put the rice full of  unagi sauce flavor into your mouth, and the unique sauce aroma immediately fills your mouth. <br>
-        In combination with a juicy and tender grilled eel, the deliciousness of the eel and the sweetness of the sauce blend seamlessly, dancing on your taste buds. <br>
-        Taking another bite, the captivating aroma of matsutake and the exquisite taste of matsutake surprisingly resembled tender and juicy red meat, adding more layers of flavor to this meal. <br>
-        Finally, put the salmon that has been rolled into a beautiful flower into your mouth, and the tender fat and delicious salmon meat melt away, leaving only a sweet and rich flavor. <br>
-        After finishing this delicious food, it makes you feel the gift from autumn, every bite full of the bounty of nature and human ingenuity.`
 
 
-        `你先將飽含蒲燒醬汁的米飯送入口中，那股獨特的醬香頓時瀰漫在口中、 <br>
-        配合一口肥嫩的蒲燒鰻，鰻魚的鮮美和甘美的醬汁配合的天衣無縫、在你的唇齒間共舞。 <br>
-        再嚐一口散發著迷人香氣的松茸、鮮美的菇類竟猶如紅肉般醇厚多汁且充滿了咬勁，為這份餐點添增了更多的層次感。 <br>
-        最後再將捲成美麗花朵的鮭魚放入口中，滑嫩的脂肪和鮮美的鮭魚肉在口中化開、只餘下鮮甜濃郁的滋味。 <br>
-        在吃完這份美食，讓你感受到了來自秋天的餽贈、每一口都充滿了大自然的恩賜和人類的巧思。 `
 
-    ],
 
 Porkpie: [
         `This pie has completely cooled down, but the subtle meat aroma and roasted fragrance are still enticing, and the crust remains crispy and layered. <br>

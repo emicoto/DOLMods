@@ -1,6 +1,6 @@
 
 function onUseDrags(enemy){
-	const { tags, effects, doDelta } = this
+	const { tags, effects, doDelta, type } = this
 	let id = this.id
 	if(this.alias){
 		id = this.alias
@@ -39,7 +39,7 @@ function onUseDrags(enemy){
 		}
 	}
 
-	let methods = useMethods(tags)
+	let methods = useMethods(type, tags)
 
 	let html = [
 		`You ${methods[0]} the ${this.name[0].toLocaleLowerCase()}.`,
@@ -230,7 +230,7 @@ const iDrugs = [
 	onHigh:function(min = 1){
 		//如果在学习，会获得更好的学习效果。
 		min = Math.max(min, 1);
-		iUtil.getPalam("control", 2 * min);
+		this.getPalam("control", 2 * min);
 
 		let flag = iCandy.getFlag(this.id, 'highonce')
 		//如果已经设置过flag，不再重复显示提醒
@@ -243,7 +243,7 @@ const iDrugs = [
 	},
 	onWake:function(){
 		//药效下头后会变疲劳
-		iUtil.getPalam("tiredness", 400);	
+		this.getPalam("tiredness", 400);	
 		return lanSwitch(drugMsg[this.id]['onWake']) + `<<ggtiredness>>`;
 
 	},
@@ -290,15 +290,15 @@ const iDrugs = [
 	onUse: onUseDrags,
 	onHigh:function(min = 1){
 		min = Math.max(min, 1);
-		iUtil.getPalam("stress", -(2 * min));
-		iUtil.getPalam("pain", -(1 * min));
+		this.getPalam("stress", -(2 * min));
+		this.getPalam("pain", -(1 * min));
 
 		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<lstress>><<lpain>>`;
 	},
 	onWake:function(){
 		//药效下头时会感觉混乱和疲惫
-		iUtil.getPalam("tiredness", 400);
-		iUtil.getPalam("awareness", -5);
+		this.getPalam("tiredness", 400);
+		this.getPalam("awareness", -5);
 
 		return lanSwitch(drugMsg[this.id]['onWake']) + `<<ggtiredness>><<lawareness>>`;
 	},
@@ -340,8 +340,8 @@ const iDrugs = [
 	onHigh:function(min = 1){
 		min = Math.max(min, 1);
 
-		iUtil.getPalam("pain", -(5 * min));
-		iUtil.getPalam("tiredness", -(5 * min));
+		this.getPalam("pain", -(5 * min));
+		this.getPalam("tiredness", -(5 * min));
 
 		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<lpain>><<ltiredness>>`;
 	}
@@ -396,12 +396,12 @@ const iDrugs = [
 	onHigh:function(min = 1){
 		min = Math.max(min, 1);
 
-		iUtil.getPalam("hallucinogen", 5*min);
+		this.getPalam("hallucinogen", 5*min);
 
 		let _mult = 1 - Math.max(iCandy.getStat(this.id, 'taken') * 0.1, 0.3);
 
-		iUtil.getPalam("pain", -(10 * min * _mult));
-		iUtil.getPalam("stress", -(20 * min * _mult));
+		this.getPalam("pain", -(10 * min * _mult));
+		this.getPalam("stress", -(20 * min * _mult));
 
 		//第一次显示与持续显示有差分		 
 		let flag = iCandy.getFlag(this.id, 'highonce')
@@ -450,7 +450,7 @@ const iDrugs = [
 		min = Math.max(min, 1);
 		if(V.combat == 1) return;
 
-		iUtil.getPalam("stress", -(5 * min));
+		this.getPalam("stress", -(5 * min));
 
 		let flag = iCandy.getFlag(this.id, 'highonce')
 		if(flag == 1) return '';
@@ -492,15 +492,15 @@ const iDrugs = [
 
 		let _mult = 1 - Math.max(iCandy.getStat(this.id, 'taken') * 0.1, 0.3);
 
-		iUtil.getPalam("pain", -(5 * min * _mult));
-		iUtil.getPalam("tiredness", -(10 * min * _mult));
+		this.getPalam("pain", -(5 * min * _mult));
+		this.getPalam("tiredness", -(10 * min * _mult));
 		wikifier("arousal", 100 * min * _mult, "genital");
 
 		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<lpain>><<ltiredness>><<ggarousal>>`;
 	},
 	onWake:function(){
 		wikifier("tiredness", 100);
-		iUtil.getPalam("pyshique", -50);
+		this.getPalam("pyshique", -50);
 
 		return lanSwitch(drugMsg[this.id]['onWake']) + `<<ggtiredness>><<lllpyshique>>`;
 	
@@ -545,7 +545,7 @@ const iDrugs = [
 
 		let _mult = 1 - Math.max(iCandy.getStat(this.id, 'taken') * 0.1, 0.3);
 
-		iUtil.getPalam("hallucinogen", 5 * min);
+		this.getPalam("hallucinogen", 5 * min);
 		wikifier("arousal", 120 * min * _mult, "genital");
 
 		return lanSwitch(drugMsg[this.id]['onHigh']) + `<<ghallucinogens>><<ggarousal>>`;
@@ -581,7 +581,7 @@ const iDrugs = [
 
 		let _mult = 1 - Math.max(iCandy.getStat(this.id, 'taken') * 0.1, 0.3);
 
-		iUtil.getPalam("hallucinogen", 5 * min);
+		this.getPalam("hallucinogen", 5 * min);
 
 		wikifier("arousal", 500 * min * _mult, "genital");
 
@@ -657,7 +657,7 @@ const iDrugs = [
 
 		let _mult = 1 - Math.max(iCandy.getStat(this.id, 'taken') * 0.1, 0.3);
 
-		iUtil.getPalam("drunk", 10 * min * _mult);
+		this.getPalam("drunk", 10 * min * _mult);
 		wikifier("arousal", 800 * _mult, "genital");
 		wikifier("hallucinogen", 5 * min);
 
@@ -700,7 +700,7 @@ function angelOnHigh(min = 1){
 	min = Math.max(min, 1);
 	wikifier("hallucinogen", 5 * min);
 	wikifier("arousal", 2000, "genital");
-	iUtil.getPalam("stress", -(80 * min));
+	this.getPalam("stress", -(80 * min));
 
 	return lanSwitch( drugMsg[this.id]['onHigh'])
 	 + `<<gggarousal>><<ghallucinogens>><<llstress>>`;

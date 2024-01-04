@@ -163,7 +163,7 @@ const iUtil = {
 			let itemname = data ? lanSwitch(data.name) : ''
 			let itemcount = item ? itemUnit(data.tags, item.count) : ''
 
-			let method = item ? lanSwitch( useMethods(data.tags) ) : ''
+			let method = item ? lanSwitch( useMethods(data.type, data.tags) ) : ''
 
 			let _html = `<div id='${slot}-${i}' class='pocketslot'>`
 			let img = iUtil.itemImageResolve(item, data)
@@ -291,3 +291,40 @@ Object.defineProperties(window, {
 	printTemplet : { value : printTemplet },
 	
 })
+
+const iShop = {
+	shelfdata : {
+		daisosnacks: function(){
+			const data = Items.searchType('foods')
+			const list = data.filter( item => item.tags.has('snack', 'candy') )
+			//随机抽取6个
+			const result = []
+			for(let i = 0; i < 6; i++){
+				if(list.length == 0) break
+
+				let item = clone(list.randompop())
+				result.push(item)
+			}
+			return result
+		},
+		daisodrinks: function(){
+			const data = Items.searchType('drinks')
+			const list = data.filter( item => item.tags.has('coffee', 'soda', 'energy', 'tea') )
+			//随机抽取6个
+			const result = []
+			for(let i = 0; i < 6; i++){
+				if(list.length == 0) break
+
+				let item = clone(list.randompop())
+				result.push(item)
+			}
+			return result
+		}
+	},
+	getshelf : function(shelf){
+		
+		let html = ''
+
+		new Wikifier(null, `<<replace #shopshelf>>${html}<</replace>>`)
+	}
+}

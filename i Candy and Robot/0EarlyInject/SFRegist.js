@@ -2,7 +2,7 @@ simpleFrameworks.addto('iModInit', 'iCandyInit')
 simpleFrameworks.addto('iModReady','iCandyUpdate', 'iCandyReady')
 simpleFrameworks.addto('iModDone', 'iCandyDone')
 
-simpleFrameworks.addto('ModMenuBig', 'showItemButton')
+simpleFrameworks.addto('ModMenuBig', 'showItemsButton')
 simpleFrameworks.addto('ModStatusBar', 'hungerBar')
 
 simpleFrameworks.addto('ModCaptionDescription', 'captionPhone')

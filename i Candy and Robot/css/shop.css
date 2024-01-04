@@ -1,0 +1,128 @@
+.shopmenu {
+    background: whitesmoke;
+    color: brown;
+    padding: 3px;
+    font-size: smaller;
+    text-align: center;
+    display: block;
+    height: 20px;
+    border: 2px dashed rosybrown;
+    font-family: fantasy;
+    cursor:pointer
+}
+
+.shopmenubox {
+    display: block;
+    width: 60px;
+    padding: 6px;
+    background: whitesmoke;
+    margin-bottom: 5px;
+}
+
+
+.shopmenu:hover {
+    color: #80ac38;
+    border-color: #afc09a
+}
+
+.shopmenu:active {
+    color: blueviolet;
+}
+
+.shopshelf {
+    display: flex;
+    flex-wrap: wrap;
+    width: 95%;
+}
+
+.shopitembox {
+    width: 24%;
+    height: fit-content;
+    border: 1px solid gray;
+    position: relative;
+    display: block;
+    margin: 2px;
+}
+
+
+.shopitembox:hover{
+    background:#482832
+}
+.shopitembox:hover .shopitemicon{
+    background:#798680;
+    border-color:#798680
+}
+.shopitembox:hover .shopitemname{
+    background:#2ce5c1
+}
+.shopitembox:hover .itemprice{
+    background: #806b6b;
+}
+
+.shopitemiconframe {
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.shopitemicon {
+    border: 1px dashed;
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+    margin: auto;
+}
+.shopitemname {
+    font-size: smaller;
+    color: white;
+    position: relative;
+    width: 100%;
+    height: 24px;
+    text-align: center;
+    background: #c37a7a;
+    display: block;
+}
+
+.itemprice {
+    font-size: xx-small;
+    text-align: center;
+    background: #494949;
+    width: 80%;
+    height: fit-content;
+    margin: 6px 10%;
+    color: #c37a7a;
+}
+
+.itemstock {
+    font-size: x-small;
+    width: 100%;
+    height: fit-content;
+    text-align: center;
+    color: gray;
+    margin-top: 8px;
+}
+
+.golden {
+    color: gold;
+}
+
+#shopmenu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-bottom: 5px;
+}
+
+#shopbanner {
+    height: 30px;
+    width: 540px;
+    
+}
+
+.snackbanner {
+    background-image: url("img/misc/daisobanner_snack.png");
+}

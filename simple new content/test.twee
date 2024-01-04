@@ -65,33 +65,9 @@ setup your UIBar
 
 
 <<widget "RobinOpinionIcon">>
-<<if $robin.timer.hurt gte 2>>
-	<img scr='img/opinionIcon/robinhurt2.png'>
-<<elseif $robin.timer.hurt gte 1>>
-	<img scr='img/opinionIcon/robinhurt1.png'>
-<<elseif $robinromance is 1>>
-	<<if $NPCName[_i].trauma gte 80>>
-		<<if $NPCName[_i].lust gte 50>>
-			<img scr='img/opinionIcon/robintruama1.png'>
-		<<else>>
-			<img scr='img/opinionIcon/robintruama.png'>
-		<</if>>
-	<<elseif $NPCName[_i].dom gte 40>>
-		<img scr='img/opinionIcon/robincherish.png'>
+	<<if C.npc.Robin.love gte 30>>
+		<img scr='img/opinionIcon/robin_love.png'>
 	<<else>>
-		<img scr='img/opinionIcon/robinlovepng'>
+		<img scr='img/opinionIcon/robin.png'>
 	<</if>>
-<<elseif $NPCName[_i].trauma gte 80>>
-	<span class="red">is traumatised.</span>
-<<elseif $NPCName[_i].trauma gte 40>>
-	<span class="red">is in pain.</span>
-<<elseif $NPCName[_i].trauma gte 10>>
-	<span class="purple">is troubled.</span>
-<<elseif $NPCName[_i].dom gte 80>>
-	<span class="teal">feels protective of you.</span>
-<<elseif $NPCName[_i].dom gte 20>>
-	<span class="teal">thinks you're <<nnpc_his "Robin">> best friend.</span>
-<<else>>
-	<span class="teal">looks up to you.</span>
-<</if>>
 <</widget>>

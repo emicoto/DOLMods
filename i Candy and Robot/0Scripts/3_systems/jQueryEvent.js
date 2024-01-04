@@ -11,6 +11,8 @@ $(document).one(':storyready',()=>{
 
 window.bak = {}
 
+setup.gamereloadcheck = true
+
 $(document).on(':passageinit', ( data )=>{
 //------------------------------------------------------------
 //
@@ -46,8 +48,14 @@ $(document).on(':passageinit', ( data )=>{
 
 	console.log('check passage in init:', passage(), psg.title)
 	V.tvar.lastPassage = passage()
-	
     iEvent.initBaseScene(psg);
+
+	//刚刷新时跳过事件检测
+	if(setup.gamereloadcheck){
+		setup.gamereloadcheck = false
+		return
+	}	
+	
     iEvent.eventReady(psg);
 
 	if(V.tvar.jump){
