@@ -164,7 +164,7 @@ const iManager = {
 		}
 
 		if(lower.name !== 'naked'){
-			count += lower.name == upper.name ? 1 :2
+			count += lower.variable == upper.variable ? 1 :2
 		}
 
 		if(this.getEquip('wallet') !== 'none'){
@@ -307,7 +307,7 @@ const iManager = {
 
 			let item
 			for(let i=0; i < count; i++){
-				console.log('shift for loop:', i, result.items)
+				//console.log('shift for loop:', i, result.items)
 				if(result.items.length > 0){
 					item = result.items.pop()
 					item.pocket = pos

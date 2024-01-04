@@ -38,7 +38,9 @@ const DrugsProcess = {
 	
 		for(const[drug, stats] of Object.entries(drugStats)){
 			//获取药物的信息
-			console.log('drug states', drug, stats, drugFlags[drug])
+			if(iCandy.config.debug)
+				console.log('drug states', drug, stats, drugFlags[drug]);
+
 			const drugItem = Items.get(drug)
 			if(!drugItem) continue;		
 	
@@ -84,7 +86,9 @@ const DrugsProcess = {
 
 		for(const[item, stats] of Object.entries(itemStats)){
 			//获取药物的信息
-			console.log('hourProcess, item check', type, item, stats, itemFlags[item])
+			if(iCandy.config.debug)
+				console.log('hourProcess, item check', type, item, stats, itemFlags[item]);
+
 			const data =  type == 'general' ? setup.addictions[item] : Items.get(item)
 			if(!data) continue;
 	

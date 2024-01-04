@@ -139,7 +139,17 @@ const sortOutMsg = function(item){
 	return html + '<br>'
 }
 
+const stateEffects = {
+	hungry: [
+		`<span class='orange'>You are starving.</span><br>
+		 You might black out if you don't eat something soon.`,
+		`<span class='orange'>你快饿晕了。</span><br>
+		 如果你不尽快吃点东西，你可能会晕倒。`
+	]
+}
+
 Object.defineProperties(window,{
 	transferMsg: {value: transferMsg},
-	sortOutMsg: {value: sortOutMsg}
+	sortOutMsg: {value: sortOutMsg},
+	stateEffects: {value: stateEffects}
 })

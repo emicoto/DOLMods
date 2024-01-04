@@ -269,9 +269,12 @@ const eventManager = {
 
     initBaseScene: function(passage){
         if(passage.tags.includes('scene')){
-            R.scene = passage.title.replace('BaseScene ', '')
+            V.currentScene = passage.title.replace('BaseScene ', '')
         }
-        console.log('initBaseScene:', R?.scene, passage)
+        else{
+            V.currentScene = undefined
+        }
+        console.log('initBaseScene:', V.currentScene, passage)
     },
 
     //if event has been set but didn't run, clear it
@@ -303,17 +306,17 @@ const eventManager = {
         //already in combat
         if(V.combat == 1) return 
         
-        console.log('eventReady:', title, R?.scene, data)
+        console.log('eventReady:', title, V.currentScene, data)
 
         //passout event always in the highest priority
         if( V.stress >= V.stressmax ){
-            console.log('eventReady, check passout event:', title, R.scene)
+            console.log('eventReady, check passout event:', title, V.currentScene)
             return this.checkEvent('Passout')
         }
 
         //check event from new scene
-        if(R && typeof R.scene === 'string'){
-            this.checkEvent(R.scene)
+        if(typeof V.currentScene === 'string'){
+            this.checkEvent(V.currentScene)
         }
         else{
             //check event from passage
@@ -344,8 +347,8 @@ const eventManager = {
     //run the post-process function for passage event
     eventDone: function(){
         let title = passage()
-        let func = this.widget[title] ?? this.widget[R.scene]
-        console.log('eventDone:', title, R.scene, func)
+        let func = this.widget[title] ?? this.widget[V.currentScene]
+        console.log('eventDone:', title, V.currentScene, func)
         
         if(typeof func == 'function'){
             func()
@@ -365,9 +368,10 @@ const eventManager = {
 
         for(let i = 0; i < eventlist.length; i++){
             const data = eventlist[i]
+            console.log('eventdata:', data)
             if(
                 ( data.passage && passage == data.passage ) || 
-                ( data.match && data.match(passage) ) ||
+                ( data.match && passage.match(data.match) ) ||
                 ( data.keys && passage.has(...data.keys) == data.keyrequire )
              ){
                 if(typeof data.require == 'function' && data.require()){
@@ -383,7 +387,9 @@ const eventManager = {
         console.log('checkevent:', event)
         //筛选事件
         const eventList = this.getEvent(event)
-        //console.log('eventlist:',eventList)
+        if(iCandy.config.debug)
+             console.log('eventlist:',eventList);
+            
         if(!eventList) return
 
         for(let i = 0; i < eventList.length; i++){

@@ -10,6 +10,7 @@ const TimeHandle = {
 			sec : currentDate.second - prevDate.second,
 			min : currentDate.minute - prevDate.minute,
 			day : currentDate.day - prevDate.day,
+			hour : currentDate.hour - prevDate.hour,
 			month : currentDate.month - prevDate.month,
 			year : currentDate.year - prevDate.year,
 			weekday : [prevDate.weekDay, currentDate.weekDay]
@@ -43,6 +44,7 @@ Time.pass = function(sec){
 
 function iTimeHandle(passedSec){
 	const { min, day, hour, month, year, weekday } = TimeHandle.passTime()
+	console.log('time handle:', passedSec, min, day, hour, month, year, weekday)
 
 	if(!T.addMsg){
 		T.addMsg = ''
@@ -52,9 +54,10 @@ function iTimeHandle(passedSec){
 	if(passedSec <= 0) return;
 	if(min <= 0 && V.combat == 0) return;
 
+
 	//根据事件的计算单位执行进程，先是按分钟计算的事件。
 	if(min > 0 || (passedSec > 0 && V.combat == 1)){
-		minuteProcess(passedSec)
+		minuteProcess(passedSec, min)
 	}
 
 	if(hour > 0){
@@ -72,7 +75,7 @@ function iTimeHandle(passedSec){
 
 }
 
-function minuteProcess(sec){
+function minuteProcess(sec, min){
 	//-------------------------------------------------------------
 	// 处理药物效果
 	//-------------------------------------------------------------
@@ -84,6 +87,15 @@ function minuteProcess(sec){
 	const extraSense = R.extraSense
 	for( const[type, sense] of Object.entries(extraSense)){
 			iCandy.senseUpdate(sense, sec)
+	}
+
+	//-------------------------------------------------------------
+	// 其他每小时处理
+	//-------------------------------------------------------------
+
+	//当饥饿过高时获得压力
+	if(V.hunger >= C.hunger.max * 0.8 && min > 0){
+		wikifier('stress', 1 * min, 10)
 	}
 
 }
@@ -102,9 +114,15 @@ function hourProcess(sec, hour){
 	//-------------------------------------------------------------
 	// 其他每小时处理
 	//-------------------------------------------------------------
-	
+
 	//获得饥饿值
-	V.hunger = Math.max(V.hungermax, V.hunger + 100 * hour)
+	V.hunger = Math.min(V.hunger + 100 * hour, C.hunger.max)
+
+	//当饥饿值过高时，获得通知
+	if(V.hunger >= C.hunger.max * 0.8){
+		wikifier('stress', 8, 40)
+		V.addMsg += lanSwitch(stateEffects.hungry) + '<<gstress>><br>'
+	}
 }
 
 
@@ -135,9 +153,12 @@ function dayProcess(sec, day, weekday){
 	R.flags.repairshop.today = 0;
 
 	//事件flag的清理
-	iEvent.setFlag('chinatown', 'vendortoday', 0)
-	iEvent.setFlag('chinatown', 'showtoday', 0)
-
+	const chinatown = iEvent.getFlag('chinatown')
+	for( let key in chinatown ){
+		if(key.includes('today')){
+			chinatown[key] = 0
+		}
+	}
 }
 
 
@@ -182,7 +203,7 @@ function iCombatHandle(){
 	) return;
 
 	let rate = V.trauma/80 + V.stress/200
-	const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter( (key, item) => !item.id.has('angelpowder') && iCandy.getStat(item.id, 'efTimer') - V.timeStamp <= 1800 )
+	const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter( ([key, item]) => !item.id.has('angelpowder') && iCandy.getStat(item.id, 'efTimer') - V.timeStamp <= 1800 )
 	console.log('combat feed drugs:',drugs)
 
 	let html = ''
@@ -217,7 +238,7 @@ function iCombatHandle(){
 		}
 
 		//当PC创伤或压力高于安全阈值时，NPC高概率喂PC天使粉。如果已经处于药效范围内，跳过
-		if(V.trauma >= V.traumamax * 0.8 || V.stress >= V.stressmax * 0.65 ){
+		if(V.trauma >= V.traumamax * 0.8 || V.stress >= V.stressmax * 0.8 ){
 
 			if( iCandy.getStat('angelpowder', 'efTimer') > V.timeStamp ){
 				continue;

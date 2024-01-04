@@ -372,7 +372,7 @@ function printPalams(palam, value){
 	return `<<${gl.repeat(count)}${palam}>>`;
 }
 
-function useMethods(tags, item){
+function useMethods(tags){
 	let methods = ['use', '使用']
 	if(tags.includes('pill')){
 		methods = ['take', '吞下']

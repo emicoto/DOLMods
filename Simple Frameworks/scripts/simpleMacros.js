@@ -10,7 +10,7 @@ setup.lang = {
     willpower : { EN: 'Willpower', CN: '意志' },
     alcohol : { EN: 'Alcohol', CN: '酒精' },
     hallucinogen : { EN: 'Hallucinogen', CN: '幻觉' },
-    hungry : { EN: 'Hungry', CN: '饥饿' },
+    hunger : { EN: 'Hunger', CN: '饥饿' },
     health : { EN: 'Health', CN: '健康' },
     storage : { EN: 'Storage', CN: '库存' },
     mechanic : { EN: 'Mechanic', CN: '机械' },

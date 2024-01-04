@@ -41,8 +41,8 @@ const combatFeedMsg = function(npc, drugItem){
 
 		return html + '<br>'
 	}
-
-	console.log('combat feed drugs:',npc, drugItem)
+	if(iCandy.config.debug)
+		console.log('combat feed drugs:',npc, drugItem);
 
 	const data = Items.get(drugItem)
 	const palams = data.onUse('enemy')

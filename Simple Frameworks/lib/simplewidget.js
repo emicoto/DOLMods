@@ -128,7 +128,9 @@ window.simpleFrameworks = {
     createMicroWidgets : async function(){
         const print = {
             hasPassageArr : ({passage, widget})=>{
-                return `<<if [${passage.join()}].includes(V.passage)>><<${widget}>><</if>>\n`
+                const arr = passage.join('","')
+
+                return `<<if ["${arr}"].includes(V.passage)>><<${widget}>><</if>>\n`
             },
             hasPassage : ({passage, widget})=>{
                 return `<<if V.passage is "${passage}">><<${widget}>><</if>>\n`

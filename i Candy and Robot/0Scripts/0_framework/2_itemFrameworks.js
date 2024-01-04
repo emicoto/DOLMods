@@ -176,25 +176,6 @@ class Items {
 		this[prop] = val
 		return this
 	}
-	/**
-	 * 一键设置药丸
-	 * @returns {Items}
-	 */
-	isPill() {
-		this.tags.push('pill')
-		this.size = 'pill'
-		return this
-	}
-
-	/**
-	 * 一键设置针剂
-	 * @returns {Items}
-	 */
-	isInject() {
-		this.tags.push('inject')
-		this.size = 'inject'
-		return this
-	}
 
 	/**
 	 * 设置物品说明
@@ -303,6 +284,12 @@ class Items {
 		return this
 	}
 
+	getPalam(param, value){
+		let list = ['trauma', 'pain', 'tiredness', 'drunk', 'hallucinogen','control','corruption','stress', 'drugged', 'awareness']
+		if(!V.statFreeze && list.includes(param))
+			V[param] = Math.clamp(V[param] + value, 0, 10000)
+	}
+
 	/**
 	 * 通用的使用效果处理
 	 * set the general effect when used
@@ -312,11 +299,11 @@ class Items {
 	 */
 	doDelta(param, value, method) {
 		if (param == 'aphrod') {
-			iUtil.getPalam('drugged', value)
+			this.getPalam('drugged', value)
 			param = 'drugged'
 		}
 		else if (param == 'drunk') {
-			iUtil.getPalam('drunk', value)
+			this.getPalam('drunk', value)
 			param = 'alcohol'
 		}
 		else {
@@ -579,6 +566,15 @@ function pocketItem(itemId, num, diff){
 		this.diff = diff
 		this.uid = data.id + '_' + diff
 	}
+}
+
+function generalUseItemMsg(tags, names){
+	let methods = useMethods(tags)
+	let html = lanSwitch(
+		`You ${methods[0]} the ${names[0].toLocaleLowerCase()}.`, 
+		`你${methods[1]}了${names[1]}。`
+	)
+	return html
 }
 
 //数组和对象在DOL内部传递有蜜汁错误。所以从背包里传递过来的，是具体位置信息。

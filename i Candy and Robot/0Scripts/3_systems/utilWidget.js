@@ -141,7 +141,7 @@ const iUtil = {
 		return img
 	},
 
-	itemIcon : function(itemId, diff){
+	itemIcons : function(itemId, diff){
 		let data = Items.get(itemId)
 		let item = { id : itemId, diff : diff, count: data.num }
 
@@ -217,7 +217,8 @@ const iUtil = {
 			}
 			_html += `</div>`
 
-			console.log(_html)
+			if(iCandy.config.debug)
+				console.log(_html);
 
 			html += _html
 		}
@@ -232,20 +233,24 @@ function printTemplet(string, ...args){
     return string
 }
 
+function noEventRunning(){
+	return !V.event && V.eventskip == 0 && V.combat == 0
+}
+window.noEventRunning = noEventRunning
 
 function wetAnusLub(arg){
 	V.player.bodyliquid.anus.goo += arg
 }
 DefineMacroS('anusgoo', wetAnusLub)
 
-function itemIcon(itemId, diff){
+function itemIcons(itemId, diff){
 	if(diff == 'undefined') diff = undefined	
 	if(V.options.images == 1){
-		return iUtil.itemIcon(itemId, diff)
+		return iUtil.itemIcons(itemId, diff)
 	}
 	return ''
 }
-DefineMacroS('itemIcon', itemIcon)
+DefineMacroS('itemIcons', itemIcons)
 
 function printMedicineLink(itemId, diff){
 	if(!itemId) return ;
@@ -275,7 +280,7 @@ function printMedicineLink(itemId, diff){
 
 
 
-	return `<<itemIcon '${itemId}' '${diff}'>><<link '${linkname}' 'Shop Pharmacy Sale'>><<set $pharmacyItem to Items.get("${itemId}")>><</link>><br>`
+	return `<<itemIcons '${itemId}' '${diff}'>><<link '${linkname}' 'Shop Pharmacy Sale'>><<set $pharmacyItem to Items.get("${itemId}")>><</link>><br>`
 }
 
 DefineMacroS('iMedicineLink', printMedicineLink)

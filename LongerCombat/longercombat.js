@@ -13,9 +13,9 @@ function simpleEjaculation(){
         wikifier('personselect', i)
 
         if(wearingCondom(i)){
-            if(V.NPCList[i].condom.state == 'defective')
+            if(V.NPCList[i]?.condom?.state == 'defective')
                 T.condomResult = 'leaked';
-            else if (V.NPCList[i].condom.state == 'defective')
+            else if (V.NPCList[i]?.condom?.state == 'defective')
                 T.condomResult = 'burst';
             else
                 T.condomResult = 'contained';
@@ -155,7 +155,8 @@ function simpleEjaculation(){
 
     }
 
-    if(html.length > 2){
+    const whitelistnpc = ['Avery', 'Briar', 'Darryl', 'Eden', 'Harper', 'Landry', 'Morgan', 'Whitney', 'Remy', 'Wren']
+    if(html.length > 2 && !V.npc.containsAn(...whitelistnpc)){
         console.log(html)
         T.outputHtml = html
     }
@@ -179,7 +180,7 @@ function longerCombat(){
             V.enemyarousalmax = V.enemyarousalmax * mult + random(1, 99) + Math.random()
         }
 
-        if(Math.floor(V.enemyarousal/500) > Math.floor(V.lastejaculated/500) && V.NPCList[0].penis !== undefined){
+        if(Math.floor(V.enemyarousal/500) > Math.floor(V.lastejaculated/500) && V.NPCList[0].penis !== 'none'){
             V.lastejaculated = V.enemyarousal;
             if(midEjac == true && random(100) <= ejacRate ){
                 simpleEjaculation()

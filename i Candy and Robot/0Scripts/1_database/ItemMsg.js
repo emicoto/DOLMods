@@ -49,14 +49,7 @@ const equipText = {
 	}
 }
 
-function generalUseItemMsg(tags, names){
-	let methods = useMethods(tags)
-	let html = lanSwitch(
-		`You ${methods[0]} the ${names[0].toLocaleLowerCase()}.`, 
-		`你${methods[1]}了${names[1]}。`
-	)
-	return html
-}
+
 
 const itemMsg = {
 	fruitscandy: [
@@ -128,6 +121,5 @@ const itemMsg = {
 
 Object.defineProperties(window, {
 	equipText: { get: ()=>equipText },
-	generalUseItemMsg: { get: ()=>generalUseItemMsg },
 	itemMsg: { get: ()=>itemMsg },
 })

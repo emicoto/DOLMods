@@ -9,7 +9,8 @@ iEvent.registEvent('location',
         type: 'Event',
         phase: 3,
         eventnext: true,
-        require: (data)=>{ return iEvent.getFlag('brothel', 'drugsintro') !== 1 && V.brothel_basement_intro == 1 && V.tvar.lastPassage == 'Brothel' && iEvent.getFlag('brothel', 'prostitution') >= 1 }
+        require: (data)=>{ return iEvent.getFlag('brothel', 'drugsintro') !== 1 && 
+            V.brothel_basement_intro == 1 && V.tvar.lastPassage == 'Brothel' }
     },
     {
         match: /[a-zA-Z]+ Street$|Park$/,
@@ -17,11 +18,11 @@ iEvent.registEvent('location',
         type: 'Event',
         toward: 'Chinatown RandomRumors',
         initcode: '<<set $tvar.scene.branch to random(1,4)>><<set $tvar.scene.exit to $tvar.lastPassage>>',
-        endcode: '<<set $eventskip to 1>><<run iEvent.addFlag("chinatown", "rumors", 1)>>',
+        endcode: '<<set $eventskip to 1>><<run iEvent.addFlag("chinatown", "rumors", 1); iEvent.addFlag("chinatown", "rumorstoday", 1)>>',
         require: (data)=>{
             return iEvent.getFlag('chinatown', 'intro') == undefined &&
-            V.location == 'town' &&
-            V.eventskip == 0 && random(100) < 30
+            V.location == 'town' && noEventRunning() && random(100) < 20 &&
+            Time.days > 2 && iEvent.getFlag('chinatown', 'rumorstoday') < 2
         }
     }
 )
@@ -38,7 +39,7 @@ iEvent.registEvent('Passout', {
         let passout = iEvent.getFlag('harvest', 'passout') || 0
         passout += iEvent.getFlag('mer', 'passout') || 0
 
-        return iEvent.getFlag('chinatown', 'prologue') == undefined && V.bus == 'harvest' && passout  >= 3 
+        return iEvent.getFlag('chinatown', 'prologue') == undefined && V.bus == 'harvest' && passout  >= 3 && Time.day > 2
     },
 })
 
