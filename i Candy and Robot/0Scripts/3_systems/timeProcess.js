@@ -90,12 +90,27 @@ function minuteProcess(sec, min){
 	}
 
 	//-------------------------------------------------------------
-	// 其他每小时处理
+	// 其他每分钟处理
 	//-------------------------------------------------------------
+	if(!min) return;
+	//获得口渴值，口渴值受到疲劳的影响
+	let thirstMult = 1 + (V.tiredness / C.tiredness.max)
+	V.thirst = Math.clamp((V.thirst + 1 * min * thirstMult).fix(2), 0, C.thirst.max)
 
-	//当饥饿过高时获得压力
-	if(V.hunger >= C.hunger.max * 0.8 && min > 0){
-		wikifier('stress', 1 * min, 10)
+	//获得饥饿值, 饥饿值受到疲劳的影响
+	let hungerMult = 1 + (V.tiredness / C.tiredness.max)
+	V.hunger = Math.min((V.hunger + 1 * min * hungerMult).fix(2), C.hunger.max)
+
+	//当饥饿值过高时，获得通知
+	if(V.hunger >= C.hunger.max * 0.8){
+		wikifier('stress', 8, 40)
+		V.addMsg += lanSwitch(stateEffects.hungry) + '<<gstress>><br>'
+	}
+
+	//当饥渴值过高时，获得通知
+	if(V.thirst >= C.thirst.max * 0.8){
+		wikifier('stress', 8, 40)
+		V.addMsg += lanSwitch(stateEffects.thirst) + '<<gstress>><br>'
 	}
 
 }
@@ -114,15 +129,21 @@ function hourProcess(sec, hour){
 	//-------------------------------------------------------------
 	// 其他每小时处理
 	//-------------------------------------------------------------
-
-	//获得饥饿值
-	V.hunger = Math.min(V.hunger + 100 * hour, C.hunger.max)
-
-	//当饥饿值过高时，获得通知
-	if(V.hunger >= C.hunger.max * 0.8){
-		wikifier('stress', 8, 40)
-		V.addMsg += lanSwitch(stateEffects.hungry) + '<<gstress>><br>'
+	
+	//随机减少商店库存，营造商店销售的假象
+	for( const [key, shelf] of Object.entries(V.iShop)){
+		if(shelf.state == 'stocked'){
+			shelf.stocks.forEach( item => {
+				if(random(100) < 40){
+					const data = Items.get(item.id)
+					const sale = random(2, 6)
+					item.stock = Math.max(0, item.stock - sale)
+					item.count = Math.max(0, item.stock * data.num )
+				}
+			})
+		}
 	}
+
 }
 
 
@@ -159,6 +180,17 @@ function dayProcess(sec, day, weekday){
 			chinatown[key] = 0
 		}
 	}
+
+	//商店上库存不足5的物品填充至20
+	for( const [key, shelf] of Object.entries(V.iShop)){
+		shelf.stocks.forEach( item => {
+			const data = Items.get(item.id)
+			if(item.stock <= 5){
+				item.stock = 20
+				item.count = item.stock * data.num
+			}
+		})
+	}
 }
 
 
@@ -166,6 +198,11 @@ function weekProcess(sec, day, weekday){
 
 	//事件flag的清理
 	iEvent.setFlag('chinatown', 'goatweek', 0)
+	
+	//清理商店的库存
+	for( const [key, shelf] of Object.entries(V.iShop)){
+		shelf.state = 'clear'
+	}
 }
 
 function iCombatHandle(){

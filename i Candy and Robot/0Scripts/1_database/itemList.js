@@ -1,6 +1,7 @@
+
 const iFoods = [
 {
-	tags: ["pieces", "food", "candy"],
+	tags: ["pieces", "candy", "packed"],
 
 	id: "fruitscandy",
 	name: ["Fruits Candy", "水果糖"],
@@ -25,7 +26,7 @@ const iFoods = [
 },
 
 {
-	tags: ["pieces", "food", "candy"],
+	tags: ["pieces", "candy", "packed"],
 
 	id: "chocolate",
 	name: ["Chocolate", "巧克力"],
@@ -49,7 +50,7 @@ const iFoods = [
 	
 },
 {
-	tags: ["packed", "food", "snack"],
+	tags: ["packed", "snack"],
 
 	id: "potachips",
 	name: ["Potato Chips", "薯片"],
@@ -74,7 +75,7 @@ const iFoods = [
 },
 
 {
-	tags: ["packed", "food", "snack"],
+	tags: ["packed", "snack"],
 
 	id: "orionring",
 	name: ["Orion Rings", "洋葱圈"],
@@ -97,7 +98,7 @@ const iFoods = [
 
 },
 {
-	tags: ["pieces", "food", "candy"],
+	tags: ["pieces", "candy"],
 
 	id: "lolipop",
 	name: ["Lolipop", "波板糖"],
@@ -121,7 +122,7 @@ const iFoods = [
 	msg : itemMsg.lolipop,
 },
 {
-	tags: ["packed", "food", "snack"],
+	tags: ["packed", "snack"],
 
 	id: "oreo",
 	name: ["Oreo", "奥利奥"],
@@ -143,7 +144,7 @@ const iFoods = [
 	],
 },
 {
-	tags: ["boxed", "food", "snack"],
+	tags: ["boxed", "snack"],
 
 	id: "pocky",
 	name: ["Pocky", "百奇"],
@@ -164,7 +165,7 @@ const iFoods = [
 	],
 },
 {
-	tags: ["canned", "food", "snack"],
+	tags: ["canned", "snack"],
 
 	id: "fruitscrisp",
 	name: ["Fruits Crisp", "干果"],
@@ -186,7 +187,7 @@ const iFoods = [
 	],
 },
 {
-	tags: ["packed", "food", "snack"],
+	tags: ["packed", "snack"],
 
 	id: "jellos",
 	name: ["Jellos", "果冻"],
@@ -208,7 +209,7 @@ const iFoods = [
 	],
 },
 {
-	tags: ["food", "prepared"],	
+	tags: ["bun", "premade"],
 
 	id: "sandwich",
 	name: ["Sandwich", "三文治"],
@@ -230,7 +231,8 @@ const iFoods = [
 },
 
 {
-	tags: ["pieces", "food", "stall"],
+	tags: ["pieces", "candy"],
+	location: ["stall"],
 
 	id: "candyfloss",
 	name: ["Candyfloss", "棉花糖"],
@@ -256,7 +258,7 @@ const iFoods = [
 },
 
 {
-	tags: ["food", "prepared"],
+	tags: ["mealbox", "premade"],
 
 	id: "lunchbox",
 	name: ["Simple Combo", "简易套餐"],
@@ -277,7 +279,7 @@ const iFoods = [
 },
 
 {
-	tags: ["boxed", "food", "cookie"],
+	tags: ["boxed", "snack", 'sweets', "pieces"],
 	id: "danishcookies",
 	name: ["Danish Cookies", "丹麦曲奇"],
 	plural:"Boxes of Danish Cookies",
@@ -299,7 +301,7 @@ const iFoods = [
 
 },
 {
-	tags: ["boxed", "food" ,"candy"],
+	tags: ["boxed", "candy", "pieces"],
 	id:"ferrero",
 	name:["Ferrero", "费列罗巧克力"],
 	plural:"Boxes of Ferrero",
@@ -320,10 +322,10 @@ const iFoods = [
 	],
 },
 {
-	tags: ["food", "bread", "packed"],
-	id:"sandwitchbread",
-	name:["Sandwitch Bread", "三文治面包"],
-	plural:"Sandwitch Breads",
+	tags: ["bread", "packed"],
+	id:"sandwichbread",
+	name:["Sandwich Bread", "三文治面包"],
+	plural:"Sandwich Breads",
 
 	num: 10,
 	price: 1000,
@@ -339,7 +341,7 @@ const iFoods = [
 	]
 },
 {
-    tags:["seasonal", "spring", "food", "mealbox"],
+    tags:["seasonal", "spring", "mealbox"],
 
     id:"SpringBoxedMeal",
     name:["Spring boxed meal", "春季便当"],
@@ -359,15 +361,15 @@ const iFoods = [
     msg:itemMsg.SpringBoxedMeal
 },
 {
-    tags:["seasonal", "autumn", "food", "mealbox"],
+    tags:["seasonal", "autumn", "mealbox"],
 
     id:"CreamChestnutCake",
     name:["Cream Chestnut Cake", "秋季便当"],
     plural:"Cream Chestnut Cake",
 
     info: [
-    "Inside the luxurious lacquer box are a variety of autumn specialties, including rice soaked in eel sauce, tender grilled eel, sliced matsutake mushrooms, and fresh salmon arranged like vibrant flowers. Enjoy to your heart''s content!",
-    "豪华的漆器盒子里面装载著满满的秋日特产，吸饱了蒲烧酱汁的米饭、肥嫩的蒲烧鳗、切成片的松茸，还有摆放成鲜豔花朵的当季新鲜鲑鱼，请尽情享用 ！",
+    "A luxury box filled by autumn specialties, includes rice, tender grilled eel, matsutake mushrooms, and fresh salmon arranged like vibrant flowers.",
+    "豪华的漆器盒子里面装载著满满的秋日特产，吸饱了蒲烧酱汁的米饭、肥嫩的蒲烧鳗、切成片的松茸，还有摆放成鲜豔花朵的当季新鲜鲑鱼。",
     ],
 
     price: 4820,
@@ -380,15 +382,15 @@ const iFoods = [
 },
 
 {
-    tags:["seasonal", "autumn", "food", "cake", "pieces"],
+    tags:["seasonal", "autumn", "cake", "pieces", "sweets"],
 
-    id:"ChestnutEarlGreyCake",
-    name:["Chestnut Earl Grey Cake", "栗香伯爵茶戚风蛋糕"],
-    plural:"Chestnut Earl Grey Cake",
+    id:"ChestnutRoyalCake",
+    name:["Chestnut Royal Cake", "栗香伯爵茶戚风蛋糕"],
+    plural:"Chestnut Royal Cake",
 
     info: [
-    "Added a generous amount of chestnut filling on top of the Earl Grey tea chiffon cake, with finely chopped chocolate surrounding the Earl Grey cream. It smells of Earl Grey tea with a hint of fruity and chestnut sweetness.",
-    "在伯爵茶戚风蛋糕的基底上加入了满满的栗子馅，细碎的巧克力围绕著红茶奶油、闻起来充满了伯爵红茶带著些微果香的芬芳与栗子馨香甜美。，"
+    "Royal tea chiffon cake filled with chesnuts, and chopped chocolate surrounding. It smells of Royal tea with a hint of fruity and chestnut sweetness.",
+    "在伯爵茶戚风蛋糕的基底上加入了满满的栗子馅，细碎的巧克力围绕著红茶奶油、闻起来充满了伯爵红茶带著些微果香的芬芳与栗子馨香甜美。",
     ],
 
     price: 12400,
@@ -404,6 +406,46 @@ const iFoods = [
 Items.addItems(iFoods, 'foods')
 
 const iDrinks = [
+	{
+		tags: ["bottle", "water"],
+
+		id: "water",
+		name: ["Water", "水"],
+		plural: "Water",
+
+		info: [
+			"A bottle of potable water from an unreliable source.",
+			"一瓶可饮用水，但水源不可靠。",
+		],
+
+		price: 89,
+		num: 1,
+		size: "medium",
+
+		effects: [
+			["thirsty", 800]
+		],
+	},
+	{
+		tags: ["bottle", "water"],
+
+		id: "mineralwater",
+		name: ["Mineral Water", "矿泉水"],
+		plural: "Bottles of Water",
+
+		info: [
+			"A bottle of mineral water, drink it to relieve thirst",
+			"一瓶矿泉水，喝了能解渴",
+		],
+
+		price: 152,
+		num: 1,
+		size: "medium",
+
+		effects: [
+			["thirsty", 1200]
+		],
+	},
 	{
 		tags: ["bottle", "soda"],
 	
@@ -480,13 +522,14 @@ const iDrinks = [
 		info: ["A regular glass bottle Frappuccino", "一瓶星冰乐咖啡"],
 		effects: [
 			["stress", 3],
+			["tiredness", 10],
 			["thirsty", 800]
 		],
 	},
 	{
 		tags: ["canned", "coffee"],
 	
-		id: "coffe",
+		id: "cancoffe",
 		name: ["Can of Coffe", "罐装咖啡"],
 		plural:"Cans of coffe",
 	
@@ -496,6 +539,7 @@ const iDrinks = [
 		info: ["A regular canned coffe", "一罐普通的咖啡"],
 		effects: [
 			["stress", 1],
+			["tiredness", 20],
 			["thirsty", 500]
 		],
 	},
@@ -512,6 +556,26 @@ const iDrinks = [
 	
 		info: [
 			'Energy drink, "Red Bull gives you wings"',
+			"能量饮料，红牛能让你飞起来",
+		],
+		effects: [
+			["tiredness", 50],
+			["thirsty", 500]
+		],
+	},
+	
+	{
+		tags: ["bottle", "energy"],
+	
+		id: "sportdrink",
+		name: ["Energy Drink", "能量饮料"],
+		plural:"bottles of Energy Drink",
+	
+		num: 1,
+		price: 800,
+	
+		info: [
+			'Sport drink, gives you an instant charge.',
 			"能量饮料，红牛能让你飞起来",
 		],
 		effects: [
@@ -543,8 +607,8 @@ const iDrinks = [
 		tags: ["bottle", "tea"],
 	
 		id: "milktea",
-		name: ["Milk Tea", "午后奶茶"],
-		plural:"Bottles of Milk Tea",
+		name: ["Queen's Milk Tea", "皇后奶茶"],
+		plural:"Bottles of Queen's Milk Tea",
 	
 		num: 1,
 		price: 849,
@@ -558,9 +622,46 @@ const iDrinks = [
 			["thirsty", 600]
 		],
 	},
+	{
+		tags: ["bottle", "tea"],
+	
+		id: "royaltea",
+		name: ["Royal Tea", "午后红茶"],
+		plural:"Bottles of Royal Tea",
+	
+		num: 1,
+		price: 649,
+	
+		info: [
+			"Fresh and fragrant straight tea, makes your afternoon full of happiness",
+			"清新香醇的红茶，让你的午后充满幸福感",
+		],
+		effects: [
+			["stress", 1],
+			["thirsty", 500]
+		],
+	},
+	{
+		tags: ["bottle", "tea"],
+	
+		id: "icetea",
+		name: ["Ice Tea", "冰红茶"],
+		plural:"Bottles of Ice Tea",
+	
+		num: 1,
+		price: 562,
+	
+		info: [
+			"Refreshingly sweet and sour iced tea for a cool day.",
+			"清爽酸甜的冰红茶，给你清凉的一天。",
+		],
+		effects: [
+			["thirsty", 800]
+		],
+	},
 ]
 
-Items.addItems(iFoods, 'drinks')
+Items.addItems(iDrinks, 'drinks')
 
 
 const ingredients = [
@@ -595,7 +696,7 @@ const ingredients = [
 		],
 	},
 	{
-		tags: ["creamy","cooking", "food"],
+		tags: ["creamy","cooking", "edible"],
 		id:"cream",
 		name:["Cream", "奶油"],
 		plural:"Cream",
@@ -689,11 +790,11 @@ const ingredients = [
 		]
 	}
 ]
-Items.addItems(ingredients)
+Items.addItems(ingredients, 'ingredients')
 
-const dailyConsumables = [
+const Sundries = [
 	{
-		tags: ['daily', 'roll'],
+		tags: ['sundry', 'roll'],
 		id: 'papertowel',
 		name: ['Roll of Paper Towel', '纸巾'],
 		plural: 'Rolls of Paper towel',
@@ -719,6 +820,8 @@ const dailyConsumables = [
 		}
 	}
 ]
+Items.addItems(dailyConsumables, 'misc')
+
 
 const Gacha = [
 	{
@@ -1408,8 +1511,8 @@ const iAddictive = [
     plural:"Sakura Wine",
 
     info: [
-    "In a glass bottle is a trans pink liquor brewed with green apple and cherry blossom as its base,  with a whole cherry blossom and gold leaf inside ! It looks very dreamy.",
-    "透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔！看上去非常梦幻。",
+    "The clear glass bottle contains a pale pink, green apple and cherry blossom based brew with whole cherry blossoms and gold leaf.",
+    "透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔。",
     ],
 
     price: 12860,
@@ -1432,7 +1535,7 @@ const iAddictive = [
     plural:"bulkSakuraWine",
 
     info: [
-    "In a glass bottle is a trans pink liquor brewed with green apple and cherry blossom as its base,  with a whole cherry blossom and gold leaf inside ! It looks very dreamy.　But selling it so cheap... seems suspicious.",
+    "The clear glass bottle contains a pale pink, green apple and cherry blossom based brew with whole cherry blossoms and gold leaf. The price it cheaper...queit suspicious.",
     "透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔！看上去非常梦幻。但是卖得这么便宜…有些可疑",
     ],
 
@@ -1455,7 +1558,7 @@ const iAddictive = [
     plural:"Osmanthus wine",
 
     info: [
-    "The liquor presents a bright amber hue, and the bottle neck is adorned with a delicate circle of pale golden osmanthus. Though unopened, it seems to emit the fragrant scent of osmanthus. Upon shaking the bottle, osmanthus blooms abundantly and cascades gracefully.",
+    "The liquor presents a bright amber hue, and the bottle neck is adorned with a delicate circle of pale golden osmanthus.",
     "酒液呈明亮的琥珀色，瓶口装饰着一圈淡淡的金黄色桂花。虽未开瓶，却仿佛散发着芬芳的桂花香。晃动瓶身，桂花纷繁而落。",
     ],
 

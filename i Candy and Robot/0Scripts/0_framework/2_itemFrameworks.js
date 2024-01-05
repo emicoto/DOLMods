@@ -10,7 +10,7 @@ class Items {
 	static set(obj) {
 		const { type, id, name } = obj
 		if (this.data[id] !== undefined) {
-			throw new Error('item already exist:', id)
+			throw new Error('item already exist:'+ id)
 		}
 
 		const _data = new Items(type, id, name)
@@ -30,7 +30,7 @@ class Items {
 	 */
 	static add(type, id, name, ...args) {
 		if (this.data[id] !== undefined) {
-			throw new Error('item already exist:', id)
+			throw new Error('item already exist:'+ id)
 		}
 
 		const [price, num, size] = args
@@ -48,7 +48,7 @@ class Items {
 		items.forEach((item) => {
 			const { type, id, name, price, num, size } = item
 			if (this.data[id] !== undefined) {
-				throw new Error('item already exist:', id)
+				throw new Error('item already exist:'+ id)
 			}
 
 			const _data = new Items( type ?? defaultType, id, name, price, num, size)

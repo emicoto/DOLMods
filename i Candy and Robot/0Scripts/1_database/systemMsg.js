@@ -145,6 +145,12 @@ const stateEffects = {
 		 You might black out if you don't eat something soon.`,
 		`<span class='orange'>你快饿晕了。</span><br>
 		 如果你不尽快吃点东西，你可能会晕倒。`
+	],
+	thirst : [
+		`<span class='orange'>You are dehydrated.</span><br>
+		 You might black out if you don't drink something soon.`,
+		`<span class='orange'>你快渴死了。</span><br>
+		 如果你不尽快喝点东西，你可能会晕倒。`
 	]
 }
 

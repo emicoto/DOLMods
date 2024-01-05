@@ -83,31 +83,62 @@
 
 <<widget "hungerBar">>
 <!-- 饥饿条 -->
-	<<if Number.isFinite($hunger)>>
-		<div id="hungercaption" @title="'Hunger: ' + $hunger.toFixed(2)">
-			<div @class="($options.showCaptionText is true ? '' : 'rightMeterText')">
-				<<lanSwitch "Hunger:" "饥饿：">>
-				<<if $options.showCaptionText is true>>
-					<<if $hunger gte $hungermax>>
-						<span class="red"><<lanSwitch "You are starving!" "你快饿死了！">></span>
-					<<elseif $hunger gte ($hungermax / 5) * 4>>
-						<span class="pink"><<lanSwitch "You are famished." "你饿坏了。">></span>
-					<<elseif $hunger gte ($hungermax / 5) * 3>>
-						<span class="purple"><<lanSwitch "You are ravenous." "你很饿了。">></span>
-					<<elseif $hunger gte ($hungermax / 5) * 2>>
-						<span class="blue"><<lanSwitch "You are hungry." "你饿了。">></span>
-					<<elseif $hunger gte ($hungermax / 5) * 1>>
-						<span class="lblue"><<lanSwitch "You are peckish." "你有点小饿。">></span>
-					<<elseif $hunger gte 1>>
-						<span class="teal"><<lanSwitch "You are satiated." "你吃饱了。">></span>
-					<<else>>
-						<span class="green"><<lanSwitch "You are full." "你很饱了。">></span>
-					<</if>>
+<<if Number.isFinite($hunger)>>
+	<div id="hungercaption" @title="'Hunger: ' + $hunger.toFixed(2)">
+		<div @class="($options.showCaptionText is true ? '' : 'rightMeterText')">
+			<<lanSwitch "Hunger:" "饥饿：">>
+			<<if $options.showCaptionText is true>>
+				<<if $hunger gte C.hunger.max>>
+					<span class="red"><<lanSwitch "You are starving!" "你快饿死了！">></span>
+				<<elseif $hunger gte (C.hunger.max / 5) * 4>>
+					<span class="pink"><<lanSwitch "You are famished." "你饿坏了。">></span>
+				<<elseif $hunger gte (C.hunger.max / 5) * 3>>
+					<span class="purple"><<lanSwitch "You are ravenous." "你非常饥饿。">></span>
+				<<elseif $hunger gte (C.hunger.max / 5) * 2>>
+					<span class="blue"><<lanSwitch "You are hungry." "你觉得饿了。">></span>
+				<<elseif $hunger gte (C.hunger.max / 5) * 1>>
+					<span class="lblue"><<lanSwitch "You are peckish." "你不是很饿。">></span>
+				<<elseif $hunger gte 1>>
+					<span class="teal"><<lanSwitch "You are satiated." "你完全饱了。">></span>
+				<<else>>
+					<span class="green"><<lanSwitch "You are full." "你吃得很撑。">></span>
 				<</if>>
-			</div>
-			<<set _showCaptionText to !$options.showCaptionText>>
-			<<statbar $hunger $hungermax _showCaptionText>>
-			<div style="clear:both;"></div>
+			<</if>>
 		</div>
-	<</if>>
+		<<set _showCaptionText to !$options.showCaptionText>>
+		<<statbar $hunger C.hunger.max _showCaptionText>>
+		<div style="clear:both;"></div>
+	</div>
+<</if>>
+<</widget>>
+
+<<widget "thirstyBar">>
+<!-- 干渴条 -->
+<<if Number.isFinite($thirst)>>
+	<div id="hungercaption" @title="'Thirst: ' + $thirst.toFixed(2)">
+		<div @class="($options.showCaptionText is true ? '' : 'rightMeterText')">
+			<<lanSwitch "Thirst:" "干渴：">>
+			<<if $options.showCaptionText is true>>
+				<<if $thirst gte C.thirst.max>>
+					<span class="red"><<lanSwitch "You are dehydrated!" "你完全脱水了！">></span>
+				<<elseif $thirst gte (C.thirst.max / 5) * 4>>
+					<span class="pink"><<lanSwitch "You are really thirsty." "你口干舌燥。">></span>
+				<<elseif $thirst gte (C.thirst.max / 5) * 3>>
+					<span class="purple"><<lanSwitch "You are thirsty." "你感觉很渴。">></span>
+				<<elseif $thirst gte (C.thirst.max / 5) * 2>>
+					<span class="blue"><<lanSwitch "Your throat is dry." "你喉咙发干。">></span>
+				<<elseif $thirst gte (C.thirst.max / 5) * 1>>
+					<span class="lblue"><<lanSwitch "You are satisfied." "你不是很渴。">></span>
+				<<elseif $thirst gte 1>>
+					<span class="teal"><<lanSwitch "You are satiated." "你并不口渴。">></span>
+				<<else>>
+					<span class="green"><<lanSwitch "You are full." "你完全不渴。">></span>
+				<</if>>
+			<</if>>
+		</div>
+		<<set _showCaptionText to !$options.showCaptionText>>
+		<<statbar $thirst C.thirst.max _showCaptionText>>
+		<div style="clear:both;"></div>
+	</div>
+<</if>>
 <</widget>>

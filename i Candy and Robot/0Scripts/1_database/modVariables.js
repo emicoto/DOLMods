@@ -221,6 +221,11 @@ C.hunger = {
 	min : 0
 }
 
+C.thirst = {
+	max : 2000,
+	min : 0
+}
+
 //--------------------------------------------------------
 //
 //  event Modules
@@ -269,6 +274,7 @@ const iCandyRobot = {
 		disableStack: false,
 		disablePockets: false,
 		keepHairs: true,
+		shopPriceMult : 1,
 	},
 
 	//mechanical module stats
@@ -298,6 +304,11 @@ const iCandyRobot = {
 		debt: 0,		//债务
 		credit: 100,	//借记卡限额
 		score: 100,		//信用分
+	},
+
+	discount:{
+		daiso: {},
+		snackshop: {},
 	},
 
 	phone:{
@@ -342,8 +353,6 @@ const iModVariables = {
 	mechanical	: 0, 
 	cooking		: 0,
 
-	hungermax	: 2000,
-
 	tvar : { //temporary variables
 		useItem: null,
 		exitPassage: null,
@@ -351,7 +360,31 @@ const iModVariables = {
 		img: null,
 		scene: {},
 		eventnext: null,
-	} 
+	},
+
+	iShop: {
+		daiso_snack: {
+			state: 'none',
+			discount: 0,
+			stocks: [],
+		},
+		daiso_drink: {
+			state: 'none',
+			discount: 0,
+			stocks: [],
+		},
+		daiso_foods: {
+			state: 'none',
+			discount: 0,
+			stocks: [],
+		},
+		daiso_sundry: {
+			state: 'none',
+			discount: 0,
+			stocks: [],
+		},
+	}
+
 
 }
 

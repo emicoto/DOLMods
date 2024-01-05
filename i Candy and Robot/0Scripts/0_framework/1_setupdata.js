@@ -354,6 +354,11 @@ function iModSetupDoLItems() {
 	Items.set(spray)
 }
 
+const maxPalam = {
+	hunger: 2000,
+	thirst: 2000,
+}
+
 function printPalams(palam, value){
 	let gl = 'l';
 	let count = 1;
@@ -365,8 +370,21 @@ function printPalams(palam, value){
 	} else if (Math.abs(value) > 20) {
 		count = 2;
 	}
+	
+	if(palam == 'hunger' || palam == 'thirsty'){
+		if(Math.abs(value) >= 500 ){
+			count = 3;
+		}
+		else if(Math.abs(value) >= 200 ){
+			count = 2;
+		}
+	}
+
 	if(palam == 'hallucinogen'){
 		palam = 'hallucinogens'
+	}
+	if(palam == 'thirsty'){
+		palam = 'thirst'
 	}
 
 	return `<<${gl.repeat(count)}${palam}>>`;
@@ -391,118 +409,214 @@ function useMethods(type, tags){
 	if(type == 'medicine'){
 		methods = ['take', '服用']
 	}
-	if(type == 'foods'){
-		methods = ['ate', '吃']
+	if(type == 'foods' || tags.includes('edible')){
+		methods = ['eat', '吃']
 	}		
-	if(type == 'drinks'){
+	if(type == 'drinks' || tags.includes('potable')){
 		methods = ['drink', '喝']
 	}
 
 	return methods
 }
+const iUnit = {
+	roll : {
+		EN : 'roll',
+		EN_plural : 'rolls',
+		CN : '卷'
+	},
+	canned : {
+		EN : 'can',
+		EN_plural : 'cans',
+		CN : '罐'
+	},
+	bottle : {
+		EN : 'bottle',
+		EN_plural : 'bottles',
+		CN : '瓶'
+	},
+	packed : {
+		EN : 'pack',
+		EN_plural : 'packs',
+		CN : '包'
+	},
+	bagged : {
+		EN : 'bag',
+		EN_plural : 'bags',
+		CN : '袋'
+	},
+	boxed : {
+		EN : 'box',
+		EN_plural : 'boxes',
+		CN : '盒'
+	},
+	set : {
+		EN : 'set',
+		EN_plural : 'sets',
+		CN : '套'
+	},
+	cup: {
+		EN : 'cup',
+		EN_plural : 'cups',
+		CN : '杯'
+	},
+	equip : {
+		EN : '',
+		EN_plural : '',
+		CN : '件'
+	},
+	misc : {
+		EN : '',
+		EN_plural : '',
+		CN : '个'
+	},
+	paper : {
+		EN : 'sheet',
+		EN_plural : 'sheets',
+		CN : '张'
+	},
+	pieces : {
+		EN : 'piece',
+		EN_plural : 'pieces',
+		CN : '块'
+	},
+	pair :{
+		EN : 'pair',
+		EN_plural : 'pairs',
+		CN : '双'
+	},
+	smoke : {
+		EN : '',
+		EN_plural : '',
+		CN : '支'
+	},
+	inject : {
+		EN : 'shot',
+		EN_plural : 'shots',
+		CN : '管'
+	},
+	pill : {
+		EN : 'pill',
+		EN_plural : 'pills',
+		CN : '片'
+	},
+	drugpowder : {
+		EN : 'bag',
+		EN_plural : 'bags',
+		CN : '包'
+	},
+	liquid : {
+		EN : 'ml',
+		EN_plural : 'ml',
+		CN : 'ml'
+	},
+	lite : {
+		EN : 'oz',
+		EN_plural : 'oz',
+		CN : 'oz'
+	},
+	powder : {
+		EN : 'lb',
+		EN_plural : 'lb',
+		CN : 'lb'
+	},
+	mealbox : {
+		EN : 'box',
+		EN_plural : 'boxes',
+		CN : '份'
+	},	
+	meal : {
+		EN : 'serving',
+		EN_plural : 'servings',
+		CN : '份'
+	},
+	bun : {
+		EN : 'bun',
+		EN_plural : 'buns',
+		CN : '个'
+	},
+	water : {
+		EN : 'bottle',
+		EN_plural : 'bottles',
+		CN : '瓶'
+	},
+}
 
-function itemUnit(tags, count){
-	const unit = {
-		pill : {
-			EN : 'pill',
-			EN_plural : 'pills',
-			CN : '片'
-		},
-		drugpowder : {
-			EN : 'bag',
-			EN_plural : 'bags',
-			CN : '包'
-		},
-		inject : {
-			EN : 'shot',
-			EN_plural : 'shots',
-			CN : '管'
-		},
-		roll : {
-			EN : 'roll',
-			EN_plural : 'rolls',
-			CN : '卷'
-		},
-		bagged : {
-			EN : 'bag',
-			EN_plural : 'bags',
-			CN : '袋'
-		},
-		paper : {
-			EN : 'sheet',
-			EN_plural : 'sheets',
-			CN : '张'
-		},
-		boxed : {
-			EN : 'box',
-			EN_plural : 'boxes',
-			CN : '盒'
-		},
-		canned : {
-			EN : 'can',
-			EN_plural : 'cans',
-			CN : '罐'
-		},
-		pieces : {
-			EN : 'piece',
-			EN_plural : 'pieces',
-			CN : '块'
-		},
-		packed : {
-			EN : 'pack',
-			EN_plural : 'packs',
-			CN : '包'
-		},
-		smoke : {
-			EN : '',
-			EN_plural : '',
-			CN : '支'
-		},
-		liquid : {
-			EN : 'ml',
-			EN_plural : 'ml',
-			CN : 'ml'
-		},
-		lite : {
-			EN : 'oz',
-			EN_plural : 'oz',
-			CN : 'oz'
-		},
-		powder : {
-			EN : 'lb',
-			EN_plural : 'lb',
-			CN : 'lb'
-		},
-		food : {
-			EN : 'serving',
-			EN_plural : 'servings',
-			CN : '份'
-		},
-		drink : {
-			EN : 'bottle',
-			EN_plural : 'bottles',
-			CN : '瓶'
-		},
-		equip : {
-			EN : '',
-			EN_plural : '',
-			CN : '件'
-		},
+const batchUnit = ['canned', 'bottle', 'packed', 'bagged', 'boxed', 'roll', 'set']
+const subUnit = Object.keys(iUnit).filter(i => batchUnit.includes(i) == false )
 
+//batch item unit
+function batchUnitTxt(tags, count){
+	let unit = ''
+	for(let i=0; i<batchUnit.length; i++){
+		if(tags.has(batchUnit[i])){
+			if(count > 1 && iUnit[batchUnit[i]][setup.language + '_plural']){
+				unit = iUnit[batchUnit[i]][setup.language + '_plural']
+			}
+			else{
+				unit = iUnit[batchUnit[i]][setup.language]
+			}
+			break
+		}
 	}
-	let text = 'x ' + count
+	return unit
+}
 
-	for(let i in unit){
-		if(tags.includes(i)){
-			if(count > 1 && unit[i][setup.language + '_plural']) 
-				text += unit[i][setup.language + '_plural']
-			else
-				text += unit[i][setup.language]
+//simple item unit
+function subUnitTxt(tags, count){
+	let unit = lanSwitch('', '个')
+	for(let i=0; i<subUnit.length; i++){
+		if(tags.has(subUnit[i])){
+			if(count > 1 && iUnit[subUnit[i]][setup.language + '_plural']){
+				unit = iUnit[subUnit[i]][setup.language + '_plural']
+			}
+			else{
+				unit = iUnit[subUnit[i]][setup.language]
+			}
+			break
+		}
+	}
+	return unit
+}
+
+
+function itemUnit(tags, count, num){
+	let text = `x${count}`
+
+	if(!num){
+		let unit = subUnitTxt(tags, count)
+		if(unit){
+			text = `${count}${unit}`
+			return text
+		}
+
+		unit = batchUnitTxt(tags, count)
+		if(unit){
+			text = `${count}${unit}`
+		}
+		return text
+	}
+
+	if(num){
+		let unit1 = batchUnitTxt(tags, count)
+		let unit2 = subUnitTxt(tags, count*num)
+
+		if( unit1 && unit2 && unit1 != unit2 ){
+			text = `${count}${unit1}(${count*num}${unit2})`
+		}
+		else if(unit1){
+			text = `${count}${unit1}`
+		}
+		else if(unit2){
+			text = `${num}${unit2}`
+		}
+		else{
+			text = `${count}`
 		}
 	}
 
 	return text
 }
+
 
 const pocketsList = ["body","held","bag","cart","hole"]
 
@@ -518,4 +632,9 @@ Object.defineProperties(window, {
 	printPalams: { value: printPalams },
 	useMethods: { value: useMethods },
 	itemUnit: { value: itemUnit },
+	iUnit: { value: iUnit },
+	batchUnit: { value: batchUnit },
+	subUnit: { value: subUnit },
+	batchUnitTxt: { value: batchUnitTxt },
+	subUnitTxt: { value: subUnitTxt },
 })

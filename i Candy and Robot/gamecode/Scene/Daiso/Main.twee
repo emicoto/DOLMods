@@ -63,7 +63,8 @@
 	<<set _link = lanSwitch('Leave', '离开')>>
 	
 	<<getouticon>><<link _link "Shopping Centre">>
-		<<run iEvent.unsetEvent()>>
+		<<run iEvent.unsetEvent(); iShop.clearCart()>>
+		<<unset $shoptabIndex>>
 		<<pass 1>>
 	<</link>>    
 <</if>>
@@ -77,36 +78,43 @@
 )>>
 <br><br>
 
+<div id="notice"></div>
+
+<div id="shopcartbox">
+</div>
+<hr>
+
 <div id="shopmenu">
-	<div class="shopheaderbox" onClick="iShop.getshelf('diasosnacks')">
-		<div class="shopheader">
-			<<lanSwitch 'Snacks' '零食'>>
+	<div class="shopmenubox" onClick="iShop.tabSwitch('daiso_snack')">
+		<div class="shopmenu">
+			<<lanSwitch 'Snack' '零食'>>
 		</div>
 	</div>
 		
-	<div class="shopheaderbox" onClick="iUtil.shopMenu('drinks')">
-		<div class="shopheader">
+	<div class="shopmenubox" onClick="iShop.tabSwitch('daiso_drink')">
+		<div class="shopmenu">
 			<<lanSwitch 'Drinks' '饮料'>>
 		</div>
 	</div>
 		
-	<div class="shopheaderbox" onClick="iUtil.shopMenu('foods')">
-		<div class="shopheader">
+	<div class="shopmenubox" onClick="iShop.tabSwitch('daiso_foods')">
+		<div class="shopmenu">
 			<<lanSwitch 'Foods' '食物'>>
 		</div>
 	</div>
 		
-	<div class="shopheaderbox" onClick="iUtil.shopMenu('sundries')">
-		<div class="shopheader">
-			<<lanSwitch 'Sundries' '杂物'>>
+	<div class="shopmenubox" onClick="iShop.tabSwitch('daiso_sundry')">
+		<div class="shopmenu">
+			<<lanSwitch 'Sundry' '杂物'>>
 		</div>
 	</div>    
 </div>
 
-<div id="shopbanner" class="snackbanner"> 
+<div id="shopbanner"> 
+	<div class="daiso_snack_banner"></div>
 </div>
 
-<div class="shopshelf">
+<div id="shopshelf">
 
 </div>
 
@@ -115,3 +123,7 @@
 
 <<ModShopZone>>
 <br><br>
+
+<<if not $shoptabIndex>>
+	<<run iShop.tabSwitch('daiso_snack')>>
+<</if>>
