@@ -6,14 +6,37 @@
 <<link _link "BaseScene Warehouse">>
     <<pass 3>>
 <</link>>
-<br>
-<<if iEvent.getFlag('chinatown', 'known') == 1 && !between(Time.hour, 9, 12)>>
+<<if iEvent.getFlag('chinatown', 'known') == 1 && !between(Time.hour, 8, 12)>>
+    <br>
     <br>
     <span class='lunepower'>
+    <<randomdata>>
+    <<datas>>
     <<=lanSwitch(
-        'A gust of wind blows a leaf of almond tree to you.',
+        'A gust of wind blows some almond leaf to you.',
         '一道远风向你吹来了一片杏树的叶子。'
     )>>
+    <<datas>>
+    <<=lanSwitch(
+        `A gust of wind blows a touch of almond fragrance to you.`,
+        `一阵远风向你吹来了一丝杏树的花香。`
+    )>>
+    <<datas>>
+    <<=lanSwitch(
+        `The wind blows and kisses your face, bring you a touch of almond fragrance.`,
+        `风吻过你的脸颊，带来了一丝杏树的花香。`
+    )>>
+    <<datas>>
+    <<=lanSwitch(
+        `The wind blows a cloud of almond blossom to you.`，
+        `风吹过一片杏花瓣飘落在你身上。`
+    )>>
+    <<datas>>
+    <<=lanSwitch(
+        `The wind blows you an ethereal song, carring a touch of almond fragrance through the air.`,
+        `风向你吹来一首空灵的歌，带着一丝杏树的花香在空气中飘舞。`
+    )>>
+    <</randomdata>>
     </span>
     <br>
     <<set _link to lanSwitch("Go to Chinatown", "前往唐人街")+' (00:05)'>>
@@ -22,7 +45,7 @@
     <</link>>
     <br>
 <</if>>
-
+<br>
 <</widget>>
 
 <<widget "chinatownExplore">> 
@@ -31,8 +54,9 @@
      (Time.dayState == 'dust' && iEvent.getFlag('chinatown', 'rumors') >= 3)
 )>>
     <span class='lunepower'>
+
     <<=lanSwitch(
-        'A gust of wind blows a leaf of almond tree to you,',
+        'A gust of wind blows some almond leaf to you,',
         '一道远风向你吹来了一片杏树的叶子，'
     )>>
     <<=lanSwitch(

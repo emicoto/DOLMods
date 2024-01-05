@@ -8,18 +8,7 @@
 <</widget>>
 
 <<widget "iCandyFooter">>
-<!-- 在PassageFooter里的处理
-<<randomdata>>
-<<datas>>
-一个测试A
-<<datas>>
-一个测试B
-<<datas>>
-一个测试C
-<<datas>>
-一个测试D
-<</randomdata>>
-  -->
+<!-- 在PassageFooter里的处理  -->
 
 <div id='modversion'>iCandyRobot ver <<=iCandy.version>> | SimpleFrameworks ver <<=simpleFrameworks.version>></div>
   
@@ -33,7 +22,6 @@
     //iEvent.initBaseScene();
     //iEvent.eventReady();
     iChara.XinyuCheck()
-
 >>
 <</if>>
 
@@ -75,7 +63,7 @@
 
 <<widget "iCandyCheats">>
 <!-- 作弊  -->
-<<link '一件清空药效'>><<run iCandy.fixDrugEffect()>><</link>>
+<<link '一键清空药效'>><<run iCandy.fixDrugEffect()>><</link>>
 <br>
 
 <</widget>>

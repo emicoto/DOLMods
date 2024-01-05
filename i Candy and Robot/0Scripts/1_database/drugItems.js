@@ -1,6 +1,7 @@
 
 function onUseDrags(enemy){
-	const { tags, effects, doDelta, type } = this
+	const _this = this;
+	const { tags, effects, type } = this
 	let id = this.id
 	if(this.alias){
 		id = this.alias
@@ -16,7 +17,7 @@ function onUseDrags(enemy){
 		let value = random(min, max);
 
 		value = value * Math.max(1 - take * 0.1, 0.2);
-		palams += doDelta(palam, value, method);
+		palams += _this.doDelta(palam, value, method);
 	});
 
 

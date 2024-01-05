@@ -303,7 +303,7 @@ const iFoods = [
 {
 	tags: ["boxed", "candy", "pieces"],
 	id:"ferrero",
-	name:["Ferrero", "费列罗巧克力"],
+	name:["Ferrero", "费列罗"],
 	plural:"Boxes of Ferrero",
 
 	num: 12,
@@ -547,15 +547,15 @@ const iDrinks = [
 	{
 		tags: ["canned", "energy"],
 	
-		id: "redbull",
-		name: ["Red Bull", "红牛"],
-		plural:"Cans of Red Bull",
+		id: "redcow",
+		name: ["Red Cow", "红羊"],
+		plural:"Cans of Red Cow",
 	
 		num: 1,
 		price: 800,
 	
 		info: [
-			'Energy drink, "Red Bull gives you wings"',
+			'Energy drink, "Red Cow gives you wings"',
 			"能量饮料，红牛能让你飞起来",
 		],
 		effects: [

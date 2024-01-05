@@ -6,9 +6,6 @@
 	<</link>>
 <</widget>>
 
-<<widget "daisoshelfsnacks">>
-	
-<</widget>>
 
 :: BaseScene DaisoShop [scene]
 <<set $outside to 0>><<set $location to "shopping_centre">><<effects>>

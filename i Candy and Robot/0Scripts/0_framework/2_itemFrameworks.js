@@ -284,7 +284,11 @@ class Items {
 		this.tags = Array.from(new Set(this.tags))
 		return this
 	}
-
+	/**
+	 * 
+	 * @param {string} param 
+	 * @param {number} value 
+	 */
 	getPalam(param, value){
 		let list = ['trauma', 'pain', 'tiredness', 'drunk', 'hallucinogen','control','corruption','stress', 'drugged', 'awareness']
 		if(!V.statFreeze && list.includes(param))
@@ -299,6 +303,7 @@ class Items {
 	 * @param {'p'|void} method 
 	 */
 	doDelta(param, value, method) {
+		console.log(this, this.getPalam)
 		if (param == 'aphrod') {
 			this.getPalam('drugged', value)
 			param = 'drugged'
@@ -590,6 +595,7 @@ function generalUseItemMsg(type, tags, names){
 //数组和对象在DOL内部传递有蜜汁错误。所以从背包里传递过来的，是具体位置信息。
 //for some reason, array and object can't be passed in DOL. so pass the the position of item in pocket.
 function useItems(pocket, pos, enemy){
+	const pocketData = V.iPockets[pocket]
 	let item = V.iPockets[pocket][pos]
 	let data = Items.get(item.id)
 	if(data.alias){
@@ -617,7 +623,7 @@ function useItems(pocket, pos, enemy){
 	item.count -= data.usage
 
 	if(item.count <= 0){
-		pocket.deleteAt(pos)
+		pocketData.deleteAt(pos)
 	}
 
 	if(enemy){
