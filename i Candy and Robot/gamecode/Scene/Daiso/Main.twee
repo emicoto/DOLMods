@@ -124,6 +124,8 @@
 <<ModShopZone>>
 <br><br>
 
+<<done>>
 <<if not $shoptabIndex>>
 	<<run iShop.tabSwitch('daiso_snack')>>
 <</if>>
+<</done>>
