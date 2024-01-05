@@ -381,10 +381,19 @@ function iCandyUpdate(){
 		iCandyInit()
 	}
 	else if(V.iCandyRobot.version !== iCandy.version ){
+
+		for(let i in iModVariables){
+			if(V[i] == undefined){
+				V[i] = clone(iModVariables[i])
+			}
+		}
+
 		V.iCandyRobot = iUtil.updateObj(iCandyRobot, V.iCandyRobot)
 		V.iPockets = iUtil.updateObj(iPockets, V.iPockets)
 		V.iStorage = iUtil.updateObj(iStorage, V.iStorage)
 		V.iRecipe = iUtil.updateObj(iRecipe, V.iRecipe)
+		V.iShop = iUtil.updateObj(iShop, V.iShop)
+
 
 		let drugsStat = V.iCandyRobot.drugStates.drugs
 		for( const [drug, data] of Object.entries(drugsStat)){

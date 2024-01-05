@@ -339,6 +339,29 @@ const iCandyRobot = {
 	flags:iEventFlags,
 }
 
+const iShop = {
+	daiso_snack: {
+		state: 'none',
+		discount: 0,
+		stocks: [],
+	},
+	daiso_drink: {
+		state: 'none',
+		discount: 0,
+		stocks: [],
+	},
+	daiso_foods: {
+		state: 'none',
+		discount: 0,
+		stocks: [],
+	},
+	daiso_sundry: {
+		state: 'none',
+		discount: 0,
+		stocks: [],
+	},
+}
+
 const iModVariables = {
 	//总控
 	iCandyRobot,
@@ -347,6 +370,7 @@ const iModVariables = {
 	iPockets,
 	iStorage,
 	iRecipe:vRecipe,
+	iShop,
 
 	//技能
 	chemical	: 0, 
@@ -361,31 +385,6 @@ const iModVariables = {
 		scene: {},
 		eventnext: null,
 	},
-
-	iShop: {
-		daiso_snack: {
-			state: 'none',
-			discount: 0,
-			stocks: [],
-		},
-		daiso_drink: {
-			state: 'none',
-			discount: 0,
-			stocks: [],
-		},
-		daiso_foods: {
-			state: 'none',
-			discount: 0,
-			stocks: [],
-		},
-		daiso_sundry: {
-			state: 'none',
-			discount: 0,
-			stocks: [],
-		},
-	}
-
-
 }
 
 const iModTattoos = [
