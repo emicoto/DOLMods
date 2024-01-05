@@ -3,16 +3,33 @@ const oldPass = Time.pass
 const TimeHandle = {
 	prevDate : {},
 	currentDate : {},
-	passTime : function(){
+	passTime : function(sec){
 		const { currentDate, prevDate } = this
 
+		let sec = sec
+		let min =  currentDate.minute - prevDate.minute
+
+		if(min < 0){
+			min += 60
+		}
+
+		let hour = currentDate.hour - prevDate.hour
+		if(hour < 0){
+			hour += 24
+		}
+
+		let day = currentDate.day - prevDate.day
+		let month = currentDate.month - prevDate.month
+		let year = currentDate.year - prevDate.year
+
+
 		return {
-			sec : currentDate.second - prevDate.second,
-			min : currentDate.minute - prevDate.minute,
-			day : currentDate.day - prevDate.day,
-			hour : currentDate.hour - prevDate.hour,
-			month : currentDate.month - prevDate.month,
-			year : currentDate.year - prevDate.year,
+			sec : sec,
+			min : min,
+			hour : hour,
+			day : day,
+			month : month,
+			year : year,
 			weekday : [prevDate.weekDay, currentDate.weekDay]
 		}
 	}
@@ -43,7 +60,7 @@ Time.pass = function(sec){
 }
 
 function iTimeHandle(passedSec){
-	const { min, day, hour, month, year, weekday } = TimeHandle.passTime()
+	const { min, day, hour, month, year, weekday } = TimeHandle.passTime(passedSec)
 	console.log('time handle:', passedSec, min, day, hour, month, year, weekday)
 
 	if(!T.addMsg){
@@ -92,16 +109,15 @@ function minuteProcess(sec, min){
 	//-------------------------------------------------------------
 	// 其他每分钟处理
 	//-------------------------------------------------------------
-	if(!sec < 60) return;
+	if(!sec < 60 || min <= 0) return;
 	//获得口渴值，口渴值受到疲劳的影响
-	min = Math.foor(sec / 60)
 
 	let thirstMult = 1 + (V.tiredness / C.tiredness.max)
 	V.thirst = Math.clamp((V.thirst + 1 * min * thirstMult).fix(2), 0, C.thirst.max)
 
 	//获得饥饿值, 饥饿值受到疲劳的影响
 	let hungerMult = 1 + (V.tiredness / C.tiredness.max)
-	V.hunger = Math.min((V.hunger + 1 * min * hungerMult).fix(2), C.hunger.max)
+	V.hunger = Math.clamp((V.hunger + 1 * min * hungerMult).fix(2), 0, C.hunger.max)
 
 	//当饥饿值过高时，获得通知
 	if(V.hunger >= C.hunger.max * 0.8){
