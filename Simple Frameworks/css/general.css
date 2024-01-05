@@ -17,3 +17,12 @@
 .abc {
     text-transform: lowercase;
 }
+
+#modversion {
+    font-size:xx-small;
+    position:fixed;
+    z-index: 1000;
+    bottom: 2px;
+    right: 2px;
+    color:#897489;
+}

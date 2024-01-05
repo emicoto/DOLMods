@@ -1,6 +1,12 @@
 {
   "name": "Simple Frameworks",
   "version": "1.7.1",
+  "modPacker": {
+    "modVersionJs": {
+      "file": "lib/simplewidget.js",
+      "regex": "^(let frameworkversion =)(.*)"
+    }
+  },
   "scriptFileList_inject_early": [
     "lib/util.js",
     "lib/selectcase.js",

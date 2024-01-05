@@ -20,6 +20,8 @@
 一个测试D
 <</randomdata>>
   -->
+
+<div id='modversion'>iCandyRobot ver <<=iCandy.version>> | SimpleFrameworks ver <<=simpleFrameworks.version>></div>
   
 <</widget>>
 

@@ -1051,6 +1051,10 @@
 
 			},
 			{
+				scr:'/*<<shopicon "closed">><<link',
+				applybefore:'\n\t\t<<ExtraLinkZone>>\n\t\t'
+			},
+			{
 				src:"/*Comment out when a new shop is",
 				applybefore:'\n\t\t<<ExtraLinkZone>>\n\t\t'
 			}

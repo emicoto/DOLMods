@@ -1,4 +1,10 @@
+let frameworkversion = "1.7.1"
+
 window.simpleFrameworks = {
+    version: frameworkversion,
+    name: 'Simple Frameworks',
+    author: 'Lune',
+    lastUpdate: '2024.01.04',
     onInit : function(...widgets){
         widgets.forEach((widget)=>{
             if(String(widget) == '[object Object]' && widget.name){
