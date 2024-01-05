@@ -63,7 +63,7 @@ $(document).on(':passageinit', ( data )=>{
 		for(let i in V){
 			window.bak[i] = clone(V[i])
 		}
-		console.timeEnd('bakup')		
+		console.timeEnd('bakup')
 		iEvent.startScene()
 	}
 

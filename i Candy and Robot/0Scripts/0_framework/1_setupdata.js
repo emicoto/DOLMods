@@ -484,6 +484,11 @@ const iUnit = {
 		EN_plural : 'pairs',
 		CN : '双'
 	},
+	uses :{
+		EN : 'use',
+		EN_plural : 'uses',
+		CN : '次'
+	},
 	smoke : {
 		EN : '',
 		EN_plural : '',

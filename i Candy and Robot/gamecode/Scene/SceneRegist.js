@@ -1,7 +1,7 @@
 //Brothel Basement
 iEvent.registEvent('location',
     {
-        passage: 'Brothel Basement',
+        entrypassage: 'Brothel Basement',
         scene: 'Brothel Basement',
         exit: 'Brothel Basement',
 
@@ -39,7 +39,7 @@ iEvent.registEvent('Passout', {
         let passout = iEvent.getFlag('harvest', 'passout') || 0
         passout += iEvent.getFlag('mer', 'passout') || 0
 
-        return iEvent.getFlag('chinatown', 'prologue') == undefined && V.bus == 'harvest' && passout  >= 3 && Time.day > 2
+        return iEvent.getFlag('chinatown', 'prologue') == undefined && V.bus == 'harvest' && passout  >= 3 && Time.days > 2
     },
 })
 

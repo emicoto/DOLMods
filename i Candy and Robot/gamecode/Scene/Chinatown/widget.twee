@@ -8,6 +8,7 @@
 <</link>>
 <br>
 <<if iEvent.getFlag('chinatown', 'known') == 1 && !between(Time.hour, 9, 12)>>
+    <br>
     <span class='lunepower'>
     <<=lanSwitch(
         'A gust of wind blows a leaf of almond tree to you.',

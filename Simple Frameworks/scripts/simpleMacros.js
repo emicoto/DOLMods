@@ -85,7 +85,7 @@ function nnpcboy(npc){
 DefineMacroS('nnpcboy', nnpcboy)
 
 function nnpcBoy(npc){
-    return nnpcboy(npc).toUpperCaseFirst()
+    return nnpcboy(npc).toUpperFirst()
  }
  DefineMacroS('nnpcBoy', nnpcBoy)
 
@@ -106,7 +106,7 @@ function nnpcBoy(npc){
     }
     let pron = pronun.toLowerCase()
 
-    return pronun[0] == 'H' ? lan[setup.language][pron].toUpperCaseFirst() : lan[setup.language][pron]
+    return pronun[0] == 'H' ? lan[setup.language][pron].toUpperFirst() : lan[setup.language][pron]
  }
 
 DefineMacroS('pcpn', pcpn)

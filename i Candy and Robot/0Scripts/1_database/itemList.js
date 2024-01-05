@@ -198,7 +198,7 @@ const iFoods = [
 		"滑溜又多汁的果冻，有太多口味可供选择了。",
 	],
 
-	num: 6,
+	num: 3,
 	price: 1640,
 	size: 6,
 
@@ -794,33 +794,58 @@ Items.addItems(ingredients, 'ingredients')
 
 const Sundries = [
 	{
-		tags: ['sundry', 'roll'],
+		tags: ['sundry', 'roll', 'uses'],
 		id: 'papertowel',
 		name: ['Roll of Paper Towel', '纸巾'],
 		plural: 'Rolls of Paper towel',
+
+		num: 10,
+		price: 100,
+		size: 30,
+
+		info: [
+			'A roll of paper towel, 10 uses',
+			'一卷纸巾，可以用10次'
+		],
+
+		onUse: function(){
+			//清理下身所有液体
+			const body = ['anus', 'botom', 'penis', 'thigh', 'vagina', 'vaginaoutside']
+			body.forEach( (key) =>{
+				liquid = V.player.bodyliquid[key]
+				liquid.goo = 0;
+				liquid.seme = 0;
+				liquid.nectar = 0;
+			})
+		}
+	},
+	{
+		tags: ['sundry', 'packed', 'paper'],
+		id: 'wettissue',
+		name: ['Wet Tissue', '湿巾'],
+		plural: 'Wet Tissues',
 
 		num: 1,
 		price: 100,
 		size: 'medium',
 
 		info: [
-			'A roll of paper towel',
-			'一卷纸巾'
+			'A pack of wet tissue, can clean yourself.',
+			'一包湿巾，可以清理全身。'
 		],
 
 		onUse: function(){
 			//清理身上所有液体
 			for(let i in V.player.bodyliquid){
-				const liquid = V.player.bodyliquid[i]
+				liquid = V.player.bodyliquid[i]
 				liquid.goo = 0;
 				liquid.seme = 0;
-				liquid.nectar = 0;
+				liquid.nectar = 0;				
 			}
-
 		}
 	}
 ]
-Items.addItems(dailyConsumables, 'misc')
+Items.addItems(Sundries, 'misc')
 
 
 const Gacha = [

@@ -162,6 +162,12 @@ const eventManager = {
     },
 
     setScene: function(located, data){
+
+        const scene = {
+            event : located, //event name
+            startTime : V.timeStamp, //event start time
+            passage : '', //event passage
+        }
         data.title = `${data.type} ${located} ${data.episode}`
         if(data.branch){
             data.title += ` ${data.branch}`
@@ -180,8 +186,9 @@ const eventManager = {
                 data.scenestage += ` ${setup.language}` 
             }
         }      
-        
-        V.tvar.scene = data
+
+        Object.assign(scene, data)
+        V.tvar.scene = scene
         V.tvar.scene.passage = data.title
 
         if(data.eventnext !== undefined){
@@ -195,7 +202,7 @@ const eventManager = {
         V.tvar.exitPassage = data.exit ?? V.passage
         V.tvar.endcode = data.endcode
         
-        console.log('setScene:', located, data)
+        console.log('setScene:', located, data, clone(V.tvar.scene))
 
         this.initEvent(V.tvar.scene)
 
@@ -277,19 +284,36 @@ const eventManager = {
         console.log('initBaseScene:', V.currentScene, passage)
     },
 
-    //if event has been set but didn't run, clear it
+    //if event has been set but didn't run, fix it
     fixEvent: function(data){
         //check the event is running in the right scene or not
-        if(!V.tvar.scene.start || V.tvar.scene.scenestage ) return
+        if(!V.tvar.scene.start) return
 
         const scene = V.tvar.scene
-        const stage = scene.title.split(' ')[1]
+        const stage = scene.event || scene.title.split(' ')[1]
 
-        if( data.title.includes(stage) == false && groupmatch(scene.type, 'Scene', 'Event')){
+        //舞台不匹配的情况
+        if( scene.type == 'Scene' && (data.tags.includes('scene') == false || data.title.includes(stage) == false)){
             console.log('fixEvent:', scene, data)
             this.unsetEvent()
         }
 
+        //事件不匹配的情况，跳转事件会在下一次检测时清除
+        if( scene.type == "Event" ){
+            if(
+                (scene.toward && !data.title.includes(scene.toward) && V.timeStamp > scene.startTime + 900 ) || 
+                (scene.scene && !data.title.includes(scene.scene) && V.timeStamp > scene.startTime + 900 )
+              ){
+                console.log('fixEvent:', scene, data)
+                this.unsetEvent()
+            }
+            else if( !data.title.includes(stage) && V.timeStamp > scene.startTime + 900 ){
+                console.log('fix event:', scene, data)
+                this.unsetEvent()
+            }
+        }
+
+        //地点不匹配的情况
         if( scene.type == 'Chara' && scene.location.includes(V.location) == false){
             console.log('fixEvent:', scene, data)
             this.unsetEvent()
@@ -301,6 +325,10 @@ const eventManager = {
     //check event when enter a scene
     eventReady: function(data){
         let title = data.title
+
+        //if event has been set but didn't run, clear it
+        this.fixEvent(data)
+
         //already in event
         if(V.tvar.scene.start == true) return
         //already in combat
@@ -316,7 +344,7 @@ const eventManager = {
 
         //check event from new scene
         if(typeof V.currentScene === 'string'){
-            this.checkEvent(V.currentScene)
+            this.checkEvent(V.currentScene, data)
         }
         else{
             //check event from passage
@@ -324,16 +352,16 @@ const eventManager = {
             const keys = data.title.split(' ')
 
             if(keys.has('Passout') && (keys.indexOf('Passout') == 0 && !data.text.includes('combat') || keys.indexOf('Passout') == key.length)){
-                this.checkEvent('Passout')
+                this.checkEvent('Passout', data)
             }
             else if(keys.has('Sleep') && data.text.includes('<<sleep>>') ){
-                this.checkEvent('Sleep')
+                this.checkEvent('Sleep', data)
             }
             else if(title == 'Bath' || title == 'Cabin Bath' || keys.indexOf('Shower') == keys.length - 1){
-                this.checkEvent('Bath')
+                this.checkEvent('Bath', data)
             }
             else{
-                this.checkEvent2(data.title)
+                this.checkEvent2(data)
             }
         }
 
@@ -360,8 +388,9 @@ const eventManager = {
     },
 
     //原有地点的事件监测
-    checkEvent2: function(passage){
-        console.log('checkevent2:', passage)
+    checkEvent2: function(psgdata){
+        console.log('checkevent2:', psgdata)
+        const title = psgdata.title
 
         const eventlist = this.getEvent('location')
         if(!eventlist) return
@@ -370,20 +399,20 @@ const eventManager = {
             const data = eventlist[i]
             console.log('eventdata:', data)
             if(
-                ( data.passage && passage == data.passage ) || 
-                ( data.match && passage.match(data.match) ) ||
-                ( data.keys && passage.has(...data.keys) == data.keyrequire )
+                ( data.entrypassage && title == data.entrypassage ) || 
+                ( data.match && title.match(data.match) ) ||
+                ( data.keys && title.has(...data.keys) == data.keyrequire )
              ){
-                if(typeof data.require == 'function' && data.require()){
+                if(typeof data.require == 'function' && data.require(psgdata)){
                     const _event = clone(data)
-                    return this.setScene(data.passage, _event)
+                    return this.setScene(title, _event)
                 }
             }
         }
     },
 
     //模组地点事件检测
-    checkEvent: function(event){
+    checkEvent: function(event, psgdata){
         console.log('checkevent:', event)
         //筛选事件
         const eventList = this.getEvent(event)
@@ -395,7 +424,7 @@ const eventManager = {
         for(let i = 0; i < eventList.length; i++){
             const data = eventList[i]
             //console.log('eventdata:', data)            
-            if(typeof data.require == 'function' && data.require()){
+            if(typeof data.require == 'function' && data.require(psgdata)){
                 const _event = clone(data)
                 return this.setScene(event, _event)
             }

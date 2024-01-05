@@ -195,7 +195,8 @@ function dayProcess(sec, day, weekday){
 
 
 function weekProcess(sec, day, weekday){
-
+	//first day of game wont trigger this
+	if(Time.days <= 1) return;
 	//事件flag的清理
 	iEvent.setFlag('chinatown', 'goatweek', 0)
 	

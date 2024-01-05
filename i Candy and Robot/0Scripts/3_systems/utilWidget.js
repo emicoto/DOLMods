@@ -234,7 +234,7 @@ function printTemplet(string, ...args){
 }
 
 function noEventRunning(){
-	return !V.event && V.eventskip == 0 && V.combat == 0
+	return V.eventskip == 0 && V.combat == 0
 }
 window.noEventRunning = noEventRunning
 
