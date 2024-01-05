@@ -391,8 +391,8 @@ function iCandyUpdate(){
 		V.iCandyRobot = iUtil.updateObj(iCandyRobot, V.iCandyRobot)
 		V.iPockets = iUtil.updateObj(iPockets, V.iPockets)
 		V.iStorage = iUtil.updateObj(iStorage, V.iStorage)
-		V.iRecipe = iUtil.updateObj(iRecipe, V.iRecipe)
-		V.iShop = iUtil.updateObj(iShop, V.iShop)
+		V.iRecipe = iUtil.updateObj(vRecipe, V.iRecipe)
+		V.iShop = iUtil.updateObj(vShop, V.iShop)
 
 
 		let drugsStat = V.iCandyRobot.drugStates.drugs

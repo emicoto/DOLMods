@@ -339,7 +339,7 @@ const iCandyRobot = {
 	flags:iEventFlags,
 }
 
-const iShop = {
+const vShop = {
 	daiso_snack: {
 		state: 'none',
 		discount: 0,
@@ -370,7 +370,7 @@ const iModVariables = {
 	iPockets,
 	iStorage,
 	iRecipe:vRecipe,
-	iShop,
+	iShop:vShop,
 
 	//技能
 	chemical	: 0, 

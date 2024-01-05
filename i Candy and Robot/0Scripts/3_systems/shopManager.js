@@ -129,7 +129,7 @@ const iShop = {
 		//const banner = document.getElementById('shopbanner')
 		//banner.className = `${shelf}_banner`
 
-		const count = Math.max( Math.floor((window.innerWidth * 0.7) / 200), 1)
+		const count = Math.clamp( Math.floor((window.innerWidth * 0.7) / 200), 1, 4)
 		const img = `<img src="img/misc/${shelf}_banner.png">`.repeat(count)
 
 		new Wikifier(null, `<<replace "#shopshelf">>${html}<</replace>>`)
