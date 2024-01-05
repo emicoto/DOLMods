@@ -56,15 +56,15 @@ function iTimeHandle(passedSec){
 
 
 	//根据事件的计算单位执行进程，先是按分钟计算的事件。
-	if(min > 0 || (passedSec > 0 && V.combat == 1)){
+	if( passedSec/60 >= 1 || min > 0 || (passedSec > 0 && V.combat == 1)){
 		minuteProcess(passedSec, min)
 	}
 
-	if(hour > 0){
+	if(hour > 0 || passedSec/3600 >= 1 ){
 		hourProcess(passedSec, hour)
 	}
 
-	if(day > 0){
+	if( day > 0 || passedSec/86400 >= 1 ){
 		dayProcess(passedSec, day, weekday)
 	}
 
@@ -92,8 +92,10 @@ function minuteProcess(sec, min){
 	//-------------------------------------------------------------
 	// 其他每分钟处理
 	//-------------------------------------------------------------
-	if(!min) return;
+	if(!sec < 60) return;
 	//获得口渴值，口渴值受到疲劳的影响
+	min = Math.foor(sec / 60)
+
 	let thirstMult = 1 + (V.tiredness / C.tiredness.max)
 	V.thirst = Math.clamp((V.thirst + 1 * min * thirstMult).fix(2), 0, C.thirst.max)
 
