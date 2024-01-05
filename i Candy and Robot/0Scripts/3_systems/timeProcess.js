@@ -3,10 +3,10 @@ const oldPass = Time.pass
 const TimeHandle = {
 	prevDate : {},
 	currentDate : {},
-	passTime : function(sec){
+	passTime : function(pass){
 		const { currentDate, prevDate } = this
 
-		let sec = sec
+		let sec = pass
 		let min =  currentDate.minute - prevDate.minute
 
 		if(min < 0){
