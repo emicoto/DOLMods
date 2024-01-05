@@ -968,8 +968,8 @@ const Gacha = [
 	{
 		tags: ["gachaopened", "rare","gachacap", "craft"],
 		id:"goldgacha_opened",
-		name:["Opened Gacha", "打开的扭蛋"],
-		plural:"Opened Gacha",
+		name:["Opened Golden Gacha", "打开的扭蛋"],
+		plural:"Opened Golden Gacha",
 	
 		num: 1,
 		price: 600,
@@ -983,7 +983,215 @@ const Gacha = [
 ]
 
 const GachaItems = [
+	{
+		tags: ["gacha", "misc", "collection"],
+		id:"angry_owl",
+		name:["Angry Owl", "愤怒的猫头鹰"],
+		plural:"Angry Owl",
 	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"A brown owl standing with crossed arms in anger. I have an idea, it seems to be saying.",
+			"生气地叉着腰的棕色猫头鹰。“我有一个想法。”它似乎在讲话。"
+		],
+
+		rare: "n",
+		gachaType:"random",
+
+	},
+	{
+		tags: ["gacha", "misc", "collection"],
+		id:"arctic_hare",
+		name:["Arctic Hare", "北极兔"],
+		plural:"Arctic Hare",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"An Arctic hare. When crouched down, it's indistinguishable from an ordinary cute domestic rabbit, but when standing up, it reveals its long legs!",
+			"是北极兔。趴下的时候和普通的可爱家兔没什么区别，站起来就会暴露大长腿！"
+		],
+
+		rare: "n",
+		gachaType:"random",
+
+	},
+	{
+		tags: ["gacha", "misc", "collection"],
+		id:"dove",
+		name:["Dove", "鸽子"],
+		plural:"Dove",
+	
+		num: 1,
+		price: 600,
+		size:"small",
+	
+		info:[
+			"A dove with grass growing on its head. It is said that the grass might be there to avoid conflicting with the image of another dove that eats stars.",
+			"头上长草的鸽子。据说长草可能是为了不和另一只吃星星的鸽子形象冲突。"
+		],
+
+		rare: "r",
+		gachaType:"random",
+
+	},
+	{
+		tags: ["gacha", "misc", "collection"],
+		id:"elephant_balloon",
+		name:["Elephant Balloon", "红气球大象"],
+		plural:"Elephant Balloon",
+	
+		num: 1,
+		price: 600,
+		size:"small",
+	
+		info:[
+			"A blue elephant that will give you a red balloon. The balloon floats gently into the sky. This elephant, without tusks or long hair, firmly believes it's a mammoth, and for some reason, there's a small missing patch of fur on its belly.",
+			"会送给你红色气球的蓝色大象。气球飘飘悠悠飞向天空。这只没有獠牙也没有长毛的大象坚定地认为自己是猛犸，而且肚子上的毛不知为何少了一小块。"
+		],
+
+		rare: "r",
+		gachaType:"random",
+
+	},
+	{
+		tags: ["gacha", "misc", "collection"],
+		id:"fox",
+		name:["Fox", "小狐狸"],
+		plural:"Fox",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"An ordinary little fox that has not yet delivered roses to anyone.",
+			"普通的小狐狸。还没有给人送过玫瑰花。"
+		],
+
+		rare: "n",
+		gachaType:"random",
+
+	},
+	{
+		tags: ["gacha", "misc", "collection"],
+		id:"foxdove",
+		name:["Fox Dove", "狐狸和鸽子的剪影"],
+		plural:"Fox Dove",
+	
+		num: 1,
+		price: 600,
+		size:"small",
+	
+		info:[
+			"Silhouettes of a little fox wearing a moon headpiece and a dove with grass on its head snuggling together.",
+			"佩戴月亮头饰的小狐狸和头上长草的鸽子依偎在一起的剪影。"
+		],
+
+		rare: "r",
+		gachaType:"random",
+
+	},
+	{
+		tags: ["gacha", "misc", "collection"],
+		id:"foxmoon",
+		name:["Fox Dove", "月亮狐狸"],
+		plural:"Fox Dove",
+	
+		num: 1,
+		price: 600,
+		size:"small",
+	
+		info:[
+			"A little fox wearing a moon headpiece. Sometimes you might see it with six tails. It must be an illusion.",
+			"佩戴月亮头饰的小狐狸。有时候会看见它有六条尾巴。一定是错觉吧。"
+		],
+
+		rare: "r",
+		gachaType:"random",
+
+	},
+	{
+		tags: ["gacha", "misc", "collection"],
+		id:"ir",
+		name:["IR", "IR"],
+		plural:"IR",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"An unknown creature with four legs. But it's very cute.",
+			"不知道是什么的生物，有四条腿。不过很可爱。"
+		],
+
+		rare: "n",
+		gachaType:"random",
+
+	},
+	{
+		tags: ["gacha", "misc", "collection"],
+		id:"rabbit_green",
+		name:["Rabbit Green", "绿耳雪兔"],
+		plural:"Rabbit Green",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"According to ancient rumors, if you can see supernatural beings, creating a snow rabbit like this in winter might allow you to enter its body. Contrary to the paired appearances in promotional art with a fellow with pink ears, they don't actually get along well.",
+			"古老的传闻说，如果你能看见妖怪，那么在冬天捏出这样一只雪兔，就有可能进入它体内。装饰宣传画上经常和粉耳朵的家伙成双成对出现，实则关系并不好。"
+		],
+
+		rare: "n",
+		gachaType:"random",
+
+	},
+	{
+		tags: ["gacha", "misc", "collection"],
+		id:"rabbit_pink",
+		name:["Rabbit Pink", "粉耳雪兔"],
+		plural:"Rabbit Pink",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"According to ancient rumors, if you can see supernatural beings, creating a snow rabbit like this in winter might allow you to enter its body. Contrary to the paired appearances in promotional art with a fellow with green ears, they don't actually get along well.",
+			"古老的传闻说，如果你能看见妖怪，那么在冬天捏出这样一只雪兔，就有可能进入它体内。装饰宣传画上经常和绿耳朵的家伙成双成对出现，实则关系并不好。"
+		],
+
+		rare: "n",
+		gachaType:"random",
+
+	},
+	{
+		tags: ["gacha", "misc", "collection"],
+		id:"rainbow_cat",
+		name:["Rainbow Cat", "彩虹猫"],
+		plural:"Rainbow Cat",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"Nyanyanyanyanyanyanya! Mysterious background music automatically plays in your mind when you stare at it. You might think it used to be a cow cat.",
+			"Nyanyanyanyanyanyanya! 盯着它的时候脑中会自动出现神秘的背景音乐。你觉得它以前可能是奶牛猫。"
+		],
+
+		rare: "n",
+		gachaType:"random",
+
+	}
 ]
 
 const iSpecial = [
