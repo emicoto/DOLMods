@@ -106,11 +106,19 @@ function minuteProcess(sec, min){
 			iCandy.senseUpdate(sense, sec)
 	}
 
+	console.log('minute process:', sec, min)
+
 	//-------------------------------------------------------------
 	// 其他每分钟处理
 	//-------------------------------------------------------------
-	if(!sec < 60 || min <= 0) return;
+	if(sec < 60 || min <= 0) return;
 	//获得口渴值，口渴值受到疲劳的影响
+
+	console.log('hunger and thirst process', sec, min)
+	if ( sec / 60 > min ){
+		min = Math.floor(sec / 60 + 0.5)
+	}
+	
 
 	let thirstMult = 1 + (V.tiredness / C.tiredness.max)
 	V.thirst = Math.clamp((V.thirst + 1 * min * thirstMult).fix(2), 0, C.thirst.max)
@@ -118,6 +126,8 @@ function minuteProcess(sec, min){
 	//获得饥饿值, 饥饿值受到疲劳的影响
 	let hungerMult = 1 + (V.tiredness / C.tiredness.max)
 	V.hunger = Math.clamp((V.hunger + 1 * min * hungerMult).fix(2), 0, C.hunger.max)
+
+	console.log('hunger:', V.hunger, hungerMult,'thirst:', V.thirst, hungerMult)
 
 	//当饥饿值过高时，获得通知
 	if(V.hunger >= C.hunger.max * 0.8){

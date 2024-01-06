@@ -1051,7 +1051,7 @@
 
 			},
 			{
-				scr:'/*<<shopicon "closed">><<link',
+				src:'/*<<shopicon "closed">><<link',
 				applybefore:'\n\t\t<<ExtraLinkZone>>\n\t\t'
 			},
 			{
@@ -1621,6 +1621,11 @@
 	<<print '<<'+_key+'>>'>>
 <</widget>>
 
+<<widget "ModOpinionIcon">>
+<<if SugarCube.Macro.has($args[0]+'OpinionIcon')>>
+    <<print '<<'+$args[0]+'OpinionIcon>>'>>
+<</if>>
+<</widget>>
 
 <<widget "ModaddNPCRelationText">>
 <<print C.npc[_npc].description>>
