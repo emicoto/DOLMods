@@ -28,7 +28,7 @@
     )>>
     <<datas>>
     <<=lanSwitch(
-        `The wind blows a cloud of almond blossom to you.`，
+        `The wind blows a cloud of almond blossom to you.`,
         `风吹过一片杏花瓣飘落在你身上。`
     )>>
     <<datas>>

@@ -9,8 +9,10 @@
     周围只有零星几个行人，他们行色匆匆，没有人注意到你。
 <</if>>
 <br>
+
 厚重的卷帘门遮住了商场的内部景象，门上挂了一个牌子
 <br><br>
+
 <span class='blue'>【营业时间 8:00 - 19:00】</span> 
 <br><br>
 
@@ -24,12 +26,16 @@
 
     <<if currentSkillValue('skulduggery') gte _lock and R.mechStats.tools.digitalSet is 1>>
         <span class="green">这锁你或许有办法打开。</span>
+
     <<elseif R.mechStats.tool.digitalSet is 1>>
         <span class="orange">你或许有办法打开，但这十分考验你。</span>
+
     <<else>>
         <span class="red">这锁你无法打开。</span>
-    <</if>>
-    <<set $tvar.daisolock = 'checked'>>
 
+    <</if>>
+
+    <<set $tvar.daisolock = 'checked'>>
     <<link '继续'>><<run iEvent.unsetEvent()>><</link>>
+
 <</linkreplace>>

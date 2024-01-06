@@ -218,7 +218,7 @@ function dayProcess(sec, day, weekday){
 		shelf.stocks.forEach( item => {
 			const data = Items.get(item.id)
 			if(item.stock <= 5){
-				item.stock = 20
+				item.stock = 30
 				item.count = item.stock * data.num
 			}
 		})

@@ -395,6 +395,7 @@ function iCandyUpdate(){
 		V.iShop = iUtil.updateObj(vShop, V.iShop)
 
 
+		//修复药效时间错误
 		let drugsStat = V.iCandyRobot.drugStates.drugs
 		for( const [drug, data] of Object.entries(drugsStat)){
 			const itemdata = Items.get(drug)
@@ -408,6 +409,22 @@ function iCandyUpdate(){
 			if(data.lastTime > V.timeStamp){
 				console.log('drug lasttime update:', drug, data.lastTime, V.timeStamp)
 				data.lastTime = V.timeStamp
+			}
+		}
+
+		//修复物品错误
+		for( const [pos, pocket] of Object.entries(V.iPockets)){
+			if(Array.isArray(pocket)){
+				pocket.forEach((item, index)=>{
+					if(!Items.get(item.id)){
+						if(item.id == 'redbull'){
+							item.id = 'redcow'
+						}
+						else if(!Items.get(item.id)){
+							pocket.slice(index, 1)
+						}
+					}
+				})
 			}
 		}
 	}

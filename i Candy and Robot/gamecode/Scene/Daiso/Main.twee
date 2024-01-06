@@ -67,6 +67,9 @@
 <</if>>
 
 
+:: Scene DaisoShop Actions
+
+
 
 :: Scene DaisoShop General
 <<=lanSwitch(
