@@ -399,7 +399,7 @@ const iFoods = [
 			["hunger" , 420],
 		],
 
-		msg: itemMsg.ChestnutEarlGreyCake,
+		msg: itemMsg.ChestnutRoyalCake,
 	},
 	{
 		tags:["seasonal", "spring", "meal", "vegi"],
@@ -766,7 +766,7 @@ const iDrinks = [
 	
 		info: [
 			'Sport drink, gives you an instant charge.',
-			"能量饮料，红牛能让你飞起来",
+			"能量饮料，让你立即充电。",
 		],
 		effects: [
 			["tiredness", 50],
