@@ -236,7 +236,7 @@ const itemMsg = {
 
         `You take a bite of the dango and taste an elegant rice fragrance and a soft and chewy texture, with a hint of sweetness. <br>
         The pink one has a light sakura fragrance, while the white one enhances the aroma of rice.And The green one has a scent mugwort. <br>
-        Chew silently, causing your soul to feel pure and tranquil.`
+        Chew silently, causing your soul to feel pure and tranquil.`,
 
         `你咬了一口团子，尝到淡雅的米香和软糯弹牙的口感，带着些许的甜味。 <br>
         粉色的有淡淡的樱花香，白色的团子让米的香气更加鲜明，绿色的团子则有着艾草的香味。 <br>
@@ -248,7 +248,7 @@ const itemMsg = {
         `The glutinous rice outer skin is dyed a In a transparent glass bottle is a pale pink liquor brewed with green apple and cherry blossom pink by cherry blossom petals is filled with sweet red bean paste and wrapped in salted cherry blossom leaves, creating this cute and spring-like dessert.<br>
         You peel open the leaf and take a bite, tasting the mild and fragrant aroma of rice and the chewy glutinous rice skin, followed by the sweet and rich red bean paste filling. <br>
         After enjoying the sticky and soft sweetness, take another bite combine salted cherry leaves and instantly fill your mouth with the fragrance and cherry blossoms, bringing a tangy, sweet, and salty flavor. <br>
-        You just ate the whole sakuramochi , feeling completely enveloped in the scent of cherry blossoms and spring.`
+        You just ate the whole sakuramochi , feeling completely enveloped in the scent of cherry blossoms and spring.`,
 
         `你先剥开叶子咬上一口，尝到清淡柔和的米香和Q弹的的糯米外皮、接着是甜蜜浓厚的红豆沙馅， <br>
         充分享受黏呼呼又软绵绵的香甜后，再咬上一口盐渍的樱叶、樱花的香味瞬间充满了你的口腔，同时带来酸酸甜甜又咸咸的滋味。 <br>
@@ -259,7 +259,7 @@ const itemMsg = {
     ColdRamen: [        
         `You put the cold noodles covered in sauce into your mouth, the chilled noodles have a satisfying chewiness, the crispy and refreshing cucumber and the tangy juicy tomatoes counterbalance the mild spiciness of the sauce, making your appetite open up. <br>
         Chewing the fresh and sweet shrimp along with the fragrant shredded ham, a completely different rich and flavorful taste swept over the taste buds. <br>
-        After finishing the whole plate of cold noodles, the scorching heat of summer doesn't feel as unbearable.`
+        After finishing the whole plate of cold noodles, the scorching heat of summer doesn't feel as unbearable.`,
 
         `你将沾满了酱汁的冷面放入口中，冰镇过后的面嚼劲十足、脆爽的小黄瓜和酸甜多汁的番茄抵消了微辣的酱汁带来的灼烧感，只让你胃口大开。 <br>
         再伴随鲜甜的虾仁和香气四溢的火腿丝一起咀嚼，和刚才截然不同的浓郁滋味席卷了味蕾。 <br>
@@ -272,7 +272,7 @@ const itemMsg = {
         Bite into a soft cake filled with rich and sweet chestnut paste, the fragrant aroma of Earl Grey cream and the sweetness of chestnuts intertwine in the mouth. <br>
         The finely chopped chocolate adds a crunchy texture and a hint of bittersweetness, bringing a richer and more luxurious flavor to the cake. <br>
         With the fragrance of red tea and chestnut, the slight bitterness prevents the sweet cake from becoming heavy, making it irresistible once you start eating it. <br>
-        Unconsciously ate the whole cake, you can still savor the deliciousness just now. `
+        Unconsciously ate the whole cake, you can still savor the deliciousness just now. `,
 
         `你切开这个呈现温暖的褐色调的蛋糕，栗子的香甜更浓郁了。 <br>
         咬上一口，松软的蛋糕和浓郁甜美的栗子馅融为一体，红茶的馥郁香气和栗子的香甜在口中交织、 <br>
@@ -285,7 +285,7 @@ const itemMsg = {
 	PorkPie: [
         `This pie has completely cooled down, but the subtle meat aroma and roasted fragrance are still enticing, and the crust remains crispy and layered. <br>
         Biting into it lightly, the crispy and fluffy pastry, the cold and refreshing meat filling with a hint of spices, and the tender and smooth broth jelly melt and blend together in the mouth. <br>
-        If paired with mulled wine, it would be the perfect meal. With a faint regret, you savor the delicious pork pie.` 
+        If paired with mulled wine, it would be the perfect meal. With a faint regret, you savor the delicious pork pie.` ,
 
         `这份派已经完全冷却了，但淡淡的肉香和烘烤的香气依旧诱人，酥皮也依然是酥脆而层次分明。 <br>
         轻咬一口，酥松的派皮、冷凉的肉馅带着香料的风味，和Q嫩的高汤冻在口内融化、交融。 <br>
@@ -297,7 +297,7 @@ const itemMsg = {
         `As you take a bite, the golden and crispy pie crust melts in your mouth, bringing a rich milky flavor. <br>
         The dried fruits soaked in strong liquor constantly release delicious flavors as they are chewed, some being soft and juicy, others crispy and tasty. Together with spices such as cardamom, cinnamon, and cloves, they form a warm aroma. <br>
         The sour-sweet green apple and slightly bitter candied orange peel balance the excessive sweetness, bringing a refreshing flavor. <br>
-        You feel warm all over, even your breath is sweet and warm.`
+        You feel warm all over, even your breath is sweet and warm.`,
 
         `你一口咬下，金黄酥脆的派皮在你的嘴里化开，带来满满的奶香。 <br>
         被烈酒浸润的丰富果干在咀嚼间不断地释放美味，有的柔软多汁，有的松软可口，它们和豆蔻、肉桂、丁香等香料一起、组成了温暖的气息。 <br>
@@ -313,7 +313,7 @@ const itemMsg = {
         smoothly sliding down the throat and creating a warm sensation. <br>
         Even more delightful is the introduction of a light mist-like, semi-transparent solid that offers a completely new texture.<br>
         Perhaps you can ask the bartender what this is. You chew on the soft, translucent solid and think about it. <br>
-        You feel a surge of heat throughout your body.`
+        You feel a surge of heat throughout your body.`,
 
         `你细细品尝着这杯热红酒，里面似乎加入了一些你不甚明晰的材料作为调味品。但这让这杯红酒的口感层次变得更加丰富了。 <br>
         香甜丰润的果香和微微的酸涩后调与唇齿间回味的酒香巧妙地融合，顺着食道滑入胃里，升腾起一阵暖意。 <br>
@@ -327,7 +327,7 @@ const itemMsg = {
         `You pinch the decorated mint leaf and gently set it aside. A gust of wind sweeps it away, leaving the air infused with a subtle hint of mint.<br>
         You take a bite of half the jelly; the cool and transparent fragrance of mint rushes out from the moist and slightly sweet jelly, instantly invigorating your senses.<br>
         The jelly is tender and springy, sliding smoothly down your throat. It captures the memories of summer, leaving a deep imprint in your mind.<br>
-        You feel as if you've returned to childhood.`
+        You feel as if you've returned to childhood.`,
 
         `你捏住装饰薄荷叶，轻轻放到一边。一阵风卷走了它，空气染上了似有若无的薄荷芬芳。<br>
         你一口咬下半个果冻，清凉通透的薄荷香气从盈润微甜的果冻中直冲而出，让人不禁精神一振。<br>
@@ -340,7 +340,7 @@ const itemMsg = {
         `You gently stir the white rice with chopsticks, releasing a subtle fragrance of rice. The texture is full and tender, creating a harmonious blend with the side dishes.<br>
         The clear soup exudes the aroma of miso. As you consume the soft tofu and chew on the resilient seaweed, the broth reveals its richness, complemented by the freshness and deliciousness of the ingredients.<br>
         You leisurely lift the teacup, bringing it close to your lips to delicately sniff the sweet tea aroma. With a sip, the tea provides a refreshing relief from the meal's richness.<br>
-        After finishing the meal, you tidy up the utensils and return them to the owner.`
+        After finishing the meal, you tidy up the utensils and return them to the owner.`,
 
         `你用筷子轻轻拌动白米，米香淡淡。口感饱满而软糯。米饭与配菜相得益彰。<br>
         清汤溢着味增的香气，吃下软嫩的豆腐，嚼碎艮韧的海带。汤汁醇厚，食材新鲜而美味。<br>
@@ -352,7 +352,7 @@ const itemMsg = {
     LambChop: [        
         `You gently tear with a fork, and the meat strands separate from the bones. The charcoal-grilled surface emanates a subtle charred fragrance, and the fat has melted during the grilling process, making the lamb chops rich and juicy. The aroma of rosemary and thyme mingles with the meat fragrance, rising like clouds.<br>
         As you place the torn lamb pieces into your mouth, a crisp golden crust breaks with a satisfying sound, and the intense charcoal-grilled aroma hits you. The meticulous charcoal grilling ensures the meat maintains its optimal texture, leaving you intoxicated with each bite.<br>
-        One piece after another. You eat with thorough enjoyment, and a sense of satisfaction spreads throughout your body. The lamb chops completely fill your hungry stomach, making the harsh winter winds seem more bearable.`
+        One piece after another. You eat with thorough enjoyment, and a sense of satisfaction spreads throughout your body. The lamb chops completely fill your hungry stomach, making the harsh winter winds seem more bearable.`,
 
         `你拿用叉子轻轻一撕，肉丝从骨头上脱离，碳烤的外表散发着微微焦香，而脂肪在烤制过程中已经溶化，羊排浓郁多汁。迷迭香与百里香的香气混着肉香如云般升腾。<br>
         将撕下的羊肉块送入口中，咔嚓一声咬开金黄的脆壳，浓郁的炭烤香气扑面而来。精巧的烤制让肉保持在最佳口感，令人陶醉其中。<br>
@@ -364,7 +364,7 @@ const itemMsg = {
         `You took a sip through the straw, and the fragrance of mint took the lead, sweeping away the heat and stuffiness.<br>
         In the middle notes, a symphony composed of crushed mint leaves and freshly steeped lemon unfolds. The sweet aroma of the fruits permeates your nostrils.<br>
         Unconsciously, the sound of the straw sucking up the last drops of liquid echoes in the cup.<br>
-        You savor the aftertaste in your mouth, feeling content in the scorching summer days.`
+        You savor the aftertaste in your mouth, feeling content in the scorching summer days.`,
 
         `你含住吸管啜了一口，薄荷的香气先声夺人，卷走了酷热与烦闷。<br>
         中调是揉碎的薄荷叶与泡得时间刚刚好的新鲜柠檬合成的协奏曲。水果的甘美气息浸润鼻腔。<br>
@@ -376,7 +376,7 @@ const itemMsg = {
     PineappleIce: [
         `You take a bite of the dango and taste an elegant rice fragrance and a soft and chewy texture, with a hint of sweetness. <br>
         The pink one has a light sakura fragrance, while the white one enhances the aroma of rice.And The green one has a scent mugwort. <br>
-        Chew silently, causing your soul to feel pure and tranquil.`
+        Chew silently, causing your soul to feel pure and tranquil.`,
 
         `你捧起菠萝杯，如预想中那样，有些扎手。<br>
         含有果汁的冰块在口中释放，在舌尖舞动。菠萝的香气随之弥漫开来，<br>
@@ -388,7 +388,7 @@ const itemMsg = {
     WatermelonIce: [
         `You peel open the leaf and take a bite, tasting the mild and fragrant aroma of rice and the chewy glutinous rice skin, followed by the sweet and rich red bean paste filling. <br>
         After enjoying the sticky and soft sweetness, take another bite combine salted cherry leaves and instantly fill your mouth with the fragrance and cherry blossoms, bringing a tangy, sweet, and salty flavor. <br>
-        You just ate the whole sakuramochi , feeling completely enveloped in the scent of cherry blossoms and spring.`
+        You just ate the whole sakuramochi , feeling completely enveloped in the scent of cherry blossoms and spring.`,
 
         `西瓜的甜蜜在唇齿间蔓延。水珠沿着杯壁滑落，交织成一幅颇为后现代主义的画作。<br>
         你细细咀嚼着西瓜，仿佛在品味夏日的清新和甜美。 <br>
