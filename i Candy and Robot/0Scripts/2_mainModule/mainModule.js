@@ -11,6 +11,9 @@ const iCandy = {
 	//save variables
 	variables : {},
 
+	//variables setting
+	valueSetting: iModVariables,
+
 	//settings
 	setup: {
 		addictions:iModAddictions,
@@ -340,8 +343,17 @@ function iCandyInit(){
 DefineMacroS('iCandyInit', iCandyInit)
 
 
+function iCandyOldInit(){
+	console.log('on iCandyOldInit')
+
+	for(let i in iModVariables){
+		V[i] = clone(iModVariables[i])
+	}
+}
+iCandy.manualInit = iCandyOldInit
+
 setup.iCandyBakItem = {}
-function iCandyUpdate(){
+function iCandyUpdate(force){
 	if(passage() == 'Start' && V.iCandyRobot) return;
 
 	if(V.iCandyStats){
@@ -386,14 +398,10 @@ function iCandyUpdate(){
 			if(V[i] == undefined){
 				V[i] = clone(iModVariables[i])
 			}
+			else{
+				V[i] = iUtil.updateObj(iModVariables[i], V[i])
+			}
 		}
-
-		V.iCandyRobot = iUtil.updateObj(iCandyRobot, V.iCandyRobot)
-		V.iPockets = iUtil.updateObj(iPockets, V.iPockets)
-		V.iStorage = iUtil.updateObj(iStorage, V.iStorage)
-		V.iRecipe = iUtil.updateObj(vRecipe, V.iRecipe)
-		V.iShop = iUtil.updateObj(vShop, V.iShop)
-
 
 		//修复药效时间错误
 		let drugsStat = V.iCandyRobot.drugStates.drugs
@@ -423,6 +431,23 @@ function iCandyUpdate(){
 						else if(!Items.get(item.id)){
 							pocket.slice(index, 1)
 						}
+					}
+				})
+			}
+		}
+
+		//修正商店物品
+		for( const [key, shelf] of Object.entries(V.iShop)){
+			if(!shelf || !shelf?.state || !shelf.stocks.length == 0 ){
+				iShop.initShelf(key)
+				iShop.getshelf(key)
+			}
+			else if(shelf.state == 'stocked'){
+				shelf.stocks.forEach( (item, key) => {
+					const data = Items.get(item.id)
+					if(!data){
+						console.log('item not found:', item.id)
+						shelf.stocks.deleteAt(key)
 					}
 				})
 			}

@@ -35,6 +35,7 @@ const iShop = {
 
 			//随机抽取6个
 			const result = []
+			result.push(Items.get('sandwich'))
 			for(let i = 0; i < 6; i++){
 				if(list.length == 0) break
 
@@ -44,11 +45,16 @@ const iShop = {
 			return result
 		},
 		daiso_sundry: function(){
-			const data = Items.searchType('misc')
+			const data = Items.searchType('misc').push(...Items.searchType('consumables'))
 			const list = data.filter( item => item.tags.has('sundry'))
 
 			const result = []
+			for(let i = 0; i < 6; i++){
+				if(list.length == 0) break
 
+				let item = list.randompop()
+				result.push(item)
+			}
 			return result
 		}
 	},
@@ -116,7 +122,7 @@ const iShop = {
 				`		</div>`,
 				`	</div>`,
 				`	<div class='itemprice'>`,
-				`		<span class='golden bold'>${(item.price/100).toFixed(2)}£</span>/${unit1 || unit2}`,
+				`		<span class='golden bold'>${price.toFixed(2)}£</span>/${unit1 || unit2}`,
 				`	</div>`,
 				`   <div class='itemstock'>${item.stock}${unit1 || unit2} left</div>`,
 				`</div>`,
@@ -213,7 +219,7 @@ const iShop = {
 	},
 
     clearCart: function(){
-        V.iShop.selected = undefined
+        delete V.iShop.selected
     },
 
 	buyItem : function(){

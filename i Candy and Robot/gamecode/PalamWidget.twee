@@ -15,6 +15,42 @@
 	<</if>>
 <</widget>>
 
+<<widget "gthirst">>
+	<<if $statdisable is "f">> |
+		<span class="red">+ <<lanSwitch 'Thirst' '口渴'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "ggthirst">>
+	<<if $statdisable is "f">> |
+		<span class="red">+ + <<lanSwitch 'Thirst' '口渴'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "gggthirst">>
+	<<if $statdisable is "f">> |
+		<span class="red">+ + + <<lanSwitch 'Thirst' '口渴'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "lthirst">>
+	<<if $statdisable is "f">> |
+		<span class="green">- <<lanSwitch 'Thirst' '口渴'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "llthirst">>
+	<<if $statdisable is "f">> |
+		<span class="green">- - <<lanSwitch 'Thirst' '口渴'>></span>
+	<</if>>
+<</widget>>
+
+<<widget "lllthirst">>
+	<<if $statdisable is "f">> |
+		<span class="green">- - - <<lanSwitch 'Thirst' '口渴'>></span>
+	<</if>>
+<</widget>>
+
 <<widget "lwillpower">>
 	<<if $statdisable is "f">> |
 		<span class="red">- <<lanSwitch 'Willpower' '意志'>></span>
@@ -106,7 +142,7 @@
 			<</if>>
 		</div>
 		<<set _showCaptionText to !$options.showCaptionText>>
-		<<statbar $hunger C.hunger.max _showCaptionText>>
+		<<statbar $hunger `C.hunger.max` _showCaptionText>>
 		<div style="clear:both;"></div>
 	</div>
 <</if>>
@@ -115,7 +151,7 @@
 <<widget "thirstyBar">>
 <!-- 干渴条 -->
 <<if Number.isFinite($thirst)>>
-	<div id="hungercaption" @title="'Thirst: ' + $thirst.toFixed(2)">
+	<div id="thirstcaption" @title="'Thirst: ' + $thirst.toFixed(2)">
 		<div @class="($options.showCaptionText is true ? '' : 'rightMeterText')">
 			<<lanSwitch "Thirst:" "干渴：">>
 			<<if $options.showCaptionText is true>>
@@ -137,7 +173,7 @@
 			<</if>>
 		</div>
 		<<set _showCaptionText to !$options.showCaptionText>>
-		<<statbar $thirst C.thirst.max _showCaptionText>>
+		<<statbar $thirst `C.thirst.max` _showCaptionText>>
 		<div style="clear:both;"></div>
 	</div>
 <</if>>

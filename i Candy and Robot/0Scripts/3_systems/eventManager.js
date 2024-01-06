@@ -272,6 +272,8 @@ const eventManager = {
         }
         console.log('initScene:', scene, V.phase, V.tvar.eventnext, V.onselect)
 
+        T.link = true
+
     },
 
     initBaseScene: function(passage){

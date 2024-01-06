@@ -27,7 +27,7 @@
     <<if currentSkillValue('skulduggery') gte _lock and R.mechStats.tools.digitalSet is 1>>
         <span class="green">这锁你或许有办法打开。</span>
 
-    <<elseif R.mechStats.tool.digitalSet is 1>>
+    <<elseif R.mechStats.tools.digitalSet is 1>>
         <span class="orange">你或许有办法打开，但这十分考验你。</span>
 
     <<else>>

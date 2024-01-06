@@ -1,6 +1,6 @@
 {
   "name": "i, Candy + Robot",
-  "version": "2.3.4.2",
+  "version": "2.3.5",
   "modPacker": {
     "modVersionJs": {
       "file": "0Scripts/0_framework/0_modversion.js",

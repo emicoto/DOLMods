@@ -5,6 +5,21 @@
 <span class="gold"><<lanSwitch "i Candy Robot" "爱糖机" >></span>
 <div>
 
+<label>
+<<set _link to lanSwitch('Force Init Mod Data', '强制初始化MOD数据')>>
+<<link _link $passage>>
+    <<run iCandy.manualInit()>>
+<</link>>
+<mouse class="tooltip-small linkBlue">(?)
+<span>
+    <<=lanSwitch(
+        "Force initialize mod data, if you get some error when you run at oldsave, you can try this.",
+        "强制初始化MOD数据，如果你在旧存档中运行MOD时遇到错误，可以尝试这个。"
+    )>>
+</span>
+</label>
+<br>
+
 <!-- 设置项目  -->
 <div class="settingsToggle">
     <label>

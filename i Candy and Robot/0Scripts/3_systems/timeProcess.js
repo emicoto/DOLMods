@@ -19,9 +19,16 @@ const TimeHandle = {
 		}
 
 		let day = currentDate.day - prevDate.day
-		let month = currentDate.month - prevDate.month
-		let year = currentDate.year - prevDate.year
+		if(day < 0){
+			day = Math.max(day + prevDate.lastDayOfMonth, 1)
+		}
 
+		let month = currentDate.month - prevDate.month
+		if(month < 0){
+			month += 12
+		}
+
+		let year = currentDate.year - prevDate.year
 
 		return {
 			sec : sec,
@@ -86,7 +93,7 @@ function iTimeHandle(passedSec){
 	}
 
 	//每周的处理
-	if(weekday[1] == 1 && weekday[0] !== 1){
+	if(weekday[1] == 1 && weekday[0] !== weekday[1] ){
 		weekProcess(passedSec, day, weekday)
 	}
 
@@ -160,14 +167,18 @@ function hourProcess(sec, hour){
 	
 	//随机减少商店库存，营造商店销售的假象
 	for( const [key, shelf] of Object.entries(V.iShop)){
-		if(!shelf || !shelf?.state){
-			iShop.initShelf(key)
-			iShop.getshelf(key)
+		if(key == 'selected'){
+			delete V.iShop.selected
+			continue;
 		}
 		else if(shelf.state == 'stocked'){
-			shelf.stocks.forEach( item => {
-				if(random(100) < 40){
-					const data = Items.get(item.id)
+			shelf.stocks.forEach( (item, key) => {
+				const data = Items.get(item.id)
+				if(!data){
+					console.log('item not found:', item.id)
+					shelf.stocks.deleteAt(key)
+				}
+				else if(random(100) < 40){
 					const sale = random(2, 6)
 					item.stock = Math.max(0, item.stock - sale)
 					item.count = Math.max(0, item.stock * data.num )
@@ -218,7 +229,7 @@ function dayProcess(sec, day, weekday){
 		shelf.stocks.forEach( item => {
 			const data = Items.get(item.id)
 			if(item.stock <= 5){
-				item.stock = 30
+				item.stock = 50
 				item.count = item.stock * data.num
 			}
 		})
@@ -234,7 +245,11 @@ function weekProcess(sec, day, weekday){
 	
 	//清理商店的库存
 	for( const [key, shelf] of Object.entries(V.iShop)){
+		if(key == 'selected') continue;
+
 		shelf.state = 'clear'
+		shelf.stocks = []
+		iShop.getshelf(key)
 	}
 }
 

@@ -103,6 +103,12 @@ function getBootJson(directory: string) {
 function setBootVersionMajor(directory: string) {
 	const boot = getBootJson(directory);
 	if (!boot) return null;
+	const ver = boot.version.split(".");
+	if(ver.length > 3){
+		ver.pop();
+		boot.version = ver.join(".");
+	}
+	
 	const result = semver.inc(boot.version, "major")
 	if (result) {
 		boot.version = result;
@@ -114,6 +120,12 @@ function setBootVersionMinor(directory: string) {
 
 	const boot = getBootJson(directory);
 	if (!boot) return null;
+	const ver = boot.version.split(".");
+	if(ver.length > 3){
+		ver.pop();
+		boot.version = ver.join(".");
+	}
+
 	boot.version = semver.inc(boot.version, "minor");
 	fs.writeFileSync(path.join(directory, "boot.json"), JSON.stringify(boot, null, 2));
 	return boot;
@@ -123,6 +135,11 @@ function setBootVersionPatch(directory: string) {
 	const boot = getBootJson(directory);
 	if (!boot) return null;
 	console.log(boot.version);
+	const ver = boot.version.split(".");
+	if(ver.length > 3){
+		ver.pop();
+		boot.version = ver.join(".");
+	}
 	boot.version = semver.inc(boot.version, "patch");
 	fs.writeFileSync(path.join(directory, "boot.json"), JSON.stringify(boot, null, 2));
 	return boot;
