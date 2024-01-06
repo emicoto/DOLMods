@@ -52,9 +52,16 @@ const iShop = {
 			return result
 		}
 	},
+	initShelf : function(shelf){
+		V.iShop[shelf] = {
+			stocks : [],
+			discount : 0,
+			state : 'none'
+		}
+	},
 	getshelf : function(shelf){
 		const shelfStats = V.iShop[shelf]
-		const current = shelfStats.stocks
+		const current = shelfStats?.stocks ?? []
 
 		let itemlist = []
 		let shopitems = []

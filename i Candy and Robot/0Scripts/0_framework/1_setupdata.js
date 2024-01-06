@@ -534,6 +534,11 @@ const iUnit = {
 		EN_plural : 'servings',
 		CN : '份'
 	},
+	serving :{
+		EN : 'serving',
+		EN_plural : 'servings',
+		CN : '份'
+	},
 	bun : {
 		EN : 'bun',
 		EN_plural : 'buns',

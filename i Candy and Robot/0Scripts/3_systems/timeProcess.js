@@ -160,7 +160,11 @@ function hourProcess(sec, hour){
 	
 	//随机减少商店库存，营造商店销售的假象
 	for( const [key, shelf] of Object.entries(V.iShop)){
-		if(shelf.state == 'stocked'){
+		if(!shelf || !shelf?.state){
+			iShop.initShelf(key)
+			iShop.getshelf(key)
+		}
+		else if(shelf.state == 'stocked'){
 			shelf.stocks.forEach( item => {
 				if(random(100) < 40){
 					const data = Items.get(item.id)
