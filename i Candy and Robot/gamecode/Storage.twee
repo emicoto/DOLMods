@@ -1,7 +1,7 @@
 :: iCandy Widget Storagep [widget]
 
 <<widget "OpenHomeStorage">>
-    <<set _link to lanSwitch('Open Storage', '打开储物柜')>>
+    <<set _link to lanSwitch('Open Storage', '打开仓库')>>
     <<link _link "iCandy HomeStorage">><</link>>
 <</widget>>
 

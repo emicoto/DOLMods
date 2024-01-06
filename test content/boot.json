@@ -1,26 +1,24 @@
 {
   "name": "test",
-  "version": "1.0.0",
+  "version": "1.0.0.1",
   "scriptFileList_inject_early": [
     "test1.js"
   ],
-  "scriptFileList_earlyload": [ ],
-   "scriptFileList_preload": [ ],
+  "scriptFileList_earlyload": [],
+  "scriptFileList_preload": [],
   "styleFileList": [],
   "scriptFileList": [
     "test2.js"
   ],
-  "tweeFileList": [
-  ],
-  "imgFileList": [ ],
-  "additionFile": [ ],
-
+  "tweeFileList": [],
+  "imgFileList": [],
+  "additionFile": [],
   "addonPlugin": [
     {
       "modName": "TweeReplacer",
       "addonName": "TweeReplacerAddon",
       "modVersion": "1.0.0",
-      "params": [  ]
+      "params": []
     }
   ],
   "dependenceInfo": [
@@ -33,8 +31,8 @@
       "version": "^1.0.0"
     },
     {
-      "modName":"Simple Frameworks",
-      "version":">=1.0.0"
+      "modName": "Simple Frameworks",
+      "version": ">=1.0.0"
     }
   ]
 }

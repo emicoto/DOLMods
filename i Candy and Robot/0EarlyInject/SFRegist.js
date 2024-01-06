@@ -30,4 +30,7 @@ simpleFrameworks.addto('ExtraLinkZone', {
 simpleFrameworks.addto('BeforeLinkZone', {
     passage:['Harvest Street', 'Mer Street'],
     widget:'chinatownExplore'
+},{
+    passage: 'Orphanage',
+    widget:'OpenHomeStorage'
 })

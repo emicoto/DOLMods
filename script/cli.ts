@@ -122,10 +122,28 @@ function setBootVersionPatch(directory: string) {
 
 	const boot = getBootJson(directory);
 	if (!boot) return null;
+	console.log(boot.version);
 	boot.version = semver.inc(boot.version, "patch");
 	fs.writeFileSync(path.join(directory, "boot.json"), JSON.stringify(boot, null, 2));
 	return boot;
 }
+
+function setBootVersionFix(directory: string) {
+	const boot = getBootJson(directory);
+	if (!boot) return null;
+	const ver = boot.version.split(".");
+	if(ver.length == 3){
+		ver.push('1')
+		boot.version = ver.join(".");
+	}
+	else{
+		ver[3] = (parseInt(ver[3]) + 1).toString();
+		boot.version = ver.join(".");
+	}
+	fs.writeFileSync(path.join(directory, "boot.json"), JSON.stringify(boot, null, 2));
+	return boot;
+}
+
 function getPackageConfig() {
 	const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"), "utf8"));
 	return packageJson;
@@ -180,6 +198,19 @@ program.command("patch").description("Sets the version of the mod").action(_ => 
 		console.log(`更新版本${boot.version}`);
 	});
 })
+program.command("fix").description("Sets the version of the mod").action(_ => {
+	inquirer.prompt([
+		{
+			type: "list",
+			name: "getMod",
+			message: "选择Mod需要更新版本?",
+			choices: mods
+		}
+	]).then(({ getMod }) => {
+		const boot = setBootVersionFix(getMod);
+		console.log(`更新版本${boot.version}`);
+	});
+})
 // select folder mod list
 program.command("list").description("Lists all mods").action(() => {
 	const mods = fs.readdirSync(__dirname).filter((file) => {
@@ -226,8 +257,8 @@ program.command("update").description("Updates the mod manager").action(() => {
 			{
 				type: "list",
 				name: "updateModVersion",
-				message: `当前版本${boot.version}，更新版本（Major +1.0.0，Minor +0.1.0，Patch +0.0.1）?`,
-				choices: ["major", "minor", "patch"]
+				message: `当前版本${boot.version}，更新版本（Major +1.0.0，Minor +0.1.0，Patch +0.0.1, Fix +0.0.0.1）?`,
+				choices: ["major", "minor", "patch", "fix"]
 			}]).then(({ updateModVersion }) => {
 
 				console.log(`更新${getMod}版本${updateModVersion}`);
@@ -240,6 +271,9 @@ program.command("update").description("Updates the mod manager").action(() => {
 						break;
 					case "patch":
 						boot = setBootVersionPatch(getMod);
+						break;
+					case "fix":
+						boot = setBootVersionFix(getMod);
 						break;
 				}
 				console.log(`更新版本${boot.version}`);

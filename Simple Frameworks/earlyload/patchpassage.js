@@ -673,7 +673,11 @@
 			},
 			{
 				src:'<<if $police_hack is 2 and',
-				applybefore:'\n<<BeforeLinkZone>>\n',
+				applybefore:'\n\t<<BeforeLinkZone>>\n\t',
+			},
+			{
+				src:'<<home_outside>>',
+				applybefore:'\n\t<<ExtraLinkZone>>\n\t',
 			}
 		],
 		'Orphanage Ward':[
