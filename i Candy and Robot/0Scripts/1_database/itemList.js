@@ -982,8 +982,11 @@ const Gacha = [
 	},
 ]
 
+Items.addItems(Gacha, 'gacha')
+
 const GachaItems = [
 	{
+		type: "collection",
 		tags: ["gacha", "misc", "collection"],
 		id:"angry_owl",
 		name:["Angry Owl", "愤怒的猫头鹰"],
@@ -1003,6 +1006,7 @@ const GachaItems = [
 
 	},
 	{
+		type: "collection",
 		tags: ["gacha", "misc", "collection"],
 		id:"arctic_hare",
 		name:["Arctic Hare", "北极兔"],
@@ -1022,6 +1026,7 @@ const GachaItems = [
 
 	},
 	{
+		type: "collection",
 		tags: ["gacha", "misc", "collection"],
 		id:"dove",
 		name:["Dove", "鸽子"],
@@ -1041,6 +1046,7 @@ const GachaItems = [
 
 	},
 	{
+		type: "collection",
 		tags: ["gacha", "misc", "collection"],
 		id:"elephant_balloon",
 		name:["Elephant Balloon", "红气球大象"],
@@ -1060,6 +1066,7 @@ const GachaItems = [
 
 	},
 	{
+		type: "collection",
 		tags: ["gacha", "misc", "collection"],
 		id:"fox",
 		name:["Fox", "小狐狸"],
@@ -1079,6 +1086,7 @@ const GachaItems = [
 
 	},
 	{
+		type: "collection",
 		tags: ["gacha", "misc", "collection"],
 		id:"foxdove",
 		name:["Fox Dove", "狐狸和鸽子的剪影"],
@@ -1098,6 +1106,7 @@ const GachaItems = [
 
 	},
 	{
+		type: "collection",
 		tags: ["gacha", "misc", "collection"],
 		id:"foxmoon",
 		name:["Fox Dove", "月亮狐狸"],
@@ -1117,6 +1126,7 @@ const GachaItems = [
 
 	},
 	{
+		type: "collection",
 		tags: ["gacha", "misc", "collection"],
 		id:"ir",
 		name:["IR", "IR"],
@@ -1136,6 +1146,7 @@ const GachaItems = [
 
 	},
 	{
+		type: "collection",
 		tags: ["gacha", "misc", "collection"],
 		id:"rabbit_green",
 		name:["Rabbit Green", "绿耳雪兔"],
@@ -1155,6 +1166,7 @@ const GachaItems = [
 
 	},
 	{
+		type: "collection",
 		tags: ["gacha", "misc", "collection"],
 		id:"rabbit_pink",
 		name:["Rabbit Pink", "粉耳雪兔"],
@@ -1174,6 +1186,7 @@ const GachaItems = [
 
 	},
 	{
+		type: "collection",
 		tags: ["gacha", "misc", "collection"],
 		id:"rainbow_cat",
 		name:["Rainbow Cat", "彩虹猫"],
@@ -1193,6 +1206,8 @@ const GachaItems = [
 
 	}
 ]
+
+Items.addItems(GachaItems)
 
 const iSpecial = [
 {

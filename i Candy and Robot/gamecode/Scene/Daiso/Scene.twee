@@ -30,4 +30,6 @@
         <span class="red">这锁你无法打开。</span>
     <</if>>
     <<set $tvar.daisolock = 'checked'>>
+
+    <<link '继续'>><<run iEvent.unsetEvent()>><</link>>
 <</linkreplace>>
