@@ -117,6 +117,16 @@ const itemMsg = {
 		你啜饮了一口，感受可乐在你的口腔里跳动。没有让这种感觉停留太久，你让它滑进胃里，冰凉的舒心感从胃部传到全身，你的精神为之一振。<br>`
 	],
 
+    cola_bottle:[
+		`You rise to uncork the bottle, and with a snap, the lid falls off.<br>
+		The black liquid eagerly surges forth, much like your current desire to drink off it.<br><br>
+		You take a sip, feeling the cola dance in your mouth. Not lingering too long on the sensation, you let it slide down your throat. <br>
+		The refreshing coldness spreads from your stomach throughout your body, invigorating your spirit.`,
+		`你起开瓶盖，啪的一声，盖子应声而落。<br>
+		黑色的液体急切地涌动着，就像你现在想要喝掉它的心情。<br><br>
+		你啜饮了一口，感受可乐在你的口腔里跳动。没有让这种感觉停留太久，你让它滑进胃里，冰凉的舒心感从胃部传到全身，你的精神为之一振。<br>`
+	],
+
 	SpringBoxedMeal: [
 
         `The box includes Mentaiko Chirashi-Sushi, fried shrimp, and potato mash salad served with tomatoes.<br>
@@ -172,7 +182,7 @@ const itemMsg = {
         你感到有什么事好像不太对劲，但是有什么关系呢？这酒可真好喝……`
     ],
 
-	ChestnutEarlGreyCake: [
+	MontBlancCake: [
         `You hold this small, dainty cake in your hand, the light brown and white pastry doesn''t look desolate in autumn, but rather warm and appealing. <br>
         Put it in your mouth, the crisp meringue melts instantly, leaving only a light and refreshing crispness. <br>
         Rum-infused grapes burst with a slightly intoxicating aroma and then meet a rich nutty flavor and intense caramel sweetness of chestnut puree in the mouth. <br>
@@ -220,18 +230,6 @@ const itemMsg = {
 
     ],
 
-	ChestnutRoyalCake: [
-        ` It smells of Royal tea with a hint of fruity and chestnut sweetness.<br>
-        When you taste this Royal Tea Chestnut Chocolate Chiffon Cake, the first thing that hits you is the aroma of Royal tea, mixed with a hint of fruity and chestnut sweetness. <br>
-		The cake is soft and light, filled with a rich chestnut filling, and surrounded by chopped chocolate that resembles jewels. <br>
-		It's a delicious feast that combines the flavors of tea, fruits, and chocolate.<br>`,
-
-        `当你品尝这款皇家茶栗子巧克力夏芬蛋糕时，首先扑面而来的是皇家茶的香气，夹杂着淡淡的果香和栗子的甜美。<br>
-		蛋糕松软轻盈，内部充满了丰富的栗子馅，而四周的切碎巧克力犹如宝石点缀。<br>
-		一场融合了茶香、水果和巧克力的美味盛宴。`
-
-    ],
-
 	HanamiDango: [
 
         `You take a bite of the dango and taste an elegant rice fragrance and a soft and chewy texture, with a hint of sweetness. <br>
@@ -267,7 +265,7 @@ const itemMsg = {
 
     ],
 
-    MontBlancCake: [
+    ChestnutRoyalCake: [
         `You cut open this cake with a warm brown tone, and the sweet fragrance of chestnuts becomes even richer. <br>
         Bite into a soft cake filled with rich and sweet chestnut paste, the fragrant aroma of Earl Grey cream and the sweetness of chestnuts intertwine in the mouth. <br>
         The finely chopped chocolate adds a crunchy texture and a hint of bittersweetness, bringing a richer and more luxurious flavor to the cake. <br>
@@ -396,6 +394,174 @@ const itemMsg = {
         你放下杯子，甩了甩手上的水。`
     ],
 
+    orionring: [
+        `You ate the onion rings.<br>
+        The natural sweetness of the onion is enhanced by the frying process, contrasting with the crispy shell. The chicken flavour crunched.`
+
+        `你吃了洋葱圈。<br>
+        洋葱的自然甜味在油炸的过程中得到了充分的提升，与酥脆的外壳形成鲜明对比。鸡肉味嘎嘣脆。`
+    ],
+
+    oreo: [
+        `You ate the Oreo.<br>
+        Twisted and licked and bubbled, the creamy flavour along with the taste of crunchy little chocolate biscuits filled your mouth.`
+
+        `你吃了奥利奥。<br>
+        扭一扭舔一舔泡一泡，奶香味伴随着脆脆的巧克力小饼干味充满了你的口腔。`
+    ],
+
+    pocky: [
+        `You ate pokey.<br>
+        The outer layer of the cookie sticks is covered with a rich and smooth coating, slightly sweet, creating a perfect combination with the light and crispy texture of the cookies. Chewing produces a distinct crunch, providing you with a delightful experience.`
+
+        `你吃了百奇巧克力饼干条。<br>
+        饼干棒的外层覆盖着一层味道丰富的涂层，丝滑又微甜，与饼干的轻盈和酥脆形成完美的搭配。在咀嚼时会产生明显的嘎吱声，给你愉快的体验。`
+    ],
+
+    fruitscrisp: [
+        `You ate fruits crisp, casually pouring them into your mouth.<br>
+        The crispness of the nuts and the softness of the dried berries blend together, creating a wonderfully unique flavor.`
+
+        `你吃了干果，你将它们随意地倒在嘴里。<br>
+        坚果的酥脆和风干浆果的软糯混杂在一起，口味非常奇妙。`
+    ],
+
+    jellos: [
+        `You ate a jelly.<br>
+        It's smooth and slips into your stomach all at once. You guess at what it would have tasted like in the residual sweetness.`
+
+        `你吃下一个果冻。<br>
+        滑溜溜的，一下子就溜进胃里。你在残余的甜味中猜测着它本来的口味。`
+    ],
+
+    danishcookies: [
+        `You ate Danish cookies.<br>
+        The rich aroma of butter permeates your mouth, gradually melting as you chew, providing a silky smooth texture.`
+
+        `你吃了丹麦曲奇。<br>
+        浓郁的奶油香气在你口中四溢，在咀嚼时逐渐融化，口感丝滑。`
+    ],
+
+    ferrero: [
+        `You ate Ferrero Rocher chocolate.<br>
+        Its silky texture gently melts on your tongue, and as the chocolate shell dissolves, the rich caramel filling begins to release its unique charm. The caramel filling is rich and sweet, balancing perfectly with the chocolate's slight bitterness.`
+
+        `你吃了费列罗巧克力。<br>
+        它的丝滑质地在你舌尖上轻轻融化，随着巧克力壳的融化，里面的焦糖馅料开始释放其独特的魅力。焦糖馅料浓郁而香甜，与巧克力的微苦恰到好处地平衡。`
+    ],
+
+    water: [
+        `You drank the water.
+        Err...is what water tastes like.`
+
+        `你喝了水。
+        额……就是水的味道。`
+    ],
+
+    mineralwater: [
+        `You drank mineral water. <br>
+        It's a bit sweeter than normal water, which is why they can be sold in bottles`
+
+        `你喝了矿泉水。<br>
+        比一般的水要甘一些，这就是它们能够装在瓶子里卖的原因。`
+    ],
+
+    frappuccino: [
+        `You drank Frappuccino. <br>
+        One sip of icy cold and refreshing.`
+
+        `你喝了星冰乐咖啡。<br>
+        喝一口冰冰凉凉的，提神醒脑。`
+    ],
+
+    cancoffe: [
+        `You drank coffee from a can. <br>
+        Cream mixed with the flavour of dark roast industrial coffee.`
+
+        `你喝了罐装咖啡。<br>
+        奶精混杂着深烘工业咖啡的味道。`
+    ],
+
+    redcow: [
+        `You drank Red Cow. <br>
+        A more powerful pick-me-up than coffee rushes down your throat in the flavour of taurine.`
+
+        `你喝了红羊。<br>
+        比咖啡更加强劲的提神力量在牛磺酸的味道里涌进你的喉咙里。`
+    ],
+
+    sportdrink: [
+        `You drank an energy drink. <br>
+        It tastes a bit like grapefruit and replenishes electrolytes lost after a workout. 
+        But it also tastes good on a regular basis.`
+
+        `你喝了能量饮料。<br>
+        味道有点像是西柚，能够补充在运动过后流失的电解质。不过平时喝也很好味。`
+    ],
+
+    fruitsoda: [
+        `You drank the fruit soda. <br>
+        The fruity flavour with the carbonation tingles your taste buds, it's the bubbles that go up a bit and surge into your stomach, making you burp.`
+
+        `你喝了水果苏打。<br>
+        水果味配着碳酸刺激着你的味蕾，就是气泡有点上头，涌入胃里，让你打了个嗝。`
+    ],
+
+    milktea: [
+        `You drank Queen's Milk Tea. <br>
+        The flavours of the creamer and tea mix blended together actually felt indulgently silky. It's just a bit high in calories.`
+
+        `你喝了皇后奶茶。<br>
+        奶精和茶混合的味道，融合起来竟感觉纵享丝滑。就是热量有点高。`
+    ],
+
+    royaltea: [
+        `You drank afternoon black tea. <br>
+        The slight bitterness of the tea is masked by the flavour of the sugar, and you drink it with a sense of elegance.`
+
+        `你喝了午后红茶。<br>
+        茶的微苦被糖的味道掩盖，喝起来有种优雅的感觉。`
+    ],
+
+    icetea: [
+        `You drank ice tea. <br>
+        The flavours of lemon and black tea mix together for an icy cold taste that's great for beating the summer heat.`
+
+        `你喝了冰红茶。<br>
+        柠檬与红茶的味道混合在一起，口感冰冰凉凉，是夏天消暑的好物。`
+    ],
+
+    sandwich: [
+        `You took a bite of sandwich. <br>
+        Vegetables, eggs and meat textures appear in turn, wrapped in a hearty bread. It's not an elaborate dish, but filling enough.`
+
+        `你咬下一口三文治。<br>
+        蔬菜、蛋和肉的口感依次出现，裹在丰盈的面包中。虽然不是精致菜肴，但足够充饥。`
+    ],
+
+    lunchbox: [
+        `You ate the easy meal. <br> 
+        The vegetables have lost their moisture and are dry; the meat is flabby. Sort of a mediocre meal.`
+        `你吃下了简易套餐。<br>
+        蔬菜失去水分，干巴巴的；肉也很松散。算是平凡的一餐。`
+    ],
+
+    sandwichbread: [
+        `You ate the sandwich bread. <br>
+        It's dry and makes you want to drink water. <br>
+        There should be something sandwiched inside the bread to make it taste good.`
+        `你吃下了三明治面包。面包很干，让人忍不住想喝水。<br>
+        面包里面应该夹点什么才好吃。`
+        
+    ],
+
+    ritz: [
+        `You've had RITZ Biscuit. <br> 
+        The crunch of the biscuit and the soft texture of the cheese sandwich intertwine while releasing the rich aroma of butter, cream and cheese. It's salty, sweet and deliciously pinched.`
+
+        `你吃了乐兹芝士夹心饼。<br>
+        饼干的酥脆和芝士夹心的绵软质地相互交织，同时释放出黄油、奶油和芝士的浓郁香气。咸咸甜甜的，好吃捏。`
+    ],
 }
 
 
