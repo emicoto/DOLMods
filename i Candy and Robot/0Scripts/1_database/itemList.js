@@ -348,7 +348,7 @@ const iFoods = [
 		plural:"Spring Boxed Meals",
 
 		info: [
-		"Filled with the deliciousness of spring, it includes Mentaiko Chirashi-Sushi, fried shrimp, and potato mash salad served with tomatoes.",
+		"Filled with the deliciousness of spring.",
 		"满含春天的美味，内含了明太子散寿司、炸虾和马铃薯泥生菜沙拉佐番茄。",
 		],
 
@@ -368,7 +368,7 @@ const iFoods = [
 		plural:"Autumn Boxed Meals",
 
 		info: [
-		"A luxury box filled by autumn specialties, includes rice, tender grilled eel, matsutake mushrooms, and fresh salmon arranged like vibrant flowers.",
+		"A luxury box filled by autumn specialties.",
 		"豪华的漆器盒子里面装载着满满的秋日特产，吸饱了蒲烧酱汁的米饭、肥嫩的蒲烧鳗、切成片的松茸，还有摆放成鲜艳花朵的当季新鲜鲑鱼。",
 		],
 
@@ -389,7 +389,7 @@ const iFoods = [
 		plural:"Chestnut Royal Cake",
 
 		info: [
-		"Royal tea chiffon cake filled with chesnuts, and chopped chocolate surrounding. It smells of Royal tea with a hint of fruity and chestnut sweetness.",
+		"Royal tea chiffon cake filled with chesnuts, and chopped chocolate surrounding.",
 		"在伯爵茶戚风蛋糕的基底上加入了满满的栗子馅，细碎的巧克力围绕着红茶奶油、闻起来充满了伯爵红茶带着些微果香的芬芳与栗子馨香甜美。",
 		],
 
@@ -402,14 +402,14 @@ const iFoods = [
 		msg: itemMsg.ChestnutEarlGreyCake,
 	},
 	{
-		tags:["seasonal", "spring", "food", "vegi"],
+		tags:["seasonal", "spring", "meal", "vegi"],
 
 		id:"HanamiDango",
 		name:["Hanami Dango", "花见团子"],
 		plural:"Hanami Dango",
 
 		info: [
-		"String together three colored dango, it would be even better if we could enjoy them under the cherry blossom tree.",
+		"String together three colored dango.",
 		"由三种颜色的团子串成，要是能在樱花树下享用就更好了",
 		],
 
@@ -424,14 +424,14 @@ const iFoods = [
 		msg: itemMsg.HanamiDango,
 	},
 	{
-		tags:["seasonal", "spring", "food", "vegi"],
+		tags:["seasonal", "spring", "meal", "vegi"],
 
 		id:"Sakuramochi",
 		name:["Sakuramochi", "樱饼"],
 		plural:"Sakuramochi",
 
 		info: [
-		"The glutinous rice outer skin is dyed a In a transparent glass bottle is a pale pink liquor brewed with green apple and cherry blossom pink by cherry blossom petals is filled with sweet red bean paste and wrapped in salted cherry blossom leaves, creating this cute and spring-like dessert.",
+		"A snack wrapped in cherry blossom sticky rice skin and leaves of the cherry blossom tree.",
 		"被花瓣染成嫩粉色的糯米外皮包着甜蜜的红豆沙馅料、再由盐渍的樱花叶包裹，就完成了这个可爱又充满春天气息的点心。",
 		],
 
@@ -446,14 +446,14 @@ const iFoods = [
 		msg: itemMsg.Sakuramochi,
 	},
 	{
-		tags:["seasonal", "summer", "food", "meat"],
+		tags:["seasonal", "summer", "meal", "meat"],
 
 		id:"ColdRamen",
 		name:["Cold Ramen", "中华冷面"],
 		plural:"Cold Ramen",
 
 		info: [
-		"Loaded with cold noodles, topped with cucumber, tomato, soft-boiled egg, ham, and shrimp.Just looking at it will make you feel refreshing.",
+		"Loaded with cold noodles, topped with cucumber, tomato, soft-boiled egg, ham, and shrimp.",
 		"用透明压克力盒装载满满的冷面、上面有小黄瓜、番茄、溏心蛋、火腿和虾仁，光是看着就能感到凉爽。",
 		],
 
@@ -467,14 +467,14 @@ const iFoods = [
 		msg: itemMsg.ColdRamen,
 	},
 	{
-		tags:["seasonal", "autumn", "food", "cake", "sweets"],
+		tags:["seasonal", "autumn", "cake", "sweets"],
 
 		id:"MontBlancCake",
 		name:["Mont Blanc Cake", "栗子蒙布朗"],
 		plural:"Mont Blanc Cake",
 
 		info: [
-		"On the light and airy meringue cookies, spread rum raisins, topped with a generous layer of chestnut puree, and finally drizzled with whipped cream and powdered sugar – this is the dessert that evokes images of autumn mountains!",
+		"On the light and airy meringue cookies, spread rum raisins, topped with a generous layer of chestnut puree.",
 		"在酥松轻盈的蛋白霜饼干上铺着酒酿葡萄、覆盖满满的栗子泥，最后淋上生奶油与糖粉、就是这份让人联想到秋日山峰的甜品了！",
 		],
 
@@ -487,14 +487,14 @@ const iFoods = [
 		msg: itemMsg.MontBlancCake,
 	},
 	{
-		tags:["seasonal", "winter", "food", "meat"],
+		tags:["seasonal", "winter", "meal", "meat"],
 
 		id:"PorkPie",
 		name:["Pork pie", "猪肉派"],
 		plural:"Pork pie",
 
 		info: [
-		"Inside the luxurious lacquer box are a variety of autumn specialties, including rice soaked in eel sauce, tender grilled eel, sliced matsutake mushrooms, and fresh salmon arranged like vibrant flowers. Enjoy to your heart's content!",
+		"A traditional pork pie in the British style.",
 		"英式的传统猪肉派，简单但细致美观的金黄色酥皮包裹着鲜美的肉馅和充满胶质的肉冻、散发着淡淡的肉香。",
 		],
 
@@ -508,14 +508,14 @@ const iFoods = [
 		msg: itemMsg.PorkPie,
 	},
 	{
-		tags:["seasonal", "winter", "food", "vegi"],
+		tags:["seasonal", "winter", "meal", "vegi"],
 
 		id:"MincePie",
 		name:["Mince pie", "圣诞百果派"],
 		plural:"Mince pie",
 
 		info: [
-		"Traditional Christmas petits fours, flaky pie crust filled with a rich filling. It has a rich aroma of brandy, fruit, cloves, and cinnamon, creating a warm and fragrant scent.",
+		"Traditional Christmas petits fours, flaky pie crust filled with a rich filling.",
 		"传统的圣诞小点心，酥松的派底填上丰富的馅料。闻起来有浓郁的白兰地酒香与酸甜果香、和丁香与肉桂的香气组成了让人温暖起来的芬芳。",
 		],
 
@@ -529,7 +529,7 @@ const iFoods = [
 		msg: itemMsg.MincePie
 	},
 	{
-		tags:["seasonal", "summer", "food", "vegi"],
+		tags:["seasonal", "summer", "meal", "vegi"],
 	
 		id:"MintJelly",
 		name:["Mint jelly", "薄荷果冻"],
@@ -551,14 +551,14 @@ const iFoods = [
 		msg: itemMsg.MintJelly
 	},
 	{
-		tags:["mealbox"],
+		tags:["meal"],
 	
 		id:"BasicFoodSet",
 		name:["Basic Food Set", "基本组合"],
 		plural:"Basic Food Sets",
 	
 		info: [
-		"A serving of rice bowl, a bowl of miso soup, and a cup of tea. Rich in aroma, abundant in ingredients, simple yet delicious. After finishing, remember to return the plates to the owner.",
+		"A serving of rice bowl, a bowl of miso soup, and a cup of tea. Rich in aroma, abundant in ingredients, simple yet delicious.",
 		"一份盖饭，一碗味增汤，一杯茶。香气浓郁，食材丰富，简单而美味。吃完记得把盘子还给老板。",
 		],
 	
@@ -571,14 +571,14 @@ const iFoods = [
 		msg: itemMsg.BasicFoodSet
 	},
 	{
-		tags:["seasonal", "winter", "food", "meat"],
+		tags:["seasonal", "winter", "meal", "meat"],
 	
 		id:"LambChop",
 		name:["Lamb Chop", "小羊排"],
 		plural:"Lamb Chops",
 	
 		info: [
-		"Refreshing and invigorating, the aroma of mint leaves perfectly blends with the unique tartness of lemon. It brings a touch of coolness to the summer days.",
+		"Roasted lamb chops, golden and crispy.",
 		"小羊排散发着碳烤与溶化脂肪的香气。表面烤至金黄酥脆。每一块都均匀撒上了迷迭香与百里香，令人垂涎欲滴。",
 		],
 	
@@ -850,14 +850,14 @@ const iDrinks = [
 		],
 	},
 	{
-		tags:["seasonal", "summer", "drink"],
+		tags:["seasonal", "summer", "serving", "cup"],
 	
 		id:"MintLemonade",
 		name:["Mint Lemonade", "薄荷柠檬饮"],
 		plural:"Mint Lemonade",
 	
 		info: [
-		"Refreshing and invigorating, the aroma of mint leaves perfectly blends with the unique tartness of lemon. It brings a touch of coolness to the summer days.",
+		"The aroma of mint leaves perfectly blends with the unique tartness of lemon.",
 		"清新爽口，薄荷叶的香气与柠檬独特的酸涩风味完美融合。夏日里带来一丝清凉。",
 		],
 	
@@ -871,14 +871,14 @@ const iDrinks = [
 		msg: itemMsg.MintLemonade
 	},
 	{
-		tags:["seasonal", "summer", "drink"],
+		tags:["seasonal", "summer", "serving", "cup"],
 	
 		id:"PineappleIce",
 		name:["Pineapple Ice", "菠萝冰"],
 		plural:"Pineapple Ice",
 	
 		info: [
-		"The shape is unique, and the ice cubes suspended in the pineapple sparkle with a crystal-clear luster in the sunlight. They may feel a bit prickly to the touch.",
+		"The shape is unique, and the ice cubes suspended in the pineapple sparkle.",
 		"造型奇特，悬浮在菠萝中的冰块在阳光下闪着晶莹的光泽。菠萝杯摸起来可能有些扎手。",
 		],
 	
@@ -892,14 +892,14 @@ const iDrinks = [
 		msg: itemMsg.PineappleIce
 	},
 	{
-		tags:["seasonal", "summer", "drink"],
+		tags:["seasonal", "summer", "serving", "cup"],
 	
 		id:"WatermelonIce",
 		name:["Watermelon Ice", "西瓜冰"],
 		plural:"Watermelon Ice",
 	
 		info: [
-		"The vibrant red flesh of the watermelon is clearly visible, and droplets on the cup's rim glisten in the sunlight. Refreshing and cooling, how about a cup to beat the summer heat?",
+		"The vibrant red flesh of the watermelon is clearly visible. Refreshing and cooling.",
 		"红艳的西瓜肉清晰可见，杯壁的水珠在阳光下闪闪发亮。清凉解暑，不来一杯吗？",
 		],
 	
@@ -2011,7 +2011,7 @@ const iAddictive = [
 		plural:"Sakura Wine",
 
 		info: [
-		"The clear glass bottle contains a pale pink, green apple and cherry blossom based brew with whole cherry blossoms and gold leaf.",
+		"The clear glass bottle contains a pale pink, green apple and cherry blossom based brew.",
 		"透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔。",
 		],
 
@@ -2034,8 +2034,8 @@ const iAddictive = [
 		plural:"bulkSakuraWine",
 
 		info: [
-		"The clear glass bottle contains a pale pink, green apple and cherry blossom based brew with whole cherry blossoms and gold leaf. The price it cheaper...queit suspicious.",
-		"透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔！看上去非常梦幻。但是卖得这么便宜…有些可疑",
+		"Sakura wine. The price it cheaper...queit suspicious.",
+		"透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔！看上去非常梦幻。但是卖得这么便宜……有些可疑",
 		],
 
 		price: 9670,
@@ -2057,7 +2057,7 @@ const iAddictive = [
 		plural:"Osmanthus wine",
 
 		info: [
-		"The liquor presents a bright amber hue, and the bottle neck is adorned with a delicate circle of pale golden osmanthus.",
+		"Amber-coloured Osmanthus wine.",
 		"酒液呈明亮的琥珀色，瓶口装饰着一圈淡淡的金黄色桂花。虽未开瓶，却仿佛散发着芬芳的桂花香。晃动瓶身，桂花纷繁而落。",
 		],
 
@@ -2073,7 +2073,7 @@ const iAddictive = [
 	},
 	{
 		type:"drinks",
-		tags:["seasonal", "winter", "alcohol"],
+		tags:["seasonal", "winter", "alcohol", "serving", "cup"],
 
 		id:"MulledWine",
 		name:["Mulled Wine", "热红酒"],

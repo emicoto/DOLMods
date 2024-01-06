@@ -119,7 +119,8 @@ const itemMsg = {
 
 	SpringBoxedMeal: [
 
-        `You first put the chirashi-sushi into your mouth, the rice dyed a tender pink color by mentaiko brings a slight spiciness, then come the flavorful eggy taste of kinshi Tamago. <br>
+        `The box includes Mentaiko Chirashi-Sushi, fried shrimp, and potato mash salad served with tomatoes.<br>
+        You first put the chirashi-sushi into your mouth, the rice dyed a tender pink color by mentaiko brings a slight spiciness, then come the flavorful eggy taste of kinshi Tamago. <br>
         Afterwards, you chewed on the dense, delicate tuna puree, combined with seaweed to create a fresh seafood flavor. <br>
         Then bite into a crispy deep-fried shrimp and The succulent and firm shrimp meat and crispy batter fill the entire mouth. <br>
         Finally, put the mashed potatoes salad in your mouth and the freshness of spring vegetables removes all the fishy smell and greasiness. <br>
@@ -187,13 +188,14 @@ const itemMsg = {
 	],
 
 	AutumnBoxedMeal: [        
-        `You first put the rice full of  unagi sauce flavor into your mouth, and the unique sauce aroma immediately fills your mouth. <br>
+        `The box includes rice, tender grilled eel, matsutake mushrooms, and fresh salmon arranged like vibrant flowers.<br>
+        You first put the rice full of  unagi sauce flavor into your mouth, and the unique sauce aroma immediately fills your mouth. <br>
         In combination with a juicy and tender grilled eel, the deliciousness of the eel and the sweetness of the sauce blend seamlessly, dancing on your taste buds. <br>
         Taking another bite, the captivating aroma of matsutake and the exquisite taste of matsutake surprisingly resembled tender and juicy red meat, adding more layers of flavor to this meal. <br>
         Finally, put the salmon that has been rolled into a beautiful flower into your mouth, and the tender fat and delicious salmon meat melt away, leaving only a sweet and rich flavor. <br>
         After finishing this delicious food, it makes you feel the gift from autumn, every bite full of the bounty of nature and human ingenuity.`,
 
-        `你先将饱含蒲烧酱汁的米饭送入口中，那股独特的酱香顿时弥漫在口中、 <br>
+        `你先将饱含蒲烧酱汁的米饭送入口中，那股独特的酱香顿时弥漫在口中。 <br>
         配合一口肥嫩的蒲烧鳗，鳗鱼的鲜美和甘美的酱汁配合的天衣无缝、在你的唇齿间共舞。 <br>
         再尝一口散发着迷人香气的松茸、鲜美的菇类竟犹如红肉般醇厚多汁且充满了咬劲，为这份餐点添增了更多的层次感。 <br>
         最后再将卷成美丽花朵的鲑鱼放入口中，滑嫩的脂肪和鲜美的鲑鱼肉在口中化开、只余下鲜甜浓郁的滋味。 <br>
@@ -202,7 +204,8 @@ const itemMsg = {
     ],
 
 	OsmanthusWine: [
-        `You shake the bottle, and before your eyes appears a farmhouse courtyard surrounded by earthen walls and wooden fences.<br>
+        `The liquor presents a bright amber hue, and the bottle neck is adorned with a delicate circle of pale golden osmanthus.<br>
+        You shake the bottle, and before your eyes appears a farmhouse courtyard surrounded by earthen walls and wooden fences.<br>
         In the center of the courtyard stands a osmanthus tree towering as high as a two-story building, a companion throughout your growth.<br>
         Osmanthus blossoms profusely, their rich and somewhat overpowering fragrance continuously drifting into your nostrils as you take a sip. The lush floral aroma perfectly blends into the fragrance of the wine, diffusing in your mouth.<br>
         You reminisce about times filled with the chirping sounds of friends engaged in idle chatter.<br>
@@ -218,7 +221,8 @@ const itemMsg = {
     ],
 
 	ChestnutRoyalCake: [
-        `When you taste this Royal Tea Chestnut Chocolate Chiffon Cake, the first thing that hits you is the aroma of Royal tea, mixed with a hint of fruity and chestnut sweetness. <br>
+        ` It smells of Royal tea with a hint of fruity and chestnut sweetness.<br>
+        When you taste this Royal Tea Chestnut Chocolate Chiffon Cake, the first thing that hits you is the aroma of Royal tea, mixed with a hint of fruity and chestnut sweetness. <br>
 		The cake is soft and light, filled with a rich chestnut filling, and surrounded by chopped chocolate that resembles jewels. <br>
 		It's a delicious feast that combines the flavors of tea, fruits, and chocolate.<br>`,
 
@@ -241,7 +245,8 @@ const itemMsg = {
     ],
 
 	Sakuramochi: [
-        `You peel open the leaf and take a bite, tasting the mild and fragrant aroma of rice and the chewy glutinous rice skin, followed by the sweet and rich red bean paste filling. <br>
+        `The glutinous rice outer skin is dyed a In a transparent glass bottle is a pale pink liquor brewed with green apple and cherry blossom pink by cherry blossom petals is filled with sweet red bean paste and wrapped in salted cherry blossom leaves, creating this cute and spring-like dessert.<br>
+        You peel open the leaf and take a bite, tasting the mild and fragrant aroma of rice and the chewy glutinous rice skin, followed by the sweet and rich red bean paste filling. <br>
         After enjoying the sticky and soft sweetness, take another bite combine salted cherry leaves and instantly fill your mouth with the fragrance and cherry blossoms, bringing a tangy, sweet, and salty flavor. <br>
         You just ate the whole sakuramochi , feeling completely enveloped in the scent of cherry blossoms and spring.`
 
