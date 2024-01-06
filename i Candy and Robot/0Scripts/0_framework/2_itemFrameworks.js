@@ -626,6 +626,11 @@ function useItems(pocket, pos, enemy){
 		pocketData.deleteAt(pos)
 	}
 
+	//掉落处理
+	if(typeof data.drop == 'function' && !enemy){
+		data.drop()
+	}
+
 	if(enemy){
 		return params
 	}

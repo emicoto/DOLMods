@@ -213,7 +213,6 @@ for(const [Id, iData] of Object.entries(Items.data)){
 		iDrugStats.state.drugs[Id] = new drugState()
 		iDrugStats.flags.drugs[Id] = new drugFlag()
 	}
-	iStorage.home[Id] = 0
 }
 
 C.hunger = {

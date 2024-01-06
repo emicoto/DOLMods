@@ -396,7 +396,7 @@ const itemMsg = {
 
     orionring: [
         `You ate the onion rings.<br>
-        The natural sweetness of the onion is enhanced by the frying process, contrasting with the crispy shell. The chicken flavour crunched.`
+        The natural sweetness of the onion is enhanced by the frying process, contrasting with the crispy shell. The chicken flavour crunched.`,
 
         `你吃了洋葱圈。<br>
         洋葱的自然甜味在油炸的过程中得到了充分的提升，与酥脆的外壳形成鲜明对比。鸡肉味嘎嘣脆。`
@@ -404,7 +404,7 @@ const itemMsg = {
 
     oreo: [
         `You ate the Oreo.<br>
-        Twisted and licked and bubbled, the creamy flavour along with the taste of crunchy little chocolate biscuits filled your mouth.`
+        Twisted and licked and bubbled, the creamy flavour along with the taste of crunchy little chocolate biscuits filled your mouth.`,
 
         `你吃了奥利奥。<br>
         扭一扭舔一舔泡一泡，奶香味伴随着脆脆的巧克力小饼干味充满了你的口腔。`
@@ -412,7 +412,7 @@ const itemMsg = {
 
     pocky: [
         `You ate pokey.<br>
-        The outer layer of the cookie sticks is covered with a rich and smooth coating, slightly sweet, creating a perfect combination with the light and crispy texture of the cookies. Chewing produces a distinct crunch, providing you with a delightful experience.`
+        The outer layer of the cookie sticks is covered with a rich and smooth coating, slightly sweet, creating a perfect combination with the light and crispy texture of the cookies. Chewing produces a distinct crunch, providing you with a delightful experience.`,
 
         `你吃了百奇巧克力饼干条。<br>
         饼干棒的外层覆盖着一层味道丰富的涂层，丝滑又微甜，与饼干的轻盈和酥脆形成完美的搭配。在咀嚼时会产生明显的嘎吱声，给你愉快的体验。`
@@ -420,7 +420,7 @@ const itemMsg = {
 
     fruitscrisp: [
         `You ate fruits crisp, casually pouring them into your mouth.<br>
-        The crispness of the nuts and the softness of the dried berries blend together, creating a wonderfully unique flavor.`
+        The crispness of the nuts and the softness of the dried berries blend together, creating a wonderfully unique flavor.`,
 
         `你吃了干果，你将它们随意地倒在嘴里。<br>
         坚果的酥脆和风干浆果的软糯混杂在一起，口味非常奇妙。`
@@ -428,7 +428,7 @@ const itemMsg = {
 
     jellos: [
         `You ate a jelly.<br>
-        It's smooth and slips into your stomach all at once. You guess at what it would have tasted like in the residual sweetness.`
+        It's smooth and slips into your stomach all at once. You guess at what it would have tasted like in the residual sweetness.`,
 
         `你吃下一个果冻。<br>
         滑溜溜的，一下子就溜进胃里。你在残余的甜味中猜测着它本来的口味。`
@@ -436,7 +436,7 @@ const itemMsg = {
 
     danishcookies: [
         `You ate Danish cookies.<br>
-        The rich aroma of butter permeates your mouth, gradually melting as you chew, providing a silky smooth texture.`
+        The rich aroma of butter permeates your mouth, gradually melting as you chew, providing a silky smooth texture.`,
 
         `你吃了丹麦曲奇。<br>
         浓郁的奶油香气在你口中四溢，在咀嚼时逐渐融化，口感丝滑。`
@@ -444,7 +444,7 @@ const itemMsg = {
 
     ferrero: [
         `You ate Ferrero Rocher chocolate.<br>
-        Its silky texture gently melts on your tongue, and as the chocolate shell dissolves, the rich caramel filling begins to release its unique charm. The caramel filling is rich and sweet, balancing perfectly with the chocolate's slight bitterness.`
+        Its silky texture gently melts on your tongue, and as the chocolate shell dissolves, the rich caramel filling begins to release its unique charm. The caramel filling is rich and sweet, balancing perfectly with the chocolate's slight bitterness.`,
 
         `你吃了费列罗巧克力。<br>
         它的丝滑质地在你舌尖上轻轻融化，随着巧克力壳的融化，里面的焦糖馅料开始释放其独特的魅力。焦糖馅料浓郁而香甜，与巧克力的微苦恰到好处地平衡。`
@@ -452,7 +452,7 @@ const itemMsg = {
 
     water: [
         `You drank the water.
-        Err...is what water tastes like.`
+        Err...is what water tastes like.`,
 
         `你喝了水。
         额……就是水的味道。`
@@ -460,7 +460,7 @@ const itemMsg = {
 
     mineralwater: [
         `You drank mineral water. <br>
-        It's a bit sweeter than normal water, which is why they can be sold in bottles`
+        It's a bit sweeter than normal water, which is why they can be sold in bottles`,
 
         `你喝了矿泉水。<br>
         比一般的水要甘一些，这就是它们能够装在瓶子里卖的原因。`
@@ -468,7 +468,7 @@ const itemMsg = {
 
     frappuccino: [
         `You drank Frappuccino. <br>
-        One sip of icy cold and refreshing.`
+        One sip of icy cold and refreshing.`,
 
         `你喝了星冰乐咖啡。<br>
         喝一口冰冰凉凉的，提神醒脑。`
@@ -476,7 +476,7 @@ const itemMsg = {
 
     cancoffe: [
         `You drank coffee from a can. <br>
-        Cream mixed with the flavour of dark roast industrial coffee.`
+        Cream mixed with the flavour of dark roast industrial coffee.`,
 
         `你喝了罐装咖啡。<br>
         奶精混杂着深烘工业咖啡的味道。`
@@ -484,7 +484,7 @@ const itemMsg = {
 
     redcow: [
         `You drank Red Cow. <br>
-        A more powerful pick-me-up than coffee rushes down your throat in the flavour of taurine.`
+        A more powerful pick-me-up than coffee rushes down your throat in the flavour of taurine.`,
 
         `你喝了红羊。<br>
         比咖啡更加强劲的提神力量在牛磺酸的味道里涌进你的喉咙里。`
@@ -493,7 +493,7 @@ const itemMsg = {
     sportdrink: [
         `You drank an energy drink. <br>
         It tastes a bit like grapefruit and replenishes electrolytes lost after a workout. 
-        But it also tastes good on a regular basis.`
+        But it also tastes good on a regular basis.`,
 
         `你喝了能量饮料。<br>
         味道有点像是西柚，能够补充在运动过后流失的电解质。不过平时喝也很好味。`
@@ -501,7 +501,7 @@ const itemMsg = {
 
     fruitsoda: [
         `You drank the fruit soda. <br>
-        The fruity flavour with the carbonation tingles your taste buds, it's the bubbles that go up a bit and surge into your stomach, making you burp.`
+        The fruity flavour with the carbonation tingles your taste buds, it's the bubbles that go up a bit and surge into your stomach, making you burp.`,
 
         `你喝了水果苏打。<br>
         水果味配着碳酸刺激着你的味蕾，就是气泡有点上头，涌入胃里，让你打了个嗝。`
@@ -509,7 +509,7 @@ const itemMsg = {
 
     milktea: [
         `You drank Queen's Milk Tea. <br>
-        The flavours of the creamer and tea mix blended together actually felt indulgently silky. It's just a bit high in calories.`
+        The flavours of the creamer and tea mix blended together actually felt indulgently silky. It's just a bit high in calories.`,
 
         `你喝了皇后奶茶。<br>
         奶精和茶混合的味道，融合起来竟感觉纵享丝滑。就是热量有点高。`
@@ -517,7 +517,7 @@ const itemMsg = {
 
     royaltea: [
         `You drank afternoon black tea. <br>
-        The slight bitterness of the tea is masked by the flavour of the sugar, and you drink it with a sense of elegance.`
+        The slight bitterness of the tea is masked by the flavour of the sugar, and you drink it with a sense of elegance.`,
 
         `你喝了午后红茶。<br>
         茶的微苦被糖的味道掩盖，喝起来有种优雅的感觉。`
@@ -525,7 +525,7 @@ const itemMsg = {
 
     icetea: [
         `You drank ice tea. <br>
-        The flavours of lemon and black tea mix together for an icy cold taste that's great for beating the summer heat.`
+        The flavours of lemon and black tea mix together for an icy cold taste that's great for beating the summer heat.`,
 
         `你喝了冰红茶。<br>
         柠檬与红茶的味道混合在一起，口感冰冰凉凉，是夏天消暑的好物。`
@@ -533,7 +533,7 @@ const itemMsg = {
 
     sandwich: [
         `You took a bite of sandwich. <br>
-        Vegetables, eggs and meat textures appear in turn, wrapped in a hearty bread. It's not an elaborate dish, but filling enough.`
+        Vegetables, eggs and meat textures appear in turn, wrapped in a hearty bread. It's not an elaborate dish, but filling enough.`,
 
         `你咬下一口三文治。<br>
         蔬菜、蛋和肉的口感依次出现，裹在丰盈的面包中。虽然不是精致菜肴，但足够充饥。`
@@ -541,7 +541,7 @@ const itemMsg = {
 
     lunchbox: [
         `You ate the easy meal. <br> 
-        The vegetables have lost their moisture and are dry; the meat is flabby. Sort of a mediocre meal.`
+        The vegetables have lost their moisture and are dry; the meat is flabby. Sort of a mediocre meal.`,
         `你吃下了简易套餐。<br>
         蔬菜失去水分，干巴巴的；肉也很松散。算是平凡的一餐。`
     ],
@@ -549,7 +549,7 @@ const itemMsg = {
     sandwichbread: [
         `You ate the sandwich bread. <br>
         It's dry and makes you want to drink water. <br>
-        There should be something sandwiched inside the bread to make it taste good.`
+        There should be something sandwiched inside the bread to make it taste good.`,
         `你吃下了三明治面包。面包很干，让人忍不住想喝水。<br>
         面包里面应该夹点什么才好吃。`
         
@@ -557,7 +557,7 @@ const itemMsg = {
 
     ritz: [
         `You've had RITZ Biscuit. <br> 
-        The crunch of the biscuit and the soft texture of the cheese sandwich intertwine while releasing the rich aroma of butter, cream and cheese. It's salty, sweet and deliciously pinched.`
+        The crunch of the biscuit and the soft texture of the cheese sandwich intertwine while releasing the rich aroma of butter, cream and cheese. It's salty, sweet and deliciously pinched.`,
 
         `你吃了乐兹芝士夹心饼。<br>
         饼干的酥脆和芝士夹心的绵软质地相互交织，同时释放出黄油、奶油和芝士的浓郁香气。咸咸甜甜的，好吃捏。`

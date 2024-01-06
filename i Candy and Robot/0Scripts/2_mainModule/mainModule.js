@@ -352,42 +352,22 @@ function iCandyOldInit(){
 }
 iCandy.manualInit = iCandyOldInit
 
-setup.iCandyBakItem = {}
 function iCandyUpdate(force){
 	if(passage() == 'Start' && V.iCandyRobot) return;
 
 	if(V.iCandyStats){
 		delete V.iCandyStory
 		delete V.mechaItems
-
 		delete V.mechanic		
 		delete V.iRobot
 		delete V.natural_lactation
-
 		delete V.myApartment
 		delete V.repairStore
-
-		for(let i in V.candyDrug){
-			let item = V.candyDrug[i]
-			setup.iCandyBakItem[i] = item.owned
-		}
-
 		delete V.candyDrug
-
-		for(let i in V.candyItems){
-			setup.iCandyBakItem[i] = V.candyItems[i]
-		}
-
 		delete V.candyItems
 		delete V.iCandyStats
 
 		iCandyInit()
-		for(let i in setup.iCandyBakItem){
-			let item = setup.iCandyBakItem[i];
-			if(item > 0){
-				V.iStorage.home[i] = item
-			}
-		}
 	}
 	else if(!V.iCandyRobot){
 		iCandyInit()
@@ -401,6 +381,11 @@ function iCandyUpdate(force){
 			else{
 				V[i] = iUtil.updateObj(iModVariables[i], V[i])
 			}
+		}
+
+		//重新初始化仓库，如果是旧版本数据
+		if(typeof V.iStorage.home.serotonin == 'number'){
+			V.iStorage.home = {}
 		}
 
 		//修复药效时间错误

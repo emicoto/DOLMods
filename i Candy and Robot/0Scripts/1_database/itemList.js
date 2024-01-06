@@ -295,9 +295,11 @@ const iFoods = [
 
 		effects: [
 			["stress", 1],
-			["hunger", 20],
+			["hunger", 10],
 			["thirsty", 10, 'p']
 		],
+
+		stacksprites:[ 30, 80, 100]
 
 	},
 	{
@@ -320,6 +322,8 @@ const iFoods = [
 			["trauma", 2],
 			["hunger", 10]
 		],
+
+		stacksprites:[ 30, 80, 100]
 	},
 	{
 		tags: ["bread", "packed"],
