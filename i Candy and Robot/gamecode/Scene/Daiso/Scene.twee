@@ -36,5 +36,6 @@
     <</if>>
     <br><br>
 
-    <<link '继续' $passage>><<run iEvent.unsetEvent()>><</link>>
+    <<link '离开' "Shopping Centre">><<run iEvent.unsetEvent()>><</link>>
+
 <</linkreplace>>

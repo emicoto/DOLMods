@@ -45,7 +45,8 @@ const iShop = {
 			return result
 		},
 		daiso_sundry: function(){
-			const data = Items.searchType('misc').push(...Items.searchType('consumables'))
+			const data = Items.searchType('misc')
+			data.push(...Items.searchType('consumables'))
 			const list = data.filter( item => item.tags.has('sundry'))
 
 			const result = []

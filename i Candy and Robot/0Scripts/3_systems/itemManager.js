@@ -391,7 +391,9 @@ const iManager = {
 
 		//然后根据堆叠限制切割
 		let items = this.splitItems(newItem, size)
-		let leftItems = []
+		let leftItems = {
+			items,
+		}
 		let leftitem = {
 				id: newItem.id,
 				name: newItem.name,

@@ -333,7 +333,7 @@ const iFoods = [
 
 		num: 10,
 		price: 1000,
-		size:"big",
+		size:10,
 
 		info:[
 			"A loaf of bread for making sandwitches",
@@ -399,6 +399,7 @@ const iFoods = [
 
 		price: 12400,
 		num: 4,
+		size: 4,
 		effects: [
 			["hunger" , 420],
 		],
