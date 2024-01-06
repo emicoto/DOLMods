@@ -402,7 +402,7 @@ const iFoods = [
 		msg: itemMsg.ChestnutEarlGreyCake,
 	},
 	{
-		tags:["seasonal", "spring", "food", "vegi"],
+		tags:["seasonal", "spring", "meal", "vegi"],
 
 		id:"HanamiDango",
 		name:["Hanami Dango", "花见团子"],
@@ -424,7 +424,7 @@ const iFoods = [
 		msg: itemMsg.HanamiDango,
 	},
 	{
-		tags:["seasonal", "spring", "food", "vegi"],
+		tags:["seasonal", "spring", "meal", "vegi"],
 
 		id:"Sakuramochi",
 		name:["Sakuramochi", "樱饼"],
@@ -446,7 +446,7 @@ const iFoods = [
 		msg: itemMsg.Sakuramochi,
 	},
 	{
-		tags:["seasonal", "summer", "food", "meat"],
+		tags:["seasonal", "summer", "meal", "meat"],
 
 		id:"ColdRamen",
 		name:["Cold Ramen", "中华冷面"],
@@ -467,7 +467,7 @@ const iFoods = [
 		msg: itemMsg.ColdRamen,
 	},
 	{
-		tags:["seasonal", "autumn", "food", "cake", "sweets"],
+		tags:["seasonal", "autumn", "cake", "sweets"],
 
 		id:"MontBlancCake",
 		name:["Mont Blanc Cake", "栗子蒙布朗"],
@@ -487,7 +487,7 @@ const iFoods = [
 		msg: itemMsg.MontBlancCake,
 	},
 	{
-		tags:["seasonal", "winter", "food", "meat"],
+		tags:["seasonal", "winter", "meal", "meat"],
 
 		id:"PorkPie",
 		name:["Pork pie", "猪肉派"],
@@ -508,7 +508,7 @@ const iFoods = [
 		msg: itemMsg.PorkPie,
 	},
 	{
-		tags:["seasonal", "winter", "food", "vegi"],
+		tags:["seasonal", "winter", "meal", "vegi"],
 
 		id:"MincePie",
 		name:["Mince pie", "圣诞百果派"],
@@ -529,7 +529,7 @@ const iFoods = [
 		msg: itemMsg.MincePie
 	},
 	{
-		tags:["seasonal", "summer", "food", "vegi"],
+		tags:["seasonal", "summer", "meal", "vegi"],
 	
 		id:"MintJelly",
 		name:["Mint jelly", "薄荷果冻"],
@@ -551,7 +551,7 @@ const iFoods = [
 		msg: itemMsg.MintJelly
 	},
 	{
-		tags:["mealbox"],
+		tags:["meal"],
 	
 		id:"BasicFoodSet",
 		name:["Basic Food Set", "基本组合"],
@@ -571,7 +571,7 @@ const iFoods = [
 		msg: itemMsg.BasicFoodSet
 	},
 	{
-		tags:["seasonal", "winter", "food", "meat"],
+		tags:["seasonal", "winter", "meal", "meat"],
 	
 		id:"LambChop",
 		name:["Lamb Chop", "小羊排"],
@@ -850,7 +850,7 @@ const iDrinks = [
 		],
 	},
 	{
-		tags:["seasonal", "summer", "drink"],
+		tags:["seasonal", "summer", "serving", "cup"],
 	
 		id:"MintLemonade",
 		name:["Mint Lemonade", "薄荷柠檬饮"],
@@ -871,7 +871,7 @@ const iDrinks = [
 		msg: itemMsg.MintLemonade
 	},
 	{
-		tags:["seasonal", "summer", "drink"],
+		tags:["seasonal", "summer", "serving", "cup"],
 	
 		id:"PineappleIce",
 		name:["Pineapple Ice", "菠萝冰"],
@@ -892,7 +892,7 @@ const iDrinks = [
 		msg: itemMsg.PineappleIce
 	},
 	{
-		tags:["seasonal", "summer", "drink"],
+		tags:["seasonal", "summer", "serving", "cup"],
 	
 		id:"WatermelonIce",
 		name:["Watermelon Ice", "西瓜冰"],
@@ -2073,7 +2073,7 @@ const iAddictive = [
 	},
 	{
 		type:"drinks",
-		tags:["seasonal", "winter", "alcohol"],
+		tags:["seasonal", "winter", "alcohol", "serving", "cup"],
 
 		id:"MulledWine",
 		name:["Mulled Wine", "热红酒"],
