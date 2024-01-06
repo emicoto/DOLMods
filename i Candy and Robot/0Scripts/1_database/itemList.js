@@ -1,406 +1,596 @@
 
 const iFoods = [
-{
-	tags: ["pieces", "candy", "packed"],
+	{
+		tags: ["pieces", "candy", "packed"],
 
-	id: "fruitscandy",
-	name: ["Fruits Candy", "水果糖"],
-	plural: "Fruits Candies",
+		id: "fruitscandy",
+		name: ["Fruits Candy", "水果糖"],
+		plural: "Fruits Candies",
 
-	info: [
-	"Sweet and sour, give you a little happiness",
-	"酸酸甜甜的，提供些许幸福感",
-	],
+		info: [
+		"Sweet and sour, give you a little happiness",
+		"酸酸甜甜的，提供些许幸福感",
+		],
 
-	price: 1240,
-	num: 12,
-	size: "tiny",
+		price: 1240,
+		num: 12,
+		size: "tiny",
 
-	effects: [
-		["trauma", 2],
-		["hunger", 50],
-	],
+		effects: [
+			["trauma", 2],
+			["hunger", 50],
+		],
 
-	msg: itemMsg.fruitscandy,
-	//stacksprites:[25, 50, 100]百分比值，当前堆叠数/堆叠上限 >= 数值时，在uid后加_num.png
-},
+		msg: itemMsg.fruitscandy,
+		//stacksprites:[25, 50, 100]百分比值，当前堆叠数/堆叠上限 >= 数值时，在uid后加_num.png
+	},
 
-{
-	tags: ["pieces", "candy", "packed"],
+	{
+		tags: ["pieces", "candy", "packed"],
 
-	id: "chocolate",
-	name: ["Chocolate", "巧克力"],
-	plural: "Chocolates",
+		id: "chocolate",
+		name: ["Chocolate", "巧克力"],
+		plural: "Chocolates",
 
-	info: [
-	"Sweet chocolate, may relives a little stress for you",
-	"甜甜的巧克力，能缓解些许压力",
-	],
+		info: [
+		"Sweet chocolate, may relives a little stress for you",
+		"甜甜的巧克力，能缓解些许压力",
+		],
 
-	price: 1640,
-	num: 4,
-	size: "small",
+		price: 1640,
+		num: 4,
+		size: "small",
 
-	effects: [
-		["trauma", 2],
-		["hunger", 80],
-	],
+		effects: [
+			["trauma", 2],
+			["hunger", 80],
+		],
 
-	msg: itemMsg.chocolate,
+		msg: itemMsg.chocolate,
+		
+	},
+	{
+		tags: ["packed", "snack"],
+
+		id: "potachips",
+		name: ["Potato Chips", "薯片"],
+		plural: "Potato Chips",
+
+		info: [
+		"Bag of crunchy chips for some hungry",
+		"一包脆脆的薯片，补充些许体力。",
+		],
+
+		size: "big",
+		price: 380,
+		num: 1,
+
+		effects: [
+			["tiredness", 12],
+			["hunger", 120],
+			["thirsty", 200, 'p']
+		],
+
+		msg: itemMsg.potachips,
+	},
+
+	{
+		tags: ["packed", "snack"],
+
+		id: "orionring",
+		name: ["Orion Rings", "洋葱圈"],
+		plural: "Orion Rings",
+
+		info: [
+		"Bag of crunchy orion rings for some hungry",
+		"一包松脆的洋葱圈，补充些许体力。",
+		],
+
+		size: "big",
+		price: 380,
+		num: 1,
+
+		effects: [
+			["tiredness", 12],
+			["hunger", 120],
+			["thirsty", 120, 'p']
+		],
+
+	},
+	{
+		tags: ["pieces", "candy"],
+
+		id: "lolipop",
+		name: ["Lolipop", "波板糖"],
+		plural: "Lolipops",
+
+		info: [
+		"Sweet, big lolipop, give you a bit of happiness",
+		"甜甜的大波板糖，提供些许幸福感",
+		],
+
+		num: 1,
+		price: 360,
+		size: "medium",
+
+		effects: [
+			["trauma", 4],
+			["hunger", 40],
+			["stress", 3],
+		],
+
+		msg: itemMsg.lolipop,
+	},
+	{
+		tags: ["packed", "snack"],
+
+		id: "oreo",
+		name: ["Oreo", "奥利奥"],
+		plural: "Oreos",
+
+		info: [
+		"Black and white oreo, sweet and crunchy.",
+		"黑白相间的奥利奥，甜甜脆脆的。",
+		],
+
+		num: 1,
+		price: 520,
+		size: "medium",
+
+		effects: [
+			["tiredness", 20],
+			["hunger", 200],
+			["stress", 2],
+		],
+	},
+	{
+		tags: ["boxed", "snack"],
+
+		id: "pocky",
+		name: ["Pocky", "百奇"],
+		plural: "Pack of Pocky",
+
+		info: [
+		"Long and thin pocky, too many flavors to choose.",
+		"细细长长的百奇，有太多口味可供选择了。",
+		],
+
+		num: 1,
+		price: 600,
+		size: "medium",
+
+		effects: [
+			["tiredness", 10],
+			["hunger", 80]
+		],
+	},
+	{
+		tags: ["canned", "snack"],
+
+		id: "fruitscrisp",
+		name: ["Fruits Crisp", "干果"],
+		plural: "Pack of Fruits Crisp",
+
+		info: [
+			"Healthy and nutritious fruits crisp, sweet and salty.",
+			"健康又营养的干果，吃起来咸咸甜甜的。",
+		],
+
+		num: 1,
+		price: 1072,
+		size: "medium",
+
+		effects: [
+			["tiredness", 30],
+			["hunger", 60],
+			["thirsty", 50, 'p']
+		],
+	},
+	{
+		tags: ["packed", "snack"],
+
+		id: "jellos",
+		name: ["Jellos", "果冻"],
+		plural: "Pack of Jellos",
+
+		info: [
+			"Smoothy and juicy Jellos, too many flavors to choose.",
+			"滑溜又多汁的果冻，有太多口味可供选择了。",
+		],
+
+		num: 3,
+		price: 1640,
+		size: 6,
+
+		effects: [
+			["stress", 1],
+			["hunger", 50],
+			["thirsty", 20]
+		],
+	},
+	{
+		tags: ["bun", "premade"],
+
+		id: "sandwich",
+		name: ["Sandwich", "三文治"],
+		plural:"Sandwiches",
+
+		num: 1,
+		price: 650,
+		size: "big",
+
+		info: [
+		"Plain sandwiches, a bread cut into triangles with eggs, bacon and veggies",
+		"普通的三文治，切成三角形的面包夹着鸡蛋培根和蔬菜",
+		],
+
+		effects: [
+			["tiredness", 40],
+			["hunger", 800],
+		],
+	},
+
+	{
+		tags: ["pieces", "candy"],
+		location: ["stall"],
+
+		id: "candyfloss",
+		name: ["Candyfloss", "棉花糖"],
+		plural:"Candyflosses",
+
+		num: 1,
+		price: 340,
+		size: "big",
+
+		info: [
+		"Sweet, cloud like candyfloss, give you soft happiness",
+		"甜甜的，云一般的棉花糖，给你软绵绵的幸福",
+		],
+
+		effects: [
+			["tiredness", 20],
+			["trauma", 5],
+			["stress", 3],
+			["hunger", 30],
+		],
+
+		msg: itemMsg.candyfloss,
+	},
+
+	{
+		tags: ["mealbox", "premade"],
+
+		id: "lunchbox",
+		name: ["Simple Combo", "简易套餐"],
+		plural:"Boxes of Simple Combo",
+
+		num: 1,
+		price: 1680,
+		size: "big",
+
+		info: [
+		"Ordinary boxed lunch combo with vegetables and meat for nutritional balance",
+		"普通的套餐餐盒，有菜有肉营养均衡",
+		],
+		effects: [
+			["hunger", 1200],
+			["tiredness", 80],
+		],
+	},
+
+	{
+		tags: ["boxed", "snack", 'sweets', "pieces"],
+		id: "danishcookies",
+		name: ["Danish Cookies", "丹麦曲奇"],
+		plural:"Boxes of Danish Cookies",
+
+		num: 24,
+		price: 2464,
+		size: 24,
+
+		info: [
+			"Delicious Danish cookies, various styles, crispy and delicious.",
+			"美味的丹麦曲奇，款式多样，松脆可口。",
+		],
+
+		effects: [
+			["stress", 1],
+			["hunger", 20],
+			["thirsty", 10, 'p']
+		],
+
+	},
+	{
+		tags: ["boxed", "candy", "pieces"],
+		id:"ferrero",
+		name:["Ferrero", "费列罗"],
+		plural:"Boxes of Ferrero",
+
+		num: 12,
+		price: 3280,
+		size: 36,
+
+		info: [
+			"Delicious Ferrero chocolate, sweet and crunchy outside, rich hazelnut chocolate inside",
+			"美味的费列罗巧克力，甜甜脆脆的外壳内是浓郁的榛果巧克力",
+		],
+
+		effects: [
+			["stress", 1],
+			["trauma", 2],
+			["hunger", 10]
+		],
+	},
+	{
+		tags: ["bread", "packed"],
+		id:"sandwichbread",
+		name:["Sandwich Bread", "三文治面包"],
+		plural:"Sandwich Breads",
+
+		num: 10,
+		price: 1000,
+		size:"big",
+
+		info:[
+			"A loaf of bread for making sandwitches",
+			"用来做三文治的面包"
+		],
+
+		effects:[
+			["hunger", 360]
+		]
+	},
+	{
+		tags:["seasonal", "spring", "mealbox"],
+
+		id:"SpringBoxedMeal",
+		name:["Spring Boxed Meal", "春季便当"],
+		plural:"Spring Boxed Meals",
+
+		info: [
+		"Filled with the deliciousness of spring, it includes Mentaiko Chirashi-Sushi, fried shrimp, and potato mash salad served with tomatoes.",
+		"满含春天的美味，内含了明太子散寿司、炸虾和马铃薯泥生菜沙拉佐番茄。",
+		],
+
+		price: 4820,
+		num: 1,
+		effects: [
+			["hunger" , 1200],
+		],
+
+		msg: itemMsg.SpringBoxedMeal,
+	},
+	{
+		tags:["seasonal", "autumn", "mealbox"],
+
+		id:"AutumnBoxedMeal",
+		name:["Autumn Boxed Meal", "秋季便当"],
+		plural:"Autumn Boxed Meals",
+
+		info: [
+		"A luxury box filled by autumn specialties, includes rice, tender grilled eel, matsutake mushrooms, and fresh salmon arranged like vibrant flowers.",
+		"豪华的漆器盒子里面装载着满满的秋日特产，吸饱了蒲烧酱汁的米饭、肥嫩的蒲烧鳗、切成片的松茸，还有摆放成鲜艳花朵的当季新鲜鲑鱼。",
+		],
+
+		price: 4820,
+		num: 1,
+		effects: [
+			["hunger" , 1200],
+		],
+
+		msg: itemMsg.AutumnBoxedMeal,
+	},
+
+	{
+		tags:["seasonal", "autumn", "cake", "pieces", "sweets"],
+
+		id:"ChestnutRoyalCake",
+		name:["Chestnut Royal Cake", "栗香伯爵茶戚风蛋糕"],
+		plural:"Chestnut Royal Cake",
+
+		info: [
+		"Royal tea chiffon cake filled with chesnuts, and chopped chocolate surrounding. It smells of Royal tea with a hint of fruity and chestnut sweetness.",
+		"在伯爵茶戚风蛋糕的基底上加入了满满的栗子馅，细碎的巧克力围绕着红茶奶油、闻起来充满了伯爵红茶带着些微果香的芬芳与栗子馨香甜美。",
+		],
+
+		price: 12400,
+		num: 4,
+		effects: [
+			["hunger" , 420],
+		],
+
+		msg: itemMsg.ChestnutEarlGreyCake,
+	},
+	{
+		tags:["seasonal", "spring", "food", "vegi"],
+
+		id:"HanamiDango",
+		name:["Hanami Dango", "花见团子"],
+		plural:"Hanami Dango",
+
+		info: [
+		"String together three colored dango, it would be even better if we could enjoy them under the cherry blossom tree.",
+		"由三种颜色的团子串成，要是能在樱花树下享用就更好了",
+		],
+
+		price: 600,
+		num: 1,
+		size: "small",
+
+		effects: [
+			["hunger" , 240],
+		],
+
+		msg: itemMsg.HanamiDango,
+	},
+	{
+		tags:["seasonal", "spring", "food", "vegi"],
+
+		id:"Sakuramochi",
+		name:["Sakuramochi", "樱饼"],
+		plural:"Sakuramochi",
+
+		info: [
+		"The glutinous rice outer skin is dyed a In a transparent glass bottle is a pale pink liquor brewed with green apple and cherry blossom pink by cherry blossom petals is filled with sweet red bean paste and wrapped in salted cherry blossom leaves, creating this cute and spring-like dessert.",
+		"被花瓣染成嫩粉色的糯米外皮包着甜蜜的红豆沙馅料、再由盐渍的樱花叶包裹，就完成了这个可爱又充满春天气息的点心。",
+		],
+
+		price: 1200,
+		num: 3,
+		size: "small",
+
+		effects: [
+			["hunger" , 100],
+		],
+
+		msg: itemMsg.Sakuramochi,
+	},
+	{
+		tags:["seasonal", "summer", "food", "meat"],
+
+		id:"ColdRamen",
+		name:["Cold Ramen", "中华冷面"],
+		plural:"Cold Ramen",
+
+		info: [
+		"Loaded with cold noodles, topped with cucumber, tomato, soft-boiled egg, ham, and shrimp.Just looking at it will make you feel refreshing.",
+		"用透明压克力盒装载满满的冷面、上面有小黄瓜、番茄、溏心蛋、火腿和虾仁，光是看着就能感到凉爽。",
+		],
+
+		price: 4220,
+		num: 1,
+		size: "big",
+		effects: [
+			["hunger" , 1000],
+		],
+
+		msg: itemMsg.ColdRamen,
+	},
+	{
+		tags:["seasonal", "autumn", "food", "cake", "sweets"],
+
+		id:"MontBlancCake",
+		name:["Mont Blanc Cake", "栗子蒙布朗"],
+		plural:"Mont Blanc Cake",
+
+		info: [
+		"On the light and airy meringue cookies, spread rum raisins, topped with a generous layer of chestnut puree, and finally drizzled with whipped cream and powdered sugar – this is the dessert that evokes images of autumn mountains!",
+		"在酥松轻盈的蛋白霜饼干上铺着酒酿葡萄、覆盖满满的栗子泥，最后淋上生奶油与糖粉、就是这份让人联想到秋日山峰的甜品了！",
+		],
+
+		price: 10400,
+		num: 1,
+		effects: [
+			["hunger" , 400],
+		],
+
+		msg: itemMsg.MontBlancCake,
+	},
+	{
+		tags:["seasonal", "winter", "food", "meat"],
+
+		id:"PorkPie",
+		name:["Pork pie", "猪肉派"],
+		plural:"Pork pie",
+
+		info: [
+		"Inside the luxurious lacquer box are a variety of autumn specialties, including rice soaked in eel sauce, tender grilled eel, sliced matsutake mushrooms, and fresh salmon arranged like vibrant flowers. Enjoy to your heart's content!",
+		"英式的传统猪肉派，简单但细致美观的金黄色酥皮包裹着鲜美的肉馅和充满胶质的肉冻、散发着淡淡的肉香。",
+		],
+
+		price: 3200,
+		num: 1,
+		size: "big",
+		effects: [
+			["hunger" , 800],
+		],
+
+		msg: itemMsg.PorkPie,
+	},
+	{
+		tags:["seasonal", "winter", "food", "vegi"],
+
+		id:"MincePie",
+		name:["Mince pie", "圣诞百果派"],
+		plural:"Mince pie",
+
+		info: [
+		"Traditional Christmas petits fours, flaky pie crust filled with a rich filling. It has a rich aroma of brandy, fruit, cloves, and cinnamon, creating a warm and fragrant scent.",
+		"传统的圣诞小点心，酥松的派底填上丰富的馅料。闻起来有浓郁的白兰地酒香与酸甜果香、和丁香与肉桂的香气组成了让人温暖起来的芬芳。",
+		],
+
+		price: 2400,
+		num: 1,
+		size: "big",
+		effects: [
+			["hunger" , 600],
+		],
+
+		msg: itemMsg.MincePie
+	},
+	{
+		tags:["seasonal", "summer", "food", "vegi"],
 	
-},
-{
-	tags: ["packed", "snack"],
-
-	id: "potachips",
-	name: ["Potato Chips", "薯片"],
-	plural: "Potato Chips",
-
-	info: [
-	"Bag of crunchy chips for some hungry",
-	"一包脆脆的薯片，补充些许体力。",
-	],
-
-	size: "big",
-	price: 380,
-	num: 1,
-
-	effects: [
-		["tiredness", 12],
-		["hunger", 120],
-		["thirsty", 200, 'p']
-	],
-
-	msg: itemMsg.potachips,
-},
-
-{
-	tags: ["packed", "snack"],
-
-	id: "orionring",
-	name: ["Orion Rings", "洋葱圈"],
-	plural: "Orion Rings",
-
-	info: [
-	"Bag of crunchy orion rings for some hungry",
-	"一包松脆的洋葱圈，补充些许体力。",
-	],
-
-	size: "big",
-	price: 380,
-	num: 1,
-
-	effects: [
-		["tiredness", 12],
-		["hunger", 120],
-		["thirsty", 120, 'p']
-	],
-
-},
-{
-	tags: ["pieces", "candy"],
-
-	id: "lolipop",
-	name: ["Lolipop", "波板糖"],
-	plural: "Lolipops",
-
-	info: [
-	"Sweet, big lolipop, give you a bit of happiness",
-	"甜甜的大波板糖，提供些许幸福感",
-	],
-
-	num: 1,
-	price: 360,
-	size: "medium",
-
-	effects: [
-		["trauma", 4],
-		["hunger", 40],
-		["stress", 3],
-	],
-
-	msg : itemMsg.lolipop,
-},
-{
-	tags: ["packed", "snack"],
-
-	id: "oreo",
-	name: ["Oreo", "奥利奥"],
-	plural: "Oreos",
-
-	info: [
-	"Black and white oreo, sweet and crunchy.",
-	"黑白相间的奥利奥，甜甜脆脆的。",
-	],
-
-	num: 1,
-	price: 520,
-	size: "medium",
-
-	effects: [
-		["tiredness", 20],
-		["hunger", 200],
-		["stress", 2],
-	],
-},
-{
-	tags: ["boxed", "snack"],
-
-	id: "pocky",
-	name: ["Pocky", "百奇"],
-	plural: "Pack of Pocky",
-
-	info: [
-	"Long and thin pocky, too many flavors to choose.",
-	"细细长长的百奇，有太多口味可供选择了。",
-	],
-
-	num: 1,
-	price: 600,
-	size: "medium",
-
-	effects: [
-		["tiredness", 10],
-		["hunger", 80]
-	],
-},
-{
-	tags: ["canned", "snack"],
-
-	id: "fruitscrisp",
-	name: ["Fruits Crisp", "干果"],
-	plural: "Pack of Fruits Crisp",
-
-	info: [
-		"Healthy and nutritious fruits crisp, sweet and salty.",
-		"健康又营养的干果，吃起来咸咸甜甜的。",
-	],
-
-	num: 1,
-	price: 1072,
-	size: "medium",
-
-	effects: [
-		["tiredness", 30],
-		["hunger", 60],
-		["thirsty", 50, 'p']
-	],
-},
-{
-	tags: ["packed", "snack"],
-
-	id: "jellos",
-	name: ["Jellos", "果冻"],
-	plural: "Pack of Jellos",
-
-	info: [
-		"Smoothy and juicy Jellos, too many flavors to choose.",
-		"滑溜又多汁的果冻，有太多口味可供选择了。",
-	],
-
-	num: 3,
-	price: 1640,
-	size: 6,
-
-	effects: [
-		["stress", 1],
-		["hunger", 50],
-		["thirsty", 20]
-	],
-},
-{
-	tags: ["bun", "premade"],
-
-	id: "sandwich",
-	name: ["Sandwich", "三文治"],
-	plural:"Sandwiches",
-
-	num: 1,
-	price: 650,
-	size: "big",
-
-	info: [
-	"Plain sandwiches, a bread cut into triangles with eggs, bacon and veggies",
-	"普通的三文治，切成三角形的面包夹着鸡蛋培根和蔬菜",
-	],
-
-	effects: [
-		["tiredness", 40],
-		["hunger", 800],
-	],
-},
-
-{
-	tags: ["pieces", "candy"],
-	location: ["stall"],
-
-	id: "candyfloss",
-	name: ["Candyfloss", "棉花糖"],
-	plural:"Candyflosses",
-
-	num: 1,
-	price: 340,
-	size: "big",
-
-	info: [
-	"Sweet, cloud like candyfloss, give you soft happiness",
-	"甜甜的，云一般的棉花糖，给你软绵绵的幸福",
-	],
-
-	effects: [
-		["tiredness", 20],
-		["trauma", 5],
-		["stress", 3],
-		["hunger", 30],
-	],
-
-	msg : itemMsg.candyfloss,
-},
-
-{
-	tags: ["mealbox", "premade"],
-
-	id: "lunchbox",
-	name: ["Simple Combo", "简易套餐"],
-	plural:"Boxes of Simple Combo",
-
-	num: 1,
-	price: 1680,
-	size: "big",
-
-	info: [
-	"Ordinary boxed lunch combo with vegetables and meat for nutritional balance",
-	"普通的套餐餐盒，有菜有肉营养均衡",
-	],
-	effects: [
-		["hunger", 1200],
-		["tiredness", 80],
-	],
-},
-
-{
-	tags: ["boxed", "snack", 'sweets', "pieces"],
-	id: "danishcookies",
-	name: ["Danish Cookies", "丹麦曲奇"],
-	plural:"Boxes of Danish Cookies",
-
-	num: 24,
-	price: 2464,
-	size: 24,
-
-	info: [
-		"Delicious Danish cookies, various styles, crispy and delicious.",
-		"美味的丹麦曲奇，款式多样，松脆可口。",
-	],
-
-	effects: [
-		["stress", 1],
-		["hunger", 20],
-		["thirsty", 10, 'p']
-	],
-
-},
-{
-	tags: ["boxed", "candy", "pieces"],
-	id:"ferrero",
-	name:["Ferrero", "费列罗"],
-	plural:"Boxes of Ferrero",
-
-	num: 12,
-	price: 3280,
-	size: 36,
-
-	info: [
-		"Delicious Ferrero chocolate, sweet and crunchy outside, rich hazelnut chocolate inside",
-		"美味的费列罗巧克力，甜甜脆脆的外壳内是浓郁的榛果巧克力",
-	],
-
-	effects: [
-		["stress", 1],
-		["trauma", 2],
-		["hunger", 10]
-	],
-},
-{
-	tags: ["bread", "packed"],
-	id:"sandwichbread",
-	name:["Sandwich Bread", "三文治面包"],
-	plural:"Sandwich Breads",
-
-	num: 10,
-	price: 1000,
-	size:"big",
-
-	info:[
-		"A loaf of bread for making sandwitches",
-		"用来做三文治的面包"
-	],
-
-	effects:[
-		["hunger", 360]
-	]
-},
-{
-    tags:["seasonal", "spring", "mealbox"],
-
-    id:"SpringBoxedMeal",
-    name:["Spring boxed meal", "春季便当"],
-    plural:"Spring boxed meal",
-
-    info: [
-    "Filled with the deliciousness of spring, it includes Mentaiko Chirashi-Sushi, fried shrimp, and potato mash salad served with tomatoes.",
-    "满含春天的美味，内含了明太子散寿司、炸虾和马铃薯泥生菜沙拉佐番茄。",
-    ],
-
-    price: 4820,
-    num: 1,
-    effects: [
-    ["hunger" , 1200],
-    ],
-
-    msg:itemMsg.SpringBoxedMeal
-},
-{
-    tags:["seasonal", "autumn", "mealbox"],
-
-    id:"CreamChestnutCake",
-    name:["Cream Chestnut Cake", "秋季便当"],
-    plural:"Cream Chestnut Cake",
-
-    info: [
-    "A luxury box filled by autumn specialties, includes rice, tender grilled eel, matsutake mushrooms, and fresh salmon arranged like vibrant flowers.",
-    "豪华的漆器盒子里面装载著满满的秋日特产，吸饱了蒲烧酱汁的米饭、肥嫩的蒲烧鳗、切成片的松茸，还有摆放成鲜豔花朵的当季新鲜鲑鱼。",
-    ],
-
-    price: 4820,
-    num: 1,
-    effects: [
-    	["hunger" , 1200],
-    ],
-
-    msg:itemMsg.AutumnBoxedMeal
-},
-
-{
-    tags:["seasonal", "autumn", "cake", "pieces", "sweets"],
-
-    id:"ChestnutRoyalCake",
-    name:["Chestnut Royal Cake", "栗香伯爵茶戚风蛋糕"],
-    plural:"Chestnut Royal Cake",
-
-    info: [
-    "Royal tea chiffon cake filled with chesnuts, and chopped chocolate surrounding. It smells of Royal tea with a hint of fruity and chestnut sweetness.",
-    "在伯爵茶戚风蛋糕的基底上加入了满满的栗子馅，细碎的巧克力围绕著红茶奶油、闻起来充满了伯爵红茶带著些微果香的芬芳与栗子馨香甜美。",
-    ],
-
-    price: 12400,
-    num: 4,
-    effects: [
-    	["hunger" , 420],
-    ],
-
-    msg:itemMsg.ChestnutEarlGreyCake
-},
+		id:"MintJelly",
+		name:["Mint jelly", "薄荷果冻"],
+		plural:"Mint jellies",
+	
+		info: [
+		"The fragrant mint aroma goes straight to your heart, and the mint leaves wiggle to say hello.",
+		"芬芳的薄荷香气直冲心脾，薄荷叶摇晃着和你打招呼。",
+		],
+	
+		price: 600,
+		num: 1,
+		size: "small",
+	
+		effects: [
+			["hunger" , 240],
+		],
+	
+		msg: itemMsg.MintJelly
+	},
+	{
+		tags:["mealbox"],
+	
+		id:"BasicFoodSet",
+		name:["Basic Food Set", "基本组合"],
+		plural:"Basic Food Sets",
+	
+		info: [
+		"A serving of rice bowl, a bowl of miso soup, and a cup of tea. Rich in aroma, abundant in ingredients, simple yet delicious. After finishing, remember to return the plates to the owner.",
+		"一份盖饭，一碗味增汤，一杯茶。香气浓郁，食材丰富，简单而美味。吃完记得把盘子还给老板。",
+		],
+	
+		price: 4220,
+		num: 1,
+		effects: [
+			["hunger" , 800],
+		],
+	
+		msg: itemMsg.BasicFoodSet
+	},
+	{
+		tags:["seasonal", "winter", "food", "meat"],
+	
+		id:"LambChop",
+		name:["Lamb Chop", "小羊排"],
+		plural:"Lamb Chops",
+	
+		info: [
+		"Refreshing and invigorating, the aroma of mint leaves perfectly blends with the unique tartness of lemon. It brings a touch of coolness to the summer days.",
+		"小羊排散发着碳烤与溶化脂肪的香气。表面烤至金黄酥脆。每一块都均匀撒上了迷迭香与百里香，令人垂涎欲滴。",
+		],
+	
+		price: 6400,
+		num: 1,
+		size: "big",
+		effects: [
+			["hunger" , 1600],
+		],
+	
+		msg: itemMsg.LambChop
+	},
 ];
 
 Items.addItems(iFoods, 'foods')
@@ -556,7 +746,7 @@ const iDrinks = [
 	
 		info: [
 			'Energy drink, "Red Cow gives you wings"',
-			"能量饮料，红牛能让你飞起来",
+			"能量饮料，红羊能让你飞起来",
 		],
 		effects: [
 			["tiredness", 50],
@@ -658,6 +848,69 @@ const iDrinks = [
 		effects: [
 			["thirsty", 800]
 		],
+	},
+	{
+		tags:["seasonal", "summer", "drink"],
+	
+		id:"MintLemonade",
+		name:["Mint Lemonade", "薄荷柠檬饮"],
+		plural:"Mint Lemonade",
+	
+		info: [
+		"Refreshing and invigorating, the aroma of mint leaves perfectly blends with the unique tartness of lemon. It brings a touch of coolness to the summer days.",
+		"清新爽口，薄荷叶的香气与柠檬独特的酸涩风味完美融合。夏日里带来一丝清凉。",
+		],
+	
+		price: 800,
+		num: 1,
+		size: "medium",
+		effects: [
+			["thirsty", 800]
+		],
+	
+		msg: itemMsg.MintLemonade
+	},
+	{
+		tags:["seasonal", "summer", "drink"],
+	
+		id:"PineappleIce",
+		name:["Pineapple Ice", "菠萝冰"],
+		plural:"Pineapple Ice",
+	
+		info: [
+		"The shape is unique, and the ice cubes suspended in the pineapple sparkle with a crystal-clear luster in the sunlight. They may feel a bit prickly to the touch.",
+		"造型奇特，悬浮在菠萝中的冰块在阳光下闪着晶莹的光泽。菠萝杯摸起来可能有些扎手。",
+		],
+	
+		price: 1000,
+		num: 1,
+		size: "medium",
+		effects: [
+			["thirsty", 900]
+		],
+	
+		msg: itemMsg.PineappleIce
+	},
+	{
+		tags:["seasonal", "summer", "drink"],
+	
+		id:"WatermelonIce",
+		name:["Watermelon Ice", "西瓜冰"],
+		plural:"Watermelon Ice",
+	
+		info: [
+		"The vibrant red flesh of the watermelon is clearly visible, and droplets on the cup's rim glisten in the sunlight. Refreshing and cooling, how about a cup to beat the summer heat?",
+		"红艳的西瓜肉清晰可见，杯壁的水珠在阳光下闪闪发亮。清凉解暑，不来一杯吗？",
+		],
+	
+		price: 1000,
+		num: 1,
+		size: "medium",
+		effects: [
+			["thirsty", 900]
+		],
+	
+		msg: itemMsg.WatermelonIce
 	},
 ]
 
@@ -1661,165 +1914,186 @@ Items.addItems(iContainers, "container")
 
 //普通成瘾品，烟酒类
 const iAddictive = [
-{
-	type:"consumable",
-	tags: ["smoke", "addiction","nicotine"],	
+	{
+		type:"consumable",
+		tags: ["smoke", "addiction","nicotine"],	
 
-	id: "cigarettes",
-	name: ["Cigarette", "香烟"],
-	plural:"Cigarettes",
+		id: "cigarettes",
+		name: ["Cigarette", "香烟"],
+		plural:"Cigarettes",
 
-	info: ["Cheap cigarettes, smells burnt", "廉价的香烟，一股烧焦味"],
+		info: ["Cheap cigarettes, smells burnt", "廉价的香烟，一股烧焦味"],
 
-	num: 20,
-	price: 3600,
-	size: 40,
+		num: 20,
+		price: 3600,
+		size: 40,
 
-	effects: [
-		["stress", 8],
-		["trauma", 8],
-		["nicotine", 100, "p"],
-	],
-	stacksprites:[50, 100]
-},
+		effects: [
+			["stress", 8],
+			["trauma", 8],
+			["nicotine", 100, "p"],
+		],
+		stacksprites:[50, 100]
+	},
 
-{
-	type:"consumable",
-	tags: ["smoke", "addiction","nicotine"],	
+	{
+		type:"consumable",
+		tags: ["smoke", "addiction","nicotine"],	
 
-	id: "marlboro",
-	name: ["Marlboro 100%", "马宝龙香烟"],
-	plural:"Box of Marlboro 100%",
+		id: "marlboro",
+		name: ["Marlboro 100%", "马宝龙香烟"],
+		plural:"Box of Marlboro 100%",
 
-	info: [
-		"A brand cigarettes with great flavor", 
-		"一个品牌香烟，味道香醇"
-	],	 
+		info: [
+			"A brand cigarettes with great flavor", 
+			"一个品牌香烟，味道香醇"
+		],	 
 
-	num: 20,
-	price: 6400,
-	size: 40,
+		num: 20,
+		price: 6400,
+		size: 40,
 
-	effects: [
-		["stress", 12],
-		["trauma", 16],
-		["nicotine", 180, "p"],
-	],
-	stacksprites:[10, 25, 50, 75, 100]
-},
-{
-	type:"drinks",
-	tags: ["canned", "alcohol",],	 
+		effects: [
+			["stress", 12],
+			["trauma", 16],
+			["nicotine", 180, "p"],
+		],
+		stacksprites:[10, 25, 50, 75, 100]
+	},
+	{
+		type:"drinks",
+		tags: ["canned", "alcohol",],	 
 
-	id: "beer",
-	name: ["Can of Beer", "啤酒"],
-	plural:"Cans of Bear",
+		id: "beer",
+		name: ["Can of Beer", "啤酒"],
+		plural:"Cans of Bear",
 
-	info: [
-		"Cheep beer, tastes like alcohol",
-		"便宜的啤酒，尝起来跟和酒精没两样",
-	],	
+		info: [
+			"Cheep beer, tastes like alcohol",
+			"便宜的啤酒，尝起来跟和酒精没两样",
+		],	
 
-	num: 1,
-	price: 540,
-	size: "medium",
+		num: 1,
+		price: 540,
+		size: "medium",
 
-	effects: [
-		["alcohol", 100, "p"],
-		["stress", 5],
-	],
-},
-{
-	type:"drinks",
-	tags: ["canned", "alcohol", ],
+		effects: [
+			["alcohol", 100, "p"],
+			["stress", 5],
+		],
+	},
+	{
+		type:"drinks",
+		tags: ["canned", "alcohol", ],
 
-	id: "blackbeer",
-	name: ["Can of Black Beer", "黑啤酒"],
-	plural:"Cans of Black Beer",
+		id: "blackbeer",
+		name: ["Can of Black Beer", "黑啤酒"],
+		plural:"Cans of Black Beer",
 
-	info: ["Black bear, a strong flavor", "黑啤，味道浓郁十分上头"],
+		info: ["Black bear, a strong flavor", "黑啤，味道浓郁十分上头"],
 
-	num: 1,
-	price: 780,
-	size: "medium",
+		num: 1,
+		price: 780,
+		size: "medium",
 
-	effects: [
-		["alcohol", 160, "p"],
-		["stress", 10],
-		["fatigue", 60],
-	],
-},
+		effects: [
+			["alcohol", 160, "p"],
+			["stress", 10],
+			["fatigue", 60],
+		],
+	},
+	{
+		type:"drinks",
+		tags:["seasonal", "spring", "alcohol"],
 
-{
-	type:"drinks",
-    tags:["seasonal", "spring", "alcohol"],
+		id:"SakuraWineWithBox",
+		name:["Sakura wine", "盒装樱花酒"],
+		plural:"Sakura Wine",
 
-    id:"SakuraWineWithBox",
-    name:["Sakura wine", "盒装樱花酒"],
-    plural:"Sakura Wine",
+		info: [
+		"The clear glass bottle contains a pale pink, green apple and cherry blossom based brew with whole cherry blossoms and gold leaf.",
+		"透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔。",
+		],
 
-    info: [
-    "The clear glass bottle contains a pale pink, green apple and cherry blossom based brew with whole cherry blossoms and gold leaf.",
-    "透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔。",
-    ],
+		price: 12860,
+		num: 1,
+		effects: [
+			["alcohol", 80, "p"],
+			["stress", 6],
+			["fatigue", 40],
+		],
 
-    price: 12860,
-    num: 1,
-    effects: [
-		["alcohol", 80, "p"],
-		["stress", 6],
-		["fatigue", 40],
-    ],
+		msg: itemMsg.SakuraWineWithBox
+	},
+	{
+		type:"drinks",
+		tags:["seasonal", "spring", "alcohol"],
 
-    msg:itemMsg.SakuraWineWithBox
-},
+		id:"BulkSakuraWine",
+		name:["bulkSakuraWine", "散装樱花酒"],
+		plural:"bulkSakuraWine",
 
-{
-	type:"drinks",
-    tags:["seasonal", "spring", "alcohol"],
+		info: [
+		"The clear glass bottle contains a pale pink, green apple and cherry blossom based brew with whole cherry blossoms and gold leaf. The price it cheaper...queit suspicious.",
+		"透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔！看上去非常梦幻。但是卖得这么便宜…有些可疑",
+		],
 
-    id:"BulkSakuraWine",
-    name:["bulkSakuraWine", "散装樱花酒"],
-    plural:"bulkSakuraWine",
+		price: 9670,
+		num: 1,
+		effects: [
+			["alcohol", 80, "p"],
+			["stress", 4],
+			["fatigue", 20],
+		],
 
-    info: [
-    "The clear glass bottle contains a pale pink, green apple and cherry blossom based brew with whole cherry blossoms and gold leaf. The price it cheaper...queit suspicious.",
-    "透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔！看上去非常梦幻。但是卖得这么便宜…有些可疑",
-    ],
+		msg: itemMsg.BulkSakuraWine
+	},
+	{
+		type:"drinks",
+		tags:["seasonal", "autumn", "alcohol"],
 
-    price: 9670,
-    num: 1,
-    effects: [
-		["alcohol", 80, "p"],
-		["stress", 4],
-		["fatigue", 20],
-    ],
+		id:"OsmanthusWine",
+		name:["Osmanthus wine", "桂花酒"],
+		plural:"Osmanthus wine",
 
-    msg:itemMsg.BulkSakuraWine
-},
-{
-	type:"drinks",
-    tags:["seasonal", "autumn", "alcohol"],
+		info: [
+		"The liquor presents a bright amber hue, and the bottle neck is adorned with a delicate circle of pale golden osmanthus.",
+		"酒液呈明亮的琥珀色，瓶口装饰着一圈淡淡的金黄色桂花。虽未开瓶，却仿佛散发着芬芳的桂花香。晃动瓶身，桂花纷繁而落。",
+		],
 
-    id:"OsmanthusWine",
-    name:["Osmanthus wine", "桂花酒"],
-    plural:"Osmanthus wine",
+		price: 8920,
+		num: 1,
+		effects: [
+			["alcohol", 100, "p"],
+			["stress", 3],
+			["fatigue", 80],
+		],
 
-    info: [
-    "The liquor presents a bright amber hue, and the bottle neck is adorned with a delicate circle of pale golden osmanthus.",
-    "酒液呈明亮的琥珀色，瓶口装饰着一圈淡淡的金黄色桂花。虽未开瓶，却仿佛散发着芬芳的桂花香。晃动瓶身，桂花纷繁而落。",
-    ],
+		msg: itemMsg.OsmanthusWine
+	},
+	{
+		type:"drinks",
+		tags:["seasonal", "winter", "alcohol"],
 
-    price: 8920,
-    num: 1,
-    effects: [
-		["alcohol", 100, "p"],
-		["stress", 3],
-		["fatigue", 80],
-    ],
+		id:"MulledWine",
+		name:["Mulled Wine", "热红酒"],
+		plural:"Mulled Wine",
 
-    msg:itemMsg.OsmanthusWine
-},
+		info: [
+		"Hot mulled wine, including red wine cinnamon, citrus, apple, and cherry.",
+		"热腾腾的热红酒，加入了葡萄酒、肉桂、柑橘、苹果和樱桃。",
+		],
+
+		price: 7350,
+		num: 1,
+		effects: [
+			["alcohol", 70, "p"],
+			["stress", 3],
+			["fatigue", 30],
+		],
+
+		msg: itemMsg.MulledWine
+	},
 ];
 
 Items.addItems(iAddictive)
