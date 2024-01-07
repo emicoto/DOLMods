@@ -1451,7 +1451,7 @@ const GachaItems = [
 		plural:"Rainbow Cat",
 	
 		num: 1,
-		price: 300,
+		price: 600,
 		size:"small",
 	
 		info:[
@@ -1459,10 +1459,150 @@ const GachaItems = [
 			"Nyanyanyanyanyanyanya! 盯着它的时候脑中会自动出现神秘的背景音乐。你觉得它以前可能是奶牛猫。"
 		],
 
-		rare: "n",
+		rare: "r",
 		gachaType:"random",
 
-	}
+	},
+	{
+		type: "collection",
+		tags: ["gacha", "foods", "collection"],
+		id:"gachacandy",
+		name:["Gacha Candy", "扭蛋糖"],
+		plural:"Gacha Candy",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"The candy dropped from the Gacha machine, it's green.",
+			"扭蛋机里扭出来的糖果，是绿色的。"
+		],
+
+		rare: "n",
+		gachaType:"candy",
+
+	},
+	{
+		type: "collection",
+		tags: ["gacha", "foods", "collection"],
+		id:"gachacandy_blue",
+		name:["Gacha Candy Blue", "蓝色扭蛋糖"],
+		plural:"Gacha Candy Blue",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"The candy dropped from the Gacha machine, it's blue.",
+			"扭蛋机里扭出来的糖果，是蓝色的。"
+		],
+
+		rare: "n",
+		gachaType:"candy",
+
+	},
+	{
+		type: "collection",
+		tags: ["gacha", "foods", "collection"],
+		id:"gachacandy_orange",
+		name:["Gacha Candy Orange", "橘色扭蛋糖"],
+		plural:"Gacha Candy Orange",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"The candy dropped from the Gacha machine, it's orange.",
+			"扭蛋机里扭出来的糖果，是橘色的。"
+		],
+
+		rare: "n",
+		gachaType:"candy",
+
+	},
+	{
+		type: "collection",
+		tags: ["gacha", "foods", "collection"],
+		id:"gachacandy_pink",
+		name:["Gacha Candy Pink", "粉色扭蛋糖"],
+		plural:"Gacha Candy Pink",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"The candy dropped from the Gacha machine, it's pink.",
+			"扭蛋机里扭出来的糖果，是粉色的。"
+		],
+
+		rare: "n",
+		gachaType:"candy",
+
+	},
+	{
+		type: "collection",
+		tags: ["gacha", "foods", "collection"],
+		id:"gachacandy_purple",
+		name:["Gacha Candy Purple", "紫色扭蛋糖"],
+		plural:"Gacha Candy Purple",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"The candy dropped from the Gacha machine, it's purple.",
+			"扭蛋机里扭出来的糖果，是紫色的。"
+		],
+
+		rare: "n",
+		gachaType:"candy",
+
+	},
+	{
+		type: "collection",
+		tags: ["gacha", "foods", "collection"],
+		id:"gachacandy_red",
+		name:["Gacha Candy Red", "红色扭蛋糖"],
+		plural:"Gacha Candy Red",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"The candy dropped from the Gacha machine, it's red.",
+			"扭蛋机里扭出来的糖果，是红色的。"
+		],
+
+		rare: "n",
+		gachaType:"candy",
+
+	},
+	{
+		type: "collection",
+		tags: ["gacha", "foods", "collection"],
+		id:"gachacandy_yellow",
+		name:["Gacha Candy Yellow", "黄色扭蛋糖"],
+		plural:"Gacha Candy Yellow",
+	
+		num: 1,
+		price: 300,
+		size:"small",
+	
+		info:[
+			"The candy dropped from the Gacha machine, it's yellow.",
+			"扭蛋机里扭出来的糖果，是黄色的。"
+		],
+
+		rare: "n",
+		gachaType:"candy",
+
+	},
 ]
 
 Items.addItems(GachaItems)
