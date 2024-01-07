@@ -197,6 +197,16 @@ window.dlog = function (type = "log", ...args) {
 		return obj[last];
 	}
 
+	function getPath(obj, path) {
+		const pathArray = path.split(".");
+		let res = obj;
+		for (const p of pathArray) {
+			if (!res[p]) return undefined;
+			res = res[p];
+		}
+		return res;
+	}
+
 	//get key by value
 	function getKeyByValue(object, value) {
 		const findArray = (arr, val) => {
@@ -224,6 +234,7 @@ window.dlog = function (type = "log", ...args) {
 		clone: { value: clone },
 		countArray: { value: countArray },
 		setPath: { value: setPath },
+		getPath: { value: getPath },
 		getKeyByValue: { value: getKeyByValue },
 		isValid: { value: isValid },
 	});

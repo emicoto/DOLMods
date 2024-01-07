@@ -25,9 +25,15 @@ setup.lang = {
 //
 //------------------------------------------------------
 function lanSwitch(...lan) {
+    if(String(lan[0]) == '[object Object]'){
+        return lan[0][setup.language] ?? lan[0]['EN'] ?? lan[0]['CN']
+    }
+
     let [EN, CN] = lan
-    if (Array.isArray(lan[0]))
+
+    if (Array.isArray(lan[0])){
         [EN, CN] = lan[0]
+    }
 
     if (setup.language == 'CN') {
         return CN ?? EN
@@ -38,6 +44,15 @@ window.lanSwitch = lanSwitch
 DefineMacroS('lanSwitch', lanSwitch)
 
 function getLan(key){
+    if(key.includes('.')){
+        const lanObj = getPath(setup.lang, key)
+        if(lanObj == undefined){
+            return 'error: the dictionary key is not found, path: ' + key
+        }
+        
+        return lanObj[setup.language] ?? lanObj['EN'] ?? lanObj['CN']
+    }
+
     if(setup.lang[key][setup.language] == undefined){
         return setup.lang[key]['EN'] ?? setup.lang[key]['CN']
     }

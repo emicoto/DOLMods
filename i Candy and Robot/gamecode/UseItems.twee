@@ -11,10 +11,9 @@
     <<link 'Next' $passage>><<pass 1>><</link>>
 <<else>>
     <<set _link = lanSwitch('Back', '返回')>>
-    <<link _link $tvar.exitPassage>>
-        <<set _time to iUtil.useItemPassTime($tvar.itemdata)>>      
-        <<pass _time>>
-        <<run iUtil.resetTvar('itemdata', 'useItem', 'img')>>  
+    <<link _link $tvar.exitPassage>>    
+        <<pass $tvar.passtime>>
+        <<run iUtil.resetTvar('itemdata', 'useItem', 'img', 'passtime')>>  
     <</link>>  
 <</if>>
 

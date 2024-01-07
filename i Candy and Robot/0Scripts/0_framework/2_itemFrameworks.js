@@ -598,12 +598,16 @@ function useItems(pocket, pos, enemy){
 	const pocketData = V.iPockets[pocket]
 	let item = V.iPockets[pocket][pos]
 	let data = Items.get(item.id)
+	if(!data){
+		throw new Error('no such item:', item.id)
+	}
 	if(data.alias){
 		data = Items.get(data.alias)
 	}
 	let params = ''
 
 	let msg = generalUseItemMsg(data.type, data.tags, data.name)
+	V.tvar.passtime = iUtil.useItemPassTime(data)
 
 	if(itemMsg[data.id]){
 		msg = lanSwitch(itemMsg[data.id])
@@ -631,9 +635,6 @@ function useItems(pocket, pos, enemy){
 		data.drop()
 	}
 
-	if(enemy){
-		return params
-	}
 	return msg + params
 }
 
