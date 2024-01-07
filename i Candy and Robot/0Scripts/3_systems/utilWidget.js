@@ -1,7 +1,7 @@
 const iUtil = {
 	resetTvar : function(...args){
 		args.forEach((arg)=>{
-			V.tvar[arg] = null
+			V.tvar[arg] = undefined
 		})
 	},
 	countHomeStorage : function(){
@@ -161,9 +161,9 @@ const iUtil = {
 			}
 
 			let itemname = data ? lanSwitch(data.name) : ''
-			let itemcount = item ? itemUnit(data.tags, item.count) : ''
+			let itemcount = data ? itemUnit(data.tags, item.count) : ''
 
-			let method = item ? lanSwitch( useMethods(data.type, data.tags) ) : ''
+			let method = data ? lanSwitch( useMethods(data.type, data.tags) ) : ''
 
 			let _html = `<div id='${slot}-${i}' class='pocketslot'>`
 			let img = iUtil.itemImageResolve(item, data)
@@ -181,20 +181,20 @@ const iUtil = {
 					_html += `<img class='icon' src="img/items/item_none.png">`
 				}
 			_html += `</div>`
-			if(item && V.combat == 0 && !V.event){
+			if(data && V.combat == 0 && !V.event){
 				_html += `<div id='action' class='pocketaction'>
 				<span class='itemaction'>`
 
 				if(data.tags.includes('equip')){
 					_html += `<<link "${lanSwitch('equip', '装备')}" $passage>>
 						<<set $addMsg += "<<imgIcon '${img}'>>">>
-						<<set $addMsg += Items.get('${item.id}').onEquip('${slot}', '${i}');>>
+						<<set $addMsg += Items.get('${data.id}').onEquip('${slot}', '${i}');>>
 					<</link>>`
 				}
 				else if(!data.require && (data.effects.length > 0 || typeof data.onUse == 'function')){
 					 _html += `<<link "${method}" "iMod UseItems">>
 					 	<<set $tvar.useItem to ["${slot}", ${i}]>>
-						<<set $tvar.itemdata to Items.get("${item.id}")>>
+						<<set $tvar.itemdata to Items.get("${data.id}")>>
 						<<set $tvar.img to "${img}">>
 						<<if $passage isnot "iMod UseItems">>
 							<<set $tvar.exitPassage to $passage>>

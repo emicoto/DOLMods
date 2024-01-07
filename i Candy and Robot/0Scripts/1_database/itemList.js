@@ -326,7 +326,7 @@ const iFoods = [
 		stacksprites:[ 30, 80, 100]
 	},
 	{
-		tags: ["bread", "packed"],
+		tags: [ "bun", "packed"],
 		id:"sandwichbread",
 		name:["Sandwich Bread", "三文治面包"],
 		plural:"Sandwich Breads",
@@ -1464,7 +1464,7 @@ const GachaItems = [
 
 	},
 	{
-		type: "collection",
+		type: "foods",
 		tags: ["gacha", "foods", "collection"],
 		id:"gachacandy",
 		name:["Gacha Candy", "扭蛋糖"],

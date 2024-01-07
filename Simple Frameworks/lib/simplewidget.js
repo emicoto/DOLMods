@@ -1,4 +1,4 @@
-let frameworkversion = "1.7.3"
+let frameworkversion = "1.7.4"
 
 window.simpleFrameworks = {
     version: frameworkversion,

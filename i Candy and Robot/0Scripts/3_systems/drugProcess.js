@@ -147,7 +147,7 @@ const DrugsProcess = {
 			const quitDays = quit * 86400 + stats.quitTimes * 5 * 86400
 				Math.min(quitDays, 120 * 86400)
 
-			if(stats.lastTime > 0 && V.timeStamp - stats.lastTime >= quitDays ){
+			if(stats.lastTime > 0 && stats.addict > 0 && V.timeStamp - stats.lastTime >= quitDays ){
 				stats.addict = 0
 				//设置戒除事件flag
 				itemFlags[item].quit = 1

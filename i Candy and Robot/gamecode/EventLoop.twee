@@ -1,5 +1,12 @@
-:: EventLoop [scene]
+:: BaseScene Template [scene]
 <<effects>>
+<div id="locationdes">
+	<<if $phase is 0 and (!$tvar.scene.start || $tvar.scene.type == 'Scene')>>
+		你在XXX。（一个基础的通用场景描写。）
+		<br><br>
+	<</if>>
+</div>
+<div id="addAfterMsg"></div>
 
 <div id='content'>
 <<include $tvar.scene.passage>>
@@ -8,9 +15,11 @@
 
 <div id='linkzone'>
 	<<if $tvar.onselect is true>>
+		<!-- 事件选项出现时，隐藏默认链接区 -->
 		<<set $tvar.onselect to false>>
 
 	<<elseif $tvar.eventnext is true>>
+		<!-- 事件进行中时，显示继续链接 -->
 		<<set _link = lanSwitch('Next', '继续')>>
         <<if $tvar.scene.nextLink>>
             <<set _link = lanSwitch($tvar.scene.nextLink)>>
@@ -20,8 +29,12 @@
                 <<=$tvar.scene.nextcode>>
             <</if>>
 		<</link>>
+	<<elseif !$tvar.scene.passage or $tvar.scene.type == 'Scene'>>
+    <!-- 无事件进行时，默认的互动链接区,先放beforelinkzone给简易框架留个位置 -->
+	<<BeforeLinkZone>>
 
 	<<else>>
+		<!-- 事件结束时，显示离开或返回正常场景的链接，并清楚事件flag -->
 		<<set _link = lanSwitch('Next', '继续')>>
         <<if $tvar.scene.leaveLink>>
             <<set _link = lanSwitch($tvar.scene.leaveLink)>>
