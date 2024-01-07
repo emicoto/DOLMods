@@ -562,6 +562,79 @@ const itemMsg = {
         `你吃了乐兹芝士夹心饼。<br>
         饼干的酥脆和芝士夹心的绵软质地相互交织，同时释放出黄油、奶油和芝士的浓郁香气。咸咸甜甜的，好吃捏。`
     ],
+
+    gachacandy: [
+        `Inside the transparent bag, the green Slime smiles at you.<br>
+        You tear open the bag and squeeze the Slime candy inside, it feels Q-tastic to the touch.<br>
+        You tentatively put the candy in your mouth, and a strong earthy flavour hits your brain.<br>
+        Your teeth can't take the bite of the candy and the syrup inside explodes violently, the excessive sweetness drying out your throat.`,
+
+        `透明的包装袋内，绿色的史莱姆对着你微笑。<br>
+        你撕开包装袋，捏了捏里面的史莱姆糖果，手感Q弹。<br>
+        你试探地把糖果放进了嘴里，强烈的土腥味冲击了你的大脑。<br>
+        牙齿受不了地咬下糖果，里面的糖浆猛地炸开，过高的甜度令你喉咙发干。`
+    ],
+
+    gachacandy_blue: [
+        `Strange objects of indescribable appearance in a bag with the title "booger-flavoured sweets" make you feel like your hands are not clean enough to hold the bag.<br>
+        Would anyone really try to eat such things? You hesitantly put what might be called a candy in your mouth. <br>
+        When the candy touches your tongue, you feel like you're in a house full of cobwebs, and the dusty smell that surrounds you makes you cough.`,
+
+        `难以形容外表的奇怪物体在包装袋中，标题的“鼻屎味糖果”让你感觉自己拿着包装袋的手都不干净了，<br>
+        真的会有人尝试吃这种东西吗？你犹豫良久将或许可以称之为糖果的物体放进嘴里。<br>
+        当糖果接触到舌头，你仿佛置身于布满蜘蛛网的小屋，萦绕在你身边的灰尘味让你不自觉地咳嗽。`
+    ],
+
+    gachacandy_orange: [
+        `"What kind of intense spark will the combination of sweets and spicy flavours create?<br>"
+        The bag reads this description.<br>
+        You carefully bite into the tip of the candy, the mild spiciness and moderate sweetness reassures you, and you pop the candy into your mouth.<br>
+        You bite down on the candy, and the stimulating spiciness makes your tongue tingle, as if the spicy and sweet flavours in your mouth are fighting.<br>
+        Your face turns red, your eyes fill with tears, and your tongue unconsciously sticks out trying to cool it.`,
+
+        `“糖果和辣味结合在一起会迸发出怎样激烈的火花呢？”包装袋上写着这样的介绍。<br>
+        你小心翼翼地咬了一口糖果的尖端，淡淡的辣味和适度的甜味令你安心，你将糖果放入嘴里。<br>
+        你咬下糖果，刺激的辣味令你舌根发麻，嘴中的辣味和甜味仿佛打架一般。<br>
+        你满脸通红，眼中盈满了泪水，舌头不自觉地伸出来想要冷却。`
+    ],
+
+    gachacandy_pink: [
+        `The peach flavoured candy in the shape of a love heart falls flat against some candies, but is a reassuring taste.<br>
+        You pop the candy straight into your mouth and take a bite, the refreshing peach flavour exploding in your mouth as you squint contentedly.`,
+
+        `爱心形状的桃子味糖果在某些糖果的衬托下显得平平无奇，不过，是令人安心的口味。<br>
+        你直接将糖果塞入嘴里，一口咬下去，清爽的桃子味在口中炸开，你满足地眯起眼睛。`
+    ],
+
+    gachacandy_purple: [
+        `You feel reassured by the "grape flavoured candy" on the bag, a favourite among children.<br>
+        The candy is very chewy, so you try hard to chew it with a puckered face.<br>
+        When you bite into the candy, some grape-sweet juice flows out, which makes you feel good.`,
+
+        `包装袋上的“葡萄味糖果”令你感到安心，是孩子们最爱的口味。<br>
+        糖果十分有嚼劲，你鼓着脸努力地嚼嚼。<br>
+        咬开糖果后，有些葡萄般清甜的汁水流了出来，令人心情愉快。`
+    ],
+
+    gachacandy_red: [
+        `The words "Persimmon Flavoured Candy" are so obvious that people usually don't pay attention to the two little "mutation" words in front of them.<br>
+        Of course, when they eat it in their mouths, they will regret not taking a closer look.<br>
+        Whether it's the smooth and chewy texture of a soft persimmon or the dry and sweet taste of a crunchy persimmon, this candy has none of it.<br>
+        Only the astringency of a tongue inching its way through a mountain.`,
+
+        `“柿子味糖果”几个字过于明显，通常人们都不会在意前面的两个小小的“异变”二字。<br>
+        当然，等他们吃进嘴里就会后悔不仔细看了。<br>
+        不论是软柿黏滑且有嚼劲的口感，还是脆柿干脆香甜的口感，这块糖都没有。<br>
+        只有舌头置身于山中寸步难行的涩。`
+    ],
+
+    gachacandy_yellow: [
+        `The yellow octopus seems to be waving at you, but the "earwax-flavoured candy" on the bag makes the scene even more bizarre.
+        When you put the candy in your mouth, the first thing you feel when the candy comes into contact with your tongue is the sour taste, followed by the smell of rotten fruit piling up and fermenting.`,
+
+        `黄色的小章鱼似乎在向你招手，然而包装袋上的“耳屎味糖果”让这一幕变得诡异了起来。
+        你将糖果放进嘴里，当糖果和舌头接触的那刻先感受到的是酸味，之后便是腐烂的水果堆在一起发酵的味道。`
+    ],
 }
 
 
