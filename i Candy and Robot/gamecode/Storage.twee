@@ -11,3 +11,7 @@
 你打开了储物柜。
 <br><br>
 
+
+
+
+<<link 'Back' 'Orphanage'>><</link>>

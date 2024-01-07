@@ -398,7 +398,7 @@ function useMethods(type, tags){
 		methods = ['inject', '注射']
 	}
 	if(tags.includes('drugpowder')){
-		methods = ['snort', '吸入']
+		methods = ['absorb', '吸取']
 	}
 	if(tags.includes('smoke')){
 		methods = ['smoke', '抽']

@@ -68,32 +68,34 @@ Time.pass = function(sec){
 
 function iTimeHandle(passedSec){
 	const { min, day, hour, month, year, weekday } = TimeHandle.passTime(passedSec)
-	console.log('time handle:', passedSec, min, day, hour, month, year, weekday)
+	console.log('time handle sec:', passedSec, 'min:', min, 'day:', day, 'hour:', hour, 'month:', month, 'year:', year, 'weekday:', weekday)
 
 	if(!T.addMsg){
 		T.addMsg = ''
 	}
 
-	//非战斗模式不处理低于0分的变动
+	//时间没有变化，跳过
 	if(passedSec <= 0) return;
-	if(min <= 0 && V.combat == 0) return;
-
 
 	//根据事件的计算单位执行进程，先是按分钟计算的事件。
-	if( passedSec/60 >= 1 || min > 0 || (passedSec > 0 && V.combat == 1)){
+	if( passedSec/60 >= 1 || min > 0 ||  V.combat == 1 ){
+		console.log('minute process:', passedSec, min)
 		minuteProcess(passedSec, min)
 	}
 
 	if(hour > 0 || passedSec/3600 >= 1 ){
+		console.log('hour process:', passedSec, hour)
 		hourProcess(passedSec, hour)
 	}
 
 	if( day > 0 || passedSec/86400 >= 1 ){
+		console.log('day process:', passedSec, day)
 		dayProcess(passedSec, day, weekday)
 	}
 
 	//每周的处理
 	if(weekday[1] == 1 && weekday[0] !== weekday[1] ){
+		console.log('week process:', passedSec, day, weekday)
 		weekProcess(passedSec, day, weekday)
 	}
 
@@ -224,11 +226,11 @@ function dayProcess(sec, day, weekday){
 		}
 	}
 
-	//商店上库存不足5的物品填充至20
+	//商店上库存不足10的物品填充至50
 	for( const [key, shelf] of Object.entries(V.iShop)){
 		shelf.stocks.forEach( item => {
 			const data = Items.get(item.id)
-			if(item.stock <= 5){
+			if(item.stock <= 10){
 				item.stock = 50
 				item.count = item.stock * data.num
 			}
@@ -238,15 +240,12 @@ function dayProcess(sec, day, weekday){
 
 
 function weekProcess(sec, day, weekday){
-	//first day of game wont trigger this
-	if(Time.days <= 1) return;
 	//事件flag的清理
 	iEvent.setFlag('chinatown', 'goatweek', 0)
 	
 	//清理商店的库存
 	for( const [key, shelf] of Object.entries(V.iShop)){
 		if(key == 'selected') continue;
-
 		shelf.state = 'clear'
 		shelf.stocks = []
 		iShop.getshelf(key)

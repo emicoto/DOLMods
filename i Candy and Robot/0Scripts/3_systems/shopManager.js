@@ -72,7 +72,7 @@ const iShop = {
 
 		let itemlist = []
 		let shopitems = []
-		if(current.length == 0 || (Time.weekDay == 1 && shelfStats.state.has('none', 'clear') )){
+		if(current.length == 0 || shelfStats.state.has('none', 'clear') ){
 			itemlist = this.shelfdata[shelf]()
 			itemlist.forEach((item)=>{
 				let diff = undefined

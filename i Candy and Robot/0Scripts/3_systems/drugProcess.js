@@ -22,19 +22,6 @@ const DrugsProcess = {
 	minuteProcess: function(sec){
 		const drugStats = R.drugStates.drugs
 		const drugFlags = R.drugFlags.drugs
-
-		//遍历前修复错误，将angelpowder_inject的数据合并到angelpowder
-		if(drugStats.angelpowder_inject){
-			for(const[key, value] of Object.entries(drugStats.angelpowder_inject)){
-				if(groupmatch(key, 'efTimer', 'lastTime') && value > V.timeStamp ){
-					drugStats.angelpowder[key] = value
-				}
-				else if(!groupmatch(key, 'efTimer', 'lastTime') && value > 0 ){
-					drugStats.angelpowder[key] += value
-				}
-			}
-			delete drugStats.angelpowder_inject
-		}
 	
 		for(const[drug, stats] of Object.entries(drugStats)){
 			//获取药物的信息
@@ -105,7 +92,7 @@ const DrugsProcess = {
 			const withdrawTimer = Math.floor((V.timeStamp - lastTime)/3600)
 	
 			//戒断时间大于戒断反应时间的话，运行戒断效果并获得通知
-			if(withdrawTimer >= withdraw){
+			if(stats.lastTime > 0 && withdrawTimer >= withdraw){
 				//如果设置了function，运行function
 				if(typeof data.onWithdraw == 'function'){
 					V.addMsg += data.onWithdraw() + '<br>'
@@ -133,7 +120,7 @@ const DrugsProcess = {
 			if(!data) continue;
 
 			//获取上瘾阈值，最大过量值，戒除需求时间(day)，引起戒断反应所需时间(hour)
-			const { threshold, maxOD, quit, tags } = drugItem
+			const { threshold, maxOD, quit, tags } = data
 
 			//当超量时，根据进度增加隐形上瘾值。
 			const process = type == 'general' ? data.process : getDrugsConfig(tags, 'process')
@@ -145,14 +132,14 @@ const DrugsProcess = {
 			if(maxOD >= 0 && stats.overdose > maxOD && stats.addict == 0 && stats.process >= 2){
 				stats.addict = 1
 				//设置上瘾事件flag
-				drugFlags[drug].addiction = 1
+				itemFlags[item].addiction = 1
 			}
 
 			//如果maxOd跟threshold都是0， 说明是必上瘾的特效药物，直接设置上瘾状态
 			if(type !== 'general' && maxOD == 0 && threshold == 0 && stats.taken > 0 && stats.addict == 0){
 				stats.addict = 1
 				//设置上瘾事件flag
-				drugFlags[drug].addiction = 1
+				itemFlags[item].addiction = 1
 			}
 
 			//检测最后一次嗑药时间，如果超过戒除需求时间，清除上瘾状态
@@ -160,10 +147,10 @@ const DrugsProcess = {
 			const quitDays = quit * 86400 + stats.quitTimes * 5 * 86400
 				Math.min(quitDays, 120 * 86400)
 
-			if(V.timeStamp - stats.lastTime >= quitDays ){
+			if(stats.lastTime > 0 && V.timeStamp - stats.lastTime >= quitDays ){
 				stats.addict = 0
 				//设置戒除事件flag
-				drugFlags[drug].quit = 1
+				itemFlags[item].quit = 1
 				//添加戒除次数
 				stats.quitTimes ++
 			}
@@ -176,7 +163,7 @@ const DrugsProcess = {
 
 			//如果超量值大于零，同时没有引起戒断反应，设置当日效果flag
 			if(type !== 'general' && stats.overdose > 0 && stats.withdraw == 0){
-				drugFlags[drug].daily = 1
+				itemFlags[item].daily = 1
 			}
 			
 			//每日清零当日计数器
@@ -195,7 +182,7 @@ const DrugsProcess = {
 				if(typeof data.onDay == 'function'){
 					V.addMsg += data.onDay() + '<br>'
 				}
-				else if(drugMsg[item].onDay){
+				else if(drugMsg[item]?.onDay){
 					V.addMsg += lanSwitch(drugMsg[item].onDay) + '<br>'
 				}
 				else{

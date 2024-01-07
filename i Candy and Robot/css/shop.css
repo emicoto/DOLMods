@@ -130,7 +130,7 @@
 
 #shopbanner {
     height: 30px;
-    width: 540px;
+    width: fit-content;
     
 }
 

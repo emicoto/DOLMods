@@ -48,8 +48,11 @@ DefineMacroS('getLan', getLan)
 
 function sexSwitch(npc, female,male){
     let gender = 'f'
-    if(npc !== 'pc'){
+    if(npc !== 'pc' && typeof npc == 'string'){
         gender = C.npc[npc].gender
+    }
+    else if(typeof npc == 'number'){
+        gender = V.NPCList[V.index]?.gender ?? 'm'
     }
     else{
         gender = V.player.gender_appearance
