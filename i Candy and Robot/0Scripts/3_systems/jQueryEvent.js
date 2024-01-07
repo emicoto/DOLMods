@@ -1,14 +1,3 @@
-
-$(document).one(':storyready',()=>{
-	let check2 = setInterval(()=>{
-		if( V.featsBoosts ){
-			//modifyFeatsBoosts()
-			//Engine.play('Start')
-			clearInterval(check2)
-		}
-	}, 100)
-})
-
 window.bak = {}
 
 setup.gamereloadcheck = true
@@ -32,7 +21,7 @@ $(document).on(':passageinit', ( data )=>{
 
 	if(!R.combat || V.combat == 1 ){
 		R.combat = {
-			angel:0, total:0,
+			angel:0, total:0
 		}
 	}
 	else if(V.combat == 0){

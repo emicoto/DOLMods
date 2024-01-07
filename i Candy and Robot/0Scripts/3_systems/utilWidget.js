@@ -196,7 +196,7 @@ const iUtil = {
 					 	<<set $tvar.useItem to ["${slot}", ${i}]>>
 						<<set $tvar.itemdata to Items.get("${data.id}")>>
 						<<set $tvar.img to "${img}">>
-						<<if $passage isnot "iMod UseItems">>
+						<<if $passage.has("iMod UseItems", "iMod DropItems", "iMod TransferItem") is false>>
 							<<set $tvar.exitPassage to $passage>>
 						<</if>>
 					 <</link>>`
@@ -210,7 +210,17 @@ const iUtil = {
 				<span class='itemaction'>
 					<<link "${lanSwitch('move', '转移')}">>
 						<<set $tvar.transferItem to ["${slot}", ${i}]>>
-						<<set $tvar.exitPassage to $passage>>
+						<<if $passage.has("iMod UseItems", "iMod DropItems", "iMod TransferItem") is false>>
+							<<set $tvar.exitPassage to $passage>>
+						<</if>>
+					<</link>>
+				</span>
+				<span class='itemaction'>
+					<<link "${lanSwitch('drop', '丢弃')}" "iMod DropItems">>
+						<<set $tvar.dropItem to ["${slot}", ${i}]>>
+						<<if $passage.has("iMod UseItems", "iMod DropItems", "iMod TransferItem") is false>>
+							<<set $tvar.exitPassage to $passage>>
+						<</if>>
 					<</link>>
 				</span>
 				</div>`

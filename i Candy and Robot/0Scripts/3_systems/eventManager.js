@@ -51,7 +51,6 @@ const eventManager = {
     },
 
     getEvent: function(event){
-        if(!this.data[event]) return
         return this.data[event]
     },
 
@@ -115,6 +114,9 @@ const eventManager = {
         if(data){
             this.setScene(event, data)
         }
+        else{
+            console.log('event not found:', type, event, key, branch)
+        }
 
         console.log('setEvent:', data)
     },
@@ -142,9 +144,6 @@ const eventManager = {
         V.tvar.scene.title += ` ${branch}`
 
         V.phase = 0
-    },
-
-    jump: function(scene, phase){
     },
 
     popBranch: function(phase){
@@ -279,6 +278,10 @@ const eventManager = {
             scene.passage = `${scene.title} ${V.phase+1}`
         }
         console.log('phase:', V.phase)
+
+        if(Story.get(scene.passage + '::Script')){
+            new Wikifier(null, scene.passage + '::Script')
+        }
 
         if(Story.has(scene.passage+` ${setup.language}`)){
             scene.passage += ` ${setup.language}`

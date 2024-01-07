@@ -41,24 +41,26 @@
 		<<passoutshop>>
 	<<elseif $tvar.scene.passage>>
 		<<include $tvar.scene.passage>>
-	<<else>>
-		<<include 'Scene DaisoShop General'>>
+	<<else>> <!-- if $tvar.shop is daiso -->
+		<<include 'Scene DaisoShop Shop'>>
 	<</if>>
 </div>
 
 <<if $tvar.onselect is true>>
 	<<set $tvar.onselect to false>>
+
 <<elseif $tvar.eventnext is true>>
-	<<set _link = lanSwitch('Next', '继续')>>
-	<<link 'Next' $passage>>
+
+	<<set _link = getLan('next')>>
+	<<link _link $passage>>
 		<<pass 1>>
 		<<if $tvar.scene.nextcode>>
 			<<=$tvar.scene.nextcode>>
 		<</if>>
 	<</link>>
+
 <<else>>
-	<<set _link = lanSwitch('Leave', '离开')>>
-	
+	<<set _link = getLan('leave')>>
 	<<getouticon>><<link _link "Shopping Centre">>
 		<<run iEvent.unsetEvent(); iShop.clearCart()>>
 		<<unset $shoptabIndex>>
@@ -67,11 +69,11 @@
 <</if>>
 
 
-:: Scene DaisoShop Actions
-
-
-
 :: Scene DaisoShop General
+
+
+
+:: Scene DaisoShop Shop
 <<=lanSwitch(
 	"Here are many goods for sale, you can browse around and find something you like.",
 	"这里有很多商品出售，你随意逛着寻找合心意的物品。"
@@ -127,5 +129,7 @@
 <<done>>
 <<if not $shoptabIndex>>
 	<<run iShop.tabSwitch('daiso_snack')>>
+<<else>>
+	<<run iShop.tabSwitch($shoptabIndex)>>
 <</if>>
 <</done>>
