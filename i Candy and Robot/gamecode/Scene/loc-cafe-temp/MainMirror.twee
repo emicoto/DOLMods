@@ -1,0 +1,506 @@
+# 段落分支间的跳转（自动执行顺序？
+# link后面的属性变化
+# 剩下两个条件判断内容
+# 链接和事件的匹配
+
+
+:: Ocean Breeze
+<<set $outside to 0>><<set $location to "cafe">><<effects>>
+<div id="locationdes">
+	<<if $phase is 0 and (!$tvar.scene.start || $tvar.scene.type == 'Scene')>>
+        <<=lanSwitch(
+        `You are in the Ocean Breeze Cafe.`,
+        `你在海风咖啡馆。`
+        )>>
+        <<if $openinghours is 1>>
+            <<if $weather is "clear">>
+                <<=lanSwitch(
+                `Most of the tables are full.`,
+                `大部分位子都是空的。`
+                )>>
+            <<elseif $weather is "overcast">>
+                <<=lanSwitch(
+                `The cafe is busy, and despite the strong winds some people are sitting outside.`,
+                `咖啡馆里人很多，尽管刮着大风，还是有人坐在外面。`
+                )>>
+            <<elseif $weather is "rain">>
+                <<=lanSwitch(
+                `No one is sitting outside due to the rain, but the cafe proper is crowded.`,
+                `因为下雨，所以没有人坐在外面，咖啡馆里很拥挤。`
+                )>>
+            <<elseif $weather is "snow">>
+                <<=lanSwitch(
+                `No one is sitting outside due to the cold, but the cafe proper is crowded.`,
+                `因为天寒地冻，所以没有人坐在外面，咖啡馆里显得很拥挤。`
+                )>>
+            <</if>>
+        <</if>>
+        <br><br>
+	<</if>>
+</div>
+
+<div id="addAfterMsg"></div>
+
+<div id='content'>
+    <<if $stress gte $stressmax>>
+        <<passoutstreet>>
+    <<elseif $tvar.scene.passage>>
+        <<include $tvar.scene.passage>>
+    <<else>>
+        <<set _title = 'Scene Ocean Breeze General ' + setup.language>>
+        <<include _title>>
+    <</if>>
+</div>
+
+<div id='linkzone'>
+<<set _link = lanSwitch('Next', '继续')>>
+<<if $tvar.onselect is true>>
+    <<set $tvar.onselect to false>>
+
+<<elseif $tvar.eventnext is true>>
+    <<link _link $passage>>
+        <<pass 1>>
+        <<if $tvar.scene.nextcode>>
+            <<=$tvar.scene.nextcode>>
+        <</if>>
+    <</link>>
+
+<<elseif !$tvar.scene.passage or $tvar.scene.type is 'Scene'>>
+    <<workOceanBreeze>>
+
+<<else>>
+    <<linkEventEnd 'Cliff Street'>>
+
+<</if>>
+<br>
+</div>
+
+:: Event Ocean Breeze 1 EN
+
+<<if $openinghours is 1 and $exposed lt 1 and $bunstat gte 50 and $chef_state is 1>>
+	<<set $chef_state to 2>><<set $bun_value to 10000>>
+	<<npc Sam>><<person1>>
+	Sam approaches you, wiping <<his>> hands on a towel and beaming.
+	"I've made a decision," <<he>> says. "I wanted to keep the buns affordable, but we've attracted interest."
+	<<He>> holds out a holiday brochure, opened on a page that advertises the town.
+	There's a picture of the cafe with a caption that describes the buns as "world-class."
+	<br><br>
+
+	"World-class!" Sam beams.
+	"I've decided to increase the price to <span class="gold">£100</span>. We have a limited supply after all, and can't keep up with demand as it is."
+	<br><br>
+
+	<<He>> returns to work, humming some tune.
+	<br><br>
+
+<<elseif $openinghours is 1 and $exposed lt 1 and $bunstat gte 200 and $chef_state is 2>>
+    <<set $chef_state to 3>>
+	<<npc Sam>><<person1>>
+	Sam approaches you.
+	"I was at a party," <<he>> says.
+	"And I may have had one too many. Anyway, the topic of our buns came up.
+	People were very curious about how they're made. When I told them I didn't know, that a new chef was responsible, they became even hungrier.
+	I think a myth is building around you."
+	<br><br>
+	"Anyway," <<he>> continues.
+	"It got me thinking. I'd like to use your image in our advertisements.
+	Maybe redesign the front of the building. It's only fair people know who's responsible for these treats."
+	<br><br>
+	"I'm willing to increase your cut to <span class="gold">30%</span> of each bun sale," <<he>> adds, cleaning a vacated table.
+	"I'm in talks with a professional photographer. Mull it over, then let me know what you think."
+	<br><br>
+
+<<elseif $openinghours is 1 and $exposed lt 1 and $chef_state is 5>>
+	<<set $chef_state to 6>>
+	<<npc Sam>>Sam approaches you. "The photographer sent the pictures over," <<he>> says.
+	"They're fantastic! The new adverts are going to look great. You'll get <span class="gold">30%</span> of each bun sold from now on, as promised."
+	<<set $bun_cut to 0.3>>
+	<br><br>
+
+	Sam returns to work, humming some tune.
+	<br><br>
+
+<<elseif $openinghours is 1 and $exposed lt 1 and $bunstat gte 400 and $chef_state is 6>>
+	<<set $chef_state to 7>>
+	<<set $chef_rework to 37>>
+	<<npc Sam>><<person1>>
+	Sam approaches you, looking more serious than normal. "I've made a decision," <<he>> says.
+	"The buns are our flagship, but people are more interested than ever in our other dishes too.
+	Even when people know the chef is not in the building, they still queue for a chance to eat here. You've probably noticed."
+	<br><br>
+	"I've bought next-door," <<he>> continues.
+	"The big one. I'm going to merge the buildings, make one huge cafe. One that can accommodate the numbers we're pulling. I'm giddy just thinking about it!"
+	<br><br>
+	<span class="pink">"We'll need to close for a month,"</span> <<he>> adds.
+	"It's unfortunate, but the changes are so big. We'll have a grand opening event when its done, with you as the star."
+	<br><br>
+	"We're closing down in a week. I don't want you to be caught off guard. Drop by when we're finished and we'll discuss the opening event."
+	<br><br>
+	<<He>> returns to work.
+	<br><br>
+
+<<else>>
+	<<if Time.hour is $closinghour>>
+		It's closing time. Sam is herding everyone outside.
+		<<if $exposed gte 1>>
+			You feel a twinge of panic as you realise how exposed you'll be should you be found in this state of dress.
+		<</if>>
+		<br><br>
+
+	<<elseif $openinghours is 0>>
+		You are alone in the darkness.
+		<br><br>
+
+	<<elseif $exposed gte 1>>
+		You are hiding beneath a table to protect your dignity.
+		<br><br>
+
+	<</if>>
+
+    <<if $arousal gte $arousalmax>>
+		<<orgasmLocation "cafe">>
+	<</if>>
+
+<</if>>
+
+
+:: Scene Ocean Breeze EN
+
+<<if !$daily.earSlimeOceanBreezeCafeEat and $openinghours is 1 and $exposed lt 1 and !$daily.cafeEaten and $money gte 200 and numberOfEarSlime() and earSlimeMakingMundaneRequests() and random(0,100) gte 92>>
+	<<set _cafeOptions to []>>
+	<<if $money gte 200>>
+		<<run _cafeOptions.push("coffee")>>
+	<</if>>
+	<<if $money gte 700 and !playerAwareTheyArePregnant()>>
+		<<switch Time.season>>
+			<<case "winter">><<run _cafeOptions.push("winter ale")>>
+			<<case "spring">><<run _cafeOptions.push("fruity ale")>>
+			<<case "summer">><<run _cafeOptions.push("shandy")>>
+			<<default>><<run _cafeOptions.push("autumn ale")>>
+		<</switch>>
+	<</if>>
+	<<if $money gte 500>>
+		<<run _cafeOptions.push("fruit salad")>>
+	<</if>>
+	<<if $money gte 1000>>
+		<<run _cafeOptions.push("pancake")>>
+	<</if>>
+	<<if $money gte 5000>>
+		<<run _cafeOptions.push("deluxe cream bun")>>
+	<</if>>
+    <<set $daily.earSlimeOceanBreezeCafeEat to _cafeOptions.random()>>
+	<span @class="$earSlime.startedThreats ? 'lewd' : 'lblue'">You feel the slime in your head command you to have a $daily.earSlimeOceanBreezeCafeEat.</span> It promises rewards if you comply<<if $earSlime.startedThreats>>, and threatens consequences if you do not<</if>>.
+	<br><br>
+	<<earSlimeCafeLinks "Obey">>
+	<br>
+	<<if $earSlime.startedThreats>>
+		<<link [[Defy|Ocean Breeze Slime Defy]]>><<corruption -1>><<pain 8>><<stress 6>><<trauma 6>><<def 1>><</link>><<lcorruption>><<ggpain>><<ggtrauma>><<ggstress>>
+	<<else>>
+		<<link [[Ignore|Ocean Breeze]]>><</link>>
+	<</if>>
+
+<</if>>
+
+
+:: Widget Ocean Breeze [widget]
+<<widget "workOceanBreeze">>
+    <<if $openinghours is 1 and $exposed lt 1 and $oceanbreezejob isnot 1>>
+        <<if $oceanbreezejoboffer is 1>>
+            <<askicon>>
+            <<set _link to lanSwitch('Ask for work', '询求工作')>>
+            <<link _link "Ocean Breeze Ask Again">>
+            <</link>>
+        <<else>>
+            <<askicon>>
+            <<set _link to lanSwitch('Ask for work', '询求工作')>>
+            <<link _link "Ocean Breeze Ask">>
+            <</link>>
+        <</if>>
+    <</if>>
+
+    <<if $openinghours is 1 and $exposed lt 1 and $oceanbreezejob is 1>>
+        <<if $chef_state is 0>>
+            <<set _link to lanSwitch('Accept job offer', '接受工作邀请')>>
+            <<link _link "Chef Work Accept">>
+            <</link>>
+        <<elseif $chef_state gte 1>>
+            <<set _link to lanSwitch('Work as a chef', '当厨师') + ' (1:00)'>>
+            <<link _link "Chef Work">>
+            <<pass 60>>
+            <</link>>
+        <</if>>
+        <<if $chef_state is 3>>
+            <<set _link to lanSwitch('"Accept Sam's offer"', '"接受萨姆的提议"')>>
+            <<link _link "Chef Photographer">>
+            <</link>>
+        <</if>>
+        <<if $player.gender_appearance is "m">>
+            <<set _link to lanSwitch('Work as a waiter', '当服务员') + ' (1:00)'>>
+            <<link _link "Ocean Breeze Work">>
+            <<pass 60>>
+            <<set $tablesservedstat += random(10,30)>>
+            <</link>>
+        <<else>>
+            <<set _link to lanSwitch('Work as a waitress', '当服务员') + ' (1:00)'>>
+            <<link _link "Ocean Breeze Work">>
+            <<pass 60>>
+            <<set $tablesservedstat += random(10,30)>>
+            <</link>>
+    <</if>>
+<br>
+<</widget>>
+
+
+:: Ocean Breeze
+
+<<if $stress gte $stressmax>>
+	<<passoutshop>>
+
+<<elseif $openinghours is 1 and $exposed lt 1 and $bunstat gte 50 and $chef_state is 1>>
+	<<set $chef_state to 2>><<set $bun_value to 10000>>
+	<<npc Sam>><<person1>>
+	Sam approaches you, wiping <<his>> hands on a towel and beaming.
+	"I've made a decision," <<he>> says. "I wanted to keep the buns affordable, but we've attracted interest."
+	<<He>> holds out a holiday brochure, opened on a page that advertises the town.
+	There's a picture of the cafe with a caption that describes the buns as "world-class."
+	<br><br>
+
+	"World-class!" Sam beams.
+	"I've decided to increase the price to <span class="gold">£100</span>. We have a limited supply after all, and can't keep up with demand as it is."
+	<br><br>
+
+	<<He>> returns to work, humming some tune.
+	<br><br>
+	<<endevent>>
+	<<link [[Next|Ocean Breeze]]>><</link>>
+	<br>
+
+<<elseif $openinghours is 1 and $exposed lt 1 and $bunstat gte 200 and $chef_state is 2>>
+	<<set $chef_state to 3>>
+	<<npc Sam>><<person1>>
+	Sam approaches you.
+	"I was at a party," <<he>> says.
+	"And I may have had one too many. Anyway, the topic of our buns came up.
+	People were very curious about how they're made. When I told them I didn't know, that a new chef was responsible, they became even hungrier.
+	I think a myth is building around you."
+	<br><br>
+	"Anyway," <<he>> continues.
+	"It got me thinking. I'd like to use your image in our advertisements.
+	Maybe redesign the front of the building. It's only fair people know who's responsible for these treats."
+	<br><br>
+	"I'm willing to increase your cut to <span class="gold">30%</span> of each bun sale," <<he>> adds, cleaning a vacated table.
+	"I'm in talks with a professional photographer. Mull it over, then let me know what you think."
+	<br><br>
+
+	<<endevent>>
+
+	<<link [[Next|Ocean Breeze]]>><</link>>
+	<br>
+
+<<elseif $openinghours is 1 and $exposed lt 1 and $chef_state is 5>>
+	<<set $chef_state to 6>>
+	<<npc Sam>>Sam approaches you. "The photographer sent the pictures over," <<he>> says.
+	"They're fantastic! The new adverts are going to look great. You'll get <span class="gold">30%</span> of each bun sold from now on, as promised."
+	<<set $bun_cut to 0.3>>
+	<br><br>
+
+	Sam returns to work, humming some tune.
+	<br><br>
+	<<endevent>>
+
+	<<link [[Next|Ocean Breeze]]>><</link>>
+	<br><br>
+
+<<elseif $openinghours is 1 and $exposed lt 1 and $bunstat gte 400 and $chef_state is 6>>
+	<<set $chef_state to 7>>
+	<<set $chef_rework to 37>>
+	<<npc Sam>><<person1>>
+	Sam approaches you, looking more serious than normal. "I've made a decision," <<he>> says.
+	"The buns are our flagship, but people are more interested than ever in our other dishes too.
+	Even when people know the chef is not in the building, they still queue for a chance to eat here. You've probably noticed."
+	<br><br>
+	"I've bought next-door," <<he>> continues.
+	"The big one. I'm going to merge the buildings, make one huge cafe. One that can accommodate the numbers we're pulling. I'm giddy just thinking about it!"
+	<br><br>
+	<span class="pink">"We'll need to close for a month,"</span> <<he>> adds.
+	"It's unfortunate, but the changes are so big. We'll have a grand opening event when its done, with you as the star."
+	<br><br>
+	"We're closing down in a week. I don't want you to be caught off guard. Drop by when we're finished and we'll discuss the opening event."
+	<br><br>
+	<<He>> returns to work.
+	<br><br>
+	<<endevent>>
+	<<link [[Next|Ocean Breeze]]>><</link>>
+	<br>
+
+<<elseif !$daily.earSlimeOceanBreezeCafeEat and $openinghours is 1 and $exposed lt 1 and !$daily.cafeEaten and $money gte 200 and numberOfEarSlime() and earSlimeMakingMundaneRequests() and random(0,100) gte 92>>
+	<<set _cafeOptions to []>>
+	<<if $money gte 200>>
+		<<run _cafeOptions.push("coffee")>>
+	<</if>>
+	<<if $money gte 700 and !playerAwareTheyArePregnant()>>
+		<<switch Time.season>>
+			<<case "winter">><<run _cafeOptions.push("winter ale")>>
+			<<case "spring">><<run _cafeOptions.push("fruity ale")>>
+			<<case "summer">><<run _cafeOptions.push("shandy")>>
+			<<default>><<run _cafeOptions.push("autumn ale")>>
+		<</switch>>
+	<</if>>
+	<<if $money gte 500>>
+		<<run _cafeOptions.push("fruit salad")>>
+	<</if>>
+	<<if $money gte 1000>>
+		<<run _cafeOptions.push("pancake")>>
+	<</if>>
+	<<if $money gte 5000>>
+		<<run _cafeOptions.push("deluxe cream bun")>>
+	<</if>>
+	<<set $daily.earSlimeOceanBreezeCafeEat to _cafeOptions.random()>>
+	<span @class="$earSlime.startedThreats ? 'lewd' : 'lblue'">You feel the slime in your head command you to have a $daily.earSlimeOceanBreezeCafeEat.</span> It promises rewards if you comply<<if $earSlime.startedThreats>>, and threatens consequences if you do not<</if>>.
+	<br><br>
+	<<earSlimeCafeLinks "Obey">>
+	<br>
+	<<if $earSlime.startedThreats>>
+		<<link [[Defy|Ocean Breeze Slime Defy]]>><<corruption -1>><<pain 8>><<stress 6>><<trauma 6>><<def 1>><</link>><<lcorruption>><<ggpain>><<ggtrauma>><<ggstress>>
+	<<else>>
+		<<link [[Ignore|Ocean Breeze]]>><</link>>
+	<</if>>
+
+<<else>>
+	<<if Time.hour is $closinghour>>
+		It's closing time. Sam is herding everyone outside.
+		<<if $exposed gte 1>>
+			You feel a twinge of panic as you realise how exposed you'll be should you be found in this state of dress.
+		<</if>>
+		<br><br>
+
+	<<elseif $openinghours is 0>>
+		You are alone in the darkness.
+		<br><br>
+
+	<<elseif $exposed gte 1>>
+		You are hiding beneath a table to protect your dignity.
+		<br><br>
+
+	<</if>>
+
+	<<if $arousal gte $arousalmax>>
+		<<orgasmLocation "cafe">>
+	<</if>>
+
+	<<if $openinghours is 1 and $exposed lt 1 and $oceanbreezejob isnot 1>>
+		<<if $oceanbreezejoboffer is 1>>
+			<<askicon>><<link [[Ask for work|Ocean Breeze Ask Again]]>><</link>>
+			<br>
+		<<else>>
+			<<askicon>><<link [[Ask for work|Ocean Breeze Ask]]>><</link>>
+			<br>
+		<</if>>
+	<</if>>
+
+	<<if $openinghours is 1 and $exposed lt 1 and $oceanbreezejob is 1>>
+		<<if $chef_state is 0>>
+			<<ind>><<link [[Accept job offer|Chef Work Accept]]>><</link>>
+			<br>
+		<<elseif $chef_state gte 1>>
+			<<ind>><<link [[Work as a chef (1:00)|Chef Work]]>><</link>>
+			<br>
+		<</if>>
+		<<if $chef_state is 3>>
+			<<ind>><<link [["Accept Sam's offer"|Chef Photographer]]>><</link>>
+			<br>
+		<</if>>
+		<<if $player.gender_appearance is "m">>
+			<<ind>><<link [[Work as a waiter (1:00)|Ocean Breeze Work]]>><<set $tablesservedstat += random(10,30)>><</link>>
+			<br>
+		<<else>>
+			<<ind>><<link [[Work as a waitress (1:00)|Ocean Breeze Work]]>><<set $tablesservedstat += random(10,30)>><</link>>
+			<br>
+		<</if>>
+	<</if>>
+
+
+
+
+
+
+
+<<if $openinghours is 1 and $exposed lt 1 and $daily.cafeEaten isnot 1>>
+
+	<<if $money gte 200>>
+		<<foodicon "coffee">><<link [[Buy coffee (0:02 £2)|Cafe Coffee]]>>
+			<<set $daily.cafeEaten to 1>><<set $money -= 200>><<stress -3>><<tiredness -4>><<pass 2>>
+		<</link>><<lstress>><<ltiredness>>
+		<br>
+	<</if>>
+	<<if $money gte 700>>
+		<<foodicon "beerbottle">>
+		<<if Time.season is "winter">>
+			<<if playerIsPregnant() and playerAwareTheyArePregnant()>>
+				<span class="blue">You can't bring yourself to drink winter ale while you know you're with child.</span>
+			<<else>>
+				<<link [[Buy winter ale (0:10 £7)|Cafe Eat]]>><<set $phase to "winter ale">><<set $daily.cafeEaten to 1>><<set $money -= 700>><<stress -6>><<alcohol 100>><<pass 10>><</link>><<lstress>><<galcohol>>
+			<</if>>
+			<br>
+		<<elseif Time.season is "spring">>
+			<<if playerIsPregnant() and playerAwareTheyArePregnant()>>
+				<span class="blue">You can't bring yourself to drink fruity ale while you know you're with child.</span>
+			<<else>>
+				<<link [[Buy fruity ale (0:10 £7)|Cafe Eat]]>><<set $phase to "fruity ale">><<set $daily.cafeEaten to 1>><<set $money -= 700>><<stress -6>><<alcohol 60>><<pass 10>><</link>><<lstress>><<galcohol>>
+			<</if>>
+			<br>
+		<<elseif Time.season is "summer">>
+			<<if playerIsPregnant() and playerAwareTheyArePregnant()>>
+				<span class="blue">You can't bring yourself to drink shandy while you know you're with child.</span>
+			<<else>>
+				<<link [[Buy shandy (0:10 £7)|Cafe Eat]]>><<set $phase to "shandy">><<set $daily.cafeEaten to 1>><<set $money -= 700>><<stress -6>><<alcohol 40>><<pass 10>><</link>><<lstress>><<galcohol>>
+			<</if>>
+			<br>
+		<<else>>
+			<<if playerIsPregnant() and playerAwareTheyArePregnant()>>
+				<span class="blue">You can't bring yourself to drink autumn ale while you know you're with child.</span>
+			<<else>>
+				<<link [[Buy autumn ale (0:10 £7)|Cafe Eat]]>><<set $phase to "autumn ale">><<set $daily.cafeEaten to 1>><<set $money -= 700>><<stress -6>><<alcohol 80>><<pass 10>><</link>><<lstress>><<galcohol>>
+			<</if>>
+			<br>
+		<</if>>
+	<</if>>
+	<<if $money gte 300>>
+		<<if ndef $milkshake>><<set $milkshake to 0>><</if>>
+		<<if $milkshake lt 2>>
+			<<foodicon "milkshake">><<link [[Buy milkshake to go (0:02 £3)|Ocean Breeze]]>><<set $money -= 300>> <<set $milkshake +=1>> <<pass 2>><</link>>
+			<br>
+		<</if>>
+	<</if>>
+	<<if $money gte 500>>
+		<<foodicon "fruitsalad">>
+		<<link [[Buy fruit salad (0:20 £5)|Cafe Eat]]>><<set $phase to "fruit salad">><<set $daily.cafeEaten to 1>><<set $money -= 500>><<stress -6>><<pass 20>><</link>><<lstress>>
+		<br>
+	<</if>>
+	<<if $money gte 600 and Time.season is "winter">>
+		<<foodicon "gingerbread">>
+		<<link [[Buy gingerbread (0:20 £6)|Cafe Eat]]>><<set $phase to "gingerbread">><<set $daily.cafeEaten to 1>><<set $money -= 600>><<stress -8>><<pass 20>><</link>><<lstress>>
+		<br>
+	<</if>>
+	<<if $money gte 1000>>
+		<<foodicon "pancakes">>
+		<<link [[Buy pancakes (0:20 £10)|Cafe Pancakes]]>><<set $daily.cafeEaten to 1>><<set $money -= 1000>><<tiredness -6>><<pass 20>><</link>><<ltiredness>>
+		<br>
+	<</if>>
+	<<if $money gte 5000>>
+		<<foodicon "creambun">>
+		<<link [[Buy Deluxe Cream Bun (0:20 £50)|Cafe Cream Bun]]>><<set $daily.cafeEaten to 1>><<transform cat 1>><<set $money -= 5000>><<pass 20>><<stress -18>><</link>><<llstress>>
+		<br>
+	<</if>>
+<</if>>
+
+<<if $openinghours is 0 and Time.hour isnot $closinghour and !$weekly.theft.oceanBreeze>>
+	<<shopicon "register">><<link [[Examine the cash register|Ocean Breeze Register]]>><</link>>
+	<br>
+<</if>>
+
+<br>
+<<clifficon>><<link [[Leave|Cliff Street]]>><</link>>
+<br><br>
+
+<</if>>
