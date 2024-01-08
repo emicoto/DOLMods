@@ -425,6 +425,16 @@ const iManager = {
 
 	},
 
+	dropItem : function(pos, index){
+		const pocket = this.getPocket(pos)
+		const dropMsg = {
+			CN : `你丢弃了${pocket[index].name} x ${pocket[index].num}。`,
+			EN : `You drop ${pocket[index].name} x ${pocket[index].num}.`
+		}
+		pocket.deleteAt(index)
+		V.addMsg += lanSwitch(dropMsg.EN, dropMsg.CN) + '<br>'
+	},
+
 	dropOrTransferItems(item){
 		//根据所在地点判断
 		if(V.location == 'home'){

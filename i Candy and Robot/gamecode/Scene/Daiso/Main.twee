@@ -7,31 +7,33 @@
 <</widget>>
 
 
+:: DaisoShop localDescription CN
+你来到了在大创百货商店。
+<<if Time.dayState is "night">>
+	这个时间商店已经关门了，里面空荡荡，一个人都没有。
+<<elseif Time.dayState is "day">>
+	现在是营业时间，你能看到店员在里忙碌着，有不少人在里面逛着。
+<<else>>
+	虽然是营业时间，但人不多，店员一眼就能看到你。
+<</if>>
+
+:: DaisoShop localDescription EN
+You've come to the Daiso General Shop.
+<<if Time.dayState is "night">>
+	The store is closed at this time, and there is no one inside.
+<<elseif Time.dayState is "day">>
+	The store is open at this time, and you can see the clerk is busy, and there are many people browsing inside.
+<<else>>
+	Although it's business hours, it's not crowded and the clerk can see you at a glance.
+<</if>>
+
 :: BaseScene DaisoShop [scene]
 <<set $outside to 0>><<set $location to "shopping_centre">><<effects>>
 
 <div id='locationdes'>
 <<if (!$tvar.scene.passage || $tvar.scene.type == 'Scene') and $phase is 0>>
-	<<=lanSwitch(
-		"You've come to the Daiso General Shop.",
-		"你来到了在大创百货商店。"
-	)>>
-	<<if Time.dayState is "night">>
-	<<=lanSwitch(
-		"The store is closed at this time, and there is no one inside.",
-		"这个时间商店已经关门了，里面空荡荡，一个人都没有。"
-	)>>
-	<<elseif Time.dayState is "day">>
-	<<=lanSwitch(
-		"The store is open at this time, and you can see the clerk is busy, and there are many people browsing inside.",
-		"现在是营业时间，你能看到店员在里忙碌着，有不少人在里面逛着。"
-	)>>
-	<<else>>
-	<<=lanSwitch(
-		"Although it's business hours, it's not crowded and the clerk can see you at a glance.",
-		"虽然是营业时间，但人不多，店员一眼就能看到你。"
-	)>>
-	<</if>>
+	<<set _output to "DaisoShop localDescription " + setup.language>>
+	<<include _output>>
 	<br><br>
 <</if>>
 </div>

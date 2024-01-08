@@ -1,7 +1,7 @@
 const iUtil = {
 	resetTvar : function(...args){
 		args.forEach((arg)=>{
-			V.tvar[arg] = undefined
+			V.tvar[arg] = null
 		})
 	},
 	countHomeStorage : function(){
@@ -186,41 +186,34 @@ const iUtil = {
 				<span class='itemaction'>`
 
 				if(data.tags.includes('equip')){
-					_html += `<<link "${lanSwitch('equip', '装备')}" $passage>>
+					_html += `<<link "${getLan('equip')}" $passage>>
 						<<set $addMsg += "<<imgIcon '${img}'>>">>
 						<<set $addMsg += Items.get('${data.id}').onEquip('${slot}', '${i}');>>
 					<</link>>`
 				}
 				else if(!data.require && (data.effects.length > 0 || typeof data.onUse == 'function')){
-					 _html += `<<link "${method}" "iMod UseItems">>
+					 _html += `<<link "${method}" "Actions UseItems">>
 					 	<<set $tvar.useItem to ["${slot}", ${i}]>>
 						<<set $tvar.itemdata to Items.get("${data.id}")>>
 						<<set $tvar.img to "${img}">>
-						<<if $passage.has("iMod UseItems", "iMod DropItems", "iMod TransferItem") is false>>
+						<<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>
 							<<set $tvar.exitPassage to $passage>>
 						<</if>>
 					 <</link>>`
-					/*
-					_html += `<<link "${method}" $passage>>
-					<<set $addMsg to useItems("${slot}",${i})>>
-					<</link>>`*/
 				}
 				
 				_html += `</span>
 				<span class='itemaction'>
-					<<link "${lanSwitch('move', '转移')}">>
+					<<link "${getLan('move')}">>
 						<<set $tvar.transferItem to ["${slot}", ${i}]>>
-						<<if $passage.has("iMod UseItems", "iMod DropItems", "iMod TransferItem") is false>>
+						<<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>
 							<<set $tvar.exitPassage to $passage>>
 						<</if>>
 					<</link>>
 				</span>
 				<span class='itemaction'>
-					<<link "${lanSwitch('drop', '丢弃')}" "iMod DropItems">>
-						<<set $tvar.dropItem to ["${slot}", ${i}]>>
-						<<if $passage.has("iMod UseItems", "iMod DropItems", "iMod TransferItem") is false>>
-							<<set $tvar.exitPassage to $passage>>
-						<</if>>
+					<<link "${getLan('drop')}" $passage>>
+						<<run iM.dropItem("${slot}", ${i})>>
 					<</link>>
 				</span>
 				</div>`
