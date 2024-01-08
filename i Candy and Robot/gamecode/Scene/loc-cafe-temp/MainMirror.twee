@@ -4,13 +4,6 @@
 # 链接和事件的匹配
 
 
-
-
-
-
-
-
-
 :: Ocean Breeze
 <<set $outside to 0>><<set $location to "cafe">><<effects>>
 <div id="locationdes">
