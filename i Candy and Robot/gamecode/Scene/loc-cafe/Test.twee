@@ -1,0 +1,122 @@
+
+:: BaseScene AlmondPath [scene]
+<<set $outside to 1>><<set $location to "almond_path">><<effects>>
+
+<div id='locationdes'>
+<<if (!$tvar.scene.passage || $tvar.scene.type == 'Scene') and $phase is 0>>
+    <<=lanSwitch(
+       "You've come to an almond boulevard in front of the Chinatown. At the entrance of Chinatown, ",
+       "你来到了唐人街外的杏林小道。在唐人街入口处，"
+    )>>
+    <<if Time.dayState is "day">>
+        <<=lanSwitch(
+           "a Chinese archway adorned with four brilliant chinese characters in a dragon dance style, exuding an eastern charm in the sun.",
+           "写着“众生平等”四个大字的牌坊在阳光下熠熠生辉。"
+        )>>
+    <<elseif Time.dayState is "night">>
+        <<=lanSwitch(
+           "a Chinese archway is illuminated by the light of lanterns.",
+           "巨大的牌坊被灯笼的光芒照亮。"
+        )>>
+    <<else>>
+        <<=lanSwitch(
+            'a Chinese archway is towering in front of you. ',
+            "巨大的牌坊耸立在眼前。"
+        )>>
+    <</if>>
+    <br>
+    <<if Time.dayState is "night">>
+        <<=lanSwitch(
+            'On this dark and cold night, the burning braziers in front of the archway provide you a touch of warmth.',
+            '在漆黑寒冷的夜里，在牌坊前静静燃烧的火盆给你带来一丝温暖。'
+            )>>
+    <<else>>
+        <<=lanSwitch(
+            'In the shade of the enormous apricot trees on either side, you are unable to directly see the street market behind the archway.',
+            '在两旁的巨大杏树的阴影下，你无法直接观察到牌坊背后的街市。'
+        )>>
+    <</if>>
+    <br><br>
+<</if>>
+</div>
+
+<div id='content'>
+    <<if $stress gte $stressmax>>
+        <<passoutstreet>>
+    <<elseif $tvar.scene.passage>>
+        <<include $tvar.scene.passage>>
+    <<else>>
+        <<set _title = 'Scene AlmondPath General ' + setup.language>>
+        <<include _title>>
+    <</if>>
+</div>
+
+<div id='linkzone'>
+<<set _link = lanSwitch('Next', '继续')>>
+<<if $tvar.onselect is true>>
+    <<set $tvar.onselect to false>>
+
+<<elseif $tvar.eventnext is true>>
+    <<link _link $passage>>
+        <<pass 1>>
+        <<if $tvar.scene.nextcode>>
+            <<=$tvar.scene.nextcode>>
+        <</if>>
+    <</link>>
+
+<<elseif !$tvar.scene.passage or $tvar.scene.type is 'Scene'>>
+    <<almondLinkLocation>>
+
+<<else>>
+    <<linkEventEnd 'Harvest Street'>>
+
+<</if>>
+<br>
+</div>
+
+
+:: Scene AlmondPath General CN
+
+<<if $iModNpc.get('Xinyu', 'location') == 'almond_path'>>
+“尘归尘……，土归土……”
+<br><br>
+一个穿着<<=sexSwitch('Xinyu', '蓝色民国风学生装的小女孩', '灰色中山装的小男孩')>>蹲坐在火盆旁，手里拿着一捆花花绿绿的纸钱，一张张地投放入火中。
+<br>
+<<=sexSwitch('Xinyu', '女孩', '男孩')>>的嘴唇轻轻地动着，反复念诵着东方的神秘语言。
+<br><br>
+
+<<localIcon 'chat'>><<link '试图搭话' $passage>><<run iEvent.setEvent('check', 'Xinyu', 'Talk')>><</link>>
+<br>
+
+<<elseif Time.dayState is 'night'>>
+冷风吹过，周围的树木絮絮作响，不时还能听到远处传来的狗叫声。
+<br>
+
+<<else>>
+两个长相奇怪、穿着唐装的机器人在牌坊前打扫落叶。
+<br>
+
+<</if>>
+<br>
+
+:: Scene AlmondPath General EN
+<<if $iModNpc.get('Xinyu', 'location') == 'almond_path'>>
+"尘归尘， 土归土..."<br>
+<br>
+
+A <<=sexSwitch('Xinyu', 'girl wears blue chinese style clothes', 'boy wears gray chiense style clothes')>> is sitting by the braziers, burning a bundle of colorful paper money.<br>
+<<nnpc_He 'Xinyu'>> is chanting in a mysterious oriental language.<br>
+
+<<localIcon 'chat'>><<link 'Try to talk to her' $passage>><<run iEvent.setEvent('check', 'Xinyu', 'Talk')>><</link>>
+<br>
+
+<<elseif Time.dayState is 'night'>>
+The cold wind blows, the trees around rustle, and you can hear the barking of dogs in the distance.
+<br>
+
+<<else>>
+Two strange robots in chinese style clothes are sweeping the fallen leaves in front of the archway.
+<br>
+
+<</if>>
+<br>
