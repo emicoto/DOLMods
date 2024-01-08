@@ -1,4 +1,4 @@
-:: iMod UseItems
+:: Actions UseItems
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
 <<imgIcon $tvar.img>>  
@@ -6,31 +6,36 @@
 <br><br>
 
 
-<<if $tvar.eventnext is true>>
-    <<set _link = lanSwitch('Next', '继续')>>
-    <<link 'Next' $passage>><<pass 1>><</link>>
-<<else>>
-    <<set _link = lanSwitch('Back', '返回')>>
-    <<link _link $tvar.exitPassage>>    
-        <<pass $tvar.passtime>>
-        <<run iUtil.resetTvar('itemdata', 'useItem', 'img', 'passtime')>>  
-    <</link>>  
+<<if $tvar.onemore>>
+    <<set _link = lanSwitch('One More', '再来一个')>>
+    <<link _link $passage>>
+        <<set $tvar.onemore to undefined>>
+    <</link>>
+    <br>
 <</if>>
 
-:: iMod TransferItems
+<<set _link = lanSwitch('Back', '返回')>>
+<<link _link $tvar.exitPassage>>    
+    <<pass $tvar.passtime>>
+    <<set $tvar.unsetAction = true>>
+    <<run iUtil.resetTvar('itemdata', 'useItem', 'img', 'passtime', 'onemore');>>  
+<</link>>
+
+
+:: Actions TransferItems
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
 
 
-:: iMod Storage
+:: Actions OpenStorage
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
 
 
-:: iMod Druggs Event [scene]
+:: Event DruggsEvent [scene]
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
-<<include $tvar.eventPassage>>
+<<include $tvar.scene.passage>>
 
 <<if $tvar.eventnext is true>>
     <<set _link = lanSwitch('Next', '继续')>>

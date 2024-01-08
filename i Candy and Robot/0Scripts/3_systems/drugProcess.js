@@ -135,8 +135,8 @@ const DrugsProcess = {
 				itemFlags[item].addiction = 1
 			}
 
-			//如果maxOd跟threshold都是0， 说明是必上瘾的特效药物，直接设置上瘾状态
-			if(type !== 'general' && maxOD == 0 && threshold == 0 && stats.taken > 0 && stats.addict == 0){
+			//如果tag里有immediate， 说明是立刻上瘾的特效药物，直接设置上瘾状态
+			if(type !== 'general' && data.tags.includes('immediate') && stats.taken > 0 && stats.addict == 0){
 				stats.addict = 1
 				//设置上瘾事件flag
 				itemFlags[item].addiction = 1
@@ -173,8 +173,8 @@ const DrugsProcess = {
 				stats.takeDays = 0
 			}
 
-			//如果超量值大于零，同时没有引起戒断反应，且连续嗑药次数大于2
-			if(type !== 'general' && stats.overdose > 0 && stats.withdraw == 0 && stats.takeDays >= 2 ){
+			//如果超量值大于零，同时没有引起戒断反应，且连续嗑药次数大于每日buff需求值，设置每日buff
+			if(type !== 'general' && stats.overdose > 0 && stats.withdraw == 0 && stats.takeDays >= data.days ){
 				itemFlags[item].daily = 1
 			}
 			

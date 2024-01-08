@@ -379,7 +379,6 @@ const iModVariables = {
 	tvar : { //temporary variables
 		useItem: null,
 		exitPassage: null,
-		eventPassage: null,
 		img: null,
 		scene: {},
 		eventnext: null,

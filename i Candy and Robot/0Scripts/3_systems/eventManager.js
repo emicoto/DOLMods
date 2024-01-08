@@ -61,6 +61,7 @@ const eventManager = {
 			for(let i in V){
 				V[i] = clone(window.bak[i])
 			}
+            delete window.bak
 			console.timeEnd('restore')
 
 			delete V.tvar.jump

@@ -7,6 +7,7 @@ setup.lang = {
     unequip : { EN: 'Unequip', CN: '卸下' },
     equip : { EN: 'Equip', CN: '装备' },
     move : { EN: 'Move', CN: '移动' },
+    drop : { EN: 'Drop', CN: '丢弃' },
     willpower : { EN: 'Willpower', CN: '意志' },
     alcohol : { EN: 'Alcohol', CN: '酒精' },
     hallucinogen : { EN: 'Hallucinogen', CN: '幻觉' },

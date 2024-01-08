@@ -596,7 +596,7 @@ function generalUseItemMsg(type, tags, names){
 //for some reason, array and object can't be passed in DOL. so pass the the position of item in pocket.
 function useItems(pocket, pos, enemy){
 	const pocketData = V.iPockets[pocket]
-	let item = V.iPockets[pocket][pos]
+	let item = pocketData[pos]
 	let data = Items.get(item.id)
 	if(!data){
 		throw new Error('no such item:', item.id)
@@ -625,6 +625,10 @@ function useItems(pocket, pos, enemy){
 	}
 
 	item.count -= data.usage
+
+	if(item.count > 0 && item.count > data.usage){
+		V.tvar.onemore = true
+	}
 
 	if(item.count <= 0){
 		pocketData.deleteAt(pos)
