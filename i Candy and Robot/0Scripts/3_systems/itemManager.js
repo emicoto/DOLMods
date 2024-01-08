@@ -581,12 +581,20 @@ const iManager = {
 	},
 
 	onEquip(pos, pocket, slot){
+		if(!V.iPockets[pocket][slot]) return
+
 		const item = V.iPockets[pocket].deleteAt(slot)
+		if(V.iPockets[pos+'type'] !== 'none'){
+			this.onUnEquip(pos)
+		}
+
 		V.iPockets[pos+'type'] = item[0]
 		this.updatePockets()
 	},
 
 	onUnEquip(pos){
+		if(V.iPockets[pos+'type'] == 'none') return
+
 		const item = V.iPockets[pos+'type']
 		V.iPockets[pos+'type'] = 'none'
 		this.getItems(item.id, 1, item.diff)

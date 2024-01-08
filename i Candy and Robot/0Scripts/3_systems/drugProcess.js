@@ -161,8 +161,20 @@ const DrugsProcess = {
 				stats.overdose = Math.max(stats.overdose - stats.taken > 0 ? recover/2 : recover, 0)
 			}
 
-			//如果超量值大于零，同时没有引起戒断反应，设置当日效果flag
-			if(type !== 'general' && stats.overdose > 0 && stats.withdraw == 0){
+			if(stats.taken > 0 ){
+				if(!stats.takeDays){
+					stats.takeDays = 1
+				}
+				else{
+					stats.takeDays ++
+				}
+			}
+			else{
+				stats.takeDays = 0
+			}
+
+			//如果超量值大于零，同时没有引起戒断反应，且连续嗑药次数大于2
+			if(type !== 'general' && stats.overdose > 0 && stats.withdraw == 0 && stats.takeDays >= 2 ){
 				itemFlags[item].daily = 1
 			}
 			
@@ -175,7 +187,6 @@ const DrugsProcess = {
 
 		for(const[item, flag] of Object.entries(flags)){
 			const data = type == 'general' ? setup.addictions[item] : Items.get(item)
-			const name = type == 'general' ? item : data.name
 			if(!data) continue;
 
 			if(flag.daily == 1){

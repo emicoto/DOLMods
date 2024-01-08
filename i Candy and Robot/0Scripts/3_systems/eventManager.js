@@ -51,7 +51,6 @@ const eventManager = {
     },
 
     getEvent: function(event){
-        if(!this.data[event]) return
         return this.data[event]
     },
 
@@ -115,6 +114,9 @@ const eventManager = {
         if(data){
             this.setScene(event, data)
         }
+        else{
+            console.log('event not found:', type, event, key, branch)
+        }
 
         console.log('setEvent:', data)
     },
@@ -144,9 +146,6 @@ const eventManager = {
         V.phase = 0
     },
 
-    jump: function(scene, phase){
-    },
-
     popBranch: function(phase){
         const branch = V.tvar.scene.branch.split(' ')
         branch.pop()
@@ -158,6 +157,33 @@ const eventManager = {
 
         if(Number(phase)){
             V.phase = Number(phase)
+        }
+    },
+
+    backBranch: function(displaylink, phase){
+        const html = `<<link "${displaylink}" $passage>><<popBranch${Number(phase) ? ' ' + phase : ''}>><</link>>`
+        return html
+    },
+
+    setBranch: function(branch, phase){
+        if(!V.tvar.scene.branch){
+            V.tvar.scene.branch = branch
+        }
+        else{
+            //pop the last branch until the certain branch
+            const branchlist = V.tvar.scene.branch.split(' ')
+            const index = branchlist.indexOf(branch)
+            branchlist.splice(index, branchlist.length - index)
+
+            V.tvar.scene.branch = branchlist.join(' ')
+            V.tvar.scene.title = `${V.tvar.scene.type} ${V.tvar.scene.event} ${V.tvar.scene.episode}`
+            if(V.tvar.scene.branch.length > 0 ){
+                V.tvar.scene.title += ` ${V.tvar.scene.branch}`
+            }
+
+            if(Number(phase)){
+                V.phase = Number(phase)
+            }
         }
     },
 
@@ -252,6 +278,10 @@ const eventManager = {
             scene.passage = `${scene.title} ${V.phase+1}`
         }
         console.log('phase:', V.phase)
+
+        if(Story.get(scene.passage + '::Script')){
+            new Wikifier(null, scene.passage + '::Script')
+        }
 
         if(Story.has(scene.passage+` ${setup.language}`)){
             scene.passage += ` ${setup.language}`
@@ -437,6 +467,8 @@ const eventManager = {
 
 DefineMacroS("goBranch", eventManager.goBranch)
 DefineMacroS("popBranch", eventManager.popBranch)
+DefineMacroS("backBranch", eventManager.backBranch)
+DefineMacroS("setBranch", eventManager.setBranch)
 
 Object.defineProperties(window,{
     iEvent: {

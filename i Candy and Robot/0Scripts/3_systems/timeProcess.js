@@ -271,10 +271,16 @@ function iCombatHandle(){
 		return;
 	}
 	//白名单NPC看概率跳过
-	if(V.npc.length > 0 && V.npc.has(...whitelistnpc)  && V.consensual == 1 && !V.npc.has('Whitney', 'Morgan', 'Kylar') && random(100) > 40 ){
+	if(V.npc.length > 0 && V.npc.has(...whitelistnpc) && random(100) > 40 ){
 		R.combat.skip = true;
 		return;
 	}
+	//合意场景看概率跳过
+	if(V.consensual == 1 && V.npc.length == 0 && random(100) > 50){
+		R.combat.skip = true;
+		return;
+	}
+
 	//已经跳过的，跳过
 	if(R.combat.skip == true) return;
 

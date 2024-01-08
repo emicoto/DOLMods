@@ -300,7 +300,7 @@ function iModSetupDoLItems() {
 	for (let i in setup.plants) {
 		let plant = setup.plants[i]
 
-		let item = Items.add('tending', plant.name, plantNames[plant.name], plant.plant_cost)
+		let item = Items.add('Indigrents', plant.name, plantNames[plant.name], plant.plant_cost)
 		let hunger = {
 			fruit: 20,
 			vegetable: 30,
@@ -321,9 +321,10 @@ function iModSetupDoLItems() {
 			item.set('size', 'small')
 		}
 
-		if (item.type == 'fruit' || item.type == 'vegetable') {
-			item.Tags('dol', 'food')
+		if (plant.type == 'fruit' || plant.type == 'vegetable') {
+			item.Tags('edible', 'vegi')
 				.Effects(['hunger', hunger[item.type]])
+				.set('type', 'foods')
 		}
 		else if (item.name.includes('bottle') || item.name.includes('Bottle')) {
 			item.Tags('dol', 'drink', 'production')
