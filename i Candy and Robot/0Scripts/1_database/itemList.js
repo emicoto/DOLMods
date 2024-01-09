@@ -836,6 +836,7 @@ const iDrinks = [
 
 		diff: {
 			lemon : { displayname:['Lemon Soda', '柠檬苏打'] },
+			orange : { displayname:['Orange Soda', '甜橙苏打'] },
 			peach : { displayname:['Peach Soda', '桃子苏打'] },
 			grape : { displayname:['Grape Soda', '葡萄苏打'] },
 			apple : { displayname:['Apple Soda', '苹果苏打'] },
