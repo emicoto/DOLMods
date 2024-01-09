@@ -1,0 +1,28 @@
+::OshiMod LocalEvent DetectorHouse SendFlyers4
+<<events>>
+<<if $phase is 1>>
+你被带到附近的公共厕所。
+（进入战斗）
+（战斗结束）
+对方心情不错地支付了你一笔小费。你获得了<span class='gold'>$<<moneyGain 30>><</span>>。（马修声望值+1）
+<br><br>
+<<if $time gte 18:00>>
+<<link '暂停工作' 'BaseScene DomusStreet'>><</link>>
+<<else>>
+<<link '继续工作' 'LocalEvent DetectorHouse SendFlyers2'>><<pass 60>><</link>>
+<br>
+<<link '暂停工作' 'BaseScene DomusStreet'>><</link>>
+<</if>>
+<<else>>
+你推开对方，那人也不多纠缠直接离开了。
+<br>
+你继续认真工作，获得了<span class='gold'>$<<moneyGain 10>>。（马修声望值+1）
+<br><br>
+<<if $time gte 18:00>>
+<<link '暂停工作' 'BaseScene DomusStreet'>><</link>>
+<<else>>
+<<link '继续工作' 'LocalEvent DetectorHouse SendFlyers2'>><<pass 60>><</link>>
+<br>
+<<link '暂停工作' 'BaseScene DomusStreet'>><</link>>
+<</if>>
+<</if>>

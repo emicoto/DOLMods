@@ -1,0 +1,17 @@
+::OshiMod LocalEvent DetectorHouse FindPet
+<<events>>
+<<if $phase is 1>>
+马修对你点点头。
+<br>
+你坐在办公桌前寻找合适的委托。
+<br><br>
+<<link '继续' 'LocalEvent DetectorHouse FindPet1'>><</link>>
+<<else>>
+“哦，你来啦。”你推开侦探社的大门就看见马修在办公桌前研究一份文件。
+<br>
+“托你的福，最近有生意上门了。不过有些委托对你来说还太早了。”马修从身旁的文件里翻了翻，然后递给你一份文件。
+<br>
+“这个委托是寻找丢失的宠物，你可以先从这样的委托开始练练手。”
+<br><br>
+<<link '继续' 'LocalEvent DetectorHouse FindPet1'>><<set $phase to 1>><</link>>
+<</if>>

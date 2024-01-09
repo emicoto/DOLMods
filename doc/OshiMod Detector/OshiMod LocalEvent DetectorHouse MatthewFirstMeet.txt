@@ -1,0 +1,21 @@
+::OshiMod LocalEvent DetectorHouse MatthewFirstMeet
+<<effects>>
+<<npc"Matthew">><<person1>>
+<<if $phase is 1>>
+<<He>>看到你显得很高兴。
+<br>
+"小姐，我知道您会回来的！如何，准备接受工作了吗？"
+<<else>>
+你来到一栋略显老旧的洋房门口，门牌上写着“<span class='blue'>马修侦探社</span>”几个大字。
+敲门后，里面传来脚步声。不一会儿，门开了。
+<br><br>
+你看见一个棕发的<<male>>，<<his>>乱糟糟的卷发遮住了眼睛，带着烟味的皮夹克衬得<<he>>略显颓废。
+<br>
+“哦！瞧瞧，一位漂亮的<<=sexSwitch('小姐','先生')>>来了，我猜您不是来委托我的。”<<he>>凑近了看着你，你甚至稍微抬头就能和<<he>>脸贴脸了。
+<br>
+“您是来找工作的我说的不错吧？不过我们这儿一周也没几个委托，如果愿意从发传单干起的话，我就请您进门喝杯茶。
+<</if>>
+<br><br>
+<<link '接受工作' 'LocalEvent DetectorHouse AcceptWork'>><</link>>
+<br>
+<<link '拒绝工作' 'LocalEvent DetectorHouse RefuseWork'>><<set $phase to 1>><</link>>

@@ -1332,11 +1332,11 @@
 		'Statistics':[
 			{
 				src: '\t<</foldout>>\n<</widget>>',
-				to: '\t<</foldout>>\n\n\t<<iModStatis>>\n\n<</widget>>'
+				to: '\t<</foldout>>\n\n\t<<iModStatistt>>\n\n<</widget>>'
 			},
 			{
 				src: '</div>\n<</widget>>',
-				to: '\n\n\t<<iModExtraStatis>>\n\n\t</div>\n<</widget>>'
+				to: '\n\n\t<<iModExtraStatist>>\n\n\t</div>\n<</widget>>'
 			}
 		],
 

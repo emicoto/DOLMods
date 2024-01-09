@@ -1,0 +1,46 @@
+::passage-farm-cottage-bailey
+::LostMod passage-farm-cottage-bailey
+
+"<<effects>>\
+\
+<<npc Alex>><<person1>>\
+<<if $phase is 3>>\
+\t你躲在厨房里。敲门声再次响起，听起来更重了。\
+\t\
+\t\"你他妈来这儿干什么？\"是艾利克斯的声音。你从窗户看见<<him>>慢慢走近，还有另一个人影。<span class=\"red\">是贝利。</span>\
+\t\
+\t\"别以为孤儿院发生火灾，就是你不交我保护费的理由。"贝利说道。\"<<pShe>>欠了我很多。我是来收钱的。\"\
+\t\
+\t<<link [[对抗贝利|Farm Cottage Bailey Confront]]>><</link>>\
+\t<<link [[让艾利克斯处理贝利|Farm Cottage Bailey Deal]]>><</link>>\
+<<elseif $phase is 2>>\
+\t你打开门。<span class=\"red\">是贝利。</span><<nnpc_he Bailey>>看着你，\"是时候付钱了。\"\
+\t\
+\t你听到脚步声接近。艾利克斯冲进小屋，站在你身边。\"我支持你的任何决定，\"<<he>>小声说道。\
+\t\
+\t<<cottage_bailey_options>>\
+<<elseif $phase is 1>>\
+\t艾利克斯打开门。<span class=\"red\">是贝利。</span><<nnpc_He Bailey>>越过艾利克斯，直视着你。\
+\t\
+\t\"是时候付钱了，\"<<nnpc_he Bailey>>说道。\
+\t\
+\t当<<he>>站在你身边时，艾利克斯狠狠地瞪着贝利。\"无论你做什么决定，我都会支持你，\"<<he>>小声说道。\
+\t\
+\t<<cottage_bailey_options>>\
+<<else>>\
+\t你打开门。<span class=\"red\">是贝利。</span>\
+\t\
+\t\"是时候付钱了，\"<<nnpc_he Bailey>>说道。\
+\t\
+\t艾利克斯来到你身边，怒视着贝利。\"无论你做什么决定，我都会支持你，\"<<he>>小声说道。\
+\t\
+\t<<cottage_bailey_options>>\
+<</if>>\
+\
+\
+\
+<<set $renttime to 7>><<set $rentday to Time.weekDay>>"
+```
+
+此代码已经删除了所有的换行符和反斜杠，保留了原始代码的结构。
+

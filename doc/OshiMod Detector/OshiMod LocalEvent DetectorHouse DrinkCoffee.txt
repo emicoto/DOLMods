@@ -1,0 +1,5 @@
+::OshiMod LocalEvent DetectorHouse DrinkCoffee
+<<effects>>
+你享用了咖啡，感到十分满足。[[ltirdness]]
+<br><br>
+<<link '返回' 'OshiMod BaseScene DetectorHouse'>><</link>>

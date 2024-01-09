@@ -1,0 +1,17 @@
+::OshiMod LocalEvent DetectorHouse CatchAdultery1
+<<events>>
+<<if $phase is 1>>
+<<person1>>离开后，马修决定将这个委托拜托给你。
+<br>
+“我认为你有足够的能力完成这份委托。”马修提供给你一个手机，“这是专用手机，你在搜集到证据时使用它拍照就好，不会发出声音，在黑暗的环境下也可以拍摄的很清楚，偶尔也可以用手机将证据传给委托人，不过亲自前往委托人家里能够获得更多报酬的机会更大。”
+<br>
+根据<<person1>>提供的线索，此时<<his>>的<<=sexSwitch('丈夫','妻子')>>最有可能出现在：
+<<else>>
+送走<<person1>>后，看着<<person1>>给你提供的线索，你准备前往：
+<br><br>
+<<link '宅邸街'  'LocalEvent DetectorHouse CatchAdultery2'>><</link>>
+<br>
+<<link '丰收街' 'LocalEvent DetectorHouse CatchAdultery3'>><</link>>
+<br>
+<<link '多瑙河街' 'LocalEvent DetectorHouse CatchAdultery4'>><</link>>
+<</if>>

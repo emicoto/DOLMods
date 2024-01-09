@@ -1,0 +1,25 @@
+::OshiMod LocalEvent DetectorHouse CatchAdultery2_2
+<<events>>
+<<if $phase is 1>>
+你回应了这份期待。
+<br>
+你用嘴亲吻<<his>>的皮肤，一只手向上抚摸着<<his>>的胸部，一只手继续<<=sexSwitch('撸动着他的肉棒','摩挲着她的小穴')>>。
+很快，你感受到<<=sexSwitch('他的肉棒又硬挺了起来','她的小穴又湿润了起来')>>。
+<br>
+你哄骗着<<he>>前往床上，<<he>>假装推拒，实则顺从地来到床上。
+<br>
+（进入战斗）
+<br>
+你趁着<<he>>刚高潮结束没有反应过来的时候跑下床，带着你的衣服和手机离开了酒店。
+<br>
+你对视频稍作调整便发送给委托人<<person1>>了。
+你获得了<span class='gold'>$<<moneyGain 450>></span>（马修声望值+2）（洞察能力+30）
+<<if $phase is 2>>
+手上的证据已经足够了，你趁目标没反应过来离开了酒店。
+<br>
+你稍作调整了视频，确信不会暴露你的身份。
+<br>
+看到视频的委托人对你表达感谢，你获得了报酬<span class='gold'>$<<moneyGain 450>></span>（马修声望值+2）（洞察能力+20）
+<</if>>
+<br><br>
+<<link '返回侦探社' 'BaseScene DetectorHouse'>><</link>>

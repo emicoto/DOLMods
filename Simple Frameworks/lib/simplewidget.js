@@ -51,8 +51,8 @@ window.simpleFrameworks = {
         iModStatus:[],
         iModFame:[],
         iModInit:[],
-        iModStatis: [],
-        iModExtraStatis: [],
+        iModStatist: [],
+        iModExtraStatist: [],
 
     },
 

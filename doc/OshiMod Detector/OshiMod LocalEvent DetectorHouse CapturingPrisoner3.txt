@@ -1,0 +1,7 @@
+::OshiMod LocalEvent DetectorHouse CapturingPrisoner3
+
+你来到了荒原，你试图搜寻线索。
+<br>
+可惜，荒原太过辽阔，你根本无从下手。
+（马修声望值-8）（洞察能力+10）
+<<link '返回侦探社' 'BaseScene DetectorHouse'>><</link>>

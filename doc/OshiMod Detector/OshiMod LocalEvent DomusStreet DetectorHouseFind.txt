@@ -1,0 +1,7 @@
+::OshiMod LocalEvent DomusStreet DetectorHouseFind
+
+你在回家的路上看到电线杆上贴着的广告“<span class="blue">马修侦探社，解决您的各种烦恼！</span>”下面写着联系方式和地址。
+<br><br>
+仔细查看后，你惊奇地发现侦探社就在孤儿院附近，如果有需要或许可以去侦探社寻求帮助。
+<br><br>
+<<link '继续' 'BaseScene DomusStreet'>><</link>>

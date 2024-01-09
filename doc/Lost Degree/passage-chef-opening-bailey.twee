@@ -1,0 +1,31 @@
+::passage-chef-opening-bailey
+::LostMod passage-chef-opening-bailey
+
+"<<set $outside to 0>>
+<<set $location to \"cafe\">>
+<<effects>>
+
+你环视整个房间。贝利正瞪大双眼盯着你，你深吸一口气，开始了演讲。你谈到了在孤儿院的生活，谈到了你和鲁比，以及孤儿院的孩子们所面临的困境，关于贝利的威胁和恐吓。
+<<if $speech_attitude is \"meek\">>
+    你不知道自己是什么时候开始哭的。
+<<elseif $speech_attitude is \"bratty\">>
+    你抓着讲台的两侧，手指因为用力而生疼。
+<<else>>
+<</if>>
+<br><br>
+
+观众们全神贯注地听着。一些人带着奇怪的笑容，另一些人则目瞪口呆。你认识的孤儿院的员工在流泪。
+<<npc Bailey>><<person1>>你看了一眼贝利，但<<hes>>甚至没有看你，反而是瞪着市长。
+<br><br>
+
+<<endevent>><<npc Quinn>><<person1>>\n奎恩冲上前打断了你的演讲，并把你推下了讲台。\n\"我们年轻的大厨，\"<<he>>说道。\"还真会开玩笑。肯定是<<pHer>>朋友逼<<phim>>说的。众所周知，贝利是我镇最成功的商人、金融家和慈善家。而在小镇里任何恐吓威胁以及组织黑社会团体的行为都会被严肃处理。"
+<br><br>
+
+你不确定人们是否理解了你说的话，许多当地人对市长的话点头表示赞同，但是也有些人看起来并不那么相信。
+<br><br>
+
+市长走下讲台，聚会正式开始。它看起来很低调。你想做什么？\n
+<br><br>
+
+<<endevent>>
+<<chefspeechoptions>>"

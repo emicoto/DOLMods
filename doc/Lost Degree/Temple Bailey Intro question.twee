@@ -1,0 +1,21 @@
+::Temple Bailey Intro Question
+::LostMod Temple Bailey Intro Question
+
+"<<effects>>
+约旦担心地看着你。"一切还好吗，我的<<sister>>？"<<he>>向你询问，"那是你的监护人，对吧？"
+<br>
+"不是。"你否定道。
+<br><br>
+
+在你有所回应前，<<bishop_hands>>们一齐转向了贝利。
+<br>
+\"铭记圣典。\"
+<br>
+\"铭记誓约。\"
+<br><br>
+
+约旦点点头，闭上眼睛。"无论如何，我相信他的本意都是好的。"<<person2>><<He>>转身离开，余下两人则向相反的方向走开了。
+<br><br>
+
+<<link [[继续|Temple]]>><<endevent>><</link>>
+<br>"

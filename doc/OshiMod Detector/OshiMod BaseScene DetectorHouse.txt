@@ -1,0 +1,26 @@
+::OshiMod BaseScene DetectorHouse
+<<randomdata>>
+你来到侦探社。
+<<datas>>
+打开大门，你看见马修正在整理文件。
+<<datas>>
+打开大门，你看见马修正在泡咖啡。
+<<datas>>
+打开大门，你看见马修正在窗边喝咖啡。
+<</randomdata>>
+<<if 歇业期内>>
+打开大门，侦探社空无一人。
+<<if $DetectCase is 1>>【if歇业期内来到侦探社】
+你来到侦探社，打算简单打扫一下卫生就离开。
+正当你哼着歌清扫着地板时，侦探社的门被敲响。
+<br><br>
+<<link '开门' 'LocalEvent DetectorHouse DetectCase1'>><</link>>
+<</if>>
+<br><br>
+<<link '查看报纸' $passage>><<run OshiEvent.setEvent('CheckPaper')>><</link>>
+<br>
+<<link '喝咖啡' $passage>><<run OshiEvent.setEvent('DrinkCoffee')>><</link>><<tiredness 5>><<ltiredness>><<pass5>>
+<br>
+<<link '查看委托' $passage>><<run OshiEvent.setEvent('CheckCase')>><</link>>
+<br>
+<<link '离开' 'BaseScene DomusStreet'>><</link>>

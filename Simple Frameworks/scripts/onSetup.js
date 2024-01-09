@@ -193,8 +193,8 @@ setup.ModCombatSetting = function(){
 }
 
 function modCombatDifficul(diffAction){
-    const actionObj = setup.modCombatActions.filter((action)=>action.value == diffAction)[0]
-    if(actionObj && actionObj.widget){
+    const actionObj = setup.modCombatActions.filter((action)=> action.value == diffAction )[0]
+    if(actionObj && actionObj.widget && Macro.has(actionObj.widget)){
         return `<<${actionObj.widget}>>`
     }
 }

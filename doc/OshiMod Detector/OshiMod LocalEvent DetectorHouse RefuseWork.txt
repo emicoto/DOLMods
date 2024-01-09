@@ -1,0 +1,5 @@
+::OshiMod LocalEvent DetectorHouse RefuseWork
+<<effects>>
+“哦，真是遗憾。至少让我做下自我介绍，我叫马修，美丽的<<=sexSwitch('小姐','先生')>>，我相信你还会来的。”
+<br><br>
+<<link '出门' 'BaseScene DomusStreet'>><</link>>

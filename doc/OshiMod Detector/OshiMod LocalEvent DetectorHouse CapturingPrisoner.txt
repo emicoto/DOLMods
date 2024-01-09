@@ -1,0 +1,20 @@
+::OshiMod LocalEvent DetectorHouse CapturingPrisoner
+
+你来到侦探社，看见马修正皱着眉头。
+<br>
+你询问了情况。
+马修看着你若有所思。
+<br>
+“其实是一个追查凶手的委托，我本想自己解决的。”<<he>>叹了一口气，摇了摇左手边厚度惊人的文件，“你也看到了，我这里还有不少指明我的委托，我实在分身乏术。”
+<br>
+<<he>>起身拍了拍你的肩：“你接下的委托都完成得很好，我认为你可以胜任。这是案件的细节，就交给你了。”马修把一叠文件交给你后，匆匆出门了。
+<br>
+你根据马修给你的资料分析凶手的所在位置。
+<br>
+你非常肯定，凶手的位置就在：
+<br><br>
+<<link '森林' 'LocalEvent CapturingPrisoner1'>><</link>>
+<br>
+<<link '垃圾填埋场' 'LocalEvent CapturingPrisoner2'>><</link>>
+<br>
+<<link '荒原' 'LocalEvent CapturingPrisoner3'>><</link>>

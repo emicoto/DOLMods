@@ -1,0 +1,35 @@
+::OshiMod LocalEvent DetectorHouse DetectCase1_2
+<<events>>
+你上前询问了一位看起来好说话的警官。
+<br>
+“您好，侦探社的<<=sexSwitch('小姐','先生')>>，我只能告诉您这是一位非常残忍的凶手，别看<<he>>现在楚楚可怜的样子，事实上<<he>>能徒手掐死一位成年<<male>>。”好说话的警官留下这句话后拒绝进一步的交流。
+<br><br>
+你根据警官的发言，打听消息。
+<br>
+很快，你锁定了案发现场。
+<br><br>
+你前往案发现场，试图在警戒线周围搜寻证据。
+<br>
+<<randomdata>>
+<<datas>>
+“<<=sexSwitch('小姐','先生')>>，您在做什么？”一位高大的<<male>>走过来询问你。
+<br>
+“这里是刚刚发生了一起案件，我认为您不应该用手触碰这里的东西。”高大的<<male>>用不赞同的眼光看你。
+<br>
+你点点头，不作回应，用手机的拍照功能留下周围的影像。
+<<datas>>
+“别碰这些东西！”一位娇小的<<male>>冲过来打掉你的手，“离远点！”
+<br>
+你吃痛地收回手，揉了揉泛红的手背。
+<<datas>>
+你打开手机，点开了拍照的功能。
+<</randomdata>>
+望着警戒线内正在对尸体进行最后检验的法医，你放大镜头，对尸体进行拍照。
+<br>
+拍照的过程中，你发现了几处可疑的地方。
+<br><br>
+<<link '脖子上的痕迹' 'LocalEvent DetectorHouse DetectCase1_3'>><<set $phase to 1>><</link>>
+<br>
+<<link '死者的身高' 'LocalEvent DetectorHouse DetectCase1_3'>><<set $phase to 2>><</link>>
+<br>
+<<link '手中奇怪的纸条 'LocalEvent DetectorHouse DetectCase1_3'>><<set $phase to 3>><</link>>

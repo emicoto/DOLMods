@@ -1,0 +1,43 @@
+::OshiMod LocalEvent DetectorHouse FindPet1
+<<randomdata>>
+<<datas>>
+你翻看文件，里面是委托人的信息和丢失宠物的照片。
+你根据委托人提供的线索前往麋鹿街寻找那只丢失的小猫。
+<br>
+幸运的是你在垃圾填埋场后门附近找到了那只丢失的猫咪。
+你靠近猫咪，想要抓住。
+<br>
+（进入战斗）
+<br>
+一番纠缠后，你顺利抓到了小猫。
+你抓住猫咪的后颈，前往委托人的家。
+委托人接过猫咪，十分感激地请你喝茶。
+<br>
+你获得了<span class='gold'>$<<moneyGain 150>></span>。（马修声望值+2）（洞察能力+5）
+<br><br>
+<<link '返回侦探社' 'BaseScene DetectorHouse'>><</link>>
+<<datas>>
+你翻看文件，里面是委托人的信息和丢失宠物的照片。
+你根据委托人提供的线索前往麋鹿街寻找那只丢失的小猫。
+<br>
+幸运的是你在垃圾填埋场后门附近找到了那只丢失的猫咪。
+你靠近猫咪，想要抓住。
+<br>
+你顺利抓到了小猫。
+你抓住猫咪的后颈，前往委托人的家。
+委托人接过猫咪，十分感激地请你喝茶。
+<br>
+你获得了<span class='gold'>$<<moneyGain 150>></span>。
+（马修声望值+2）（洞察能力+10）
+<br><br>
+<<link '返回侦探社' 'OshiMod BaseScene DetectorHouse'>><</link>>
+<<case 3>>
+你翻看文件，里面是委托人提供的线索和丢失宠物的照片。
+线索中提到了三个地点，要前往哪里呢？
+<br><br>
+<<link '麋鹿街' 'LocalEvent DetectorHouse FindPet2'>><<set $phase to 1 >><</link>>
+<br>
+<<link '丰收街' 'LocalEvent DetectorHouse FindPet2'>><<set $phase to 2 >><</link>>
+<br>
+<<link '倒钩街' 'LocalEvent DetectorHouse FindPet2'>><</link>>
+<</randomdata>>

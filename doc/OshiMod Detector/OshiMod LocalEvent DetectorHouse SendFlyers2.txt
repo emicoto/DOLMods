@@ -1,0 +1,55 @@
+::OshiMod LocalEvent DetectorHouse SendFlyers2
+<<randomdata>>
+<<datas>>
+你和马修花费了一些时间发完了传单,幸运的是你在没在垃圾桶里见到这些传单。<<lstress>>
+<br>
+你获得了<span class='gold'>$<<moneyGain 10>><</span>>（马修声望值+1）
+<br><br>
+<<if $time gte 18:00>>
+<<link '暂停工作' 'BaseScene DomusStreet'>><</link>>
+<<else>>
+<<link '继续工作' 'LocalEvent DetectorHouse SendFlyers2'>><<pass 60>><</link>>
+<br>
+<<link '暂停工作' 'BaseScene DomusStreet'>><</link>>
+<</if>>
+<<datas>>
+你和马修花费了一些时间发完了传单,令人悲伤的是你在垃圾桶里见到了这些传单。<<gstress>>
+<br>
+你获得了<span class='gold'>$<<moneyGain 10>><</span>>（马修声望值+1）
+<br><br>
+<<if $time gte 18:00>>
+<<link '暂停工作' 'BaseScene DomusStreet'>><</link>>
+<<else>>
+<<link '继续工作' 'LocalEvent DetectorHouse SendFlyers2'>><</link>>
+<br>
+<<link '暂停工作' 'BaseScene DomusStreet'>><</link>>
+<</if>>
+<<datas>>
+你在认真发传单的途中看见了罗宾，<<he>>看见你两眼发亮地跑过来。
+<br>
+“你是在工作吗？”<<he>>接过你手里的传单，“我帮你一起吧。”
+<br>
+有了罗宾的加入，传单很快就发完了。
+<br>
+你获得了<span class='gold'>$<<moneyGain 10>><</span>>（马修声望值+1）
+<br><br>
+<<if $time gte 18:00>>
+<<link '感谢罗宾（淫乱5）' 'LocalEvent DetectorHouse SendFlyers3'>><<set $phase to 1>><</link>>
+<br>
+<<link '和罗宾一起回家' 'LocalEvent DetectorHouse SendFlyers3'>><<set $phase to 2>><</link>>
+<<else>>
+<<link '继续工作(1:00)' 'LocalEvent DetectorHouse SendFlyers3'>><<pass60>><</link>>
+<br>
+<<link '感谢罗宾（淫乱5）' 'LocalEvent DetectorHouse SendFlyers3'>><<set $phase to 1>><</link>>
+<br>
+<<link '和罗宾一起回家' 'LocalEvent DetectorHouse SendFlyers3'>><<set $phase to 2>><</link>>
+<br>
+<</if>>
+<<datas>>
+你正在认真派发传单，突然有人抓住你的屁股，使劲捏了捏。
+<br>
+“不错的手感，别发传单了，我给你双倍工资你陪我去个地方如何？”
+<br><br>
+<<link '接受（淫乱4）' 'LocalEvent DetectorHouse SendFlyers4'>><<set $phase to 1>><</link>>
+<br>
+<<link '拒绝' 'LocalEvent DetectorHouse SendFlyers4'>><</link>>

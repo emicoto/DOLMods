@@ -1,0 +1,12 @@
+::OshiMod LocalEvent DetectorHouse DetectCase1
+<<events>>
+“请帮帮我吧！我突然被指认为凶杀案的凶手，警察根本不听我的解释，我只能来拜托侦探社了！”<<boy>>慌张地说。
+<br>
+很快，几名警察赶了过来围着<<boy>>将<<he>>带走。
+<br>
+“请帮帮我！请帮帮我！”<<boy>>恳求着你，警察毫不留情地把<<he>>抓走。
+<br><br>
+<<link '无视' 'LocalEvent DetectorHouse DetectCase1_1'>><</link>>
+<br>
+<<link '帮忙' 'LocalEvent DetectorHouse DetectCase1_2'>><</link>>
+

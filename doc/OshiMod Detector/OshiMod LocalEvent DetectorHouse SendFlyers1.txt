@@ -1,0 +1,10 @@
+::OshiMod LocalEvent DetectorHouse SendFlyers1
+<<events>>
+<<if $phase is 1>>
+“不错的主意。早点发完早点回家吃饭！”
+<<if $phase is 2>>
+“哦，有道理，有钱人才舍得花钱解决问题。”
+<<if $phase is 3>>
+“嗯，你说的对，人流量大的地方更容易发传单。”
+<br><br>
+<<link '继续' 'LocalEvent DetectorHouse SendFlyers2'>><</link>>

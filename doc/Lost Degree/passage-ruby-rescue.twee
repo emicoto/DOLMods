@@ -1,0 +1,15 @@
+::passage-bailey-rescue
+::LostMod passage-ruby-rescue
+
+<<set $outside to 0>>
+<<set $location to \"home\">>
+<<effects>>
+<<set $stress -= 2000>>
+<<npc Bailey>><<person1>>
+
+你醒了，你看到了鲁比。<<He>>看上去松了口气。"没有外伤的迹象，应该只是压力太大晕倒了。好好休息，孩子。"<<He>>在离开时关上了门。
+<br><br>
+
+<<pain 5>>
+<<link [[继续|Bedroom]]>><<endevent>><</link>>
+<br>"

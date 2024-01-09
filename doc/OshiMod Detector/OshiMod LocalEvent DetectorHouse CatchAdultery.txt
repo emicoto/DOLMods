@@ -1,0 +1,19 @@
+::OshiMod LocalEvent DetectorHouse CatchAdultery
+<<events>>
+<<if $phase is 1>>
+你接待了一位委托人，经过一番交谈，你大概了解了情况。
+<person1>怀疑<his><person2>出轨。
+<<link '继续' 'LocalEvent DetectorHouse CatchAdultery1'>><</link>>
+<<else>>
+你推开侦探社的门，马修正在泡咖啡。
+<br>
+“你最近工作十分努力。我认为你可以进行更难的委托了。”马修递给你一杯咖啡。<<ltiredness>>
+<br>
+马修正准备翻找文件，这时有人来敲门了。
+你打开门，来人是<<person1>>。
+<br>
+“我的<<=sexSwitch('丈夫','妻子')>>恐怕有了外遇，我想请你们调查。”<<person1>>提供了<<=sexSwitch('丈夫','妻子')>>的资料并提前支付了部分报酬。
+“如果能当场抓住我<<=sexSwitch('丈夫','妻子')>>出轨的证据，酬劳可以加倍。”
+<br><br>
+<<link '继续' 'LocalEvent DetectorHouse CatchAdultery1'>><<set $phase to 1 >><</link>>
+<</if>>

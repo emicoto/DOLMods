@@ -1,0 +1,9 @@
+::OshiMod LocalEvent DetectorHouse SendFlyers
+<<events>>
+“嗯，宅邸街，多瑙河街，商业街，这三个地方你选择去哪？”马修背着一包传单询问你的意见。
+<br><br>
+<<link '宅邸街' 'LocalEvent DetectorHouse SendFlyers1'>><<set $phase to 1 >><</link>>
+<br>
+<<link '多瑙河街' 'LocalEvent DetectorHouse SendFlyers1'>><<set $phase to 2 >><</link>>
+<br>
+<<link '商业街' 'LocalEvent DetectorHouse SendFlyers1'>><<set $phase to 3 >><</link>>

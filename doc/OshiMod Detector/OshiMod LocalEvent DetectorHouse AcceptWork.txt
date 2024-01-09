@@ -1,0 +1,14 @@
+::OshiMod LocalEvent DetectorHouse AcceptWork
+“好极了！”<<=sexSwitch('Matthew','男性青年','女性青年')>>请你坐在沙发上。
+<br>
+你环顾四周，侦探社靠窗的位置放着一张餐桌，上面还有未收拾的碗筷。
+<br>
+“忘了自我介绍了，我叫马修，是这个侦探社的社长，你愿意的话直接喊我马修就好了。”<<he>>指了指沙发左边的办公桌，“平常我在这里办公，你如果不介意的话可以和我一起用这个办公桌，毕竟我们侦探社经费有限。”
+<br>
+<<he>>把桌子整理出来一半的位置让给你放置物品。
+<br>
+“只要你有空就可以来侦探社工作，当然，先从发传单开始。”
+<br><br>
+<<link '继续' 'BaseScence DetectorHouse'>><</link>>
+<br>
+<<link  '出门' 'BaseScence DomusStreet'>><</link>>

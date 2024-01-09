@@ -1,0 +1,10 @@
+::OshiMod LocalEvent DetectorHouse DetectCase1_1
+<<events>>
+【if歇业期内来到侦探社】
+你不想被扯进什么麻烦中，关上门，继续清扫侦探社的地板。
+<br><br>
+<<link '继续' 'BaseScene DetectorHouse'>><</link>>
+<<if $DetectCase is 2>>
+你不想被扯进什么麻烦，默默目送<<boy>>的离去。
+<br><br>
+<<link '继续' 'BaseScene DetectorHouse'>><</link>>

@@ -1,0 +1,34 @@
+::OshiMod LocalEvent DetectorHouse SendFlyers3
+<<events>>
+<<if $phase is 1>>
+你用手轻轻地挠了挠罗宾的手心，靠近<he>耳边吹气。
+<br>
+罗宾红着脸被你拉进了附近的厕所。
+<br>
+“等等，在这里？”罗宾紧张地检查周围的隔间，确定没人后松了一口气。
+<br>
+你从背后抱住罗宾，手伸向<his>的下面。
+<br>
+（进入战斗）
+
+（战斗途中概率触发）你们听到有脚步声靠近，有人打开了旁边隔间的门，淅淅沥沥的水声从隔壁传来。
+
+（发出声音触发）“搞什么！要搞回家搞去！”隔间的门被狠狠关上，你们这个隔间的门被用力地踹了一脚。
+
+（战斗结束）罗宾抱住你，靠在你肩膀上对着你耳边悄悄说：“下次还是回家再做吧。”
+<br><br>
+<<if $time gte 18:00>>
+<<link '暂停工作' 'BaseScene DomusStreet'>><</link>>
+<<else>>
+<<link '继续工作' 'LocalEvent DetectorHouse SendFlyers2'>><<pass 60>><</link>>
+<br>
+<<link '暂停工作' 'BaseScene DomusStreet'>><</link>>
+<</if>>
+<<if $phase is 2>>
+你和罗宾一起回到了孤儿院。
+<br><br>
+<<link '和罗宾一起回家' 'BaseScene Bedroom'>><</link>>
+<<else>>
+你感谢并告别了罗宾，决定继续工作。
+<<link '继续工作（1:00）' 'OshiMod LocalEvent DetectorHouse SendFlyers2'>><<pass60>><</link>>
+<</if>>

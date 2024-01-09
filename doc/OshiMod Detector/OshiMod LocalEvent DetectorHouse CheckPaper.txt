@@ -1,0 +1,13 @@
+::OshiMod LocalEvent DetectorHouse CheckPaper
+
+你查看了最近的报纸，一条新闻引起了你的注意。
+<<randomdata>>
+<<datas>>
+“震惊！雷米牧场奶牛产量惊人！”
+<<datas>>
+“可怕！森林湖泊似乎有水怪出没！”
+<<datas>>
+“期待！海风咖啡厅新品推出！”
+<</randomdata>>
+<br><br>
+<<link '返回' 'BaseScene DetectorHouse'>><</link>>

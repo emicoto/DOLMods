@@ -1,0 +1,18 @@
+::OshiMod LocalEvent DetectorHouse CheckCase
+<<effects>>
+你查看了你目前能完成的委托。
+<br><br>
+<<if $MatthewFame lt 20>>
+<<link '发传单(1:00)' 'LocalEvent DetectorHouse SendFlyers'>><<pass60>><</link>>
+<br>
+<<if $MatthewFame gte 20>>
+<<link '寻找宠物(2:00)' 'LocalEvent DetectorHouse FindPet'>><<pass120>><</link>>
+<br>
+<<if $MatthewFame gte 40>>
+<<link '捉奸(4:00)' 'LocalEvent DetectorHouse CatchAdultery'>><<pass240>><</link>>
+<br>
+<<if $MatthewFame gte 60>>
+<<link '侦破案件(4:00)' 'LocalEvent DetectorHouse DetectCase'>><<pass240>><</link>>
+<br>
+<<if $MatthewFame gte 80>>
+<<link '追凶(5:00)' 'LocalEvent DetectorHouse CapturingPrisoner'>><<pass300>><</link>>

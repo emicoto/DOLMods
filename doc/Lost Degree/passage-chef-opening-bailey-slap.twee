@@ -1,0 +1,19 @@
+::passage-chef-opening-bailey-slap
+::LostMod passage-chef-opening-bailey-slap
+
+<<set $outside to 0>>
+<<set $location to \"cafe\">>
+<<effects>>
+
+你一巴掌扇在贝利脸上。<<He>>几乎纹丝未动。\n房间里安静了一会儿，然后爆发出笑声和兴奋的叫声。贝利靠得更近，<<his>>的脸上带着扭曲的假笑。
+<br><br>
+
+"我们单独在一起的时候最好别这么做，"<<he>>低声而咬牙切齿地说道。"我不想让鲁比看到你被做成人棍的样子。"
+<br><br>
+
+<<He>>拉开了距离，因为自从你来到这里，第一次注意力被转移到了其他地方。
+<br><br>
+
+<<endevent>>
+<<link [[查看|Chef Opening 7]]>><</link>>
+<br>

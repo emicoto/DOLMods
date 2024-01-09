@@ -1,0 +1,66 @@
+::OshiMod LocalEvent DetectorHouse DetectCase1_3
+<<events>>
+<<if $phase is 1>>
+你放大照片，仔细研究了一下尸体脖子上的痕迹。
+<br>
+<<randomdata>>
+<<datas>>
+回忆起<<boy>>的体型，你认为这个手印的大小和<<boy>>完全不符。
+<br>
+你向现场看起来认真负责的警察掏出侦探社社员的证件，解释了自己的来意。
+<br>
+看起来认真负责的警察思索了一会后，肯定了你的发现，联系了上级后告知你这个证据不足以证明<<boy>>的清白，除非你能抓到凶手。
+<<datas>>
+你经过一番比较，对于手印的大小和<<boy>>意外相符的结果感到意外。
+<</randomdata>>
+<<if $phase is 2>>
+根据尸体的痕迹，你判断死者应当被举起到一定高度过。
+<br>
+死者虽然是成年<<male>>，但身高只比普通的成年女性较高一点。
+<<randomdata>>
+<<datas>>
+<<boy>>的体型或许可以做到。
+<<datas>>
+<<boy>>身型娇小，应该是无法做到这一点的。
+<</randomdata>>
+<br>
+你询问了看起来正在开小差的警察，是否有其他嫌疑人。
+<br>
+看起来正在开小差的警察确认你的侦探社社员证件后，告诉你还有另外两名嫌疑人。
+<br>
+其中一名高大的<<male>>正在警惕地盯着你们。另一名则是正在不远处椅子上哭泣的娇小<<male>>。
+<<else>>
+你询问了现场看起来是领导的警察。
+<br>
+看起来是领导的警察看到你的证件，点头拉起警戒线示意你进去调查。
+<br>
+你走近尸体，确认纸条上的内容。
+<br>
+“您的一举一动都牵动着我的心，我对您的爱……如果您也一样……”
+<br>
+看起来是一封情书，不过纸条背面写着案发现场的地点和时间。
+<br>
+<<randomdata>>
+<<datas>>
+据说纸条的字迹和娇小的<<male>>一致。
+<<datas>>
+据说纸条是<<boy>>写的。
+<<datas>>
+据说高大的<<male>>是来赴约的人。
+<</randomdata>>
+<br><br>
+</if>
+【三个选项都确认后】
+通过一些调查，你基本可以确认凶手是谁。
+<br>
+你对现场的警察们进行了一番推理，警察们很是信服你的推理。
+<br>
+你肯定地说出了你的答案.
+<br>
+凶手就是
+<br><br>
+<<link '娇小<<male>>' 'LocalEvent DetectorHouse DetectCase1_4'>><<set$phase to 1>><</link>>
+<br>
+<<link '高大<<male>>' 'LocalEvent DetectorHouse DetectCase1_4'>><<set$phase to 2>><</link>>
+<br>
+<<link '<<boy>>' 'LocalEvent DetectorHouse DetectCase1_4'>><<set$phase to 3>><</link>>

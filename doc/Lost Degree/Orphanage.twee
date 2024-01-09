@@ -1,0 +1,275 @@
+::Orphanage
+::LostMod Orphanage
+
+<<set $outside to 0>><<set $location to "home">><<home_effects>><<effects>>
+
+<<set _robin to statusCheck("Robin")>>
+
+你正站在孤儿院的正厅里，
+
+<<if $christmas is 1 and Time.monthDay is 25 and Time.dayState isnot "night">>
+	房间里充满了节日的欢乐。
+<<elseif $halloween is 1 and Time.monthDay is 31 and Time.hour gte 15 and Time.dayState isnot "night">>
+	<<if !$halloween_robin_costume and !$halloween_robin_scare and ($wraith.state isnot "" and $wraithIntro and $hallucinations gte 1 and $rng lte 70)>>
+		<!-- This event happens if Robin is wearing the ghost costume, but you don't know that it's Robin. -->
+		<!-- The odds are 70% if you meet the conditions, much higher than normal, bc this is a non-repeatable event -->
+		<<set _wraithEvent to true>>
+	<<else>>
+		房间内热闹非凡，这些盛装打扮的孤儿们都兴奋不已。
+	<</if>>
+<<else>>
+	<<if Time.dayState is "day">>
+		几个孤儿正在清洁地板。
+	<<elseif Time.dayState is "dusk">>
+		这里安静到落针可闻。
+	<<elseif Time.dayState is "dawn">>
+		<<if Time.schoolDay>>
+			孤儿们正收拾东西准备上学。
+		<<else>>
+			孤儿正在外面寻找工作。
+		<</if>>
+	<<elseif Time.dayState is "night">>
+		孤儿们现在应该都在睡觉。
+	<</if>>
+<</if>>
+
+<br><br>
+
+<<if $stress gte $stressmax>>
+	<<passouthome>>
+<<elseif $exposed gte 1 and Time.hour lt 22 and Time.hour gte 6>>
+	你无法忍受有人看到你这副模样，你赶忙跑回卧室中。
+	<br><br>
+	<<set $danger to random(1, 10000)>><<set $dangerevent to 0>>
+	<<if $danger gte (9900 - $allure)>>
+		一扇门突然打开了，一个<<generatey1>><<person1>><<person>>走了出来，<<covered>><<He>>并没有注意到你。
+		<br><br>
+		<<link [[隐匿|Orphanage Hide]]>><<stress 6>><</link>><<gstress>>
+		<br>
+		<<if $exhibitionism gte 55>>
+			<<link [[炫耀|Orphanage Flaunt]]>><</link>><<exhibitionist4>>
+			<br>
+		<</if>>
+	<<else>>
+		<<link [[继续|Bedroom]]>><</link>>
+	<</if>>
+<<elseif $baileyReunionScene is "dungeon">>
+	<<npc Bailey>><<person1>>
+	<<unset $baileyReunionScene>>
+
+	<<if $home_gone gte 24>>
+		鲁比正看着你，眼神有些惊讶，随后又立刻转为了失而复得的喜悦。一张印有你照片的失踪者海报被钉在<<him>>的旁边。
+		<br><br>
+		"你终于回来了！孩子。"<<He>> 冲过来，将你抱在怀里，"你知不知道我找你找的有多辛苦。"
+		<br><br>
+		<<He>>放开了你，将海报撕下来揉成一团。
+	<<else>>
+		在你进去的时候，一个亲切的声音在你身边传来："欢迎回来，孩子。"是鲁比，<<Hes>>放下了手头的工作，朝着你笑了笑。"我很高兴你没事。"
+		<br><br>
+		
+        <</if>>
+
+<<elseif $home_gone gte 168 and Time.dayState isnot "night">>
+    <<generatey1>><<person1>>
+    你注意到墙上有什么东西，那是一张贴有你照片的失踪者的海报。它还没有被扯下来，这意味着鲁比一定也还在找你。
+    <br><br>
+
+    <<if $orphan_hope gte 10>>
+        一个负责清洁工作的<<person>>注意到了你，<<He>>抬头看了一眼海报。随后<<his>>吃惊地看向你。"是你！"<<he>>说道，同时<<his>>手里的拖把都掉在了地上。"我们不知道我们是否还会再见到你。"
+        <br><br>
+        <<set $home_gone to 0>>
+        <<He>>取下海报时松了口气。<<ghope>><<hope 1>>
+        <br><br>
+    <<else>>
+        一个<<person>>在做着清洁工作时注意到了你，<<he>>激动到弄洒了<<his>>的拖把桶。还没等你反应过来，<<he>>就上前抱住了你。"是你，我们没想到你会回来，我们——"<<he>>沉默了，你感觉好像有什么东西滴到了你的肩膀上。
+        <br><br>
+        <<set $home_gone to 0>>
+        <<He>>在放你走时松了口气。<<He>>擦去<<his>>的眼泪，取下了海报。<<gghope>><<hope 3>>
+        <br><br>
+    <</if>>
+
+    <<link [[继续|Orphanage]]>><<endevent>><</link>>
+
+<<elseif Time.days gte 1 and _robin.init is 0 and Time.hour gte 7 and Time.hour lte 20 and !(Time.schoolDay and between(Time.hour, 8, 15)>>
+    <<set $robindebt to 0>><<set $robindebtlimit to 5>>
+    <<npc Robin>><<initnpc Robin>><<person1>>
+    你听到一个声音在你身后叫道："嘿！"你转身一看，是罗宾。<<Hes>>是孤儿院的另一位住户，虽然与你年纪相仿，却一直都很仰慕你。<<He>>向你跑来，但是并没有做到及时减速，所以直接撞到了你的身上，这让<<he>>差点摔倒，不过好在你及时拉住了<<his>>的手臂来让<<him>>站稳。"谢谢，"<<he>>说道。尽管<<he>>仍然保持微笑，但从<<his>>的眼神和肢体语言还是可以看出<<he>>有些尴尬。
+    <br><br>
+    "我昨天没看见你，记得<span class="gold">来一趟我的房间，</span>不过你想什么时候来都行，我有东西要给你看。我太兴奋了！"<<He>>抱住你，然后在你反应过来之前就跑开了。
+    <br><br>
+
+    <<endevent>>
+    <<link [[继续|Orphanage]]>><</link>>
+    <br>
+
+<<elseif $loft_whitney is 1>>
+    <<npc "Ruby">><<person1>>
+    有人拍了拍你的肩膀。是鲁比。"抱歉，孩子。我要拿走这个违禁品，"<<he>>说着，毫不犹豫地从你手里抓走了惠特尼的香烟，然后朝你笑了笑，走了。
+    <br><br>
+    <<endevent>>
+    <<link [[继续|Orphanage]]>><<set $loft_whitney to 3>><</link>>
+    <br>
+
+<<elseif $loft_whitney is 2>>
+    <<npc "Ruby">><<person1>><<generatey2>>
+    你在大厅里看到一个孤儿，一个<<person2>><<person>>，正在鲁比面前低着头，不敢看<<his>>眼睛。
+    <br><br>
+    <<person1>>
+    "好了，孩子，"鲁比说，"把违禁品交出来。"<<He>>拍了拍<<person2>><<persons>>的肩膀，然后从<<his>>手里拽出一包香烟。
+    <br><br>
+    "是一个恶霸让我这么做的。"<<person2>><<person>>辩解道。
+    <br><br>
+    "这样，我知道了。"鲁比点了点头，笑着捏了一下<<person2>><<person>>的脸蛋，"放心，我没生气。去吧。"
+    <br><br>
+    <<person2>><<person>>松了口气,小跑着离开了。
+    <br><br>
+    你怀疑那个恶霸指的是惠特尼。没能让你在阁楼里吸烟，就找了别人。
+    <br><br>
+    
+    <<endevent>>
+
+    <<link [[继续|Orphanage]]>><<set $loft_whitney to 4>><</link>>
+
+    <<elseif $renttime lte 0>>
+	<<set $bus to "home">>
+	一只手从后面搭住你的肩膀，你转过头，看到那张微笑着的面孔。<span class="Blue">是鲁比。</span>
+	<br><br>
+	<<if $robinfirstrentfight and ($baileypaychain lt 2 or $renttime lte -1)>>
+		<<rentduerobin 0>>
+	<<else>>
+		<<rentdue 0>>
+	<</if>>
+<<elseif $babyIntros and $babyIntros.Bailey and $babyIntros.Bailey.length gt 0>>
+	<<npc Bailey>><<person1>>
+	"你在这里，孩子。"一个声音在你身后响起，你转身看去，鲁比正向你走来。
+	<br><br>
+
+	<<homeBabyIntro>>
+
+	<<link [[继续|Orphanage]]>><<endevent>><</link>>
+	<br>
+<<elseif $christmas is 1 and Time.monthDay is 25 and $christmas_gift is "clothes" and !$christmas_event_2 and Time.dayState isnot "night">>
+	<<set $christmas_event_2 to 1>>
+	<<pass 30>>
+	<<earnFeat "A Festive Home">>
+	那颗塑料树是整场活动的中心。每个孤儿至少会收到一份礼物。他们无法控制自己的心情，很快就撕开包装拿到了你买的衣服。大多数人看起来都很开心，尽管有一个<<generatey1>><<person1>><<person>>在抱怨着，"衬衫？"<<he>>说道，"这太无聊了，我想要一个游戏机。"
+	<br><br>
+	"不要忘恩负义，"一位年长的<<generatey2>><<personsimple>>说道。"那件衬衫看起来又好又暖。"仿佛是要佐证所说的话，一阵冷风从有缺陷的窗户的缝隙吹了进来。<<ggghope>><<hope 10>>
+	<br><br>
+	<<endevent>><<npc Bailey>><<person1>>
+	鲁比看着这一切，这些礼物似乎让<<him>>十分头痛，"高兴玩了记得把这里收拾干净。"<<he>>有些无奈地说着，同时指着散落在地的包装纸。"好了，孩子们。一起来帮忙。"
+	<br><br>
+	当包装纸清理干净后，鲁比在树底看到了一份无人认领的礼物，上面写有<<his>>的名字。<<He>>将礼物拿在<<his>>的手中检查了片刻，随后<<his>>将礼物夹在胳膊底下，离开了房间。
+	<br><br>
+	一位新来的孤儿见此竟笑了出来，而其余的人则脸上也不禁流露出欣慰的表情。
+	<br><br>
+
+	<<link [[继续|Orphanage]]>><<endevent>><</link>>
+	<br>
+<<elseif $christmas is 1 and Time.monthDay is 25 and $robinmissing is 0 and _robin.init is 1 and $christmas_robin_gift_received is undefined and Time.hour gte 7>>
+	<<set $christmas_robin_gift_received to true>>
+	你在树下发现了一份礼物，上面写有你的名字，是罗宾准备的。
+	<br><br>
+	你打开它，里面装有一盒饼干，你很庆幸贝利不在此处。<<ltrauma>><<lstress>><<trauma -6>><<stress -6>>
+	<br><br>
+
+	<<link [[继续|Orphanage]]>><</link>>
+	<br>
+<<elseif $christmas is 1 and Time.monthDay is 25 and $robinmissing is 0 and $christmas_gift_robin_wrapped is 1 and $christmas_gift_robin_given is undefined and Time.dayState isnot "night">>
+	<<set $christmas_gift_robin_given to true>>
+	<<christmas_robin>>
+<<elseif $daily.homeEvent isnot 1 and Time.hour gte 6 and Time.hour lte 21>>
+	<<set $daily.homeEvent to 1>>
+	<<homeevent>>
+<<elseif Time.hour gte 16 and Time.hour lte 21 and getRobinLocation() is "orphanage"
+and !$fromRobinRoom and _robin.cdquest is 2 and _robin.trauma lte 20 and !$daily.robin.cdevent>>
+	<<set $daily.robin.cdevent to 1>>
+	<<npc Robin>><<person1>>
+	<<generatey2>><<person2>>
+
+	你看到罗宾正在和一个<<person2>><<person>>交谈，在看见你之后，罗宾向你招手。
+	<br><br>
+
+	<<link [[过去|Robin CD Socialise]]>><</link>>
+	<br>
+	<<link [[无视|Orphanage]]>><<endevent>><</link>>
+<<else>>
+	<<if $halloween is 1 and Time.monthDay is 31 and !$fromRobinRoom and $robinmissing is 0 and Time.hour gte 16 and Time.hour lt 19 and _robin.init is 1>>
+		<<if $halloween_robin_costume>>
+			你看到了罗宾，<<nnpc_he "Robin">>穿上了<<= $halloween_robin_costume.replace("witch","女巫服").replace("vampire","吸血鬼装").replace("ghost","鬼怪装")>>，同时正被兴奋的孤儿们包围着。
+
+<<elseif _wraithEvent>>
+	你看到有个人的头上盖着床单，那家伙一动不动，同时大厅内也空无一人，只显寂静，你注意到那床单<span class="red">是一种熟悉且可怕的苍白色。</span>
+	<br><br>
+
+	<span class="wraith">"不给糖就捣蛋。"</span>
+	<br><br>
+
+	你跌跌撞撞地往后退并尖叫了起来，仅仅一眨眼的功夫，大厅就完全变了一个样，你看到罗宾正被兴奋的孤儿们包围着，<<nnpc_his "Robin">>的手臂上正缠绕着<<nnpc_his "Robin">>的床单，看着你和你手上的床单，<<nnpc_his "Robin">>的眼睛里充满了迷惑。
+	<<else>>
+		你看到有人在头上套上床单扮演鬼魂，而在那附近围满了兴奋的孤儿。
+	<</if>>
+
+	<br><br>
+
+	<<if $halloween is 1 and Time.monthDay is 31 and !$fromRobinRoom and $robinmissing is 0 and Time.hour gte 16 and Time.hour lt 19 and _robin.init is 1>>
+		<<if $halloween_robin_costume>>
+			你看到了罗宾，<<nnpc_he "Robin">>穿上了<<= $halloween_robin_costume.replace("witch","女巫服").replace("vampire","吸血鬼装").replace("ghost","鬼怪装")>>，同时正被兴奋的孤儿们包围着。
+		<<elseif _wraithEvent>>
+			你看到有个人的头上盖着床单，那家伙一动不动，同时大厅内也空无一人，只显寂静，你注意到那床单<span class="red">是一种熟悉且可怕的苍白色。</span>
+			<br><br>
+
+			<span class="wraith">"不给糖就捣蛋。"</span>
+			<br><br>
+
+			你跌跌撞撞地往后退并尖叫了起来，仅仅一眨眼的功夫，大厅就完全变了一个样，你看到罗宾正被兴奋的孤儿们包围着，<<nnpc_his "Robin">>的手臂上正缠绕着<<nnpc_his "Robin">>的床单，看着你和你手上的床单，<<nnpc_his "Robin">>的眼睛里充满了迷惑。
+		<<else>>
+			你看到有人在头上套上床单扮演鬼魂，而在那附近围满了兴奋的孤儿。
+		<</if>>
+
+		<br><br>
+		
+		<<foodicon "halloween">><<link [[靠近他们|Robin Trick Hall]]>><</link>>
+		<br><br>
+	<</if>>
+
+	<<if $police_hack is 2 and ($pub_hack_job is 1 or $pub_hack_job is 2)>>
+		<<ind>><<link [[寻找黑客 (0:10)|Orphanage Hacker]]>><<pass 10>><</link>>
+		<br><br>
+	<<elseif $pubfame and $pubfame.intro lte 2 and $pub_hack_job lte 3>>
+		<<ind>><<link [[寻找黑客 (0:10)|Orphanage Hacker]]>><<pass 10>><</link>>
+		<br><br>
+	<</if>>
+
+	<<if $kylar_camera is 5>>
+		<<ind>><<link [[决定如何处理凯拉尔的相机 (0:05)|Orphanage Kylar Camera]]>><<pass 5>><</link>>
+		<br><br>
+	<</if>>
+
+	<<if $christmas is 1 and Time.monthDay is 25 and Time.dayState isnot "night" and $exposed lte 0>>
+		<<ind>><<link [[庆祝圣诞节 (1:00)|Orphanage Christmas]]>><<pass 60>><<trauma -12>><<stress -6>><</link>><<lltrauma>><<lstress>>
+		<br>
+	<</if>>
+
+	<<gardenicon>><<link [[花园 (0:01)|Garden]]>><<pass 1>><</link>>
+	<br><br>
+
+	<<officeicon>><<link [["鲁比办公室 (0:01)" "LostMod Ruby's Office"]]>><<pass 1>><</link>>
+	<br>
+
+	<<orphanageWard>>
+	<br>
+
+	<<if Time.hour gte 18 and Time.hour lte 20 and _robin.trauma gte 40 and $robinmissing is 0 and !$robinTraumaVisit>>
+		<<bedicon>><<link [[卧室 (0:01)|Robin Trauma Visit]]>><<set $phase to 0>><<pass 1>><</link>>
+		<br>
+	<<elseif $kylar.timer.home gte 100 and $kylar.home is undefined>>
+		<<bedicon>><<link [[卧室 (0:01)|Kylar Bedroom 1]]>><<pass 1>><<set $kylar.timer.home to 0>><<set $kylar.home to 0>><</link>>
+		<br>
+	<<elseif $kylar.timer.home gte 100 and $kylar.home is 0 and $NPCName[$NPCNameList.indexOf("Kylar")].state is
+
+
+
+	
+
+	

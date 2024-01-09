@@ -230,7 +230,7 @@
             <</link>>
         <</if>>
         <<if $chef_state is 3>>
-            <<set _link to lanSwitch('"Accept Sam's offer"', '"接受萨姆的提议"')>>
+            <<set _link to lanSwitch("Accept Sam's offer", "接受萨姆的提议")>>
             <<link _link "Chef Photographer">>
             <</link>>
         <</if>>
@@ -246,6 +246,7 @@
             <<pass 60>>
             <<set $tablesservedstat += random(10,30)>>
             <</link>>
+		<</if>>
     <</if>>
 <br>
 <</widget>>
