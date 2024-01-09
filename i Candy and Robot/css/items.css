@@ -101,3 +101,42 @@
     -webkit-background-clip: text;
     color: transparent;
 }
+
+.gray {
+    color:dimgrey
+}
+
+#background {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: rgb(41 41 41 / 50%);
+    border: 1px;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    backdrop-filter: blur(2px);
+}
+
+#messageBox {
+    width: 24%;
+    height: 12%;
+    min-width: 80px;
+    min-height: 80px;
+    position: fixed;
+    top: 25%;
+    left: calc(50% - 80px);
+    background: rgb(37 30 51 / 60%);
+    display: block;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 1.2em;
+    box-shadow: 6px 10px 8px 5px rgb(0 0 0 / 30%);
+    z-index: 10001;
+    backdrop-filter: blur(6px);
+}
+
+#container .pocketslot {
+    width: 45%;
+}

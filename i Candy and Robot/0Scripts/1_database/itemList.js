@@ -1,7 +1,6 @@
-
 const iFoods = [
 	{
-		tags: ["pieces", "candy", "packed"],
+		tags: ["candy", "packed"],
 
 		id: "fruitscandy",
 		name: ["Fruits Candy", "水果糖"],
@@ -11,6 +10,7 @@ const iFoods = [
 		"Sweet and sour, give you a little happiness",
 		"酸酸甜甜的，提供些许幸福感",
 		],
+		unit: "piece",
 
 		price: 1240,
 		num: 12,
@@ -26,7 +26,7 @@ const iFoods = [
 	},
 
 	{
-		tags: ["pieces", "candy", "packed"],
+		tags: ["candy", "packed"],
 
 		id: "chocolate",
 		name: ["Chocolate", "巧克力"],
@@ -40,6 +40,7 @@ const iFoods = [
 		price: 1640,
 		num: 4,
 		size: "small",
+		unit: "piece",
 
 		effects: [
 			["trauma", 2],
@@ -50,7 +51,7 @@ const iFoods = [
 		
 	},
 	{
-		tags: ["packed", "snack"],
+		tags: ["bagged", "snack"],
 
 		id: "potachips",
 		name: ["Potato Chips", "薯片"],
@@ -61,7 +62,7 @@ const iFoods = [
 		"一包脆脆的薯片，补充些许体力。",
 		],
 
-		size: "big",
+		size: "medium",
 		price: 380,
 		num: 1,
 
@@ -75,7 +76,7 @@ const iFoods = [
 	},
 
 	{
-		tags: ["packed", "snack"],
+		tags: ["bagged", "snack"],
 
 		id: "orionring",
 		name: ["Orion Rings", "洋葱圈"],
@@ -86,7 +87,7 @@ const iFoods = [
 		"一包松脆的洋葱圈，补充些许体力。",
 		],
 
-		size: "big",
+		size: "medium",
 		price: 380,
 		num: 1,
 
@@ -98,7 +99,7 @@ const iFoods = [
 
 	},
 	{
-		tags: ["pieces", "candy"],
+		tags: ["candy"],
 
 		id: "lolipop",
 		name: ["Lolipop", "波板糖"],
@@ -112,6 +113,7 @@ const iFoods = [
 		num: 1,
 		price: 360,
 		size: "medium",
+		unit: "piece",
 
 		effects: [
 			["trauma", 4],
@@ -133,9 +135,10 @@ const iFoods = [
 		"黑白相间的奥利奥，甜甜脆脆的。",
 		],
 
-		num: 1,
+		num: 10,
 		price: 520,
-		size: "medium",
+		size: 10,
+		unit: "piece",
 
 		effects: [
 			["tiredness", 20],
@@ -201,6 +204,7 @@ const iFoods = [
 		num: 3,
 		price: 1640,
 		size: 6,
+		unit: "cup",
 
 		effects: [
 			["stress", 1],
@@ -209,7 +213,7 @@ const iFoods = [
 		],
 	},
 	{
-		tags: ["bun", "premade"],
+		tags: ["pastry", "premade"],
 
 		id: "sandwich",
 		name: ["Sandwich", "三文治"],
@@ -218,6 +222,7 @@ const iFoods = [
 		num: 1,
 		price: 650,
 		size: "big",
+		unit: "piece",
 
 		info: [
 		"Plain sandwiches, a bread cut into triangles with eggs, bacon and veggies",
@@ -231,7 +236,7 @@ const iFoods = [
 	},
 
 	{
-		tags: ["pieces", "candy"],
+		tags: ["candy"],
 		location: ["stall"],
 
 		id: "candyfloss",
@@ -241,6 +246,7 @@ const iFoods = [
 		num: 1,
 		price: 340,
 		size: "big",
+		unit: "piece",
 
 		info: [
 		"Sweet, cloud like candyfloss, give you soft happiness",
@@ -279,7 +285,7 @@ const iFoods = [
 	},
 
 	{
-		tags: ["boxed", "snack", 'sweets', "pieces"],
+		tags: ["boxed", "snack"],
 		id: "danishcookies",
 		name: ["Danish Cookies", "丹麦曲奇"],
 		plural:"Boxes of Danish Cookies",
@@ -287,6 +293,7 @@ const iFoods = [
 		num: 24,
 		price: 2464,
 		size: 24,
+		unit: "piece",
 
 		info: [
 			"Delicious Danish cookies, various styles, crispy and delicious.",
@@ -303,7 +310,7 @@ const iFoods = [
 
 	},
 	{
-		tags: ["boxed", "candy", "pieces"],
+		tags: ["boxed", "candy"],
 		id:"ferrero",
 		name:["Ferrero", "费列罗"],
 		plural:"Boxes of Ferrero",
@@ -311,6 +318,7 @@ const iFoods = [
 		num: 12,
 		price: 3280,
 		size: 36,
+		unit: "piece",
 
 		info: [
 			"Delicious Ferrero chocolate, sweet and crunchy outside, rich hazelnut chocolate inside",
@@ -326,14 +334,15 @@ const iFoods = [
 		stacksprites:[ 30, 80, 100]
 	},
 	{
-		tags: [ "bun", "packed"],
+		tags: ["packed", "pastry", "premade"],
 		id:"sandwichbread",
-		name:["Sandwich Bread", "三文治面包"],
-		plural:"Sandwich Breads",
+		name:["White Bread", "白面包"],
+		plural:"White Breads",
 
 		num: 10,
 		price: 1000,
 		size:10,
+		unit: "piece",
 
 		info:[
 			"A loaf of bread for making sandwitches",
@@ -386,7 +395,7 @@ const iFoods = [
 	},
 
 	{
-		tags:["seasonal", "autumn", "cake", "pieces", "sweets"],
+		tags:["seasonal", "autumn", "pieces", "pastry"],
 
 		id:"ChestnutRoyalCake",
 		name:["Chestnut Royal Cake", "栗香伯爵茶戚风蛋糕"],
@@ -407,7 +416,7 @@ const iFoods = [
 		msg: itemMsg.ChestnutRoyalCake,
 	},
 	{
-		tags:["seasonal", "spring", "meal", "vegi"],
+		tags:["seasonal", "spring", "meal", "pastry"],
 
 		id:"HanamiDango",
 		name:["Hanami Dango", "花见团子"],
@@ -429,7 +438,7 @@ const iFoods = [
 		msg: itemMsg.HanamiDango,
 	},
 	{
-		tags:["seasonal", "spring", "meal", "vegi"],
+		tags:["seasonal", "spring", "meal", "pastry"],
 
 		id:"Sakuramochi",
 		name:["Sakuramochi", "樱饼"],
@@ -443,6 +452,7 @@ const iFoods = [
 		price: 1200,
 		num: 3,
 		size: "small",
+		unit: "piece",
 
 		effects: [
 			["hunger" , 100],
@@ -451,7 +461,7 @@ const iFoods = [
 		msg: itemMsg.Sakuramochi,
 	},
 	{
-		tags:["seasonal", "summer", "meal", "meat"],
+		tags:["seasonal", "summer", "meal", "ramen"],
 
 		id:"ColdRamen",
 		name:["Cold Ramen", "中华冷面"],
@@ -472,7 +482,7 @@ const iFoods = [
 		msg: itemMsg.ColdRamen,
 	},
 	{
-		tags:["seasonal", "autumn", "cake", "sweets"],
+		tags:["seasonal", "autumn", "pastry"],
 
 		id:"MontBlancCake",
 		name:["Mont Blanc Cake", "栗子蒙布朗"],
@@ -488,6 +498,7 @@ const iFoods = [
 		effects: [
 			["hunger" , 400],
 		],
+		unit: "piece",
 
 		msg: itemMsg.MontBlancCake,
 	},
@@ -513,7 +524,7 @@ const iFoods = [
 		msg: itemMsg.PorkPie,
 	},
 	{
-		tags:["seasonal", "winter", "meal", "vegi"],
+		tags:["seasonal", "winter", "meal", "pastry"],
 
 		id:"MincePie",
 		name:["Mince pie", "圣诞百果派"],
@@ -534,7 +545,7 @@ const iFoods = [
 		msg: itemMsg.MincePie
 	},
 	{
-		tags:["seasonal", "summer", "meal", "vegi"],
+		tags:["seasonal", "summer", "pudding"],
 	
 		id:"MintJelly",
 		name:["Mint jelly", "薄荷果冻"],
@@ -548,6 +559,7 @@ const iFoods = [
 		price: 600,
 		num: 1,
 		size: "small",
+		unit: "serve",
 	
 		effects: [
 			["hunger" , 240],
@@ -556,7 +568,7 @@ const iFoods = [
 		msg: itemMsg.MintJelly
 	},
 	{
-		tags:["meal"],
+		tags:["meal", "set"],
 	
 		id:"BasicFoodSet",
 		name:["Basic Food Set", "基本组合"],
@@ -600,6 +612,16 @@ const iFoods = [
 
 Items.addItems(iFoods, 'foods')
 
+let dropbottle = {
+	item: "bottle",
+	num: 1
+}
+
+let dropcan = {
+	item: "can",
+	num: 1
+}
+
 const iDrinks = [
 	{
 		tags: ["bottle", "water"],
@@ -620,6 +642,8 @@ const iDrinks = [
 		effects: [
 			["thirsty", 800]
 		],
+		drop: dropbottle,
+
 	},
 	{
 		tags: ["bottle", "water"],
@@ -640,6 +664,8 @@ const iDrinks = [
 		effects: [
 			["thirsty", 1200]
 		],
+		
+		drop: dropbottle,
 	},
 	{
 		tags: ["bottle", "soda"],
@@ -663,6 +689,8 @@ const iDrinks = [
 		],
 		
 		msg: itemMsg.ramune,
+		
+		drop: dropbottle,
 	},
 
 	{
@@ -683,6 +711,7 @@ const iDrinks = [
 		],
 	
 		msg: itemMsg.cola,
+		drop: dropcan,
 	},
 	
 	{
@@ -702,6 +731,7 @@ const iDrinks = [
 		],
 	
 		msg: itemMsg.cola,
+		drop: dropbottle,
 	},
 	
 	{
@@ -737,6 +767,8 @@ const iDrinks = [
 			["tiredness", 20],
 			["thirsty", 500]
 		],
+
+		drop: dropcan,
 	},
 	
 	{
@@ -757,6 +789,8 @@ const iDrinks = [
 			["tiredness", 50],
 			["thirsty", 500]
 		],
+
+		drop: dropcan,
 	},
 	
 	{
@@ -777,13 +811,15 @@ const iDrinks = [
 			["tiredness", 50],
 			["thirsty", 500]
 		],
+
+		drop: dropbottle,
 	},
 	{
-		tags: ["canned", "soda"],
+		tags: ["bottle", "soda"],
 	
 		id: "fruitsoda",
 		name: ["Fruit Soda", "水果苏打"],
-		plural:"Cans of Fruit Soda",
+		plural:"Bottles of Fruit Soda",
 	
 		num: 1,
 		price: 520,
@@ -797,6 +833,16 @@ const iDrinks = [
 			["stress", 1],
 			["thirsty", 500]
 		],
+
+		diff: {
+			lemon : { displayname:['Lemon Soda', '柠檬苏打'] },
+			peach : { displayname:['Peach Soda', '桃子苏打'] },
+			grape : { displayname:['Grape Soda', '葡萄苏打'] },
+			apple : { displayname:['Apple Soda', '苹果苏打'] },
+			melon : { displayname:['Melon Soda', '甜瓜苏打'] },
+		},
+
+		drop: dropbottle,
 	},
 	{
 		tags: ["bottle", "tea"],
@@ -816,6 +862,8 @@ const iDrinks = [
 			["stress", 2],
 			["thirsty", 600]
 		],
+
+		drop: dropbottle,
 	},
 	{
 		tags: ["bottle", "tea"],
@@ -835,6 +883,8 @@ const iDrinks = [
 			["stress", 1],
 			["thirsty", 500]
 		],
+
+		drop: dropbottle,
 	},
 	{
 		tags: ["bottle", "tea"],
@@ -853,9 +903,11 @@ const iDrinks = [
 		effects: [
 			["thirsty", 800]
 		],
+
+		drop: dropbottle,
 	},
 	{
-		tags:["seasonal", "summer", "serving", "cup"],
+		tags:["seasonal", "summer", "serving"],
 	
 		id:"MintLemonade",
 		name:["Mint Lemonade", "薄荷柠檬饮"],
@@ -872,11 +924,13 @@ const iDrinks = [
 		effects: [
 			["thirsty", 800]
 		],
+
+		unit: 'cup',
 	
 		msg: itemMsg.MintLemonade
 	},
 	{
-		tags:["seasonal", "summer", "serving", "cup"],
+		tags:["seasonal", "summer", "serving"],
 	
 		id:"PineappleIce",
 		name:["Pineapple Ice", "菠萝冰"],
@@ -893,11 +947,13 @@ const iDrinks = [
 		effects: [
 			["thirsty", 900]
 		],
+
+		unit: 'cup',
 	
 		msg: itemMsg.PineappleIce
 	},
 	{
-		tags:["seasonal", "summer", "serving", "cup"],
+		tags:["seasonal", "summer", "serving"],
 	
 		id:"WatermelonIce",
 		name:["Watermelon Ice", "西瓜冰"],
@@ -914,6 +970,7 @@ const iDrinks = [
 		effects: [
 			["thirsty", 900]
 		],
+		unit: 'cup',
 	
 		msg: itemMsg.WatermelonIce
 	},
@@ -932,6 +989,7 @@ const ingredients = [
 		num: 1,
 		price: 10000,
 		size:"small",
+		unit: 'pack',
 	
 		info:[
 			"A pack of blood",
@@ -962,6 +1020,7 @@ const ingredients = [
 		num: 10,
 		price: 1265,
 		size:"micro",
+		unit: "oz",
 
 		usage: 2,
 		effects:[
@@ -981,6 +1040,7 @@ const ingredients = [
 		num: 25,
 		price: 3849,
 		size: "powder",
+		unit: 'lb',
 
 		info:[
 			"flour",
@@ -988,7 +1048,7 @@ const ingredients = [
 		]
 	},
 	{
-		tags: ["lite", "flavor", "cooking"],
+		tags: ["flavor", "cooking"],
 		id:"mayonaise",
 		name:["Mayonaise", "蛋黄酱"],
 		plural:"Mayonaise",
@@ -996,6 +1056,7 @@ const ingredients = [
 		num: 40,
 		price: 1039,
 		size: 40,
+		unit: 'oz',
 
 		info:[
 			"mayonaise",
@@ -1003,7 +1064,7 @@ const ingredients = [
 		]
 	},
 	{
-		tags:["lite", "flavor", "cooking"],
+		tags:["flavor", "cooking"],
 		id:"sugar",
 		name:["Sugar", "糖"],
 		plural:"Sugar",
@@ -1011,6 +1072,7 @@ const ingredients = [
 		num: 50,
 		price: 1200,
 		size: 50,
+		unit: 'oz',
 
 		info:[
 			"sugar",
@@ -1018,7 +1080,7 @@ const ingredients = [
 		]
 	},
 	{
-		tags:["lite", "flavor", "cooking"],
+		tags:["flavor", "cooking"],
 		id:"salt",
 		name:["Salt", "盐"],
 		plural:"Salt",
@@ -1026,6 +1088,7 @@ const ingredients = [
 		num: 50,
 		price: 1000,
 		size: 50,
+		unit: 'oz',
 
 		info:[
 			"salt",
@@ -1033,7 +1096,7 @@ const ingredients = [
 		]
 	},
 	{
-		tags:["liquid", "flavor", "cooking"],
+		tags:["flavor", "cooking"],
 		id:"soysauce",
 		name:["Soy Sauce", "酱油"],
 		plural:"Soy Sauce",
@@ -1041,10 +1104,46 @@ const ingredients = [
 		num: 180,
 		price: 360,
 		size: 180,
+		unit: 'ml',
 
 		info:[
 			"soy sauce",
 			"酱油"
+		]
+	},
+
+	{
+		tags:["plastic", "craft"],
+		id:"bottle",
+		name:["Empty Bottle", "空瓶"],
+		plural:"Empty Bottles",
+
+		num: 1,
+		price: 5,
+		size: 'medium',
+		unit: 'bottle',
+
+		info:[
+			"An empty bottle",
+			"一个空瓶"
+		]
+
+	},
+
+	{
+		tags:["aluminum", "craft"],
+		id:"can",
+		name:["Empty Can", "空罐"],
+		plural:"Empty Cans",
+
+		num: 1,
+		price: 10,
+		size: 'medium',
+		unit: 'canned',
+
+		info:[
+			"An empty can",
+			"一个空罐"
 		]
 	}
 ]
@@ -1052,7 +1151,8 @@ Items.addItems(ingredients, 'ingredients')
 
 const Sundries = [
 	{
-		tags: ['sundry', 'roll', 'uses'],
+		type: "consumable",
+		tags: ['sundry', 'roll' ],
 		id: 'papertowel',
 		name: ['Roll of Paper Towel', '纸巾'],
 		plural: 'Rolls of Paper towel',
@@ -1060,6 +1160,7 @@ const Sundries = [
 		num: 10,
 		price: 100,
 		size: 30,
+		unit: 'uses',
 
 		info: [
 			'A roll of paper towel, 10 uses',
@@ -1070,15 +1171,18 @@ const Sundries = [
 			//清理下身所有液体
 			const body = ['anus', 'botom', 'penis', 'thigh', 'vagina', 'vaginaoutside']
 			body.forEach( (key) =>{
-				liquid = V.player.bodyliquid[key]
-				liquid.goo = 0;
-				liquid.seme = 0;
-				liquid.nectar = 0;
+				const liquid = V.player.bodyliquid[key]
+				if(liquid){
+					liquid.goo = 0;
+					liquid.seme = 0;
+					liquid.nectar = 0;
+				}
 			})
 		}
 	},
 	{
-		tags: ['sundry', 'packed', 'paper'],
+		type: "consumable",
+		tags: ['sundry', 'packed'],
 		id: 'wettissue',
 		name: ['Wet Tissue', '湿巾'],
 		plural: 'Wet Tissues',
@@ -1095,15 +1199,17 @@ const Sundries = [
 		onUse: function(){
 			//清理身上所有液体
 			for(let i in V.player.bodyliquid){
-				liquid = V.player.bodyliquid[i]
-				liquid.goo = 0;
-				liquid.seme = 0;
-				liquid.nectar = 0;				
+				const liquid = V.player.bodyliquid[i]
+				if(liquid){
+					liquid.goo = 0;
+					liquid.seme = 0;
+					liquid.nectar = 0;						
+				}
 			}
 		}
 	}
 ]
-Items.addItems(Sundries, 'misc')
+Items.addItems(Sundries)
 
 
 const Gacha = [
@@ -1115,7 +1221,8 @@ const Gacha = [
 	
 		num: 1,
 		price: 600,
-		size:"small",
+		size:"medium",
+		unit: 'capsule',
 	
 		info:[
 			"A gacha capsule, you can get a random item from it",
@@ -1135,7 +1242,8 @@ const Gacha = [
 	
 		num: 1,
 		price: 600,
-		size:"small",
+		size:"medium",
+		unit: 'capsule',
 	
 		info:[
 			"A gacha capsule with leaf pattern, you can get a random item from it",
@@ -1155,7 +1263,8 @@ const Gacha = [
 	
 		num: 1,
 		price: 600,
-		size:"small",
+		size:"medium",
+		unit: 'capsule',
 		
 	
 		info:[
@@ -1176,7 +1285,8 @@ const Gacha = [
 	
 		num: 1,
 		price: 600,
-		size:"small",
+		size:"medium",
+		unit: 'capsule',
 	
 		info:[
 			"A gacha capsule with leaf pattern, you can get a random item from it",
@@ -1196,7 +1306,8 @@ const Gacha = [
 	
 		num: 1,
 		price: 600,
-		size:"small",
+		size:"medium",
+		unit: 'capsule',
 	
 		info:[
 			"An opened gacha capsule, the item inside has been taken out",
@@ -1211,7 +1322,8 @@ const Gacha = [
 	
 		num: 1,
 		price: 600,
-		size:"small",
+		size:"medium",
+		unit: 'capsule',
 	
 		info:[
 			"A golden gacha capsule, you can get a random item from it",
@@ -1231,7 +1343,8 @@ const Gacha = [
 	
 		num: 1,
 		price: 600,
-		size:"small",
+		size:"medium",
+		unit: 'capsule',
 	
 		info:[
 			"An opened golden gacha capsule, the item inside has been taken out",
@@ -1465,14 +1578,15 @@ const GachaItems = [
 	},
 	{
 		type: "foods",
-		tags: ["gacha", "foods", "collection"],
+		tags: ["gacha",  'candy',"collection"],
 		id:"gachacandy",
 		name:["Gacha Candy", "扭蛋糖"],
 		plural:"Gacha Candy",
 	
 		num: 1,
 		price: 300,
-		size:"small",
+		size: "small",
+		unit: 'piece',
 	
 		info:[
 			"The candy dropped from the Gacha machine, it's green.",
@@ -1484,8 +1598,8 @@ const GachaItems = [
 
 	},
 	{
-		type: "collection",
-		tags: ["gacha", "foods", "collection"],
+		type: "foods",
+		tags: ["gacha", 'candy', "collection"],
 		id:"gachacandy_blue",
 		name:["Gacha Candy Blue", "蓝色扭蛋糖"],
 		plural:"Gacha Candy Blue",
@@ -1493,6 +1607,7 @@ const GachaItems = [
 		num: 1,
 		price: 300,
 		size:"small",
+		unit: 'piece',
 	
 		info:[
 			"The candy dropped from the Gacha machine, it's blue.",
@@ -1504,8 +1619,8 @@ const GachaItems = [
 
 	},
 	{
-		type: "collection",
-		tags: ["gacha", "foods", "collection"],
+		type: "foods",
+		tags: ["gacha", 'candy',"collection"],
 		id:"gachacandy_orange",
 		name:["Gacha Candy Orange", "橘色扭蛋糖"],
 		plural:"Gacha Candy Orange",
@@ -1513,6 +1628,7 @@ const GachaItems = [
 		num: 1,
 		price: 300,
 		size:"small",
+		unit: 'piece',
 	
 		info:[
 			"The candy dropped from the Gacha machine, it's orange.",
@@ -1524,8 +1640,8 @@ const GachaItems = [
 
 	},
 	{
-		type: "collection",
-		tags: ["gacha", "foods", "collection"],
+		type: "foods",
+		tags: ["gacha", 'candy', "collection"],
 		id:"gachacandy_pink",
 		name:["Gacha Candy Pink", "粉色扭蛋糖"],
 		plural:"Gacha Candy Pink",
@@ -1533,6 +1649,7 @@ const GachaItems = [
 		num: 1,
 		price: 300,
 		size:"small",
+		unit: 'piece',
 	
 		info:[
 			"The candy dropped from the Gacha machine, it's pink.",
@@ -1544,8 +1661,8 @@ const GachaItems = [
 
 	},
 	{
-		type: "collection",
-		tags: ["gacha", "foods", "collection"],
+		type: "foods",
+		tags: ["gacha", 'candy',"collection"],
 		id:"gachacandy_purple",
 		name:["Gacha Candy Purple", "紫色扭蛋糖"],
 		plural:"Gacha Candy Purple",
@@ -1553,6 +1670,7 @@ const GachaItems = [
 		num: 1,
 		price: 300,
 		size:"small",
+		unit: 'piece',
 	
 		info:[
 			"The candy dropped from the Gacha machine, it's purple.",
@@ -1564,8 +1682,8 @@ const GachaItems = [
 
 	},
 	{
-		type: "collection",
-		tags: ["gacha", "foods", "collection"],
+		type: "foods",
+		tags: ["gacha", 'candy',"collection"],
 		id:"gachacandy_red",
 		name:["Gacha Candy Red", "红色扭蛋糖"],
 		plural:"Gacha Candy Red",
@@ -1573,6 +1691,7 @@ const GachaItems = [
 		num: 1,
 		price: 300,
 		size:"small",
+		unit: 'piece',
 	
 		info:[
 			"The candy dropped from the Gacha machine, it's red.",
@@ -1584,8 +1703,8 @@ const GachaItems = [
 
 	},
 	{
-		type: "collection",
-		tags: ["gacha", "foods", "collection"],
+		type: "foods",
+		tags: ["gacha", 'candy', "collection"],
 		id:"gachacandy_yellow",
 		name:["Gacha Candy Yellow", "黄色扭蛋糖"],
 		plural:"Gacha Candy Yellow",
@@ -1593,6 +1712,7 @@ const GachaItems = [
 		num: 1,
 		price: 300,
 		size:"small",
+		unit: 'piece',
 	
 		info:[
 			"The candy dropped from the Gacha machine, it's yellow.",
@@ -1610,15 +1730,16 @@ Items.addItems(GachaItems)
 const iSpecial = [
 {
 	type: "consumable",
-	tags: ["liquid", "lubricant"],
+	tags: ["liquid", "lubricant", "bottle"],
 
 	id: "lubricant",
-	name: ["KY Anal Glide", "KY肛用润滑液"],
-	plural:"KY Anal Glide",
+	name: ["KY Anal Lube", "KY肛用润滑液"],
+	plural:"KY Anal Lube",
 
 	num: 200,
 	price: 3000,
 	size: 200,
+	unit: 'ml',
 
 	usage: 10,
 	info: [
@@ -1632,8 +1753,7 @@ const iSpecial = [
 
 	diff:{
 		new:{
-			displayname:['new package', '新包装'],
-			img:'items/consumable/lubricant_new.png'
+			displayname:['KY Anal Glide', 'KY肛用护理液']
 		}
 	},
 
@@ -1642,7 +1762,7 @@ const iSpecial = [
 
 {
 	type: "consumable",
-	tags: ["liquid", "lubricant"],
+	tags: ["liquid", "lubricant", "bottle"],
 
 	id: "druglubricant",
 	name: ["Aphrodisiac Anal Lube", "催情润滑夜"],
@@ -1651,6 +1771,7 @@ const iSpecial = [
 	num: 200,
 	price: 3000,
 	size: 200,
+	unit: 'ml',
 
 	usage: 10,
 	info: [
@@ -1665,6 +1786,7 @@ const iSpecial = [
 
 	require:"bathroom",
 },
+
 
 ]
 
@@ -1710,7 +1832,7 @@ function onUnEquip(){
 		pos = 'wallet'
 	}
 
-	const item = V.iPockets[pos+'type']
+	const item = iM.getEquip(pos)
 
 	if(item.diff && this.diff){
 		const diff = this.diff[item.diff]
@@ -1741,6 +1863,7 @@ const iContainers = [
 		num: 1,
 		price: 100,
 		size: 10,
+		unit: 'bag',
   
 		capacity: 3,
 		
@@ -1762,6 +1885,7 @@ const iContainers = [
 		num: 1,
 		price: 300,
 		size: 10,
+		unit: 'bag',
   
 		capacity: 6,
 		
@@ -1783,6 +1907,7 @@ const iContainers = [
 		num: 1,
 		price: 200,
 		size: 10,
+		unit: 'bag',
   
 		capacity: 2,
 		
@@ -1802,9 +1927,11 @@ const iContainers = [
 	  price: 4200,
 	  size: "big",
 	  capacity: 4,
+
+	  
 	  diff:{
-		girl:{ displayname:['girlish', '女款'], img:'items/container/satchel_girl.png', sp:'girlish'},
-		cat:{ displayname:['cat', '猫'], img:'items/container/satchel_cat.png', sp:'cat'}
+		girl:{ displayname:['girlish', '女款'],  sp:'girlish'},
+		cat:{ displayname:['cat', '猫'],  sp:'cat'}
 	  },
 
 	  onEquip,
@@ -1825,7 +1952,7 @@ const iContainers = [
 	  size: "big",
 	  capacity: 6,
 	  diff:{
-		girl:{ displayname:['girlish', '女款'], img:'items/container/leathersatchel_girl.png', sp:'girlish'},
+		girl:{ displayname:['girlish', '女款'], sp:'girlish'},
 
 	  },
 
@@ -1847,8 +1974,8 @@ const iContainers = [
 	  size: "big",
 	  capacity: 8,
 	  diff:{
-		black:{ displayname:['black', '黑色'], img:'items/container/schoolbag_black.png'},
-		pink:{ displayname:['pink', '粉色'], img:'items/container/schoolbag_pink.png', sp:'girlish'}
+		black:{ displayname:['black', '黑色'], },
+		pink:{ displayname:['pink', '粉色'],  sp:'girlish'}
 	  },
 	  
 	  onEquip,
@@ -1873,7 +2000,7 @@ const iContainers = [
 
 	  capacity: 12,
 	  diff:{
-		girl:{ displayname:['girlish', '女款'], img:'items/container/backpack_girl.png', sp:'girlish'}
+		girl:{ displayname:['girlish', '女款'],  sp:'girlish'}
 	  },
 	  
 	  onEquip,
@@ -1932,8 +2059,8 @@ const iContainers = [
 		info: ["A smart, stylish rolling buckets.", "一个智能的，时尚的便携式垃圾桶。"],
 		capacity: 25,
 		diff:{
-			blue:{ displayname:['blue', '蓝色'], img:'items/container/bucket_blue.png'},
-			yellow:{ displayname:['yellow', '黄色'], img:'items/container/bucket_yellow.png'},
+			blue:{ displayname:['blue', '蓝色'], },
+			yellow:{ displayname:['yellow', '黄色'], },
 		},
 		
 		onEquip,
@@ -1998,12 +2125,12 @@ const iContainers = [
 
 		capacity: 50000,
 		diff:{
-			blue:{ displayname:['blue', '蓝色'], img:'items/container/pouch_blue.png'},
-			green:{ displayname:['green', '绿色'], img:'items/container/pouch_green.png'},
-			orange:{ displayname:['orange', '橙色'], img:'items/container/pouch_orange.png'},
-			pink:{ displayname:['pink', '粉色'], img:'items/container/pouch_pink.png'},
-			purple:{ displayname:['purple', '紫色'], img:'items/container/pouch_purple.png'},
-			yellow:{ displayname:['yellow', '黄色'], img:'items/container/pouch_yellow.png'},
+			blue:{ displayname:['blue', '蓝色'] },
+			green:{ displayname:['green', '绿色'] },
+			orange:{ displayname:['orange', '橙色'] },
+			pink:{ displayname:['pink', '粉色'] },
+			purple:{ displayname:['purple', '紫色']},
+			yellow:{ displayname:['yellow', '黄色']},
 		},
 		
 		onEquip,
@@ -2061,7 +2188,7 @@ Items.addItems(iContainers, "container")
 const iAddictive = [
 	{
 		type:"consumable",
-		tags: ["smoke", "addiction","nicotine"],	
+		tags: ["smoke", "nicotine"],	
 
 		id: "cigarettes",
 		name: ["Cigarette", "香烟"],
@@ -2083,7 +2210,7 @@ const iAddictive = [
 
 	{
 		type:"consumable",
-		tags: ["smoke", "addiction","nicotine"],	
+		tags: ["smoke", "nicotine"],	
 
 		id: "marlboro",
 		name: ["Marlboro 100%", "马宝龙香烟"],

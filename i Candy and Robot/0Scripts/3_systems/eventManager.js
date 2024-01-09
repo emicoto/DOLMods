@@ -51,6 +51,7 @@ const eventManager = {
     },
 
     getEvent: function(event){
+        if(!this.data[event]) return
         return this.data[event]
     },
 
@@ -351,7 +352,6 @@ const eventManager = {
             console.log('fixEvent:', scene, data)
             this.unsetEvent()
         }
-
  
     },
 
@@ -380,8 +380,8 @@ const eventManager = {
             this.checkEvent(V.currentScene, data)
         }
         else{
-            //check event from passage
             
+            //check event from passage
             const keys = data.title.split(' ')
 
             if(keys.has('Passout') && (keys.indexOf('Passout') == 0 && !data.text.includes('combat') || keys.indexOf('Passout') == key.length)){
@@ -430,7 +430,11 @@ const eventManager = {
 
         for(let i = 0; i < eventlist.length; i++){
             const data = eventlist[i]
-            console.log('eventdata:', data)
+
+            if(iCandy.config.debug){
+                console.log('eventdata:', data)
+            }
+
             if(
                 ( data.entrypassage && title == data.entrypassage ) || 
                 ( data.match && title.match(data.match) ) ||

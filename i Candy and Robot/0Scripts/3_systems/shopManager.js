@@ -3,7 +3,7 @@ const iShop = {
 	shelfdata : {
 		daiso_snack: function(){
 			const data = Items.searchType('foods')
-			const list = data.filter( item => item.tags.has('snack', 'candy') && !item.tags.has('seasonal', 'mealbox', 'premade') && !item.location )
+			const list = data.filter( item => item.tags.has('snack', 'candy') && !item.tags.has('seasonal', 'mealbox', 'premade', 'gacha') && !item.location )
 			//随机抽取8个
 			const result = []
 			for(let i = 0; i < 8; i++){
@@ -16,7 +16,7 @@ const iShop = {
 		},
 		daiso_drink: function(){
 			const data = Items.searchType('drinks')
-			const list = data.filter( item => item.tags.has('coffee', 'soda', 'energy', 'tea') && !item.tags.includes('seasonal', 'premade') && !item.location )
+			const list = data.filter( item => item.tags.has('coffee', 'soda', 'energy', 'tea') && !item.tags.includes('seasonal', 'premade', 'gacha') && !item.location )
 			//随机抽取8个
 			const result = []
 			result.push(Items.get('mineralwater'))
@@ -31,7 +31,7 @@ const iShop = {
 		},
 		daiso_foods: function(){
 			const data = Items.searchType('foods')
-			const list = data.filter( item => item.tags.has('mealbox', 'premade', 'bread') && !item.location && ( !item.tags.has('seasonal') || item.tags.has('seasonal', Time.season) == 2 ))
+			const list = data.filter( item => item.tags.has('mealbox', 'premade', 'bread') && !item.location && ( !item.tags.has('seasonal', 'gacha') || item.tags.has('seasonal', Time.season) == 2 ))
 
 			//随机抽取6个
 			const result = []
@@ -46,8 +46,8 @@ const iShop = {
 		},
 		daiso_sundry: function(){
 			const data = Items.searchType('misc')
-			data.push(...Items.searchType('consumables'))
-			const list = data.filter( item => item.tags.has('sundry'))
+			data.push(...Items.searchType('consumable'))
+			const list = data.filter( item => item.tags.has('sundry') && !item.tags.has('seasonal', 'gacha') && !item.location )
 
 			const result = []
 			for(let i = 0; i < 6; i++){
@@ -108,18 +108,29 @@ const iShop = {
 		for(let i=0; i < shopitems.length; i++){
 			const item = shopitems[i]
 			const data = Items.get(item.id)
-			const img = iUtil.itemImageResolve(item, data)
+			const img = iUtil.itemImageResolve(item, data, 1)
 			const unit1 = batchUnitTxt(data.tags, item.stock)
 			const unit2 = subUnitTxt(data.tags, item.count)
             const price = item.price/100 * ( 1 - V.iShop[shelf].discount)
 
+			let name = lanSwitch(data.name)
+			if(item.diff){
+				const diffname = data.diff[item.diff].displayname
+				if(data.tags.includes('equip')){
+					name = `${name} [${diffname}]`
+				}
+				else{
+					name = lanSwitch(diffname)
+				}
+			}
+
 
 			let html = [
 				`<div class='shopitembox' onclick='iShop.select("${shelf}", ${i})'>`,
-				`	<div class='shopitemname'>${lanSwitch(data.name)}</div>`,
+				`	<div class='shopitemname'>${name}</div>`,
 				`	<div class='shopitemiconframe'>`,
 				`		<div class='shopitemicon'>`,
-				`			<img src='${img}'>`,
+				`			<img  class='icon' src='${img}'>`,
 				`		</div>`,
 				`	</div>`,
 				`	<div class='itemprice'>`,
@@ -152,7 +163,7 @@ const iShop = {
 
 	printCart : function(item){
 		const data = Items.get(item.id)
-		const img = iUtil.itemImageResolve(item, data)
+		const img = iUtil.itemImageResolve(item, data, 1)
 		const name = lanSwitch(data.name)
 		const info = lanSwitch(data.info)
         console.log('print cart item:', item, item.stack, data.tags, data.num )
@@ -169,7 +180,7 @@ const iShop = {
 				<div id="shopcart-iteminfo">
 					<div id="shopcart-icon">
 						<div class="shopcart-icon">
-							<img src="${img}">
+							<img class='icon' src="${img}">
 						</div>
 					</div>
 					<div class="shopcart-info">

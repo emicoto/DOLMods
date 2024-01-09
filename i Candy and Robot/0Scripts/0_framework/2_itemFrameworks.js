@@ -583,13 +583,30 @@ function pocketItem(itemId, num, diff){
 	}
 }
 
-function generalUseItemMsg(type, tags, names){
-	let methods = useMethods(type, tags)
-	let html = lanSwitch(
-		`You ${methods[0]} the ${names[0].toLocaleLowerCase()}.`, 
-		`你${methods[1]}了${names[1]}。`
-	)
-	return html
+function onDrop(data){
+	if(iM.checkItemOnGet(data.drop.item, data.drop.num)){
+		const dropitem = Items.get(data.drop.item)
+
+		iM.getItem(dropitem.id, data.drop.num)
+
+		V.addMsg += printTemplet(
+			lanSwitch(systemMsg.getItem),
+			lanSwitch(dropitem.name),
+		)
+	}
+}
+
+function useItemPassTime(type){
+	const time = {
+		consumable : 5,
+		foods : 5,
+		drinks : 5,
+		cooking : 10,
+		drugs: 3,
+		medicine : 2,
+		misc: 5,
+	}
+	return time[type] || 1
 }
 
 //数组和对象在DOL内部传递有蜜汁错误。所以从背包里传递过来的，是具体位置信息。
@@ -601,32 +618,41 @@ function useItems(pocket, pos, enemy){
 	if(!data){
 		throw new Error('no such item:', item.id)
 	}
+
+	const { type, tags, name, effects, onUse, usage, drop } = data
+
 	if(data.alias){
 		data = Items.get(data.alias)
 	}
+
 	let params = ''
 
-	let msg = generalUseItemMsg(data.type, data.tags, data.name)
-	V.tvar.passtime = iUtil.useItemPassTime(data)
+	let msg = printTemplet(
+		lanSwitch( systemMsg.useItem ), 
+		lanSwitch( useMethods( type, tags ) ), 
+		lanSwitch( name )
+	)
+
+	V.tvar.passtime = useItemPassTime(type)
 
 	if(itemMsg[data.id]){
 		msg = lanSwitch(itemMsg[data.id])
 	}
 
-	if(data.effects.length > 0 && typeof data.onUse !== 'function'){
-		data.effects.forEach((set)=>{
+	if( effects?.length > 0 && typeof onUse !== 'function'){
+		effects.forEach((set)=>{
 			let [param, value, method] = set;
 			params += data.doDelta(param, value, method);
 		})
 
 	}
-	else if(typeof data.onUse == 'function'){
-		msg = data.onUse()
+	else if(typeof onUse == 'function'){
+		msg = onUse()
 	}
 
-	item.count -= data.usage
+	item.count -= usage || 1
 
-	if(item.count > 0 && item.count > data.usage){
+	if(item.count > 0 && item.count >= usage){
 		V.tvar.onemore = true
 	}
 
@@ -635,12 +661,13 @@ function useItems(pocket, pos, enemy){
 	}
 
 	//掉落处理
-	if(typeof data.drop == 'function' && !enemy){
-		data.drop()
+	if(String(drop) == '[object Object]' && !enemy){
+		onDrop(data)
 	}
 
 	return msg + params
 }
+
 
 DefineMacroS('useItem', useItems)
 

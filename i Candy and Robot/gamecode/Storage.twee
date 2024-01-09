@@ -1,17 +1,68 @@
 :: iCandy Widget Storagep [widget]
-
 <<widget "OpenHomeStorage">>
-    <<set _link to lanSwitch('Open Storage', '打开仓库')>>
-    <<link _link "iCandy HomeStorage">><</link>>
+<<ind>><<set _link to lanSwitch('Open Storage', '打开仓库')>>
+<<link _link "Actions HomeStorage">><</link>>
+<br><br>
 <</widget>>
 
+<<widget "OpenLockers">>
+<<set _link to lanSwitch('Open Locker', '打开储物柜')>>
+<<link _link "Actions LockerStorage">><</link>>
+<br><br>
+<</widget>>
 
-:: iCandy HomeStorage
+<<widget "OpenStorage">>
+<<set _link to lanSwitch('Open Storage', '打开储物柜')>>
+<<link _link "Actions Storage">><</link>>
+<br><br>
+<</widget>>
 
+:: Actions HomeStorage
 你打开了储物柜。
 <br><br>
 
+<div id='container'>
 
+<div id="storage-0" class="pocketslot no-numberify">
+    <div class="itemname">塑料袋</div>
+    <div class="itemcount">1件</div>
+    <div id="slider">
+        <<link '<<'>>
+            <<replace #storage-0-stack>><<=_storage[0]>><</replace>>
+            <<set _storage[0] = Math.max(_storage[0] - 5, 0)>>
+        <</link>>
+        <<link '<'>><</link>>
+        <div id='storage-0-stack'> <<=_storage[0]>> </div>
+        <<link '>'>><</link>>
+        <<link '>>'>>
+            <<replace #storage-0-stack>><<=_storage[0]>><</replace>>
+            <<set _storage[0] = Math.min(_storage[0] + 5, 100)>>
+        <</link>>
+    </div>
+
+    <div id="plasticbag" class="itemicon">
+        <mouse class="tooltip-tiny">
+        <img class="icon" src="img/items/container/plasticbag.png">
+        <span>一个稍微能装东西的塑料袋。</span>
+        </mouse>
+    </div>
+    <div id="action" class="pocketaction">
+        <span class="itemaction">
+        <<link "取出">>
+            <<run iM.takeItem('home', 0, _storage[0])>>
+        <</link>>
+        </span>
+        <span class="itemaction">
+        <<link "清空">>
+            <<run iM.clearItem('home', 0)>>
+        <</link>>
+        </span>
+    </div>
+</div>
+
+
+
+</div>
 
 
 <<link 'Back' 'Orphanage'>><</link>>

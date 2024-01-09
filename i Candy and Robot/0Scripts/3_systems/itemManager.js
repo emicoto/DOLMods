@@ -47,8 +47,12 @@ const iManager = {
 	},
 
 	getEquip(pos){
-		if(V.iPockets[pos + 'type'] == 'none') return 'none'
-		return V.iPockets[pos + 'type'].id
+		if(V.iPockets.equip[pos] == 'none') return 'none'
+		return V.iPockets.equip[pos].id
+	},
+
+	setEquip(pos, value){
+		V.iPockets.equip[pos] = value
 	},
 
 	getPocket(pos){
@@ -594,19 +598,19 @@ const iManager = {
 		if(!V.iPockets[pocket][slot]) return
 
 		const item = V.iPockets[pocket].deleteAt(slot)
-		if(V.iPockets[pos+'type'] !== 'none'){
+		if(this.getEquip(pos) !== 'none'){
 			this.onUnEquip(pos)
 		}
 
-		V.iPockets[pos+'type'] = item[0]
+		this.setEquip(pos, item[0])
 		this.updatePockets()
 	},
 
 	onUnEquip(pos){
-		if(V.iPockets[pos+'type'] == 'none') return
+		const item = this.getEquip(pos)
+		if(item == 'none') return
 
-		const item = V.iPockets[pos+'type']
-		V.iPockets[pos+'type'] = 'none'
+		this.setEquip(pos, 'none')
 		this.getItems(item.id, 1, item.diff)
 		this.updatePockets()
 	},

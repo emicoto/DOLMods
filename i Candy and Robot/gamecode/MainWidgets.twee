@@ -11,7 +11,11 @@
 <!-- 在PassageFooter里的处理  -->
 
 <div id='modversion'>iCandyRobot ver <<=iCandy.version>> | SimpleFrameworks ver <<=simpleFrameworks.version>></div>
-  
+<div id='background' class='hidden'></div>
+<div id='messageBox' class='hidden no-numberify'>
+    hidden message
+</div>
+
 <</widget>>
 
 <<widget "iCandyReady">>
@@ -65,5 +69,15 @@
 <!-- 作弊  -->
 <<link '一键清空药效'>><<run iCandy.fixDrugEffect()>><</link>>
 <br>
+
+<</widget>>
+
+<<widget 'iCandyStatis'>>
+<!-- 统计  -->
+
+<</widget>>
+
+<<widget 'iCandyExtraStatis'>>
+<!-- 额外统计  -->
 
 <</widget>>

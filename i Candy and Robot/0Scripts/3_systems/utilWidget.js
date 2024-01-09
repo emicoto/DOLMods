@@ -70,23 +70,11 @@ const iUtil = {
 
 	},
 
-	useItemPassTime : function(itemdata){
-		const { type, tags } = itemdata
-		const time = {
-			consumable : 5,
-			foods : 5,
-			cooking : 10,
-			drugs: 3,
-			medicine : 2,
-		}
-		return time[type] || 1
-	},
-
 	printEquipment : function (){
 		let html = ``
 		const equip = ['held', 'bag', 'wallet', 'cart']
 		equip.forEach((slot)=>{
-			let item = V.iPockets[slot+'type']
+			let item = iM.getEquip(slot)
 				html += `<div id='${slot}' class='equipslot'>`
 	
 				if(item !== 'none'){
@@ -101,7 +89,7 @@ const iUtil = {
 					html += `<mouse class="tooltip-tiny"${onclick}>\n`
 					html += `	<img class='icon' src="${img}">\n`
 					html += `	<span>${lanSwitch(data.info)}\n`
-					html += `	<span class="yellow">${lanSwitch('unequip', '取消装备')}</span>`
+					html += `	<span class="yellow">${getLan('unequip')}</span>`
 					html += '	</span>'
 					html += '</mouse>'
 				}
@@ -115,7 +103,7 @@ const iUtil = {
 		return html
 	},
 
-	itemImageResolve : function(item, data){
+	itemImageResolve : function(item, data, shop){
 		if(!item) return 'img/items/item_none.png'
 		let size = iM.getStackSize(item.id)
 
@@ -128,7 +116,7 @@ const iUtil = {
 
 			for(let i = 1; i <= data.stacksprites.length; i++){
 				let min = data.stacksprites[i-1]
-				let max = i == data.stacksprites.length ? 1000 :  data.stacksprites[i] - 1
+				let max = i == data.stacksprites.length ? 10000 :  data.stacksprites[i] - 1
 				let result = `img/items/${data.type}/${data.id}_${min}.png`
 				if(item.diff){
 					result = `img/items/${data.type}/${data.id}_${item.diff}_${min}.png`
@@ -137,6 +125,12 @@ const iUtil = {
 			}
 			select.else(data.img)
 			img = select.has(Math.floor((item.count/size+0.5)*100))
+		}
+		console.log('image', img, item, data)
+		
+		if(data.stacksprites && shop){
+			let len = data.stacksprites.length
+			img = `img/items/${data.type}/${data.id}_${data.stacksprites[len-1]}.png`
 		}
 		return img
 	},
@@ -161,12 +155,17 @@ const iUtil = {
 			}
 
 			let itemname = data ? lanSwitch(data.name) : ''
-			let itemcount = data ? itemUnit(data.tags, item.count) : ''
+			let itemcount = data ? itemUnit(data, item.count) : ''
 
 			let method = data ? lanSwitch( useMethods(data.type, data.tags) ) : ''
 
 			let _html = `<div id='${slot}-${i}' class='pocketslot'>`
 			let img = iUtil.itemImageResolve(item, data)
+
+			if(data && item.diff && !item.tags.includes('equip')){
+				const diff = data.diff[item.diff]
+				itemname = lanSwitch(diff.displayname)
+			}
 
 			_html += `<div class='itemname'>${itemname}</div>`
 			_html += `<div class='itemcount'>${itemcount}</div>`
@@ -194,7 +193,6 @@ const iUtil = {
 				else if(!data.require && (data.effects.length > 0 || typeof data.onUse == 'function')){
 					 _html += `<<link "${method}" "Actions UseItems">>
 					 	<<set $tvar.useItem to ["${slot}", ${i}]>>
-						<<set $tvar.itemdata to Items.get("${data.id}")>>
 						<<set $tvar.img to "${img}">>
 						<<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>
 							<<set $tvar.exitPassage to $passage>>

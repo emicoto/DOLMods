@@ -1327,6 +1327,29 @@
 				src:'<<run _potentialLoveInterests.delete($loveInterest.primary)>>',
 				applyafter:'<<run let key = C.npc[$loveInterest.primary].displayname; delete _loveInterestSelections[key]>>'
 			}
+		],
+
+		'Statistics':[
+			{
+				src: '\t<</foldout>>\n<</widget>>',
+				to: '\t<</foldout>>\n\n\t<<iModStatis>>\n\n<</widget>>'
+			},
+			{
+				src: '</div>\n<</widget>>',
+				to: '\n\n\t<<iModExtraStatis>>\n\n\t</div>\n<</widget>>'
+			}
+		],
+
+		'Widgets Actions Generation':[
+			{
+				src:'<<switch $options.combatControls>>',
+				applybefore:'\n<<run setup.ModCombatSetting()>>\n'
+			},
+			{
+				srcmatchgroup: /<<widget "[a-zA-z]+Difficulty">>([\s\S]*?)<<\/widget>>/g,
+				find:'<</widget>>',
+				applybefore:'\n\n\t<<ModCombatDifficulty _diffAction>>\n\n'
+			}
 		]
 	}
 	
@@ -1351,45 +1374,72 @@
 		return source
 	}
 
+	const applysrc = function(source, srctxt, set){
+		if(set.to){
+			source = source.replace(srctxt, set.to)
+		}
+		else if(set.applyafter){
+			source = source.replace(srctxt, srctxt + set.applyafter)
+		}
+		else if(set.applybefore){
+			source = source.replace(srctxt, set.applybefore + srctxt)
+		}
+		return source
+	}
+	const applymatch = function(source, matcher, set){
+		if(source.match(matcher) == null) return source
+		
+		let [txt, txt1] = source.match(matcher)
+		return applysrc(source, txt, set)
+	}
+	const applygroup = function(source, srctxt, set){
+		if(set.to){
+			source = source.split(srctxt).join(set.to)
+		}
+		else if(set.applyafter){
+			source = source.split(srctxt).join(srctxt + set.applyafter)
+		}
+		else if(set.applybefore){
+			source = source.split(srctxt).join(set.applybefore + srctxt)
+		}
+		return source
+	}
+
 	//能批处理的批处理。街道和地点，以及战斗场景
 	function patchScene(passage, title){
 		let source = String(passage.content)
+
 	
 		if(locationPassage[title]){
 			locationPassage[title].forEach((set)=>{
 				if(set.src){
-					if(set.to){
-						source = source.replace(set.src, set.to)
-					}
-					else if(set.applyafter){
-						source = source.replace(set.src, set.src + set.applyafter)
-					}
-					else if(set.applybefore){
-						source = source.replace(set.src, set.applybefore + set.src)
-					}
+					source = applysrc(source, set.src, set)
 				}
 				if(set.srcmatch){
-					let [txt, txt1] = source.match(set.srcmatch)
-					if(set.to){
-						source = source.replace(txt, set.to)
-					}
-					else if(set.applyafter){
-						source = source.replace(txt, txt + set.applyafter)
-					}
-					else if(set.applybefore){
-						source = source.replace(txt, set.applybefore + txt)
+					srouce = applymatch(source, set.srcmatch, set)
+				}
+				if(set.srcmatchgroup){
+					let txt = source.match(set.srcmatchgroup)
+					if(txt.length > 0){
+						for(let i = 0; i < txt.length; i++){
+							const text = txt[i]
+							if(set.find){
+								let res = applysrc(text, set.find, set)
+								source = source.replace(text, res)
+							}
+							else if(set.findmatch){
+								let [txt1, txt2] = text.match(set.findmatch)
+								let res = applysrc(txt[i], txt1, set)
+								source = source.replace(text, res)
+							}
+							else{
+								source = applysrc(source, text, set)
+							}
+						}			
 					}
 				}
 				if(set.srcgroup){
-					if(set.to){
-						source = source.split(set.srcgroup).join(set.to)
-					}
-					else if(set.applyafter){
-						source = source.split(set.srcgroup).join(set.srcgroup + set.applyafter)
-					}
-					else if(set.applybefore){
-						source = source.split(set.srcgroup).join(set.applybefore + set.srcgroup)
-					}
+					applygroup(source, set.srcgroup, set)
 				}
 			})
 			
@@ -1521,26 +1571,33 @@
 	
 		widgetPassage[title].forEach((set)=>{
 			if(set.src){
-				if(set.to){
-					source = source.replace(set.src, set.to)
-				}
-				else if(set.applyafter){
-					source = source.replace(set.src, set.src + set.applyafter)
-				}
-				else if(set.applybefore){
-					source = source.replace(set.src, set.applybefore + set.src)
+				source = applysrc(source, set.src, set)
+			}
+			if(set.srcmatch){
+				srouce = applymatch(source, set.srcmatch, set)
+			}
+			if(set.srcmatchgroup){
+				let txt = source.match(set.srcmatchgroup)
+				if(txt.length > 0){
+					for(let i = 0; i < txt.length; i++){
+						const text = txt[i]
+						if(set.find){
+							let res = applysrc(text, set.find, set)
+							source = source.replace(text, res)
+						}
+						else if(set.findmatch){
+							let [txt1, txt2] = text.match(set.findmatch)
+							let res = applysrc(txt[i], txt1, set)
+							source = source.replace(text, res)
+						}
+						else{
+							source = applysrc(source, text, set)
+						}
+					}
 				}
 			}
 			if(set.srcgroup){
-				if(set.to){
-					source = source.split(set.srcgroup).join(set.to)
-				}
-				else if(set.applyafter){
-					source = source.split(set.srcgroup).join(set.srcgroup + set.applyafter)
-				}
-				else if(set.applybefore){
-					source = source.split(set.srcgroup).join(set.applybefore + set.srcgroup)
-				}
+				applygroup(source, set.srcgroup, set)
 			}
 		})
 

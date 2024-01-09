@@ -18,7 +18,6 @@
 <<link _link $tvar.exitPassage>>    
     <<pass $tvar.passtime>>
     <<set $tvar.unsetAction = true>>
-    <<run iUtil.resetTvar('itemdata', 'useItem', 'img', 'passtime', 'onemore');>>  
 <</link>>
 
 

@@ -324,7 +324,6 @@ function iModSetupDoLItems() {
 		if (plant.type == 'fruit' || plant.type == 'vegetable') {
 			item.Tags('edible', 'vegi')
 				.Effects(['hunger', hunger[item.type]])
-				.set('type', 'foods')
 		}
 		else if (item.name.includes('bottle') || item.name.includes('Bottle')) {
 			item.Tags('dol', 'drink', 'production')
@@ -355,6 +354,12 @@ function iModSetupDoLItems() {
 	Items.set(spray)
 }
 
+
+//--------------------------------------------
+//
+//  variable config
+//
+//--------------------------------------------
 const maxPalam = {
 	hunger: 2000,
 	thirst: 2000,
@@ -425,6 +430,16 @@ const iUnit = {
 		EN_plural : 'rolls',
 		CN : '卷'
 	},
+	can : {
+		EN : 'can',
+		EN_plural : 'cans',
+		CN : '罐'
+	},
+	sheet : {
+		EN : 'sheet',
+		EN_plural : 'sheets',
+		CN : '张'
+	},
 	canned : {
 		EN : 'can',
 		EN_plural : 'cans',
@@ -440,12 +455,27 @@ const iUnit = {
 		EN_plural : 'packs',
 		CN : '包'
 	},
+	pack : {
+		EN : 'pack',
+		EN_plural : 'packs',
+		CN : '包'
+	},
 	bagged : {
 		EN : 'bag',
 		EN_plural : 'bags',
 		CN : '袋'
 	},
+	bag : {
+		EN : 'bag',
+		EN_plural : 'bags',
+		CN : '袋'
+	},
 	boxed : {
+		EN : 'box',
+		EN_plural : 'boxes',
+		CN : '盒'
+	},
+	box : {
 		EN : 'box',
 		EN_plural : 'boxes',
 		CN : '盒'
@@ -465,6 +495,11 @@ const iUnit = {
 		EN_plural : '',
 		CN : '件'
 	},
+	capsule: {
+		EN : 'capsule',
+		EN_plural : 'capsules',
+		CN : '个'
+	},
 	misc : {
 		EN : '',
 		EN_plural : '',
@@ -475,7 +510,7 @@ const iUnit = {
 		EN_plural : 'sheets',
 		CN : '张'
 	},
-	pieces : {
+	piece : {
 		EN : 'piece',
 		EN_plural : 'pieces',
 		CN : '块'
@@ -510,21 +545,28 @@ const iUnit = {
 		EN_plural : 'bags',
 		CN : '包'
 	},
-	liquid : {
+	ml: {
 		EN : 'ml',
 		EN_plural : 'ml',
 		CN : 'ml'
 	},
-	lite : {
+
+	oz : {
 		EN : 'oz',
 		EN_plural : 'oz',
 		CN : 'oz'
 	},
-	powder : {
+	lb : {
 		EN : 'lb',
 		EN_plural : 'lb',
 		CN : 'lb'
 	},
+	
+	liquid : {
+		EN : 'ml',
+		EN_plural : 'ml',
+		CN : 'ml'
+	},	
 	mealbox : {
 		EN : 'box',
 		EN_plural : 'boxes',
@@ -535,15 +577,15 @@ const iUnit = {
 		EN_plural : 'servings',
 		CN : '份'
 	},
-	serving :{
+	serve :{
 		EN : 'serving',
 		EN_plural : 'servings',
 		CN : '份'
 	},
-	bun : {
-		EN : 'bun',
-		EN_plural : 'buns',
-		CN : '个'
+	loaf : {
+		EN : 'loaf',
+		EN_plural : 'loaves',
+		CN : '条'
 	},
 	water : {
 		EN : 'bottle',
@@ -552,7 +594,7 @@ const iUnit = {
 	},
 }
 
-const batchUnit = ['canned', 'bottle', 'packed', 'bagged', 'boxed', 'roll', 'set']
+const batchUnit = ['canned', 'bottle', 'packed', 'bagged', 'boxed', 'roll', 'set', 'box']
 const subUnit = Object.keys(iUnit).filter(i => batchUnit.includes(i) == false )
 
 //batch item unit
@@ -573,8 +615,18 @@ function batchUnitTxt(tags, count){
 }
 
 //simple item unit
-function subUnitTxt(tags, count){
+function subUnitTxt(data, count){
 	let unit = lanSwitch('', '个')
+	if(data.unit){
+		if(count > 1 && iUnit[data.unit][setup.language + '_plural']){
+			unit = iUnit[data.unit][setup.language + '_plural']
+		}
+		else{
+			unit = iUnit[data.unit][setup.language]
+		}
+		return unit
+	}
+
 	for(let i=0; i<subUnit.length; i++){
 		if(tags.has(subUnit[i])){
 			if(count > 1 && iUnit[subUnit[i]][setup.language + '_plural']){
@@ -590,17 +642,17 @@ function subUnitTxt(tags, count){
 }
 
 
-function itemUnit(tags, count, num){
+function itemUnit(data, count, num){
 	let text = `x${count}`
 
 	if(!num){
-		let unit = subUnitTxt(tags, count)
+		let unit = subUnitTxt(data, count)
 		if(unit){
 			text = `${count}${unit}`
 			return text
 		}
 
-		unit = batchUnitTxt(tags, count)
+		unit = batchUnitTxt(data.tags, count)
 		if(unit){
 			text = `${count}${unit}`
 		}
@@ -608,8 +660,8 @@ function itemUnit(tags, count, num){
 	}
 
 	if(num){
-		let unit1 = batchUnitTxt(tags, count)
-		let unit2 = subUnitTxt(tags, count*num)
+		let unit1 = batchUnitTxt(data.tags, count)
+		let unit2 = subUnitTxt(data, count*num)
 
 		if( unit1 && unit2 && unit1 != unit2 ){
 			text = `${count}${unit1}(${count*num}${unit2})`
@@ -618,7 +670,7 @@ function itemUnit(tags, count, num){
 			text = `${count}${unit1}`
 		}
 		else if(unit2){
-			text = `${num}${unit2}`
+			text = `${count*num}${unit2}`
 		}
 		else{
 			text = `${count}`

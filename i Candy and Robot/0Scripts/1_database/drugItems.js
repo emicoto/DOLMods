@@ -405,7 +405,7 @@ const iDrugs = [
 		this.getPalam("stress", -(20 * min * _mult));
 
 		//第一次显示与持续显示有差分		 
-		let flag = iCandy.getFlag(this.id, 'highonce')
+		let flag = iCandy.getFlag(this.id, 'highonce') ?? 0
 
 		let html = lanSwitch(drugMsg[this.id]['onHigh'][flag])
 		 + `<<ghallucinogens>><<lpain>><<llstress>>`;

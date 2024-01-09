@@ -17,7 +17,6 @@ function getDrugsConfig(tags, type){
 	}
 }
 
-
 const DrugsProcess = {
 	minuteProcess: function(sec){
 		const drugStats = R.drugStates.drugs
@@ -97,7 +96,7 @@ const DrugsProcess = {
 				if(typeof data.onWithdraw == 'function'){
 					V.addMsg += data.onWithdraw() + '<br>'
 				}
-				else if(drugMsg[item].onWithdraw){
+				else if(drugMsg[item]?.onWithdraw){
 					V.addMsg += lanSwitch(drugMsg[item].onWithdraw) + '<br>'
 				}
 				//没有则运行默认的戒断效果
@@ -158,7 +157,7 @@ const DrugsProcess = {
 			//超量值也算是一种药效残余值，每日自然恢复3点，但如果当日有嗑过药恢复数就减少。
 			const recover = type == 'general' ? 3 : getDrugsConfig(tags, 'recover')
 			if(stats.taken <= threshold ){
-				stats.overdose = Math.max(stats.overdose - stats.taken > 0 ? recover/2 : recover, 0)
+				stats.overdose = Math.max(stats.overdose - (stats.taken > 0 ? recover/2 : recover), 0)
 			}
 
 			if(stats.taken > 0 ){

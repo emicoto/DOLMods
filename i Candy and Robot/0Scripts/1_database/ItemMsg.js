@@ -50,6 +50,18 @@ const equipText = {
 }
 
 
+const systemMsg = {
+    getItem: [
+        `<span class='green'>You got {0}.</span><br>`,
+        `<span class='green'>你获得了{0}。</span><br>`
+    ],
+
+    useItem: [
+        `You {0} the {1}.`,
+        `你{0}了{1}。`
+    ],
+}
+
 
 const itemMsg = {
 	fruitscandy: [

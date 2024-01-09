@@ -168,6 +168,37 @@ setup.addBodyWriting = function(){
     })
 }
 
+//------------------------------------------------------
+//
+//  战斗动作支持
+//
+//------------------------------------------------------
+setup.modCombatActions = []
+
+setup.ModCombatSetting = function(){
+    console.log('ModCombatSetting', T.args)
+    const [ actions , actiontype ] = T.args
+
+    setup.modCombatActions.forEach((setupAction)=>{
+        const { displayname, value, type, condition, color } = setupAction
+        if( ( (typeof type == 'string' && type == actiontype) || (Array.isArray(type) && type.has(actiontype))) && typeof condition == 'function' && condition()){
+            const name = lanSwitch(displayname)
+            actions[name] = value
+            if(typeof color == 'string'){
+                T.args[2] = color
+            }
+            
+        }
+    })
+}
+
+function modCombatDifficul(diffAction){
+    const actionObj = setup.modCombatActions.filter((action)=>action.value == diffAction)[0]
+    if(actionObj && actionObj.widget){
+        return `<<${actionObj.widget}>>`
+    }
+}
+DefineMacroS('ModCombatDifficulty', modCombatDifficul)
 
 //------------------------------------------------------
 //

@@ -47,19 +47,22 @@ Time.pass = function(sec){
 	const fragment = oldPass(sec)
 	const currentDate = Time.date
 
+	console.log('fragment:', fragment)
 	console.log('passed time:',sec)
 	console.log('prevDate:',prevDate)
 	console.log('currentDate:', currentDate)
 
 	TimeHandle.prevDate = prevDate
 	TimeHandle.currentDate = currentDate
-
-	iTimeHandle(sec)
+	
+	fragment.append(iTimeHandle(sec))
+	
 	if(V.combat == 1){
 		iCombatHandle()
+		iCombatActionHandle()
 	}
 
-	console.log('fragment:', fragment)
+
 	if(fragment !== undefined){
 		return fragment 
 	}
@@ -99,6 +102,7 @@ function iTimeHandle(passedSec){
 		weekProcess(passedSec, day, weekday)
 	}
 
+	return html
 }
 
 function minuteProcess(sec, min){
@@ -120,35 +124,20 @@ function minuteProcess(sec, min){
 	//-------------------------------------------------------------
 	// 其他每分钟处理
 	//-------------------------------------------------------------
-	if(sec < 60 || min <= 0) return;
-	//获得口渴值，口渴值受到疲劳的影响
+	if(sec < 60 && min <= 0 ) return;
 
+	//获得口渴值，口渴值受到疲劳的影响
 	console.log('hunger and thirst process', sec, min)
 	if ( sec / 60 > min ){
 		min = Math.floor(sec / 60 + 0.5)
 	}
 	
 
-	let thirstMult = 1 + (V.tiredness / C.tiredness.max)
-	V.thirst = Math.clamp((V.thirst + 1 * min * thirstMult).fix(2), 0, C.thirst.max)
-
+	let mult = 1 + (V.tiredness / C.tiredness.max)
+	V.thirst = Math.clamp((V.thirst + 1 * min * mult).fix(2), 0, C.thirst.max)
 	//获得饥饿值, 饥饿值受到疲劳的影响
-	let hungerMult = 1 + (V.tiredness / C.tiredness.max)
-	V.hunger = Math.clamp((V.hunger + 1 * min * hungerMult).fix(2), 0, C.hunger.max)
+	V.hunger = Math.clamp((V.hunger + 1 * min * mult).fix(2), 0, C.hunger.max)
 
-	console.log('hunger:', V.hunger, hungerMult,'thirst:', V.thirst, hungerMult)
-
-	//当饥饿值过高时，获得通知
-	if(V.hunger >= C.hunger.max * 0.8){
-		wikifier('stress', 8, 40)
-		V.addMsg += lanSwitch(stateEffects.hungry) + '<<gstress>><br>'
-	}
-
-	//当饥渴值过高时，获得通知
-	if(V.thirst >= C.thirst.max * 0.8){
-		wikifier('stress', 8, 40)
-		V.addMsg += lanSwitch(stateEffects.thirst) + '<<gstress>><br>'
-	}
 
 }
 
@@ -166,7 +155,19 @@ function hourProcess(sec, hour){
 	//-------------------------------------------------------------
 	// 其他每小时处理
 	//-------------------------------------------------------------
-	
+
+	//当饥饿值过高时，获得通知
+	if(V.hunger >= C.hunger.max * 0.8){
+		wikifier('stress', 8, 60)
+		V.addMsg += lanSwitch(stateEffects.hungry) + '<<gstress>><br>'
+	}
+
+	//当饥渴值过高时，获得通知
+	if(V.thirst >= C.thirst.max * 0.8){
+		wikifier('stress', 8, 60)
+		V.addMsg += lanSwitch(stateEffects.thirst) + '<<gstress>><br>'
+	}
+
 	//随机减少商店库存，营造商店销售的假象
 	for( const [key, shelf] of Object.entries(V.iShop)){
 		if(key == 'selected'){
@@ -180,8 +181,8 @@ function hourProcess(sec, hour){
 					console.log('item not found:', item.id)
 					shelf.stocks.deleteAt(key)
 				}
-				else if(random(100) < 40){
-					const sale = random(2, 6)
+				else if(window.random(100) < 40){
+					const sale = window.random(2, 6)
 					item.stock = Math.max(0, item.stock - sale)
 					item.count = Math.max(0, item.stock * data.num )
 				}
@@ -252,16 +253,31 @@ function weekProcess(sec, day, weekday){
 	}
 }
 
+function iCombatActionHandle(){
+if(V.leftaction == 'whackdrugs' || V.rightaction == 'whackdrugs'){
+	T.addMsg += '你试图打掉对方手中的药物，'
+	if(random(100) < 30){
+		T.addMsg += '并成功了。对方看起来更加生气了。<br>'
+	}
+	else{
+		T.addMsg += '但是失败了。对方看起来更加生气了。<br>'
+	}
+}
+}
+
 function iCombatHandle(){
 	const whitelistnpc = ['Avery', 'Briar', 'Darryl', 'Eden', 'Harper', 'Kylar', 'Landry', 'Morgan', 'Whitney', 'Winter', 'Remy', 'Wren', 'Keith', 'Cheng']
 	//非战斗场景跳过
 	if(V.combat == 0) return;
 	if(V.stalk == true) return;
+	//游戏前三天跳过
+	if(Time.days < 3) return;
+
 	//非白名单NPC跳过
 	if(V.npc.length > 0 && !V.npc.has(...whitelistnpc)) return;
 
 	//如果场景在学校，则看概率跳过
-	if( V.location == 'school' && random(100) > 20) {
+	if( V.location == 'school' && random(100) > 10) {
 		R.combat.skip = true;
 		return;
 	}
@@ -280,7 +296,6 @@ function iCombatHandle(){
 		R.combat.skip = true;
 		return;
 	}
-
 	//已经跳过的，跳过
 	if(R.combat.skip == true) return;
 
@@ -293,7 +308,7 @@ function iCombatHandle(){
 	) return;
 
 	let rate = V.trauma/80 + V.stress/200
-	const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter( (item) => !item.id.has('angelpowder') && iCandy.getStat(item.id, 'efTimer') - V.timeStamp <= 1800 )
+	const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter( (item) => !item.id.has('angel') && iCandy.getStat(item.id, 'efTimer') - V.timeStamp <= 1800 )
 	console.log('combat feed drugs:',drugs)
 
 	let html = ''
@@ -374,3 +389,49 @@ Object.defineProperties(window.iCandy, {
 	hourProcess : { value : hourProcess, writable : false },
 	dayProcess : { value : dayProcess, writable : false }
 })
+
+function combatTest(){
+	//循环当前NPC
+	const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter( (item) => !item.id.has('angel') && iCandy.getStat(item.id, 'efTimer') - V.timeStamp <= 1800 )
+	for(let i = 0; i < V.NPCList.length; i++){
+		const npc = V.NPCList[i]
+
+		//先初始化feed
+		if(npc.feed == undefined){
+			npc.feed = 0
+		}
+
+		//如果NPC的手为空，则有概率拿起针头or药丸
+		if( (npc.lefthand == 0 || npc.righthand == 0 ) && random(100) < 30 ){
+			npc.takeItem = {
+				item : drugs.random(),
+				timer: 0
+			}
+			V.afterMsg += `${npc.fullDescription}拿起了${npc.takeItem.item.name}<br>`
+		}
+
+		if( npc.takenItem ){
+			npc.takenItem.timer += 1
+
+			//下回合开始时，进行行为判断
+			if(npc.takenItem.timer > 1 ){
+				
+				if(V.playerAction.lefthand == 'hitoff' || V.playerAction.righthand == 'hitoff'){
+					//如果PC试图打掉NPC手中的物品，则有概率打掉
+					if(random(100) < 20){
+						V.afterMsg += `${npc.fullDescription}的${npc.takenItem.item.name}被打掉了<br>`
+						npc.takenItem = undefined
+					}
+					//否则，NPC有概率投喂PC
+					else if(random(100) < 30){
+						V.afterMsg += `${npc.fullDescription}投喂了${npc.takenItem.item.name}<br>`
+						npc.feed++
+						npc.takenItem = undefined
+					}
+				}
+			}
+		}
+
+		
+	}
+}
