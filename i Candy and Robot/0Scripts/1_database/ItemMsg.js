@@ -641,10 +641,10 @@ const itemMsg = {
     ],
 
     gachacandy_yellow: [
-        `The yellow octopus seems to be waving at you, but the "earwax-flavoured candy" on the bag makes the scene even more bizarre.
+        `The yellow octopus seems to be waving at you, but the "earwax-flavoured candy" on the bag makes the scene even more bizarre.<br>
         When you put the candy in your mouth, the first thing you feel when the candy comes into contact with your tongue is the sour taste, followed by the smell of rotten fruit piling up and fermenting.`,
 
-        `黄色的小章鱼似乎在向你招手，然而包装袋上的“耳屎味糖果”让这一幕变得诡异了起来。
+        `黄色的小章鱼似乎在向你招手，然而包装袋上的“耳屎味糖果”让这一幕变得诡异了起来。<br>
         你将糖果放进嘴里，当糖果和舌头接触的那刻先感受到的是酸味，之后便是腐烂的水果堆在一起发酵的味道。`
     ],
 }
