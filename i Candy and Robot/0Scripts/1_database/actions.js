@@ -4,6 +4,9 @@ const iCandyCombatActions = [
         value: 'whackdrugs',
         type: 'leftaction',
         widget: 'whackdrugsDifficult',
+
+        mainType: 'Default',
+        color: 'brat',
         condition: function(){
             return V.pain < 100 && V.arousal < V.arousalmax * 0.8 && V.control >= V.controlmax * 0.3 && V.NPCList[V.lefttarget].takeItem
         }
@@ -13,6 +16,9 @@ const iCandyCombatActions = [
         value: 'whackdrugs',
         type: 'rightaction',
         widget: 'whackdrugsDifficult',
+
+        mainType: 'Default',
+        color: 'brat',
         condition: function(){
             return V.pain < 100 && V.arousal < V.arousalmax * 0.8 && V.control >= V.controlmax * 0.3 && V.NPCList[V.righttarget].takeItem
         }

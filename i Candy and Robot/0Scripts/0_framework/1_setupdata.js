@@ -355,334 +355,6 @@ function iModSetupDoLItems() {
 }
 
 
-//--------------------------------------------
-//
-//  variable config
-//
-//--------------------------------------------
-const maxPalam = {
-	hunger: 2000,
-	thirst: 2000,
-}
-
-function printPalams(palam, value){
-	let gl = 'l';
-	let count = 1;
-	if (value > 0) {
-		gl = 'g';
-	}
-	if (Math.abs(value) > 30) {
-		count = 3;
-	} else if (Math.abs(value) > 20) {
-		count = 2;
-	}
-	
-	if(palam == 'hunger' || palam == 'thirsty'){
-		if(Math.abs(value) >= 500 ){
-			count = 3;
-		}
-		else if(Math.abs(value) >= 200 ){
-			count = 2;
-		}
-	}
-
-	if(palam == 'hallucinogen'){
-		palam = 'hallucinogens'
-	}
-	if(palam == 'thirsty'){
-		palam = 'thirst'
-	}
-
-	return `<<${gl.repeat(count)}${palam}>>`;
-}
-
-function useMethods(type, tags){
-	
-	let methods = ['use', '使用']
-
-	if(tags.includes('inject')){
-		methods = ['inject', '注射']
-	}
-	if(tags.includes('drugpowder')){
-		methods = ['absorb', '吸取']
-	}
-	if(tags.includes('smoke')){
-		methods = ['smoke', '抽']
-	}
-	if(tags.includes('cream')){
-		methods = ['apply', '涂抹']
-	}
-	if(type == 'medicine'){
-		methods = ['take', '服用']
-	}
-	if(type == 'foods' || tags.includes('edible')){
-		methods = ['eat', '吃']
-	}		
-	if(type == 'drinks' || tags.includes('potable')){
-		methods = ['drink', '喝']
-	}
-
-	return methods
-}
-const iUnit = {
-	roll : {
-		EN : 'roll',
-		EN_plural : 'rolls',
-		CN : '卷'
-	},
-	can : {
-		EN : 'can',
-		EN_plural : 'cans',
-		CN : '罐'
-	},
-	sheet : {
-		EN : 'sheet',
-		EN_plural : 'sheets',
-		CN : '张'
-	},
-	canned : {
-		EN : 'can',
-		EN_plural : 'cans',
-		CN : '罐'
-	},
-	bottle : {
-		EN : 'bottle',
-		EN_plural : 'bottles',
-		CN : '瓶'
-	},
-	packed : {
-		EN : 'pack',
-		EN_plural : 'packs',
-		CN : '包'
-	},
-	pack : {
-		EN : 'pack',
-		EN_plural : 'packs',
-		CN : '包'
-	},
-	bagged : {
-		EN : 'bag',
-		EN_plural : 'bags',
-		CN : '袋'
-	},
-	bag : {
-		EN : 'bag',
-		EN_plural : 'bags',
-		CN : '袋'
-	},
-	boxed : {
-		EN : 'box',
-		EN_plural : 'boxes',
-		CN : '盒'
-	},
-	box : {
-		EN : 'box',
-		EN_plural : 'boxes',
-		CN : '盒'
-	},
-	set : {
-		EN : 'set',
-		EN_plural : 'sets',
-		CN : '套'
-	},
-	cup: {
-		EN : 'cup',
-		EN_plural : 'cups',
-		CN : '杯'
-	},
-	equip : {
-		EN : '',
-		EN_plural : '',
-		CN : '件'
-	},
-	capsule: {
-		EN : 'capsule',
-		EN_plural : 'capsules',
-		CN : '个'
-	},
-	misc : {
-		EN : '',
-		EN_plural : '',
-		CN : '个'
-	},
-	paper : {
-		EN : 'sheet',
-		EN_plural : 'sheets',
-		CN : '张'
-	},
-	piece : {
-		EN : 'piece',
-		EN_plural : 'pieces',
-		CN : '块'
-	},
-	pair :{
-		EN : 'pair',
-		EN_plural : 'pairs',
-		CN : '双'
-	},
-	uses :{
-		EN : 'use',
-		EN_plural : 'uses',
-		CN : '次'
-	},
-	smoke : {
-		EN : '',
-		EN_plural : '',
-		CN : '支'
-	},
-	inject : {
-		EN : 'shot',
-		EN_plural : 'shots',
-		CN : '管'
-	},
-	pill : {
-		EN : 'pill',
-		EN_plural : 'pills',
-		CN : '片'
-	},
-	drugpowder : {
-		EN : 'bag',
-		EN_plural : 'bags',
-		CN : '包'
-	},
-	ml: {
-		EN : 'ml',
-		EN_plural : 'ml',
-		CN : 'ml'
-	},
-
-	oz : {
-		EN : 'oz',
-		EN_plural : 'oz',
-		CN : 'oz'
-	},
-	lb : {
-		EN : 'lb',
-		EN_plural : 'lb',
-		CN : 'lb'
-	},
-	
-	liquid : {
-		EN : 'ml',
-		EN_plural : 'ml',
-		CN : 'ml'
-	},	
-	mealbox : {
-		EN : 'box',
-		EN_plural : 'boxes',
-		CN : '份'
-	},	
-	meal : {
-		EN : 'serving',
-		EN_plural : 'servings',
-		CN : '份'
-	},
-	serve :{
-		EN : 'serving',
-		EN_plural : 'servings',
-		CN : '份'
-	},
-	loaf : {
-		EN : 'loaf',
-		EN_plural : 'loaves',
-		CN : '条'
-	},
-	water : {
-		EN : 'bottle',
-		EN_plural : 'bottles',
-		CN : '瓶'
-	},
-}
-
-const batchUnit = ['canned', 'bottle', 'packed', 'bagged', 'boxed', 'roll', 'set', 'box']
-const subUnit = Object.keys(iUnit).filter(i => batchUnit.includes(i) == false )
-
-//batch item unit
-function batchUnitTxt(tags, count){
-	let unit = ''
-	for(let i=0; i<batchUnit.length; i++){
-		if(tags.has(batchUnit[i])){
-			if(count > 1 && iUnit[batchUnit[i]][setup.language + '_plural']){
-				unit = iUnit[batchUnit[i]][setup.language + '_plural']
-			}
-			else{
-				unit = iUnit[batchUnit[i]][setup.language]
-			}
-			break
-		}
-	}
-	return unit
-}
-
-//simple item unit
-function subUnitTxt(data, count){
-	let unit = lanSwitch('', '个')
-	if(data.unit){
-		if(count > 1 && iUnit[data.unit][setup.language + '_plural']){
-			unit = iUnit[data.unit][setup.language + '_plural']
-		}
-		else{
-			unit = iUnit[data.unit][setup.language]
-		}
-		return unit
-	}
-
-	for(let i=0; i<subUnit.length; i++){
-		if(tags.has(subUnit[i])){
-			if(count > 1 && iUnit[subUnit[i]][setup.language + '_plural']){
-				unit = iUnit[subUnit[i]][setup.language + '_plural']
-			}
-			else{
-				unit = iUnit[subUnit[i]][setup.language]
-			}
-			break
-		}
-	}
-	return unit
-}
-
-
-function itemUnit(data, count, num){
-	let text = `x${count}`
-
-	if(!num){
-		let unit = subUnitTxt(data, count)
-		if(unit){
-			text = `${count}${unit}`
-			return text
-		}
-
-		unit = batchUnitTxt(data.tags, count)
-		if(unit){
-			text = `${count}${unit}`
-		}
-		return text
-	}
-
-	if(num){
-		let unit1 = batchUnitTxt(data.tags, count)
-		let unit2 = subUnitTxt(data, count*num)
-
-		if( unit1 && unit2 && unit1 != unit2 ){
-			text = `${count}${unit1}(${count*num}${unit2})`
-		}
-		else if(unit1){
-			text = `${count}${unit1}`
-		}
-		else if(unit2){
-			text = `${count*num}${unit2}`
-		}
-		else{
-			text = `${count}`
-		}
-	}
-
-	return text
-}
-
-
-const pocketsList = ["body","held","bag","cart","hole"]
-
 Object.defineProperties(setup, {
 	addictions: { value: iModAddictions },
 	maxStacks: { value: iModMaxStacks },
@@ -690,14 +362,306 @@ Object.defineProperties(setup, {
 	plantNames: { value: plantNames }
 })
 
-Object.defineProperties(window, {
-	pocketsList: { value: pocketsList },
-	printPalams: { value: printPalams },
-	useMethods: { value: useMethods },
-	itemUnit: { value: itemUnit },
-	iUnit: { value: iUnit },
-	batchUnit: { value: batchUnit },
-	subUnit: { value: subUnit },
-	batchUnitTxt: { value: batchUnitTxt },
-	subUnitTxt: { value: subUnitTxt },
-})
+//--------------------------------------------
+//
+//  variable config
+//
+//--------------------------------------------
+const pocketsList = ["body","held","bag","cart","hole"]
+
+const iCandyDataSetting = {
+	units : {
+		roll : {
+			EN : 'roll',
+			EN_plural : 'rolls',
+			CN : '卷'
+		},
+		can : {
+			EN : 'can',
+			EN_plural : 'cans',
+			CN : '罐'
+		},
+		sheet : {
+			EN : 'sheet',
+			EN_plural : 'sheets',
+			CN : '张'
+		},
+		canned : {
+			EN : 'can',
+			EN_plural : 'cans',
+			CN : '罐'
+		},
+		bottle : {
+			EN : 'bottle',
+			EN_plural : 'bottles',
+			CN : '瓶'
+		},
+		packed : {
+			EN : 'pack',
+			EN_plural : 'packs',
+			CN : '包'
+		},
+		pack : {
+			EN : 'pack',
+			EN_plural : 'packs',
+			CN : '包'
+		},
+		bagged : {
+			EN : 'bag',
+			EN_plural : 'bags',
+			CN : '袋'
+		},
+		bag : {
+			EN : 'bag',
+			EN_plural : 'bags',
+			CN : '袋'
+		},
+		boxed : {
+			EN : 'box',
+			EN_plural : 'boxes',
+			CN : '盒'
+		},
+		box : {
+			EN : 'box',
+			EN_plural : 'boxes',
+			CN : '盒'
+		},
+		set : {
+			EN : 'set',
+			EN_plural : 'sets',
+			CN : '套'
+		},
+		cup: {
+			EN : 'cup',
+			EN_plural : 'cups',
+			CN : '杯'
+		},
+		equip : {
+			EN : '',
+			EN_plural : '',
+			CN : '件'
+		},
+		capsule: {
+			EN : 'capsule',
+			EN_plural : 'capsules',
+			CN : '个'
+		},
+		misc : {
+			EN : '',
+			EN_plural : '',
+			CN : '个'
+		},
+		paper : {
+			EN : 'sheet',
+			EN_plural : 'sheets',
+			CN : '张'
+		},
+		piece : {
+			EN : 'piece',
+			EN_plural : 'pieces',
+			CN : '块'
+		},
+		pair :{
+			EN : 'pair',
+			EN_plural : 'pairs',
+			CN : '双'
+		},
+		uses :{
+			EN : 'use',
+			EN_plural : 'uses',
+			CN : '次'
+		},
+		smoke : {
+			EN : '',
+			EN_plural : '',
+			CN : '支'
+		},
+		inject : {
+			EN : 'shot',
+			EN_plural : 'shots',
+			CN : '管'
+		},
+		pill : {
+			EN : 'pill',
+			EN_plural : 'pills',
+			CN : '片'
+		},
+		drugpowder : {
+			EN : 'bag',
+			EN_plural : 'bags',
+			CN : '包'
+		},
+		ml: {
+			EN : 'ml',
+			EN_plural : 'ml',
+			CN : 'ml'
+		},
+
+		oz : {
+			EN : 'oz',
+			EN_plural : 'oz',
+			CN : 'oz'
+		},
+		lb : {
+			EN : 'lb',
+			EN_plural : 'lb',
+			CN : 'lb'
+		},
+		
+		liquid : {
+			EN : 'ml',
+			EN_plural : 'ml',
+			CN : 'ml'
+		},	
+		mealbox : {
+			EN : 'box',
+			EN_plural : 'boxes',
+			CN : '份'
+		},	
+		meal : {
+			EN : 'serving',
+			EN_plural : 'servings',
+			CN : '份'
+		},
+		serve :{
+			EN : 'serving',
+			EN_plural : 'servings',
+			CN : '份'
+		},
+		loaf : {
+			EN : 'loaf',
+			EN_plural : 'loaves',
+			CN : '条'
+		},
+		water : {
+			EN : 'bottle',
+			EN_plural : 'bottles',
+			CN : '瓶'
+		},
+	},
+
+	batchUnit : ['canned', 'bottle', 'packed', 'bagged', 'boxed', 'roll', 'set', 'box'],
+
+	useMethods: function (type, tags){
+		let methods = ['use', '使用']
+
+		if(tags.includes('inject')){
+			methods = ['inject', '注射']
+		}
+		if(tags.includes('drugpowder')){
+			methods = ['absorb', '吸取']
+		}
+		if(tags.includes('smoke')){
+			methods = ['smoke', '抽']
+		}
+		if(tags.includes('cream')){
+			methods = ['apply', '涂抹']
+		}
+		if(type == 'medicine'){
+			methods = ['take', '服用']
+		}
+		if(type == 'foods' || tags.includes('edible')){
+			methods = ['eat', '吃']
+		}		
+		if(type == 'drinks' || tags.includes('potable')){
+			methods = ['drink', '喝']
+		}
+
+		return methods
+	},
+
+	batchUnitTxt: function(data, count){
+		let unit = ''
+		for(let i=0; i<this.batchUnit.length; i++){
+			const key = this.batchUnit[i]
+			if(data.tags.has(key)){
+				if(count > 1 && this.units[key][setup.language + '_plural']){
+					unit = this.units[key][setup.language + '_plural']
+				}
+				else{
+					unit = this.units[key][setup.language]
+				}
+				break
+			}
+		}
+		return unit
+	},
+
+	subUnitTxt: function(data, count){
+		let unit = lanSwitch('', '个')
+		let key = data.unit
+		let lan = setup.language
+
+		if(data.unit){
+			let key = data.unit
+
+			if(count > 1 && this.units[key][lan + '_plural']){
+				unit = this.units[key][lan + '_plural']
+			}
+			else{
+				unit = this.units[key][lan]
+			}
+			return unit
+		}
+	
+		for(let i=0; i < this.subUnit.length; i++){
+			let key = this.subUnit[i]
+
+			if(data.tags.has(key)){
+				if(count > 1 && this.units[key][lan + '_plural']){
+					unit = this.units[key][lan + '_plural']
+				}
+				else{
+					unit = this.units[key][lan]
+				}
+				break
+			}
+		}
+		return unit
+	},
+
+	itemUnit: function(data, count, num){
+		let text = `x${count}`
+
+		if(!num){
+			let unit = this.subUnitTxt(data, count)
+			if(unit){
+				text = `${count}${unit}`
+				return text
+			}
+
+			unit = this.batchUnitTxt(data, count)
+			if(unit){
+				text = `${count}${unit}`
+			}
+			return text
+		}
+
+		if(num){
+			let unit1 = this.batchUnitTxt(data, count)
+			let unit2 = this.subUnitTxt(data, count*num)
+
+			if( unit1 && unit2 && unit1 != unit2 ){
+				text = `${count}${unit1}(${count*num}${unit2})`
+			}
+			else if(unit1){
+				text = `${count}${unit1}`
+			}
+			else if(unit2){
+				text = `${count*num}${unit2}`
+			}
+			else{
+				text = `${count}`
+			}
+		}
+
+		return text
+	},
+	pocketsList,
+}
+
+let subUnit = Object.keys(iCandyDataSetting.units).filter(i => iCandyDataSetting.batchUnit.includes(i) == false )
+iCandyDataSetting.subUnit = subUnit
+
+Object.defineProperty(window, 'iData', { get: function () { return iCandyDataSetting } })
+Object.defineProperty(window, 'pocketsList', { get: function () { return pocketsList } })

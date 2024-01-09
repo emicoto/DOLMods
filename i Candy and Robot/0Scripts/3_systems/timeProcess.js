@@ -102,7 +102,7 @@ function iTimeHandle(passedSec){
 		weekProcess(passedSec, day, weekday)
 	}
 
-	return html
+	return ''
 }
 
 function minuteProcess(sec, min){
@@ -266,7 +266,7 @@ if(V.leftaction == 'whackdrugs' || V.rightaction == 'whackdrugs'){
 }
 
 function iCombatHandle(){
-	const whitelistnpc = ['Avery', 'Briar', 'Darryl', 'Eden', 'Harper', 'Kylar', 'Landry', 'Morgan', 'Whitney', 'Winter', 'Remy', 'Wren', 'Keith', 'Cheng']
+	const whitelistnpc = ['Avery', 'Briar', 'Darryl', 'Eden', 'Harper', 'Kylar', 'Landry', 'Morgan', 'Whitney', 'Winter', 'Remy', 'Wren', 'Cheng']
 	//非战斗场景跳过
 	if(V.combat == 0) return;
 	if(V.stalk == true) return;
@@ -301,8 +301,9 @@ function iCombatHandle(){
 
 
 	//当pc处于反抗状态且处于优势时，跳过事件。
-	if( V.pain < V.painmax * 0.8 
-		&& V.enemyhealth < V.enemyhealthmax * 0.5 
+	if( V.pain < V.painmax * 0.8
+		&& V.arousal < V.arousalmax * 0.8
+		&& V.enemyhealth < V.enemyhealthmax * 0.3 
 		&& V.orgasmdown < 1 && V.rightarm !== 'bound' && V.leftarm !== 'bound' 
 		&& V.leftleg !== 'bound' && V.rightleg !=='bound'
 	) return;
@@ -315,8 +316,8 @@ function iCombatHandle(){
 
 
 	//当敌人是触手或史莱姆或植物时，概率给pc上特殊分泌物
-	if((V.enemytype == 'slime' || V.enemytype == 'tentacles' || V.enemytype == 'plant') && !iCandy.senseGet('genital', 'slime')){
-		if(random(100) < 20 ){
+	if( (V.enemytype == 'slime' || V.enemytype == 'tentacles' || V.enemytype == 'plant') && !iCandy.senseGet('genital', 'slime')){
+		if( random(100) < 20 && ( V.anususe !== 0 || V.mouthuse !== 0 ) ){
 			wikifier('drugs', 2000)
 			iCandy.senseSet('genital', 'slime', 1.2, 3600)
 			html += combatFeedMsg(V.enemytype, 'drugs')

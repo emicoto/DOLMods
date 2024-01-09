@@ -1332,7 +1332,7 @@
 		'Statistics':[
 			{
 				src: '\t<</foldout>>\n<</widget>>',
-				to: '\t<</foldout>>\n\n\t<<iModStatistt>>\n\n<</widget>>'
+				to: '\t<</foldout>>\n\n\t<<iModStatist>>\n\n<</widget>>'
 			},
 			{
 				src: '</div>\n<</widget>>',
@@ -1344,11 +1344,6 @@
 			{
 				src:'<<switch $options.combatControls>>',
 				applybefore:'\n<<run setup.ModCombatSetting()>>\n'
-			},
-			{
-				srcmatchgroup: /<<widget "[a-zA-z]+Difficulty">>([\s\S]*?)<<\/widget>>/g,
-				find:'<</widget>>',
-				applybefore:'\n\n\t<<ModCombatDifficulty _diffAction>>\n\n'
 			}
 		]
 	}
@@ -1560,6 +1555,17 @@
 	
 		return passage
 	}
+
+	function patchCombat(source){
+		let src = source
+		let txt = src.match(/<<widget "[a-zA-z]+Difficulty">>([\s\S]*?)<<\/widget>>/g)
+		txt.forEach((text)=>{
+			let [txt1, txt2] = text.match(/<<widget "(.+)Difficulty">>/)
+			let res = text.replace('<</widget>>', `\n\n\t<<ModCombatDifficulty _diffAction "${txt2}">>\n\n<</widget>>`)
+			src = src.replace(text, res)
+		})
+		return src
+	}
 	
 	//简单粗暴的批量脚本，在对应的widget区最后加个钩子
 	function patchWidget(passage, title){
@@ -1600,6 +1606,10 @@
 				applygroup(source, set.srcgroup, set)
 			}
 		})
+
+		if(title == "Widgets Actions Generation"){
+			source = patchCombat(source)
+		}
 
 		if(title === 'npcNamed'){
 			source = checkBJX(source)

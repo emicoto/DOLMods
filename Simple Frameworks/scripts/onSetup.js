@@ -192,10 +192,15 @@ setup.ModCombatSetting = function(){
     })
 }
 
-function modCombatDifficul(diffAction){
+function modCombatDifficul(diffAction, action){
+    console.log('modCombatDifficul', T.args, action, diffAction)
+
     const actionObj = setup.modCombatActions.filter((action)=> action.value == diffAction )[0]
     if(actionObj && actionObj.widget && Macro.has(actionObj.widget)){
         return `<<${actionObj.widget}>>`
+    }
+    else{
+        return ""
     }
 }
 DefineMacroS('ModCombatDifficulty', modCombatDifficul)
@@ -346,6 +351,18 @@ function checkUpdate() {
 }
 
 Save.onLoad.add(checkUpdate)
+
+$(document).one(':passagedisplay', () => {
+    if(passage() == 'Start' && setup.modCombatActions.length > 0){
+        console.log('Mod Combat Colours Setting')
+        setup.modCombatActions.forEach((action)=>{
+            const { value, color, mainType } = action
+            if(typeof color == 'string' && typeof mainType == 'string'){
+                combatActionColours[mainType][color].push(value)
+            }
+        })
+    }
+})
 
 $(document).on(":passagedisplay",()=>{
     //读档时的处理

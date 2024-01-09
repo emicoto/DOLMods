@@ -236,15 +236,15 @@ const DrugsProcess = {
 			const hours = setup.addictions[item].withdraw
 			const methods = lanSwitch(setup.addictions[item].methods)
 	
-			return printTemplet(lanSwitch(template), word[item], methods[item], hours) + '<br>'
+			return P.templet(lanSwitch(template), word[item], methods[item], hours) + '<br>'
 		}
 		else{
 			const data = Items.get(item)
 			const word = lanSwitch(data.name)
 			const hours = data.withdraw
-			let methods = useMethods(data.type, data.tags)
+			let methods = iData.useMethods(data.type, data.tags)
 	
-			return printTemplet(lanSwitch(template), word, lanSwitch(methods), hours) + '<br>'
+			return P.templet(lanSwitch(template), word, lanSwitch(methods), hours) + '<br>'
 		}
 	},
 
@@ -257,12 +257,12 @@ const DrugsProcess = {
 	
 		if(general.includes(item)){
 			const word = lanSwitch(setup.addictions[item].name)
-			return printTemplet(lanSwitch(template), word[item]) + '<br>'
+			return P.templet(lanSwitch(template), word[item]) + '<br>'
 		}
 		else{
 			const data = Items.get(item)
 			const word = lanSwitch(data.name)
-			return printTemplet(lanSwitch(template), word) + '<br>'
+			return P.templet(lanSwitch(template), word) + '<br>'
 		}
 	}
 }

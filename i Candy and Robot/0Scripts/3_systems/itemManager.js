@@ -1,4 +1,3 @@
-
 function getItemInfo(count,pos){
 	return Object.assign({count:0,pos:[],
 	addItem(count,pos){
@@ -11,44 +10,47 @@ function getItemInfo(count,pos){
 	})
 }
 
+/**
+ * 获取物品的可堆叠大小
+ * @param {string} itemId 
+ * @returns {number}
+ */
+function getStackSize(itemId, mode){
+    let item = Items.get(itemId)
+    let size = typeof item.size === "number" ? item.size : setup.maxStacks[item.size]
 
+    if(!item){
+        console.error('error from get items stack size, id:', itemId)
+        return 0
+    }
+    else if(!item.size){
+        return 1
+    }
+
+    else if(mode == 'storage'){
+        return Math.clamp(size * iCandy.getConfig('globalStack') * 10, 1, 10000)
+    }
+
+    //获取原始堆叠大小
+    else if(mode == 'raw'){
+        return size
+    }
+
+    //应该完全禁用，但麻烦，干脆弄个除了作弊不会到达的数字。
+    else if(iCandy.getConfig('disableStack') === true ){
+        return Math.pow(10, 20)
+    }
+
+    //默认最大可能得堆叠上限为1k
+    return Math.clamp(size * iCandy.getConfig('globalStack'), 1, 1000)
+}
 
 const iManager = {
-	/**
-	 * 获取物品的可堆叠大小
-	 * @param {string} itemId 
-	 * @returns {number}
-	 */
-	getStackSize (itemId, org){
-		let item = Items.get(itemId)
-		let size = typeof item.size === "number" ? item.size : setup.maxStacks[item.size]
-
-		if(!item){
-			console.error('error from get items stack size, id:', itemId)
-			return 0
-		}
-		else if(!item.size){
-			return 1
-		}
-
-		//获取原始堆叠大小
-		else if(org){
-			return size
-		}
-
-		//应该完全禁用，但麻烦，干脆弄个除了作弊不会到达的数字。
-		else if(iCandy.getConfig('disableStack') === true ){
-			return Math.pow(10, 20)
-		}
-
-		//默认最大可能得堆叠上限为1k
-		return Math.clamp(size * iCandy.getConfig('globalStack'), 1, 1000)
-
-	},
+	getStackSize,
 
 	getEquip(pos){
 		if(V.iPockets.equip[pos] == 'none') return 'none'
-		return V.iPockets.equip[pos].id
+		return V.iPockets.equip[pos]
 	},
 
 	setEquip(pos, value){
@@ -172,7 +174,8 @@ const iManager = {
 		}
 
 		if(this.getEquip('wallet') !== 'none'){
-			let wallet = Items.get(this.getEquip('wallet'))
+			let id = this.getEquip('wallet').id
+			let wallet = Items.get(id)
 			if(wallet.tags.includes('extraspace')){
 				count += 1
 			}
@@ -191,7 +194,10 @@ const iManager = {
 			return iManager.checkBodySlots()
 		},
 		held(){
-			const held = Items.data[iManager.getEquip('held')];
+			let item = iManager.getEquip('held')
+			if(item == 'none') return 0
+
+			const held = Items.data[item.id];
 			return held?.capacity ?? 0
 		},
 		hole(){
@@ -205,11 +211,17 @@ const iManager = {
 			return 0
 		},
 		bag(){
-			const bag = Items.data[iManager.getEquip('bag')];
+			let item = iManager.getEquip('bag')
+			if(item == 'none') return 0
+
+			const bag = Items.data[item.id];
 			return bag?.capacity ?? 0
 		},
 		cart(){
-			const cart = Items.data[iManager.getEquip('cart')];
+			let item = iManager.getEquip('cart')
+			if(item == 'none') return 0
+
+			const cart = Items.data[id];
 			return cart?.capacity ?? 0
 		}
 	},

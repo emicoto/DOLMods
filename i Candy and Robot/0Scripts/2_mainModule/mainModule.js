@@ -312,10 +312,6 @@ function destinationeventend(){
 		return '<<harvesteventend>><br><br>'
 }
 
-function setupMaps(){
-	
-}
-
 function iCandyInit(){
 	console.log('on iCandyInit')
 
@@ -352,7 +348,7 @@ function iCandyOldInit(){
 }
 iCandy.manualInit = iCandyOldInit
 
-function iCandyUpdate(force){
+function iCandyUpdate(){
 	if(passage() == 'Start' && V.iCandyRobot) return;
 
 	if(V.iCandyStats){
@@ -379,7 +375,7 @@ function iCandyUpdate(force){
 				V[i] = clone(iModVariables[i])
 			}
 			else{
-				V[i] = iUtil.updateObj(iModVariables[i], V[i])
+				V[i] = F.updateObj(iModVariables[i], V[i])
 			}
 		}
 
@@ -435,6 +431,15 @@ function iCandyUpdate(force){
 						shelf.stocks.deleteAt(key)
 					}
 				})
+			}
+		}
+
+		//将旧版装备数据转换为新版
+		for( const [key, value] of Object.entries(V.iPockets)){
+			if(key.has('type')){
+				const k = key.replace('type', '')
+				V.iPockets.equip[k] = value
+				delete V.iPockets[key]
 			}
 		}
 	}

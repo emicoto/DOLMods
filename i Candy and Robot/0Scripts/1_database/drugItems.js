@@ -40,7 +40,7 @@ function onUseDrags(enemy){
 		}
 	}
 
-	let methods = useMethods(type, tags)
+	let methods = iData.useMethods(type, tags)
 
 	let html = [
 		`You ${methods[0]} the ${this.name[0].toLocaleLowerCase()}.`,

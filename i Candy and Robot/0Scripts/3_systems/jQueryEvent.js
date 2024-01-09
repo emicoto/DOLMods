@@ -63,7 +63,7 @@ $(document).on(':passageinit', ( data )=>{
 	//如果刚从动作事件里退出
 	if(V.tvar.unsetAction){
 		V.tvar.unsetAction = false;
-		iUtil.resetTvar('useItem', 'img', 'passtime', 'onemore');
+		F.resetTvar('useItem', 'img', 'passtime', 'onemore');
 		//如果从物品事件出来，在这里就不再执行事件检测了
 		return
 	}

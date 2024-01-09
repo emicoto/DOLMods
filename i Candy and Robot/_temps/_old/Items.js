@@ -274,7 +274,7 @@ doDelta(param, value, method) {
 	param = 'alcohol'
 	}
 
-	return printPalams(param, value)
+	return P.palams(param, value)
 }
 /**
  * 使用效果的处理

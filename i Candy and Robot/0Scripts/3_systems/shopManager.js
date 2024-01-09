@@ -108,9 +108,9 @@ const iShop = {
 		for(let i=0; i < shopitems.length; i++){
 			const item = shopitems[i]
 			const data = Items.get(item.id)
-			const img = iUtil.itemImageResolve(item, data, 1)
-			const unit1 = batchUnitTxt(data.tags, item.stock)
-			const unit2 = subUnitTxt(data.tags, item.count)
+			const img = P.itemImageResolve(item, data, 1)
+			const unit1 = iData.batchUnitTxt(data, item.stock)
+			const unit2 = iData.subUnitTxt(data, item.count)
             const price = item.price/100 * ( 1 - V.iShop[shelf].discount)
 
 			let name = lanSwitch(data.name)
@@ -124,13 +124,12 @@ const iShop = {
 				}
 			}
 
-
 			let html = [
 				`<div class='shopitembox' onclick='iShop.select("${shelf}", ${i})'>`,
 				`	<div class='shopitemname'>${name}</div>`,
 				`	<div class='shopitemiconframe'>`,
 				`		<div class='shopitemicon'>`,
-				`			<img  class='icon' src='${img}'>`,
+				`			<img class='icon' src='${img}'>`,
 				`		</div>`,
 				`	</div>`,
 				`	<div class='itemprice'>`,
@@ -146,28 +145,15 @@ const iShop = {
 		return output + '</div>'
 	},
 
-	tabSwitch : function(shelf){
-		const html = this.printShelf(shelf)
-		V.shoptabIndex = shelf
-
-		//变更div id:shopbanner的class
-		//const banner = document.getElementById('shopbanner')
-		//banner.className = `${shelf}_banner`
-
-		const count = Math.clamp( Math.floor((window.innerWidth * 0.7) / 200), 1, 4)
-		const img = `<img src="img/misc/${shelf}_banner.png">`.repeat(count)
-
-		new Wikifier(null, `<<replace "#shopshelf">>${html}<</replace>>`)
-		new Wikifier(null, `<<replace "#shopbanner">>${img}<</replace>>`)
-	},
-
-	printCart : function(item){
+    shopcart : function(item){
 		const data = Items.get(item.id)
-		const img = iUtil.itemImageResolve(item, data, 1)
+		const img = P.itemImageResolve(item, data, 1)
 		const name = lanSwitch(data.name)
 		const info = lanSwitch(data.info)
+
         console.log('print cart item:', item, item.stack, data.tags, data.num )
-		const unit = itemUnit(data.tags, item.stack, data.num)
+		
+		const unit = iData.itemUnit(data, item.stack, data.num)
         const shelf = item.index[0]
         const price = item.price/100 * ( 1 - V.iShop[shelf].discount)
 
@@ -201,6 +187,21 @@ const iShop = {
 		return html
 	},
 
+	tabSwitch : function(shelf){
+		const html = this.printShelf(shelf)
+		V.shoptabIndex = shelf
+
+		//变更div id:shopbanner的class
+		//const banner = document.getElementById('shopbanner')
+		//banner.className = `${shelf}_banner`
+
+		const count = Math.clamp( Math.floor((window.innerWidth * 0.7) / 200), 1, 4)
+		const img = `<img src="img/misc/${shelf}_banner.png">`.repeat(count)
+
+		new Wikifier(null, `<<replace "#shopshelf">>${html}<</replace>>`)
+		new Wikifier(null, `<<replace "#shopbanner">>${img}<</replace>>`)
+	},
+
 	select : function(shelf, index){
 		const item = V.iShop[shelf].stocks[index]
 		if(item.stock <= 0){
@@ -222,7 +223,7 @@ const iShop = {
 			V.iShop.selected.stack += 1
 		}
 
-		const html = this.printCart(V.iShop.selected)		
+		const html = this.shopcart(V.iShop.selected)
 		new Wikifier(null, `<<replace #shopcartbox>>${html}<</replace>>`)
 	},
 
@@ -263,8 +264,8 @@ const iShop = {
 
 		iM.getItems(selectItem.id, selectItem.stack * data.num)
 
-		const unit1 = batchUnitTxt(data.tags, selectItem.stack)
-		const unit2 = subUnitTxt(data.tags, selectItem.stack * data.num)
+		const unit1 = iData.batchUnitTxt(data, selectItem.stack)
+		const unit2 = iData.subUnitTxt(data, selectItem.stack * data.num)
 
 		message = [
 			//You bought 1 bottle of mineral water for 0.5£.

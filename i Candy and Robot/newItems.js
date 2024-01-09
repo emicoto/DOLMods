@@ -1,15 +1,3 @@
-function getItemInfo(count,pos){
-	return Object.assign({count:0,pos:[],
-	addItem(count,pos){
-		this.count += count;
-		this.pos.push(pos)
-	}
-	},{
-		count,
-		pos:[pos]
-	})
-}
-
 class Items {
 	static data = {};
 	/**
@@ -162,8 +150,7 @@ class Items {
 		this.effects = []
 		this.usage = 1
 		this.img = `img/items/${type}/${id}.png`
-
-		//this.diff = {}
+        
 	}
 
 	/**
@@ -335,127 +322,3 @@ class Items {
 		return P.palams(param, value)
 	}
 }
-
-/**
- * 会储存到游戏里的物品数据
- * the data of items in game
- * @param {string} itemId
- * @param {number} num
- */
-function pocketItem(itemId, num, diff){
-	let data = Items.get(itemId);
-	if(!data){
-		throw new Error('no such item:', itemId)
-	}
-
-	this.type = data.type
-	this.uid = data.id
-	this.id = data.id
-	this.name = lanSwitch(data.name)
-	this.count = num
-	this.pocket = 'body'
-
-	if(diff){
-		this.diff = diff
-		this.uid = data.id + '_' + diff
-	}
-}
-
-function onDrop(data){
-	if(iM.checkItemOnGet(data.drop.item, data.drop.num)){
-		const dropitem = Items.get(data.drop.item)
-
-		iM.getItems(dropitem.id, data.drop.num)
-
-		V.addMsg += P.templet(
-			lanSwitch(systemMsg.getItem),
-			lanSwitch(dropitem.name),
-		)
-	}
-}
-
-function useItemPassTime(type){
-	const time = {
-		consumable : 5,
-		foods : 5,
-		drinks : 5,
-		cooking : 10,
-		drugs: 3,
-		medicine : 2,
-		misc: 5,
-	}
-	return time[type] || 1
-}
-
-//数组和对象在DOL内部传递有蜜汁错误。所以从背包里传递过来的，是具体位置信息。
-//for some reason, array and object can't be passed in DOL. so pass the the position of item in pocket.
-function useItems(pocket, pos, enemy){
-	const pocketData = V.iPockets[pocket]
-	let item = pocketData[pos]
-	let data = Items.get(item.id)
-	if(!data){
-		throw new Error('no such item:', item.id)
-	}
-
-	const { type, tags, name, effects, usage, drop } = data
-
-	if(data.alias){
-		data = Items.get(data.alias)
-	}
-
-	let params = ''
-
-	let msg = P.templet(
-		lanSwitch( systemMsg.useItem ), 
-		lanSwitch( iData.useMethods( type, tags ) ), 
-		lanSwitch( name )
-	)
-
-	V.tvar.passtime = useItemPassTime(type)
-
-	if(itemMsg[data.id]){
-		msg = lanSwitch(itemMsg[data.id])
-	}
-
-	if( effects?.length > 0 && typeof onUse !== 'function'){
-		effects.forEach((set)=>{
-			let [param, value, method] = set;
-			params += data.doDelta(param, value, method);
-		})
-
-	}
-	else if(typeof data.onUse == 'function'){
-		msg = data.onUse()
-	}
-
-	item.count -= usage || 1
-
-	if(item.count > 0 && item.count >= usage){
-		V.tvar.onemore = true
-	}
-
-	if(item.count <= 0){
-		pocketData.deleteAt(pos)
-	}
-
-	//掉落处理
-	if(String(drop) == '[object Object]' && !enemy){
-		onDrop(data)
-	}
-
-	return msg + params
-}
-
-
-DefineMacroS('useItem', useItems)
-
-
-
-Object.defineProperties(window,{
-	Items:{ value:Items },
-	pocketItem:{ value:pocketItem },
-	useItems:{
-		value:useItems,
-		writable:true
-	}
-})

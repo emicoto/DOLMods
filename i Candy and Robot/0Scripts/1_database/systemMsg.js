@@ -19,7 +19,8 @@ const transferMsg = {
 		)+'<br>';
 	},
 	held(item){
-		const held = Items.data[iManager.getEquip('held')];
+		const itemId = iManager.getEquip('held')
+		const held = Items.data[itemId];
 		return lanSwitch(
 			`You put ${item.name} into ${held.name[0].toLocaleLowerCase()}.`,
 			`你把${item.name}放进了${held.name[1]}。`
