@@ -21,7 +21,7 @@ iEvent.registEvent('location',
         endcode: '<<set $eventskip to 1>><<run iEvent.addFlag("chinatown", "rumors", 1); iEvent.addFlag("chinatown", "rumorstoday", 1)>>',
         require: (data)=>{
             return iEvent.getFlag('chinatown', 'intro') == undefined &&
-            V.location == 'town' && F.noEventRunning() && random(100) < 20 &&
+            V.location == 'town' && F.noEventRunning() && random(100) < 30 &&
             Time.days > 2 && iEvent.getFlag('chinatown', 'rumorstoday') < 2
         }
     }

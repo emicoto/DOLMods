@@ -193,6 +193,7 @@ const htmlPrinter = {
 						<<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>
 							<<set $tvar.exitPassage to $passage>>
 						<</if>>
+						<<run console.log('on use check', $tvar.useItem, $tvar.img, $tvar.exitPassage)>>
 					 <</link>>`
 				}
 				
@@ -200,9 +201,6 @@ const htmlPrinter = {
 				<span class='itemaction'>
 					<<link "${getLan('move')}">>
 						<<set $tvar.transferItem to ["${slot}", ${i}]>>
-						<<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>
-							<<set $tvar.exitPassage to $passage>>
-						<</if>>
 					<</link>>
 				</span>
 				<span class='itemaction'>
@@ -214,7 +212,7 @@ const htmlPrinter = {
 			}
 			_html += `</div>`
 
-			if(iCandy.config.debug)
+			//if(iCandy.config.debug)
 				console.log(_html);
 
 			html += _html

@@ -379,11 +379,9 @@ const iModVariables = {
 	cooking		: 0,
 
 	tvar : { //temporary variables
-		useItem: null,
-		exitPassage: null,
-		img: null,
+		exitPassage: '',
 		scene: {},
-		eventnext: null,
+		eventnext: false,
 	},
 }
 

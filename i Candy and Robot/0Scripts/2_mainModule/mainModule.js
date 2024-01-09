@@ -379,6 +379,8 @@ function iCandyUpdate(){
 			}
 		}
 
+		V.iCandyRobot.version = iCandy.version
+
 		//重新初始化仓库，如果是旧版本数据
 		if(typeof V.iStorage.home.serotonin == 'number'){
 			V.iStorage.home = {}
