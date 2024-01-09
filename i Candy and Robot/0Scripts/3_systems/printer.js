@@ -113,7 +113,7 @@ const htmlPrinter = {
 			let item = iM.getEquip(slot)
 				html += `<div id='${slot}' class='equipslot'>`
 	
-				if(item !== 'none'){
+				if(item){
 					const data = Items.get(item.id)
 					let img = this.itemImageResolve(item, data)
 					let onclick = ` onClick="V.addMsg += Items.get('${item.id}').onUnEquip(); SugarCube.Engine.play(V.passage)"`

@@ -49,12 +49,16 @@ const iManager = {
 	getStackSize,
 
 	getEquip(pos){
-		if(V.iPockets.equip[pos] == 'none') return 'none'
+		if(V.iPockets.equip[pos].id == 'none') return
 		return V.iPockets.equip[pos]
 	},
 
 	setEquip(pos, value){
 		V.iPockets.equip[pos] = value
+	},
+	
+	unsetEquip(pos){
+		V.iPockets.equip[pos] = { id:'none' }
 	},
 
 	getPocket(pos){
@@ -173,14 +177,14 @@ const iManager = {
 			count += lower.variable == upper.variable ? 1 :2
 		}
 
-		if(this.getEquip('wallet') !== 'none'){
+		if(this.getEquip('wallet')){
 			let id = this.getEquip('wallet').id
 			let wallet = Items.get(id)
 			if(wallet.tags.includes('extraspace')){
 				count += 1
 			}
 		}
-		if(this.getEquip('held') !== 'none'){
+		if(this.getEquip('held')){
 			count -= 1
 		}
 		return count
@@ -195,7 +199,7 @@ const iManager = {
 		},
 		held(){
 			let item = iManager.getEquip('held')
-			if(item == 'none') return 0
+			if(!item) return 0
 
 			const held = Items.data[item.id];
 			return held?.capacity ?? 0
@@ -212,14 +216,14 @@ const iManager = {
 		},
 		bag(){
 			let item = iManager.getEquip('bag')
-			if(item == 'none') return 0
+			if(!item) return 0
 
 			const bag = Items.data[item.id];
 			return bag?.capacity ?? 0
 		},
 		cart(){
 			let item = iManager.getEquip('cart')
-			if(item == 'none') return 0
+			if(!item) return 0
 
 			const cart = Items.data[id];
 			return cart?.capacity ?? 0
@@ -610,7 +614,7 @@ const iManager = {
 		if(!V.iPockets[pocket][slot]) return
 
 		const item = V.iPockets[pocket].deleteAt(slot)
-		if(this.getEquip(pos) !== 'none'){
+		if(this.getEquip(pos)){
 			this.onUnEquip(pos)
 		}
 
@@ -620,9 +624,9 @@ const iManager = {
 
 	onUnEquip(pos){
 		const item = this.getEquip(pos)
-		if(item == 'none') return
+		if(!item) return
 
-		this.setEquip(pos, 'none')
+		this.unsetEquip(pos)
 		this.getItems(item.id, 1, item.diff)
 		this.updatePockets()
 	},
@@ -830,12 +834,12 @@ function lostItemsAfterRape(){
 
 	/*概率整个背包或手推车弄丢
 	if(random(1000) >= 800){
-		V.iPockets.bagtype = 'none'
+		iM.unsetEquip('bag')
 		V.iPockets.bag = []
 		message
 	}
 	if(random(1000) >= 800){
-		V.iPockets.carttype = 'none'
+		iM.unsetEquip('cart')
 		V.iPockets.cart = []
 		message
 	}

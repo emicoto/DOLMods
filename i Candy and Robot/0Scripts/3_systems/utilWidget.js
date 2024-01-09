@@ -55,7 +55,7 @@ const iUtil = {
 
 		if(prop){
 			//更新变量，如果type完全不一样就直接更新了。 弃用变量的删除或type一致但版号更新之类的用精准手术法。
-			if(typeof target[prop] !== typeof source[prop] && source[prop] !== undefined){
+			if(typeof target[prop] !== typeof source[prop] && source[prop] !== undefined ){
 				target[prop] = source[prop]
 			}
 			if(String(source[prop]) == '[object Object]'){

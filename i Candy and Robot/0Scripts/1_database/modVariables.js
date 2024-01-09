@@ -57,10 +57,10 @@ const iPockets = {
 	hole: [],
 
 	equip:{
-		held: 'none',
-		bag: 'none',
-		cart: 'none',
-		wallet: 'none',
+		held: { id:'none' },
+		bag: { id:'none' },
+		cart: { id:'none' },
+		wallet: { id:'none' },
 	},
 	
 	states:{

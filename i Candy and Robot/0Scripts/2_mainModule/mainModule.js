@@ -370,6 +370,23 @@ function iCandyUpdate(){
 	}
 	else if(V.iCandyRobot.version !== iCandy.version ){
 
+		//将旧版装备数据转换为新版
+		for( const [key, value] of Object.entries(V.iPockets)){
+			if(key.has('type')){
+				const k = key.replace('type', '')
+				if(!V.iPockets.equip) V.iPockets.equip = {};
+
+				V.iPockets.equip[k] = value
+				delete V.iPockets[key]
+			}
+		}
+
+		//重新初始化仓库，如果是旧版本数据
+		if(typeof V.iStorage.home.serotonin == 'number'){
+			V.iStorage.home = {}
+		}
+
+		//更新数据
 		for(let i in iModVariables){
 			if(V[i] == undefined){
 				V[i] = clone(iModVariables[i])
@@ -379,12 +396,8 @@ function iCandyUpdate(){
 			}
 		}
 
+		//更新版本号
 		V.iCandyRobot.version = iCandy.version
-
-		//重新初始化仓库，如果是旧版本数据
-		if(typeof V.iStorage.home.serotonin == 'number'){
-			V.iStorage.home = {}
-		}
 
 		//修复药效时间错误
 		let drugsStat = V.iCandyRobot.drugStates.drugs
@@ -412,6 +425,7 @@ function iCandyUpdate(){
 							item.id = 'redcow'
 						}
 						else if(!Items.get(item.id)){
+							console.log('item not found:', item.id)
 							pocket.slice(index, 1)
 						}
 					}
@@ -436,14 +450,6 @@ function iCandyUpdate(){
 			}
 		}
 
-		//将旧版装备数据转换为新版
-		for( const [key, value] of Object.entries(V.iPockets)){
-			if(key.has('type')){
-				const k = key.replace('type', '')
-				V.iPockets.equip[k] = value
-				delete V.iPockets[key]
-			}
-		}
 	}
 }
 iCandy.modUpdate = iCandyUpdate

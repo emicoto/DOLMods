@@ -47,7 +47,7 @@
 </div>
 <br>
 
-<<if $iPockets.heldtype isnot 'none'>>
+<<if iM.getEquip('held')>>
 <div id='handheld' class='pocket-container'>
 	<div id='handheld-header' class='pocket-header'>
 		<span class="gold bold"><<lanSwitch 'Handheld' '手持'>></span>
@@ -70,13 +70,13 @@
 </div>
 <br>
 
-<<if $iPockets.bagtype isnot 'none'>>
+<<if iM.getEquip('bag')>>
 	<<set _link = lanSwitch('Open your backpack', '打开背包')>>
 	<<link _link 'iMod Storage'>><<set $tvar.openstorage to 'bag'>><</link>>
 	<br><br>
 <</if>>
 
-<<if $iPockets.carttype isnot 'none'>>
+<<if iM.getEquip('cart')>>
 	<<set _link = lanSwitch('Check the items in your cart', '检查手推车里的物品')>>
 	<<link _link 'iMod Storage'>><<set $tvar.openstorage to 'cart'>><</link>>
 	<br><br>

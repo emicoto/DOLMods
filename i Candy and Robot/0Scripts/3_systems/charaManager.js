@@ -19,11 +19,14 @@ const iChara = {
 		if(Time.dayState == 'dusk' && [1,4,6,7].includes(Time.weekDay)){
 			V.iModNpc.set('Xinyu', 'location', 'almond_path')
 		}
-		else if(Time.dayState == 'day' && between(Time.weekDay, 2, 6)){
+		else if( between(Time.weekDay, 2, 6) && between(Time.hour, 9, 12)){
+			V.iModNpc.set('Xinyu', 'location', 'shingwong')
+		}
+		else if( between(Time.hour, 14, 16) ){
 			V.iModNpc.set('Xinyu', 'location', 'chinatown')
 		}
 		else{
-			V.iModNpc.set('Xinyu', 'location', 'shingwong')
+			V.iModNpc.set('Xinyu', 'location', 'xinyuHome')
 		}
 	}
 }
