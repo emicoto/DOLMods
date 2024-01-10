@@ -1146,6 +1146,23 @@ const ingredients = [
 			"An empty can",
 			"一个空罐"
 		]
+	},
+
+	{
+		tags:["glass", "craft"],
+		id:"glassbottle",
+		name:["Empty Glass Bottle", "空玻璃瓶"],
+		plural:"Empty Glass Bottles",
+
+		num: 1,
+		price: 10,
+		size: 'medium',
+		unit: 'bottle',
+
+		info:[
+			"An empty glass bottle",
+			"一个空玻璃瓶"
+		]
 	}
 ]
 Items.addItems(ingredients, 'ingredients')
