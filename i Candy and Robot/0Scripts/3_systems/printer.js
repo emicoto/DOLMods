@@ -53,7 +53,9 @@ const htmlPrinter = {
 			select.else(data.img)
 			img = select.has(Math.floor((item.count/size+0.5)*100))
 		}
-		console.log('image', img, item, data)
+
+		if(iCandy.config.debug)
+			console.log('image', img, item, data)
 		
 		if(data.stacksprites && shop){
 			let len = data.stacksprites.length

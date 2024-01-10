@@ -54,6 +54,16 @@ iEvent.registPsg('Mer Street',()=>{
         iEvent.addFlag('mer', 'passout', 1)
     }
 })
+
+iEvent.registPsg('Canteen Milkshake', ()=>{
+    wikifier('thirsty', 1000)
+    new Wikifier(null, `<<append #addAfterMsg>>${
+        lanSwitch(
+            'Your throat is moistened by the sweetness of the milkshake.',
+            '你喉咙被奶昔的甜蜜滋润了。')
+    }<<llthirst>><</append>>`)
+})
+
 /*
 iEvent.registEvent('Passout',
 {

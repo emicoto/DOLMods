@@ -1,5 +1,51 @@
 sugarcube-2:
   macros:
+    thirsty:
+      name: thirsty
+    lllthirst:
+      name: lllthirst
+    llthirst:
+      name: llthirst
+    lthirst:
+      name: lthirst
+    
+    sleepy:
+      name: sleepy
+    lllsleepy:
+      name: lllsleepy
+    llsleepy:
+      name: llsleepy
+    lsleepy:
+      name: lsleepy
+    gsleepy:
+      name: gsleepy
+    ggsleepy:
+      name: ggsleepy
+    gggsleepy:
+      name: gggsleepy
+    
+    health:
+      name: health
+    lllhealth:
+      name: lllhealth
+    llhealth:
+      name: llhealth
+    lhealth:
+      name: lhealth
+    ghealth:
+      name: ghealth
+    gghealth:
+      name: gghealth
+    ggghealth:
+      name: ggghealth
+
+    sick:
+      name: sick
+    lsick:
+      name: lsick
+    gsick:
+      name: ggsick
+
     linkEventEnd:
       name: linkEventEnd
     pcpn:

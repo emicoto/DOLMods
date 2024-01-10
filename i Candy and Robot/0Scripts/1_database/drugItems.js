@@ -119,7 +119,7 @@ const iMedicines = [
 		price: 6400,
 		size: "pill",
 
-		effects: [["control", 30]],
+		effects: [["control", 30, 'p']],
 
 		threshold: 4,	//安全使用次数，超过这个值会涨overdose
 		maxOD: 20,		//最大过量值，超过这个值会上瘾

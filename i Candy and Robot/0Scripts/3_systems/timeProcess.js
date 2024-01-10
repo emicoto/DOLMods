@@ -270,8 +270,12 @@ function iCombatHandle(){
 	//非战斗场景跳过
 	if(V.combat == 0) return;
 	if(V.stalk == true) return;
-	//游戏前三天跳过
-	if(Time.days < 3) return;
+
+	//游戏前三天大概率跳过
+	if(Time.days < 3 && random(100) > 25 ){
+		R.combat.skip = true;
+		return;
+	}
 
 	//非白名单NPC跳过
 	if(V.npc.length > 0 && !V.npc.has(...whitelistnpc)) return;

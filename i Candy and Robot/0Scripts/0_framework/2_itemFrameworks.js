@@ -1,15 +1,3 @@
-function getItemInfo(count,pos){
-	return Object.assign({count:0,pos:[],
-	addItem(count,pos){
-		this.count += count;
-		this.pos.push(pos)
-	}
-	},{
-		count,
-		pos:[pos]
-	})
-}
-
 class Items {
 	static data = {};
 	/**
@@ -162,7 +150,6 @@ class Items {
 		this.effects = []
 		this.usage = 1
 		this.img = `img/items/${type}/${id}.png`
-
 		//this.diff = {}
 	}
 

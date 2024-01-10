@@ -3,6 +3,8 @@
 //  setup config
 //
 //--------------------------------------------
+setup.palamlist = ['trauma', 'pain', 'tiredness', 'drunk', 'hallucinogen','control','corruption','stress', 'drugged', 'awareness']
+
 const iModAddictions = { 
 	alcohol:{
 		name: ['alcohol', '酒精'],

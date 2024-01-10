@@ -253,7 +253,7 @@ const iManager = {
 			if(!Array.isArray(pocket)) return result;
 
 			let stack = pocket.filter((item, index)=>{
-				if(item.uid==itemId) {
+				if(item.uid == itemId) {
 					result.total += item.count;
 					result.path.push({ pos: key, index })
 					return item;

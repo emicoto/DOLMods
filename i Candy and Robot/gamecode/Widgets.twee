@@ -73,3 +73,14 @@
 <</link>>
 <br>
 <</widget>>
+
+<<widget "fillHungerSchool">>
+    <<hunger -1200>>
+    <<thirsty -1200>>
+    <<append #addMsg transition>>
+        <<=lanSwitch(
+            'The school lunch filled your stomach.',
+            '学校的午餐填饱了你的肚子。',
+        )>> <<lllhunger>> <<llthirst>>
+    <</append>>
+<</widget>>

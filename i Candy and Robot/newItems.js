@@ -134,14 +134,7 @@ class Items {
 	constructor(type, id, name, price = 500, num = 1, size = 'big') {
 		this.type = type
 		this.id = id
-
-		if (name.length == 3) {
-			this.plural = name.pop()
-			this.name = name
-		}
-		else {
-			this.name = name
-		}
+		this.name = name
 
 		this.num = num
 		this.price = price
@@ -150,7 +143,6 @@ class Items {
 		this.effects = []
 		this.usage = 1
 		this.img = `img/items/${type}/${id}.png`
-        
 	}
 
 	/**
@@ -186,25 +178,6 @@ class Items {
 	}
 
 	/**
-	 * 设置上瘾相关各数值
-	 * set addiction values
-	 * @param {number} threshold 安全剂量 safe dosage
-	 * @param {number} maxOD 短期内多少嗑多少上瘾 short term overdose
-	 * @param {number} withdraw 引起戒断反应所需时间（小时） time to cause withdraw reaction
-	 * @param {number} quit 彻底戒断所需日数 time to quit
-	 * @param {number} hours 起效时长（小时） duration of effect
-	 * @returns 
-	 */
-	Addiction({ threshold = 1, maxOD = 5, withdraw = 3 * 24, quit = 7, hours = 1 }) {
-		this.threshold = threshold
-		this.maxOD = maxOD
-		this.withdraw = withdraw
-		this.quit = quit
-		this.hours = hours
-		return this
-	}
-
-	/**
 	 * 使用时的常规效果
 	 * the effects when used
 	 * @param  {Array<[string, number]|[string, number, 'p']>} effects 
@@ -227,50 +200,6 @@ class Items {
 	}
 
 	/**
-	 * 设置每日效果
-	 * set the daily effect
-	 * @param {function} callback 
-	 * @returns 
-	 */
-	dayEffect(callback) {
-		this.onDay = callback
-		return this
-	}
-
-	/**
-	 * 设置戒断反应
-	 * set the withdraw effect
-	 * @param {function} callback 
-	 * @returns 
-	 */
-	Withdraw(callback) {
-		this.onWithdraw = callback
-		return this
-	}
-
-	/**
-	 * 药效起作用时的持续效果
-	 * set the effect when the drug on high
-	 * @param {function} callback 
-	 * @returns 
-	 */
-	High(callback) {
-		this.onHigh = callback
-		return this
-	}
-
-	/**
-	 * 药效失效时的副作用效果
-	 * set the effect when the drug on low
-	 * @param {funciton} callback 
-	 * @returns 
-	 */
-	Wake(callback) {
-		this.onWake = callback
-		return this
-	}
-
-	/**
 	 * 设置标签
 	 * set tags
 	 * @param  {string[]} tags 
@@ -288,8 +217,7 @@ class Items {
 	 * @param {number} value 
 	 */
 	getPalam(param, value){
-		let list = ['trauma', 'pain', 'tiredness', 'drunk', 'hallucinogen','control','corruption','stress', 'drugged', 'awareness']
-		if(!V.statFreeze && list.includes(param))
+		if(!V.statFreeze && setup.palamlist.includes(param))
 			V[param] = Math.clamp(V[param] + value, 0, 10000)
 	}
 
@@ -301,7 +229,6 @@ class Items {
 	 * @param {'p'|void} method 
 	 */
 	doDelta(param, value, method) {
-		console.log(this, this.getPalam)
 		if (param == 'aphrod') {
 			this.getPalam('drugged', value)
 			param = 'drugged'

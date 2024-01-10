@@ -34,3 +34,8 @@ simpleFrameworks.addto('BeforeLinkZone', {
     passage: 'Orphanage',
     widget:'OpenHomeStorage'
 })
+
+simpleFrameworks.addto('iModFooter', {
+    passage: ['Canteen Lunch Robin', 'Canteen Lunch Robin CD 1', 'Robin Kiyoura Start', 'Canteen Lunch Kylar', 'Canteen Lunch Sydney', 'Canteen Lunch' ],
+    widget: 'fillHungerSchool'
+})
