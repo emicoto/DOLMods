@@ -140,3 +140,61 @@
 #container .pocketslot {
     width: 45%;
 }
+
+#slider {
+    position: absolute;
+    right: 10px;
+    bottom: 30px;
+    font-size: x-small;
+    width: fit-content;
+}
+
+#slider input {
+    -webkit-appearance: none;
+    margin:0px;
+    padding: 0px;
+    width: 80%;
+    height: 10px;
+    max-height: 10px;
+    outline: none;
+    opacity: 0.6;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border:none;
+    background:none
+  }
+  
+  
+  #slider input:hover {
+    opacity: 1;
+  }
+  
+  #slider input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    background: #9b89ff;
+    cursor: pointer;
+    border:none;
+    padding:0px;
+    margin: -4px 0px 0px 0px;
+  }
+  
+  #slider input::-moz-slider-thumb {
+    width: 8px;
+    height: 18px;
+    background: #a8a8a8;
+    cursor: pointer;
+    border:none;
+  }
+  
+  #slider input::-webkit-slider-runnable-track{
+    max-height: 6px;
+    background: #5a5a6f;
+  }
+  
+  .slider-count {
+      margin-left: 5px;
+  }

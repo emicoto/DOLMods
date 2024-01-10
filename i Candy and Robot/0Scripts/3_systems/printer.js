@@ -222,9 +222,65 @@ const htmlPrinter = {
 		return html
     },
 
+	noneItem : {
+		type:'misc', 
+		id:'noneitem', 
+		name:['none', '无'],
+		info:['', '']
+	},
+
 	storage : function(postion){
-		let html = ''
+		let html = []
 		const storage = V.iStorage[postion]
+		for(let i = 0; i < storage.limit; i++){
+			const item = storage.slots[i] || this.noneItem
+			const data = Items.get(item.id) || this.noneItem
+
+			let img = this.itemImageResolve(item, data)
+			let name = lanSwitch(data.name)
+			let _html = ''
+
+			if(item.diff){
+				const diff = data.diff[item.diff]
+				name = lanSwitch(diff.displayname)
+			}
+			
+			_html += `<div id='storage-${index}' class='pocketslot no-numberify'>`
+			_html += `	<div class='itemname'>${name}</div>`
+			_html += `	<div class='itemcount'>${iData.itemUnit(data, item.count)}</div>`
+			if ( item.count > 1 ){
+				_html += `	<div id='slider'>`
+				_html += `		<input type='range' min='1' max='${item.count}' value='1' step='1' oninput='T.storage[${index}] = $(this).val(); $('#sliderval-${index}').text(T.storage[${index}]);>`
+				_html += `		<span id='sliderval-${index}'>1</span>`
+				_html += `	</div>`
+			}
+			_html += `	<div id='${item.uid}' class='itemicon'>`
+			_html += `		<mouse class="tooltip-tiny">`
+			_html += `			<img class='icon' src="${img}">`
+			if ( data.id !== 'noneitem' ){
+				_html += `			<span>${lanSwitch(data.info)}</span>`
+			}
+			_html += `		</mouse>`
+			_html += `	</div>`
+			if( data.id !== 'noneitem' ){
+				_html += `	<div id='action' class='pocketaction'>`
+				_html += `		<span class='itemaction'>`
+				_html += `			<<link "${getLan('take')}">>`
+				_html += `				<<run iM.takeItem("${postion}", ${index}, T.storage[${index}])>>`
+				_html += `			<</link>>`
+				_html += `		</span>`
+				_html += `		<span class='itemaction'>`
+				_html += `			<<link "${getLan('clearall')}">>`
+				_html += `				<<run iM.clearItem("${postion}", ${index})>>`
+				_html += `			<</link>>`
+				_html += `		</span>`
+				_html += `	</div>`
+			}
+			_html += `</div>`
+
+			html.push(_html)
+		}
+		
 	}
 
 }

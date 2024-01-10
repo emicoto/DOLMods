@@ -18,49 +18,42 @@
 <</widget>>
 
 :: Actions HomeStorage
+<<set _storage to []>>
 你打开了储物柜。
 <br><br>
 
 <div id='container'>
 
-<div id="storage-0" class="pocketslot no-numberify">
-    <div class="itemname">塑料袋</div>
-    <div class="itemcount">1件</div>
+<div id="body-0" class="pocketslot no-numberify">
+    <div class="itemname">矿泉水</div>
+    <div class="itemcount">24瓶</div>
     <div id="slider">
-        <<link '<<'>>
-            <<replace #storage-0-stack>> <<=_storage[0]>> <</replace>>
-            <<set _storage[0] = Math.max(_storage[0] - 5, 0)>>
-        <</link>>
-        <<link '<'>><</link>>
-        <div id='storage-0-stack'> <<=_storage[0]>> </div>
-        <<link '>'>><</link>>
-        <<link '>>'>>
-            <<replace #storage-0-stack>><<=_storage[0]>><</replace>>
-            <<set _storage[0] = Math.min(_storage[0] + 5, 100)>>
-        <</link>>
+        <input type="range" min="1" max="24" value="1" steup="1" class="slider" id="myRange" 
+        onchange="T.storage[0] = $(this).val(); console.log($(this).val(), T.storage[0]); $('#sliderValue').text(T.storage[0]); ">
+        <span id="sliderValue" class="slider-count">
+        </span>
     </div>
 
     <div id="plasticbag" class="itemicon">
         <mouse class="tooltip-tiny">
-        <img class="icon" src="img/items/container/plasticbag.png">
+        <img class="icon" src="img/items/drinks/mineralwater.png">
         <span>一个稍微能装东西的塑料袋。</span>
         </mouse>
     </div>
+    
     <div id="action" class="pocketaction">
         <span class="itemaction">
-        <<link "取出">>
-            <<run iM.takeItem('home', 0, _storage[0])>>
-        <</link>>
-        </span>
+            <<link '取出'>>
+                <<run iM.takeItems('storage', 0, _storage[0])>>
+            <</link>>
+		</span>
         <span class="itemaction">
-        <<link "清空">>
-            <<run iM.clearItem('home', 0)>>
-        <</link>>
-        </span>
+            <<link '清空'>>
+                <<run iM.clearItems('storage', 0, _storage[0])>>
+            <</link>>
+		</span>
     </div>
 </div>
-
-
 
 </div>
 
