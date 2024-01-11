@@ -622,6 +622,11 @@ let dropcan = {
 	num: 1
 }
 
+let dropbottleG = {
+	item: "glassbottle",
+	num: 1
+}
+
 const iDrinks = [
 	{
 		tags: ["bottle", "water"],
@@ -690,7 +695,7 @@ const iDrinks = [
 		
 		msg: itemMsg.ramune,
 		
-		drop: dropbottle,
+		drop: dropbottleG,
 	},
 
 	{
@@ -1810,21 +1815,31 @@ const iSpecial = [
 
 Items.addItems(iSpecial)
 
-function onEquip(pocket, slot){
-	const item = V.iPockets[pocket][slot]
+function getEquipType(tags){
+	if(tags.includes('held')){
+		return 'held'
+	}
+	else if(tags.includes('cart')){
+		return 'cart'
+	}
+	else if(tags.includes('wallet')){
+		return 'wallet'
+	}
+	else{
+		return 'bag'
+	}
+}
+/**
+ * event ont equip item
+ * @param {string} type 
+ * @param {number} pos 
+ * @returns {string} html
+ */
+function onEquip(type, pos){
+	const item = V.iPockets[type][pos]
 
-	let pos = 'bag'
-	if(this.tags.includes('held')){
-		pos = 'held'
-	}
-	else if(this.tags.includes('cart')){
-		pos = 'cart'
-	}
-	else if(this.tags.includes('wallet')){
-		pos = 'wallet'
-	}
-
-	if(item?.diff && this.diff){
+	let target = getEquipType(item.tags)
+	if(item.diff && this.diff){
 		const diff = this.diff[item.diff]
 
 		if(diff.sp){
@@ -1832,25 +1847,23 @@ function onEquip(pocket, slot){
 		}
 	}
 
-	let html = equipText[pos].equip(this.name)
-	iM.onEquip(pos, pocket, slot)
+	let name = clone(this.name)
+	name = P.toLower(name)
+
+	let html = P.templet(sMsg.equipText[target].equip, name)
+	iManager.onEquip(type, pos, target)
 
 	return html
 }
 
 function onUnEquip(){
-	let pos = 'bag'
-	if(this.tags.includes('held')){
-		pos = 'held'
-	}
-	else if(this.tags.includes('cart')){
-		pos = 'cart'
-	}
-	else if(this.tags.includes('wallet')){
-		pos = 'wallet'
-	}
+	let pos = getEquipType(this.tags)
 
-	const item = iM.getEquip(pos)
+	const item = iManager.getEquip(pos)
+
+	if(!item){
+		throw new Error(`Error on unEquip ${this.id}, no item on ${pos}.`)
+	}
 
 	if(item.diff && this.diff){
 		const diff = this.diff[item.diff]
@@ -1859,8 +1872,13 @@ function onUnEquip(){
 			iCandy.unsetEquipEf(diff.sp)
 		}
 	}
-	let html = equipText[pos].unequip(this.name)
-	iM.onUnEquip(pos)
+
+	let name = clone(this.name)
+	name = P.toLower(name)
+
+	let html = P.templet(sMsg.equipText[pos].unequip, name)
+	iManager.onUnEquip(pos)
+
 	return html
 }
 
@@ -2255,12 +2273,12 @@ const iAddictive = [
 		tags: ["canned", "alcohol",],	 
 
 		id: "beer",
-		name: ["Can of Beer", "啤酒"],
+		name: ["Beer", "啤酒"],
 		plural:"Cans of Bear",
 
 		info: [
-			"Cheep beer, tastes like alcohol",
-			"便宜的啤酒，尝起来跟和酒精没两样",
+			"Cheep beer, tastes like water mixed with beer",
+			"便宜的啤酒，尝起来跟和加了点酒的水没两样",
 		],	
 
 		num: 1,
@@ -2271,6 +2289,8 @@ const iAddictive = [
 			["alcohol", 100, "p"],
 			["stress", 5],
 		],
+
+		drop: dropcan,
 	},
 	{
 		type:"drinks",
@@ -2291,10 +2311,12 @@ const iAddictive = [
 			["stress", 10],
 			["fatigue", 60],
 		],
+
+		drop: dropcan,
 	},
 	{
 		type:"drinks",
-		tags:["seasonal", "spring", "alcohol"],
+		tags:["seasonal", "spring", "alcohol", 'bottle'],
 
 		id:"SakuraWineWithBox",
 		name:["Sakura wine", "盒装樱花酒"],
@@ -2313,11 +2335,12 @@ const iAddictive = [
 			["fatigue", 40],
 		],
 
+		drop: dropbottleG,
 		msg: itemMsg.SakuraWineWithBox
 	},
 	{
 		type:"drinks",
-		tags:["seasonal", "spring", "alcohol"],
+		tags:["seasonal", "spring", "alcohol", 'bottle'],
 
 		id:"BulkSakuraWine",
 		name:["bulkSakuraWine", "散装樱花酒"],
@@ -2325,7 +2348,7 @@ const iAddictive = [
 
 		info: [
 		"Sakura wine. The price it cheaper...queit suspicious.",
-		"透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒液，里面有整朵樱花和金箔！看上去非常梦幻。但是卖得这么便宜……有些可疑",
+		"透明的玻璃瓶里是淡粉色、以青苹果和樱花为基底酿造的酒。但是卖得这么便宜……有些可疑",
 		],
 
 		price: 9670,
@@ -2336,11 +2359,12 @@ const iAddictive = [
 			["fatigue", 20],
 		],
 
+		drop: dropbottleG,
 		msg: itemMsg.BulkSakuraWine
 	},
 	{
 		type:"drinks",
-		tags:["seasonal", "autumn", "alcohol"],
+		tags:["seasonal", "autumn", "alcohol", 'bottle'],
 
 		id:"OsmanthusWine",
 		name:["Osmanthus wine", "桂花酒"],
@@ -2348,7 +2372,7 @@ const iAddictive = [
 
 		info: [
 		"Amber-coloured Osmanthus wine.",
-		"酒液呈明亮的琥珀色，瓶口装饰着一圈淡淡的金黄色桂花。虽未开瓶，却仿佛散发着芬芳的桂花香。晃动瓶身，桂花纷繁而落。",
+		"酒液呈明亮的琥珀色，瓶口装饰着一圈淡淡的金黄色桂花。虽未开瓶，却仿佛散发着芬芳的桂花香。",
 		],
 
 		price: 8920,
@@ -2359,6 +2383,7 @@ const iAddictive = [
 			["fatigue", 80],
 		],
 
+		drop: dropbottleG,
 		msg: itemMsg.OsmanthusWine
 	},
 	{

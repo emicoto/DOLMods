@@ -19,6 +19,9 @@ setup.lang = {
     cooking : { EN: 'Cooking', CN: '烹饪' },
     wakeup : { EN: 'Wake up', CN: '醒来' },
     loiter : { EN: 'Loiter', CN: '闲逛' },
+    take : { EN: 'Take', CN: '取出' },
+    takehalf : { EN: 'Take half', CN: '取出一半' },
+    clearall : { EN: 'Clear', CN: '清空' },
 }
 //------------------------------------------------------
 //

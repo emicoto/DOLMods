@@ -1,871 +1,685 @@
-function getItemInfo(count,pos){
-	return Object.assign({count:0,pos:[],
-	addItem(count,pos){
-		this.count += count;
-		this.pos.push(pos)
-	}
-	},{
-		count,
-		pos:[pos]
-	})
-}
-
-/**
- * 获取物品的可堆叠大小
- * @param {string} itemId 
- * @returns {number}
- */
-function getStackSize(itemId, mode){
-    let item = Items.get(itemId)
-    let size = typeof item.size === "number" ? item.size : setup.maxStacks[item.size]
-
-    if(!item){
-        console.error('error from get items stack size, id:', itemId)
-        return 0
-    }
-    else if(!item.size){
-        return 1
-    }
-
-    else if(mode == 'storage'){
-        return Math.clamp(size * iCandy.getConfig('globalStack') * 10, 1, 10000)
-    }
-
-    //获取原始堆叠大小
-    else if(mode == 'raw'){
-        return size
-    }
-
-    //应该完全禁用，但麻烦，干脆弄个除了作弊不会到达的数字。
-    else if(iCandy.getConfig('disableStack') === true ){
-        return Math.pow(10, 20)
-    }
-
-    //默认最大可能得堆叠上限为1k
-    return Math.clamp(size * iCandy.getConfig('globalStack'), 1, 1000)
-}
-
+//-----------------------------------------------------------------------
+//
+//                          Management Functions
+//
+//-----------------------------------------------------------------------
 const iManager = {
-	getStackSize,
 
-	getEquip(pos){
-		if(V.iPockets.equip[pos].id == 'none') return
-		return V.iPockets.equip[pos]
+	//--------------------------------------------------------------
+	//                     fast access functions                    
+	//--------------------------------------------------------------
+
+	/**
+	 * get the current equiped container
+	 * @param {string} type 
+	 * @returns {  iStack | void }
+	 */
+	getEquip(type){
+		if(V.iPockets.equip[type].id !== 'none'){
+			return V.iPockets.equip[type]
+		}
 	},
 
-	setEquip(pos, value){
-		V.iPockets.equip[pos] = value
+	/**
+	 * set container to equip slot
+	 * @param {string} type 
+	 * @param {iStack} item 
+	 */
+	setEquip(type, item){
+		V.iPockets.equip[type] = item
+	},	
+
+	/**
+	 * unset container from equip slot
+	 * @param {string} type 
+	 */
+	unsetEquip(type){
+		V.iPockets.equip[type] = { type:'misc', id: 'none', name: 'none' }
+	},
+
+	getState(type){
+		return V.iPockets.state[type]
+	},
+
+	setState(type, state){
+		V.iPockets.state[type] = state
+	},
+
+	getSavedSize(type){
+		return V.iPockets.savedSize[type]
+	},
+
+	setFlag(type, flag){
+		V.iPockets.flag[type] = flag
+	},
+
+	getFlag(type){
+		return V.iPockets.flag[type]
 	},
 	
-	unsetEquip(pos){
-		V.iPockets.equip[pos] = { id:'none' }
+	//--------------------------------------------------------------//
+	//                     item management                          //
+	//--------------------------------------------------------------//
+	
+	// sanitize the item stack
+	format(stack, num, diff){
+		if(Array.isArray(stack) == false && String(stack) == '[object Object]'){
+			stack = [stack]
+		}
+		else if(typeof stack == 'string'){
+			let id = stack
+			const data = Items.get(id)
+			if(!data){
+				console.error('error from iManager.format, no such item:', id)
+				return []
+			}
+			if(!num){
+				num = data.num
+			}
+			stack = [new iStack(id, num, diff)]
+		}
+
+		if(Array.isArray(stack) == true && stack.length > 0){
+			return stack
+		}
+
+		console.error('error from iManager.format, no available item stack:', stack, 'num:', num, 'diff:', diff)
+		return []
 	},
 
-	getPocket(pos){
-		return V.iPockets[pos]
+	calcCostSlots(items){
+		return items.reduce((total, item) => {
+			const size = iStack.getSize(item.id)
+			total += Math.ceil(item.count / size)
+			return total
+		}, 0)
 	},
 
-	getEvent(pos){
-		return V.iPockets.event[pos]
+	mergeCheck(pocket, items){
+		let remains = []
+		for(let i=0; i < items.length; i++){
+			const item = items[i]
+			//calculate the total cost slot
+			const size = iStack.getSize(item.id)
+			const sameStack = pocket.getAll('uid', item.uid)
+			let remain = item.count
+
+			//check if can be merged to the same stack
+			if(sameStack.length > 0){
+				let total = sameStack.reduce((total, stack) => {
+					total += stack.count
+				}, 0)
+				remain = size * sameStack.length - total
+				item.count = remain
+			}
+
+			if(remain > 0){
+				//delete the item from items if it can be merged to the same stack
+				remains.push(item)
+			}
+		}
+		return remains
 	},
 
-	setEvent(pos, value){
-		V.iPockets.event[pos] = value
+	checkAvailable(items, num, diff){
+		let itemStacks = this.format(items, num, diff)
+		let costSlot = 0
+		let availableSlot = Pocket.getRemain()
+
+		if(itemStacks.length == 0){
+			return {
+				available: false,
+				overflow: -1,
+				costSlot: -1,
+				message: 'no item to check'
+			}
+		}
+		if(availableSlot == 0){
+			return {
+				available: false,
+				overflow: itemStacks.length,
+				costSlot: -1,
+				message: 'no space'
+			}
+		}
+
+		//before check the pockets, check if the item can be merged to the same stack
+		Pocket.list.forEach(type => {
+			const pocket = Pocket.get(type)
+			itemStacks = this.mergeCheck(pocket, itemStacks)
+		})
+
+		itemStacks.forEach(stack => {
+			costSlot += this.calcCostSlots(stack)
+		})
+
+		let available = (costSlot <= availableSlot)
+		const result = {
+			available,
+			overflow: costSlot - availableSlot,
+			costSlot,
+			availableSlot,
+			message: available ? 'item-added' : 'no-space'
+		}
+		return result
 	},
 
-	setState(pos, value){
-		V.iPockets.states[pos] = value
-	},
-
-	getState(pos){
-		return V.iPockets.states[pos]
-	},
 	/**
-	 * 按堆叠限制切割物品堆
-	 * @param {pocketItem} item 
-	 * @param {number} stacksize 
-	 * @returns {Array<pocketItem>}
+	 * send the stacks to global inventory
+	 * @param {iStack[]} itemStacks 
 	 */
-	splitItems (item, stacksize){
-		if(!stacksize || item.count <= stacksize) return [item];
+	sendGlobal(itemStacks){
+		const storage = Pocket.get('global')
 
-		let totalCount = item.count;
-		let items = []
+		for(let i in itemStacks){
+			let id = itemStacks[i].uid
 
-		const resCount = totalCount % stacksize
-		let splitItem =null;
-
-		if(resCount > 0){
-			splitItem = clone(item)
-			splitItem.count = resCount;
-			items.push(splitItem)
-			totalCount -= resCount;
+			if(!storage.items[id]){
+				storage.items[id] = itemStacks[i]
+			}
+			else{
+				storage.items[id].count += itemStacks[i].count
+			}
 		}
 
-		const itemCount = totalCount / stacksize;
-		for (let index = 0; index < itemCount; index++) {
-			splitItem = clone(item)
-			splitItem.count = stacksize
-			items.push(splitItem)
-		}
-		return items
 	},
 
 	/**
-	 * 合并相同物品的堆叠
-	 * @param {Array<pocketItem>} pocket 
+	 * add an item to the inventory
+	 * @param {string} itemId 
+	 * @param {number} num 
+	 * @param {string | void} diff 
+	 * @returns 
 	 */
-	mergeSameItems (pocket){
-		const sameItems = pocket.reduce((nowItem, { uid, count } ,i)=>{
-			if(nowItem.has(uid)){
-				var item = nowItem.get(uid)
-				item.addItem(count,i)
-				return nowItem;
-			}
-
-			nowItem.set(uid, getItemInfo(count, i))
-			return nowItem;
-		},new Map())
-		
-		let removeItemPos = []
-		for (const { pos,count } of sameItems.values()) {
-			const nowItemPos = pos.shift()
-			pocket[nowItemPos].count = count
-
-			if(pos.length <= 0){
-				continue
-			}
-			for (const itemPos of pos) {
-				removeItemPos.push(itemPos)
-			}
+	getItem(itemId, num, diff){
+		const data = Items.get(itemId)
+		if(!data){
+			console.error('error from iManager.getItem, no such item:', itemId)
+			return
 		}
 
-		removeItemPos = removeItemPos.sort((a,b)=>b-a);
-		for (const pos of removeItemPos) {
-			pocket.deleteAt(pos)
-		}
-		
+		const stack = new iStack(itemId, num, diff)
+		const result = this.onGetItems(stack, 'getone')
+		return result
 	},
 
 	/**
-	 * 转移物品时显示用文本。 重复的物品会预先合并好
-	 * @param {Array<{pos:string, item:pocketItem}> transferDetail
+	 * on get items event, add items to the inventory and return the message
+	 * @param {iStack[]} stacks 
+	 * @param {string} situation 
 	 * @returns {string}
 	 */
-	transferMessage : function(transferDetail){
-		return transferDetail.reduce((res, {pos, item})=>{
-			const message = transferMsg[pos]
+	onGetItems(stacks, situation){
+		const itemStacks = this.format(stacks, situation)
+		let html = ''
 
-			if(typeof message !== "function" ) return res;
-			res += message(item);
-			return res;
-
-		}, '')
-	},
-	/**
-	 * 检测身上可用物品格
-	 * @returns {number}
-	 */
-	checkBodySlots : function(){
-		let count = 2
-		const {upper, over_upper, lower } = V.worn
-		if(upper.name !== 'naked' || over_upper !== 'naked'){
-			count += 1
+		if( situation == 'unequip' ){
+			return this.addItems(items)
 		}
 
-		if(lower.name !== 'naked'){
-			count += lower.variable == upper.variable ? 1 :2
+		//获取物品的提示
+		if( situation == 'getone' ){
+			html = P.templet( sMsg.getItems, itemStacks[0].name, num )
 		}
-
-		if(this.getEquip('wallet')){
-			let id = this.getEquip('wallet').id
-			let wallet = Items.get(id)
-			if(wallet.tags.includes('extraspace')){
-				count += 1
-			}
-		}
-		if(this.getEquip('held')){
-			count -= 1
-		}
-		return count
-	},
-
-	/**
-	 * 身上各部位的最大格子数
-	 */
-	MaxSlots : {
-		body(){
-			return iManager.checkBodySlots()
-		},
-		held(){
-			let item = iManager.getEquip('held')
-			if(!item) return 0
-
-			const held = Items.data[item.id];
-			return held?.capacity ?? 0
-		},
-		hole(){
-			if(currentSkillValue('promiscuity') >= 90){
-				return 2
-			}
-			else if(currentSkillValue('promiscuity') >= 75){
-				return 1
-			}
-
-			return 0
-		},
-		bag(){
-			let item = iManager.getEquip('bag')
-			if(!item) return 0
-
-			const bag = Items.data[item.id];
-			return bag?.capacity ?? 0
-		},
-		cart(){
-			let item = iManager.getEquip('cart')
-			if(!item) return 0
-
-			const cart = Items.data[id];
-			return cart?.capacity ?? 0
-		}
-	},
-
-	/**
-	 * 获取身上各部位最大格子数
-	 * @param {string} pos 
-	 * @returns {number}
-	 */
-	getMaxSlots : function(pos){
-		const slot = this.MaxSlots[pos];
-		if(typeof slot === "function") return slot();
-		return 0;
-	},
-	/**
-	 * 在身上搜索物品，并返回对应物品的所有堆叠，以及相关信息
-	 * @param {string} itemId 
-	 * @returns { {total: number, stacks: Array<pocketItem>, path:Array<{ pos:string, index: number }>} }
-	 */
-	getStackFromPockets : function(itemId){
-		return pocketsList.reduce((result, key)=>{
-
-			const pocket = this.getPocket(key)
-			//防意外
-			if(!Array.isArray(pocket)) return result;
-
-			let stack = pocket.filter((item, index)=>{
-				if(item.uid == itemId) {
-					result.total += item.count;
-					result.path.push({ pos: key, index })
-					return item;
-				}
+		else if( situation == 'getmulti' ){
+			stacks.forEach((item) => {
+				html += P.templet( sMsg.getItems, item.name, item.count )
 			})
-
-			result.stacks.push(...stack)
-			return result
-
-	},{ total:0,  stacks: [], path:[] })
-	},
-
-	/**
-	* 获取空余的物品格子
-	* @return {{ slots: Array<{ pos:string, count:number }>, total: number }}
-	*/
-	getEmptySlots(){
-		return pocketsList.reduce((result, key)=>{
-			let pocket = this.getPocket(key)
-			let max = this.getMaxSlots(key)
-			if(pocket.length < max ){
-				let count = max - pocket.length
-				result.slots.push( { pos: key, count } )
-				result.total += count
-			}
-			return result
-		}, { slots:[ ], total: 0 })
-	},
-
-	objPocket(items){
-		let obj = {};
-		items.forEach((item)=>{
-			if(!obj[item.uid]){
-				obj[item.uid] = {
-					type: item.type,
-					id: item.id,
-					uid: item.uid,
-					name: item.name,
-					count: item.count,
-					pocket: item.pocket
-				}
-			}
-			else{
-				obj[item.uid].count += item.count
-			}
-		})
-
-		return obj
-	},
-
-	shiftStacks : function(stacks, amount){
-		return stacks.reduce((left, item)=>{
-			if(left == 0) return left;
-			let size = this.getStackSize(item.id)
-
-			//如果开启了无限堆叠模式……到这步骤都不影响。
-			if(item.count < size){
-				//万一amount比size要小得多呢……？限制一下！
-				let get = Math.clamp(size - item.count, 0, left);
-				item.count += get;
-				left = left - get;
-			}
-			return left
-		}, amount)
-	},
-	
-	shiftSlots : function(slots, items){
-		return slots.reduce((result, { pos, count})=>{
-			let pocket = this.getPocket(pos)
-			if(result.items.length == 0) return result
-
-			let item
-			for(let i=0; i < count; i++){
-				//console.log('shift for loop:', i, result.items)
-				if(result.items.length > 0){
-					item = result.items.pop()
-					item.pocket = pos
-					pocket.push(item)
-					result.details.push({ pos, item })
-				}
-			}
-			console.log('shiftSlots:', result)
-			console.log('last:', item)
-			result.last = item;
-			return result
-		}, { items, last:null, details:[]})
-	},
-
-	/**
-	 * 物品获得前的检测。
-	 * 返回boolean
-	 */
-	checkItemOnGet : function(itemId, num){
-		//如果没有格子限制的话直接返回true
-		if(iCandy.getConfig('disablePockets') == true ) return true;
-
-		const size = this.getStackSize(itemId)
-		const { total, stacks } = this.getStackFromPockets(itemId);
-		console.log('size:', size, 'num:', num)
-		console.log('total:', total, 'stacks:', stacks)
-
-		//先检查即存堆叠是否有足够空位，有就直接返回true
-		if(stacks.length * size - total >= num){
-			return true
 		}
-
-		const slots = this.getEmptySlots()
-		console.log('slots:', slots)
-
-		//看看有无足够空余位置
-		if( slots.total >= Math.ceil(num/size) ){
-			return true
-		}
-
-		return false
-	},
-
-	/**
-	 * 物品获得时的处理。将返回显示用文本。
-	 * @param {string} itemId 
-	 * @param {number} num
-	 * @return {string} 
-	 */
-	getItems : function(itemId, num, diff){
-		let newItem = new pocketItem(itemId, num, diff)
-		let size = this.getStackSize(itemId)
-		let msg = ''
-		let leftNum = 0
-		let ID = newItem.uid
-
-		//如果没有格子限制，则直接扔pockets.global
-		if(iCandy.getConfig('disablePockets') == true ){
-
-			if(!V.iPockets.global[ID]){
-				V.iPockets.global[ID] = newItem;
-			}
-			else{
-				V.iPockets.global[ID].count += num;
-			}
-			
-		}
-
-		//先进行是否存在即存堆叠的检测。如果即存堆叠有足够空间，就直接加上。  
-		let {total, stacks} = this.getStackFromPockets(ID)
-
-		if(total > 0){
-			//先整合看看有无剩余
-			leftNum = this.shiftStacks(stacks, num)
-			//如果这里已经没剩余数了，直接返回没有额外信息。
-			console.log('leftNum:', leftNum)
-			if(leftNum == 0) return msg
-			//先更新物品数量。如果上一步即存堆叠都是满的话，leftNum现在跟num是一致的.
-			newItem.count = leftNum
-		}
-
-		//然后根据堆叠限制切割
-		let items = this.splitItems(newItem, size)
-		let leftItems = {
-			items,
-		}
-		let leftitem = {
-				id: newItem.id,
-				name: newItem.name,
-				count: 0
-			}
-
-		//检测空格位置。有空间就塞，没有就把多余的扔地上/存储物柜/藏物点
-		let Slots = this.getEmptySlots()
-		if (Slots.total > 0){          
-			leftItems = iM.shiftSlots(Slots.slots, clone(items))
-			console.log('leftItems:', leftItems)
-
-			//如果这里已经处理完了，根据最后处理的位置抛个提示
-			if(leftItems.items.length == 0 ){
-				let { last } = leftItems
-				return transferMsg[last.pocket](last)
-			}
-		}
-
-		//处理溢出的部分。
-		//先统计一下总数
-		leftitem.count = leftItems.items.reduce((result, item)=>{
-			result += item.count; return result
-		}, 0)
-
-		//根据所在地点判断获取提示信息
-		let html = this.dropOrTransferItems(leftitem)
-		return html
-
-	},
-
-	dropItem : function(pos, index){
-		const pocket = this.getPocket(pos)
-		const dropMsg = {
-			CN : `你丢弃了${pocket[index].name} x ${pocket[index].count}。`,
-			EN : `You drop ${pocket[index].name} x ${pocket[index].count}.`
-		}
-		pocket.deleteAt(index)
-		V.addMsg += lanSwitch(dropMsg.EN, dropMsg.CN) + '<br>'
-	},
-
-	dropOrTransferItems(item){
-		//根据所在地点判断
-		if(V.location == 'home'){
-			//在家就转移到家里仓库。
-			this.storeItems('home', item.id, item.count, item.diff)
-			return transferMsg.home(item)
-		}
-		else if(V.location == 'farm'){
-			//在农场里就转移到农场仓库
-			this.storeItems('farmbarns', item.id, item.count, item.diff)
-			return transferMsg.farm(item)
-		}
-		//如果所在地有储物柜
-		else if(this.hasLockers() && this.canStoreLockers()){
-			this.storeItems('lockers', item.id, item.count, item.diff)
-			return transferMsg.lockers(item)
-		}
-		//如果所在地有藏物点
-		else if(this.hidePoint[getLocation()]){
-			let [place, storage] = this.hidePoint[getLocation()]
-			this.storeItems(storage, item.id, item.count, item.diff)
-			return transferMsg[place](item)
-		}
-		//其他情况就无了。
-		else{
-			return transferMsg.ground(item)
-		}
-	},
-
-	//判定所在地有无储物柜。
-	//只有学校、俱乐部、妓院、商场有储物柜。
-	//储物柜内部是共通的(￣▽￣")。没有堆叠限制，但有item数限制
-	hasLockers(){
-		//学校的储物柜是免费的。
-		if(getLocation() == 'school') return true;
-		//其他地方的储物柜需要解锁。
-		return V.iStorage.lockerOwned[getLocation()] == 1
-	},
-
-	//获取所在地的藏物点。
-	//公园有灌木丛，工厂街有垃圾桶，岛上是自己的藏身处
-	//灌木丛和垃圾桶每日清理。岛屿藏身处则概率清理。
-	hidePoint :{
-		park: ['bushes', 'bushes_park'],
-		elk : ['trashbin', 'trashbin_elk'],
-		island : ['hideout', 'hideout']
-	},
-
-	canStoreLockers(){
-		return this.countStorageItems(V.iStorage.lockers) < 60
-	},
-
-	sortPocket(pocket, max){
-		let items = []
-		let leftItems = []
-		let deleteItems = []
-		for( let i=0; i < max; i++ ){
-			let item = pocket[i]
-			if(!item) continue
-			let size = this.getStackSize(item.id)
-			console.log('item:', item, 'size:', size)
-
-			if(item.count > size){
-				console.log('split item', item.count, size)
-				let left = clone(item)
-				item.count = size
-				left.count -= size
-
-				left = iManager.splitItems(left, size)
-				leftItems.push(...left)
-			}
-			items.push(pocket[i])
-			deleteItems.push(i)
-		}
-		deleteItems = deleteItems.sort((a,b)=>b-a)
-		deleteItems.forEach((index)=>{
-			pocket.deleteAt(index)
-		})
-		if(pocket.length > 0){
-			leftItems.push(...pocket)
-		}
-
-		return { items, leftItems }
-	},
-
-	//定期更新口袋和容器的堆叠，并进行爆衣检测。
-	updatePockets(situation){
-		//初始化
-		if(!V.iPockets.temp){
-			this.saveSlotsStatus()
-		}
-
-		//先做爆衣检测
-		pocketsList.forEach((pos)=>{    
-			this.checkBroken(pos)
-		})
-
-		//然后保存当前slot状态
-		this.saveSlotsStatus()
-
-		//更新背包堆叠情况。如果爆了就清除多的物品并扔出提示文本
-		let leftItems = []
-
-		pocketsList.forEach((pos)=>{
-			console.log('pocket:',pos,  V.iPockets[pos])
-			let res = this.sortPocket(V.iPockets[pos], this.getMaxSlots(pos))
-			console.log('sort result:',res)
-			V.iPockets[pos] = res.items
-			leftItems.push(...res.leftItems)
-		})
-
-		console.log('leftItems:', leftItems)
-		//如果物品没有溢出就在这里结束，没有额外提示消息。
-		if(leftItems.length == 0) return '';
-
-		//如果背包、手推车遗失，会在遗失判定时同时清理掉物品。
-		//先整理多余物品到已有堆叠中
-		leftItems.forEach((item)=>{
-			let { total, stacks } = this.getStackFromPockets(item.uid)
-			if( total > 0 ){
-				item.count = this.shiftStacks(stacks, item.count)
-			}
-		})
-		//清理掉已清空的物品
-		leftItems = leftItems.filter(item => item.count > 0)
-		//如果物品没有溢出就在这里结束，没有额外提示消息。
-		if(leftItems.length == 0) return '';
-		
-		//看看有无空间塞多出来的物品
-		let empty = this.getEmptySlots()
-
-		//如果有空位就先转移
-		if(empty.total > 0){
-			let result = this.shiftSlots(empty.slots, leftItems)
-			leftItems = result.items
-
-			if(leftItems.length == 0){
-				return this.transferMessage(result.details)
-			}
-		}
-
-		//如果有剩余，或者上面检测时没有空余位置的，就看看是就地转移物品到安全点或爆掉落
-		if(leftItems.length > 0){
-			let html = ''
-
-			leftItems.forEach((item)=>{
-				html += sortOutMsg(item)
-				html += this.dropOrTransferItems(item)
-			})
-
+		//if pockets be disabled then throw all items to global inventory
+		if( iCandy.getConfig('disablePockets') === true ){
+			this.sendGlobal(itemStacks)
 			return html
 		}
 
-	},
-
-	onEquip(pos, pocket, slot){
-		if(!V.iPockets[pocket][slot]) return
-
-		const item = V.iPockets[pocket].deleteAt(slot)
-		if(this.getEquip(pos)){
-			this.onUnEquip(pos)
+		const overflow = this.addItems(itemStacks)
+		//check if overflow		
+		if( overflow.length > 0 ){
+			overflow.forEach(stack => {
+				html += this.dropOrTransfer(stack)
+			})
 		}
 
-		this.setEquip(pos, item[0])
-		this.updatePockets()
+		return html
 	},
 
-	onUnEquip(pos){
-		const item = this.getEquip(pos)
-		if(!item) return
-
-		this.unsetEquip(pos)
-		this.getItems(item.id, 1, item.diff)
-		this.updatePockets()
-	},
-
-	//检测装备状态并记录
-	checkBroken(pos){
-		if(pos == 'body'){
-			if (this.getMaxSlots('body') < V.iPockets.temp.body && this.getMaxSlots('body') >=4 ){
-				this.setState('body', 'changed')
-				this.setEvent('body', 2)
+	addItems(itemStacks){
+		let overflow = itemStacks
+	
+		//search all pockets if the item can be added
+		for(let i in Pocket.list){
+			const pocket = Pocket.get(Pocket.list[i])
+			const result = pocket.add(itemStacks)
+	
+			if(result.overflow.length > 0){
+				overflow = result.overflow
 			}
-			else if( this.getMaxSlots('body') < V.iPockets.temp.body){
-				this.setState('body', 'broken')
-				this.setEvent('body', 1)
-			}
-			else if( this.getMaxSlots('body') >= V.iPockets.temp.body && this.getMaxSlots('body') > 2 ){
-				this.setState('body', 'equiped')
+			else{
+				break
 			}
 		}
+	
+		if(overflow.length > 0){
+			return overflow
+		}
 
-		else if(pos == 'hole'){
-			if( this.getMaxSlots('hole') < V.iPockets.temp.hole ){
-				this.setState('hole', 'fit')
-				this.setEvent('hole', 1)
+		return []
+	},
+
+	/**
+	 * drop a selected item
+	 * @param {string} type 
+	 * @param {number} pos 
+	 * @returns {iStack | void}
+	 */
+	drop(type, pos){
+		const pocket = Pocket.get(type)
+		const item = pocket.take(pos)
+		return item
+	},
+
+	/**
+	 * drop all items that match the property
+	 * @param {string} type must in the list: body, bag, cart, hole, held, global 
+	 * @param {*} prop search property
+	 * @param {*} value match value
+	 * @returns 
+	 */
+	dropAll( type, prop , value ){
+		const pocket = Pocket.get(type)
+		const items = pocket.takeAll(prop, value)
+		return items
+	},
+
+	randomDrop( type, num ){
+		const pocket = Pocket.get(type)
+		for(let i=0; i < num; i++){
+			let index = Math.floor( Math.random() * pocket.slots.length )
+			pocket.take(index)
+		}
+		return items
+	},
+	
+	/**
+	 * remove an item from the inventory then return the message
+	 * @param {string} type 
+	 * @param {number} pos 
+	 * @returns 
+	 */
+	onRemove(type, pos){
+		this.drop(type, pos)
+		return P.templet( sMsg.dropItem, item.name, item.count )
+	},
+
+	//save the current limit size of the pockets
+	saveSize(){
+		const savedSize = {}
+		Pocket.list.forEach(type => {
+			savedSize[type] = Pocket.get(type).limitsize
+		})
+		V.iPockets.savedSize = savedSize
+	},
+
+	//update the pockets states
+	updateState(type){
+		const equip = this.getEquip(type)
+		if(!equip) return;
+
+		let size = equip.max()
+		let savedSize = this.getSavedSize(type)
+
+		if(type == 'body'){
+
+			if( size < savedSize && size >= 4 ){
+				this.setState(type, 'changed')
+				this.setFlag(type, 2)
 			}
-			else if(this.getMaxSlots('hole') > 0 ){
-				this.setState('hole', 'loose')
+			else if( size < savedSize){
+				this.setState(type, 'exposed')
+				this.setFlag(type, 1)
 			}
-			return
+			else if( size >= savedSize && size >= 4 ){
+				this.setState(type, 'equiped')
+			}
+		}
+		else if(type == 'hole'){
+			if( size < savedSize ){
+				this.setState(type, 'tighten')
+				this.setFlag(type, 1)
+			}
+			else if( size > savedSize){
+				this.setState(type, 'loosen')
+			}
 		}
 		else{
-			if( this.getMaxSlots(pos) < V.iPockets.temp[pos] && this.getMaxSlots(pos) > 0 ){
-				this.setState(pos, 'changed')
-				this.setEvent(pos, 1)
+			if( size < savedSize && size > 0 ){
+				this.setState(type, 'changed')
+				this.setFlag(type, 1)
 			}
-			else if(this.getMaxSlots(pos) >= V.iPockets.temp[pos]  && this.getMaxSlots(pos) > 0){
-				this.setState(pos, 'equiped')
+			else if( size >= savedSize){
+				this.setState(type, 'equiped')
 			}
-		}
-
-	},
-
-	saveSlotsStatus(){
-		V.iPockets.temp = {
-			body	: this.getMaxSlots('body'),
-			held	: this.getMaxSlots('held'),
-			bag		: this.getMaxSlots('bag'),
-			hole	: this.getMaxSlots('hole'),
-			cart	: this.getMaxSlots('cart'),
-		}
-	},
-
-	storeItems(location, itemId, num, diff){
-		const item = new pocketItem(itemId, num, diff)
-		let id = item.uid
-
-		if(!V.iStorage[location][id]){
-			V.iStorage[location][id] = item
-		}
-
-		V.iStorage[location][id].count += num
 		
-		return V.iStorage[location][id]
+		}
 	},
 
-	countStorageItems(storage){
-		return Object.entries(storage).reduce((result, [key, item])=>{
-			//一个堆叠算一个。
-			const size = this.getStackSize(item.id) ?? 1
-			const stacks = Math.ceil(item.count / size)
+	//make a message from the stacks transfered
+	transMsg(stacks){
 
-			result += stacks
+		if(!Array.isArray(stacks)){
+			stacks = [stacks]
+		}
 
-			return result
-		}, 0)
-	}
+		return stacks.reduce((message, stack) => {
+			let pos = stack.index[0]
 
-}
+			//if the item index format is 'type_pos', then split it
+			if(pos.split('_').length > 1 ){
+				pos = pos.split('_')[1]
+			}
 
-/**
- * 
- * @returns {string}
- */
-function getLocation(){
-	//巴士里直接返回巴士
-	if(V.passage == 'Bus' || V.passage.includes('Bus')){
-		return 'bus'
-	}
+			//get the message from systemMsg.js
+			const msg = sMsg.transferMsg[pos]
 
-	if(V.passsage.includes('Stall')){
-		return 'market'
-	}
+			if(typeof msg == 'function'){
+				message += msg(stack) + '<br>'
+			}
+			else{
+				message += P.templet(msg, stack.name, stack.count) + '<br>'
+			}
+			return message
+		}, '')
+	},
 
-	if(V.location == 'town'){
-		//根据bus返回
-		return V.bus
+	sortOutEvent(){
+		let html = ''
 
-	}
-	if(V.location == 'alley'){
-		//根据passage返回地点
-		if(V.passage.includes('Commercial')) return 'commercial_alley'
-		if(V.passage.includes('Industrial')) return 'industrial_alley'
-		if(V.passage.includes('Residential')) return 'residential_alley'
-	}
+		Pocket.list.forEach(type => {
+			if(type == 'body'){
+				if(this.getFlag('body') == 1){
+					html += lanSwitch( sMsg.sortOutMsg.body_broken ) + '<br>'
+				}
+				else if(this.getFlag('body') == 2){
+					html += lanSwitch( sMsg.sortOutMsg.body_changed ) + '<br>'
+				}
+			}
+			else {
+				if(this.getFlag(type) == 1){
+					html += lanSwitch( sMsg.sortOutMsg[type] ) + '<br>'
+				}
+			}
 
-	return V.location
-}
+			this.setFlag(type, 0)
+		})
 
+		return html + '<br>'
+	},
 
-const iMoney = {
+	updatePockets(){
+		//先检测当前装备的容器是否有容量变化
+		Pocket.list.forEach(type => {
+			const pocket = Pocket.get(type)
+			const max = Pocket.getMaxSlot(type)
+	
+			if(pocket.limitsize != max){
+				this.updateState(type)
+				pocket.limitsize = max
+			}
+		})
+
+		//更新上限记录
+		this.saveSize()
+	
+		//整理所有物品，超出堆叠上限的物品会被分堆
+		//如果分堆后的物品又超出了容量上限，则会被自动转移或者丢弃
+		const remainItems = []
+		const updateItems = []
+
+		for(let i in Pocket.list){
+			const pocket = Pocket.get(Pocket.list[i])
+	
+			const remain = pocket.sortOut(remainItems)
+			if(remain.length > 0){
+				remainItems = remain
+			}
+			pocket.sort()
+			updateItems.push(...pocket.updateIndex())
+		}
+
+		//如果没有超出容量限制的物品，或没有位置变动的情况，则不需要给与玩家提示
+		if(remainItems.length == 0 && updateItems.length == 0) return ''
+
+		let html = []
+
+		//根据位置变动，给与玩家提示
+		if(updateItems.length > 0){
+			html.push( this.transMsg(updateItems) )
+		}
+
+		//如果有多余的物品，则根据情况判断是扔掉还是转移
+		if(remainItems.length > 0){
+
+			html.push( this.sortOutEvent() )
+
+			remainItems.forEach(stack => {
+				html.push( this.dropOrTransfer(stack) )
+			})
+		}
+		
+		if(html.length > 0){
+			return html.join('<br>') + '<br>'
+		}
+	},
+
+	dropOrTransfer(stack){
+		let storage = V.location == 'home' ? Pocket.get('home') : V.location == 'farm' ? Pocket.get('farm') : Pocket.get('lockers')
+
+		//根据所在地点判断, 如果是家里或者农场，则转移至仓库
+		if( V.location.has('home', 'farm') && storage.check(stack) == true){
+			stack.index = ['storage_' + V.location , storage.slots.length]
+			storage.add(stack)
+			return this.transMsg(stack)
+		}
+
+		//如果所在地有储物柜，则转移到储物柜
+		if( hasLockers() && storage.check(stack) == true){
+			stack.index = ['storage_lockers' , storage.slots.length]
+			storage.add(stack)
+			return this.transMsg(stack)
+		}
+
+		//如果所在地有藏物处，则转移到藏物处
+		let [type, fullname] = getHideout()
+		storage = Pocket.get(fullname)
+
+		if( storage.check(stack) == true ){
+			stack.index = [type , storage.slots.length]
+			storage.add(stack)
+			return this.transMsg(stack)
+		}
+
+		//都没有的话，就扔掉
+		return P.templet( sMsg.transferMsg.ground, stack.name, stack.count )
+
+	},
+
+	//--------------------------------------------------------------
+	//					 item usage                                 
+	//--------------------------------------------------------------
 	/**
-	 * 获取可携带的最大金钱数额
-	 * @returns {number}
+	 * Equip item from the inventory
+	 * @param {string} type 
+	 * @param {number} pos 
 	 */
-	max : function(){
-		let wallet = V.iPockets.wallettype?.id
-		let bag = Items.data[wallet]
-		return  bag?.capacity + 250000 ?? 250000
+	onEquip( type, pos, equip){
+		const item = Pocket.get(type).take(pos)
+		if(this.getEquip(equip)){
+			this.onUnEquip(equip)
+		}
+
+		this.setEquip(equip, item)
+		this.updatePockets()
+	},
+	
+	onUnEquip( type ){
+		const item = this.getEquip(type)
+		if(!item){
+			return
+		}
+
+		this.unsetEquip(type)
+
+		this.onGetItems(item, 'unequip')
+		this.updatePockets()
 	},
 
 	/**
-	 * 金钱进行变动时的处理
-	 * @param {number} value 
+	 * useItem
+	 * @param {Items} data 
 	 */
-	gain : function(value){
-		let left = V.money1 + value - this.max()
-		V.money1 = Math.clamp(V.money1 + value, 0, this.max());
+	useItem( data, times, situation ){
+		const { type, effects } = data
+		let passtime = iData.itemUseTime[type] || 1
 
-		if(left > 0){
-			T.addMsg += this.giveMsg.drop(left)
+		let params = ''
+
+		//if has use effect
+		if( effects && effects.length > 0 && typeof data.onUse != 'function' ){
+			params = data.doEffect(times)
 		}
+
+		else if ( typeof data.onUse == 'function' ){
+			params = data.onUse(times, situation)
+		}
+
+		//if use from inventory set the passtime
+		if( situation?.includes('use') ){
+			V.tvar.passtime = passtime
+		}
+
+		return params
 	},
 
-	lost : function(value){
-		V.money1 = Math.clamp(V.money1 - value, 0, this.max());
-		T.addMsg += this.giveMsg.lost(value)
-	},
-
-	use : function(value){
-		V.money1 -= value
-	},
-
-	giveMsg :{
-		lost : function(value){
-
-		},
-		earn : function(value){
-
-		},
+	//use item from inventory
+	useFromInv(type, pos, situation = 'use'){
+		const pocket = Pocket.get(type)
+		const item = pocket.takeSelected(pos)
+		const data = Items.get(item.id)
 		
-		transfer : function(value){
-
-		},
-
-		drop : function(value){
-			return lanSwitch(
-				`You have more money than you can carry, and you have to leave the extra ${value/100}£ where it is.`, 
-				`你的钱多得拿不下了，多余的${value/100}£你只好留在原地。`
-				)
+		if(!data){
+			console.error('error from iManager.useFromInv, no such item:', item.id)
+			return 'Error: no item data found.'
 		}
-	}
-}
-
-
-//被强奸后随机丢失物品，一定概率丢失背包钱包手推车
-function lostItemsAfterRape(){
-	let moneyrate = V.money1/100000
-	let max = Math.floor(V.money1 * 0.75 / 100)
-	let lostmoney = random(10, max) * 100
-
-	//身上超过50块就可能丢失，钱越多，丢失概率越大
-	if( V.money1 >= 5000 ){
-		let rate = random(1000) * moneyrate
-		if( rate >= 500 ){
-			iMoney.money(-lostmoney)
-		}
-	}
-
-	const lost = (pocket)=>{
-		let count = random(0, 4)
-		if(pocket.length < count || pocket.length == 0 || count == 0) return
 		
-		for( let i = 0; i < pocket.length; i++){
-			if(count <= 0) break;
+		const msg = this.onUseItem( item, situation )
+		pocket.sortOut()
 
-			if(random(100) > 50){
-				pocket.deleteAt(i);
-				count --
+		return msg
+	},
+
+
+	//default is use item from inventory, if situation is specified then use item from the situation, the type will be the item id and pos will be the item count
+	onUseItem( stack, situation){
+		let item = stack || new iStack( itemId, 1 )
+		let data = Items.get(item.id)
+
+		//if the item is alias then get original item data by alias
+		if(data && data.alias ){
+			data = Items.get(data.alias)
+		}
+
+		//if the item data is not available then return
+		if(!data){
+			console.error('error from iManager.onUseItem, no such item:', item.id)
+			return
+		}
+
+		let params = ''
+		let msg = ''
+		let dropMsg = ''
+		let usage = data.usage || 1
+		let times = situation == 'useall' ? Math.ceil(item.count/usage) : 1
+
+		switch (situation) {
+			case 'enemy':
+				params = this.useItem(data, 1, situation)
+				return params
+
+			//current version has not effect to npc
+			case 'apply-to-npc':
+				item.count -= usage
+				return ''
+
+			case 'use':
+			case 'useall':
+				item.count = Math.max(item.count - usage * times, 0)
+
+				if( typeof data.drop == 'object' ){
+					dropMsg = this.onItemDrop(data.drop, times)
+				}
+				params = this.useItem(data, times, situation )
+		}
+
+		//throw the item use message and event
+		if( situation?.includes('use')  ){
+			msg += P.templet( sMsg.useItem, data.name, iData.useMethods( data.type, data.tags ))
+
+			if( itemMsg[data.id] ){
+				msg += '<br>' + lanSwitch(itemMsg[data.id])
+			}
+
+			msg +=  params
+
+			if( dropMsg ){
+				msg += '<br>' + dropMsg
 			}
 		}
 
-		return true
-	}
 
-	//判断物品丢失， 优先丢身上的
-	let lostitem = lost('body')
-	//然后背包里的
-	if(!lostitem){
-		lostitem = lost('bag')
-	}
-	//最后是手推车的
-	if(!lostitem){
-		lost('cart')
-	}
+		return msg
+	},
 
-	/*概率整个背包或手推车弄丢
-	if(random(1000) >= 800){
-		iM.unsetEquip('bag')
-		V.iPockets.bag = []
-		message
-	}
-	if(random(1000) >= 800){
-		iM.unsetEquip('cart')
-		V.iPockets.cart = []
-		message
-	}
-	*/
+	onItemDrop( drop, times = 1 ){
+		let msg = ''
+		let itemStacks = []
+		
+		if( Array.isArray(drop) == false ){
+			drop = [drop]
+		}
+		drop.forEach( item => {
+			let num = item.num || 1
+			let itemStack = new iStack(item.item, num * times , item.diff)
+			itemStacks.push(itemStack)
+		})
 
+		msg = this.onGetItems(itemStacks, drop.length > 1 ? 'getmulti' : 'getone')
+
+		return msg
+	},
+
+	takeSelected( type, position, amount = 1 ){
+		const pocket = Pocket.get(type)
+		const item = pocket.takeSome(position, amount)
+		
+		pocket.sortOut()
+
+		return item
+	}
 }
 
 
-
-//tending_pick, tending_harvest收获/拾取农作物时的处理
-function harvestHandle(){
-
-}
-
-
+//define the global variable
 Object.defineProperties(window, {
-	getItemInfo : {
-		value : getItemInfo
+	iManager: { 
+		value: iManager,
+		writable: false,
+		enumerable: true,
+		configurable: false
 	},
-	iM : {
-		value : iManager
-	},
-	iMoney : {
-		value : iMoney
-	},
-	getLocation : {
-		value : getLocation
+
+	im: {
+		get: function(){
+			return iManager
+		}
 	}
-})	
+})

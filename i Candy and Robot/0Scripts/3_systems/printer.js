@@ -32,7 +32,7 @@ const htmlPrinter = {
 
 	itemImageResolve : function(item, data, shop){
 		if(!item) return 'img/items/item_none.png'
-		let size = iM.getStackSize(item.id)
+		let size = iStack.getSize(item.id)
 
 		let img = data.img
 		if(item.diff){
@@ -73,11 +73,49 @@ const htmlPrinter = {
 	},
 
     templet : function(string, ...args){
+		const isValid = function(str){
+			if( String(str) == '[object Object]' && ( str.EN || str.CN )  ) return true
+
+			return str && ( typeof str === 'string' || Array.isArray(string) ) && str.length > 0
+		}
+		const isLan = function(str){
+			return String(str) == '[object Object]' || Array.isArray(str)
+		}
+
+		if( !isValid(string) ) return
+
+		if( isLan(string) ){
+			string = lanSwitch(string)
+		}
+
         for(let i = 0; i < args.length; i++){
-            string = string.replaceAll(`{${i}}`, args[i])
+			let txt = args[i]
+
+			if( !isValid(txt) ) continue
+
+			if( isLan(txt) ){
+				txt = lanSwitch(txt)
+			}
+
+            string = string.replaceAll(`{${i}}`, txt)
         }
         return string
-    },	
+    },
+
+	toLower : function(str){
+
+		if( String(str) == '[object Object]' && ( str.EN || str.CN )  ){
+			str.EN = str.EN.toLowerCase()
+			return str
+		}
+		
+		if( Array.isArray(str) ){
+			str[0] = str[0].toLowerCase()
+			return str
+		}
+
+		return str.toLowerCase()
+	},
 
     pharmacy : function(itemId, diff){
         if(!itemId) return ;
@@ -112,7 +150,7 @@ const htmlPrinter = {
 		let html = ``
 		const equip = ['held', 'bag', 'wallet', 'cart']
 		equip.forEach((slot)=>{
-			let item = iM.getEquip(slot)
+			let item = iManager.getEquip(slot)
 				html += `<div id='${slot}' class='equipslot'>`
 	
 				if(item){
@@ -120,7 +158,7 @@ const htmlPrinter = {
 					let img = this.itemImageResolve(item, data)
 					let onclick = ` onClick="V.addMsg += Items.get('${item.id}').onUnEquip(); SugarCube.Engine.play(V.passage)"`
 	
-					if(!iM.checkItemOnGet(item.id, 1)){
+					if( iManager.checkAvailable(item).avalaible == false ){
 						onclick = ``
 					}
 
@@ -143,10 +181,12 @@ const htmlPrinter = {
 
     pockets : function(slot){
 		let html = ''
-		let pocket = V.iPockets[slot]
-		let maxslot = iM.getMaxSlots(slot)
+		let pocket = Pocket.get(slot)
+		let maxslot = pocket.max()
+
 		for(let i = 0; i < maxslot; i++){
-			const item = pocket[i]
+			const item = pocket.slots[i]
+
 			let data = item ? Items.get(item.id) : null
 			if(data && item.diff && data.diff[item.diff].aliasItem){
 				data = Items.get(data.diff[item.diff].aliasItem)
@@ -207,7 +247,7 @@ const htmlPrinter = {
 				</span>
 				<span class='itemaction'>
 					<<link "${getLan('drop')}" $passage>>
-						<<run iM.dropItem("${slot}", ${i})>>
+						<<run im.onRemove("${slot}", ${i})>>
 					<</link>>
 				</span>
 				</div>`
@@ -265,13 +305,18 @@ const htmlPrinter = {
 			if( data.id !== 'noneitem' ){
 				_html += `	<div id='action' class='pocketaction'>`
 				_html += `		<span class='itemaction'>`
+				_html += `			<<link "${getLan('takehalf')}">>`
+				_html += `				<<run im.takeSelected("${postion}", ${index}, T.storage[${index}])>>`
+				_html += `			<</link>>`
+				_html += `		</span>`
+				_html += `		<span class='itemaction'>`
 				_html += `			<<link "${getLan('take')}">>`
-				_html += `				<<run iM.takeItem("${postion}", ${index}, T.storage[${index}])>>`
+				_html += `				<<run im.takeSelected("${postion}", ${index}, T.storage[${index}])>>`
 				_html += `			<</link>>`
 				_html += `		</span>`
 				_html += `		<span class='itemaction'>`
 				_html += `			<<link "${getLan('clearall')}">>`
-				_html += `				<<run iM.clearItem("${postion}", ${index})>>`
+				_html += `				<<run im.drop("${postion}", ${index})>>`
 				_html += `			<</link>>`
 				_html += `		</span>`
 				_html += `	</div>`

@@ -44,12 +44,12 @@
     <div id="action" class="pocketaction">
         <span class="itemaction">
             <<link '取出'>>
-                <<run iM.takeItems('storage', 0, _storage[0])>>
+                <<run im.takeSelected('storage', 0, _storage[0])>>
             <</link>>
 		</span>
         <span class="itemaction">
             <<link '清空'>>
-                <<run iM.clearItems('storage', 0, _storage[0])>>
+                <<run im.onRemove('storage', 0)>>
             <</link>>
 		</span>
     </div>

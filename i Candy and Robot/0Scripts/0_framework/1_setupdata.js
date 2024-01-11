@@ -5,7 +5,7 @@
 //--------------------------------------------
 setup.palamlist = ['trauma', 'pain', 'tiredness', 'drunk', 'hallucinogen','control','corruption','stress', 'drugged', 'awareness']
 
-const iModAddictions = { 
+let iModAddictions = { 
 	alcohol:{
 		name: ['alcohol', '酒精'],
 		threshold: 3,
@@ -27,6 +27,7 @@ const iModAddictions = {
 		process: 0.4,
 		methods:['take', '吸收']
 	},
+
 	nicotine:{
 		name: ['nicotine', '尼古丁'],
 		threshold: 0,
@@ -64,7 +65,7 @@ const iModAddictions = {
 }
 
 //各种大小物品的最大堆叠限制
-const iModMaxStacks = {
+let iModMaxStacks = {
 	pill  : 50,
 	inject: 10,
 	liquid: 500, // ml
@@ -76,7 +77,7 @@ const iModMaxStacks = {
 	big   : 1,
 }
 
-const iModDrugConfig = {
+let iModDrugConfig = {
     immediate: {
         process: 2,
         recover: 0.05,
@@ -100,7 +101,7 @@ const iModDrugConfig = {
 }
 
 
-const plantNames = {
+let plantNames = {
 	"apple": [
 		"Apple",
 		"苹果",
@@ -542,6 +543,22 @@ const iCandyDataSetting = {
 		},
 	},
 
+	hidePoint:{
+		park: ['bushes', 'bushes_park'],
+		elk : ['trashbin', 'trashbin_elk'],
+		island : ['hideout', 'hideout']
+	},
+	
+	itemUseTime: {
+		consumable : 5,
+		foods : 5,
+		drinks : 5,
+		cooking : 10,
+		drugs: 3,
+		medicine : 2,
+		misc: 5,
+	},
+
 	batchUnit : ['canned', 'bottle', 'packed', 'bagged', 'boxed', 'roll', 'set', 'box'],
 
 	useMethods: function (type, tags){
@@ -659,6 +676,7 @@ const iCandyDataSetting = {
 
 		return text
 	},
+
 	pocketsList,
 }
 

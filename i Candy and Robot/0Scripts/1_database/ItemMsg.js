@@ -1,68 +1,4 @@
 
-const equipText = {
-	'held':{ equip: (name)=>{
-		return lanSwitch(
-			`You hold the ${name[0].toLocaleLowerCase()} in your hand.`, 
-			`你拿起了${name[1]}。`)
-		},
-		unequip: (name)=>{
-			return lanSwitch(
-				`You put the ${name[0].toLocaleLowerCase()} down.`, 
-				`你放下了${name[1]}。`)
-		}
-	},
-	'cart':{
-		equip: (name)=>{
-		return lanSwitch(
-			`You push the ${name[0].toLocaleLowerCase()} in front of you.`, 
-			`你推着${name[1]}走在前面。`)
-		},
-		unequip: (name)=>{
-			return lanSwitch(
-				`You leave the ${name[0].toLocaleLowerCase()} aside.`, 
-				`你将${name[1]}停放在了一旁。`)
-		}
-	},
-	'bag':{
-		equip: (name)=>{
-		return lanSwitch(
-			`You equip the ${name[0].toLocaleLowerCase()} to your body.`, 
-			`你将${name[1]}装备到身上。`)
-		},
-		unequip: (name)=>{
-			return lanSwitch(
-				`You take off the ${name[0].toLocaleLowerCase()} from your body.`,
-				`你将${name[1]}从身上卸下。`)
-		}
-	},
-	'wallet':{
-		equip: (name)=>{
-		return lanSwitch(
-			`You equip the ${name[0].toLocaleLowerCase()}.`, 
-			`你将${name[1]}装备上。`)
-		},
-		unequip: (name)=>{
-		return lanSwitch(
-			`You take off ${name[0].toLocaleLowerCase()}.`,
-			`你放下了${name[1]}。`)
-		}
-	}
-}
-
-
-const systemMsg = {
-    getItem: [
-        `<span class='green'>You got {0}.</span><br>`,
-        `<span class='green'>你获得了{0}。</span><br>`
-    ],
-
-    useItem: [
-        `You {0} the {1}.`,
-        `你{0}了{1}。`
-    ],
-}
-
-
 const itemMsg = {
 	fruitscandy: [
 		`You unwrap the candy, and the crystal-clear sugar ball reflects an enticing light.<br>
@@ -651,6 +587,5 @@ const itemMsg = {
 
 
 Object.defineProperties(window, {
-	equipText: { get: ()=>equipText },
 	itemMsg: { get: ()=>itemMsg },
 })

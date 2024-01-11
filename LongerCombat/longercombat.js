@@ -25,7 +25,9 @@ function simpleEjaculation(){
         }
 
         if(T.condomResult == 'contained'){
-            wikifier('genericCondomEjaculation')
+            T.nn = i;
+            let _html = wikifier('genericCondomEjaculation').textContent
+            html += _html.replace(/\t/g, '').trim() + '<br><br>'
             return
         }
 

@@ -1,10 +1,11 @@
 const iUtil = {
-	resetTvar : function(...args){
+	resetTvar(...args){
 		args.forEach((arg)=>{
 			delete V.tvar[arg]
 		})
 	},
-	countHomeStorage : function(){
+
+	countHomeStorage(){
 		let count = 0
 		for(let i in V.iStorage.home){
 			count += V.iStorage.home[i]
@@ -12,7 +13,7 @@ const iUtil = {
 		return count
 	},
 
-	countMechaItems : function(){
+	countMechaItems(){
 		let count = 0
 		for(let i in R.mechStats.tools){
 			count += R.mechStats[i]
@@ -20,19 +21,19 @@ const iUtil = {
 		return count
 	},
 
-	getPalam : function(key, value){
+	getPalam(key, value){
 		let list = ['trauma', 'pain', 'tiredness', 'drunk', 'hallucinogen','control','corruption','stress', 'drugged', 'awareness']
 		if(!V.statFreeze && list.includes(key))
 			V[key] += value
 	},
 
-	getPhysique : function(value){
+	getPhysique(value){
 		if(V.statFreeze){
 			V.physique = Math.clamp(V.physique + value, 0, V.physiquesize)
 		}
 	},
 
-	updateObj : function(source, target, prop){
+	updateObj(source, target, prop){
 		if(!prop){
 			if(typeof target !== typeof source){
 				return source
@@ -69,9 +70,41 @@ const iUtil = {
 		}
 	},
 
-	noEventRunning : function(){
+	noEventRunning(){
 		return V.eventskip == 0 && V.combat == 0
 	},
+
+	getLocation(){
+		//巴士里直接返回巴士
+		if(V.passage == 'Bus' || V.passage.includes('Bus')){
+			return 'bus'
+		}
+
+		if(V.passsage.includes('Stall')){
+			return 'market'
+		}
+
+		if(V.location == 'town'){
+			//根据bus返回
+			return V.bus
+
+		}
+		if(V.location == 'alley'){
+			//根据passage返回地点
+			if(V.passage.includes('Commercial')) return 'commercial_alley'
+			if(V.passage.includes('Industrial')) return 'industrial_alley'
+			if(V.passage.includes('Residential')) return 'residential_alley'
+		}
+
+		return V.location
+	},
+
+	hasLockers(){
+		//学校的储物柜是免费的。
+		if(getLocation() == 'school') return true;
+		//其他地方的储物柜需要解锁。
+		return R.lockerOwned[getLocation()] == 1
+	}
 }
 
 

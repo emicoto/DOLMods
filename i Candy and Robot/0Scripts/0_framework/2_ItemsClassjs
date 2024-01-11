@@ -248,4 +248,12 @@ class Items {
 		}
 		return P.palams(param, value)
 	}
+
+	doEffects(times = 1){
+		return this.effects.reduce(( params, [param, value, method]) => {
+			value *= times
+			params += this.doDelta(param, value, method)
+			return params
+		}, '')
+	}
 }

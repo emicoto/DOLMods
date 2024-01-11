@@ -159,13 +159,13 @@ function hourProcess(sec, hour){
 	//当饥饿值过高时，获得通知
 	if(V.hunger >= C.hunger.max * 0.8){
 		wikifier('stress', 8, 60)
-		V.addMsg += lanSwitch(stateEffects.hungry) + '<<gstress>><br>'
+		V.addMsg += lanSwitch( sMsg.stateEffects.hungry ) + '<<gstress>><br>'
 	}
 
 	//当饥渴值过高时，获得通知
 	if(V.thirst >= C.thirst.max * 0.8){
 		wikifier('stress', 8, 60)
-		V.addMsg += lanSwitch(stateEffects.thirst) + '<<gstress>><br>'
+		V.addMsg += lanSwitch( sMsg.stateEffects.thirst ) + '<<gstress>><br>'
 	}
 
 	//随机减少商店库存，营造商店销售的假象

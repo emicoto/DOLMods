@@ -252,7 +252,7 @@ const iShop = {
 			return
 		}
 
-		if(iM.checkItemOnGet(selectItem.id, getNum) == false){
+		if(iManager.checkAvailable(selectItem.id, getNum).available == false){
 			message = lanSwitch('Not enough space.', '空间不够。')
 			this.notice(message, 'red')
 			return
@@ -262,7 +262,9 @@ const iShop = {
 		shopItem.stock -= selectItem.stack
 		shopItem.count -= selectItem.stack * data.num
 
-		iM.getItems(selectItem.id, selectItem.stack * data.num)
+		const stacks = new iStack(selectItem.id, selectItem.stack * data.num, selectItem.diff )
+
+		iManager.onGetItems(stacks, 'shop')
 
 		const unit1 = iData.batchUnitTxt(data, selectItem.stack)
 		const unit2 = iData.subUnitTxt(data, selectItem.stack * data.num)
