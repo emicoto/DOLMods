@@ -62,7 +62,7 @@ Time.pass = function (sec) {
         iCombatActionHandle();
     }
 
-    fragment.append(iManager.updatePockets());
+    V.addMsg += iManager.updatePockets();
 
     if (fragment !== undefined) {
         return fragment;
@@ -116,7 +116,7 @@ function minuteProcess(sec, min) {
     // 处理额外效果
     //-------------------------------------------------------------
     const extraSense = R.extraSense;
-    for (const [type, sense] of Object.entries(extraSense)) {
+    for (const [, sense] of Object.entries(extraSense)) {
         iCandy.senseUpdate(sense, sec);
     }
 

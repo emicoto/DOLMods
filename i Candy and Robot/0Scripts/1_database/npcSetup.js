@@ -95,7 +95,7 @@ NamedNPC.add(
 
 const npcSetting = {
     Robert : {
-        important : () => { V.iRobot.condition > 60; },
+        important : () => V.iRobot.condition > 60,
         love      : {
             displayname  : ['Devotion', '忠心'],
             activeIcon   : 'img/ui/devotion.png',
@@ -136,3 +136,4 @@ const npcSetting = {
     }
 
 };
+Object.assign(setup.ModNpcSetting, npcSetting);

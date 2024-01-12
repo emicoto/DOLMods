@@ -56,10 +56,10 @@ class iStack {
         const stacks = [];
 
         for (let i = 0; i < count; i++) {
-            stacks.push(new iStack(stack.id, size, stack.diff));
+            stacks.push(new iStack(stack.id, size, stack));
         }
         if (remain > 0) {
-            stacks.push(new iStack(stack.id, remain, stack.diff));
+            stacks.push(new iStack(stack.id, remain, stack));
         }
 
         return stacks;
@@ -72,9 +72,9 @@ class iStack {
 	 * @param {string | void} diff
 	 * @returns
 	 */
-    static set = function (itemId, num, diff) {
+    static set = function (itemId, num, obj) {
         const size = iStack.getSize(itemId);
-        const stacks = iStack.split(new iStack(itemId, num, diff), size);
+        const stacks = iStack.split(new iStack(itemId, num, obj), size);
         return stacks;
     };
 
@@ -112,9 +112,9 @@ class iStack {
 	 * @param {Items} data
 	 * @param {string} itemId
 	 * @param {number} num
-	 * @param {string} diff
+	 * @param {object} obj
 	 */
-    constructor(itemId, num, diff) {
+    constructor(itemId, num, obj) {
         const data = Items.get(itemId);
         if (!data) {
             throw new Error('no such item:', itemId);
@@ -124,10 +124,10 @@ class iStack {
         this.name = lanSwitch(data.name);
         this.count = num;
 
-        this.index = ['equip_body', 0];
+        this.index = obj?.index || ['equip_body', 0];
 
-        this.diff = diff;
-        this.uid = diff ? `${this.id}_${diff}` : this.id;
+        this.diff = obj?.diff || '';
+        this.uid = obj?.diff ? `${this.id}_${obj.diff}` : this.id;
 
 
         // check if the item can be stacked
@@ -280,8 +280,8 @@ class Pocket {
         const { type, pos, limitsize, slots } = pocket;
         const inventory = new Pocket(type, pos, limitsize);
         inventory.slots = slots.map(stack => {
-            const { id, count, diff } = stack;
-            return new iStack(id, count, diff);
+            const { id, count } = stack;
+            return new iStack(id, count, stack);
         });
         return inventory;
     }
@@ -405,15 +405,21 @@ class Pocket {
 	 */
     updateIndex() {
         const posChanged = [];
-        this.slots.forEach((stack, i) => {
+        const { type, pos } = this;
+
+        for (let i = 0; i < this.slots.length; i++) {
+            const stack = this.slots[i];
             const oldPos = stack.index[0].split('_')[1];
 
-            stack.index = [`${this.type}_${this.pos}`, i];
+            console.log('update index:', stack.id, oldPos, stack.index[0]);
 
-            if (oldPos != this.pos) {
+            stack.index = [`${type}_${pos}`, i];
+
+            console.log('update index:', stack.index[0], oldPos, pos);
+            if (oldPos !== pos) {
                 posChanged.push(stack);
             }
-        });
+        }
 
         return posChanged;
     }
@@ -458,7 +464,7 @@ class Pocket {
             return this.take(pos);
         }
 
-        const item = new iStack(stack.id, num, stack.diff);
+        const item = new iStack(stack.id, num, stack);
         stack.take(num);
 
         return item;
@@ -501,7 +507,7 @@ class Pocket {
             }
 
             if (remain > 0) {
-                remains.push(new iStack(itemStack.id, remain, itemStack.diff));
+                remains.push(new iStack(itemStack.id, remain, itemStack));
             }
 
             return remains;
@@ -535,11 +541,12 @@ class Pocket {
 
         return itemStacks.reduce((result, item) => {
             // add to the empty slot
-            const stacks = iStack.set(item.id, item.count, item.diff);
+            const stacks = iStack.set(item.id, item.count, item.diff, item.index);
             const count = this.remains();
 			
             for (let i = 0; i < count; i++) {
                 const stack = stacks.pop();
+                
                 this.slots.push(stack);
 
                 if (stacks.length == 0) {

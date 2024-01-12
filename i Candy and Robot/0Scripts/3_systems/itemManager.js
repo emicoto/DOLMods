@@ -62,7 +62,7 @@ const iManager = {
     // --------------------------------------------------------------//
 	
     // sanitize the item stack
-    format(stack, num, diff) {
+    format(stack, num, obj) {
         if (Array.isArray(stack) == false && String(stack) == '[object Object]') {
             stack = [stack];
         }
@@ -76,7 +76,7 @@ const iManager = {
             if (!num) {
                 num = data.num;
             }
-            stack = [new iStack(id, num, diff)];
+            stack = [new iStack(id, num, obj)];
         }
 
         if (Array.isArray(stack) == true && stack.length > 0) {
@@ -204,17 +204,17 @@ const iManager = {
 	 * add an item to the inventory
 	 * @param {string} itemId
 	 * @param {number} num
-	 * @param {string | void} diff
+	 * @param {object | void} obj
 	 * @returns
 	 */
-    getItem(itemId, num, diff) {
+    getItem(itemId, num, obj) {
         const data = Items.get(itemId);
         if (!data) {
             console.error('error from iManager.getItem, no such item:', itemId);
             return;
         }
 
-        const stack = new iStack(itemId, num, diff);
+        const stack = new iStack(itemId, num, obj);
         const result = this.onGetItems(stack, 'getone');
         return result;
     },
@@ -455,15 +455,21 @@ const iManager = {
         let remainItems = [];
         const updateItems = [];
 
-        for (const i in Pocket.list) {
-            const pocket = Pocket.get(Pocket.list[i]);
-	
+        for (let i = 0; i < Pocket.list.length; i++) {
+            const key = Pocket.list[i];
+            const pocket = Pocket.get(key);
+            console.log('sort out check:', key);
+
             const remain = pocket.sortOut(remainItems);
             if (remain.length > 0) {
                 remainItems = remain;
             }
             pocket.sort();
-            updateItems.push(...pocket.updateIndex());
+
+            const update = pocket.updateIndex();
+            console.log('sort out:', key, clone(remainItems), clone(update));
+
+            updateItems.push(...update);
         }
 
         // 如果没有超出容量限制的物品，或没有位置变动的情况，则不需要给与玩家提示
@@ -607,7 +613,7 @@ const iManager = {
     // if situation is specified then use item from the situation,
     // the type will be the item id and pos will be the item count
     onUseItem(stack, situation) {
-        const item = stack || new iStack(itemId, 1);
+        const item = stack || new iStack(stack, 1);
         let data = Items.get(item.id);
 
         // if the item is alias then get original item data by alias
@@ -677,7 +683,7 @@ const iManager = {
         }
         drop.forEach(item => {
             const num = item.num || 1;
-            const itemStack = new iStack(item.item, num * times , item.diff);
+            const itemStack = new iStack(item.item, num * times , item);
             itemStacks.push(itemStack);
         });
 

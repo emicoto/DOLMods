@@ -704,8 +704,9 @@ function angelOnHigh(min = 1) {
 }
 
 function angelOnWake() {
-    const physique = random(30, 80) / 10;
-    wikifier('physique_loss', physique);
+    const physique = random(30, 80);
+
+    F.getPhysique(-physique);
 
     wikifier('control', -20);
     wikifier('stress', 120);
@@ -716,7 +717,7 @@ function angelOnWake() {
 
 function angelOnDay() {
     const physique = random(40, 80);
-    iUtil.getPhysique(physique);
+    F.getPhysique(physique);
 
     const will = random(10, 20);
     wikifier('willpower', will);
@@ -735,7 +736,7 @@ function angelOnDay() {
 
 function angelOnWithdraw() {
     const physique = random(60, 120) / 10;
-    wikifier('physique_loss', physique);
+    F.getPhysique(-physique);
 
     const will = random(20, 40);
     wikifier('willpower', -will);
