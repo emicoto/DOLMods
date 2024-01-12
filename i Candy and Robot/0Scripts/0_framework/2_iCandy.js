@@ -1,0 +1,252 @@
+// Mod Data
+const iCandy = {
+    version : iCandyModVersion,
+    author  : 'Lune',
+
+    // mod startup config
+    config : {
+        debug          : false,
+        globalStack    : 1,
+        disableStack   : false,
+        disablePockets : false,
+        keepHairs      : true,
+        shopPriceMult  : 1
+    },
+
+    // save variables
+    variables : {},
+
+    // settings
+    setup : {
+        addictions : iModAddictions,
+        maxStacks  : iModMaxStacks,
+        tattoos    : iModTattoos,
+        drugConfig : iModDrugConfig
+    },
+
+    // temporary variables
+    temp : {},
+
+    // mod functions
+    getConfig(prop) {
+        return V?.iCandyRobot?.config[prop] ?? this.config[prop];
+    },
+
+    checkStat(item) {
+        const data = Items.get(item);
+
+        if (R.drugStates.drugs[item]) {
+            return true;
+        }
+
+        if (data && data.tags.includes('addiction')) {
+            R.drugStates.drugs[item] = new drugState();
+            return true;
+        }
+
+        return false;
+    },
+
+    getStat(item, prop) {
+        const general = ['aphrod', 'alcohol', 'nicotine'];
+        if (general.includes(item)) {
+            return prop ? R.drugStates.general[item][prop] : R.drugStates.general[item];
+        }
+
+        if (this.checkStat(item)) {
+            return prop ? R.drugStates.drugs[item][prop] : R.drugStates.drugs[item];
+        }
+    },
+    setStat(item, prop, value) {
+        const general = ['aphrod', 'alcohol', 'nicotine'];
+        if (general.includes(item)) {
+            R.drugStates.general[item][prop] = value;
+            return R.drugStates.general[item][prop];
+        }
+        if (this.checkStat(item)) {
+            R.drugStates.drugs[item][prop] = value;
+            return R.drugStates.drugs[item][prop];
+        }
+    },
+    setValue(item, prop, value) {
+        const general = ['aphrod', 'alcohol', 'nicotine'];
+        if (general.includes(item)) {
+            R.drugStates.general[item][prop] = value;
+            return R.drugStates.general[item][prop];
+        }
+
+        if (this.checkStat(item)) {
+            R.drugStates.drugs[item][prop] = value;
+            return R.drugStates.drugs[item][prop];
+        }
+    },
+
+    addValue(item, prop, value) {
+        const general = ['aphrod', 'alcohol', 'nicotine'];
+        if (general.includes(item)) {
+            R.drugStates.general[item][prop] += value;
+            return R.drugStates.general[item][prop];
+        }
+		
+        if (this.checkStat(item)) {
+            R.drugStates.drugs[item][prop] += value;
+            return R.drugStates.drugs[item][prop];
+        }
+    },
+
+    take(item, value) {
+        value = Number(value);
+        if (!value) return;
+        const data = setup.addictions[item];
+
+        R.drugStates.general[item].taken += Math.max(Math.floor(value / 100 + 0.5), 1);
+        R.drugStates.general[item].lastTime = V.timeStamp;
+
+        if (R.drugStates.general[item].taken > data.threshold) {
+            R.drugStates.general[item].overdose++;
+        }
+    },
+
+    setFlag(item, prop, value) {
+        const general = ['aphrod', 'alcohol', 'nicotine'];
+        if (general.includes(item)) {
+            R.drugFlags.general[item][prop] = value;
+            return R.drugFlags.general[item][prop];
+        }
+
+        if (this.checkStat(item)) {
+            R.drugFlags.drugs[item][prop] = value;
+            return R.drugFlags.drugs[item][prop];
+        }
+    },
+
+    getFlag(item, prop) {
+        const general = ['aphrod', 'alcohol', 'nicotine'];
+        if (general.includes(item)) {
+            return prop ? R.drugFlags.general[item][prop] : R.drugFlags.general[item];
+        }
+
+        if (this.checkStat(item)) {
+            return prop ? R.drugFlags.drugs[item][prop] : R.drugFlags.drugs[item];
+        }
+    },
+
+    setEquipEf(efId) {
+        if (!R.equipEf[efId]) {
+            R.equipEf[efId] = 1;
+            return;
+        }
+        R.equipEf[efId] = Math.min(R.equipEf[efId] + 1, 10);
+    },
+
+    unsetEquipEf(efId) {
+        R.equipEf[efId] = Math.max(R.equipEf[efId] - 1, 0);
+    },
+
+    // 记录更新。如果还没进行过初始化，就初始化一下。
+    senseBak() {
+        for (const [type, sens] of Object.entries(R.extraSense)) {
+            const base = V[`${type}sensitivity`];
+
+            if (sens.init == 0) {
+                sens.init = 1;
+                sens.base = V[`${type}sensitivity`];
+            }
+            else {
+                sens.base = base - sens.add;
+            }
+        }
+    },
+
+    // 设置感度BUFF来源，如果来源不存在则创建，存在则叠加
+    senseSet(type, src, value, timer = 0, fade = 0) {
+        const sens = R.extraSense[type];
+        if (!sens) return;
+
+        const { source } = sens;
+
+        if (source[src] == undefined) {
+            source[src] = {
+                value,
+                timer,
+                fade
+            };
+        }
+        else {
+            source[src].value += value;
+            source[src].timer = Math.max(source[src].timer, timer);
+        }
+
+        return R.extraSense[type];
+    },
+
+    senseGet(type, src) {
+        const sens = R.extraSense[type];
+        if (!sens || !sens.source[src]) return;
+
+        return sens.source[src];
+    },
+
+    // 统计所有来源的buff，减少各来源的计时器，并更新到buffed, add
+    // passtime单位为秒
+    // calculate all buffs, reduce timer, update buffed value
+    senseUpdate(sense, passtime) {
+        this.senseBak();
+
+        let add = 0;
+        for (const [src, buff] of Object.entries(sense.source)) {
+            // 如果计时器为0，且不是持续性buff，就删除这个来源
+            // if timer is 0 and not a fade buff, delete this source
+            if (buff.timer <= 0 && buff.fade == 0) {
+                delete sense.source[src];
+                continue;
+            }
+
+            // 如果是持续性buff，且数值等于0，就删除这个来源
+            // if fade buff and value is 0, delete this source
+            if (buff.timer <= 0 && buff.fade !== 0 && buff.value == 0) {
+                delete sense.source[src];
+                continue;
+            }
+
+            // 如果是持续性buff，就先更新数值。
+            // if fade buff, update value
+
+            // 药效持续中，获得数值增加
+            // the buff is activing, then add value
+            if (buff.fade !== 0 && buff.timer > 0) {
+                const multiplier = V.combat == 1 ? 0.5 : Math.max(passtime / 60, 1);
+                buff.value += buff.fade * multiplier;
+            }
+
+            // 药效减退中，数值减少
+            // the buff is fading, then reduce value
+            if (buff.fade !== 0 && buff.timer <= 0) {
+                const multiplier = V.combat == 1 ? 0.2 : Math.max(passtime / 60, 1);
+                buff.value -= buff.fade * multiplier;
+
+                // 确保数值不会高于或低于0
+                // make sure the value is not higher or lower than 0
+                if (buff.fade > 0) {
+                    buff.value = Math.max(buff.value, 0);
+                }
+                else {
+                    buff.value = Math.min(buff.value, 0);
+                }
+            }
+
+            // 集算所有buff的数值
+            // calculate all buffs
+            add += buff.value;
+
+            buff.timer = Math.max(buff.timer - passtime, 0);
+        }
+
+        sense.add = add;
+        V[`${sense.type}sensitivity`] = sense.base + sense.add;
+
+        return R.extraSense;
+    }
+};
+
+Object.defineProperty(window, 'iCandy', { get : () => iCandy });

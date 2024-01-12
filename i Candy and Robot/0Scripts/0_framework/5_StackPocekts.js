@@ -12,6 +12,7 @@ class iStack {
     static getSize = function (itemId, mode) {
         const item = Items.get(itemId);
         const size = typeof item.size === 'number' ? item.size : setup.maxStacks[item.size];
+        const config = iCandy.getConfig('storageStack') || 1;
 	
         if (!item) {
             console.error('error from get items stack size, id:', itemId);
@@ -22,7 +23,7 @@ class iStack {
         }
 	
         else if (mode == 'storage') {
-            return Math.clamp(size * iCandy.getConfig('globalStack') * 10, 1, 10000);
+            return Math.clamp(size * config , 1, 10000);
         }
 	
         // 获取原始堆叠大小
@@ -36,7 +37,7 @@ class iStack {
         }
 	
         // 默认最大可能得堆叠上限为1k
-        return Math.clamp(size * iCandy.getConfig('globalStack'), 1, 1000);
+        return Math.clamp(size * config, 1, 1000);
     };
 
     /**
@@ -178,8 +179,11 @@ class iStack {
 //-----------------------------------------------------------------------
 class Pocket {
     static maxSlot = {
-
         body() {
+            if (!V.worn) {
+                return 4;
+            }
+
             let slot = 2; // 2 slot for hands
             const { upper, over_upper, lower } = V.worn;
 			
@@ -332,7 +336,7 @@ class Pocket {
     constructor(type, position, limitsize) {
         this.type = type;
         this.pos = position;
-        this.limitsize = limitsize || Pocket.getMaxSlot(position);
+        this.limitsize = limitsize;
         this.slots = [];
     }
 
@@ -486,7 +490,7 @@ class Pocket {
 	 */
     merge(itemStacks) {
         return itemStacks.reduce((remains, itemStack) => {
-            const sameStack = this.getByUid(itemStack.uid);
+            const sameStack = this.getAll('uid', itemStack.uid);
             let remain = itemStack.count;
 
             // merge to the same stack

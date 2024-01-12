@@ -29,9 +29,10 @@
   "scriptFileList": [
     "0Scripts/0_framework/0_modversion.js",
     "0Scripts/0_framework/1_setupdata.js",
-    "0Scripts/0_framework/2_ItemsClass.js",
-    "0Scripts/0_framework/3_iRecipeClass.js",
-    "0Scripts/0_framework/4_StackPocekts.js",
+    "0Scripts/0_framework/2_iCandy.js",
+    "0Scripts/0_framework/3_ItemsClass.js",
+    "0Scripts/0_framework/4_iRecipeClass.js",
+    "0Scripts/0_framework/5_StackPocekts.js",
     "0Scripts/1_database/ItemMsg.js",
     "0Scripts/1_database/actions.js",
     "0Scripts/1_database/drugItems.js",

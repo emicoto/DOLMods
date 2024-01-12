@@ -2,7 +2,7 @@
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
 <<imgIcon $tvar.img>>  
-<<=useItems($tvar.useItem[0], $tvar.useItem[1])>>
+<<=im.useFromInv($tvar.useItem[0], $tvar.useItem[1])>>
 <br><br>
 
 

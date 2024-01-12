@@ -62,6 +62,7 @@ Time.pass = function (sec) {
         iCombatActionHandle();
     }
 
+    fragment.append(iManager.updatePockets());
 
     if (fragment !== undefined) {
         return fragment;

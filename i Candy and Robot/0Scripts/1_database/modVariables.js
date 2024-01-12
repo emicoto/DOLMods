@@ -49,13 +49,13 @@ function exSense(type) {
 //
 //--------------------------------------------------------
 const iPockets = {
-    body : new Pocket('body', 'body'),
-    hole : new Pocket('body', 'hole'),
+    body : new Pocket('body', 'body', 4),
+    hole : new Pocket('body', 'hole', 0),
 
-    wallet : new Pocket('equip', 'wallet'),
-    held   : new Pocket('equip', 'held'),
-    bag    : new Pocket('equip', 'bag'),
-    cart   : new Pocket('equip', 'cart'),
+    wallet : new Pocket('equip', 'wallet', 0),
+    held   : new Pocket('equip', 'held', 0),
+    bag    : new Pocket('equip', 'bag', 0),
+    cart   : new Pocket('equip', 'cart', 0),
 
     equip : {
         held   : { id : 'none' },
@@ -87,7 +87,9 @@ const iPockets = {
 
 iPockets.global.items = {};
 
-iPockets.body.push(new iStack('plasticbag', 1), new iStack('coinpouch', 1));
+iPockets.body.add(
+    [new iStack('plasticbag', 1), new iStack('coinpouch', 1)]
+);
 
 const iStorage = {
     home      : new Pocket('storage', 'home', 12), // 只要在孤儿院就能使用
