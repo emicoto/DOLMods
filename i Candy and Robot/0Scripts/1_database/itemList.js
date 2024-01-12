@@ -1835,7 +1835,7 @@ function getEquipType(tags) {
  * @returns {string} html
  */
 function onEquip(type, pos) {
-    const item = V.iPockets[type][pos];
+    const item = Pocket.get(type).select(pos);
 
     const target = getEquipType(item.tags);
     if (item.diff && this.diff) {

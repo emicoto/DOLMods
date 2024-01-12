@@ -82,25 +82,27 @@ const iPockets = {
         wallet : 0
     },
 
-    global : {}
+    global : new Pocket('global', 'global')
 };
+
+iPockets.global.items = {};
 
 iPockets.body.push(new iStack('plasticbag', 1), new iStack('coinpouch', 1));
 
 const iStorage = {
-    home      : {}, // 只要在孤儿院就能使用
-    lockers   : {}, // 放在储物柜里的物品可以在某些地方使用，如厕所、学校、浴室、妓院等
-    warehouse : {}, // 放在仓库里的物品用于贩售
-    apartment : {}, // 只要在出租屋就能使用
-    farmbarns : {}, // 只要在农场就能使用
+    home      : new Pocket('storage', 'home', 12), // 只要在孤儿院就能使用
+    lockers   : new Pocket('storage', 'lockers', 12), // 放在储物柜里的物品可以在某些地方使用，如厕所、学校、浴室、妓院等
+    warehouse : new Pocket('storage', 'warehouse', 60), // 放在仓库里的物品用于贩售
+    apartment : new Pocket('storage', 'apartment', 18), // 只要在出租屋就能使用
+    farm      : new Pocket('storage', 'farm', 36), // 只要在农场就能使用
 
-    bushes_park  : {},
-    trashbin_elk : {},
-    hideout      : {},
+    bushes_park  : new Pocket('storage', 'bushes_park', 6), // 公园灌木丛
+    trashbin_elk : new Pocket('storage', 'trashbin_elk', 6), // 麋鹿酒吧垃圾桶
+    hideout      : new Pocket('storage', 'hideout', 6), // 隐藏地点
+    howllow      : new Pocket('storage', 'howllow', 6), // 隐藏地点
 
-    warehouseOwned    : 0,
-    warehouseCapacity : 1000,
-    lockerOwned       : {
+    warehouseOwned : 0,
+    lockerOwned    : {
         school          : 1,
         strip_club      : 0,
         brothel         : 0,
@@ -277,6 +279,34 @@ iEventFlags.apartment = {
 
 //--------------------------------------------------------
 //
+//  shop variables
+//
+//--------------------------------------------------------
+const vShop = {
+    daiso_snack : {
+        state    : 'none',
+        discount : 0,
+        stocks   : []
+    },
+    daiso_drink : {
+        state    : 'none',
+        discount : 0,
+        stocks   : []
+    },
+    daiso_foods : {
+        state    : 'none',
+        discount : 0,
+        stocks   : []
+    },
+    daiso_sundry : {
+        state    : 'none',
+        discount : 0,
+        stocks   : []
+    }
+};
+
+//--------------------------------------------------------
+//
 //  main variables
 //
 //--------------------------------------------------------
@@ -353,28 +383,6 @@ const iCandyRobot = {
     flags : iEventFlags
 };
 
-const vShop = {
-    daiso_snack : {
-        state    : 'none',
-        discount : 0,
-        stocks   : []
-    },
-    daiso_drink : {
-        state    : 'none',
-        discount : 0,
-        stocks   : []
-    },
-    daiso_foods : {
-        state    : 'none',
-        discount : 0,
-        stocks   : []
-    },
-    daiso_sundry : {
-        state    : 'none',
-        discount : 0,
-        stocks   : []
-    }
-};
 
 const iModVariables = {
     // 总控
@@ -399,37 +407,3 @@ const iModVariables = {
     }
 };
 
-const iModTattoos = [
-    {
-        key     : 'fifty_whore',
-        name    : '£50',
-        special : 'prostitution',
-        degree  : 5000
-    },
-    {
-        key     : 'drug_eater',
-        name    : 'Drug Eater',
-        cn      : '瘾君子',
-        special : 'drugs'
-    },
-    {
-        key     : 'drug_whore',
-        name    : 'Drug Whore',
-        cn      : '毒娼',
-        special : 'prostitution'
-    },
-    {
-        key     : 'sell_for_drug',
-        name    : 'Sell body for drugs',
-        cn      : '为药卖身',
-        special : 'prostitution'
-    },
-    {
-        key     : 'drug_slut',
-        name    : 'Drug Slut',
-        cn      : '药瘾婊子',
-        special : 'drugs'
-    }
-];
-
-setup.modTattoos.push(...iModTattoos);

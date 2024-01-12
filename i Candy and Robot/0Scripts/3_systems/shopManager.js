@@ -270,12 +270,14 @@ const iShop = {
         message = [
             // You bought 1 bottle of mineral water for 0.5£.
             `You bought ${selectItem.stack}`
+			// eslint-disable-next-line no-nested-ternary
 			+ `${unit1 ? ` ${unit1}` : unit2 ? `${unit2}` : ''}`
 			+ `${unit1 || unit2 ? ' of ' : ''}`
 			+ `${data.name[0]} for ${(totalPrice / 100).toFixed(2)}£.`,
 
             // 你购买了2盒糖果，总共花费了0.5£。
             `你购买了${selectItem.stack}`
+			// eslint-disable-next-line no-nested-ternary
 			+ `${unit1 ? ` ${unit1}` : unit2 ? `${unit2}` : ''}`
 			+ `${data.name[1]}`
 			+ `，总共花费了${(totalPrice / 100).toFixed(2)}£。`

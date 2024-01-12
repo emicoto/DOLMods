@@ -1,6 +1,6 @@
 {
   "name": "i, Candy + Robot",
-  "version": "2.3.7",
+  "version": "2.4.0",
   "modPacker": {
     "modVersionJs": {
       "file": "0Scripts/0_framework/0_modversion.js",
@@ -29,8 +29,9 @@
   "scriptFileList": [
     "0Scripts/0_framework/0_modversion.js",
     "0Scripts/0_framework/1_setupdata.js",
-    "0Scripts/0_framework/2_itemFrameworks.js",
-    "0Scripts/0_framework/3_itemRecipe.js",
+    "0Scripts/0_framework/2_ItemsClass.js",
+    "0Scripts/0_framework/3_iRecipeClass.js",
+    "0Scripts/0_framework/4_StackPocekts.js",
     "0Scripts/1_database/ItemMsg.js",
     "0Scripts/1_database/actions.js",
     "0Scripts/1_database/drugItems.js",
@@ -40,15 +41,17 @@
     "0Scripts/1_database/npcSetup.js",
     "0Scripts/1_database/systemMsg.js",
     "0Scripts/2_mainModule/mainModule.js",
+    "0Scripts/3_systems/0_utilWidget.js",
+    "0Scripts/3_systems/ItemManager.js",
     "0Scripts/3_systems/charaManager.js",
     "0Scripts/3_systems/drugProcess.js",
     "0Scripts/3_systems/eventManager.js",
-    "0Scripts/3_systems/itemManager.js",
+    "0Scripts/3_systems/itemEvent.js",
     "0Scripts/3_systems/jQueryEvent.js",
+    "0Scripts/3_systems/moneyHandle.js",
     "0Scripts/3_systems/printer.js",
     "0Scripts/3_systems/shopManager.js",
     "0Scripts/3_systems/timeProcess.js",
-    "0Scripts/3_systems/utilWidget.js",
     "gamecode/Scene/Chinatown/eventRegist.js",
     "gamecode/Scene/Daiso/eventRegist.js",
     "gamecode/Scene/SceneRegist.js"

@@ -313,11 +313,17 @@ function iCandyInit() {
         V[i] = clone(iModVariables[i]);
     }
 
+    for (const key in V.iShop) {
+        V.iShop[key].stocks = iShop.getshelf(key);
+    }
+
     setup.iCandyMod = 'ready';
+
     if (V.passage == 'Start') {
         Items.init();
     }
-    for (const [key, datas] of Object.entries(iEvent.data)) {
+
+    for (const [, datas] of Object.entries(iEvent.data)) {
         datas.sort((a, b) => { b.priority - a.priority; });
     }
 
@@ -325,6 +331,7 @@ function iCandyInit() {
         Macro.delete('destination');
         DefineMacroS('destination', destination);
     }
+    
     if (Macro.has('destinationeventend')) {
         Macro.delete('destinationeventend');
         DefineMacroS('destinationeventend', destinationeventend);
@@ -364,13 +371,36 @@ function iCandyUpdate() {
     }
     else if (V.iCandyRobot.version !== iCandy.version) {
         // 将旧版装备数据转换为新版
+        // convert old equip data to new
         for (const [key, value] of Object.entries(V.iPockets)) {
             if (key.has('type')) {
                 const k = key.replace('type', '');
                 if (!V.iPockets.equip) V.iPockets.equip = {};
 
-                V.iPockets.equip[k] = value;
+                if (typeof value == 'object') {
+                    V.iPockets.equip[k] = value;
+                }
+                else {
+                    V.iPockets.equip[k] = {
+                        type : 'misc',
+                        id   : 'none',
+                        name : 'none'
+                    };
+                }
+                
                 delete V.iPockets[key];
+            }
+            else if (key.has('body', 'hole')) {
+                const stacks = iStack.add(value);
+
+                V.iPockets[key] = new Pocket('body', key);
+                V.iPockets[key].add(stacks);
+            }
+            else if (Pocket.list.includes(key)) {
+                const stacks = iStack.add(value);
+
+                V.iPockets[key] = new Pocket('equip', key);
+                V.iPockets[key].add(stacks);
             }
         }
 
@@ -409,20 +439,17 @@ function iCandyUpdate() {
             }
         }
 
-        // 修复物品错误
-        for (const [pos, pocket] of Object.entries(V.iPockets)) {
-            if (Array.isArray(pocket)) {
-                pocket.forEach((item, index) => {
-                    if (!Items.get(item.id)) {
-                        if (item.id == 'redbull') {
-                            item.id = 'redcow';
-                        }
-                        else if (!Items.get(item.id)) {
-                            console.log('item not found:', item.id);
-                            pocket.slice(index, 1);
-                        }
-                    }
-                });
+        // 更新class
+        for (const [key, pocket] of Object.entries(V.iPockets)) {
+            if (Pocket.list.includes(key) && pocket.constructor.name !== 'Pocket') {
+                V.iPockets[key] = Pocket.recover(pocket);
+            }
+        }
+
+        for (const [key, storage] of Object.entries(V.iStorage)) {
+            if (key == 'lockerOwned' || key == 'warehouseOwned') continue;
+            if (storage.constructor.name !== 'Pocket') {
+                V.iStorage[key] = Pocket.recover(storage);
             }
         }
 
@@ -459,3 +486,22 @@ function fixDrugEffect() {
 }
 
 iCandy.fixDrugEffect = fixDrugEffect;
+
+function iCandyOnLoad(save) {
+    const val = save.state.history[0].variables;
+    // 更新class
+    for (const [key, pocket] of Object.entries(val.iPockets)) {
+        if (Pocket.list.includes(key) && pocket.constructor.name !== 'Pocket') {
+            val.iPockets[key] = Pocket.recover(pocket);
+        }
+    }
+
+    for (const [key, storage] of Object.entries(val.iStorage)) {
+        if (key == 'lockerOwned' || key == 'warehouseOwned') continue;
+        if (storage.constructor.name !== 'Pocket') {
+            val.iStorage[key] = Pocket.recover(storage);
+        }
+    }
+}
+
+Save.onLoad.add(iCandyOnLoad);

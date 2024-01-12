@@ -98,6 +98,14 @@ class iStack {
         return result;
     };
 
+    static add = function (items) {
+        const result = [];
+        items.forEach(item => {
+            result.push(...iStack.set(item.id, item.count, item.diff));
+        });
+        return result;
+    };
+
     /**
 	 *
 	 * @param {Items} data
@@ -262,6 +270,17 @@ class Pocket {
         }
 		
         return V.iStorage[type];
+    }
+
+    // recover the class from save data
+    static recover(pocket) {
+        const { type, pos, limitsize, slots } = pocket;
+        const inventory = new Pocket(type, pos, limitsize);
+        inventory.slots = slots.map(stack => {
+            const { id, count, diff } = stack;
+            return new iStack(id, count, diff);
+        });
+        return inventory;
     }
 
     // get all stack by item uid from all inventory

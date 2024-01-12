@@ -365,6 +365,42 @@ Object.defineProperties(setup, {
     plantNames : { value : plantNames }
 });
 
+
+const iModTattoos = [
+    {
+        key     : 'fifty_whore',
+        name    : '£50',
+        special : 'prostitution',
+        degree  : 5000
+    },
+    {
+        key     : 'drug_eater',
+        name    : 'Drug Eater',
+        cn      : '瘾君子',
+        special : 'drugs'
+    },
+    {
+        key     : 'drug_whore',
+        name    : 'Drug Whore',
+        cn      : '毒娼',
+        special : 'prostitution'
+    },
+    {
+        key     : 'sell_for_drug',
+        name    : 'Sell body for drugs',
+        cn      : '为药卖身',
+        special : 'prostitution'
+    },
+    {
+        key     : 'drug_slut',
+        name    : 'Drug Slut',
+        cn      : '药瘾婊子',
+        special : 'drugs'
+    }
+];
+
+setup.modTattoos.push(...iModTattoos);
+
 //--------------------------------------------
 //
 //  variable config
@@ -546,7 +582,7 @@ const iCandyDataSetting = {
     hidePoint : {
         park   : ['bushes', 'bushes_park'],
         elk    : ['trashbin', 'trashbin_elk'],
-        island : ['hideout', 'hideout']
+        island : ['hideout', 'howllow']
     },
 	
     itemUseTime : {

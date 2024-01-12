@@ -310,7 +310,9 @@ function iCombatHandle() {
     ) return;
 
     const rate = V.trauma / 80 + V.stress / 200;
-    const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter(item => !item.id.has('angel') && iCandy.getStat(item.id, 'efTimer') - V.timeStamp <= 1800);
+    const drugs = Items.search('drugs', 'or', 'pill', 'inject')
+        .filter(item => item.id.has('angel') && iCandy.getStat(item.id, 'efTimer') - V.timeStamp <= 1800);
+
     console.log('combat feed drugs:',drugs);
 
     let html = '';
@@ -358,6 +360,7 @@ function iCombatHandle() {
                 continue;
             }
         }
+        
         // 其他情况根据创伤，疼痛，压力计算概率，随机喂PC毒品
         if (random(100) <= rate && R.combat.total < 3 && drugs.length > 0) {
             const drug = drugs.random();

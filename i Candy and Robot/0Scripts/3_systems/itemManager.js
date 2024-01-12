@@ -573,7 +573,9 @@ const iManager = {
     },
 
 
-    // default is use item from inventory, if situation is specified then use item from the situation, the type will be the item id and pos will be the item count
+    // default is use item from inventory,
+    // if situation is specified then use item from the situation,
+    // the type will be the item id and pos will be the item count
     onUseItem(stack, situation) {
         const item = stack || new iStack(itemId, 1);
         let data = Items.get(item.id);

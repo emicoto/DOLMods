@@ -91,7 +91,7 @@ class Items {
 	 */
     static searchType(type) {
         const database = Object.entries(this.data);
-        return database.filter(([key, item]) => item.type == type).map(item => item[1]);
+        return database.filter(([, item]) => item.type == type).map(item => item[1]);
     }
 
     /**
@@ -102,7 +102,7 @@ class Items {
 	 */
     static searchTag(...tag) {
         const database = Object.entries(this.data);
-        return database.filter(([key, item]) => item.tags.containsAll(...tag)).map(item => item[1]);
+        return database.filter(([, item]) => item.tags.containsAll(...tag)).map(item => item[1]);
     }
 
     /**
@@ -116,10 +116,14 @@ class Items {
     static search(type, andor, ...tags) {
         const database = Object.entries(this.data);
         if (andor == 'and') {
-            return database.filter(([key, item]) => item.type == type && item.tags.containsAll(...tags)).map(item => item[1]);
+            return database.filter(
+                ([, item]) => item.type == type && item.tags.containsAll(...tags)).map(item => item[1]
+            );
         }
 		
-        return database.filter(([key, item]) => item.type == type && item.tags.containsAny(...tags)).map(item => item[1]);
+        return database.filter(
+            ([, item]) => item.type == type && item.tags.containsAny(...tags)).map(item => item[1]
+        );
     }
 
     /**
@@ -221,7 +225,9 @@ class Items {
 	 * @param {number} value
 	 */
     getPalam(param, value) {
-        if (!V.statFreeze && setup.palamlist.includes(param)) V[param] = Math.clamp(V[param] + value, 0, 10000);
+        if (!V.statFreeze && setup.palamlist.includes(param)) {
+            V[param] = Math.clamp(V[param] + value, 0, 10000);
+        }
     }
 
     /**
