@@ -12,7 +12,7 @@ setup.iCandyMod = 'start';
 //-------------------------------------------------------------
 
 Object.defineProperties(window, {
-	Macro : { get : () => Macro },
-	Story : { get : () => Story },
-	R     : { get : () => State.variables.iCandyRobot }
+    Macro : { get : () => Macro },
+    Story : { get : () => Story },
+    R     : { get : () => State.variables.iCandyRobot }
 });
