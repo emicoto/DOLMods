@@ -16,12 +16,12 @@
  * "Hello World".has("Foo"); // false
  * "Hello World".has("Foo", "Bar"); // false
  */
-Object.defineProperty(String.prototype, "has", {
-	configurable: true,
-	writable: true,
+Object.defineProperty(String.prototype, 'has', {
+	configurable : true,
+	writable     : true,
 	value(...arg) {
 		if (this == null) {
-			throw new TypeError("String.prototype.has called on null or undefined");
+			throw new TypeError('String.prototype.has called on null or undefined');
 		}
 
 		if (Array.isArray(arg[0])) arg = arg[0];
@@ -31,15 +31,15 @@ Object.defineProperty(String.prototype, "has", {
 		}
 		if (!count) return false;
 		return count;
-	},
+	}
 });
 
-Object.defineProperty(Array.prototype, "has", {
-	configurable: true,
-	writable: true,
+Object.defineProperty(Array.prototype, 'has', {
+	configurable : true,
+	writable     : true,
 	value(/* needles */) {
 		if (this == null) {
-			throw new TypeError("Array.prototype.has called on null or undefined");
+			throw new TypeError('Array.prototype.has called on null or undefined');
 		}
 
 		if (arguments.length === 1) {
@@ -56,47 +56,47 @@ Object.defineProperty(Array.prototype, "has", {
 				Array.prototype.some.call(
 					this,
 					function (val) {
-						return val === this.val || (val !== val && this.val !== this.val);
+						return val === this.val || val !== val && this.val !== this.val;
 					},
-					{ val: arguments[i] }
+					{ val : arguments[i] }
 				)
 			) {
 				count++;
 			}
 		}
-		if(count == 0) return false
+		if (count == 0) return false;
 		return count;
-	},
+	}
 });
 
 /*
     Returns the given numerical clamped to the specified bounds.
 */
-Object.defineProperty(Math, "clamp", {
-	configurable: true,
-	writable: true,
+Object.defineProperty(Math, 'clamp', {
+	configurable : true,
+	writable     : true,
 
 	value(num, min, max) {
 		const value = Number(num);
 		return Number.isNaN(value) ? NaN : value.clamp(min, max);
-	},
+	}
 });
 
 /*
 		Returns the number clamped to the specified bounds.
 	*/
-Object.defineProperty(Number.prototype, "clamp", {
-	configurable: true,
-	writable: true,
+Object.defineProperty(Number.prototype, 'clamp', {
+	configurable : true,
+	writable     : true,
 
 	value(/* min, max */) {
 		if (this == null) {
 			// lazy equality for null
-			throw new TypeError("Number.prototype.clamp called on null or undefined");
+			throw new TypeError('Number.prototype.clamp called on null or undefined');
 		}
 
 		if (arguments.length !== 2) {
-			throw new Error("Number.prototype.clamp called with an incorrect number of parameters");
+			throw new Error('Number.prototype.clamp called with an incorrect number of parameters');
 		}
 
 		let min = Number(arguments[0]);
@@ -107,50 +107,50 @@ Object.defineProperty(Number.prototype, "clamp", {
 		}
 
 		return Math.min(Math.max(this, min), max);
-	},
+	}
 });
 
-//fix the number to any decimal places
-Object.defineProperty(Math, "fix",{
-	configurable: true,
-	writable:true,
+// fix the number to any decimal places
+Object.defineProperty(Math, 'fix',{
+	configurable : true,
+	writable     : true,
 
-	value(num, count){
+	value(num, count) {
 		const value = Number(num);
 		const a = Number(count) || 2;
 
 		return parseFloat(value.toFixed(a));
 	}
-})
+});
 
-Object.defineProperty(Number.prototype, "fix", {
-	configurable: true,
-	writable:true,
+Object.defineProperty(Number.prototype, 'fix', {
+	configurable : true,
+	writable     : true,
 
-	value(/* value */){
+	value(/* value */) {
 		if (this == null) {
 			// lazy equality for null
-			throw new TypeError("Number.prototype.fix called on null or undefined");
+			throw new TypeError('Number.prototype.fix called on null or undefined');
 		}
 
 		if (arguments.length > 1) {
-			throw new Error("Number.prototype.fix called with an incorrect number of parameters");
+			throw new Error('Number.prototype.fix called with an incorrect number of parameters');
 		}
 
-		let value = Number(arguments[0]) || 2;
+		const value = Number(arguments[0]) || 2;
 
 		return parseFloat(this.toFixed(value));
 	}
-})
+});
 
-Object.defineProperty(String.prototype, "toLocaleUpperFirst", {
-	configurable: true,
-	writable: true,
+Object.defineProperty(String.prototype, 'toLocaleUpperFirst', {
+	configurable : true,
+	writable     : true,
 
 	value() {
 		if (this == null) {
 			// lazy equality for null
-			throw new TypeError("String.prototype.toLocaleUpperFirst called on null or undefined");
+			throw new TypeError('String.prototype.toLocaleUpperFirst called on null or undefined');
 		}
 
 		// Required as `this` could be a `String` object or come from a `call()` or `apply()`.
@@ -159,21 +159,21 @@ Object.defineProperty(String.prototype, "toLocaleUpperFirst", {
 		// Get the first code point—may be one or two code units—and its end position.
 		const { char, end } = _getCodePointStartAndEnd(str, 0);
 
-		return end === -1 ? "" : char.toLocaleUpperCase() + str.slice(end + 1);
-	},
+		return end === -1 ? '' : char.toLocaleUpperCase() + str.slice(end + 1);
+	}
 });
 
 /*
 		Returns a copy of the base string with the first Unicode code point uppercased.
 	*/
-Object.defineProperty(String.prototype, "toUpperFirst", {
-	configurable: true,
-	writable: true,
+Object.defineProperty(String.prototype, 'toUpperFirst', {
+	configurable : true,
+	writable     : true,
 
 	value() {
 		if (this == null) {
 			// lazy equality for null
-			throw new TypeError("String.prototype.toUpperFirst called on null or undefined");
+			throw new TypeError('String.prototype.toUpperFirst called on null or undefined');
 		}
 
 		// Required as `this` could be a `String` object or come from a `call()` or `apply()`.
@@ -182,6 +182,6 @@ Object.defineProperty(String.prototype, "toUpperFirst", {
 		// Get the first code point—may be one or two code units—and its end position.
 		const { char, end } = _getCodePointStartAndEnd(str, 0);
 
-		return end === -1 ? "" : char.toUpperCase() + str.slice(end + 1);
-	},
+		return end === -1 ? '' : char.toUpperCase() + str.slice(end + 1);
+	}
 });

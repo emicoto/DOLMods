@@ -11,7 +11,8 @@
 		"mod-major": "tsx ./script/cli.ts major",
 		"mod-minor": "tsx ./script/cli.ts minor",
 		"mod-patch": "tsx ./script/cli.ts patch",
-		"mod-update": "tsx ./script/cli.ts update"
+		"mod-update": "tsx ./script/cli.ts update",
+		"lint": "eslint --fix --ext .js ."
 	},
 	"repository": {
 		"type": "git",
@@ -41,6 +42,10 @@
 	},
 	"devDependencies": {
 		"@types/archiver": "^6.0.2",
-		"@types/node": "^20.10.5"
+		"@types/eslint": "^8",
+		"@types/node": "^20.10.5",
+		"eslint": "^8.56.0",
+		"stylelint": "^16.1.0",
+		"stylelint-config-standard": "^36.0.0"
 	}
 }

@@ -1,2 +1,2 @@
 
-simpleFrameworks.addto('iModOptions', 'longerCombatConfig')
+simpleFrameworks.addto('iModOptions', 'longerCombatConfig');

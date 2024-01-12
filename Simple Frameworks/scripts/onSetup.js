@@ -1,83 +1,83 @@
 
 setup.DOLNPCNames = {
-    Avery: ["Avery", "艾弗利"],
-    Bailey: ["Bailey", "贝利"],
-    Briar: ["Briar", "布莱尔"],
-    Charlie: ["Charlie", "查理"],
-    Darryl: ["Darryl", "达里尔"],
-    Doren: ["Doren", "多伦"],
-    Eden: ["Eden", "伊甸"],
-    Gwylan: ["Gwylan", "格威岚"],
-    Harper: ["Harper", "哈珀"],
-    Jordan: ["Jordan", "约旦"],
-    Kylar: ["Kylar", "凯莱尔"],
-    Landry: ["Landry", "兰德里"],
-    Leighton: ["Leighton", "礼顿"],
-    Mason: ["Mason", "梅森"],
-    Morgan: ["Morgan", "摩根"],
-    River: ["River", "瑞沃"],
-    Robin: ["Robin", "罗宾"],
-    Sam: ["Sam", "萨姆"],
-    Sirris: ["Sirris", "西里斯"],
-    Whitney: ["Whitney", "惠特尼"],
-    Winter: ["Winter", "温特"],
-    "Black Wolf": ["Black Wolf", "黑狼"],
-    Niki: ["Niki", "尼奇"],
-    Quinn: ["Quinn", "奎恩"],
-    Remy: ["Remy", "雷米"],
-    Alex: ["Alex", "艾利克斯"],
-    "Great Hawk": ["Great Hawk", "巨鹰"],
-    Wren: ["Wren", "伦恩"],
-    Sydney: ["Sydney", "悉尼"],
-    "Ivory Wraith": ["Ivory Wraith", "白色幽灵"],
-    Zephyr: ["Zephyr", "泽菲尔"],
-  };
+	Avery          : ['Avery', '艾弗利'],
+	Bailey         : ['Bailey', '贝利'],
+	Briar          : ['Briar', '布莱尔'],
+	Charlie        : ['Charlie', '查理'],
+	Darryl         : ['Darryl', '达里尔'],
+	Doren          : ['Doren', '多伦'],
+	Eden           : ['Eden', '伊甸'],
+	Gwylan         : ['Gwylan', '格威岚'],
+	Harper         : ['Harper', '哈珀'],
+	Jordan         : ['Jordan', '约旦'],
+	Kylar          : ['Kylar', '凯莱尔'],
+	Landry         : ['Landry', '兰德里'],
+	Leighton       : ['Leighton', '礼顿'],
+	Mason          : ['Mason', '梅森'],
+	Morgan         : ['Morgan', '摩根'],
+	River          : ['River', '瑞沃'],
+	Robin          : ['Robin', '罗宾'],
+	Sam            : ['Sam', '萨姆'],
+	Sirris         : ['Sirris', '西里斯'],
+	Whitney        : ['Whitney', '惠特尼'],
+	Winter         : ['Winter', '温特'],
+	'Black Wolf'   : ['Black Wolf', '黑狼'],
+	Niki           : ['Niki', '尼奇'],
+	Quinn          : ['Quinn', '奎恩'],
+	Remy           : ['Remy', '雷米'],
+	Alex           : ['Alex', '艾利克斯'],
+	'Great Hawk'   : ['Great Hawk', '巨鹰'],
+	Wren           : ['Wren', '伦恩'],
+	Sydney         : ['Sydney', '悉尼'],
+	'Ivory Wraith' : ['Ivory Wraith', '白色幽灵'],
+	Zephyr         : ['Zephyr', '泽菲尔']
+};
 
 setup.dolbus = [
-    'nightingale',
-    'domus',
-    'elk',
-    'high',
-    'starfish',
-    'barb',
-    'connudatus',
-    'wolf',
-    'harvest',
-    'oxford',
-    'danube',
-    'mer',
-    'cliff',
-    'industrial',
-    'residential',
-    'commercial',
-    'park',
-    'industrialdrain',
-    'residentialdrain',
-    'commercialdrain',
-    'seabeach',
-    'searocks',
-    'seadocks',
-    'seacliffs',
-    'drainexit',
-    'sea',
-    'lakebus'
-]
+	'nightingale',
+	'domus',
+	'elk',
+	'high',
+	'starfish',
+	'barb',
+	'connudatus',
+	'wolf',
+	'harvest',
+	'oxford',
+	'danube',
+	'mer',
+	'cliff',
+	'industrial',
+	'residential',
+	'commercial',
+	'park',
+	'industrialdrain',
+	'residentialdrain',
+	'commercialdrain',
+	'seabeach',
+	'searocks',
+	'seadocks',
+	'seacliffs',
+	'drainexit',
+	'sea',
+	'lakebus'
+];
 
-let lancheck = setInterval(() => {
-    if (typeof setup !== 'object') { return }
+const lancheck = setInterval(() => {
+	if (typeof setup !== 'object') { return; }
 
-    if (window.modI18N || setup.breastsizes[1] == '微隆的') {
-        setup.language = 'CN'
-    }
-    else {
-        setup.language = 'EN'
-    }
+	if (window.modI18N || setup.breastsizes[1] == '微隆的') {
+		setup.language = 'CN';
+	}
+	else {
+		setup.language = 'EN';
+	}
 
-    if (setup.language == 'CN' || (setup.language == 'EN' && setup.breastsizes[1] !== '微隆的')) {
-        clearInterval(lancheck)
-        $(document).trigger('languageChecked')
-    }
-}, 60)
+	if (setup.language == 'CN' || setup.language == 'EN' && setup.breastsizes[1] !== '微隆的') {
+		clearInterval(lancheck);
+		$(document).trigger('languageChecked');
+	}
+}, 60);
 
 //------------------------------------------------------
 //
@@ -87,123 +87,118 @@ let lancheck = setInterval(() => {
 setup.ModTraits = [];
 setup.ModTraitTitle = [];
 setup.addModTrait = function () {
-    let Traits = [
-        'General Traits',
-        'Special Traits',
-        'School Traits',
-        'Trauma Traits',
-        'NPC Traits',
-        'Hypnosis Traits',
-        'Acceptance Traits'
-    ]
+	const Traits = [
+		'General Traits',
+		'Special Traits',
+		'School Traits',
+		'Trauma Traits',
+		'NPC Traits',
+		'Hypnosis Traits',
+		'Acceptance Traits'
+	];
 
-    console.log(Traits)
-    const initTraits = function(trait){
-        let { addto, name, cond, text, colour } = trait;
-        let index;
+	console.log(Traits);
+	const initTraits = function (trait) {
+		const { addto, name, cond, text, colour } = trait;
+		let index;
 
-        if(addto){
-            index = Traits.indexOf(addto)
-        }
+		if (addto) {
+			index = Traits.indexOf(addto);
+		}
 
-        let option = {
-            name: lanSwitch(name),
-            has: typeof cond == 'function' ? cond() : cond,
-            text: lanSwitch(text),
-            colour,
-        }
+		const option = {
+			name : lanSwitch(name),
+			has  : typeof cond === 'function' ? cond() : cond,
+			text : lanSwitch(text),
+			colour
+		};
 
-        return [option, index]
-    }
+		return [option, index];
+	};
 
-    setup.ModTraitTitle.forEach((option) => {
-        if (String(option) == `[object Object]`) {
+	setup.ModTraitTitle.forEach(option => {
+		if (String(option) == '[object Object]') {
+			const traits = [];
 
-            let traits = []
+			if (Array.isArray(option.traits)) {
+				option.traits.forEach(trait => {
+					const [data, index] = initTraits(trait);
+					traits.push(data);
+				});
+			}
 
-            if(Array.isArray(option.traits)){
-                option.traits.forEach((trait)=>{
-                    const [data, index] = initTraits(trait)
-                    traits.push(data)
-                })
-            }
+			T.traitLists.push({
+				title : lanSwitch(option.display),
+				traits
+			});
 
-            T.traitLists.push({
-                title: lanSwitch(option.display),
-                traits
-            })
+			Traits.push(option.title);
+		}
+	});
 
-            Traits.push(option.title)
-        }
-    })
-
-    setup.ModTraits.forEach((trait) => {
-        const [data, index ] = initTraits(trait)
-        T.traitLists[index].traits.push(data)
-    })
-
-}
+	setup.ModTraits.forEach(trait => {
+		const [data, index] = initTraits(trait);
+		T.traitLists[index].traits.push(data);
+	});
+};
 
 
 setup.modTattoos = [];
-setup.addBodyWriting = function(){
-    setup.modTattoos.forEach((obj)=>{
-        const item = {
-            index: Object.keys(setup.bodywriting).length,
-            writing: obj.name,
-            type: obj.type ?? 'text',
-            writ_cn: obj.cn ?? obj.name,
-            arrow: obj.arrow ?? 0,
-            special: obj.special ?? 'none',
-            gender: obj.gender ?? 'n',
-            lewd: obj.lewd ?? 1,
-            degree: obj.degree ?? 0,
-            key: obj.key,
-            sprites: obj.sprites?? [],		
-        }
+setup.addBodyWriting = function () {
+	setup.modTattoos.forEach(obj => {
+		const item = {
+			index   : Object.keys(setup.bodywriting).length,
+			writing : obj.name,
+			type    : obj.type ?? 'text',
+			writ_cn : obj.cn ?? obj.name,
+			arrow   : obj.arrow ?? 0,
+			special : obj.special ?? 'none',
+			gender  : obj.gender ?? 'n',
+			lewd    : obj.lewd ?? 1,
+			degree  : obj.degree ?? 0,
+			key     : obj.key,
+			sprites : obj.sprites ?? []
+		};
 
-        setup.bodywriting[obj.key] = item;
-        setup.bodywriting_namebyindex[item.index] = obj.key;
-
-    })
-}
+		setup.bodywriting[obj.key] = item;
+		setup.bodywriting_namebyindex[item.index] = obj.key;
+	});
+};
 
 //------------------------------------------------------
 //
 //  战斗动作支持
 //
 //------------------------------------------------------
-setup.modCombatActions = []
+setup.modCombatActions = [];
 
-setup.ModCombatSetting = function(){
-    console.log('ModCombatSetting', T.args)
-    const [ actions , actiontype ] = T.args
+setup.ModCombatSetting = function () {
+	console.log('ModCombatSetting', T.args);
+	const [actions, actiontype] = T.args;
 
-    setup.modCombatActions.forEach((setupAction)=>{
-        const { displayname, value, type, condition, color } = setupAction
-        if( ( (typeof type == 'string' && type == actiontype) || (Array.isArray(type) && type.has(actiontype))) && typeof condition == 'function' && condition()){
-            const name = lanSwitch(displayname)
-            actions[name] = value
-            if(typeof color == 'string'){
-                T.args[2] = color
-            }
-            
-        }
-    })
+	setup.modCombatActions.forEach(setupAction => {
+		const { displayname, value, type, condition, color } = setupAction;
+		if ((typeof type === 'string' && type == actiontype || Array.isArray(type) && type.has(actiontype)) && typeof condition === 'function' && condition()) {
+			const name = lanSwitch(displayname);
+			actions[name] = value;
+			if (typeof color === 'string') {
+				T.args[2] = color;
+			}
+		}
+	});
+};
+
+function modCombatDifficul(diffAction, action) {
+	console.log('modCombatDifficul', T.args, action, diffAction);
+
+	const actionObj = setup.modCombatActions.filter(action => action.value == diffAction)[0];
+	if (actionObj && actionObj.widget && Macro.has(actionObj.widget)) {
+		return `<<${actionObj.widget}>>`;
+	}
+	
+	return '';
 }
-
-function modCombatDifficul(diffAction, action){
-    console.log('modCombatDifficul', T.args, action, diffAction)
-
-    const actionObj = setup.modCombatActions.filter((action)=> action.value == diffAction )[0]
-    if(actionObj && actionObj.widget && Macro.has(actionObj.widget)){
-        return `<<${actionObj.widget}>>`
-    }
-    else{
-        return ""
-    }
-}
-DefineMacroS('ModCombatDifficulty', modCombatDifficul)
+DefineMacroS('ModCombatDifficulty', modCombatDifficul);
 
 //------------------------------------------------------
 //
@@ -211,177 +206,177 @@ DefineMacroS('ModCombatDifficulty', modCombatDifficul)
 //
 //------------------------------------------------------
 const iModManager = {
-    setCf: function(prop, value){
-       this.init('iModConfigs')
-        V.iModConfigs[prop] = value;
-    },
+	setCf(prop, value) {
+		this.init('iModConfigs');
+		V.iModConfigs[prop] = value;
+	},
 
-    getCf: function(prop){
-        this.init('iModConfigs')
-        return V.iModConfigs[prop]
-    },
+	getCf(prop) {
+		this.init('iModConfigs');
+		return V.iModConfigs[prop];
+	},
 
-    setV: function(prop, value){
-        this.init('iModVar')
-        V.iModVar[prop] = value;
-    },
+	setV(prop, value) {
+		this.init('iModVar');
+		V.iModVar[prop] = value;
+	},
 
-    addV: function(prop, value){
-        this.init('iModVar')
-        if(!V.iModVar[prop]){
-            V.iModVar[prop] = value
-        }
-        else{
-            V.iModVar[prop] += value
-        }
-        return V.iModVar[prop]
-    },
+	addV(prop, value) {
+		this.init('iModVar');
+		if (!V.iModVar[prop]) {
+			V.iModVar[prop] = value;
+		}
+		else {
+			V.iModVar[prop] += value;
+		}
+		return V.iModVar[prop];
+	},
 
-    getV: function(prop){
-        this.init('iModVar')
-        return V.iModVar[prop]
-    },
+	getV(prop) {
+		this.init('iModVar');
+		return V.iModVar[prop];
+	},
 
-    setNpc: function(chara, prop, value){
-        this.init('iModNpc')
-        if(!V.iModNpc[chara]){
-            V.iModNpc[chara] = {}
-        }
-        if(prop && value){
-            V.iModNpc[chara][prop] = value
-        }
-        return V.iModNpc[chara]
-    },
+	setNpc(chara, prop, value) {
+		this.init('iModNpc');
+		if (!V.iModNpc[chara]) {
+			V.iModNpc[chara] = {};
+		}
+		if (prop && value) {
+			V.iModNpc[chara][prop] = value;
+		}
+		return V.iModNpc[chara];
+	},
 
-    getNpc: function(chara, prop){
-        this.init('iModNpc')
-        if(!V.iModNpc[chara]){
-            V.iModNpc[chara] = {}
-        }  
-        return prop ? V.iModNpc[chara][prop] : V.iModNpc[chara]
-    },
-    
-    npcV: function(prop, value){
-        this.init('iModNpc')
-        if(!V.iModNpc[prop]){
-            V.iModNpc[prop] = value
-        }
-        else{
-            if(typeof V.iModNpc[prop] == 'number'){
-                V.iModNpc[prop] += value
-            }
-            else if(Array.isArray(V.iModNpc[prop])){
-                V.iModNpc[prop].push(value)
-            }
-            else if(typeof V.iModNpc[prop] == 'object'){
-                V.iModNpc[prop] = Object.assign(V.iModNpc[prop], value)
-            }
-            else{
-                V.iModNpc[prop] = value
-            }
-        }
-        return V.iModNpc[prop]
-    },
+	getNpc(chara, prop) {
+		this.init('iModNpc');
+		if (!V.iModNpc[chara]) {
+			V.iModNpc[chara] = {};
+		}
+		return prop ? V.iModNpc[chara][prop] : V.iModNpc[chara];
+	},
 
-    init: function(type){
-        if(eval(`V.${type}`) == undefined){
-            eval(`V.${type} = {}`)
-        }
+	npcV(prop, value) {
+		this.init('iModNpc');
+		if (!V.iModNpc[prop]) {
+			V.iModNpc[prop] = value;
+		}
+		else {
+			if (typeof V.iModNpc[prop] === 'number') {
+				V.iModNpc[prop] += value;
+			}
+			else if (Array.isArray(V.iModNpc[prop])) {
+				V.iModNpc[prop].push(value);
+			}
+			else if (typeof V.iModNpc[prop] === 'object') {
+				V.iModNpc[prop] = Object.assign(V.iModNpc[prop], value);
+			}
+			else {
+				V.iModNpc[prop] = value;
+			}
+		}
+		return V.iModNpc[prop];
+	},
 
-        const modvar = eval(`V.${type}`)
+	init(type) {
+		if (eval(`V.${type}`) == undefined) {
+			eval(`V.${type} = {}`);
+		}
 
-        if(typeof modvar.set !== 'function' || modvar.initver !== 1){
-            console.log('init on ready:', type)
-            modvar.set = function(prop, args1, args2){
-                if(!this[prop] && args2){
-                    this[prop] = {
-                        [args1] : args2
-                    }
-                }
-                else if(!this[prop] && !args2){
-                    this[prop] = args1 ?? 0
-                }
-                else if(this[prop] && args2){
-                    this[prop][args1] = args2
-                }
-                
-                return this[prop]
-            }
-        }
+		const modvar = eval(`V.${type}`);
 
-        if(typeof modvar.get !== 'function'|| modvar.initver !== 1){
-            modvar.get = function(prop, prop2){
-                if(!this[prop] && prop2){
-                    this[prop] = {}
-                }
+		if (typeof modvar.set !== 'function' || modvar.initver !== 1) {
+			console.log('init on ready:', type);
+			modvar.set = function (prop, args1, args2) {
+				if (!this[prop] && args2) {
+					this[prop] = {
+						[args1] : args2
+					};
+				}
+				else if (!this[prop] && !args2) {
+					this[prop] = args1 ?? 0;
+				}
+				else if (this[prop] && args2) {
+					this[prop][args1] = args2;
+				}
 
-                return prop2 ? this[prop][prop2] : this[prop]
-            }
-        }
+				return this[prop];
+			};
+		}
 
-        modvar.initver = 1
-    },
+		if (typeof modvar.get !== 'function' || modvar.initver !== 1) {
+			modvar.get = function (prop, prop2) {
+				if (!this[prop] && prop2) {
+					this[prop] = {};
+				}
 
-    has:function(type, prop){
-        if(!V['iMod'+type]){
-            this.init(type)
-        }
+				return prop2 ? this[prop][prop2] : this[prop];
+			};
+		}
 
-        return V['iMod'+type][prop]
-    }
+		modvar.initver = 1;
+	},
 
+	has(type, prop) {
+		if (!V[`iMod${type}`]) {
+			this.init(type);
+		}
+
+		return V[`iMod${type}`][prop];
+	}
+
+};
+window.iMod = iModManager;
+
+function iModonReady() {
+	iMod.init('iModConfigs');
+	iMod.init('iModVar');
+	iMod.init('iModNpc');
 }
-window.iMod = iModManager
-
-function iModonReady(){
-    iMod.init('iModConfigs');
-    iMod.init('iModVar');
-    iMod.init('iModNpc');
-}
-DefineMacroS('iModonReady', iModonReady)
+DefineMacroS('iModonReady', iModonReady);
 
 //------------------------------------------------------
 //
 //  进程处理
 //
 //------------------------------------------------------
-setup.NPCFrameworkOnLoad = false
+setup.NPCFrameworkOnLoad = false;
 function checkUpdate() {
-    setup.NPCFrameworkOnLoad = true
+	setup.NPCFrameworkOnLoad = true;
 }
 
-Save.onLoad.add(checkUpdate)
+Save.onLoad.add(checkUpdate);
 
 $(document).one(':passagedisplay', () => {
-    if(passage() == 'Start' && setup.modCombatActions.length > 0){
-        console.log('Mod Combat Colours Setting')
-        setup.modCombatActions.forEach((action)=>{
-            const { value, color, mainType } = action
-            if(typeof color == 'string' && typeof mainType == 'string'){
-                combatActionColours[mainType][color].push(value)
-            }
-        })
-    }
-})
+	if (passage() == 'Start' && setup.modCombatActions.length > 0) {
+		console.log('Mod Combat Colours Setting');
+		setup.modCombatActions.forEach(action => {
+			const { value, color, mainType } = action;
+			if (typeof color === 'string' && typeof mainType === 'string') {
+				combatActionColours[mainType][color].push(value);
+			}
+		});
+	}
+});
 
-$(document).on(":passagedisplay",()=>{
-    //读档时的处理
-    if (setup.NPCFrameworkOnLoad === true && V.passage !== 'Start' && V.passage !== 'Downgrade Waiting Room') {
-            NamedNPC.clear()
-            NamedNPC.update()
-        setup.NPCFrameworkOnLoad = false
-    }
-    else if(setup.NPCFrameworkOnLoad === true && V.passage == 'Downgrade Waiting Room'){
-        setup.NPCFrameworkOnLoad = false
-        setup.NPCFrameworkOnDowngrade = true
-    }
-    else if(setup.NPCFrameworkOnDowngrade === true && V.passage !== 'Downgrade Waiting Room'){
-        NamedNPC.clear()
-        NamedNPC.update()
-        setup.NPCFrameworkOnDowngrade = false
-    }
-})
+$(document).on(':passagedisplay', () => {
+	// 读档时的处理
+	if (setup.NPCFrameworkOnLoad === true && V.passage !== 'Start' && V.passage !== 'Downgrade Waiting Room') {
+		NamedNPC.clear();
+		NamedNPC.update();
+		setup.NPCFrameworkOnLoad = false;
+	}
+	else if (setup.NPCFrameworkOnLoad === true && V.passage == 'Downgrade Waiting Room') {
+		setup.NPCFrameworkOnLoad = false;
+		setup.NPCFrameworkOnDowngrade = true;
+	}
+	else if (setup.NPCFrameworkOnDowngrade === true && V.passage !== 'Downgrade Waiting Room') {
+		NamedNPC.clear();
+		NamedNPC.update();
+		setup.NPCFrameworkOnDowngrade = false;
+	}
+});
 
 $(document).on(':switchlanguage', () => {
-    NamedNPC.switchlan()
-})
+	NamedNPC.switchlan();
+});

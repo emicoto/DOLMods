@@ -1,9 +1,9 @@
-const iCandyModVersion = "2.3.7"
+const iCandyModVersion = '2.3.7';
 const iCandyStartConfig = {
 
-}
+};
 
-setup.iCandyMod = "start"
+setup.iCandyMod = 'start';
 
 //-------------------------------------------------------------
 //
@@ -12,13 +12,7 @@ setup.iCandyMod = "start"
 //-------------------------------------------------------------
 
 Object.defineProperties(window, {
-    Macro : { get:()=> {
-        return Macro
-    }},
-    Story : { get:()=> {
-        return Story
-    }},
-    R : { get:()=> {
-        return State.variables.iCandyRobot
-    }},
-})
+	Macro : { get : () => Macro },
+	Story : { get : () => Story },
+	R     : { get : () => State.variables.iCandyRobot }
+});

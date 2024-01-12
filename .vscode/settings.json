@@ -1,0 +1,6 @@
+{
+	"workbench.editor.wrapTabs": false,
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.indentSize": "tabSize"
+}
