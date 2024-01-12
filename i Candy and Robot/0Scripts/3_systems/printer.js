@@ -73,11 +73,12 @@ const htmlPrinter = {
     },
 
     templet(string, ...args) {
+        // check if string is valid
         const isValid = function (str) {
             if (String(str) == '[object Object]' && (str.EN || str.CN)) return true;
-
-            return str && (typeof str === 'string' || Array.isArray(string)) && str.length > 0;
+            return str && (typeof str === 'string' || Array.isArray(str)) && str.length > 0;
         };
+
         const isLan = function (str) {
             return String(str) == '[object Object]' || Array.isArray(str);
         };
@@ -253,8 +254,7 @@ const htmlPrinter = {
             }
             _html += '</div>';
 
-            // if(iCandy.config.debug)
-            console.log(_html);
+            if (iCandy.config.debug) console.log(_html);
 
             html += _html;
         }

@@ -241,6 +241,7 @@ const iShop = {
         const data = Items.get(selectItem.id);
         const getNum = data.num * selectItem.stack;
         const totalPrice = shopItem.price * selectItem.stack * (1 - V.iShop[shelf].discount);
+        const stacks = iStack.set(selectItem.id, getNum, selectItem.diff);
 
         let message = '';
 
@@ -250,7 +251,7 @@ const iShop = {
             return;
         }
 
-        if (iManager.checkAvailable(selectItem.id, getNum).available == false) {
+        if (iManager.checkAvailable(stacks).available == false) {
             message = lanSwitch('Not enough space.', '空间不够。');
             this.notice(message, 'red');
             return;
@@ -260,7 +261,7 @@ const iShop = {
         shopItem.stock -= selectItem.stack;
         shopItem.count -= getNum;
 
-        const stacks = new iStack(selectItem.id, getNum, selectItem.diff);
+
         console.log('on buy items:', stacks);
         iManager.onGetItems(stacks, 'shop');
 

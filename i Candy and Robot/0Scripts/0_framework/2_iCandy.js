@@ -39,8 +39,9 @@ const iCandy = {
             return true;
         }
 
-        if (data && data.tags.includes('addiction')) {
+        if (data && data.tags.includes('addiction') && !data.alias) {
             R.drugStates.drugs[item] = new drugState();
+            R.drugFlags.drugs[item] = new drugFlag();
             return true;
         }
 

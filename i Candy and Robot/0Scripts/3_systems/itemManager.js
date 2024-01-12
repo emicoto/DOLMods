@@ -319,7 +319,7 @@ const iManager = {
 	 * @returns
 	 */
     onRemove(type, pos) {
-        this.drop(type, pos);
+        const item = this.drop(type, pos);
         return P.templet(sMsg.dropItem, item.name, item.count);
     },
 
@@ -559,7 +559,7 @@ const iManager = {
 
         // if has use effect
         if (effects && effects.length > 0 && typeof data.onUse != 'function') {
-            params = data.doEffect(times);
+            params = data.doEffects(times);
         }
 
         else if (typeof data.onUse == 'function') {
@@ -577,7 +577,7 @@ const iManager = {
     // use item from inventory
     useFromInv(type, pos, situation = 'use') {
         const pocket = Pocket.get(type);
-        const item = pocket.take(pos);
+        const item = pocket.select(pos);
         const data = Items.get(item.id);
 		
         if (!data) {
@@ -586,6 +586,8 @@ const iManager = {
         }
 		
         const msg = this.onUseItem(item, situation);
+        console.log(pocket, item);
+
         pocket.sortOut();
 
         return msg;
@@ -615,6 +617,8 @@ const iManager = {
         let dropMsg = '';
         const usage = data.usage || 1;
         const times = situation == 'useall' ? Math.ceil(item.count / usage) : 1;
+
+        console.log('on use item:', situation, times, usage);
 
         switch (situation) {
         case 'enemy':

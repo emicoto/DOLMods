@@ -1852,6 +1852,7 @@ function onEquip(type, pos) {
         name[0] = P.toLower(name);
     }
 
+    console.log('name check, on Equip',name);
     const html = P.templet(sMsg.equipText[target].equip, name);
     iManager.onEquip(type, pos, target);
 

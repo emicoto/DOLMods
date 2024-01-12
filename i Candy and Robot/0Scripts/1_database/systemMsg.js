@@ -222,7 +222,7 @@ const sMsg = {
     ],
 
     useItem : [
-        'You {0} the {1}.',
+        'You {1} the {0}.',
         '你{0}了{1}。'
     ],
 
