@@ -226,7 +226,7 @@ function iCandyUpdate() {
         }
     }
 
-    if (V.iPockets.bosy.constructor.name !== 'Pocket') {
+    if (V.iPockets.bosy.constructor.name !== 'Pocket' || iCandy.onLoad === true) {
         iCandyRecover();
     }
 }
