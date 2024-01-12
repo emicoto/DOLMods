@@ -95,14 +95,14 @@ class iStack {
                 map[stack.uid].count += stack.count;
             }
         });
-
+        console.log('merge stacks result:', result);
         return result;
     };
 
     static add = function (items) {
         const result = [];
         items.forEach(item => {
-            result.push(...iStack.set(item.id, item.count, item.diff));
+            result.push(...iStack.set(item.id, item.count, item));
         });
         return result;
     };
@@ -121,55 +121,67 @@ class iStack {
         }
 
         this.id = data.id;
+        this.uid = data.id;
+
         this.name = lanSwitch(data.name);
         this.count = num;
 
-        this.index = obj?.index || ['equip_body', 0];
+        console.log('iStack:', obj);
+        if (obj?.diff) {
+            this.uid = `${this.id}_${obj.diff}`;
+        }
 
-        this.diff = obj?.diff || '';
-        this.uid = obj?.diff ? `${this.id}_${obj.diff}` : this.id;
+        if (obj?.index) {
+            this.index = obj.index;
+        }
+        else {
+            this.index = ['body_body', 0];
+        }
 
+        if (obj?.items) {
+            this.items = obj.items;
+        }
+    }
 
-        // check if the item can be stacked
-        this.canStack = function () {
-            return iStack.getSize(this.id) > 1;
-        };
+    // check if the item can be stacked
+    canStack() {
+        return iStack.getSize(this.id) > 1;
+    }
 
-        // check if the stack isnot full then return the remain space
-        this.remain = function () {
-            return iStack.getSize(this.id) - this.count;
-        };
+    // check if the stack isnot full then return the remain space
+    remain() {
+        return iStack.getSize(this.id) - this.count;
+    }
 
-        /**
-		 * add to the stack and return the remain item count
-		 * @param {number} num
-		 * @returns
-		 */
-        this.add = function (num) {
-            const limit = iStack.getSize(this.id);
-            const count = this.count;
-            this.count = Math.min(this.count + num, limit);
-            return count + num - limit;
-        };
+    /**
+     * add to the stack and return the remain item count
+     * @param {number} num
+     * @returns
+     */
+    add(num) {
+        const limit = iStack.getSize(this.id);
+        const count = this.count;
+        this.count = Math.min(this.count + num, limit);
+        return count + num - limit;
+    }
 
-        /**
+    /**
 		 * take required count from stack and return left required count
 		 * @param {number} num
 		 * @returns
 		 */
-        this.take = function (num) {
-            const _count = this.count;
-            this.count = Math.max(this.count - num, 0);
-            return Math.abs(_count - num);
-        };
+    take(num) {
+        const _count = this.count;
+        this.count = Math.max(this.count - num, 0);
+        return Math.abs(_count - num);
+    }
 
-        /**
+    /**
 		 * check if the stack can add the item and return the remain item count
 		 */
-        this.check = function (num) {
-            const limit = iStack.getSize(this.id);
-            return num - Math.clamp(this.count + num, 0, limit);
-        };
+    check(num) {
+        const limit = iStack.getSize(this.id);
+        return num - Math.clamp(this.count + num, 0, limit);
     }
 }
 
@@ -409,9 +421,9 @@ class Pocket {
 
         for (let i = 0; i < this.slots.length; i++) {
             const stack = this.slots[i];
-            const oldPos = stack.index[0].split('_')[1];
+            console.log('update index:', stack.id, stack.index[0]);
 
-            console.log('update index:', stack.id, oldPos, stack.index[0]);
+            const oldPos = stack.index[0].split('_')[1];
 
             stack.index = [`${type}_${pos}`, i];
 
@@ -541,7 +553,7 @@ class Pocket {
 
         return itemStacks.reduce((result, item) => {
             // add to the empty slot
-            const stacks = iStack.set(item.id, item.count, item.diff, item.index);
+            const stacks = iStack.set(item.id, item.count, item);
             const count = this.remains();
 			
             for (let i = 0; i < count; i++) {
@@ -562,7 +574,7 @@ class Pocket {
     /**
 	 * check the availability of the items
 	 * @param {iStack} stack
-	 * @returns {avaliable: boolean, overflow:number, costslot: number, availableSlot: number}
+	 * @returns {avaliable: boolean, overflow:number, costSlot: number, availableSlot: number}
 	 */
     check(itemStacks) {
         const remainSlot = this.remains();
@@ -579,7 +591,7 @@ class Pocket {
         const costSlot = iManager.calcCostSlots(_stacks);
 
         const result = {
-            costslot,
+            costSlot,
             availableSlot : remainSlot,
             overflow      : costSlot - remainSlot,
             avaliable     : costSlot <= remainSlot

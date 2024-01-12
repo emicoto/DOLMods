@@ -128,6 +128,17 @@ const iManager = {
         return remains;
     },
 
+    checkUnequip(item) {
+        let availableSlot = 0;
+        for (const i in Pocket.list) {
+            if (item.equip == Pocket.list[i]) continue;
+
+            const pocket = Pocket.get(Pocket.list[i]);
+            availableSlot += pocket.max();
+        }
+        return availableSlot;
+    },
+
     checkAvailable(items, num, diff) {
         let itemStacks = this.format(clone(items), num, diff);
         let costSlot = 0;
@@ -230,7 +241,7 @@ const iManager = {
         let html = '';
 
         if (situation == 'unequip') {
-            return this.addItems(itemStacks);
+            return this.addItems(stacks);
         }
 
         // 获取物品的提示
@@ -548,6 +559,13 @@ const iManager = {
 
         this.setEquip(equip, item);
         this.updatePockets();
+
+        if (item.items) {
+            console.log('restore check:',clone(item));
+            const items = clone(item.items);
+            this.addItems(items);
+            delete item.items;
+        }
     },
 	
     onUnEquip(type) {
@@ -557,8 +575,12 @@ const iManager = {
         }
 
         this.unsetEquip(type);
+
+        // move items from inventory to the container
+        item.items = clone(Pocket.get(type).slots);
         this.updatePockets();
 
+        console.log('on unequip:', clone(item));
         this.onGetItems(item, 'unequip');
     },
 

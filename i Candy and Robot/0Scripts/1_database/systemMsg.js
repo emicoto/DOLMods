@@ -18,7 +18,7 @@ const transferMsg = {
                 '你把{0}放进了衣服口袋里。'
             ]
         ];
-        if (iManager.getMaxSlots('body') <= 2) {
+        if (iStack.getSize('body') <= 2) {
             return P.templet(html[0], item.name);
         }
 

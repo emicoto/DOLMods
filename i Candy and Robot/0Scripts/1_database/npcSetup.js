@@ -95,7 +95,7 @@ NamedNPC.add(
 
 const npcSetting = {
     Robert : {
-        important : () => V.iRobot.condition > 60,
+        important : () => R.robot.condition > 60,
         love      : {
             displayname  : ['Devotion', '忠心'],
             activeIcon   : 'img/ui/devotion.png',
@@ -120,7 +120,7 @@ const npcSetting = {
             inactiveIcon : 'img/ui/empty_desire.png',
             maxValue     : 80
         },
-        loveInterest : () => V.iRobot.condition > 80 && V.iRobot.aware > 2
+        loveInterest : () => R.robot.condition > 80 && R.robot.aware > 2
     },
 
     Xinyu : {

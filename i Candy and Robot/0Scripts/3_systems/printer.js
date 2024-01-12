@@ -158,7 +158,7 @@ const htmlPrinter = {
                 const img = this.itemImageResolve(item, data);
                 let onclick = ` onClick="V.addMsg += Items.get('${item.id}').onUnEquip(); SugarCube.Engine.play(V.passage)"`;
 	
-                if (iManager.checkAvailable(item).avalaible == false) {
+                if (iManager.checkUnequip(item) > 0 && slot !== 'held') {
                     onclick = '';
                 }
 
