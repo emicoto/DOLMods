@@ -241,7 +241,9 @@ const iShop = {
         const data = Items.get(selectItem.id);
         const getNum = data.num * selectItem.stack;
         const totalPrice = shopItem.price * selectItem.stack * (1 - V.iShop[shelf].discount);
+
         const stacks = iStack.set(selectItem.id, getNum, selectItem.diff);
+        console.log('buy item check:', getNum, totalPrice, stacks[0].count);
 
         let message = '';
 
@@ -262,7 +264,7 @@ const iShop = {
         shopItem.count -= getNum;
 
 
-        console.log('on buy items:', stacks);
+        console.log('on buy items:', stacks, stacks.count);
         iManager.onGetItems(stacks, 'shop');
 
         const unit1 = iData.batchUnitTxt(data, selectItem.stack);

@@ -47,7 +47,7 @@ const DrugsProcess = {
                 // 如果药效过去，取消flag并检测是否有清醒效果
                 stats.efTimer = 0;
 
-                console.log('drug effect end', drug, stats, drugFlags[drug]);
+                // console.log('drug effect end', drug, stats, drugFlags[drug]);
 
                 if (drugFlags[drug].high == 1) {
                     drugFlags[drug].high = 0;

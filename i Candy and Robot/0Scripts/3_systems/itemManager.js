@@ -86,8 +86,13 @@ const iManager = {
         console.error('error from iManager.format, no available item stack:', stack, 'num:', num, 'diff:', diff);
         return [];
     },
-
+    /**
+     * calculate the cost slots of the items
+     * @param {iStack[]} items
+     * @returns {number}
+     */
     calcCostSlots(items) {
+        console.log('calcCostSlots:', items);
         return items.reduce((total, item) => {
             const size = iStack.getSize(item.id);
             total += Math.ceil(item.count / size);
@@ -102,18 +107,20 @@ const iManager = {
             // calculate the total cost slot
             const size = iStack.getSize(item.id);
             const sameStack = pocket.getAll('uid', item.uid);
+
             let remain = item.count;
 
             // check if can be merged to the same stack
             if (sameStack.length > 0) {
-                const total = sameStack.reduce((total, stack) => {
-                    total += stack.count;
-                }, 0);
+                // 获取同类物品的总数
+                const total = sameStack.reduce((total, stack) => total += stack.count, 0);
+                // 计算剩余空位
                 remain = size * sameStack.length - total;
-                item.count = remain;
+                // 减去剩余空位
+                item.count = item.count - remain;
             }
 
-            if (remain > 0) {
+            if (item.count > 0) {
                 // delete the item from items if it can be merged to the same stack
                 remains.push(item);
             }
@@ -122,7 +129,7 @@ const iManager = {
     },
 
     checkAvailable(items, num, diff) {
-        let itemStacks = this.format(items, num, diff);
+        let itemStacks = this.format(clone(items), num, diff);
         let costSlot = 0;
         const availableSlot = Pocket.getRemain();
 
@@ -468,7 +475,6 @@ const iManager = {
         if (updateItems.length > 0) {
             html.push(this.transMsg(updateItems));
         }
-
         console.log('on update Pockets:',updateItems, remainItems);
 
         // 如果有多余的物品，则根据情况判断是扔掉还是转移
@@ -476,6 +482,7 @@ const iManager = {
             html.push(this.sortOutEvent());
 
             remainItems.forEach(stack => {
+                console.log('remainItems resolution:', stack);
                 html.push(this.dropOrTransfer(stack));
             });
         }
@@ -490,29 +497,31 @@ const iManager = {
         let storage = V.location == 'home' ? Pocket.get('home') : V.location == 'farm' ? Pocket.get('farm') : Pocket.get('lockers');
 
         // 根据所在地点判断, 如果是家里或者农场，则转移至仓库
-        if (V.location.has('home', 'farm') && storage.check(stack) == true) {
+        if (V.location.has('home', 'farm') && storage.check(clone(stack)) == true) {
             stack.index = [`storage_${V.location}` , storage.slots.length];
             storage.add(stack);
             return this.transMsg(stack);
         }
 
         // 如果所在地有储物柜，则转移到储物柜
-        if (F.hasLockers() && storage.check(stack) == true) {
+        if (F.hasLockers() && storage.check(clone(stack)) == true) {
             stack.index = ['storage_lockers' , storage.slots.length];
             storage.add(stack);
             return this.transMsg(stack);
         }
 
         // 如果所在地有藏物处，则转移到藏物处
-        const [type, fullname] = F.getHideOut();
-        storage = Pocket.get(fullname);
+        if (F.getHideOut()) {
+            const [type, fullname] = F.getHideOut();
+            storage = Pocket.get(fullname);
 
-        if (storage.check(stack) == true) {
-            stack.index = [type , storage.slots.length];
-            storage.add(stack);
-            return this.transMsg(stack);
+            if (storage.check(clone(stack)) == true) {
+                stack.index = [type , storage.slots.length];
+                storage.add(stack);
+                return this.transMsg(stack);
+            }
         }
-
+        
         // 都没有的话，就扔掉
         return P.templet(sMsg.transferMsg.ground, stack.name, stack.count);
     },
@@ -542,9 +551,9 @@ const iManager = {
         }
 
         this.unsetEquip(type);
+        this.updatePockets();
 
         this.onGetItems(item, 'unequip');
-        this.updatePockets();
     },
 
     /**

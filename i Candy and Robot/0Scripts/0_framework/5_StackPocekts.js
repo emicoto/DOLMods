@@ -147,8 +147,9 @@ class iStack {
 		 */
         this.add = function (num) {
             const limit = iStack.getSize(this.id);
+            const count = this.count;
             this.count = Math.min(this.count + num, limit);
-            return num - this.count;
+            return count + num - limit;
         };
 
         /**
@@ -409,7 +410,7 @@ class Pocket {
 
             stack.index = [`${this.type}_${this.pos}`, i];
 
-            if (oldPos != this.type) {
+            if (oldPos != this.pos) {
                 posChanged.push(stack);
             }
         });
@@ -558,13 +559,17 @@ class Pocket {
 	 */
     check(itemStacks) {
         const remainSlot = this.remains();
+        let _stacks = clone(itemStacks);
 
-        if (Array.isArray(itemStacks) == false) {
-            itemStacks = [itemStacks];
+        if (Array.isArray(_stacks) == false) {
+            _stacks = [_stacks];
         }
 
+        iManager.mergeCheck(this, _stacks);
+        
+        console.log('check itemStacks:', _stacks);
         // calculate the total cost slot
-        const costSlot = iManager.calcCostSlots(this, itemStacks);
+        const costSlot = iManager.calcCostSlots(_stacks);
 
         const result = {
             costslot,
