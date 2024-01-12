@@ -1837,7 +1837,7 @@ function getEquipType(tags) {
 function onEquip(type, pos) {
     const item = Pocket.get(type).select(pos);
 
-    const target = getEquipType(item.tags);
+    const target = getEquipType(this.tags);
     if (item.diff && this.diff) {
         const diff = this.diff[item.diff];
 

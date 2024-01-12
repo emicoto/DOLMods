@@ -266,3 +266,5 @@ class Items {
         }, '');
     }
 }
+
+Object.defineProperty(window, 'Items', { value : Items, writable : false, configurable : false });

@@ -148,10 +148,8 @@ const iManager = {
             const pocket = Pocket.get(type);
             itemStacks = this.mergeCheck(pocket, itemStacks);
         });
-
-        itemStacks.forEach(stack => {
-            costSlot += this.calcCostSlots(stack);
-        });
+        
+        costSlot += this.calcCostSlots(itemStacks);
 
         const available = costSlot <= availableSlot;
         const result = {
@@ -321,7 +319,7 @@ const iManager = {
 
     // update the pockets states
     updateState(type) {
-        const equip = this.getEquip(type);
+        const equip = Pocket.get(type);
         if (!equip) return;
 
         const size = equip.max();

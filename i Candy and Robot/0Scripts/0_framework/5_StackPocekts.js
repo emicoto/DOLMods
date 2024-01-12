@@ -85,7 +85,7 @@ class iStack {
     static merge = function (stacks) {
         const result = [];
         const map = {};
-
+        console.log('merge stacks:', stacks);
         stacks.forEach(stack => {
             if (!map[stack.uid]) {
                 map[stack.uid] = stack;
@@ -180,10 +180,6 @@ class iStack {
 class Pocket {
     static maxSlot = {
         body() {
-            if (!V.worn) {
-                return 4;
-            }
-
             let slot = 2; // 2 slot for hands
             const { upper, over_upper, lower } = V.worn;
 			

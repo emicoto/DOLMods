@@ -127,6 +127,7 @@ function iCandyUpdate() {
     else if (V.iCandyRobot.version !== iCandy.version) {
         // 将旧版装备数据转换为新版
         // convert old equip data to new
+        console.log('on version update');
         for (const [key, value] of Object.entries(V.iPockets)) {
             if (key.has('type')) {
                 const k = key.replace('type', '');
@@ -145,13 +146,14 @@ function iCandyUpdate() {
                 
                 delete V.iPockets[key];
             }
-            else if (key.has('body', 'hole')) {
+            else if (key.has('body', 'hole') && value.limitsize == undefined) {
                 const stacks = iStack.add(value);
+                console.log('restore stacks:', stacks, value);
 
                 V.iPockets[key] = new Pocket('body', key);
                 V.iPockets[key].add(stacks);
             }
-            else if (Pocket.list.includes(key)) {
+            else if (Pocket.list.includes(key) && value.limitsize == undefined) {
                 const stacks = iStack.add(value);
 
                 V.iPockets[key] = new Pocket('equip', key);
@@ -161,7 +163,12 @@ function iCandyUpdate() {
 
         // 重新初始化仓库，如果是旧版本数据
         if (typeof V.iStorage.home.serotonin == 'number') {
-            V.iStorage.home = new Pocket('storage', 'home', 12);
+            for (const [key, value] of Object.entries(iStorage)) {
+                if (value.limitsize == undefined) continue;
+                
+                V.iStorage[key] = new Pocket('storage', key);
+                V.iStorage[key].limitsize = value.limitsize;
+            }
         }
 
         // 更新数据
@@ -191,20 +198,6 @@ function iCandyUpdate() {
             if (data.lastTime > V.timeStamp) {
                 console.log('drug lasttime update:', drug, data.lastTime, V.timeStamp);
                 data.lastTime = V.timeStamp;
-            }
-        }
-
-        // 更新class
-        for (const [key, pocket] of Object.entries(V.iPockets)) {
-            if (Pocket.list.includes(key) && pocket.constructor.name !== 'Pocket') {
-                V.iPockets[key] = Pocket.recover(pocket);
-            }
-        }
-
-        for (const [key, storage] of Object.entries(V.iStorage)) {
-            if (key == 'lockerOwned' || key == 'warehouseOwned') continue;
-            if (storage.constructor.name !== 'Pocket') {
-                V.iStorage[key] = Pocket.recover(storage);
             }
         }
 
@@ -262,7 +255,7 @@ function iCandyRecover() {
 }
 
 function iCandyOnLoad() {
-    iCansy.onLoad = true;
+    iCandy.onLoad = true;
 }
 
 Save.onLoad.add(iCandyOnLoad);

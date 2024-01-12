@@ -58,10 +58,10 @@ const iPockets = {
     cart   : new Pocket('equip', 'cart', 0),
 
     equip : {
-        held   : { id : 'none' },
-        bag    : { id : 'none' },
-        cart   : { id : 'none' },
-        wallet : { id : 'none' }
+        held   : { type : 'misc', id : 'none', name : 'none' },
+        bag    : { type : 'misc', id : 'none', name : 'none' },
+        cart   : { type : 'misc', id : 'none', name : 'none' },
+        wallet : { type : 'misc', id : 'none', name : 'none' }
     },
 
     states : {
