@@ -69,7 +69,7 @@ const iUtil = {
     },
 
     noEventRunning() {
-        return V.eventskip == 0 && V.combat == 0;
+        return V.eventskip == 0 && V.combat == 0 && V.phase == 0;
     },
 
     getLocation() {

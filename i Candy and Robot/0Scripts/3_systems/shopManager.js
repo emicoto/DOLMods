@@ -242,7 +242,7 @@ const iShop = {
         const getNum = data.num * selectItem.stack;
         const totalPrice = shopItem.price * selectItem.stack * (1 - V.iShop[shelf].discount);
 
-        const stacks = iStack.set(selectItem.id, getNum, selectItem.diff);
+        const stacks = iStack.set(selectItem.id, getNum, selectItem);
         console.log('buy item check:', getNum, totalPrice, stacks[0].count);
 
         let message = '';

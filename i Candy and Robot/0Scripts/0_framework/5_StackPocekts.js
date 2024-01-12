@@ -545,8 +545,10 @@ class Pocket {
             return result;
         }
 
+        console.log('before merge items in pocket',itemStacks);
         // merge the item to the same stack before add to the inventory
         itemStacks = this.merge(itemStacks);
+        console.log('on add items in pocket',itemStacks);
 
         result.overflow = [];
         result.total = 0;

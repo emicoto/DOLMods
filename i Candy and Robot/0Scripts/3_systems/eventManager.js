@@ -376,7 +376,7 @@ const eventManager = {
             // check event from passage
             const keys = data.title.split(' ');
 
-            if (keys.has('Passout') && (keys.indexOf('Passout') == 0 && !data.text.includes('combat') || keys.indexOf('Passout') == key.length)) {
+            if (keys.has('Passout') && (keys.indexOf('Passout') == 0 && !data.text.includes('combat') || keys.indexOf('Passout') == keys.length)) {
                 this.checkEvent('Passout', data);
             }
             else if (keys.has('Sleep') && data.text.includes('<<sleep>>')) {

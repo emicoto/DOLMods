@@ -218,7 +218,7 @@ const htmlPrinter = {
                 _html += '<img class=\'icon\' src="img/items/item_none.png">';
             }
             _html += '</div>';
-            if (data && V.combat == 0 && !V.event) {
+            if (data && F.noEventRunning()) {
                 _html += `<div id='action' class='pocketaction'>
 				<span class='itemaction'>`;
 
