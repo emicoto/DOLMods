@@ -73,7 +73,7 @@ const iPockets = {
         wallet : 'none'
     },
 
-    event : {
+    flag : {
         body   : 0,
         held   : 0,
         bag    : 0,

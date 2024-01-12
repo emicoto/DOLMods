@@ -125,11 +125,14 @@ function iCandyUpdate() {
         iCandyInit();
     }
     else if (V.iCandyRobot.version !== iCandy.version) {
+        console.log('on version update');
+
+        const oldEquip = ['bagtype', 'walltettype', 'heldtype', 'carttype'];
+
         // 将旧版装备数据转换为新版
         // convert old equip data to new
-        console.log('on version update');
         for (const [key, value] of Object.entries(V.iPockets)) {
-            if (key.has('type')) {
+            if (oldEquip.includes(key)) {
                 const k = key.replace('type', '');
                 if (!V.iPockets.equip) V.iPockets.equip = {};
 
@@ -146,20 +149,35 @@ function iCandyUpdate() {
                 
                 delete V.iPockets[key];
             }
-            else if (key.has('body', 'hole') && value.limitsize == undefined) {
+        }
+
+        // 将旧的背包数据转换为新版
+        for (const [key, value] of Object.entries(V.iPockets)) {
+            if (key.has('body', 'hole') && value.limitsize == undefined) {
                 const stacks = iStack.add(value);
                 console.log('restore stacks:', stacks, value);
 
                 V.iPockets[key] = new Pocket('body', key);
+                V.iPockets[key].limitsize = V.iPockets[key].max();
+
                 V.iPockets[key].add(stacks);
+
+                console.log('new pockets:', V.iPockets[key].limitsize, V.iPockets[key].slots);
             }
             else if (Pocket.list.includes(key) && value.limitsize == undefined) {
                 const stacks = iStack.add(value);
 
                 V.iPockets[key] = new Pocket('equip', key);
+                V.iPockets[key].limitsize = V.iPockets[key].max();
+
                 V.iPockets[key].add(stacks);
             }
+            else if (key == 'global') {
+                V.iPockets.global = new Pocket('global', 'global', 1000000000);
+                V.iPockets.global.items = {};
+            }
         }
+
 
         // 重新初始化仓库，如果是旧版本数据
         if (typeof V.iStorage.home.serotonin == 'number') {

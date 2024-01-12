@@ -180,6 +180,8 @@ class iStack {
 class Pocket {
     static maxSlot = {
         body() {
+            if (!V.worn) return 4;
+
             let slot = 2; // 2 slot for hands
             const { upper, over_upper, lower } = V.worn;
 			
@@ -340,8 +342,9 @@ class Pocket {
     //              inventory methods              //
     // ---------------------------------------------//
     max() {
-        if (this.type == 'equip') {
-            return Pocket.getMaxSlot(this.pos);
+        if (Pocket.list.includes(this.pos)) {
+            this.limitsize = Pocket.getMaxSlot(this.pos) || 0;
+            return this.limitsize;
         }
         return this.limitsize;
     }

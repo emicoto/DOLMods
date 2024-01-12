@@ -38,11 +38,11 @@ const iManager = {
     },
 
     getState(type) {
-        return V.iPockets.state[type];
+        return V.iPockets.states[type];
     },
 
     setState(type, state) {
-        V.iPockets.state[type] = state;
+        V.iPockets.states[type] = state;
     },
 
     getSavedSize(type) {
@@ -179,6 +179,18 @@ const iManager = {
                 storage.items[id].count += itemStacks[i].count;
             }
         }
+
+        this.updateGlobal();
+    },
+    /**
+     * update global inventory
+     */
+    updateGlobal() {
+        const storage = Pocket.get('global');
+
+        // turn items object to array then set to slots
+        const items = Object.values(storage.items);
+        storage.slots = items;
     },
 
     /**
@@ -410,6 +422,10 @@ const iManager = {
     },
 
     updatePockets() {
+        if (!V.iPockets.saveSize) {
+            this.saveSize();
+        }
+
         // 先检测当前装备的容器是否有容量变化
         Pocket.list.forEach(type => {
             const pocket = Pocket.get(type);
