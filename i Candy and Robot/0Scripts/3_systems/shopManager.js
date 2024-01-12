@@ -258,14 +258,14 @@ const iShop = {
 
         V.money -= totalPrice;
         shopItem.stock -= selectItem.stack;
-        shopItem.count -= selectItem.stack * data.num;
+        shopItem.count -= getNum;
 
-        const stacks = new iStack(selectItem.id, selectItem.stack * data.num, selectItem.diff);
-
+        const stacks = new iStack(selectItem.id, getNum, selectItem.diff);
+        console.log('on buy items:', stacks);
         iManager.onGetItems(stacks, 'shop');
 
         const unit1 = iData.batchUnitTxt(data, selectItem.stack);
-        const unit2 = iData.subUnitTxt(data, selectItem.stack * data.num);
+        const unit2 = iData.subUnitTxt(data, getNum);
 
         message = [
             // You bought 1 bottle of mineral water for 0.5£.

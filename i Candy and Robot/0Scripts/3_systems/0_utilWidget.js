@@ -78,7 +78,7 @@ const iUtil = {
             return 'bus';
         }
 
-        if (V.passsage.includes('Stall')) {
+        if (V.passage.includes('Stall')) {
             return 'market';
         }
 
@@ -97,10 +97,25 @@ const iUtil = {
     },
 
     hasLockers() {
+        const local = this.getLocation();
         // 学校的储物柜是免费的。
-        if (getLocation() == 'school') return true;
+        if (local == 'school') return true;
         // 其他地方的储物柜需要解锁。
-        return R.lockerOwned[getLocation()] == 1;
+        return R.lockerOwned[local] == 1;
+    },
+
+    getHideOut() {
+        if (V.passage.has('Park')) {
+            return iData.hidePoint.park;
+        }
+
+        if (V.passage.has('Elk')) {
+            return iData.hidePoint.elk;
+        }
+
+        if (V.passage.has('Island')) {
+            return iData.hidePoint.island;
+        }
     }
 };
 

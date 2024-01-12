@@ -101,17 +101,7 @@ const iStorage = {
     bushes_park  : new Pocket('storage', 'bushes_park', 6), // 公园灌木丛
     trashbin_elk : new Pocket('storage', 'trashbin_elk', 6), // 麋鹿酒吧垃圾桶
     hideout      : new Pocket('storage', 'hideout', 6), // 隐藏地点
-    howllow      : new Pocket('storage', 'howllow', 6), // 隐藏地点
-
-    warehouseOwned : 0,
-    lockerOwned    : {
-        school          : 1,
-        strip_club      : 0,
-        brothel         : 0,
-        shopping_centre : 0,
-        office_building : 0,
-        beach           : 0
-    }
+    howllow      : new Pocket('storage', 'howllow', 6) // 隐藏地点
 };
 
 const vRecipe = {
@@ -382,7 +372,18 @@ const iCandyRobot = {
     },
 
     // event modules
-    flags : iEventFlags
+    flags : iEventFlags,
+
+    // storage owned state
+    warehouseOwned : 0,
+    lockerOwned    : {
+        school          : 1,
+        strip_club      : 0,
+        brothel         : 0,
+        shopping_centre : 0,
+        office_building : 0,
+        beach           : 0
+    }
 };
 
 

@@ -178,6 +178,7 @@ function iCandyUpdate() {
             }
         }
 
+        V.iPockets.flag = V.iPockets.event;
 
         // 重新初始化仓库，如果是旧版本数据
         if (typeof V.iStorage.home.serotonin == 'number') {
@@ -188,6 +189,23 @@ function iCandyUpdate() {
                 V.iStorage[key].limitsize = value.limitsize;
             }
         }
+
+        // 重新初始化仓库所有权变量
+        if (typeof V.iStorage.warehouseOwned !== 'undefined') {
+            delete V.iStorage.warehouseOwned;
+            delete V.iStorage.lockersOwned;
+
+            V.iCandyRobot.warehouseOwned = 0;
+            V.iCandyRobot.lockersOwned = {
+                school          : 1,
+                strip_club      : 0,
+                brothel         : 0,
+                shopping_centre : 0,
+                office_building : 0,
+                beach           : 0
+            };
+        }
+
 
         // 更新数据
         for (const i in iModVariables) {

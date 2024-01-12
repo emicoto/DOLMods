@@ -48,7 +48,7 @@ const iFoods = [
         ],
 
         msg : itemMsg.chocolate
-		
+
     },
     {
         tags : ['bagged', 'snack'],
@@ -368,7 +368,7 @@ const iFoods = [
         price   : 4820,
         num     : 1,
         effects : [
-            ['hunger' , 1200]
+            ['hunger', 1200]
         ],
 
         msg : itemMsg.SpringBoxedMeal
@@ -388,7 +388,7 @@ const iFoods = [
         price   : 4820,
         num     : 1,
         effects : [
-            ['hunger' , 1200]
+            ['hunger', 1200]
         ],
 
         msg : itemMsg.AutumnBoxedMeal
@@ -410,7 +410,7 @@ const iFoods = [
         num     : 4,
         size    : 4,
         effects : [
-            ['hunger' , 420]
+            ['hunger', 420]
         ],
 
         msg : itemMsg.ChestnutRoyalCake
@@ -432,7 +432,7 @@ const iFoods = [
         size  : 'small',
 
         effects : [
-            ['hunger' , 240]
+            ['hunger', 240]
         ],
 
         msg : itemMsg.HanamiDango
@@ -455,7 +455,7 @@ const iFoods = [
         unit  : 'piece',
 
         effects : [
-            ['hunger' , 100]
+            ['hunger', 100]
         ],
 
         msg : itemMsg.Sakuramochi
@@ -476,7 +476,7 @@ const iFoods = [
         num     : 1,
         size    : 'big',
         effects : [
-            ['hunger' , 1000]
+            ['hunger', 1000]
         ],
 
         msg : itemMsg.ColdRamen
@@ -496,7 +496,7 @@ const iFoods = [
         price   : 10400,
         num     : 1,
         effects : [
-            ['hunger' , 400]
+            ['hunger', 400]
         ],
         unit : 'piece',
 
@@ -518,7 +518,7 @@ const iFoods = [
         num     : 1,
         size    : 'big',
         effects : [
-            ['hunger' , 800]
+            ['hunger', 800]
         ],
 
         msg : itemMsg.PorkPie
@@ -539,73 +539,73 @@ const iFoods = [
         num     : 1,
         size    : 'big',
         effects : [
-            ['hunger' , 600]
+            ['hunger', 600]
         ],
 
         msg : itemMsg.MincePie
     },
     {
         tags : ['seasonal', 'summer', 'pudding'],
-	
+
         id     : 'MintJelly',
         name   : ['Mint jelly', '薄荷果冻'],
         plural : 'Mint jellies',
-	
+
         info : [
             'The fragrant mint aroma goes straight to your heart, and the mint leaves wiggle to say hello.',
             '芬芳的薄荷香气直冲心脾，薄荷叶摇晃着和你打招呼。'
         ],
-	
+
         price : 600,
         num   : 1,
         size  : 'small',
         unit  : 'serve',
-	
+
         effects : [
-            ['hunger' , 240]
+            ['hunger', 240]
         ],
-	
+
         msg : itemMsg.MintJelly
     },
     {
         tags : ['meal', 'set'],
-	
+
         id     : 'BasicFoodSet',
         name   : ['Basic Food Set', '基本组合'],
         plural : 'Basic Food Sets',
-	
+
         info : [
             'A serving of rice bowl, a bowl of miso soup, and a cup of tea. Rich in aroma, abundant in ingredients, simple yet delicious.',
             '一份盖饭，一碗味增汤，一杯茶。香气浓郁，食材丰富，简单而美味。吃完记得把盘子还给老板。'
         ],
-	
+
         price   : 4220,
         num     : 1,
         effects : [
-            ['hunger' , 800]
+            ['hunger', 800]
         ],
-	
+
         msg : itemMsg.BasicFoodSet
     },
     {
         tags : ['seasonal', 'winter', 'meal', 'meat'],
-	
+
         id     : 'LambChop',
         name   : ['Lamb Chop', '小羊排'],
         plural : 'Lamb Chops',
-	
+
         info : [
             'Roasted lamb chops, golden and crispy.',
             '小羊排散发着碳烤与溶化脂肪的香气。表面烤至金黄酥脆。每一块都均匀撒上了迷迭香与百里香，令人垂涎欲滴。'
         ],
-	
+
         price   : 6400,
         num     : 1,
         size    : 'big',
         effects : [
-            ['hunger' , 1600]
+            ['hunger', 1600]
         ],
-	
+
         msg : itemMsg.LambChop
     }
 ];
@@ -669,86 +669,86 @@ const iDrinks = [
         effects : [
             ['thirsty', 1200]
         ],
-		
+
         drop : dropbottle
     },
     {
         tags : ['bottle', 'soda'],
-	
+
         id     : 'ramune',
         name   : ['Ramune', '波子水'],
         plural : 'Ramunes',
-	
+
         info : [
             'Cool ramune, recover a bit of stamina',
             '清爽的波子水，能补充点体力'
         ],
-	
+
         price : 520,
         num   : 1,
         size  : 3,
-	
+
         effects : [
             ['tiredness', 64],
             ['thirsty', 600]
         ],
-		
+
         msg : itemMsg.ramune,
-		
+
         drop : dropbottleG
     },
 
     {
-        tags : ['canned','soda'],
-	
+        tags : ['canned', 'soda'],
+
         id     : 'cola',
         name   : ['Can of Cola', '可乐'],
         plural : 'Cans of Cola',
-	
+
         num   : 1,
         price : 200,
         size  : 4,
-	
+
         info    : ['A regular canned cola', '一罐普通的罐装可乐'],
         effects : [
             ['stress', 2],
             ['thirsty', 500]
         ],
-	
+
         msg  : itemMsg.cola,
         drop : dropcan
     },
-	
+
     {
         tags : ['bottle', 'soda'],
-	
+
         id     : 'cola_bottle',
         name   : ['Bottle of Cola', '可乐'],
         plural : 'Bottles of Cola',
-	
+
         num   : 1,
         price : 400,
-	
+
         info    : ['A regular bottle cola', '一瓶普通的瓶装可乐'],
         effects : [
             ['stress', 2],
             ['thirsty', 1000]
         ],
-	
+
         msg  : itemMsg.cola,
         drop : dropbottle
     },
-	
+
     {
         tags : ['bottle', 'coffee'],
-	
+
         id     : 'frappuccino',
         name   : ['Frappuccino', '星冰乐咖啡'],
         plural : 'Bottles of Frappuccino',
-	
+
         num   : 1,
         price : 800,
-	
+
         info    : ['A regular glass bottle Frappuccino', '一瓶星冰乐咖啡'],
         effects : [
             ['stress', 3],
@@ -758,14 +758,14 @@ const iDrinks = [
     },
     {
         tags : ['canned', 'coffee'],
-	
+
         id     : 'cancoffe',
         name   : ['Can of Coffe', '罐装咖啡'],
         plural : 'Cans of coffe',
-	
+
         num   : 1,
         price : 640,
-	
+
         info    : ['A regular canned coffe', '一罐普通的咖啡'],
         effects : [
             ['stress', 1],
@@ -775,17 +775,17 @@ const iDrinks = [
 
         drop : dropcan
     },
-	
+
     {
         tags : ['canned', 'energy'],
-	
+
         id     : 'redcow',
         name   : ['Red Cow', '红羊'],
         plural : 'Cans of Red Cow',
-	
+
         num   : 1,
         price : 800,
-	
+
         info : [
             'Energy drink, "Red Cow gives you wings"',
             '能量饮料，红羊能让你飞起来'
@@ -797,17 +797,17 @@ const iDrinks = [
 
         drop : dropcan
     },
-	
+
     {
         tags : ['bottle', 'energy'],
-	
+
         id     : 'sportdrink',
         name   : ['Energy Drink', '能量饮料'],
         plural : 'bottles of Energy Drink',
-	
+
         num   : 1,
         price : 800,
-	
+
         info : [
             'Sport drink, gives you an instant charge.',
             '能量饮料，让你立即充电。'
@@ -821,14 +821,14 @@ const iDrinks = [
     },
     {
         tags : ['bottle', 'soda'],
-	
+
         id     : 'fruitsoda',
         name   : ['Fruit Soda', '水果苏打'],
         plural : 'Bottles of Fruit Soda',
-	
+
         num   : 1,
         price : 520,
-	
+
         info : [
             'Fresh and sparkling fruits soda, too many flavors to choose.',
             '清新爽口、美味可口的水果苏打，有太多口味可供选择了'
@@ -852,14 +852,14 @@ const iDrinks = [
     },
     {
         tags : ['bottle', 'tea'],
-	
+
         id     : 'milktea',
         name   : ["Queen's Milk Tea", '皇后奶茶'],
         plural : "Bottles of Queen's Milk Tea",
-	
+
         num   : 1,
         price : 849,
-	
+
         info : [
             'Sweety and smooth, fragrant milk tea, makes your afternoon full of happiness',
             '甜丝丝，滑溜溜，香醇的奶茶，让你的午后充满幸福感'
@@ -873,14 +873,14 @@ const iDrinks = [
     },
     {
         tags : ['bottle', 'tea'],
-	
+
         id     : 'royaltea',
         name   : ['Royal Tea', '午后红茶'],
         plural : 'Bottles of Royal Tea',
-	
+
         num   : 1,
         price : 649,
-	
+
         info : [
             'Fresh and fragrant straight tea, makes your afternoon full of happiness',
             '清新香醇的红茶，让你的午后充满幸福感'
@@ -894,14 +894,14 @@ const iDrinks = [
     },
     {
         tags : ['bottle', 'tea'],
-	
+
         id     : 'icetea',
         name   : ['Ice Tea', '冰红茶'],
         plural : 'Bottles of Ice Tea',
-	
+
         num   : 1,
         price : 562,
-	
+
         info : [
             'Refreshingly sweet and sour iced tea for a cool day.',
             '清爽酸甜的冰红茶，给你清凉的一天。'
@@ -914,16 +914,16 @@ const iDrinks = [
     },
     {
         tags : ['seasonal', 'summer', 'serving'],
-	
+
         id     : 'MintLemonade',
         name   : ['Mint Lemonade', '薄荷柠檬饮'],
         plural : 'Mint Lemonade',
-	
+
         info : [
             'The aroma of mint leaves perfectly blends with the unique tartness of lemon.',
             '清新爽口，薄荷叶的香气与柠檬独特的酸涩风味完美融合。夏日里带来一丝清凉。'
         ],
-	
+
         price   : 800,
         num     : 1,
         size    : 'medium',
@@ -932,21 +932,21 @@ const iDrinks = [
         ],
 
         unit : 'cup',
-	
+
         msg : itemMsg.MintLemonade
     },
     {
         tags : ['seasonal', 'summer', 'serving'],
-	
+
         id     : 'PineappleIce',
         name   : ['Pineapple Ice', '菠萝冰'],
         plural : 'Pineapple Ice',
-	
+
         info : [
             'The shape is unique, and the ice cubes suspended in the pineapple sparkle.',
             '造型奇特，悬浮在菠萝中的冰块在阳光下闪着晶莹的光泽。菠萝杯摸起来可能有些扎手。'
         ],
-	
+
         price   : 1000,
         num     : 1,
         size    : 'medium',
@@ -955,21 +955,21 @@ const iDrinks = [
         ],
 
         unit : 'cup',
-	
+
         msg : itemMsg.PineappleIce
     },
     {
         tags : ['seasonal', 'summer', 'serving'],
-	
+
         id     : 'WatermelonIce',
         name   : ['Watermelon Ice', '西瓜冰'],
         plural : 'Watermelon Ice',
-	
+
         info : [
             'The vibrant red flesh of the watermelon is clearly visible. Refreshing and cooling.',
             '红艳的西瓜肉清晰可见，杯壁的水珠在阳光下闪闪发亮。清凉解暑，不来一杯吗？'
         ],
-	
+
         price   : 1000,
         num     : 1,
         size    : 'medium',
@@ -977,7 +977,7 @@ const iDrinks = [
             ['thirsty', 900]
         ],
         unit : 'cup',
-	
+
         msg : itemMsg.WatermelonIce
     }
 ];
@@ -991,12 +991,12 @@ const ingredients = [
         id     : 'blood',
         name   : ['Blood', '血液'],
         plural : 'Blood',
-	
+
         num   : 1,
         price : 10000,
         size  : 'small',
         unit  : 'pack',
-	
+
         info : [
             'A pack of blood',
             '一包血液'
@@ -1007,22 +1007,22 @@ const ingredients = [
         id     : 'candypackage',
         name   : ['Candy Package', '糖果包装'],
         plural : 'Candy Packages',
-	
+
         num   : 1,
         price : 10,
         size  : 'micro',
-	
+
         info : [
             'A package used to pack candies',
             '糖果吃剩后的包装'
         ]
     },
     {
-        tags   : ['creamy','cooking', 'edible'],
+        tags   : ['creamy', 'cooking', 'edible'],
         id     : 'cream',
         name   : ['Cream', '奶油'],
         plural : 'Cream',
-	
+
         num   : 10,
         price : 1265,
         size  : 'micro',
@@ -1241,12 +1241,12 @@ const Gacha = [
         id     : 'gacha',
         name   : ['Gacha', '扭蛋'],
         plural : 'Gacha',
-	
+
         num   : 1,
         price : 600,
         size  : 'medium',
         unit  : 'capsule',
-	
+
         info : [
             'A gacha capsule, you can get a random item from it',
             '一个扭蛋胶囊，里面有一个随机物品'
@@ -1262,12 +1262,12 @@ const Gacha = [
         id     : 'gacha_leef',
         name   : ['Leef Gacha', '叶子扭蛋'],
         plural : 'Leef Gacha',
-	
+
         num   : 1,
         price : 600,
         size  : 'medium',
         unit  : 'capsule',
-	
+
         info : [
             'A gacha capsule with leaf pattern, you can get a random item from it',
             '一个有着叶子图案的扭蛋胶囊。里面有一个随机物品'
@@ -1283,13 +1283,13 @@ const Gacha = [
         id     : 'gacha_magic',
         name   : ['Magic Gacha', '魔法扭蛋'],
         plural : 'Magic Gacha',
-	
+
         num   : 1,
         price : 600,
         size  : 'medium',
         unit  : 'capsule',
-		
-	
+
+
         info : [
             'A gacha capsule with magic pattern, you can get a random item from it',
             '一个有着魔法图案的扭蛋胶囊。里面有一个随机物品'
@@ -1305,12 +1305,12 @@ const Gacha = [
         id     : 'gacha_star',
         name   : ['Star Gacha', '星星扭蛋'],
         plural : 'Star Gacha',
-	
+
         num   : 1,
         price : 600,
         size  : 'medium',
         unit  : 'capsule',
-	
+
         info : [
             'A gacha capsule with leaf pattern, you can get a random item from it',
             '一个有着叶子图案的扭蛋胶囊。里面有一个随机物品'
@@ -1326,28 +1326,28 @@ const Gacha = [
         id     : 'gacha_opened',
         name   : ['Opened Gacha', '打开的扭蛋'],
         plural : 'Opened Gacha',
-	
+
         num   : 1,
         price : 600,
         size  : 'medium',
         unit  : 'capsule',
-	
+
         info : [
             'An opened gacha capsule, the item inside has been taken out',
             '一个被打开的扭蛋，里面的物品已经被取出'
         ]
     },
     {
-        tags   : ['gacha', 'rare','gachacap'],
+        tags   : ['gacha', 'rare', 'gachacap'],
         id     : 'goldgacha',
         name   : ['Gold Gacha', '黄金扭蛋'],
         plural : 'Gold Gacha',
-	
+
         num   : 1,
         price : 600,
         size  : 'medium',
         unit  : 'capsule',
-	
+
         info : [
             'A golden gacha capsule, you can get a random item from it',
             '一个金黄色的扭蛋胶囊。里面有一个随机物品'
@@ -1359,16 +1359,16 @@ const Gacha = [
 
     },
     {
-        tags   : ['gachaopened', 'rare','gachacap', 'craft'],
+        tags   : ['gachaopened', 'rare', 'gachacap', 'craft'],
         id     : 'goldgacha_opened',
         name   : ['Opened Golden Gacha', '打开的扭蛋'],
         plural : 'Opened Golden Gacha',
-	
+
         num   : 1,
         price : 600,
         size  : 'medium',
         unit  : 'capsule',
-	
+
         info : [
             'An opened golden gacha capsule, the item inside has been taken out',
             '一个被打开的黄金扭蛋，里面的物品已经被取出'
@@ -1385,11 +1385,11 @@ const GachaItems = [
         id     : 'angry_owl',
         name   : ['Angry Owl', '愤怒的猫头鹰'],
         plural : 'Angry Owl',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
-	
+
         info : [
             'A brown owl standing with crossed arms in anger. I have an idea, it seems to be saying.',
             '生气地叉着腰的棕色猫头鹰。“我有一个想法。”它似乎在讲话。'
@@ -1405,11 +1405,11 @@ const GachaItems = [
         id     : 'arctic_hare',
         name   : ['Arctic Hare', '北极兔'],
         plural : 'Arctic Hare',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
-	
+
         info : [
             "An Arctic hare. When crouched down, it's indistinguishable from an ordinary cute domestic rabbit, but when standing up, it reveals its long legs!",
             '是北极兔。趴下的时候和普通的可爱家兔没什么区别，站起来就会暴露大长腿！'
@@ -1425,11 +1425,11 @@ const GachaItems = [
         id     : 'dove',
         name   : ['Dove', '鸽子'],
         plural : 'Dove',
-	
+
         num   : 1,
         price : 600,
         size  : 'small',
-	
+
         info : [
             'A dove with grass growing on its head. It is said that the grass might be there to avoid conflicting with the image of another dove that eats stars.',
             '头上长草的鸽子。据说长草可能是为了不和另一只吃星星的鸽子形象冲突。'
@@ -1445,11 +1445,11 @@ const GachaItems = [
         id     : 'elephant_balloon',
         name   : ['Elephant Balloon', '红气球大象'],
         plural : 'Elephant Balloon',
-	
+
         num   : 1,
         price : 600,
         size  : 'small',
-	
+
         info : [
             "A blue elephant that will give you a red balloon. The balloon floats gently into the sky. This elephant, without tusks or long hair, firmly believes it's a mammoth, and for some reason, there's a small missing patch of fur on its belly.",
             '会送给你红色气球的蓝色大象。气球飘飘悠悠飞向天空。这只没有獠牙也没有长毛的大象坚定地认为自己是猛犸，而且肚子上的毛不知为何少了一小块。'
@@ -1465,11 +1465,11 @@ const GachaItems = [
         id     : 'fox',
         name   : ['Fox', '小狐狸'],
         plural : 'Fox',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
-	
+
         info : [
             'An ordinary little fox that has not yet delivered roses to anyone.',
             '普通的小狐狸。还没有给人送过玫瑰花。'
@@ -1485,11 +1485,11 @@ const GachaItems = [
         id     : 'foxdove',
         name   : ['Fox Dove', '狐狸和鸽子的剪影'],
         plural : 'Fox Dove',
-	
+
         num   : 1,
         price : 600,
         size  : 'small',
-	
+
         info : [
             'Silhouettes of a little fox wearing a moon headpiece and a dove with grass on its head snuggling together.',
             '佩戴月亮头饰的小狐狸和头上长草的鸽子依偎在一起的剪影。'
@@ -1505,11 +1505,11 @@ const GachaItems = [
         id     : 'foxmoon',
         name   : ['Fox Dove', '月亮狐狸'],
         plural : 'Fox Dove',
-	
+
         num   : 1,
         price : 600,
         size  : 'small',
-	
+
         info : [
             'A little fox wearing a moon headpiece. Sometimes you might see it with six tails. It must be an illusion.',
             '佩戴月亮头饰的小狐狸。有时候会看见它有六条尾巴。一定是错觉吧。'
@@ -1525,11 +1525,11 @@ const GachaItems = [
         id     : 'ir',
         name   : ['IR', 'IR'],
         plural : 'IR',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
-	
+
         info : [
             "An unknown creature with four legs. But it's very cute.",
             '不知道是什么的生物，有四条腿。不过很可爱。'
@@ -1545,11 +1545,11 @@ const GachaItems = [
         id     : 'rabbit_green',
         name   : ['Rabbit Green', '绿耳雪兔'],
         plural : 'Rabbit Green',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
-	
+
         info : [
             "According to ancient rumors, if you can see supernatural beings, creating a snow rabbit like this in winter might allow you to enter its body. Contrary to the paired appearances in promotional art with a fellow with pink ears, they don't actually get along well.",
             '古老的传闻说，如果你能看见妖怪，那么在冬天捏出这样一只雪兔，就有可能进入它体内。装饰宣传画上经常和粉耳朵的家伙成双成对出现，实则关系并不好。'
@@ -1565,11 +1565,11 @@ const GachaItems = [
         id     : 'rabbit_pink',
         name   : ['Rabbit Pink', '粉耳雪兔'],
         plural : 'Rabbit Pink',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
-	
+
         info : [
             "According to ancient rumors, if you can see supernatural beings, creating a snow rabbit like this in winter might allow you to enter its body. Contrary to the paired appearances in promotional art with a fellow with green ears, they don't actually get along well.",
             '古老的传闻说，如果你能看见妖怪，那么在冬天捏出这样一只雪兔，就有可能进入它体内。装饰宣传画上经常和绿耳朵的家伙成双成对出现，实则关系并不好。'
@@ -1585,11 +1585,11 @@ const GachaItems = [
         id     : 'rainbow_cat',
         name   : ['Rainbow Cat', '彩虹猫'],
         plural : 'Rainbow Cat',
-	
+
         num   : 1,
         price : 600,
         size  : 'small',
-	
+
         info : [
             'Nyanyanyanyanyanyanya! Mysterious background music automatically plays in your mind when you stare at it. You might think it used to be a cow cat.',
             'Nyanyanyanyanyanyanya! 盯着它的时候脑中会自动出现神秘的背景音乐。你觉得它以前可能是奶牛猫。'
@@ -1601,16 +1601,16 @@ const GachaItems = [
     },
     {
         type   : 'foods',
-        tags   : ['gacha',  'candy','collection'],
+        tags   : ['gacha', 'candy', 'collection'],
         id     : 'gachacandy',
         name   : ['Gacha Candy', '扭蛋糖'],
         plural : 'Gacha Candy',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
         unit  : 'piece',
-	
+
         info : [
             "The candy dropped from the Gacha machine, it's green.",
             '扭蛋机里扭出来的糖果，是绿色的。'
@@ -1626,12 +1626,12 @@ const GachaItems = [
         id     : 'gachacandy_blue',
         name   : ['Gacha Candy Blue', '蓝色扭蛋糖'],
         plural : 'Gacha Candy Blue',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
         unit  : 'piece',
-	
+
         info : [
             "The candy dropped from the Gacha machine, it's blue.",
             '扭蛋机里扭出来的糖果，是蓝色的。'
@@ -1643,16 +1643,16 @@ const GachaItems = [
     },
     {
         type   : 'foods',
-        tags   : ['gacha', 'candy','collection'],
+        tags   : ['gacha', 'candy', 'collection'],
         id     : 'gachacandy_orange',
         name   : ['Gacha Candy Orange', '橘色扭蛋糖'],
         plural : 'Gacha Candy Orange',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
         unit  : 'piece',
-	
+
         info : [
             "The candy dropped from the Gacha machine, it's orange.",
             '扭蛋机里扭出来的糖果，是橘色的。'
@@ -1668,12 +1668,12 @@ const GachaItems = [
         id     : 'gachacandy_pink',
         name   : ['Gacha Candy Pink', '粉色扭蛋糖'],
         plural : 'Gacha Candy Pink',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
         unit  : 'piece',
-	
+
         info : [
             "The candy dropped from the Gacha machine, it's pink.",
             '扭蛋机里扭出来的糖果，是粉色的。'
@@ -1685,16 +1685,16 @@ const GachaItems = [
     },
     {
         type   : 'foods',
-        tags   : ['gacha', 'candy','collection'],
+        tags   : ['gacha', 'candy', 'collection'],
         id     : 'gachacandy_purple',
         name   : ['Gacha Candy Purple', '紫色扭蛋糖'],
         plural : 'Gacha Candy Purple',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
         unit  : 'piece',
-	
+
         info : [
             "The candy dropped from the Gacha machine, it's purple.",
             '扭蛋机里扭出来的糖果，是紫色的。'
@@ -1706,16 +1706,16 @@ const GachaItems = [
     },
     {
         type   : 'foods',
-        tags   : ['gacha', 'candy','collection'],
+        tags   : ['gacha', 'candy', 'collection'],
         id     : 'gachacandy_red',
         name   : ['Gacha Candy Red', '红色扭蛋糖'],
         plural : 'Gacha Candy Red',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
         unit  : 'piece',
-	
+
         info : [
             "The candy dropped from the Gacha machine, it's red.",
             '扭蛋机里扭出来的糖果，是红色的。'
@@ -1731,12 +1731,12 @@ const GachaItems = [
         id     : 'gachacandy_yellow',
         name   : ['Gacha Candy Yellow', '黄色扭蛋糖'],
         plural : 'Gacha Candy Yellow',
-	
+
         num   : 1,
         price : 300,
         size  : 'small',
         unit  : 'piece',
-	
+
         info : [
             "The candy dropped from the Gacha machine, it's yellow.",
             '扭蛋机里扭出来的糖果，是黄色的。'
@@ -1825,7 +1825,7 @@ function getEquipType(tags) {
     else if (tags.includes('wallet')) {
         return 'wallet';
     }
-	
+
     return 'bag';
 }
 /**
@@ -1846,8 +1846,11 @@ function onEquip(type, pos) {
         }
     }
 
-    let name = clone(this.name);
-    name = P.toLower(name);
+    const name = clone(this.name);
+
+    if (name[0]) {
+        name[0] = P.toLower(name);
+    }
 
     const html = P.templet(sMsg.equipText[target].equip, name);
     iManager.onEquip(type, pos, target);
@@ -1884,244 +1887,244 @@ function onUnEquip() {
 
 const iContainers = [
     {
-        tags : ['equip','held'],
-  
+        tags : ['equip', 'held'],
+
         id     : 'plasticbag',
         name   : ['Plastic Bag', '塑料袋'],
         plural : 'Plastic bag',
-  
+
         info : [
-		  'A plastic bag that can hold things.',
-		  '一个稍微能装东西的塑料袋。'
+            'A plastic bag that can hold things.',
+            '一个稍微能装东西的塑料袋。'
         ],
-  
+
         num   : 1,
         price : 100,
         size  : 10,
         unit  : 'bag',
-  
+
         capacity : 3,
-		
+
         onEquip,
         onUnEquip
     },
     {
-        tags : ['equip','held'],
-  
+        tags : ['equip', 'held'],
+
         id     : 'trashbag',
         name   : ['Trash Bag', '垃圾袋'],
         plural : 'Trash bag',
-  
+
         info : [
-		  'A black plastic bag that can hold a lot of trash.',
-		  '一个能装大量垃圾的黑色塑料袋。'
+            'A black plastic bag that can hold a lot of trash.',
+            '一个能装大量垃圾的黑色塑料袋。'
         ],
-  
+
         num   : 1,
         price : 300,
         size  : 10,
         unit  : 'bag',
-  
+
         capacity : 6,
-		
+
         onEquip,
         onUnEquip
     },
     {
-        tags : ['equip','held'],
-  
+        tags : ['equip', 'held'],
+
         id     : 'seedbag',
         name   : ['Seeds Bag', '种子袋'],
         plural : 'Seeds Bags',
-  
+
         info : [
-		  'A bag to hold seeds.',
-		  '一个用来装种子的袋子。'
+            'A bag to hold seeds.',
+            '一个用来装种子的袋子。'
         ],
-  
+
         num   : 1,
         price : 200,
         size  : 10,
         unit  : 'bag',
-  
+
         capacity : 2,
-		
+
         onEquip,
         onUnEquip
     },
     {
-	  tags : ['equip','bag'],
+        tags : ['equip', 'bag'],
 
-	  id     : 'satchel',
-	  name   : ['Small Satchel', '小挎包'],
-	  plural : 'Small Satchels',
+        id     : 'satchel',
+        name   : ['Small Satchel', '小挎包'],
+        plural : 'Small Satchels',
 
-	  info : ['A small, cute satchel.', '一个小巧可爱的挎包。'],
+        info : ['A small, cute satchel.', '一个小巧可爱的挎包。'],
 
-	  num      : 1,
-	  price    : 4200,
-	  size     : 'big',
-	  capacity : 4,
+        num      : 1,
+        price    : 4200,
+        size     : 'big',
+        capacity : 4,
 
-	  
-	  diff : {
-            girl : { displayname : ['girlish', '女款'],  sp : 'girlish' },
-            cat  : { displayname : ['cat', '猫'],  sp : 'cat' }
-	  },
 
-	  onEquip,
-	  onUnEquip
+        diff : {
+            girl : { displayname : ['girlish', '女款'], sp : 'girlish' },
+            cat  : { displayname : ['cat', '猫'], sp : 'cat' }
+        },
+
+        onEquip,
+        onUnEquip
     },
-  
+
     {
-	  tags : ['equip','bag'],
+        tags : ['equip', 'bag'],
 
-	  id     : 'leathersatchel',
-	  name   : ['Leather Satchel', '皮包'],
-	  plural : 'Leather Satchels',
+        id     : 'leathersatchel',
+        name   : ['Leather Satchel', '皮包'],
+        plural : 'Leather Satchels',
 
-	  info : ['A stylish designed, leather satchel.', '一个时尚的皮包。'],
+        info : ['A stylish designed, leather satchel.', '一个时尚的皮包。'],
 
-	  num      : 1,
-	  price    : 6800,
-	  size     : 'big',
-	  capacity : 6,
-	  diff     : {
+        num      : 1,
+        price    : 6800,
+        size     : 'big',
+        capacity : 6,
+        diff     : {
             girl : { displayname : ['girlish', '女款'], sp : 'girlish' }
 
-	  },
+        },
 
-	  onEquip,
-	  onUnEquip
+        onEquip,
+        onUnEquip
     },
-  
+
     {
-	  tags : ['equip','bag'],
+        tags : ['equip', 'bag'],
 
-	  id     : 'schoolbag',
-	  name   : ['School Bag', '书包'],
-	  plural : 'School bag',
+        id     : 'schoolbag',
+        name   : ['School Bag', '书包'],
+        plural : 'School bag',
 
-	  info : ['A common school bag used by students.', '学生常用的书包。'],
+        info : ['A common school bag used by students.', '学生常用的书包。'],
 
-	  num      : 1,
-	  price    : 9680,
-	  size     : 'big',
-	  capacity : 8,
-	  diff     : {
+        num      : 1,
+        price    : 9680,
+        size     : 'big',
+        capacity : 8,
+        diff     : {
             black : { displayname : ['black', '黑色'] },
-            pink  : { displayname : ['pink', '粉色'],  sp : 'girlish' }
-	  },
-	  
-	  onEquip,
-	  onUnEquip
+            pink  : { displayname : ['pink', '粉色'], sp : 'girlish' }
+        },
+
+        onEquip,
+        onUnEquip
     },
-  
+
     {
-	  tags : ['equip','bag'],
+        tags : ['equip', 'bag'],
 
-	  id     : 'backpack',
-	  name   : ['Backpack', '大背包'],
-	  plural : 'Backpacks',
+        id     : 'backpack',
+        name   : ['Backpack', '大背包'],
+        plural : 'Backpacks',
 
-	  info : [
+        info : [
             'A large backpack with plenty of capacity.',
             '一个有着充足容量的大背包。'
-	  ],
+        ],
 
-	  num   : 1,
-	  price : 13620,
-	  size  : 'big',
+        num   : 1,
+        price : 13620,
+        size  : 'big',
 
-	  capacity : 12,
-	  diff     : {
-            girl : { displayname : ['girlish', '女款'],  sp : 'girlish' }
-	  },
-	  
-	  onEquip,
-	  onUnEquip
+        capacity : 12,
+        diff     : {
+            girl : { displayname : ['girlish', '女款'], sp : 'girlish' }
+        },
+
+        onEquip,
+        onUnEquip
     },
     {
-	  tags : ['equip','bag'],
+        tags : ['equip', 'bag'],
 
-	  id     : 'hikingpack',
-	  name   : ['Hiking Backpack', '登山包'],
-	  plural : 'Hiking Backpacks',
+        id     : 'hikingpack',
+        name   : ['Hiking Backpack', '登山包'],
+        plural : 'Hiking Backpacks',
 
-	  info : [
+        info : [
             'Extra large capacity backpack for hikinA collapsible cartg.',
             '一个有着充足容量的大背包。'
-	  ],
-	  	  
-	  num      : 1,
-	  price    : 28420,
-	  size     : 'big',
-	  capacity : 20,
-	  
-	  onEquip,
-	  onUnEquip
+        ],
+
+        num      : 1,
+        price    : 28420,
+        size     : 'big',
+        capacity : 20,
+
+        onEquip,
+        onUnEquip
     },
-  
+
     {
-	  tags : ['equip','cart'],
+        tags : ['equip', 'cart'],
 
-	  id     : 'cart',
-	  name   : ['Simple Cart', '简易手推车'],
-	  plural : 'Simple Carts',
+        id     : 'cart',
+        name   : ['Simple Cart', '简易手推车'],
+        plural : 'Simple Carts',
 
-	  num   : 1,
-	  price : 3200,
-	  size  : 'big',
+        num   : 1,
+        price : 3200,
+        size  : 'big',
 
-	  info     : ['A simple, collapsible cart', '一个简易的，可折叠的手推车。'],
-	  capacity : 36,
-	  
-	  onEquip,
-	  onUnEquip
+        info     : ['A simple, collapsible cart', '一个简易的，可折叠的手推车。'],
+        capacity : 36,
+
+        onEquip,
+        onUnEquip
     },
-  
+
     {
-        tags : ['equip','cart'],
-  
+        tags : ['equip', 'cart'],
+
         id     : 'bucket',
         name   : ['Rolling Bucket', '便携垃圾桶'],
         plural : 'Rolling Buckets',
-  
+
         num   : 1,
         price : 27620,
         size  : 'big',
-  
+
         info     : ['A smart, stylish rolling buckets.', '一个智能的，时尚的便携式垃圾桶。'],
         capacity : 25,
         diff     : {
             blue   : { displayname : ['blue', '蓝色'] },
             yellow : { displayname : ['yellow', '黄色'] }
         },
-		
+
         onEquip,
         onUnEquip
     },
 
     {
-	  tags : ['equip','cart'],
+        tags : ['equip', 'cart'],
 
-	  id     : 'xlcart',
-	  name   : ['Outdoor Cart', '可折叠户外手推车'],
-	  plural : 'Outdoor Carts',
+        id     : 'xlcart',
+        name   : ['Outdoor Cart', '可折叠户外手推车'],
+        plural : 'Outdoor Carts',
 
-	  num   : 1,
-	  price : 45960,
-	  size  : 'big',
+        num   : 1,
+        price : 45960,
+        size  : 'big',
 
-	  info     : ['A normal, collapsible cart', '一个普通的，可折叠的手推车。'],
-	  capacity : 50,
-	  
-	  onEquip,
-	  onUnEquip
+        info     : ['A normal, collapsible cart', '一个普通的，可折叠的手推车。'],
+        capacity : 50,
+
+        onEquip,
+        onUnEquip
     },
 
     {
-        tags : ['equip','wallet'],
+        tags : ['equip', 'wallet'],
 
         id     : 'coinpouch',
         name   : ['Coin Pouch', '零钱袋'],
@@ -2137,13 +2140,13 @@ const iContainers = [
         ],
 
         capacity : 10000,
-		
+
         onEquip,
         onUnEquip
     },
 
     {
-        tags : ['equip','wallet'],
+        tags : ['equip', 'wallet'],
 
         id     : 'pouch',
         name   : ['Pouch', '荷包'],
@@ -2167,7 +2170,7 @@ const iContainers = [
             purple : { displayname : ['purple', '紫色'] },
             yellow : { displayname : ['yellow', '黄色'] }
         },
-		
+
         onEquip,
         onUnEquip
     },
@@ -2189,7 +2192,7 @@ const iContainers = [
         ],
 
         capacity : 500000,
-		
+
         onEquip,
         onUnEquip
     },
@@ -2211,12 +2214,12 @@ const iContainers = [
         ],
 
         capacity : 2500000,
-		
+
         onEquip,
         onUnEquip
     }
 ];
- 
+
 Items.addItems(iContainers, 'container');
 
 // 普通成瘾品，烟酒类

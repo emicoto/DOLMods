@@ -219,16 +219,16 @@ const iManager = {
 	 * @returns {string}
 	 */
     onGetItems(stacks, situation) {
-        const itemStacks = this.format(stacks, situation);
+        const itemStacks = this.format(stacks);
         let html = '';
 
         if (situation == 'unequip') {
-            return this.addItems(items);
+            return this.addItems(itemStacks);
         }
 
         // 获取物品的提示
         if (situation == 'getone') {
-            html = P.templet(sMsg.getItems, itemStacks[0].name, num);
+            html = P.templet(sMsg.getItems, itemStacks[0].name, itemStacks[0].count);
         }
         else if (situation == 'getmulti') {
             stacks.forEach(item => {
@@ -242,6 +242,8 @@ const iManager = {
         }
 
         const overflow = this.addItems(itemStacks);
+        console.log('on get items:', itemStacks, overflow);
+
         // check if overflow
         if (overflow.length > 0) {
             overflow.forEach(stack => {
@@ -264,6 +266,7 @@ const iManager = {
                 overflow = result.overflow;
             }
             else {
+                overflow = [];
                 break;
             }
         }
@@ -466,6 +469,8 @@ const iManager = {
             html.push(this.transMsg(updateItems));
         }
 
+        console.log('on update Pockets:',updateItems, remainItems);
+
         // 如果有多余的物品，则根据情况判断是扔掉还是转移
         if (remainItems.length > 0) {
             html.push(this.sortOutEvent());
@@ -492,14 +497,14 @@ const iManager = {
         }
 
         // 如果所在地有储物柜，则转移到储物柜
-        if (hasLockers() && storage.check(stack) == true) {
+        if (F.hasLockers() && storage.check(stack) == true) {
             stack.index = ['storage_lockers' , storage.slots.length];
             storage.add(stack);
             return this.transMsg(stack);
         }
 
         // 如果所在地有藏物处，则转移到藏物处
-        const [type, fullname] = getHideout();
+        const [type, fullname] = F.getHideOut();
         storage = Pocket.get(fullname);
 
         if (storage.check(stack) == true) {
@@ -572,7 +577,7 @@ const iManager = {
     // use item from inventory
     useFromInv(type, pos, situation = 'use') {
         const pocket = Pocket.get(type);
-        const item = pocket.takeSelected(pos);
+        const item = pocket.take(pos);
         const data = Items.get(item.id);
 		
         if (!data) {
