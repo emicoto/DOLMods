@@ -230,6 +230,18 @@ iModExtraStatist
 )>>
 ```
 
+### 随机输出内容
+```HTML
+<<randomdata>>
+<<datas>>
+随机内容A
+<<datas>>
+随机内容B
+<<datas>>
+随机内容C
+<</randomdata>>
+```
+
 ## 添加 NPC
 参考[此处](https://github.com/emicoto/DOLMods/blob/52695d80a24e009b2882eab147a5fbf17ef19972/simple%20new%20content/newNPC.js)。
 
