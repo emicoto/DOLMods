@@ -85,7 +85,7 @@ class iStack {
     static merge = function (stacks) {
         const result = [];
         const map = {};
-        console.log('merge stacks:', stacks);
+
         stacks.forEach(stack => {
             if (!map[stack.uid]) {
                 map[stack.uid] = stack;
@@ -95,7 +95,8 @@ class iStack {
                 map[stack.uid].count += stack.count;
             }
         });
-        console.log('merge stacks result:', result);
+
+        // console.log('merge stacks result:', result);
         return result;
     };
 
@@ -127,19 +128,17 @@ class iStack {
         this.count = num;
 
         console.log('iStack:', obj);
+        for (const k in obj) {
+            if (k.has('count', 'stack', 'stock', 'shelf', 'shop')) continue;
+            this[k] = obj[k];
+        }
+
         if (obj?.diff) {
             this.uid = `${this.id}_${obj.diff}`;
         }
 
-        if (obj?.index) {
-            this.index = obj.index;
-        }
-        else {
+        if (!obj?.index && !this.index) {
             this.index = ['body_body', 0];
-        }
-
-        if (obj?.items) {
-            this.items = obj.items;
         }
     }
 

@@ -86,6 +86,11 @@ const iUtil = {
             // 根据bus返回
             return V.bus;
         }
+
+        if (V.location == 'farm' && V.passage.includes('Livestock')) {
+            return 'livestock';
+        }
+
         if (V.location == 'alley') {
             // 根据passage返回地点
             if (V.passage.includes('Commercial')) return 'commercial_alley';

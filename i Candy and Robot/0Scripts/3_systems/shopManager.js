@@ -144,7 +144,7 @@ const iShop = {
         return `${output}</div>`;
     },
 
-    shopcart(item) {
+    shopcart(item, shelf, index) {
         const data = Items.get(item.id);
         const img = P.itemImageResolve(item, data, 1);
         const name = lanSwitch(data.name);
@@ -153,7 +153,6 @@ const iShop = {
         console.log('print cart item:', item, item.stack, data.tags, data.num);
 		
         const unit = iData.itemUnit(data, item.stack, data.num);
-        const shelf = item.index[0];
         const price = item.price / 100 * (1 - V.iShop[shelf].discount);
 
         const html = `
@@ -178,7 +177,7 @@ const iShop = {
 				<div class="cart-itemcount">x${unit}</div>
 				<div class="cart-itemprice">
 					<span class="cart-price">total: ${price.toFixed(2)}£</span>
-					<<button ${lanSwitch('buy', '购买')}>><<run iShop.buyItem()>><</button>>
+					<<button ${lanSwitch('buy', '购买')}>><<run iShop.buyItem('${shelf}', '${index}')>><</button>>
 				</div>
 			</div>
 		</div>`;
@@ -212,7 +211,7 @@ const iShop = {
             V.iShop.selected = clone(item);
 
             V.iShop.selected.stack = 1;
-            V.iShop.selected.index = [shelf, index];
+            V.iShop.selected.shopshelf = [shelf, index];
 
             delete V.iShop.selected.stock;
             delete V.iShop.selected.count;
@@ -221,7 +220,7 @@ const iShop = {
             V.iShop.selected.stack += 1;
         }
 
-        const html = this.shopcart(V.iShop.selected);
+        const html = this.shopcart(V.iShop.selected, shelf, index);
         new Wikifier(null, `<<replace #shopcartbox>>${html}<</replace>>`);
     },
 
@@ -233,17 +232,28 @@ const iShop = {
         delete V.iShop.selected;
     },
 
-    buyItem() {
-        const selectItem = V.iShop.selected;
-        const [shelf, index] = selectItem.index;
-        const shopItem = V.iShop[shelf].stocks[index];
+    initItem() {
+        const selectItem = clone(V.iShop.selected);
 
         const data = Items.get(selectItem.id);
-        const getNum = data.num * selectItem.stack;
-        const totalPrice = shopItem.price * selectItem.stack * (1 - V.iShop[shelf].discount);
 
-        const stacks = iStack.set(selectItem.id, getNum, selectItem);
-        console.log('buy item check:', getNum, totalPrice, stacks[0].count);
+        selectItem.count = selectItem.stack * data.num;
+        return selectItem;
+    },
+
+    buyItem() {
+        // get items data
+        const selectItem = this.initItem();
+        const { id, count, stack, price, shopshelf } = selectItem;
+        const [shelf, index] = shopshelf;
+
+        const data = Items.get(id);
+        const totalPrice = price * stack * (1 - V.iShop[shelf].discount);
+
+        // init stacks
+        const stacks = iStack.set(id, count, selectItem);
+
+        if (iCandy.config.debug)console.log('buy item check:', count, totalPrice, stacks);
 
         let message = '';
 
@@ -260,26 +270,27 @@ const iShop = {
         }
 
         V.money -= totalPrice;
-        shopItem.stock -= selectItem.stack;
-        shopItem.count -= getNum;
+
+        const shopItem = V.iShop[shelf].stocks[index];
+        shopItem.stock -= stack;
+        shopItem.count -= count;
 
 
-        console.log('on buy items:', stacks, stacks.count);
         iManager.onGetItems(stacks, 'shop');
 
-        const unit1 = iData.batchUnitTxt(data, selectItem.stack);
-        const unit2 = iData.subUnitTxt(data, getNum);
+        const unit1 = iData.batchUnitTxt(data, stack);
+        const unit2 = iData.subUnitTxt(data, count);
 
         message = [
             // You bought 1 bottle of mineral water for 0.5£.
-            `You bought ${selectItem.stack}`
+            `You bought ${stack}`
 			// eslint-disable-next-line no-nested-ternary
 			+ `${unit1 ? ` ${unit1}` : unit2 ? `${unit2}` : ''}`
 			+ `${unit1 || unit2 ? ' of ' : ''}`
 			+ `${data.name[0]} for ${(totalPrice / 100).toFixed(2)}£.`,
 
             // 你购买了2盒糖果，总共花费了0.5£。
-            `你购买了${selectItem.stack}`
+            `你购买了${stack}`
 			// eslint-disable-next-line no-nested-ternary
 			+ `${unit1 ? ` ${unit1}` : unit2 ? `${unit2}` : ''}`
 			+ `${data.name[1]}`
@@ -288,6 +299,7 @@ const iShop = {
 
         // refresh cart and page
         this.clearCart();
+        iManager.updatePockets();
         Engine.play(V.passage);
 
         setTimeout(() => {

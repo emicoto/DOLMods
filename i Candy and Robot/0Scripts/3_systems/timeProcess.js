@@ -278,6 +278,11 @@ function iCombatHandle() {
     // 非白名单NPC跳过
     if (V.npc.length > 0 && !V.npc.has(...whitelistnpc)) return;
 
+    if (F.getLocation() == 'livestock' && random(100) > 10) {
+        R.combat.skip = true;
+        return;
+    }
+
     // 如果场景在学校，则看概率跳过
     if (V.location == 'school' && random(100) > 10) {
         R.combat.skip = true;
@@ -353,7 +358,7 @@ function iCombatHandle() {
                 continue;
             }
 
-            if (random(100) < 40 && R.combat.angel < 1) {
+            if (random(100) < 30 && R.combat.angel < 1 && (F.getLocation() !== 'livestock' || random(100) <= 1)) {
                 html += combatFeedMsg(npc, 'angelpowder_inject');
                 npc.feed++;
                 R.combat.angel++;
