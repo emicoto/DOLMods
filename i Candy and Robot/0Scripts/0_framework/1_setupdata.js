@@ -14,7 +14,8 @@ const iModAddictions = {
         quit      : 28,
         hours     : 0,
         process   : 0.2,
-        methods   : ['drink', '喝']
+        methods   : ['drink', '喝'],
+        recover   : 4
     },
 
     aphrod : {
@@ -25,7 +26,8 @@ const iModAddictions = {
         quit      : 28,
         hours     : 0,
         process   : 0.4,
-        methods   : ['take', '吸收']
+        methods   : ['take', '吸收'],
+        recover   : 5
     },
 
     nicotine : {
@@ -36,7 +38,8 @@ const iModAddictions = {
         quit      : 28,
         hours     : 0,
         process   : 0.3,
-        methods   : ['smoke', '吸']
+        methods   : ['smoke', '吸'],
+        recover   : 3
     },
 
     medicine : {
@@ -44,7 +47,8 @@ const iModAddictions = {
         maxOD     : 12,
         withdraw  : 72,
         quit      : 7,
-        hours     : 0
+        hours     : 0,
+        recover   : 3.5
     },
 
     riskyDrugs : {
@@ -52,7 +56,8 @@ const iModAddictions = {
         maxOD     : 3,
         withdraw  : 24,
         quit      : 30,
-        hours     : 1
+        hours     : 1,
+        recover   : 2
     },
 
     superDrugs : {
@@ -60,7 +65,8 @@ const iModAddictions = {
         maxOD     : 1,
         withdraw  : 12,
         quit      : 48,
-        hours     : 2
+        hours     : 2,
+        recover   : 1
     }
 };
 

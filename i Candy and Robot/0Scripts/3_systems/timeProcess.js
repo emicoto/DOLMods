@@ -46,19 +46,20 @@ const TimeHandle = {
         html : {}
     },
 
+    get(flag) {
+        return this.event.flag[flag];
+    },
+
     set(flag, html) {
         if (this.event.flag[flag] == undefined) {
             this.event.flag[flag] = {
-                on    : 0,
+                on    : 1,
                 times : 0
             };
-
             this.event.html[flag] = html;
         }
         else {
             this.event.flag[flag].on = 1;
-            this.event.flag[flag].times++;
-
             this.event.html[flag] = html;
         }
     },
@@ -74,6 +75,12 @@ const TimeHandle = {
         this.event.html[flag] = '';
     },
 
+    clearAll() {
+        for (const [key] of Object.entries(this.event.flag)) {
+            this.clear(key);
+        }
+    },
+
     onSave() {
         return this.event;
     },
@@ -85,12 +92,37 @@ const TimeHandle = {
     }
 };
 
+Save.onSave.add(() => {
+    V.timeRec = TimeHandle.onSave();
+});
+
+Save.onLoad.add(data => {
+    const saves = data.state.history;
+    const save = saves[saves.length - 1].variables;
+
+    console.log('timeRec:', save.timeRec);
+    console.log('saves:', data, save);
+
+    if (save.timeRec) {
+        timeRec.onLoad(save.timeRec);
+        delete save.timeRec;
+    }
+    else {
+        timeRec.clearAll();
+    }
+
+    return data;
+});
+
 Time.pass = function (sec) {
     const prevDate = new DateTime(V.startDate + V.timeStamp);
-    const fragment = oldPass(sec);
+    const fragment = oldPass(sec) || '';
     const currentDate = Time.date;
 
-    console.log('fragment:', fragment);
+    if (!T.addMsg) {
+        T.addMsg = '';
+    }
+
     console.log('passed time:',sec);
     console.log('prevDate:',prevDate);
     console.log('currentDate:', currentDate);
@@ -98,7 +130,7 @@ Time.pass = function (sec) {
     TimeHandle.prevDate = prevDate;
     TimeHandle.currentDate = currentDate;
 	
-    fragment.append(iTimeHandle(sec));
+    iTimeHandle(sec);
 	
     if (V.combat == 1) {
         iCombatHandle();
@@ -107,31 +139,17 @@ Time.pass = function (sec) {
 
     V.addMsg += iManager.updatePockets();
 
-    if (fragment !== undefined) {
-        return fragment;
-    }
-    return '';
+    return fragment;
 };
 
 function iTimeHandle(passedSec) {
     const { min, day, hour, month, year, weekday } = TimeHandle.passTime(passedSec);
+
     console.log('time handle sec:', passedSec, 'min:', min, 'day:', day, 'hour:', hour, 'month:', month, 'year:', year, 'weekday:', weekday);
 
-    if (!T.addMsg) {
-        T.addMsg = '';
-    }
-    console.log('before sleepcheck:', V.sleepHoursTotal, V.sleephour, T.sleepinterrupt, V.sleepStat);
-    /* if(V.sleepHoursTotal > 0){
-        T.sleepinterrupt = 1
-        V.sleephour = -1
-        wikifier('exit')
-    } */
-
-    const html = [];
-
-
-    if (V.sleepHoursTotal > 0) {
-        sleepHandle();
+    if (V.sleephour > 0 || T.livestock_sleep > 0) {
+        console.log('before sleepHandle:', V.sleephour, T.livestock_sleep);
+        sleepHandle('before');
     }
 
     // 时间没有变化，跳过
@@ -161,6 +179,14 @@ function iTimeHandle(passedSec) {
 
     timeEffectHandle();  // 统一处理时间效果的事件与文本
 
+    if (V.sleephour > 0 || T.livestock_sleep > 0) {
+        sleepHandle('after');
+    }
+    else {
+        timeRec.clearAll();
+        delete V.sleeploop;
+    }
+
     return '';
 }
 
@@ -187,12 +213,19 @@ function minuteProcess(sec, min) {
 
     // 获得口渴值，口渴值受到疲劳的影响
     console.log('hunger and thirst process', sec, min);
-    if (sec / 60 > min) {
+
+    if (sec / 60 >= min) {
         min = Math.floor(sec / 60 + 0.5);
     }
 	
 
-    const mult = 1 + V.tiredness / C.tiredness.max;
+    let mult = 1 + V.tiredness / C.tiredness.max;
+
+    // 如果在雷米农场，饥饿值的增长速度大减
+    if (F.getLocation() == 'livestock') {
+        mult = 0.2;
+    }
+
     V.thirst = Math.clamp((V.thirst + Number(min) * mult).fix(2), 0, C.thirst.max);
     // 获得饥饿值, 饥饿值受到疲劳的影响
     V.hunger = Math.clamp((V.hunger + Number(min) * mult).fix(2), 0, C.hunger.max);
@@ -213,16 +246,34 @@ function hourProcess(sec, hour) {
     // 其他每小时处理
     //-------------------------------------------------------------
 
+    let mult = 50;
+
+    if (F.getLocation() == 'livestock') {
+        mult = 30;
+    }
+
+    // 睡眠时压力增长减缓
+    if (V.sleephour > 0) {
+        mult *= 0.5;
+    }
+
     // 当饥饿值过高时，获得通知
-    if (V.hunger >= C.hunger.max * 0.8) {
-        wikifier('stress', 8, 60);
-        V.addMsg += `${lanSwitch(sMsg.stateEffects.hungry)}<<gstress>><br>`;
+    if (V.hunger >= C.hunger.max * 0.9) {
+        wikifier('stress', 8, mult);
+        timeRec.set('hungerstress', `${lanSwitch(sMsg.stateEffects.hungry)}<<gstress>><br>`);
     }
 
     // 当饥渴值过高时，获得通知
-    if (V.thirst >= C.thirst.max * 0.8) {
-        wikifier('stress', 8, 60);
-        V.addMsg += `${lanSwitch(sMsg.stateEffects.thirst)}<<gstress>><br>`;
+    if (V.thirst >= C.thirst.max * 0.9) {
+        wikifier('stress', 8, mult);
+        timeRec.set('thirststress', `${lanSwitch(sMsg.stateEffects.thirst)}<<gstress>><br>`);
+    }
+
+    // 当过度饥饿或过度口渴时，从睡眠中醒来。如果可能的话。
+    if (V.hunger >= C.hunger.max * 0.95 || V.thirst >= C.thirst.max * 0.95) {
+        if (T.sleepHoursTotal > 0) {
+            timeRec.set('sleepinterrupt', '');
+        }
     }
 
     // 随机减少商店库存，营造商店销售的假象
@@ -284,7 +335,7 @@ function dayProcess(sec, day, weekday) {
     }
 
     // 商店上库存不足10的物品填充至50
-    for (const [key, shelf] of Object.entries(V.iShop)) {
+    for (const [, shelf] of Object.entries(V.iShop)) {
         shelf.stocks.forEach(item => {
             const data = Items.get(item.id);
             if (item.stock <= 10) {
@@ -310,11 +361,57 @@ function weekProcess(sec, day, weekday) {
 }
 
 
+function sleepHandle(mode) {
+    if (!V.sleeploop) {
+        V.sleeploop = 1;
+    }
+    
+    if (mode == 'before') {
+        V.sleeploop++ ;
+        return;
+    }
+
+    const interrupt = timeRec.get('sleepinterrupt');
+    if (interrupt > 1) {
+        wikifier('exit');
+    }
+}
+
+function timeEffectHandle() {
+    const html = [];
+    const { event } = TimeHandle;
+
+    console.log('time effect handle:', clone(event));
+
+    for (const [key, value] of Object.entries(event.flag)) {
+        if (value.time > 1 && V.sleeploop > 0) {
+            timeRec.unset(key);
+            continue;
+        }
+
+        if (value.on == 1) {
+            html.push(event.html[key]);
+            value.times++;
+            timeRec.unset(key);
+        }
+    }
+
+    if (html.length > 0) {
+        console.log('time effect handle html:', html);
+        V.addMsg += `${html.join('')}<br>`;
+    }
+}
+
 Object.defineProperties(window.iCandy, {
     timeRec       : { value : TimeHandle, writable : false },
     timeHandle    : { value : iTimeHandle, writable : false },
     minuteProcess : { value : minuteProcess, writable : false },
     hourProcess   : { value : hourProcess, writable : false },
-    dayProcess    : { value : dayProcess, writable : false }
+    dayProcess    : { value : dayProcess, writable : false },
+    weekProcess   : { value : weekProcess, writable : false },
+    sleepHandle   : { value : sleepHandle, writable : false }
 });
 
+Object.defineProperties(window, {
+    timeRec : { value : TimeHandle, writable : false }
+});

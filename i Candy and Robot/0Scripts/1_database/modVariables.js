@@ -214,12 +214,12 @@ for (const [Id, iData] of Object.entries(Items.data)) {
 }
 
 C.hunger = {
-    max : 2000,
+    max : 3000,
     min : 0
 };
 
 C.thirst = {
-    max : 2000,
+    max : 3000,
     min : 0
 };
 

@@ -3,7 +3,7 @@ simpleFrameworks.addto('iModReady','iCandyUpdate', 'iCandyReady');
 simpleFrameworks.addto('iModDone', 'iCandyDone');
 
 simpleFrameworks.addto('ModMenuBig', 'showItemsButton');
-simpleFrameworks.addto('ModStatusBar', 'hungerBar', 'thirstyBar');
+simpleFrameworks.addto('ModStatusBar', 'iCandyStatusBar');
 
 simpleFrameworks.addto('ModCaptionDescription', 'captionPhone');
 simpleFrameworks.addto('ModCaptionAfterDescription', 'captionDrugs');

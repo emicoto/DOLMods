@@ -20,7 +20,6 @@ const DrugsProcess = {
     minuteProcess(sec) {
         const drugStats = R.drugStates.drugs;
         const drugFlags = R.drugFlags.drugs;
-        const html = [];
 	
         for (const [drug, stats] of Object.entries(drugStats)) {
             // 获取药物的信息
@@ -38,10 +37,10 @@ const DrugsProcess = {
 	
                 // 运行药物效果并获得通知
                 if (typeof drugItem.onHigh == 'function') {
-                    timeRec(`drug_onhigh_${drug}`, drugItem.onHigh(sec / 60));
+                    timeRec.set(`drug_onhigh_${drug}`, drugItem.onHigh(sec / 60));
                 }
                 else if (drugMsg[drug].onHigh) {
-                    timeRec(`drug_onhigh_${drug}`, lanSwitch(drugMsg[drug].onHigh));
+                    timeRec.set(`drug_onhigh_${drug}`, lanSwitch(drugMsg[drug].onHigh));
                 }
             }
             else {
@@ -56,21 +55,18 @@ const DrugsProcess = {
 	
                     // 如果药物有清醒效果，运行清醒效果并获得通知
                     if (typeof drugItem.onWake == 'function') {
-                        html.push(`${drugItem.onWake()}`);
+                        timeRec.set(`drug_onwake_${drug}`, `${drugItem.onWake()}`);
                     }
                     else if (drugMsg[drug].onWake) {
-                        html.push(`${lanSwitch(drugMsg[drug].onWake)}`);
+                        timeRec.set(`drug_onwake_${drug}`, `${lanSwitch(drugMsg[drug].onWake)}`);
                     }
                 }
             }
         }
-
-        return html;
     },
     hourProcess(type) {
         const itemStats = type == 'general' ? R.drugStates.general : R.drugStates.drugs;
         const itemFlags = type == 'general' ? R.drugFlags.general : R.drugFlags.drugs;
-        const html = [];
 
         for (const [item, stats] of Object.entries(itemStats)) {
             // 获取药物的信息
@@ -92,25 +88,23 @@ const DrugsProcess = {
             const withdrawTimer = Math.floor((V.timeStamp - lastTime) / 3600);
 	
             // 戒断时间大于戒断反应时间的话，运行戒断效果并获得通知
-            if (stats.lastTime > 0 && withdrawTimer >= withdraw) {
+            if (stats.lastTime > 0 && withdrawTimer >= withdraw && stats.withdraw == 0) {
                 // 如果设置了function，运行function
                 if (typeof data.onWithdraw == 'function') {
-                    html.push(`${data.onWithdraw()}`);
+                    timeRec.set(`drug_onwithdraw_${item}`, data.onWithdraw());
                 }
                 else if (drugMsg[item]?.onWithdraw) {
-                    html.push(`${lanSwitch(drugMsg[item].onWithdraw)}`);
+                    timeRec.set(`drug_onwithdraw_${item}`, lanSwitch(drugMsg[item].onWithdraw));
                 }
                 // 没有则运行默认的戒断效果
                 else {
                     const name = type == 'general' ? item : data.name;
-                    html.push(`${generalWithdraw(name)}`);
+                    timeRec.set(`drug_onwithdraw_${item}`, generalWithdraw(name));
                 }
                 // 设置戒断状态
                 stats.withdraw = 1;
             }
         }
-
-        return html;
     },
     dayProcess(type) {
         const itemStats = type == 'general' ? R.drugStates.general : R.drugStates.drugs;
@@ -158,7 +152,7 @@ const DrugsProcess = {
             }
 
             // 超量值也算是一种药效残余值，每日自然恢复3点，但如果当日有嗑过药恢复数就减少。
-            const recover = type == 'general' ? 3 : getDrugsConfig(tags, 'recover');
+            const recover = type == 'general' ? data.recover : getDrugsConfig(tags, 'recover');
             if (stats.taken <= threshold) {
                 stats.overdose = Math.max(stats.overdose - (stats.taken > 0 ? recover / 2 : recover), 0);
             }
@@ -194,10 +188,10 @@ const DrugsProcess = {
 
             if (flag.daily == 1) {
                 if (typeof data.onDay == 'function') {
-                    html.push(`${data.onDay()}`);
+                    html.push(data.onDay());
                 }
                 else if (drugMsg[item]?.onDay) {
-                    html.push(`${lanSwitch(drugMsg[item].onDay)}`);
+                    html.push(lanSwitch(drugMsg[item].onDay));
                 }
                 else {
 					
@@ -206,11 +200,11 @@ const DrugsProcess = {
             }
 
             if (flag.addiction == 1) {
-                html.push(`${this.addictionEvent(item)}`);
+                html.push(this.addictionEvent(item));
 
                 // 如果设置了专用事件，在通知后运行专用事件
                 if (typeof data.addictionEvent == 'function') {
-                    html.push(`${data.addictionEvent()}`);
+                    html.push(data.addictionEvent());
                 }
                 flag.addiction = 0;
             }
@@ -221,13 +215,13 @@ const DrugsProcess = {
 
                 // 如果设置了专用事件，在通知后运行专用事件
                 if (typeof data.quitEvent == 'function') {
-                    html.push(`${data.quitEvent()}`);
+                    html.push(data.quitEvent());
                 }
                 flag.quit = 0;
             }
         }
 
-        return html;
+        if (html.length > 0) V.addMsg += html.join('<br>');
     },
 
     addictionEvent(item) {
@@ -237,19 +231,19 @@ const DrugsProcess = {
             '你已经对{0}彻底上瘾了，你需要持续{1}{0}来维持正常的生活。如果{2}小时内没有{1}{0}，你将会出现戒断症状。'
         ];
         if (general.includes(item)) {
-            const word = lanSwitch(setup.addictions[item].name);
+            const word = setup.addictions[item].name;
             const hours = setup.addictions[item].withdraw;
-            const methods = lanSwitch(setup.addictions[item].methods);
+            const methods = setup.addictions[item].methods;
 	
-            return `${P.templet(lanSwitch(template), word[item], methods[item], hours)}<br>`;
+            return P.templet(template, word, methods, hours);
         }
 		
         const data = Items.get(item);
-        const word = lanSwitch(data.name);
+        const word = data.name;
         const hours = data.withdraw;
         const methods = iData.useMethods(data.type, data.tags);
 	
-        return `${P.templet(lanSwitch(template), word, lanSwitch(methods), hours)}<br>`;
+        return P.templet(template, word, methods, hours);
     },
 
     QuitEvent(item) {
@@ -260,13 +254,13 @@ const DrugsProcess = {
         ];
 	
         if (general.includes(item)) {
-            const word = lanSwitch(setup.addictions[item].name);
-            return `${P.templet(lanSwitch(template), word[item])}<br>`;
+            const word = setup.addictions[item].name;
+            return P.templet(template, word);
         }
 		
         const data = Items.get(item);
-        const word = lanSwitch(data.name);
-        return `${P.templet(lanSwitch(template), word)}<br>`;
+        const word = data.name;
+        return P.templet(template, word);
     }
 };
 

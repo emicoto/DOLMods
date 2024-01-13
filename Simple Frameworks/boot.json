@@ -1,10 +1,10 @@
 {
   "name": "Simple Frameworks",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "modPacker": {
     "modVersionJs": {
       "file": "lib/simplewidget.js",
-      "regex": "^(let frameworkversion =)(.*)"
+      "regex": "^(const frameworkversion =)(.*)"
     }
   },
   "scriptFileList_inject_early": [

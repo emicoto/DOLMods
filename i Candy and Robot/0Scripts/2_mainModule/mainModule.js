@@ -58,6 +58,34 @@ function destinationeventend() {
     return '<<harvesteventend>><br><br>';
 }
 
+function specialSleep() {
+    V.sleephour = 7;
+
+    if (F.getLocation() == 'livestock') {
+        if (Time.hour > 20) {
+            V.sleephour = 23 - Time.hour + 6;
+        }
+        else if (Time.hour < 6) {
+            V.sleephour = 6 - Time.hour;
+        }
+    }
+
+    const hours = V.sleephour;
+
+    for (let i = 0; i < hours; i++) {
+        wikifier('pass', 1, 'hour');
+        V.sleephour--;
+        if (V.sleeptrouble == 1 && V.controlled == 0) {
+            V.tiredness -= 200;
+        }
+        else {
+            V.tiredness -= 250;
+        }
+        
+        V.sleepStat++;
+    }
+}
+
 function iCandyInit() {
     console.log('on iCandyInit');
 
@@ -88,13 +116,22 @@ function iCandyInit() {
         Macro.delete('destinationeventend');
         DefineMacroS('destinationeventend', destinationeventend);
     }
+
+    if (Macro.has('sewerssleep')) {
+        Macro.delete('sewerssleep');
+        DefineMacroS('sewerssleep', specialSleep);
+    }
+
+    if (Macro.has('livestock_sleep')) {
+        Macro.delete('livestock_sleep');
+        DefineMacroS('livestock_sleep', specialSleep);
+    }
 }
 DefineMacroS('iCandyInit', iCandyInit);
 
 
 function iCandyOldInit() {
     console.log('on iCandyOldInit');
-
     for (const i in iModVariables) {
         V[i] = clone(iModVariables[i]);
     }

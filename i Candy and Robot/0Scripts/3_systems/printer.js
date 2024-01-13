@@ -76,7 +76,7 @@ const htmlPrinter = {
         // check if string is valid
         const isValid = function (str) {
             if (String(str) == '[object Object]' && (str.EN || str.CN)) return true;
-            return str && (typeof str === 'string' || Array.isArray(str)) && str.length > 0;
+            return typeof str === 'string' || Array.isArray(str);
         };
 
         const isLan = function (str) {
@@ -229,7 +229,7 @@ const htmlPrinter = {
 					<</link>>`;
                 }
                 else if (!data.require && (data.effects.length > 0 || typeof data.onUse == 'function')) {
-					 _html += `<<link "${method.toUpperFirst()()}" "Actions UseItems">>
+					 _html += `<<link "${method.toUpperFirst()}" "Actions UseItems">>
 					 	<<set $tvar.useItem to ["${slot}", ${i}]>>
 						<<set $tvar.img to "${img}">>
 						<<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>

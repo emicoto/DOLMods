@@ -69,7 +69,7 @@ function iCombatHandle() {
     // 非白名单NPC跳过
     if (V.npc.length > 0 && !V.npc.has(...whitelistnpc)) return;
 
-    if (F.getLocation() == 'livestock' && random(100) > 10) {
+    if (F.getLocation() == 'livestock' && random(100) > 30) {
         R.combat.skip = true;
         return;
     }
@@ -149,7 +149,7 @@ function iCombatHandle() {
                 continue;
             }
 
-            if (random(100) < 30 && R.combat.angel < 1 && (F.getLocation() !== 'livestock' || random(100) <= 1)) {
+            if (random(100) < 30 && R.combat.angel < 1 && (F.getLocation() !== 'livestock' || random(100) < 6)) {
                 html += combatFeedMsg(npc, 'angelpowder_inject');
                 npc.feed++;
                 R.combat.angel++;

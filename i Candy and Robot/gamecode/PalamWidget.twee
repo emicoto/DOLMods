@@ -35,19 +35,19 @@
 
 <<widget "lthirst">>
 	<<if $statdisable is "f">> |
-		<span class="green">- <<lanSwitch 'Thirst' '口渴'>></span>
+		<span class="teal">- <<lanSwitch 'Thirst' '口渴'>></span>
 	<</if>>
 <</widget>>
 
 <<widget "llthirst">>
 	<<if $statdisable is "f">> |
-		<span class="green">- - <<lanSwitch 'Thirst' '口渴'>></span>
+		<span class="teal">- - <<lanSwitch 'Thirst' '口渴'>></span>
 	<</if>>
 <</widget>>
 
 <<widget "lllthirst">>
 	<<if $statdisable is "f">> |
-		<span class="green">- - - <<lanSwitch 'Thirst' '口渴'>></span>
+		<span class="teal">- - - <<lanSwitch 'Thirst' '口渴'>></span>
 	<</if>>
 <</widget>>
 
@@ -115,6 +115,11 @@
 			<<set $lactation_pressure += R.trait.naturalLactation*120>>
 		<</if>>
 	<</if>>
+<</widget>>
+
+<<widget "iCandyStatusBar">>
+	<div id='hungerbar'><<hungerBar>></div>
+	<div id='thirstbar'><<thirstyBar>></div>
 <</widget>>
 
 <<widget "hungerBar">>

@@ -201,6 +201,7 @@ iModExtraStatist
 <<link _link $passage>><</link>>
 ```
 目前支持的常用文本请参见[此处](https://github.com/emicoto/DOLMods/blob/52695d80a24e009b2882eab147a5fbf17ef19972/Simple%20Frameworks/scripts/simpleMacros.js#L1)的 `setup.lang`。
+
 #### 编写多语言内容
 ```HTML
 <<lanswitch "English" "中文">>
@@ -209,7 +210,7 @@ iModExtraStatist
 ### 根据性别输出不同内容
 ```HTML
 <<print sexSwitch(
-  "NPC内部名字，缺省时默认为pc",
+  "NPC内部名字，缺省时默认为pc，输入0则分配为当前路人",
   "若男性输出的内容",
   "若女性输出的内容",
 )>>
@@ -217,7 +218,7 @@ iModExtraStatist
 
 ### 根据NPC性别输出“男孩”或“女孩”
 ```HTML
-<<nnpcboy "NPC内部名字">>
+<<nnpcboy "NPC内部名字，输入0则分配为当前路人">>
 ```
 如果是英文，需要首字母大写，则使用 `nnpcBoy`。
 
@@ -242,14 +243,98 @@ iModExtraStatist
 <</randomdata>>
 ```
 
-## 添加 NPC
+如果在randomdata之后输入rate，就可设置概率值来随机你的内容。
+
+datas后的数值可以是：总值相加为100的方式从大到小排。
+
+也可以是：数值按优先值的方式来填，数字越大的概率越高。
+
+不管如何设置，内部都是根据 数值总值 / 随机数， 以占比值来进行对比抽选的。
+
+```HTML
+<<randomdata rate>>
+<<datas 80>>
+大约有80%概率会显示这段内容
+在没有设置默认文本时
+最大概率的文本将成为默认文本
+<<datas 60>>
+大约有60%概率会显示这段内容
+<<datas 40>>
+大约有40%概率会显示这段内容
+<<datas>>
+不输入数字则作为默认文本
+<</randomdata>>
+```
+
+## 添加 NPC 与 特征
 参考[此处](https://github.com/emicoto/DOLMods/blob/52695d80a24e009b2882eab147a5fbf17ef19972/simple%20new%20content/newNPC.js)。
+
+## 添加纹身
+与原版添加纹身的写法基本一致，但可以省略不需要进行设置的变量。
+
+没有进行设置的变量则会设置为默认值。
+
+通过框架添加的纹身将会自动排序添加进游戏系统中。
+
+```Javascript
+const myNewTatoos = [
+    {
+        key     : 'fifty_whore',  // 纹身ID， 必须是英文字母
+        name    : '£50',          // 默认显示用的名称
+        special : 'prostitution', // 特殊分类标记，这里是卖淫分类。默认为'none'
+        degree  : 5000            // 如果是卖淫类纹身，degree则会是能获得的钱。默认为0
+    },
+    {
+        key     : 'a_custom_tattoo',
+        type    : 'text',         // 文字还是图案纹身，默认值为text。图案则输入object
+        name    : 'Custom Tattoo',
+        cn      : '自定义纹身',   // 需要显示中文的话。
+        special : 'custom',
+        arrow   : 1,             // 默认值为0。1=有，0=无。设置arrow则会表示有个箭头指向生殖器
+        gender  : 'f',           // 纹身的性别，女f,男m，双性n，默认为'n'
+        lewd    : 1,             // 是否变态纹身。1=是 0=否 默认为1。
+    },
+    {
+        key     : 'venus_object',  //一个示范
+        type    : 'object'
+        name    : 'venus',
+        cn      : '美神像',
+        lewd    : 0
+    }
+];
+
+setup.modTattoos.push(...myNewTatoos); //表格设置完后，推送到简易框架中。
+
+```
 
 ## 添加物品
 参考[此处](https://github.com/emicoto/DOLMods/blob/52695d80a24e009b2882eab147a5fbf17ef19972/simple%20new%20content/newItems.js)。
 
+需要注意的是，物品系统还没完全从爱糖机模组独立，所以如果想用到物品相关功能，
+
+需要将爱糖机也一起当作前置（当前版本）。
+
+之后会根据情况逐步独立出来整合至简易框架中。
+
+## 添加战斗动作
+参考[此处](https://github.com/emicoto/DOLMods/blob/main/i%20Candy%20and%20Robot/0Scripts/1_database/actions.js)。
+
 ## 添加以 JavaScript 编写的宏
 参考[此处](https://github.com/emicoto/DOLMods/blob/52695d80a24e009b2882eab147a5fbf17ef19972/simple%20new%20content/test.js)。
 
+## 注册事件
+参考[此处](https://github.com/emicoto/DOLMods/blob/main/i%20Candy%20and%20Robot/gamecode/Scene/SceneRegist.js)。
+
+需要注意的是，事件系统还没完全从爱糖机模组独立，如果想用事件系统相干功能，
+
+需要将爱糖机也一起当作前置版本（当前版本）。
+
+不过这个事件框架在完成所有基础测试后，将会整合至简易框架当中。
+
 ## 简易框架能做什么和不能做什么
-简易框架是用于添加内容和简化编写的。如果需要修改原游戏内容，请查看 [TweeReplacer](https://github.com/Lyoko-Jeremie/Degrees-of-Lewdity_Mod_TweeReplacer/) 的用法，或查看 ModLoader 自带的 [`getPassageData` 和 `updatePassageData` 方法](https://github.com/Lyoko-Jeremie/sugarcube-2-ModLoader/blob/ff638f59261874737c269880f6ff1a1a6e2db865/src/insertTools/MyMod/MyMod_script_preload_example.js)。
+简易框架主要是用于添加内容和简化编写的。 
+
+当然，也可以通过新的事件系统来对passage进行打补丁，这样就可以在不对源码进行修改的情况下，
+对passage进行些许修改，添加事件分支，功能等等。
+
+但以上方式都无法达到你想要的效果，则请请查看 [TweeReplacer](https://github.com/Lyoko-Jeremie/Degrees-of-Lewdity_Mod_TweeReplacer/) 的用法，或查看 ModLoader 自带的 [`getPassageData` 和 `updatePassageData` 方法](https://github.com/Lyoko-Jeremie/sugarcube-2-ModLoader/blob/ff638f59261874737c269880f6ff1a1a6e2db865/src/insertTools/MyMod/MyMod_script_preload_example.js)。

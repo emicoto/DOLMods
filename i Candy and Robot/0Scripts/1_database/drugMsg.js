@@ -1,5 +1,13 @@
 const generalWithdraw = function (drugItem) {
-    wikifier('stress', 30);
+    const stress = {
+        alcohol  : 10,
+        aphrod   : 5,
+        nicotine : 10
+    };
+    
+    const stressVal = stress[drugItem] || 5;
+    wikifier('stress', stressVal, 40);
+
     const html = {
         alcohol : lanSwitch(
             'You haven\'t drunk for a while, you feel irritable and start to have withdrawal symptoms.',
@@ -18,13 +26,12 @@ const generalWithdraw = function (drugItem) {
     if (html[drugItem]) {
         return `${html[drugItem]}<<gggstress>>`;
     }
-    else {
-        const html = lanSwitch(
-            `You haven't taken ${drugItem[0]} for a while, you feel irritable and start to have withdrawal symptoms.`,
-            `你有一段时间没吃${drugItem[1]}了，你感到烦躁，并开始出现戒断症状。`
-        );
-        return `${html}<<gggstress>>`;
-    }
+
+    const txt = lanSwitch(
+        `You haven't taken ${drugItem[0]} for a while, you feel irritable and start to have withdrawal symptoms.`,
+        `你有一段时间没吃${drugItem[1]}了，你感到烦躁，并开始出现戒断症状。`
+    );
+    return `${txt}<<gggstress>>`;
 };
 
 const combatFeedMsg = function (npc, drugItem) {

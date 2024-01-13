@@ -154,7 +154,7 @@ setup.addBodyWriting = function () {
             arrow   : obj.arrow ?? 0,
             special : obj.special ?? 'none',
             gender  : obj.gender ?? 'n',
-            lewd    : obj.lewd ?? 1,
+            lewd    : typeof obj.lewd == 'number' ? obj.lewd : 1,
             degree  : obj.degree ?? 0,
             key     : obj.key,
             sprites : obj.sprites ?? []

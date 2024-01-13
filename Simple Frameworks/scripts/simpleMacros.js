@@ -90,7 +90,7 @@ DefineMacroS('sexSwitch', sexSwitch);
 function nnpcboy(npc) {
     let gender = C.npc[npc].pronoun;
 
-    if(npc == 0){
+    if (npc == 0) {
         gender = V.NPCList[V.index].pronoun;
     }
     const boy = {

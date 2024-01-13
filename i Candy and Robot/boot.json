@@ -1,6 +1,6 @@
 {
   "name": "i, Candy + Robot",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "modPacker": {
     "modVersionJs": {
       "file": "0Scripts/0_framework/0_modversion.js",
@@ -45,6 +45,7 @@
     "0Scripts/3_systems/0_utilWidget.js",
     "0Scripts/3_systems/ItemManager.js",
     "0Scripts/3_systems/charaManager.js",
+    "0Scripts/3_systems/combatHandle.js",
     "0Scripts/3_systems/drugProcess.js",
     "0Scripts/3_systems/eventManager.js",
     "0Scripts/3_systems/itemEvent.js",

@@ -375,13 +375,13 @@
         'Coast Path' : [
             {
                 src : '<br><br>',
-                to  : '<br><div id="addAfterMsg"></div><br>\n<<BeforeLinkZone>>\n'
+                to  : '<br><br><div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n'
             }
         ],
         'Coast Path Farmland' : [
             {
                 src : '<br><br>',
-                to  : '<br><div id="addAfterMsg"></div><br>\n<<BeforeLinkZone>>\n'
+                to  : '<br><br><div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n'
             }
         ],
         Estate : [
@@ -510,6 +510,16 @@
                 applybefore : '\n<<BeforeLinkZone>>\n'
             }
         ],
+        'Livestock Field River' : [
+            {
+                src        : '<</if>>\n<br>\n',
+                applyafter : '<br>\n<div id="addAfterMsg"></div>\n'
+            },
+            {
+                srcmatch    : /<<link \[\[(Wash|清洗)/,
+                applybefore : '\n\t\t<<BeforeLinkZone>>\n\t\t'
+            }
+        ],
         Moor : [
             {
                 src         : '<<if $stress gte $stressmax>>',
@@ -571,7 +581,7 @@
         Bus : [
             {
                 src : '<br><br>',
-                to  : '<br><div id="addAfterMsg"></div><br><<BeforeLinkZone>>\n'
+                to  : '<br><br><div id="addAfterMsg"></div><<BeforeLinkZone>>\n'
             }
         ],
         'Bus Station' : [
@@ -693,7 +703,7 @@
         'Storm Drain Entrance' : [
             {
                 src : '<br><br>',
-                to  : '<br><div id="addAfterMsg"></div><br>\n<<BeforeLinkZone>>\n'
+                to  : '<br><br><div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n'
             }
         ],
         'Hospital front' : [
@@ -806,7 +816,7 @@
         'Police Station' : [
             {
                 src : '<br><br>',
-                to  : '<br><div id="addAfterMsg"></div><br><<BeforeLinkZone>>\n'
+                to  : '<br><br><div id="addAfterMsg"></div><<BeforeLinkZone>>\n'
             }
         ],
         Pound : [
@@ -928,7 +938,7 @@
         "School Boy's Toilets" : [
             {
                 src : '<br><br>',
-                to  : '<br><div id="addAfterMsg"></div><br><<BeforeLinkZone>>\n'
+                to  : '<br><br><div id="addAfterMsg"></div><<BeforeLinkZone>>\n'
             },
             {
                 src         : '<<if _store_check isnot 1>>',
@@ -938,7 +948,7 @@
         "School Girl's Toilets" : [
             {
                 src : '<br><br>',
-                to  : '<br><div id="addAfterMsg"></div><br><<BeforeLinkZone>>\n'
+                to  : '<br><br><div id="addAfterMsg"></div><<BeforeLinkZone>>\n'
             },
             {
                 src         : '<<if _store_check isnot 1>>',
@@ -1410,7 +1420,7 @@
                     source = applysrc(source, set.src, set);
                 }
                 if (set.srcmatch) {
-                    srouce = applymatch(source, set.srcmatch, set);
+                    source = applymatch(source, set.srcmatch, set);
                 }
                 if (set.srcmatchgroup) {
                     const txt = source.match(set.srcmatchgroup);
@@ -1488,6 +1498,24 @@
     // 简单粗暴的批量脚本，在对应位置增加文本区域。
     function patchPassage(passage, title) {
         const source = String(passage.content);
+
+        if (title == 'StoryCaption') {
+            // nothing to do at storycaption
+        }
+        else if (title == 'PassageHeader') {
+            // add div to passage header
+            passage.content = `<div id="passage-header">${passage.content}</div>`;
+        }
+        else if (title == 'PassageFooter') {
+            // add div to passage footer
+            passage.content = `<div id="passage-footer">${passage.content}</div>`;
+        }
+        else {
+            // add div to passage content
+            passage.content = `<div id="passage-content">${passage.content}</div>`;
+        }
+        
+
         // 处理过的就跳过
         if (patchedPassage[title]) return passage;
         if (source.includes('<<effects>>' === false || patchedPassage[title]) == 1) {
