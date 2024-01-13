@@ -6,13 +6,13 @@
 	* [使用简易框架添加内容](#使用简易框架添加内容)
 		* [全部模块](#全部模块)
 		* [部分模块代表的位置](#部分模块代表的位置)
-	* [打包 MOD](#打包_MOD)
+	* [打包 MOD](#打包-MOD)
 * [简化内容编写](#简化内容编写)
 	* [多语言支持](#多语言支持)
 		* [常用文本的多语言](#常用文本的多语言)
 		* [编写多语言内容](#编写多语言内容)
 	* [根据性别输出不同内容](#根据性别输出不同内容)
-	* [根据NPC性别输出“男孩”或“女孩”](#根据NPC性别输出“男孩”或“女孩”)
+	* [根据NPC性别输出“男孩”或“女孩”](#根据NPC性别输出男孩或女孩)
 	* [根据态度输出不同内容](#根据态度输出不同内容)
 * [添加 NPC](#添加-npc)
 * [添加物品](#添加物品)
@@ -93,7 +93,7 @@ simpleFrameworks.addto('iModHeader', {
     widget: 'aSimpleTest2',
 });
 ```
-并不是所有模块都是 passage 中的位置，有些位置独立在 passage 之外，它们的使用方法也和上述例子不同。例如，模块 `ModMenuSmall` 用于在左边栏添加小按钮。如果我想把 `aSimpleTest2` 放到左边栏小按钮的位置，就可以这么写：
+并不是所有模块都是 passage 中的位置，有些位置独立在 passage 之外，它们的使用方法也和上述例子不同。例如，模块 `ModMenuSmall` 用于在左边栏添加小按钮。如果你想把 `aSimpleTest2` 放到左边栏小按钮的位置，就可以这么写：
 
 ```js
 simpleFrameworks.addto('ModMenuSmall', 'aSimpleTest2');
@@ -139,8 +139,7 @@ iModExtraStatist
 #### 部分模块代表的位置
 下面这张图展示了最简单的几种模块所代表的位置，更多解说可以[在这里](https://github.com/emicoto/DOLMods/blob/main/Simple%20Frameworks/temp/widget%20copy.twee)查看。
 
-<img src="https://i.niupic.com/images/2024/01/13/ffYi.png
-">
+![example](https://i.niupic.com/images/2024/01/13/ffYi.png)
 
 ### 打包 MOD
 现在，你已经在 `内容文件` 写好了内容，也在 `载入文件` 中通过简易框架把内容逐个加入到了游戏中。你需要做的只是把 MOD 打包了。
@@ -210,25 +209,17 @@ iModExtraStatist
 ### 根据性别输出不同内容
 ```HTML
 <<print sexSwitch(
-  "NPC内部名字，缺省时默认为pc，输入数字0则分配为当前路人npc",
+  "NPC内部名字，缺省时默认为pc",
   "若男性输出的内容",
   "若女性输出的内容",
 )>>
 ```
 
-### 根据NPC性别输出“男孩”或“女孩” 
+### 根据NPC性别输出“男孩”或“女孩”
 ```HTML
-<<nnpcboy "NPC内部名字，输入数字0则分配为当前路人npc">>
-<<nnpcboy 0>>
+<<nnpcboy "NPC内部名字">>
 ```
 如果是英文，需要首字母大写，则使用 `nnpcBoy`。
-
-### 根据PC性别输出第三人称他/她 He/She
-```HTML
-<<pcpn "he">>
-```
-
-如果是英文，首字母大写时会自动转换。
 
 ### 根据态度输出不同内容
 ```HTML
@@ -239,48 +230,17 @@ iModExtraStatist
 )>>
 ```
 
-### 随机显示文本或分支
+### 随机输出内容
 ```HTML
 <<randomdata>>
 <<datas>>
-  一个随机内容A
+随机内容A
 <<datas>>
-  一个随机内容B
+随机内容B
 <<datas>>
-  一个随机内容C
+随机内容C
 <</randomdata>>
 ```
-
-
-在randomdata后面输入 rate则可以根据概率分配。
-
-
-```HTML
-<<randomdata rate>>
-  <<datas 80>>
-    有百分80概率触发这个分支
-  <<datas 60>>
-    有百分60概率触发这个分支
-  <<datas 40>>
-    有百分40概率触发这个分支
-  <<datas 30>>
-    有百分30概率触发这个分支
-<</datas>>
-```
-
-
-randomdata内部处理概率的方式是，先将所有概率值相加起来。
-
-然后在 1 到 总概率值 之间随机一个数字。
-
-如上面示例， 80+60+40+30 = 210
-
-接着如果Math.random()的结果 为186， 那么186/210 就占了 88%
-
-所有概率数值都比88小，但因为没有符合的内容，所以最后会默认返回概率值最大的
-
-但如果存在没有设置数值的datas，则会返回这个分支内容。
-
 
 ## 添加 NPC
 参考[此处](https://github.com/emicoto/DOLMods/blob/52695d80a24e009b2882eab147a5fbf17ef19972/simple%20new%20content/newNPC.js)。
