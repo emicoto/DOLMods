@@ -217,20 +217,40 @@ const sMsg = {
     stateEffects,
     equipText,
 
-    getItem : [
-        '<span class=\'green\'>You got {0}.</span><br>',
-        '<span class=\'green\'>你获得了{0}。</span><br>'
-    ],
+    getItem : {
+        EN : '<span class=\'green\'>You got {0}.</span><br>',
+        CN : '<span class=\'green\'>你获得了{0}。</span><br>'
+    },
 
-    useItem : [
-        'You {1} the {0}.',
-        '你{0}了{1}。'
-    ],
+    useItem : {
+        EN : 'You {1} the {0}.',
+        CN : '你{0}了{1}。'
+    },
 
     dropItem : {
-        CN : '你丢弃了{0} x {1}。',
-        EN : 'You drop {0} x {1}.'
-    }
+        EN : 'You drop {0} x {1}.',
+        CN : '你丢弃了{0} x {1}。'
+    },
+
+    pickDrug : {
+        EN : '{0} take the {1} out of <<his>> pocket.',
+        CN : '{0}从口袋里拿出了{1}。'
+    },
+
+    whackdrugs_success : {
+        EN : 'You did it, the {0} is knocked out of <<his>> hand.',
+        CN : '你成功了，{0}被打落了手中。'
+    },
+
+    whackdrugs_try : {
+        EN : 'You try to whack the {0} away.',
+        CN : '你试图击落对方手中的{0}。'
+    },
+
+    feedDrug : {
+        EN : '{0} {1} you the {2}.',
+        CN : '{0}{1}了你{2}。'
+    },
 };
 
 Object.defineProperties(window,{

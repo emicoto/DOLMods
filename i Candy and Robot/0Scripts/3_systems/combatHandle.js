@@ -15,28 +15,28 @@ function combatTest() {
                 item  : drugs.random(),
                 timer : 0
             };
-            V.afterMsg += `${npc.fullDescription}拿起了${npc.takeItem.item.name}<br>`;
+            V.afterMsg += `${P.templet(sMsg.pickDrug, npc.fullDescription, npc.takeItem.item.name)}<br>`;
         }
 
         if (npc.takenItem) {
-            npc.takenItem.timer += 1;
-
             // 下回合开始时，进行行为判断
             if (npc.takenItem.timer > 1) {
-                if (V.playerAction.lefthand == 'hitoff' || V.playerAction.righthand == 'hitoff') {
+                if (V.playerAction.lefthand == 'whackdrugs' || V.playerAction.righthand == 'whackdrugs') {
                     // 如果PC试图打掉NPC手中的物品，则有概率打掉
                     if (random(100) < 20) {
-                        V.afterMsg += `${npc.fullDescription}的${npc.takenItem.item.name}被打掉了<br>`;
+                        V.afterMsg += `${P.templet(sMsg.whackdrugs, npc.fullDescription, npc.takenItem.item.name)}<br>`;
+                        
                         npc.takenItem = undefined;
                     }
                     // 否则，NPC有概率投喂PC
                     else if (random(100) < 30) {
-                        V.afterMsg += `${npc.fullDescription}投喂了${npc.takenItem.item.name}<br>`;
+                        V.afterMsg += `${P.templet(sMsg.feedDrug, npc.fullDescription, npc.takenItem.item.name)}<br>`;
                         npc.feed++;
                         npc.takenItem = undefined;
                     }
                 }
             }
+            npc.takenItem.timer += 1;
         }
     }
 }
