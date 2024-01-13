@@ -278,7 +278,9 @@ const iManager = {
         // search all pockets if the item can be added
         for (const i in Pocket.list) {
             const pocket = Pocket.get(Pocket.list[i]);
-            const result = pocket.add(itemStacks);
+            const result = pocket.add(overflow);
+
+            console.log('add items:', pocket, result, overflow);
 	
             if (result.overflow.length > 0) {
                 overflow = result.overflow;
