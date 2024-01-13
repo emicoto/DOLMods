@@ -229,7 +229,7 @@ const htmlPrinter = {
 					<</link>>`;
                 }
                 else if (!data.require && (data.effects.length > 0 || typeof data.onUse == 'function')) {
-					 _html += `<<link "${method}" "Actions UseItems">>
+					 _html += `<<link "${method.toUpperFirst()()}" "Actions UseItems">>
 					 	<<set $tvar.useItem to ["${slot}", ${i}]>>
 						<<set $tvar.img to "${img}">>
 						<<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>

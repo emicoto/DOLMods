@@ -32,7 +32,7 @@ class iRecipe {
         }
 
         this.data[id] = new iRecipe(id, time, ...recipe);
-        for (const i in obj[i]) {
+        for (const i in obj) {
             this.data[i] = obj[i];
         }
 
@@ -54,7 +54,7 @@ class iRecipe {
             const _data = new iRecipe(id, time, ...ingredients);
 
             for (const i in data) {
-                _data = data[i];
+                _data[i] = data[i];
             }
             this.data[id] = _data;
         });
@@ -70,10 +70,17 @@ class iRecipe {
         const database = Object.entries(this.data);
 
         if (!nocheck) {
-            return database.filter(([key, data]) => data.production == itemId && data.methods.includes(method) && (!data.lock || data.lock && data.requirement()));
+            return database.filter(([, data]) =>
+                data.production === itemId &&
+                data.methods.includes(method) &&
+                (!data.lock || data.lock && data.requirement())
+            );
         }
 		
-        return database.filter(([key, data]) => data.production == itemId && data.methods.includes(method));
+        return database.filter(([, data]) =>
+            data.production === itemId &&
+            data.methods.includes(method)
+        );
     }
     /**
 	 * 根据合成方法搜索配方
@@ -86,10 +93,12 @@ class iRecipe {
         const database = Object.entries(this.data);
 
         if (!nocheck) {
-            return database.filter(([key, data]) => data.methods.includes(method) && (!data.lock || data.lock && data.requirement()));
+            return database.filter(([, data]) =>
+                data.methods.includes(method) &&
+                (!data.lock || data.lock && data.requirement()));
         }
 		
-        return database.filter(([key, data]) => data.methods.includes(method));
+        return database.filter(([, data]) => data.methods.includes(method));
     }
     /**
 	 * 根据物品Id搜索配方
@@ -102,10 +111,10 @@ class iRecipe {
         const database = Object.entries(this.data);
 
         if (!nocheck) {
-            return database.filter(([key, data]) => data.production == itemId && (!data.lock || data.lock && data.requirement()));
+            return database.filter(([, data]) => data.production == itemId && (!data.lock || data.lock && data.requirement()));
         }
 		
-        return database.filter(([key, data]) => data.production == itemId);
+        return database.filter(([, data]) => data.production == itemId);
     }
 
     /**

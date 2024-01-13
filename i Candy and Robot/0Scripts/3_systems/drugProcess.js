@@ -20,6 +20,7 @@ const DrugsProcess = {
     minuteProcess(sec) {
         const drugStats = R.drugStates.drugs;
         const drugFlags = R.drugFlags.drugs;
+        const html = [];
 	
         for (const [drug, stats] of Object.entries(drugStats)) {
             // 获取药物的信息
@@ -37,10 +38,10 @@ const DrugsProcess = {
 	
                 // 运行药物效果并获得通知
                 if (typeof drugItem.onHigh == 'function') {
-                    V.addMsg += `${drugItem.onHigh(sec / 60)}<br>`;
+                    timeRec(`drug_onhigh_${drug}`, drugItem.onHigh(sec / 60));
                 }
                 else if (drugMsg[drug].onHigh) {
-                    V.addMsg += `${lanSwitch(drugMsg[drug].onHigh)}<br>`;
+                    timeRec(`drug_onhigh_${drug}`, lanSwitch(drugMsg[drug].onHigh));
                 }
             }
             else {
@@ -55,18 +56,21 @@ const DrugsProcess = {
 	
                     // 如果药物有清醒效果，运行清醒效果并获得通知
                     if (typeof drugItem.onWake == 'function') {
-                        V.addMsg += `${drugItem.onWake()}<br>`;
+                        html.push(`${drugItem.onWake()}`);
                     }
                     else if (drugMsg[drug].onWake) {
-                        V.addMsg += `${lanSwitch(drugMsg[drug].onWake)}<br>`;
+                        html.push(`${lanSwitch(drugMsg[drug].onWake)}`);
                     }
                 }
             }
         }
+
+        return html;
     },
     hourProcess(type) {
         const itemStats = type == 'general' ? R.drugStates.general : R.drugStates.drugs;
         const itemFlags = type == 'general' ? R.drugFlags.general : R.drugFlags.drugs;
+        const html = [];
 
         for (const [item, stats] of Object.entries(itemStats)) {
             // 获取药物的信息
@@ -91,20 +95,22 @@ const DrugsProcess = {
             if (stats.lastTime > 0 && withdrawTimer >= withdraw) {
                 // 如果设置了function，运行function
                 if (typeof data.onWithdraw == 'function') {
-                    V.addMsg += `${data.onWithdraw()}<br>`;
+                    html.push(`${data.onWithdraw()}`);
                 }
                 else if (drugMsg[item]?.onWithdraw) {
-                    V.addMsg += `${lanSwitch(drugMsg[item].onWithdraw)}<br>`;
+                    html.push(`${lanSwitch(drugMsg[item].onWithdraw)}`);
                 }
                 // 没有则运行默认的戒断效果
                 else {
                     const name = type == 'general' ? item : data.name;
-                    V.addMsg += `${generalWithdraw(name)}<br>`;
+                    html.push(`${generalWithdraw(name)}`);
                 }
                 // 设置戒断状态
                 stats.withdraw = 1;
             }
         }
+
+        return html;
     },
     dayProcess(type) {
         const itemStats = type == 'general' ? R.drugStates.general : R.drugStates.drugs;
@@ -180,6 +186,7 @@ const DrugsProcess = {
     },
     eventCount(type) {
         const flags = type == 'general' ? R.drugFlags.general : R.drugFlags.drugs;
+        const html = [];
 
         for (const [item, flag] of Object.entries(flags)) {
             const data = type == 'general' ? setup.addictions[item] : Items.get(item);
@@ -187,10 +194,10 @@ const DrugsProcess = {
 
             if (flag.daily == 1) {
                 if (typeof data.onDay == 'function') {
-                    V.addMsg += `${data.onDay()}<br>`;
+                    html.push(`${data.onDay()}`);
                 }
                 else if (drugMsg[item]?.onDay) {
-                    V.addMsg += `${lanSwitch(drugMsg[item].onDay)}<br>`;
+                    html.push(`${lanSwitch(drugMsg[item].onDay)}`);
                 }
                 else {
 					
@@ -199,26 +206,28 @@ const DrugsProcess = {
             }
 
             if (flag.addiction == 1) {
-                V.addMsg += `${this.addictionEvent(item)}<br>`;
+                html.push(`${this.addictionEvent(item)}`);
 
                 // 如果设置了专用事件，在通知后运行专用事件
                 if (typeof data.addictionEvent == 'function') {
-                    V.addMsg += `${data.addictionEvent()}<br>`;
+                    html.push(`${data.addictionEvent()}`);
                 }
                 flag.addiction = 0;
             }
 
             // 如果当日有戒除，运行戒除效果并获得通知
             if (flag.quit == 1) {
-                V.addMsg += `${this.QuitEvent(item)}<br>`;
+                html.push(`${this.QuitEvent(item)}`);
 
                 // 如果设置了专用事件，在通知后运行专用事件
                 if (typeof data.quitEvent == 'function') {
-                    V.addMsg += `${data.quitEvent()}<br>`;
+                    html.push(`${data.quitEvent()}`);
                 }
                 flag.quit = 0;
             }
         }
+
+        return html;
     },
 
     addictionEvent(item) {

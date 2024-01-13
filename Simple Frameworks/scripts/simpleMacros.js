@@ -88,7 +88,11 @@ window.sexSwitch = sexSwitch;
 DefineMacroS('sexSwitch', sexSwitch);
 
 function nnpcboy(npc) {
-    const gender = C.npc[npc].pronoun;
+    let gender = C.npc[npc].pronoun;
+
+    if(npc == 0){
+        gender = V.NPCList[V.index].pronoun;
+    }
     const boy = {
         EN : 'boy',
         CN : '男孩'
@@ -110,6 +114,7 @@ function nnpcBoy(npc) {
     return nnpcboy(npc).toUpperFirst();
 }
 DefineMacroS('nnpcBoy', nnpcBoy);
+
 
 function pcpn(pronun) {
     const lan = {
@@ -158,12 +163,64 @@ Macro.add('randomdata', {
     tags : ['datas'],
     handler() {
         const len = this.payload.length;
+        const rateMode = this.payload[0].source.includes('rate');
 
         console.log(this.payload);
-        if (len == 1) return this.error('no data found');
+        if (len == 1) return this.error(`no data found from randomdata: ${this.payload[0].source}${this.payload[0].contents}`);
 
-        const index = random(1, len - 1);
-        const data = this.payload[index].contents;
-        jQuery(this.output).wiki(data);
+        if (!rateMode) {
+            const index = random(1, len - 1);
+            const data = this.payload[index].contents;
+            jQuery(this.output).wiki(data);
+            return;
+        }
+
+        const datas = new Array(len - 1).fill({ rate : 0, contents : '' });
+        let defaultText = '';
+
+        this.payload.forEach((data, index) => {
+            if (index == 0) return;
+
+            const rate = data.source.match(/\d+/);
+            datas[index - 1] = { rate : Number(rate), contents : data.contents };
+
+            if (!rate) {
+                defaultText = data.contents;
+            }
+        });
+
+        // sort by rate, biggest to smallest
+        datas.sort((a, b) => b.rate - a.rate);
+
+        // if not default set, the biggest one will be the default text
+        if (defaultText == '') {
+            defaultText = datas[0].contents;
+        }
+
+        console.log(datas);
+
+        // get total rate
+        let total = datas.reduce((res, cur) => res + cur.rate, 0);
+
+        // sort by rate, smaller to bigger
+        datas.sort((a, b) => a.rate - b.rate);
+
+        for (let i = 0; i < datas.length; i++) {
+            const data = datas[i];
+            const rate = random(1, total);
+
+            if (config.debug) {
+                console.log('random rate:', rate, 'total:', total, 'data rate:', data.rate, 'data:', data.contents);
+            }
+            
+            if (rate < data.rate) {
+                jQuery(this.output).wiki(data.contents);
+                return;
+            }
+            
+            total -= data.rate;
+        }
+
+        jQuery(this.output).wiki(defaultText);
     }
 });
