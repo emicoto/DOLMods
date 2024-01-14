@@ -53,50 +53,60 @@ function iCombatActionHandle() {
     }
 }
 
+function combatCheck() {
+    const checklist = iCombat.onCheck;
+    for (let i = 0; i < checklist.length; i++) {
+        const check = checklist[i];
+        if (check.condition() && check.type == 'forceskip') {
+            R.combat.skip = true;
+            return;
+        }
+    }
+}
 
-function iCombatHandle() {
+function combatCheckBefore() {
     const whitelistnpc = ['Avery', 'Briar', 'Darryl', 'Eden', 'Harper', 'Kylar', 'Landry', 'Morgan', 'Whitney', 'Winter', 'Remy', 'Wren', 'Cheng'];
-    // 非战斗场景跳过
-    if (V.combat == 0) return;
-    if (V.stalk == true) return;
 
+    // 非战斗场景跳过
+    if (V.combat == 0) return 'skip';
+    if (V.stalk == true) return 'skip';
     // 游戏前三天大概率跳过
-    if (Time.days < 3 && random(100) > 25) {
+    if (Time.days < 3 && random(100) < 80) {
         R.combat.skip = true;
-        return;
+        return 'skip';
     }
 
     // 非白名单NPC跳过
-    if (V.npc.length > 0 && !V.npc.has(...whitelistnpc)) return;
+    if (V.npc.length > 0 && !V.npc.has(...whitelistnpc)) return 'skip';
 
-    if (F.getLocation() == 'livestock' && random(100) > 30) {
+    if (F.getLocation() == 'livestock' && random(100) < 80) {
         R.combat.skip = true;
-        return;
+        return 'skip';
     }
 
     // 如果场景在学校，则看概率跳过
-    if (V.location == 'school' && random(100) > 10) {
+    if (V.location == 'school' && random(100) < 90) {
         R.combat.skip = true;
-        return;
+        return 'skip';
     }
-    // 如果场景在警察局，则看概率跳过
-    if (V.location == 'police_station' && random(100) > 30) {
-        R.combat.skip = true;
-        return;
-    }
-    // 白名单NPC看概率跳过
-    if (V.npc.length > 0 && V.npc.has(...whitelistnpc) && random(100) > 40) {
-        R.combat.skip = true;
-        return;
-    }
-    // 合意场景看概率跳过
-    if (V.consensual == 1 && V.npc.length == 0 && random(100) > 50) {
-        R.combat.skip = true;
-        return;
-    }
-    // 已经跳过的，跳过
-    if (R.combat.skip == true) return;
 
+    // 如果场景在警察局，则看概率跳过
+    if (V.location == 'police_station' && random(100) < 80) {
+        R.combat.skip = true;
+        return 'skip';
+    }
+
+    // 白名单NPC合意情况下看概率跳过
+    if (V.npc.length > 0 && V.npc.has(...whitelistnpc) && V.consensual == 1 && random(100) < 60) {
+        R.combat.skip = true;
+        return 'skip';
+    }
+
+    // 合意场景看概率跳过
+    if (V.consensual == 1 && V.npc.length == 0 && random(100) < 75) {
+        R.combat.skip = true;
+        return 'skip';
+    }
 
     // 当pc处于反抗状态且处于优势时，跳过事件。
     if (V.pain < V.painmax * 0.8
@@ -104,7 +114,15 @@ function iCombatHandle() {
 		&& V.enemyhealth < V.enemyhealthmax * 0.3
 		&& V.orgasmdown < 1 && V.rightarm !== 'bound' && V.leftarm !== 'bound'
 		&& V.leftleg !== 'bound' && V.rightleg !== 'bound'
-    ) return;
+    ) return 'skip';
+}
+
+
+function CombatHandle() {
+    // 检查是否可执行状态
+    const state = combatCheckBefore();
+    // 如果返回的是skip，或者已经被确定跳过，则跳过
+    if (R.combat.skip == true || state == 'skip') return;
 
     const rate = V.trauma / 80 + V.stress / 200;
     const drugs = Items.search('drugs', 'or', 'pill', 'inject')
@@ -178,8 +196,3 @@ function iCombatHandle() {
         V.afterMsg += html;
     }
 }
-
-
-Object.defineProperties(window.iCandy, {
-    iCombatHandle : { value : iCombatHandle, writable : false }
-});

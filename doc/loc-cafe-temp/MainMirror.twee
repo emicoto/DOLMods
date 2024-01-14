@@ -3,40 +3,45 @@
 # 剩下两个条件判断内容
 # 链接和事件的匹配
 
+:: Scene OceanBreeze locationDescription CN
+<<if $phase is 0 and (!$tvar.scene.start || $tvar.scene.type == 'Scene')>>
+	你在海风咖啡馆。
+	<<if $openinghours is 1>>
+		<<if $weather is "clear">>
+			大部分位子都是空的。
+		<<elseif $weather is "overcast">>
+			咖啡馆里人很多，尽管刮着大风，还是有人坐在外面。
+		<<elseif $weather is "rain">>
+			因为下雨，所以没有人坐在外面，咖啡馆里很拥挤。
+		<<elseif $weather is "snow">>
+			因为天寒地冻，所以没有人坐在外面，咖啡馆里显得很拥挤。
+		<</if>>
+	<</if>>
+	<br><br>
+<</if>>
 
-:: Ocean Breeze
-<<set $outside to 0>><<set $location to "cafe">><<effects>>
-<div id="locationdes">
+:: Scene OceanBreeze locationDescription EN
 	<<if $phase is 0 and (!$tvar.scene.start || $tvar.scene.type == 'Scene')>>
-        <<=lanSwitch(
-        `You are in the Ocean Breeze Cafe.`,
-        `你在海风咖啡馆。`
-        )>>
+        You are in the Ocean Breeze Cafe.
         <<if $openinghours is 1>>
             <<if $weather is "clear">>
-                <<=lanSwitch(
-                `Most of the tables are full.`,
-                `大部分位子都是空的。`
-                )>>
+                Most of the tables are full.
             <<elseif $weather is "overcast">>
-                <<=lanSwitch(
-                `The cafe is busy, and despite the strong winds some people are sitting outside.`,
-                `咖啡馆里人很多，尽管刮着大风，还是有人坐在外面。`
-                )>>
+                The cafe is busy, and despite the strong winds some people are sitting outside.
             <<elseif $weather is "rain">>
-                <<=lanSwitch(
-                `No one is sitting outside due to the rain, but the cafe proper is crowded.`,
-                `因为下雨，所以没有人坐在外面，咖啡馆里很拥挤。`
-                )>>
+                No one is sitting outside due to the rain, but the cafe proper is crowded.
             <<elseif $weather is "snow">>
-                <<=lanSwitch(
-                `No one is sitting outside due to the cold, but the cafe proper is crowded.`,
-                `因为天寒地冻，所以没有人坐在外面，咖啡馆里显得很拥挤。`
-                )>>
+                No one is sitting outside due to the cold, but the cafe proper is crowded.
             <</if>>
         <</if>>
         <br><br>
 	<</if>>
+
+:: BaseScene OceanBreeze [scene]
+<<set $outside to 0>><<set $location to "cafe">><<effects>>
+<div id="locationdes">
+	<<set _title to 'Scene OceanBreeze locationDescription' + setup.language>>
+	<<include _title>>
 </div>
 
 <div id="addAfterMsg"></div>
@@ -70,7 +75,6 @@
 
 <<else>>
     <<linkEventEnd 'Cliff Street'>>
-
 <</if>>
 <br>
 </div>

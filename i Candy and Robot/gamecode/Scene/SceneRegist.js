@@ -108,7 +108,7 @@ iEvent.registPsg('Livestock Field River', () => {
 
     const links = data.getElementsByClassName('macro-link');
 
-    let ref = null
+    let ref = null;
     for (let i = 0; i < links.length; i++) {
         if (links[i].innerHTML.has('Wash', '清洗')) {
             ref = links[i];

@@ -238,8 +238,13 @@ const sMsg = {
     },
 
     whackdrugs_success : {
-        EN : 'You did it, the {0} is knocked out of <<his>> hand.',
-        CN : '你成功了，{0}被打落了手中。'
+        EN : 'You did it, the {0} is knocked out of <<his>> hand, and <<he>> looks even angrier.',
+        CN : '你成功了，{0}从{1}手中被打掉了，{1}看起来更加生气了。'
+    },
+
+    whackdrugs_fail : {
+        EN : 'You failed, then your behavior makes {0} even angrier.',
+        CN : '你失败了，你的行为让{0}更加生气了。'
     },
 
     whackdrugs_try : {
@@ -250,7 +255,7 @@ const sMsg = {
     feedDrug : {
         EN : '{0} {1} you the {2}.',
         CN : '{0}{1}了你{2}。'
-    },
+    }
 };
 
 Object.defineProperties(window,{
