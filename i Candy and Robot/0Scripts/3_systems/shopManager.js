@@ -153,7 +153,7 @@ const iShop = {
         console.log('print cart item:', item, item.stack, data.tags, data.num);
 		
         const unit = iData.itemUnit(data, item.stack, data.num);
-        const price = item.price / 100 * (1 - V.iShop[shelf].discount);
+        const price = item.price / 100 * (1 - V.iShop[shelf].discount) * item.stack;
 
         const html = `
 		<div id="shopcart">

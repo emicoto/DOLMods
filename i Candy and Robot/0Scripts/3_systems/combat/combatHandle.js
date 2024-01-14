@@ -107,7 +107,7 @@ function combatCheckBefore() {
 }
 
 
-function CombatHandle() {
+function iCombatHandle() {
     // 检查是否可执行状态
     const state = combatCheckBefore();
     // 如果返回的是skip，或者已经被确定跳过，则跳过
@@ -185,3 +185,9 @@ function CombatHandle() {
         V.afterMsg += html;
     }
 }
+
+
+Object.defineProperties(window.iCandy, {
+    iCombatHandle : { value : iCombatHandle },
+    iCombatActionHandle : { value : iCombatActionHandle}
+})
