@@ -13,7 +13,7 @@ const iMoney = {
         const item = Items.get(wallet.id);
         const defaultVal = 250000 * iCandy.getConfig('moneyMod');
 
-        return item ? item.capacity + defaultVal : defaultVal;
+        return item ? item.moneylimit + defaultVal : defaultVal;
     },
 
     /**
@@ -78,7 +78,7 @@ const iMoney = {
         },
 
         transfer : {
-            CN : '你的钱多得拿不下了， 于是你将{0}存进了${1}。',
+            CN : '你的钱多得拿不下了， 于是你将{0}£存进了{1}。',
             EN : 'The money you have is more than you can carry; so you transfered {0}£ to the {1}.'
         },
 

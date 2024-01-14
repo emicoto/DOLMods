@@ -140,6 +140,7 @@ const iManager = {
     },
 
     checkAvailable(items, num, diff) {
+        iStack.checkmode = 'inv';
         let itemStacks = this.format(clone(items), num, diff);
         let costSlot = 0;
         const availableSlot = Pocket.getRemain();
@@ -274,7 +275,6 @@ const iManager = {
 
     addItems(itemStacks) {
         let overflow = itemStacks;
-	
         // search all pockets if the item can be added
         for (const i in Pocket.list) {
             const pocket = Pocket.get(Pocket.list[i]);
@@ -723,6 +723,63 @@ const iManager = {
         pocket.sortOut();
 
         return item;
+    },
+
+    location : {
+        home         : ['storage','仓库'],
+        farm         : ['barn','谷仓'],
+        lockers      : ['lockers','储物柜'],
+        warehouse    : ['warehouse','仓库'],
+        apartment    : ['shelf','储物架'],
+        bushes_park  : ['bushes','灌木丛'],
+        transbin_elk : ['trashbin','垃圾桶'],
+        hideout      : ['hideout','藏身处'],
+        howllow      : ['howllow','树洞']
+    },
+
+    takeStorage(type, position, amount = 1) {
+        const item = this.takeSelected(type, position, amount);
+
+        if (this.checkAvailable(item, amount).available == false) {
+            return P.templet(sMsg.noSpace);
+        };
+
+        this.addItems(item);
+        
+        return P.templet(sMsg.takeStorage, item.name, amount, this.location[position]);
+    },
+
+    putStorage(local, type, pos, amount = 1) {
+        const item = this.takeSelected(type, pos, amount);
+        const storage = Pocket.get(local);
+
+        storage.add(item);
+
+        this.resetCheckmode();
+        return P.templet(sMsg.putStorage, item.name, amount, location[position]);
+    },
+
+    storeable(type, itempos, itemindex) {
+        const storage = Pocket.get(type);
+        const item = Pocket.get(itempos).select(itemindex);
+        const result = storage.check(item);
+        
+        if (storage.typelimit && !storage.typelimit.has(item.type)) {
+            return false;
+        }
+
+        if (storage.taglimit && !storage.taglimit.has(...item.tags)) {
+            return false;
+        }
+
+        this.resetCheckmode();
+        return result.available;
+    },
+
+    resetCheckmode() {
+        setTimeout(() => {
+            iStack.checkmode = 'inv';
+        }, 40);
     }
 };
 

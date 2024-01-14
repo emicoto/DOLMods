@@ -32,7 +32,7 @@
 		<span class="gold bold"><<lanSwitch 'Equipment' '装备'>></span>
 	</div>
 	<div id='equipment-content' class='pocket-content'>
-		<<=P.equipment()>>
+		<<=pocketUI.equipment()>>
 	</div>
 </div>
 <br>
@@ -42,7 +42,7 @@
 		<span class="gold bold"><<lanSwitch 'Body Pockets' '身上的口袋'>></span>
 	</div>
 	<div id='bodypockets-content' class='pocket-content'>
-		<<=P.pockets('body')>>
+		<<=pocketUI.pocket('body')>>
 	</div>
 </div>
 <br>
@@ -53,7 +53,7 @@
 		<span class="gold bold"><<lanSwitch 'Handheld' '手持'>></span>
 	</div>
 	<div id='handheld-content' class='pocket-content'>
-		<<=P.pockets('held')>>
+		<<=pocketUI.pocket('held')>>
 	</div>
 </div>
 <br>
@@ -65,7 +65,7 @@
 		<span class="gold bold"><<lanSwitch 'Secret Pocket' '秘密口袋'>></span>
 	</div>
 	<div id='secretpocket-content' class='pocket-content'>
-		<<=P.pockets('hole')>>
+		<<=pocketUI.pocket('hole')>>
 	</div>
 </div>
 <br>

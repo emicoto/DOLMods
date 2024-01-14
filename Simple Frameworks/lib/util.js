@@ -298,6 +298,7 @@ slog('log', 'simple framework start at util.js')
         }
     });
 
+
     Object.defineProperty(Array.prototype, 'has', {
         configurable : true,
         writable     : true,
@@ -333,6 +334,18 @@ slog('log', 'simple framework start at util.js')
         }
     });
 
+    Object.defineProperty(String.prototype, 'toCamelCase', {
+        configurable : true,
+        writable     : true,
+        value() {
+            if (this == null) {
+                throw new TypeError('String.prototype.toCamelCase called on null or undefined');
+            }
+
+            return this.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index == 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
+        }
+    });
+
     Object.defineProperty(Array.prototype, 'randompop', {
         configurable : true,
         writable     : true,
@@ -342,6 +355,18 @@ slog('log', 'simple framework start at util.js')
             }
 
             return this.splice(Math.floor(Math.random() * this.length), 1)[0];
+        }
+    });
+
+    Object.defineProperty(String.prototype, 'randompop', {
+        configurable : true,
+        writable     : true,
+        value() {
+            if (this == null) {
+                throw new TypeError('String.prototype.randompop called on null or undefined');
+            }
+
+            return this.split('').randompop();
         }
     });
 })();

@@ -188,6 +188,6 @@ function iCombatHandle() {
 
 
 Object.defineProperties(window.iCandy, {
-    iCombatHandle : { value : iCombatHandle },
-    iCombatActionHandle : { value : iCombatActionHandle}
-})
+    iCombatHandle       : { value : iCombatHandle },
+    iCombatActionHandle : { value : iCombatActionHandle }
+});

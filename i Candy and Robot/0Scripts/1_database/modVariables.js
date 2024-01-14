@@ -88,7 +88,7 @@ const iPockets = {
 iPockets.global.items = {};
 
 iPockets.body.add(
-    [new iStack('plasticbag', 1), new iStack('coinpouch', 1)]
+    [new iStack('plasticbag', 1).set('unit', 1), new iStack('coinpouch', 1).set('unit', 1)]
 );
 
 const iStorage = {
@@ -103,6 +103,17 @@ const iStorage = {
     hideout      : new Pocket('storage', 'hideout', 6), // 隐藏地点
     howllow      : new Pocket('storage', 'howllow', 6) // 隐藏地点
 };
+
+iStorage.home.slots.push(
+    new iStack('papertowel', 30, {
+        unit  : 3,
+        index : ['storage_home', 0]
+    }),
+    new iStack('flour', 50, {
+        unit  : 2,
+        index : ['storage_home', 1]
+    })
+);
 
 const vRecipe = {
     books    : {},

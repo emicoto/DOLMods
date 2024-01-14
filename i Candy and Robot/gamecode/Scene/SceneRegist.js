@@ -127,8 +127,8 @@ iEvent.registPsg('Livestock Field River', () => {
 
     const macro = `<<replace #addAfterMsg transition>>${lanSwitch(inner)}<<thirsty -600>><<lllthirst>><br><br><</replace>><<replace #thirstcaption>><<thirstyBar>><</replace>>`;
 
-    const html = `<<ind>><<link "${lanSwitch('Wash', '清洗')} (0:15)" "Livestock Field Wash">><<wash>><<pass 15>><</link>><br>
-        <<ind>><<link "${lanSwitch('Drink', '喝水')} (0:10)">>${macro}<</link>>`;
+    const html = `<<actionUI "wash">><<link "${lanSwitch('Wash', '清洗')} (0:15)" "Livestock Field Wash">><<wash>><<pass 15>><</link>><br>
+    <<actionUI "drinkwater">><<link "${lanSwitch('Drink', '喝水')} (0:10)">>${macro}<</link>>`;
 
     setTimeout(() => {
         new Wikifier(null, `<<replace #patchContent>>${lanSwitch(html)}<</replace>>`);

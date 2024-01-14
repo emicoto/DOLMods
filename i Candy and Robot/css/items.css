@@ -198,3 +198,9 @@
   .slider-count {
       margin-left: 5px;
   }
+
+  #container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}

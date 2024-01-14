@@ -9,7 +9,9 @@ class iStack {
 	 * @param {string} itemId
 	 * @returns {number}
 	 */
-    static getSize = function (itemId, mode) {
+    static checkmode = 'inv';
+
+    static getSize = function (itemId) {
         const item = Items.get(itemId);
         const size = typeof item.size === 'number' ? item.size : setup.maxStacks[item.size];
         const config = iCandy.getConfig('storageStack') || 1;
@@ -22,12 +24,12 @@ class iStack {
             return 1;
         }
 	
-        else if (mode == 'storage') {
+        else if (this.checkmode == 'storage') {
             return Math.clamp(size * config , 1, 10000);
         }
 	
         // 获取原始堆叠大小
-        else if (mode == 'raw') {
+        else if (this.checkmode  == 'raw') {
             return size;
         }
 	
@@ -140,6 +142,11 @@ class iStack {
         if (!obj?.index && !this.index) {
             this.index = ['body_body', 0];
         }
+    }
+
+    set(prop, value) {
+        this[prop] = value;
+        return this;
     }
 
     // check if the item can be stacked
@@ -256,6 +263,10 @@ class Pocket {
 
         cart() {
             return this.equip('cart');
+        },
+
+        wallet() {
+            return this.equip('wallet');
         }
     };
     /**
@@ -354,8 +365,8 @@ class Pocket {
     //              inventory methods              //
     // ---------------------------------------------//
     max() {
-        if (Pocket.list.includes(this.pos)) {
-            this.limitsize = Pocket.getMaxSlot(this.pos) || 0;
+        if (Pocket.getMaxSlot(this.pos)) {
+            this.limitsize = Pocket.getMaxSlot(this.pos);
             return this.limitsize;
         }
         return this.limitsize;
@@ -391,7 +402,7 @@ class Pocket {
     /**
      * get by seleted index
      * @param {number} index
-     * @returns
+     * @returns {iStack}
      */
     select(index) {
         return this.slots[index];
@@ -531,9 +542,11 @@ class Pocket {
 	 * @returns { overflow: iStack[], total: number }
 	 */
     add(itemStacks) {
+        iStack.checkmode = this.type;
         if (Array.isArray(itemStacks) == false) {
             itemStacks = [itemStacks];
         }
+
 
         const result =  {
             overflow : itemStacks,
@@ -578,6 +591,7 @@ class Pocket {
 	 * @returns {avaliable: boolean, overflow:number, costSlot: number, availableSlot: number}
 	 */
     check(itemStacks) {
+        iStack.checkmode = this.type;
         const remainSlot = this.remains();
         let _stacks = clone(itemStacks);
 

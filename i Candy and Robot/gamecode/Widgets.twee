@@ -42,8 +42,26 @@
 <img class="icon" @src="_path + _img">
 
 <<widget "localIcon">>
+    <<if $args[0].has('png') is false>>
+        <<set _img to $args[0] + '.png'>>
+    <<else>>
+        <<set _img to $args[0]>>
+    <</if>>
+
 	<<if $options.images is 1>>
-		<<=`<img class="icon" src='img/misc/${$args[0]}.png'>`>>
+		<<=`<img class="icon" src='img/misc/${_img}'>`>>
+	<</if>>
+<</widget>>
+
+<<widget "actionUI">>
+    <<if $args[0].has('png') is false>>
+        <<set _img to $args[0] + '.png'>>
+    <<else>>
+        <<set _img to $args[0]>>
+    <</if>>
+
+	<<if $options.images is 1>>
+		<<=`<img class="icon" src='img/action/${_img}'>`>>
 	<</if>>
 <</widget>>
 

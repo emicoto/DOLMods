@@ -2142,7 +2142,8 @@ const iContainers = [
             '一个用来装零钱的布袋。'
         ],
 
-        capacity : 10000,
+        moneylimit : 10000,
+        capacity   : 1,
 
         onEquip,
         onUnEquip
@@ -2164,8 +2165,10 @@ const iContainers = [
             '看起来有点小的荷包。明明很小，意外的很能装东西。'
         ],
 
-        capacity : 50000,
-        diff     : {
+        moneylimit : 50000,
+        capacity   : 1,
+        
+        diff : {
             blue   : { displayname : ['blue', '蓝色'] },
             green  : { displayname : ['green', '绿色'] },
             orange : { displayname : ['orange', '橙色'] },
@@ -2194,7 +2197,8 @@ const iContainers = [
             '一个普通的单夹层钱包。容量一般，但附带一个小小的零钱口袋与卡槽。'
         ],
 
-        capacity : 500000,
+        moneylimit : 500000,
+        capacity   : 2,
 
         onEquip,
         onUnEquip
@@ -2216,7 +2220,8 @@ const iContainers = [
             '一个长方形的时尚手持包。充足的容量让你随时带着上万现金，还有足够的空间存放大量零钱以及手机。'
         ],
 
-        capacity : 2500000,
+        moneylimit : 2500000,
+        capacity   : 3,
 
         onEquip,
         onUnEquip

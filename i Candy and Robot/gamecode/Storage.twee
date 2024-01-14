@@ -1,7 +1,7 @@
 :: iCandy Widget Storagep [widget]
 <<widget "OpenHomeStorage">>
-<<ind>><<set _link to lanSwitch('Open Storage', '打开仓库')>>
-<<link _link "Actions HomeStorage">><</link>>
+<<ind>><<set _link to lanSwitch('Garages', '旧车库') + ' (00:01)'>>
+<<link _link "Actions HomeStorage">><<pass 1>><</link>>
 <br><br>
 <</widget>>
 
@@ -17,44 +17,60 @@
 <br><br>
 <</widget>>
 
+
+:: BaseScene HomeStorage [scene]
+<<set $outside to 0>><<effects>>
+
+<div id='locationdes'>
+<<if (!$tvar.scene.passage || $tvar.scene.type == 'Scene') and $phase is 0>>
+	<<set _output to "HomeStorage localDescription " + setup.language>>
+	<<include _output>>
+	<br><br>
+<</if>>
+</div>
+
+
+<div id='content'>
+	<<if $tvar.scene.passage>>
+		<<include $tvar.scene.passage>>
+	<<else>> <!-- if $tvar.shop is daiso -->
+		<<include 'Scene HomeStorage'>>
+	<</if>>
+</div>
+
+<<if $tvar.onselect is true>>
+	<<set $tvar.onselect to false>>
+
+<<elseif $tvar.eventnext is true>>
+	<<set _link = getLan('next')>>
+	<<link _link $passage>>
+		<<pass 1>>
+		<<if $tvar.scene.nextcode>>
+			<<=$tvar.scene.nextcode>>
+		<</if>>
+	<</link>>
+
+<<else>>
+	<<set _link = getLan('leave')>>
+	<<getouticon>><<link _link "Orphanage">>
+		<<run iEvent.unsetEvent();>>
+		<<pass 1>>
+	<</link>>    
+<</if>>
+
+:: Scene HomeStorage
+你来到后院车库改成的仓库，里面有一些箱子和储物架。
+<br>
+在右手边的墙角有个老式冰箱，上面贴着一张纸条。
+<br>
+
 :: Actions HomeStorage
 <<set _storage to []>>
-你打开了储物柜。
+你打开了仓库的门。
 <br><br>
 
 <div id='container'>
-
-<div id="body-0" class="pocketslot no-numberify">
-    <div class="itemname">矿泉水</div>
-    <div class="itemcount">24瓶</div>
-    <div id="slider">
-        <input type="range" min="1" max="24" value="1" steup="1" class="slider" id="myRange" 
-        onchange="T.storage[0] = $(this).val(); console.log($(this).val(), T.storage[0]); $('#sliderValue').text(T.storage[0]); ">
-        <span id="sliderValue" class="slider-count">
-        </span>
-    </div>
-
-    <div id="plasticbag" class="itemicon">
-        <mouse class="tooltip-tiny">
-        <img class="icon" src="img/items/drinks/mineralwater.png">
-        <span>一个稍微能装东西的塑料袋。</span>
-        </mouse>
-    </div>
-    
-    <div id="action" class="pocketaction">
-        <span class="itemaction">
-            <<link '取出'>>
-                <<run im.takeSelected('storage', 0, _storage[0])>>
-            <</link>>
-		</span>
-        <span class="itemaction">
-            <<link '清空'>>
-                <<run im.onRemove('storage', 0)>>
-            <</link>>
-		</span>
-    </div>
-</div>
-
+<<=pocketUI.storage('home')>>
 </div>
 
 

@@ -238,6 +238,7 @@ const iShop = {
         const data = Items.get(selectItem.id);
 
         selectItem.count = selectItem.stack * data.num;
+        selectItem.unit = selectItem.stack;
         return selectItem;
     },
 

@@ -10,12 +10,12 @@
 <</widget>>
 
 <<widget "XinyuIntroAsk">>
-    <<set _link = lanSwitch('Try to approuch',"试着沟通" )>>
+    <<actionUI 'chat'>><<set _link = lanSwitch('Try to approuch',"试着沟通" )>>
     <<link _link $passage>>
         <<run iEvent.addFlag('Xinyu', 'ask', 1)>>
     <</link>>
     <br>
-    <<set _link = lanSwitch('Maybe next time', '算了')>>
+    <<ind>><<set _link = lanSwitch('Maybe next time', '算了')>>
     <<link _link $passage>>
     <<run iEvent.unsetEvent(); iEvent.setEvent('get', 'Xinyu', 'Talk', 'Intro GiveUp')>>
     <</link>>
