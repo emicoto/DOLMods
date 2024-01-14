@@ -1,6 +1,6 @@
 {
   "name": "i, Candy + Robot",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "modPacker": {
     "modVersionJs": {
       "file": "0Scripts/0_framework/0_modversion.js",
@@ -42,18 +42,20 @@
     "0Scripts/1_database/npcSetup.js",
     "0Scripts/1_database/systemMsg.js",
     "0Scripts/2_mainModule/mainModule.js",
-    "0Scripts/3_systems/0_utilWidget.js",
+    "0Scripts/3_systems/0_utils/utilWidget.js",
+    "0Scripts/3_systems/1_timeprocess/drugProcess.js",
+    "0Scripts/3_systems/1_timeprocess/timeProcess.js",
     "0Scripts/3_systems/ItemManager.js",
     "0Scripts/3_systems/charaManager.js",
-    "0Scripts/3_systems/combatHandle.js",
-    "0Scripts/3_systems/drugProcess.js",
+    "0Scripts/3_systems/combat/0_combatSystem.js",
+    "0Scripts/3_systems/combat/combatHandle.js",
+    "0Scripts/3_systems/combat/combatSetting.js",
     "0Scripts/3_systems/eventManager.js",
     "0Scripts/3_systems/itemEvent.js",
     "0Scripts/3_systems/jQueryEvent.js",
     "0Scripts/3_systems/moneyHandle.js",
     "0Scripts/3_systems/printer.js",
     "0Scripts/3_systems/shopManager.js",
-    "0Scripts/3_systems/timeProcess.js",
     "gamecode/Scene/Chinatown/eventRegist.js",
     "gamecode/Scene/Daiso/eventRegist.js",
     "gamecode/Scene/SceneRegist.js"

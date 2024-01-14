@@ -173,7 +173,7 @@ function longerCombat() {
             V.enemyarousalmax = V.enemyarousalmax * mult + random(1, 99) + Math.random();
         }
 
-        if (Math.floor(V.enemyarousal / 500) > Math.floor(V.lastejaculated / 500) && V.NPCList[0].penis !== 'none') {
+        if (Math.floor(V.enemyarousal / 500) > Math.floor(V.lastejaculated / 500) && V.NPCList[0].penis && V.NPCList[i].penis !== 'none') {
             V.lastejaculated = V.enemyarousal;
             if (midEjac == true && random(100) <= ejacRate) {
                 simpleEjaculation();

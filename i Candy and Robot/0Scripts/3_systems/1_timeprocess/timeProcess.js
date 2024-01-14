@@ -211,24 +211,25 @@ function minuteProcess(sec, min) {
     //-------------------------------------------------------------
     if (sec < 60 && min <= 0) return;
 
-    // 获得口渴值，口渴值受到疲劳的影响
-    console.log('hunger and thirst process', sec, min);
-
     if (sec / 60 >= min) {
         min = Math.floor(sec / 60 + 0.5);
     }
-	
+
 
     let mult = 1 + V.tiredness / C.tiredness.max;
 
+    console.log('hunger and thirst process:', 'mult:', mult, 'min:', min);
+
+    // 获得口渴值，口渴值受到疲劳的影响
+    V.thirst = Math.clamp((V.thirst + min * mult).fix(2), 0, C.thirst.max);
+
     // 如果在雷米农场，饥饿值的增长速度大减
     if (F.getLocation() == 'livestock') {
-        mult = 0.2;
+        mult = 0.5;
     }
 
-    V.thirst = Math.clamp((V.thirst + Number(min) * mult).fix(2), 0, C.thirst.max);
     // 获得饥饿值, 饥饿值受到疲劳的影响
-    V.hunger = Math.clamp((V.hunger + Number(min) * mult).fix(2), 0, C.hunger.max);
+    V.hunger = Math.clamp((V.hunger + min * mult).fix(2), 0, C.hunger.max);
 }
 
 function hourProcess(sec, hour) {
@@ -247,10 +248,6 @@ function hourProcess(sec, hour) {
     //-------------------------------------------------------------
 
     let mult = 50;
-
-    if (F.getLocation() == 'livestock') {
-        mult = 30;
-    }
 
     // 睡眠时压力增长减缓
     if (V.sleephour > 0) {

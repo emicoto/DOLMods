@@ -106,6 +106,7 @@ const combatFeedMsg = function (npc, drugItem) {
     return `${html.randomFeedAny} ${palams}<br>`;
 };
 
+
 const drugMsg = {
     nzt_48 : {
         onHigh : [

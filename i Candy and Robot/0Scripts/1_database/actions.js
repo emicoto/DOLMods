@@ -8,7 +8,9 @@ const iCandyCombatActions = [
         mainType : 'Default',
         color    : 'brat',
         condition() {
-            return V.pain < 100 && V.arousal < V.arousalmax * 0.8 && V.control >= V.controlmax * 0.3 && V.NPCList[V.lefttarget].takeItem;
+            return V.pain < 100 && V.arousal < V.arousalmax * 0.8
+            && V.control >= V.controlmax * 0.3
+            && V.NPCList[V.lefttarget].takeItem;
         }
     },
     {
@@ -20,7 +22,9 @@ const iCandyCombatActions = [
         mainType : 'Default',
         color    : 'brat',
         condition() {
-            return V.pain < 100 && V.arousal < V.arousalmax * 0.8 && V.control >= V.controlmax * 0.3 && V.NPCList[V.righttarget].takeItem;
+            return V.pain < 100 && V.arousal < V.arousalmax * 0.8
+            && V.control >= V.controlmax * 0.3
+            && V.NPCList[V.righttarget].takeItem;
         }
     }
 ];

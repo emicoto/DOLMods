@@ -200,7 +200,7 @@ const htmlPrinter = {
             let _html = `<div id='${slot}-${i}' class='pocketslot'>`;
             const img = this.itemImageResolve(item, data);
 
-            if (data && item.diff && !item.tags.includes('equip')) {
+            if (data && item.diff && !data.tags.includes('equip')) {
                 const diff = data.diff[item.diff];
                 itemname = lanSwitch(diff.displayname);
             }

@@ -210,12 +210,50 @@ const equipText = {
     }
 };
 
+const combatMsg = {
+    feedDrug : {
+        angelpowder : {
+            EN : `{0} looks at your lifeless face and finds it rather dull. So, <<He>> takes out a pink syringe and injects it directly into your body.<br>
+			<span class ='pink'>You are injected with a dose of Seraphic Euphoria.</span>`,
+
+            CN : `{0}看着你毫无声息的脸，觉得这样很无趣。于是<<He>>拿出一针粉色的针剂，直接打在了你身上。<br>
+			<span class ='pink'>你被注射了一针天使醉。</span>`
+        },
+
+        inject : {
+            EN : `{0} takes out a {1} syringe and injects it directly into your body.<br>
+			<span class ='pink'>You are injected with a dose of {1}.</span>`,
+            CN : `{0}拿出一针{0}，直接打在了你身上。<br>
+			<span class ='pink'>你被注射了一针{0}。</span>`
+        },
+
+        mouth : {
+            EN : '{0} feeds you a <span class="pink">{1}</span>.',
+            CN : '{0}往你嘴里喂了颗<span class="pink">{1}</span>。'
+        },
+
+        anus : {
+            EN : '{0} put a <span class="pink">{1}</span> into your anus.',
+            CN : '{0}往你肛门塞了颗<span class="pink">{1}</span>。'
+        },
+        
+        kiss : {
+            EN : '{0} feeds you a <span class="pink">{1}</span> through mouth to mouth as <<he>> kiss you.',
+            CN : '{0}亲吻你之余，通过嘴对嘴的方式喂了你一颗<span class="pink">{1}</span>。'
+        },
+        random : {
+            EN : '{0} feeds you a <span class="pink">{1}</span> as you gasp for breath.',
+            CN : '{0}在你喘气的空档强行喂了你一颗<span class="pink">{1}</span>。'
+        }
+    }
+};
 
 const sMsg = {
     transferMsg,
     sortOutMsg,
     stateEffects,
     equipText,
+    combatMsg,
 
     getItem : {
         EN : '<span class=\'green\'>You got {0}.</span><br>',
@@ -257,6 +295,7 @@ const sMsg = {
         CN : '{0}{1}了你{2}。'
     }
 };
+
 
 Object.defineProperties(window,{
     sMsg : { value : sMsg }

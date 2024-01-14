@@ -681,7 +681,7 @@ const iManager = {
 
         // throw the item use message and event
         if (situation?.includes('use')) {
-            msg += P.templet(sMsg.useItem, data.name, iData.useMethods(data.type, data.tags));
+            msg += P.templet(sMsg.useItem, iData.useMethods(data.type, data.tags, data.name));
 
             if (itemMsg[data.id]) {
                 msg += `<br>${lanSwitch(itemMsg[data.id])}`;

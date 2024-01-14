@@ -53,17 +53,6 @@ function iCombatActionHandle() {
     }
 }
 
-function combatCheck() {
-    const checklist = iCombat.onCheck;
-    for (let i = 0; i < checklist.length; i++) {
-        const check = checklist[i];
-        if (check.condition() && check.type == 'forceskip') {
-            R.combat.skip = true;
-            return;
-        }
-    }
-}
-
 function combatCheckBefore() {
     const whitelistnpc = ['Avery', 'Briar', 'Darryl', 'Eden', 'Harper', 'Kylar', 'Landry', 'Morgan', 'Whitney', 'Winter', 'Remy', 'Wren', 'Cheng'];
 

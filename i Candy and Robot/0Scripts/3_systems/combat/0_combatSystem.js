@@ -1,7 +1,34 @@
+/**
+ * @class combatEvent
+ * @property {string} id        // 事件ID
+ * @property {string} type      // 事件类型
+ * @property {string} actiontype// 哪个身体部位执行的行为
+ * @property {string} target    // 执行行为的目标
+ * @property {number} turns     // 行为准备到执行所需的回合数
+ * @property {number} priority  // 优先级
+ * @property {function} action  // 行为处理函数
+ * @property {function} condition// 行为是否能执行的判断函数
+ * @property {function} filter   // 行为是否在UI上可选的条件函数
+ * @property {object} feedback   // 行为反馈数据
+ * @property {string[]} tags     // 事件标签
+ * @property {number}  time      // 经过的时间
+ * @property {object}  next      // 联动事件、动作的设置
+ * @property {boolean} forceable // 条件达到时是否可以无视玩家操作而强制执行
+ * @property {boolean} autokeep  // 是否在执行完毕后自动保持
+ */
 class combatEvent {
-    constructor(config) {
-        for (const [key,value] of Object.entries(config)) {
-            this[key] = value;
+    /**
+     * @param {combatEvent} config
+     */
+    constructor(id, type, config) {
+        this.id = id;
+        this.type = type;
+        this.config = {};
+
+        if (config) {
+            for (const [key,value] of Object.entries(config)) {
+                this[key] = value;
+            }
         }
     }
     /**
@@ -9,7 +36,7 @@ class combatEvent {
      * @param {function} callback
      * @returns {combatEvent}
      */
-    setAction(callback) {
+    Action(callback) {
         this.action = callback;
         return this;
     }
@@ -20,8 +47,14 @@ class combatEvent {
      * @param {function} callback
      * @returns {combatEvent}
      */
-    setCondition(callback) {
+    Cond(callback) {
         this.condition = callback;
+        return this;
+    }
+
+    Skip(...event) {
+        this.type = 'skipcheck';
+        this.config.skipevent = event;
         return this;
     }
 
@@ -31,8 +64,23 @@ class combatEvent {
      * @param {any} content
      * @returns {combatEvent}
      */
-    setFeedback(content) {
+    Feedback(content) {
         this.feedback = content;
+        return this;
+    }
+
+    Config(display, config) {
+        this.configurable = true;
+        this.displayId = display;
+        this.config = config;
+        return this;
+    }
+
+    Next(eventId, turn = 1) {
+        this.next = {
+            id : eventId,
+            turn
+        };
         return this;
     }
 
@@ -48,18 +96,37 @@ class combatEvent {
     }
 }
 
+class combatFilter {
+    constructor(id, condition) {
+        this.id = id;
+        this.condition = condition;
+    }
+    
+    Config(name, config) {
+        this.configurable = true;
+        this.name = name;
+        this.config = config;
+        return this;
+    }
+
+    Cond(callback) {
+        this.condition = callback;
+        return this;
+    }
+}
+
 /**
  * @class combatFeedback
  * @param {object} feedback
  * @param {object} config
  * @description 战斗中的反馈文本
- * @property {{ text: object, args: object[] }} feedback
+ * @property {object} text      // 文本内容。一般为模板字符串
+ * @property {object[]} args    // 文本参数
+ * @property {function} getArgs // 获取文本参数的函数
+ * @property {string} type      // 文本类型
+ * @property {string} pos       // 文本显示位置
  */
-function combatFeedback(feedback, config) {
-    /**
-     * @type {{ text: object, args: object[] }}
-     */
-    this.feedback = feedback;
+function combatFeedback(config) {
     for (const [key, value] of Object.entries(config)) {
         this[key] = value;
     }
@@ -68,42 +135,38 @@ function combatFeedback(feedback, config) {
 /**
  * @class combatState
  * @description 战斗进程的状态
- * @property {boolean} running
- * @property {boolean} skip
- * @property {string} current
- * @property {string} event
- * @property {string} mode
+ * @property {boolean} running  // 战斗是否正在进行
+ * @property {boolean} skip     // 是否跳过运作处理
+ * @property {string} current   // 系统当前状态
+ * @property {string} event     // 处理中事件
+ * @property {string} mode      // 战斗模式
  */
-function combatState() {
+function combatState(state = 'init', event = 'onInit', mode = 'encount') {
     this.running = true;
     this.skip = false;
-    this.current = 'onInit';
-    this.event = 'onInit';
-    this.mode = 'combat';
+    this.current = state;
+    this.event = event;
+    this.mode = mode;
 }
 
 /**
  * @class combatConfig
  * @param {combatConfig} config
  * @description 战斗进程的配置
- * @property {boolean} forceskip
  * @property {string} situation
  * @property {string} enemytype
- * @property {object} next
+ * @property {combatConfig} next
  * @property {string} current
- * @property {string} prev
+ * @property {combatConfig} prev
  * @property {object} endcombat
  * @property {string[]} skipevent
  * @property {object[]} history
- * @property {function} func
- * @property {string} key
  */
 function combatConfig(config) {
     this.situation = 'rape';
     this.enemytype = 'man';
     this.next = {};
     this.current = 'turnstart';
-    this.prev = '';
     this.skipevent = [];
     this.history = [];
 
@@ -116,28 +179,34 @@ function combatConfig(config) {
  * @class turnConfig
  * @param {turnConfig} config
  * @description 回合的配置
- * @property {boolean} skip
- * @property {number} total
- * @property {number} arousal
- * @property {number} arousalmax
- * @property {string} event
- * @property {string} type
- * @property {string} enemyaction
- * @property {string} playeraction
+ * @property {boolean} skip         // 是否跳过当前回合的处理
+ * @property {number} total         // 敌人总数
+ * @property {number} arousal       // 敌人总体的兴奋度
+ * @property {number} arousalmax    // 敌人总体的最大兴奋度
+ * @property {string} event         // 当前回合的事件
+ * @property {string} prev          // 上一回合的事件
+
+ * @property {string} type          // 当前回合的类型
+ * @property {string} current       // 当前回合的状态
+ * @property {string[]} enemyaction // 敌人行为列表
+ * @property {string[]} playeraction// 玩家行为列表
+ * @property {turnConfig[]} history // 回合历史
  */
 function turnConfig(config) {
     this.skip = false;
     this.total = 0;
     this.arousal = 0;
     this.arousalmax = 0;
-    this.event = 'onInit';
-    this.type = 'turnstart';
+    this.event = 'molest';
+    this.type = 'enemyturn';
+    this.current = 'start';
 
     for (const [key, value] of Object.entries(config)) {
         this[key] = value;
     }
 }
 /**
+ * @class iCombat
  * @typedef {object} iCombat
  */
 const iCombat = {
@@ -223,7 +292,7 @@ const iCombat = {
     * @param {combatEvent} config
     * @returns {combatEvent}
     */
-    setCheck(config) {
+    Filter(config) {
         this.onCheck.push(new combatEvent(config));
         return this.onCheck[this.onCheck.length - 1];
     },
@@ -311,17 +380,19 @@ const iCombat = {
         this.config = {};
     },
 
-    pushFeedback() {
-        for (const [key, value] of Object.entries(this.feedbacks)) {
-            if (typeof value == 'string') {
-                V.addMsg += `${value}<br>`;
-            }
-            else if (typeof value == 'function') {
-                V.addMsg += `${value()}<br>`;
-            }
+    pushFeedback(msg) {
+        // 设置反馈位置
+        msg = `${msg}Msg` || 'afterMsg';
 
-            delete this.feedbacks[key];
+        for (let i = 0; i < this.feedbacks.length; i++) {
+            const { text, getArgs, args } = this.feedbacks[i];
+
+            const arg = getArgs ? getArgs() : args;
+
+            V[msg] += P.templet(text, ...arg);
         }
+
+        this.feedbacks = [];
     },
 
     initData() {
