@@ -437,37 +437,63 @@ const iCombat = {
         }, {});
     },
 
-    init() {
-        this.state = {
-            running : true,
-            skip    : false,
-            event   : 'onInit',
-            mode    : 'combat',
-            current : 'onInit'
-        };
+    getConfig(comId) {
+        return iMod.getCF(comId)
+    },
 
-        const config = {};
+    //-----------------------------------------------------------------------------
+    //
+    //   init process
+    //
+    //-----------------------------------------------------------------------------
+    /**
+     * @description 战检测是否运行特殊战斗处理
+     */
+    checkStart() {
+        const checklist = this.onCheck;
+
+        for (let i = 0; i < checklist.length; i++) {
+            const com = checklist[i];
+            const config = this.getConfig(com.id) || com.config;
+
+            if (com.condition(config)) {
+                this.state.skip = true;
+                this.state.event = com.id;
+                break;
+            }
+        }
+    },
+
+    /**
+     * @description 初始化战斗进程
+     */
+    init() {
+        this.state = new combatState();
 
         // 检查否存在需要提前进行预处理的内容
         for (const [event, command] of Object.entries(this.onInit)) {
             if (command.condition && !command.condition()) continue;
 
             // 执行预处理
-            const cfg = command.action(this);
+            const config = command.action(this, V.NPCList);
 
-            if (cfg) {
-                for (const [key, value] of Object.entries(cfg)) {
-                    config[key] = clone(value);
-                }
-            }
-
-            if (command.feedback) {
-                this.feedbacks[event] = command.feedback;
+            if (config && config.feedback) {
+                this.feedbacks.push(config.feedback);
             }
 
             if (command.forceskip || config?.forceskip) {
                 this.state.skip = true;
                 break;
+            }
+
+            if (config) {
+                for (const [key, value] of Object.entries(config)) {
+                    this.config[key] = value;
+                }
+            }
+
+            if (config?.next) {
+                this.state.event = config.next;
             }
         }
 
@@ -475,9 +501,24 @@ const iCombat = {
 
         // 初始化完毕后，执行反馈文本。
         this.pushFeedback();
-        this.config = config;
     },
 
+    //-----------------------------------------------------------------------------
+    //
+    //    temporary process handle
+    //
+    //-----------------------------------------------------------------------------
+    /**
+     * @description 临时用的战斗进程
+     */
+
+    actions() {
+        if (!this.state.running || this.state.skip) return;
+
+        // 先处理npc的行为
+        for (let n = 0; n < V.NPCList.length; n++) {
+        }
+    },
     //-----------------------------------------------------------------------------
     //
     //    main process
@@ -488,32 +529,6 @@ const iCombat = {
         if (this.state.skip) return;
 
         let next;
-
-        for (const [key, action] of Object.entries(this.onAction)) {
-            // 如果前一个事件抛出了callback，执行callback；
-            if (next?.func) {
-                next.func();
-            }
- 
-            // 如果有条件，且条件不满足，则跳过
-            if (action.condition && !action.condition()) continue;
-
-            // 如果有反馈文本，则添加到反馈文本中
-            if (action.feedback) {
-                this.feedbacks[key] = action.feedback;
-            }
-
-            // 执行行为
-            action.action(next);
-
-            // 如果有联动事件，则抛到下一个事件中
-            if (action.next) {
-                next = action.next;
-            }
-            else {
-                next = undefined;
-            }
-        }
 
         // 执行完毕后，执行反馈文本。
         this.pushFeedback();

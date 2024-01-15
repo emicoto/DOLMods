@@ -37,7 +37,6 @@ There is an old refrigerator in the corner of the right wall, where you can stor
 <<if (!$tvar.scene.passage || $tvar.scene.type == 'Scene') and $phase is 0>>
 	<<set _output to "Orphanage Garage localDescription " + setup.language>>
 	<<include _output>>
-	<br><br>
 <</if>>
 </div>
 
@@ -73,7 +72,7 @@ There is an old refrigerator in the corner of the right wall, where you can stor
 <<set $tvar.storage to 'home'>>
 <<set _storage to []>>
 <<lanSwitch "The items in storage:" "车库里的物品：">>
-<br><br>
+<br>
 
 <div id='container'>
 <<=pocketUI.storage('home')>>

@@ -1725,15 +1725,17 @@
 <</widget>>
 
 <<widget "ModOpinionIcon">>
-<<if SugarCube.Macro.has($args[0]+'OpinionIcon')>>
-    <<print '<<'+$args[0]+'OpinionIcon>>'>>
+<<set _widget to $args[0].replace(/\\s/g, '')>>
+<<if SugarCube.Macro.has(_widget+'OpinionIcon')>>
+    <<print '<<'+widget+'OpinionIcon>>'>>
 <</if>>
 <</widget>>
 
 <<widget "ModaddNPCRelationText">>
 <<print C.npc[_npc].description>>
-<<if SugarCube.Macro.has(_npc+'Opinion')>>
-    <<print '<<'+_npc+'Opinion>>'>>
+<<set _widget to _npc.replace(/\\s/g, '')>>
+<<if SugarCube.Macro.has(_widget+'Opinion')>>
+    <<print '<<'+_widget+'Opinion>>'>>
 <<else>>
     <<if C.npc[_npc].love gte $npclovehigh>>
         <<if C.npc[_npc].dom gte $npcdomhigh>>
