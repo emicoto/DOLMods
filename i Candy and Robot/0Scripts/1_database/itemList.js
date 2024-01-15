@@ -987,7 +987,7 @@ Items.addItems(iDrinks, 'drinks');
 
 const ingredients = [
     {
-        tags   : ['liquid', 'chemical', 'craft'],
+        tags   : ['liquid', 'chemical', 'craft', 'packed'],
         id     : 'blood',
         name   : ['Blood', '血液'],
         plural : 'Blood',
@@ -995,7 +995,7 @@ const ingredients = [
         num   : 1,
         price : 10000,
         size  : 'small',
-        unit  : 'pack',
+        unit  : 'ml',
 
         info : [
             'A pack of blood',
@@ -1018,7 +1018,7 @@ const ingredients = [
         ]
     },
     {
-        tags   : ['creamy', 'cooking', 'edible'],
+        tags   : ['creamy', 'cooking', 'edible', 'boxed'],
         id     : 'cream',
         name   : ['Cream', '奶油'],
         plural : 'Cream',
@@ -1038,7 +1038,7 @@ const ingredients = [
         ]
     },
     {
-        tags   : ['powder', 'cooking'],
+        tags   : ['powder', 'cooking', 'bagged'],
         id     : 'flour',
         name   : ['Flour', '面粉'],
         plural : 'Flour',
@@ -1054,7 +1054,7 @@ const ingredients = [
         ]
     },
     {
-        tags   : ['flavor', 'cooking'],
+        tags   : ['flavor', 'cooking', 'bottle'],
         id     : 'mayonaise',
         name   : ['Mayonaise', '蛋黄酱'],
         plural : 'Mayonaise',
@@ -1070,7 +1070,7 @@ const ingredients = [
         ]
     },
     {
-        tags   : ['flavor', 'cooking'],
+        tags   : ['flavor', 'cooking', 'bagged'],
         id     : 'sugar',
         name   : ['Sugar', '糖'],
         plural : 'Sugar',
@@ -1086,7 +1086,7 @@ const ingredients = [
         ]
     },
     {
-        tags   : ['flavor', 'cooking'],
+        tags   : ['flavor', 'cooking', 'bagged'],
         id     : 'salt',
         name   : ['Salt', '盐'],
         plural : 'Salt',
@@ -1102,7 +1102,7 @@ const ingredients = [
         ]
     },
     {
-        tags   : ['flavor', 'cooking'],
+        tags   : ['flavor', 'cooking', 'bottle'],
         id     : 'soysauce',
         name   : ['Soy Sauce', '酱油'],
         plural : 'Soy Sauce',
@@ -1177,7 +1177,7 @@ const Sundries = [
         type   : 'consumable',
         tags   : ['sundry', 'roll'],
         id     : 'papertowel',
-        name   : ['Roll of Paper Towel', '纸巾'],
+        name   : ['Paper Towel', '纸巾'],
         plural : 'Rolls of Paper towel',
 
         num   : 10,

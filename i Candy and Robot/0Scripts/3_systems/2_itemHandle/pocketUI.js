@@ -3,8 +3,10 @@ const pocketUI = {
     iniData(item, storage) {
         if (!item) return this.emptyItem();
         
-        const { id, uid, name, info, count, diff, unit } = item;
+        const { id, uid, name, info, count, diff } = item;
         const source = Items.get(id);
+        const unit = item.unitSize();
+
         const UIdata = {
             id,
             uid,
@@ -31,8 +33,10 @@ const pocketUI = {
         }
 
         if (storage) {
-            UIdata.count = iData.itemUnit(source, unit, count);
+            UIdata.count = iData.itemUnit(source, unit, count, 1);
         }
+
+        return UIdata;
     },
 
     emptyItem() {
@@ -66,10 +70,10 @@ const pocketUI = {
             
             if (uid !== 'none') {
                 _html += `
-        <mouse class="tooltip-tiny">
-            <img src="${img}" class="itemimg">
-            <span>${info}</span>
-        </mouse>
+            <mouse class="tooltip-tiny">
+                <img src="${img}" class="itemimg">
+                <span>${info}</span>
+            </mouse>
         </div>`;
 
                 //
@@ -84,7 +88,7 @@ const pocketUI = {
 
             // if empty or disabled on event, end at here
             if (uid == 'none' || !F.noEventRunning()) {
-                _html += '/<div>';
+                _html += '</div>';
                 html.push(_html);
                 continue;
             }
@@ -108,7 +112,7 @@ const pocketUI = {
             else if (method) {
                 _html += `
             <<link "${method}" "Actions UseItems">>
-                <<set $tvar.useItem to ["${slot}", ${i}]>>
+                <<set $tvar.useItem to ["${pos}", ${i}]>>
                     <<set $tvar.img to "${img}">>
                     <<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>
                         <<set $tvar.exitPassage to $passage>>
@@ -123,7 +127,7 @@ const pocketUI = {
 
             _html += `
             <<link "${getLan('move')}">>
-                <<set $tvar.transferItem to ["${pos}", ${i}]>>
+                <<run pocketUI.transfer("${pos}", ${i})>>
             <</link>>
             </span>`;
 
@@ -152,8 +156,10 @@ const pocketUI = {
 
         for (let i = 0; i < maxslot; i++) {
             const item = storage.select(i);
-            const UIdata = this.iniData(item);
+            const UIdata = this.iniData(item, 1);
             const { uid, name, info, count, img } = UIdata;
+            
+            if (uid !== 'none') T.storage[i] = 1;
 
             let _html = `
     <div id="storage-${i}" class="pocketslot no-numberify">
@@ -163,8 +169,8 @@ const pocketUI = {
             if (item && item.count > 1) {
                 _html += `
         <div id="slider">
-            <input type='range' min='1' max='${item.count}' value='1' step='1' oninput='T.storage[${index}] = $(this).val(); $('#sliderval-${index}').text(T.storage[${index}]);>
-            <span id='sliderval-${index}'>1</span>
+            <input type="range" min="1" max="${item.count}" value="1" step="1" oninput="T.storage[${i}] = $(this).val(); $('#sliderval-${i}').text(T.storage[${i}]);">
+            <span id='sliderval-${i}'>1</span>
         </div>`;
 
             //
@@ -198,20 +204,33 @@ const pocketUI = {
             }
 
             _html += `
-        <div id="action" class="pocketaction">
+        <div id="action" class="pocketaction">`;
+            
+            if (location.has('bag', 'cart')) {
+                _html += `
             <span class="itemaction">
-                <<link "${getLan('takehalf')}">>
-                    <<run im.takeStorage("${location}", ${index}, ${Math.floor(item.count / 2)})>>
+                <<link "${method}" "Actions UseItems">>
+                    <<set $tvar.useItem to ["${location}", ${i}]>>
+                    <<set $tvar.img to "${img}">>
+                    <<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>
+                        <<set $tvar.exitPassage to $passage>>
+                    <</if>>
+                    <<run console.log('on use check', $tvar.useItem, $tvar.img, $tvar.exitPassage)>>
+                <</link>>
+            </span>`;
+
+            //
+            }
+    
+            _html += `
+            <span class="itemaction">
+                <<link "${getLan('take')}" $passage>>
+                    <<run V.addMsg = im.takeStorage("${location}", ${i}, T.storage[${i}])>>
                 <</link>>
             </span>
             <span class="itemaction">
-                <<link "${getLan('take')}">>
-                    <<run im.takeStorage("${location}", ${index}, T.storage[${index}])>>
-                <</link>>
-            </span>
-            <span class="itemaction">
-                <<link "${getLan('clearall')}">>
-                    <<run im.drop("${location}", ${index})>>
+                <<link "${getLan('clearall')}" $passage>>
+                    <<run im.drop("${location}", ${i})>>
                 <</link>>
             </span>
         </div>`;
@@ -248,7 +267,7 @@ const pocketUI = {
 	
             if (item) {
                 const data = Items.get(item.id);
-                const img = this.itemImageResolve(item, data);
+                const img = P.itemImageResolve(item, data);
                 let onclick = ` onClick="V.addMsg += Items.get('${item.id}').onUnEquip(); SugarCube.Engine.play(V.passage)"`;
 	
                 if (!iManager.checkUnequip(item) && slot !== 'held') {
@@ -280,6 +299,45 @@ const pocketUI = {
         } */
 	
         return html.join('\n');
+    },
+
+    transfer(pos, slot) {
+        const item = Pocket.get(pos).select(slot);
+        const img = this.iniData(item, 1).img;
+        const checklist = ['bag', 'cart', 'wallet'];
+        if (V.tvar.storage) {
+            checklist.push(V.tvar.storage);
+        }
+
+        const list = checklist.reduce((result, key)=>{
+            if (im.storeable(key, pos, slot)) {
+                result.push(key);
+            }
+            return result;
+        }, []);
+
+        let html = `要将<img class='icon' src='${img}'><span class='teal'>${item.name}</span>移动到哪里？<br><br>`;
+
+        list.forEach(key => {
+            html += `
+            <span class='itemaction'>
+                <<link ${lanSwitch(iData.storage[key])} $passage>>
+                    <<run V.addMsg = im.putStorage('${key}', '${pos}', ${slot}, ${item.count})>>
+                    <<addclass '#messageBox' 'hidden'>>
+                    <<addclass '#background' 'hidden'>>
+                <</link>>
+            </span>`;
+        });
+
+        html += `
+        <span class='itemaction'>
+        <<link ${lanSwitch(['Cancel', '取消'])}>>
+            <<addclass '#messageBox' 'hidden'>>
+            <<addclass '#background' 'hidden'>>
+        <</link>>
+    </span>`;
+
+        new Wikifier(null, `<<replace #messageBox>>${html}<</replace>><<removeclass #messageBox 'hidden'>><<removeclass #background 'hidden'>>`);
     }
 };
 

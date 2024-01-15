@@ -601,6 +601,20 @@ const iCandyDataSetting = {
         misc       : 5
     },
 
+    storage : {
+        home         : ['storage','仓库'],
+        farm         : ['barn','谷仓'],
+        lockers      : ['lockers','储物柜'],
+        warehouse    : ['warehouse','仓库'],
+        apartment    : ['shelf','储物架'],
+        bushes_park  : ['bushes','灌木丛'],
+        transbin_elk : ['trashbin','垃圾桶'],
+        hideout      : ['hideout','藏身处'],
+        howllow      : ['howllow','树洞'],
+        bag          : ['bag','背包'],
+        cart         : ['cart','手推车']
+    },
+
     batchUnit : ['canned', 'bottle', 'packed', 'bagged', 'boxed', 'roll', 'set', 'box'],
 
     useMethods(type, tags) {
@@ -679,7 +693,7 @@ const iCandyDataSetting = {
         return unit;
     },
 
-    itemUnit(data, count, num) {
+    itemUnit(data, count, num, storage) {
         let text = `x${count}`;
 
         if (!num) {
@@ -702,6 +716,9 @@ const iCandyDataSetting = {
 
             if (unit1 && unit2 && unit1 != unit2) {
                 text = `${count}${unit1}(${count * num}${unit2})`;
+                if (storage) {
+                    text = `${count}${unit1}(${num}${unit2})`;
+                }
             }
             else if (unit1) {
                 text = `${count}${unit1}`;

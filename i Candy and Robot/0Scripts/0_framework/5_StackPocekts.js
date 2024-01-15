@@ -189,6 +189,15 @@ class iStack {
         const limit = iStack.getSize(this.id);
         return num - Math.clamp(this.count + num, 0, limit);
     }
+
+    /**
+     * count unit size
+     */
+    unitSize() {
+        const item = Items.get(this.id);
+        this.unit = Math.ceil(this.count / item.num)
+        return this.unit;
+    }
 }
 
 //-----------------------------------------------------------------------
@@ -290,7 +299,7 @@ class Pocket {
 	 * @returns {Pocket}
 	 */
     static get(type) {
-        if (this.list.includes(type)) {
+        if (this.list.includes(type) || type == 'wallet') {
             return V.iPockets[type];
         }
 		
@@ -364,6 +373,11 @@ class Pocket {
     // ---------------------------------------------//
     //              inventory methods              //
     // ---------------------------------------------//
+    set(prop, value) {
+        this[prop] = value;
+        return this;
+    }
+
     max() {
         if (Pocket.getMaxSlot(this.pos)) {
             this.limitsize = Pocket.getMaxSlot(this.pos);
@@ -609,7 +623,7 @@ class Pocket {
             costSlot,
             availableSlot : remainSlot,
             overflow      : costSlot - remainSlot,
-            avaliable     : costSlot <= remainSlot
+            available     : costSlot <= remainSlot
         };
 
         return result;

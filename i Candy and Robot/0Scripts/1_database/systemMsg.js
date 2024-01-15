@@ -280,6 +280,11 @@ const sMsg = {
         CN : '你从{2}拿出了{0} x {1}。'
     },
 
+    noSpace : {
+        EN : 'You have no space for {0}.',
+        CN : '你身上位置不够了。'
+    },
+
     whackdrugs_success : {
         EN : 'You did it, the {0} is knocked out of <<his>> hand, and <<he>> looks even angrier.',
         CN : '你成功了，{0}从{1}手中被打掉了，{1}看起来更加生气了。'

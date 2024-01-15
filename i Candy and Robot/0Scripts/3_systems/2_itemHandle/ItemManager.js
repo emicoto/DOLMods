@@ -513,17 +513,23 @@ const iManager = {
 
     dropOrTransfer(stack) {
         // eslint-disable-next-line no-nested-ternary
-        let storage = V.location == 'home' ? Pocket.get('home') : V.location == 'farm' ? Pocket.get('farm') : Pocket.get('lockers');
+        let storage = Pocket.get('lockers');
+        if (V.location == 'farm') {
+            storage = Pocket.get('farm');
+        }
+        else if (V.location == 'home') {
+            storage = Pocket.get('home');
+        }
 
         // 根据所在地点判断, 如果是家里或者农场，则转移至仓库
-        if (V.location.has('home', 'farm') && storage.check(clone(stack)) == true) {
+        if (V.location.has('home', 'farm') && storage.check(stack).available == true) {
             stack.index = [`storage_${V.location}` , storage.slots.length];
             storage.add(stack);
             return this.transMsg(stack);
         }
 
         // 如果所在地有储物柜，则转移到储物柜
-        if (F.hasLockers() && storage.check(clone(stack)) == true) {
+        if (F.hasLockers() && storage.check(stack).available == true) {
             stack.index = ['storage_lockers' , storage.slots.length];
             storage.add(stack);
             return this.transMsg(stack);
@@ -534,7 +540,7 @@ const iManager = {
             const [type, fullname] = F.getHideOut();
             storage = Pocket.get(fullname);
 
-            if (storage.check(clone(stack)) == true) {
+            if (storage.check(stack).available == true) {
                 stack.index = [type , storage.slots.length];
                 storage.add(stack);
                 return this.transMsg(stack);
@@ -716,37 +722,27 @@ const iManager = {
         return msg;
     },
 
-    takeSelected(type, position, amount = 1) {
+    takeSelected(type, pos, amount = 1) {
         const pocket = Pocket.get(type);
-        const item = pocket.takeSome(position, amount);
+        const item = pocket.takeSome(pos, amount);
 		
         pocket.sortOut();
 
         return item;
     },
 
-    location : {
-        home         : ['storage','仓库'],
-        farm         : ['barn','谷仓'],
-        lockers      : ['lockers','储物柜'],
-        warehouse    : ['warehouse','仓库'],
-        apartment    : ['shelf','储物架'],
-        bushes_park  : ['bushes','灌木丛'],
-        transbin_elk : ['trashbin','垃圾桶'],
-        hideout      : ['hideout','藏身处'],
-        howllow      : ['howllow','树洞']
-    },
-
-    takeStorage(type, position, amount = 1) {
-        const item = this.takeSelected(type, position, amount);
+    takeStorage(type, pos, amount = 1) {
+        let item = Pocket.get(type).select(pos);
 
         if (this.checkAvailable(item, amount).available == false) {
-            return P.templet(sMsg.noSpace);
-        };
+            return P.templet(sMsg.noSpace, item.name);
+        }
+
+        item = this.takeSelected(type, pos, amount);
 
         this.addItems(item);
         
-        return P.templet(sMsg.takeStorage, item.name, amount, this.location[position]);
+        return P.templet(sMsg.takeStorage, item.name, amount, iData.storage[type]);
     },
 
     putStorage(local, type, pos, amount = 1) {
@@ -756,7 +752,7 @@ const iManager = {
         storage.add(item);
 
         this.resetCheckmode();
-        return P.templet(sMsg.putStorage, item.name, amount, location[position]);
+        return P.templet(sMsg.putStorage, item.name, amount, iData.storage[local]);
     },
 
     storeable(type, itempos, itemindex) {

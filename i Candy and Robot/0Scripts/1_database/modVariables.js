@@ -52,7 +52,7 @@ const iPockets = {
     body : new Pocket('body', 'body', 4),
     hole : new Pocket('body', 'hole', 0),
 
-    wallet : new Pocket('equip', 'wallet', 0),
+    wallet : new Pocket('equip', 'wallet', 0).set('typelimit', 'money'),
     held   : new Pocket('equip', 'held', 0),
     bag    : new Pocket('equip', 'bag', 0),
     cart   : new Pocket('equip', 'cart', 0),

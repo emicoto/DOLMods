@@ -65,6 +65,7 @@
 <br>
 
 :: Actions HomeStorage
+<<set $tvar.storage to 'home'>>
 <<set _storage to []>>
 你打开了仓库的门。
 <br><br>

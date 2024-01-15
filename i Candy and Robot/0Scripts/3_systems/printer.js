@@ -76,7 +76,7 @@ const htmlPrinter = {
         // check if string is valid
         const isValid = function (str) {
             if (String(str) == '[object Object]' && (str.EN || str.CN)) return true;
-            return typeof str === 'string' || Array.isArray(str);
+            return typeof str === 'string' || Array.isArray(str) || typeof str === 'number';
         };
 
         const isLan = function (str) {
