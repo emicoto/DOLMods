@@ -86,8 +86,10 @@ There is an old refrigerator in the corner of the right wall, where you can stor
 :: Event Orphanage Garage Intro
 <<set _passage to 'Orphanage Garage IntroText ' + setup.language >>
 
+<<include _passage>>
+
 <<set _link to lanSwitch('Next', '继续')>>
-<<link _link 'Orphanage'>><<tiredness 60>><<run iEvent.setFlag('orphanage', 'garagesinit', 1); iEvent.unsetEvent()>><<pass 3 hour>><</link>>
+<<link _link 'Orphanage'>><<tiredness 60>><<run iEvent.setFlag('orphanage', 'garageinit', 1); iEvent.unsetEvent()>><<pass 3 hour>><</link>>
 
 :: Orphanage Garage IntroText CN
 在你来到后院时，你发现孤儿院里的小孩们正拿着扫帚拖把、锤子刷子螺丝刀等等，在车库前忙活。
