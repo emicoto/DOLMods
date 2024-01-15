@@ -56,6 +56,16 @@
                 applybefore : '\n<<ExtraLinkZone>>\n'
             }
         ],
+        Garden : [
+            {
+                src         : '<<if $alex_greenhouse gte 3>>',
+                applybefore : '\n\n\t<div id="addAfterMsg"></div>\n\t<<BeforeLinkZone>>\n\n\t'
+            },
+            {
+                src         : '<<main_hall_icon>><<link',
+                applybefore : '\n\n\t<<ExtraLinkZone>>\n\n\t'
+            }
+        ],
         'Adult Shop' : [
             {
                 src : '\t<br><br>\n<</if>>\n\n<<if $stress',

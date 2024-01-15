@@ -332,6 +332,13 @@ function iModonReady() {
     iMod.init('iModConfigs');
     iMod.init('iModVar');
     iMod.init('iModNpc');
+
+    if (iMod.getCf('language')) {
+        setup.language = iMod.getCf('language');
+    }
+    else {
+        iMod.setCf('language', setup.language);
+    }
 }
 DefineMacroS('iModonReady', iModonReady);
 

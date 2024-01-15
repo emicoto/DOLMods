@@ -309,7 +309,7 @@ const pocketUI = {
             checklist.push(V.tvar.storage);
         }
 
-        const list = checklist.reduce((result, key)=>{
+        const list = checklist.reduce((result, key) => {
             if (im.storeable(key, pos, slot)) {
                 result.push(key);
             }

@@ -135,6 +135,17 @@ iEvent.registPsg('Livestock Field River', () => {
     }, 60);
 });
 
+
+iEvent.registEvent('location',
+                   {
+                       entrypassage : 'Garden',
+                       toward       : 'Orphanage Garage Intro',
+    
+                       type    : 'Event',
+                       require : () => iEvent.getFlag('orphanage', 'garagesinit') !== 1 && iEvent.getFlag('time', 'days') >= 6 && Time.dayState == 'day'
+                   }
+);
+
 /*
 iEvent.registEvent('Passout',
 {

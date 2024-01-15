@@ -1,4 +1,4 @@
-const iCandyModVersion = "2.4.3"
+const iCandyModVersion = "2.4.4"
 const iCandyStartConfig = {
 
 };

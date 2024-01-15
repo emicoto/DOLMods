@@ -169,6 +169,7 @@ function iTimeHandle(passedSec) {
     if (day > 0 || passedSec / 86400 >= 1) {
         console.log('day process:', passedSec, day);
         dayProcess(passedSec, day, weekday);
+        iEvent.addFlag('time', 'days', 1);
     }
 
     // 每周的处理

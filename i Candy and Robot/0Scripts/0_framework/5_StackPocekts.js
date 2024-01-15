@@ -195,7 +195,7 @@ class iStack {
      */
     unitSize() {
         const item = Items.get(this.id);
-        this.unit = Math.ceil(this.count / item.num)
+        this.unit = Math.ceil(this.count / item.num);
         return this.unit;
     }
 }

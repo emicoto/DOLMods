@@ -1,8 +1,10 @@
 :: iCandy Widget Storagep [widget]
 <<widget "OpenHomeStorage">>
-<<ind>><<set _link to lanSwitch('Garages', '旧车库') + ' (00:01)'>>
-<<link _link "Actions HomeStorage">><<pass 1>><</link>>
+<<if iEvent.getFlag('orphanage', 'garageinit') is 1>>
+<<ind>><<set _link to lanSwitch('Garage', '旧车库') + ' (00:01)'>>
+<<link _link "BaseScene Orphanage Garage">><<pass 1>><</link>>
 <br><br>
+<</if>>
 <</widget>>
 
 <<widget "OpenLockers">>
@@ -17,24 +19,33 @@
 <br><br>
 <</widget>>
 
+:: Orphanage Garage localDescription CN
+你来到后院的车库，里面有一些箱子和储物架。 
+<br>
+在右手边的墙角还有有个老式冰箱，可以存放一些食材。
+<br><br>
 
-:: BaseScene HomeStorage [scene]
+:: Orphanage Garage localDescription EN
+You are in the garage at backyard. There are some boxes and shelves. 
+<br>
+There is an old refrigerator in the corner of the right wall, where you can store some food.
+<br><br>
+
+:: BaseScene Orphanage Garage [scene]
 <<set $outside to 0>><<effects>>
-
 <div id='locationdes'>
 <<if (!$tvar.scene.passage || $tvar.scene.type == 'Scene') and $phase is 0>>
-	<<set _output to "HomeStorage localDescription " + setup.language>>
+	<<set _output to "Orphanage Garage localDescription " + setup.language>>
 	<<include _output>>
 	<br><br>
 <</if>>
 </div>
 
-
 <div id='content'>
 	<<if $tvar.scene.passage>>
 		<<include $tvar.scene.passage>>
 	<<else>> <!-- if $tvar.shop is daiso -->
-		<<include 'Scene HomeStorage'>>
+		<<include 'Scene Orphanage Garage'>>
 	<</if>>
 </div>
 
@@ -58,16 +69,10 @@
 	<</link>>    
 <</if>>
 
-:: Scene HomeStorage
-你来到后院车库改成的仓库，里面有一些箱子和储物架。
-<br>
-在右手边的墙角有个老式冰箱，上面贴着一张纸条。
-<br>
-
-:: Actions HomeStorage
+:: Scene Orphanage Garage
 <<set $tvar.storage to 'home'>>
 <<set _storage to []>>
-你打开了仓库的门。
+<<lanSwitch "The items in storage:" "车库里的物品：">>
 <br><br>
 
 <div id='container'>
@@ -76,3 +81,77 @@
 
 
 <<link 'Back' 'Orphanage'>><</link>>
+
+
+:: Event Orphanage Garage Intro
+<<set _passage to 'Orphanage Garage IntroText ' + setup.language >>
+
+<<set _link to lanSwitch('Next', '继续')>>
+<<link _link 'Orphanage'>><<tiredness 60>><<run iEvent.setFlag('orphanage', 'garagesinit', 1); iEvent.unsetEvent()>><<pass 3 hour>><</link>>
+
+:: Orphanage Garage IntroText CN
+在你来到后院时，你发现孤儿院里的小孩们正拿着扫帚拖把、锤子刷子螺丝刀等等，在车库前忙活。
+<br><br>
+
+车库靠近孤儿院主楼后院，门厅后面就有出口直接到车库，只是之前都是锁着的。
+<br>
+车库很久之前就存在了，但是一直被作为仓库用，里面堆满了杂物，很久没人打理了，就连门窗都破破烂烂的。
+<br><br>
+
+你打量了下车库，发现最近明显被修缮过，门窗都换了新的，地面也重新铺了一层水泥。
+<br>
+只是里面还是很脏，杂物依在。
+<br><br>
+
+"院长说最近院内囤积的杂物太多了，总算下定决心把车库修了修，改装成了仓库。"
+<br>
+一名小孩在注意到你的到来后，向你打了个招呼并说明了情况。
+<br>
+ "我们刚换了门窗，把车库整理好后，再刷一遍墙就可以用了。"
+<br><br>
+
+你看着孩子们忙碌的身影，点了点头，便拿起垃圾袋，帮忙清理起来。
+<br>
+跟着孩子们忙活了大半天后，你们总算把车库改装好并整理干净了。
+<br><br>
+
+<span class='yellow'>你可以使用车库来存放物品了。</span>
+<br><br>
+
+:: Orphanage Garage IntroText EN
+When you come to the backyard of the orphanage, 
+you notice the children of orphanage is busy with brooms, mops, hammers, brushes, and screwdrivers in front of the garage.
+<br><br>
+
+The garage is located near the back of the orphanage's main building, 
+and there's an exit from the mainhall that leads directly to the garage, 
+but it had locked until today. 
+<br><br>
+
+The garage has been here for a long time but had been used as a storage area, filled with clutter and debris.
+Even the doors and windows were old and dilapidated.
+<br><br>
+
+You take closer inspection, then notice that the garage has get some repairs rencently.
+<br>
+The doors and windows have been replaced, and the exterior has renovated.
+<br>
+However, it's still quite dirty inside, with various debris strewn about.
+<br><br>
+
+One of the children notices your arrival and greets you, explaining the situation, 
+<br>
+"The <<=sexSwitch("Bailey", "headmistress","headmaster")>> said that there's been too much clutter in the orphanage lately, so <<nnpc_he 'Bailey'>> finally decided to fix up the garage and convert it into a storage space. "
+<br>
+"We just replaced the doors and windows, and once we clean up the inside and paint the walls, it'll be ready to use."
+<br><br>
+
+You nod in understanding and pick up a garbage bag,
+joining in to help with the cleanup. 
+<br>
+After working alongside the children for most of the day, 
+you've successfully renovated and tidied up the garage.
+<br><br>
+
+<span class='yellow'>You can use the garage to store items now.</span>
+<br><br>
