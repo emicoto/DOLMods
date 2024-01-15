@@ -75,12 +75,12 @@
         Brothel : [
             {
                 src         : '<<if $brotheljob is 1>>',
-                applybefore : '\n<div id=\"addAfterMsg\"></div>\n<<BeforeLinkZone>>\n'
+                applybefore : '\n<div id="addAfterMsg"></div>\n<<BeforeLinkZone>>\n'
             }
         ],
         'Brothel Shower' : [
             {
-                src        : '<<wash>>\n<br><br>',
+                srcmatch   : /<<wash>>[\s\S]*?<br><br>/,
                 applyafter : '<div id="addAfterMsg"></div>\n'
 	
             },
@@ -227,7 +227,7 @@
             },
             {
                 src        : '<<lakereturnjourney>>',
-                applyafter : '\n<<BeforeLinkZone>>\n'
+                applyafter : '\n\n\t<<BeforeLinkZone>>\n'
             }
         ],
         'Lake Fishing Rock' : [
@@ -266,8 +266,8 @@
                 applybefore : '\n<div id="addAfterMsg"></div>\n'
             },
             {
-                src        : '<<lakereturnjourney>>',
-                applyafter : '\n<<BeforeLinkZone>>\n'
+                src         : '<<swimicon "back">>',
+                applybefore : '\n\n<<BeforeLinkZone>>\n\n'
             }
         ],
         'Lake Shallows Ice' : [
@@ -546,7 +546,7 @@
                 to  : '<br><br><div id="addAfterMsg"></div>\n'
             },
             {
-                src         : '<<if $harpy gte 6 ',
+                srcmatch    : /<<if[\s]+\$harpy gte 6|<<if \$treasure_map/,
                 applybefore : '\n<<BeforeLinkZone>>\n'
             }
         ],
@@ -812,15 +812,15 @@
         "Women's Toilets" : [
             {
                 src         : '<<if $stress gte $stressmax>>',
-                applybefore : '<div id="addAfterMsg"></div>\n'
+                applybefore : '<div id="addAfterMsg"></div>\n\n'
             },
             {
-                src         : '\n\t\t\t<<link [[',
-                applybefore : '\n<<BeforeLinkZone>>\n'
+                src         : '<<mirroricon>><<link',
+                applybefore : '\n\n\t\t<<BeforeLinkZone>>\n\n\t\t'
             },
             {
                 src         : '<<if _store_check isnot 1>>',
-                applybefore : '\n<<ExtraLinkZone>>\n'
+                applybefore : '\n\t\t<<ExtraLinkZone>>\n\n\t\t'
             }
         ],
         'Police Station' : [
@@ -845,11 +845,7 @@
         ],
         'Prison Cell' : [
             {
-                src         : '<<link [[Settings|Asylum Settings]]>><</link>>',
-                applybefore : '<<ExtraLinkZone>>\n'
-            },
-            {
-                src         : '<<link [[设置|Asylum Settings]]>><</link>>',
+                srcmatch    : /<<link \[\[(Settings|设置)\|Prison Settings/,
                 applybefore : '<<ExtraLinkZone>>\n'
             },
             {
@@ -1272,11 +1268,7 @@
                 applybefore : '\n\t\t\tsetup.ModSocialSetting();\n\n\t\t\t'
             },
             {
-                src         : '<br>\n\t\t<span class="gold">Fame</span>',
-                applybefore : '\n\t\t<<iModStatus>>\n\t\t'
-            },
-            {
-                src         : '<br>\n\t\t<span class="gold">知名度</span>',
+                srcmatch    : /<br>[\s]+<span class="gold">(Fame|知名度)<\/span>/,
                 applybefore : '\n\t\t<<iModStatus>>\n\t\t'
             },
             {
@@ -1316,11 +1308,7 @@
         ],
         'Widgets Cabin' : [
             {
-                src         : '<<link [[Settings|Asylum Settings]]>><</link>>',
-                applybefore : '<<ExtraLinkZone>>\n'
-            },
-            {
-                src         : '<<link [[设置|Asylum Settings]]>><</link>>',
+                srcmatch    : /<<link \[\[(Settings|设置)|Cabin Settings\]\]>><<\/link>>/,
                 applybefore : '<<ExtraLinkZone>>\n'
             }
         ],
@@ -1426,13 +1414,20 @@
 	
         if (locationPassage[title]) {
             locationPassage[title].forEach(set => {
-                if (set.src) {
+                if (set.src && source.includes(set.src)) {
                     source = applysrc(source, set.src, set);
                 }
-                if (set.srcmatch) {
+                else if (set.src) {
+                    console.warn('match failed:', set.src, title);
+                }
+                if (set.srcmatch && source.match(set.srcmatch)) {
                     source = applymatch(source, set.srcmatch, set);
                 }
-                if (set.srcmatchgroup) {
+                else if (set.srcmatch) {
+                    console.warn('match failed:', set.srcmatch, title);
+                }
+
+                if (set.srcmatchgroup && source.match(set.srcmatchgroup)) {
                     const txt = source.match(set.srcmatchgroup);
                     if (txt.length > 0) {
                         for (let i = 0; i < txt.length; i++) {
@@ -1452,8 +1447,14 @@
                         }
                     }
                 }
-                if (set.srcgroup) {
+                else if (set.srcmatchgroup) {
+                    console.warn('match failed:', set.srcmatchgroup, title);
+                }
+                if (set.srcgroup && source.includes(set.srcgroup)) {
                     applygroup(source, set.srcgroup, set);
+                }
+                else if (set.srcgroup) {
+                    console.warn('match failed:', set.srcgroup, title);
                 }
             });
 			
@@ -1528,7 +1529,7 @@
 
         // 处理过的就跳过
         if (patchedPassage[title]) return passage;
-        if (source.includes('<<effects>>' === false || patchedPassage[title]) == 1) {
+        if (source.includes('<<effects>>' === false)) {
             return passage;
         }
 	
@@ -1610,13 +1611,20 @@
         console.log(typeof source, title, passage);
 	
         widgetPassage[title].forEach(set => {
-            if (set.src) {
+            if (set.src && source.includes(set.src)) {
                 source = applysrc(source, set.src, set);
             }
-            if (set.srcmatch) {
+            else if (set.src) {
+                console.warn('match failed:', set.src, title);
+            }
+            if (set.srcmatch && source.match(set.srcmatch)) {
                 srouce = applymatch(source, set.srcmatch, set);
             }
-            if (set.srcmatchgroup) {
+            else if (set.srcmatch) {
+                console.warn('match failed:', set.srcmatch, title);
+            }
+
+            if (set.srcmatchgroup && source.match(set.srcmatchgroup)) {
                 const txt = source.match(set.srcmatchgroup);
                 if (txt.length > 0) {
                     for (let i = 0; i < txt.length; i++) {
@@ -1636,8 +1644,14 @@
                     }
                 }
             }
-            if (set.srcgroup) {
+            else if (set.srcmatchgroup) {
+                console.warn('match failed:', set.srcmatchgroup, title);
+            }
+            if (set.srcgroup && source.includes(set.srcgroup)) {
                 applygroup(source, set.srcgroup, set);
+            }
+            else if (set.srcgroup) {
+                console.warn('match failed:', set.srcgroup, title);
             }
         });
 
@@ -1833,6 +1847,8 @@
         console.log(passageData);
 		
         await simpleWidgetInit(passageData);
+
+        console.log('Simple Framework patching passage...');
 
         for (const [title, passage] of passageData) {
             try {
