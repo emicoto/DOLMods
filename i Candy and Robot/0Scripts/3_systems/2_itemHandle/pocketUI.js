@@ -133,7 +133,7 @@ const pocketUI = {
 
             _html += `
             <span class='itemaction'>
-            <<link "${getLan('drop')}">>
+            <<link "${getLan('drop')}" $passage>>
                 <<run im.onRemove("${pos}", ${i})>>
             <</link>>
             </span>
