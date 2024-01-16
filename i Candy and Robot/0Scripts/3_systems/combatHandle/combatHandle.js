@@ -1,43 +1,28 @@
-function combatTest() {
-    // 循环当前NPC
-    const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter(item => !item.id.has('angel') && iCandy.getStat(item.id, 'efTimer') - V.timeStamp <= 1800);
-    for (let i = 0; i < V.NPCList.length; i++) {
-        const npc = V.NPCList[i];
+function combatHandle() {
+    if (V.combat == 0) return;
 
-        // 先初始化feed
-        if (npc.feed == undefined) {
-            npc.feed = 0;
+    if (V.combat == 1 && !iCombat.state.running) {
+        iCombat.checkStart();
+    }
+
+    if (V.combat == 1 && iCombat.state.running && !iCombat.state.skip) {
+        if (iCombat.state.current == 'init') {
+            iCombat.state.event = 'afterInit';
+            iCombat.initNPC();
         }
 
-        // 如果NPC的手为空，则有概率拿起针头or药丸
-        if ((npc.lefthand == 0 || npc.righthand == 0) && random(100) < 30) {
-            npc.takeItem = {
-                item  : drugs.random(),
-                timer : 0
-            };
-            V.afterMsg += `${P.templet(sMsg.pickDrug, npc.fullDescription, npc.takeItem.item.name)}<br>`;
+        if (iCombat.state.current == 'start') {
+            iCombat.state.current = 'running';
+            iCombat.state.event = 'process';
         }
 
-        if (npc.takenItem) {
-            // 下回合开始时，进行行为判断
-            if (npc.takenItem.timer > 1) {
-                if (V.playerAction.lefthand == 'whackdrugs' || V.playerAction.righthand == 'whackdrugs') {
-                    // 如果PC试图打掉NPC手中的物品，则有概率打掉
-                    if (random(100) < 20) {
-                        V.afterMsg += `${P.templet(sMsg.whackdrugs, npc.fullDescription, npc.takenItem.item.name)}<br>`;
-                        
-                        npc.takenItem = undefined;
-                    }
-                    // 否则，NPC有概率投喂PC
-                    else if (random(100) < 30) {
-                        V.afterMsg += `${P.templet(sMsg.feedDrug, npc.fullDescription, npc.takenItem.item.name)}<br>`;
-                        npc.feed++;
-                        npc.takenItem = undefined;
-                    }
-                }
-            }
-            npc.takenItem.timer += 1;
+        if (iCombat.state.currunt == 'running') {
+            iCombat.process();
         }
+    }
+
+    if (V.combat == 0 && iCombat.state.running) {
+        iCombat.end();
     }
 }
 

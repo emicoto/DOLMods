@@ -1,6 +1,8 @@
 
 const whitelistnpc = ['Avery', 'Briar', 'Darryl', 'Eden', 'Harper', 'Kylar', 'Landry', 'Morgan', 'Whitney', 'Winter', 'Remy', 'Wren', 'Cheng'];
 
+setup.whitelistnpc = whitelistnpc;
+
 const Filters = [
     new combatFilter('tutorial')
         .Config('新手保护', { days : 3 })
@@ -18,7 +20,7 @@ const Filters = [
         .Cond(() => V.npc.length > 0 && !V.npc.has(...whitelistnpc)),
     
     new combatFilter('location-livestock')
-        .Config('雷米农场概率', { rate : 80 })
+        .Config('雷米农场概率', { rate : 75 })
         .Cond(config => V.location == 'livestock' && random(100) < config.rate),
 
     new combatFilter('randomnpc-consensual-check')
@@ -35,29 +37,59 @@ function getNpcTrait(traits) {
     if (traits.includes('relaxed')) return 'relaxed';
     if (traits.includes('brooding')) return 'brooding';
 }
+setup.getNpcTrait = getNpcTrait;
+
+function getNNpcTrait(name) {
+    const traits = {
+        Avery   : 'dominant',
+        Briar   : 'relaxed',
+        Darryl  : 'socialble',
+        Eden    : 'relaxed',
+        Harper  : 'hypnotist',
+        Kylar   : 'lewd',
+        Landry  : 'socialble',
+        Morgan  : 'hypnotist',
+        Whitney : 'lecher',
+        Winter  : 'relaxed',
+        Remy    : 'dominant',
+        Wren    : 'socialble',
+        Cheng   : 'hypnotist'
+    };
+
+    return traits[name];
+}
+setup.getNNpcTrait = getNNpcTrait;
 
 const initEvent = [
     new combatEvent('drugpocket', 'npc')
         .Cond(npc => V.enemytype == 'man' || npc.type == 'human')
         .Config('NPCDrugItem', { dificulty : 1, maxnum : 2, noangel : false })
-        .Action((npc, config) => {
+        .Action((sys, npc, config) => {
             const rate = {
                 relaxed   : 20,
                 socialble : 30,
-                brooding  : 50,
-                lecher    : 70,
+                violent   : 40,
+                dominant  : 50,
+                brooding  : 60,
+                sadistic  : 70,
+                lewd      : 75,
+                lecher    : 80,
                 hypnotist : 100
             };
 
-            const trait = getNpcTrait(npc.trait);
+            let trait = setup.getNpcTrait(npc.trait);
             if (npc.pocket == undefined) npc.pocket = [];
+
+            if (npc.fullDescription.has(...setup.whitelistnpc)) {
+                trait = setup.getNNpcTrait(npc.fullDescription);
+            }
 
             if (random(100) < rate[trait] * config.dificulty) {
                 const drugs = Items.search('drugs', 'or', 'pill', 'inject').filter(item => !item.id.has('angel'));
                 npc.pocket = [];
                 // 为npc随机添加两款药物
                 for (let i = 0; i < config.maxnum ; i++) {
-                    const drug = drugs.random();
+                    const drug = drugs.randompop();
                     npc.pocket.push(drug);
                 }
             }
@@ -66,6 +98,14 @@ const initEvent = [
             if (npc.trait.includes('hypnotist') && !config.noangel) {
                 npc.pocket.push(Items.get('angelpowder_inject'));
             }
+
+            // 非催眠师低概率携带天使粉
+            if (!npc.trait.has('hypnotist', 'relaxed') && random(100) < 10 && !config.noangel) {
+                npc.pocket.push(Items.get('angelpowder_inject'));
+            }
+
+            // 初始化投喂的欲望值
+            npc.drugdesire = rate[trait] * config.dificulty + random(20);
         })
 ];
 
@@ -79,7 +119,15 @@ const turnStartEvent = [
                 && V.rightarm !== 'bound' && V.leftarm !== 'bound'
                 && V.leftleg !== 'bound' && V.rightleg !== 'bound'
         )
-        .Skip('feeddrug')
+        .Skip('takedrug', 'feeddrug'),
+    
+    // 检测npc是否携带药物，有则登记相关动作
+    new combatEvent('checkpocket', 'npc')
+        .Cond(npc => npc.pocket.length > 0 && !npc.handItem && npc.drugdesire <= random(100))
+        .Action(() => ({
+            enemyaction : ['takedrug', 'feeddrug']
+        }))
+
 ];
 
 const enemyAction = [

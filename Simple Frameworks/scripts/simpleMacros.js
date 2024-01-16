@@ -209,7 +209,7 @@ Macro.add('randomdata', {
             const data = datas[i];
             const rate = random(1, total);
 
-            if (config.debug) {
+            if (Config.debug) {
                 console.log('random rate:', rate, 'total:', total, 'data rate:', data.rate, 'data:', data.contents);
             }
             

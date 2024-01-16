@@ -815,7 +815,7 @@
                 applybefore : '<div id="addAfterMsg"></div>\n\n'
             },
             {
-                src         : '<<mirroricon>><<link',
+                srcmatch    : /(<<mirroricon>>|)<<link(.+)Simple Mirror/,
                 applybefore : '\n\n\t\t<<BeforeLinkZone>>\n\n\t\t'
             },
             {
@@ -1293,7 +1293,8 @@
         'Widgets Named Npcs' : [
             {
                 src : '<<relationshiptext>>',
-                to  : '<<if NamedNPC.has($NPCName[_i].nam) >= 0 or SugarCube.Macro.has($NPCName[_i].nam+"Opinion")>><<ModaddNPCRelationText>><<else>><<relationshiptext>><</if>><<if SugarCube.Macro.has($NPCName[_i].nam+"OpinionIcon")>><<ModOpinionIcon $NPCName[_i].nam>><</if>>'
+                // eslint-disable-next-line no-template-curly-in-string
+                to  : '<<if SugarCube.Macro.has(`${$NPCName[_i].nam.replace(/s/g, "")}Opinion`)>>\n\t\t<<ModaddNPCRelationText>>\n    <<else>>\n\t\t<<relationshiptext>>\n\t<</if>>\n\t<<if SugarCube.Macro.has($NPCName[_i].nam+"OpinionIcon")>>\n        <<ModOpinionIcon `"${$NPCName[_i].nam}"`>>\n\t<</if>>'
             }
         ],
         Widgets : [
@@ -1608,7 +1609,7 @@
 
         if (!widgetPassage[title]) return;
 
-        console.log(typeof source, title, passage);
+        // console.log(typeof source, title, passage);
 	
         widgetPassage[title].forEach(set => {
             if (set.src && source.includes(set.src)) {
@@ -1741,7 +1742,7 @@
 <<widget "ModOpinionIcon">>
 <<set _widget to $args[0].replace(/\\s/g, '')>>
 <<if SugarCube.Macro.has(_widget+'OpinionIcon')>>
-    <<print '<<'+widget+'OpinionIcon>>'>>
+    <<print '<<'+_widget+'OpinionIcon>>'>>
 <</if>>
 <</widget>>
 

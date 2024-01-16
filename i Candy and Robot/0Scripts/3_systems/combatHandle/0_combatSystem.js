@@ -54,7 +54,7 @@ class combatEvent {
 
     Skip(...event) {
         this.type = 'skipcheck';
-        this.config.skipevent = event;
+        this.skipevent = event;
         return this;
     }
 
@@ -126,7 +126,9 @@ class combatFilter {
  * @property {string} type      // 文本类型
  * @property {string} pos       // 文本显示位置
  */
-function combatFeedback(config) {
+function combatFeedback(id, text, config) {
+    this.id = id;
+    this.text = text;
     for (const [key, value] of Object.entries(config)) {
         this[key] = value;
     }
@@ -155,7 +157,7 @@ function combatState(state = 'init', event = 'onInit', mode = 'encount') {
  * @description 战斗进程的配置
  * @property {string} situation
  * @property {string} enemytype
- * @property {combatConfig} next
+ * @property {turnConfig[]} next
  * @property {string} current
  * @property {combatConfig} prev
  * @property {object} endcombat
@@ -165,13 +167,15 @@ function combatState(state = 'init', event = 'onInit', mode = 'encount') {
 function combatConfig(config) {
     this.situation = 'rape';
     this.enemytype = 'man';
-    this.next = {};
+    this.next = [];
     this.current = 'turnstart';
     this.skipevent = [];
     this.history = [];
 
-    for (const [key, value] of Object.entries(config)) {
-        this[key] = value;
+    if (config) {
+        for (const [key, value] of Object.entries(config)) {
+            this[key] = value;
+        }
     }
 }
 
@@ -180,9 +184,6 @@ function combatConfig(config) {
  * @param {turnConfig} config
  * @description 回合的配置
  * @property {boolean} skip         // 是否跳过当前回合的处理
- * @property {number} total         // 敌人总数
- * @property {number} arousal       // 敌人总体的兴奋度
- * @property {number} arousalmax    // 敌人总体的最大兴奋度
  * @property {string} event         // 当前回合的事件
  * @property {string} prev          // 上一回合的事件
 
@@ -190,16 +191,15 @@ function combatConfig(config) {
  * @property {string} current       // 当前回合的状态
  * @property {string[]} enemyaction // 敌人行为列表
  * @property {string[]} playeraction// 玩家行为列表
- * @property {turnConfig[]} history // 回合历史
  */
 function turnConfig(config) {
     this.skip = false;
-    this.total = 0;
-    this.arousal = 0;
-    this.arousalmax = 0;
     this.event = 'molest';
     this.type = 'enemyturn';
     this.current = 'start';
+    this.skipevent = [];
+    this.enemyaction = [];
+    this.playeraction = [];
 
     for (const [key, value] of Object.entries(config)) {
         this[key] = value;
@@ -292,87 +292,22 @@ const iCombat = {
     * @param {combatEvent} config
     * @returns {combatEvent}
     */
-    Filter(config) {
-        this.onCheck.push(new combatEvent(config));
-        return this.onCheck[this.onCheck.length - 1];
-    },
-   
-    /**
-     *
-     * @param {string} key
-     * @param {combatEvent} config
-     * @returns {combatEvent}
-     */
-    setInit(key, config) {
-        this.onInit.set(key, new combatEvent(config));
-        return this.onInit.get(key);
-    },
-    /**
-     *
-     * @param {string} key
-     * @param {combatEvent} config
-     * @returns {combatEvent}
-     */
-    setAction(key, config) {
-        this.onAction.set(key, new combatEvent(config));
-        return this.onAction.get(key);
+    add(type, ...config) {
+        if (type == 'check') {
+            this.onCheck.push(...config);
+            return;
+        }
+
+        for (let i = 0; i < config.length; i++) {
+            const com = config[i];
+            this[type].set(com.id, com);
+        }
     },
 
-    /**
-     * @param {string} key
-     * @param {combatEvent} config
-     * @returns {combatEvent}
-     * @description 敌人回合执行的事件
-     */
-    setEnemyTurn(key, config) {
-        this.onEnemyTurn.set(key, new combatEvent(config));
-        return this.onEnemyTurn.get(key);
+    regist(type, config) {
+        this[type].set(config.id, config);
+        return this[type].get(config.id);
     },
-
-    /**
-     * @param {string} key
-     * @param {combatEvent} config
-     * @returns {combatEvent}
-     * @description 玩家回合执行的事件
-     */
-    setPlayerTurn(key, config) {
-        this.onPlayerTurn.set(key, new combatEvent(config));
-        return this.onPlayerTurn.get(key);
-    },
-    
-    /**
-     * @param {string} key
-     * @param {combatEvent} config
-     * @returns {combatEvent}
-     * @description 回合开始时执行的事件
-     */
-    setTurnStart(key, config) {
-        this.onTurnStart.set(key, new combatEvent(config));
-        return this.onTurnStart.get(key);
-    },
-
-    /**
-     * @param {string} key
-     * @param {combatEvent} config
-     * @returns {combatEvent}
-     * @description 回合结束时执行的事件
-     */
-    setTurnEnd(key, config) {
-        this.onTurnEnd.set(key, new combatEvent(config));
-        return this.onTurnEnd.get(key);
-    },
-
-    /**
-     * @param {string} key
-     * @param {combatEvent} config
-     * @returns {combatEvent}
-     * @description 战斗结束时执行的事件
-     */
-    setEnd(key, config) {
-        this.onEnd.set(key, new combatEvent(config));
-        return this.onEnd.get(key);
-    },
-
 
     endCombat() {
         this.state = {};
@@ -381,17 +316,23 @@ const iCombat = {
     },
 
     pushFeedback(msg) {
+        if (this.feedbacks.length == 0) return;
+
         // 设置反馈位置
-        msg = `${msg}Msg` || 'afterMsg';
+        if (!msg) msg = 'after';
+        let mPos = `${msg}Msg`;
 
         for (let i = 0; i < this.feedbacks.length; i++) {
-            const { text, getArgs, args } = this.feedbacks[i];
+            const { text, getArgs, args, pos } = this.feedbacks[i];
 
-            const arg = getArgs ? getArgs() : args;
+            const arg =  getArgs?.() || args;
+            if (pos) mPos = `${pos}Msg`;
+            else mPos = `${msg}Msg`;
 
-            V[msg] += P.templet(text, ...arg);
+            V[mPos] += P.templet(text, ...arg);
         }
 
+        // 清空反馈列表
         this.feedbacks = [];
     },
 
@@ -438,7 +379,7 @@ const iCombat = {
     },
 
     getConfig(comId) {
-        return iMod.getCF(comId)
+        return iMod.getCF(comId);
     },
 
     //-----------------------------------------------------------------------------
@@ -446,23 +387,6 @@ const iCombat = {
     //   init process
     //
     //-----------------------------------------------------------------------------
-    /**
-     * @description 战检测是否运行特殊战斗处理
-     */
-    checkStart() {
-        const checklist = this.onCheck;
-
-        for (let i = 0; i < checklist.length; i++) {
-            const com = checklist[i];
-            const config = this.getConfig(com.id) || com.config;
-
-            if (com.condition(config)) {
-                this.state.skip = true;
-                this.state.event = com.id;
-                break;
-            }
-        }
-    },
 
     /**
      * @description 初始化战斗进程
@@ -509,22 +433,146 @@ const iCombat = {
     //
     //-----------------------------------------------------------------------------
     /**
+     * @description 检测是否运行特殊战斗处理
+     */
+    checkStart() {
+        const checklist = this.onCheck;
+        this.state = new combatState();
+
+        for (let i = 0; i < checklist.length; i++) {
+            const com = checklist[i];
+            const config = this.getConfig(com.id) || com.config;
+
+            if (com.condition(config)) {
+                this.state.skip = true;
+                this.state.event = `${com.id}-skip`;
+                break;
+            }
+        }
+    },
+
+    initConfig(config) {
+        // 最后统一处理设置，确定战斗进程的配置
+        this.config = new combatConfig(config);
+        this.config.enemytype = V.enemytype;
+        
+        // 更新situation
+        if (V.enemynomax >= 2 && !V.consensual) {
+            this.config.situation = 'gangbang';
+        }
+        else if (V.enemynomax >= 2) {
+            this.config.situation = 'groupsex';
+        }
+        else if (V.consensual) {
+            this.config.situation = 'sex';
+        }
+
+        if (V.npc.length > 0) {
+            this.config.situation += '-NamedNPC';
+        }
+
+        this.state.turns = 0;
+    },
+
+    initNPC() {
+        const configs = {};
+
+        for (let i = 0; i < V.NPCList.length; i++) {
+            const npc = V.NPCList[i];
+            if (npc.active !== 'active') continue;
+
+            for (let k = 0; k < this.onInit.length; k++) {
+                const com = this.onInit[k];
+                if (com.condition && !com.condition(npc)) continue;
+
+                const option = this.getConfig(com.id) || com.config;
+
+                // 执行预处理
+                const config = com.action(this, npc, option);
+
+                // 如果有反馈文本，则添加到反馈列表中
+                if (config && config.feedback) {
+                    this.feedbacks.push(config.feedback);
+                    delete config.feedback;
+                }
+
+                // 如果有配置，则添加到配置列表中
+                if (config) {
+                    configs[com.id] = config;
+                }
+            }
+        }
+
+        this.initConfig(configs);
+        // 初始化完毕后，执行反馈文本。
+        this.pushFeedback('add');
+    },
+
+    startTurn() {
+        this.state.turns += 1;
+
+        this.turn = new turnConfig();
+
+        const turnstart = Array.from(this.onTurnStart.values());
+        for (let i = 0; i < turnstart.length; i++) {
+            const com = turnstart[i];
+            const config = this.getConfig(com.id) || com.config;
+
+            if (com.condition && !com.condition(config)) continue;
+            // 执行预处理
+            const result = com.action(this, config);
+
+            if (result && result.feedback) {
+                this.feedbacks.push(result.feedback);
+            }
+            
+            if (result?.skipevent) {
+                this.turn.skipevent.push(...result.skipevent);
+            }
+
+            if (result?.enemyaction) {
+                this.turn.enemyaction.push(...result.enemyaction);
+            }
+
+            if (result?.playeraction) {
+                this.turn.playeraction.push(...result.playeraction);
+            }
+        }
+
+        // 初始化完毕后，执行反馈文本。
+        this.pushFeedback();
+    },
+    /**
      * @description 临时用的战斗进程
      */
 
-    actions() {
-        if (!this.state.running || this.state.skip) return;
-
-        // 先处理npc的行为
-        for (let n = 0; n < V.NPCList.length; n++) {
+    process() {
+        // 记录前一回合的事件
+        if (this.turn.current) {
+            this.config.history.push(this.turn);
         }
+
+        // 回合开始时的预处理
+        this.startTurn();
+
+        // 先执行玩家回合，对玩家的输入进行处理
+        this.playerTurn();
+
+        // 玩家回合结束后，执行敌人回合
+        this.enemyTurn();
+
+        // 检测战斗中事件
+        this.actionEvent();
+
+        // 回合结束时的预处理
+        this.endTurn();
     },
     //-----------------------------------------------------------------------------
     //
     //    main process
     //
     //-----------------------------------------------------------------------------
-    process() {
+    mainProcess() {
         if (!this.state.running) return;
         if (this.state.skip) return;
 

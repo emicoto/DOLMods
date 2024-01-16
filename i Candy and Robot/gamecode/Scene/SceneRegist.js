@@ -142,7 +142,7 @@ iEvent.registEvent('location',
                        toward       : 'Orphanage Garage Intro',
     
                        type    : 'Event',
-                       require : () => iEvent.getFlag('orphanage', 'garagesinit') !== 1 && iEvent.getFlag('time', 'days') >= 6 && Time.dayState == 'day'
+                       require : () => !iEvent.getFlag('orphanage', 'garageinit') && iEvent.getFlag('time', 'days') >= 6 && Time.dayState == 'day'
                    }
 );
 

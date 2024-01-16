@@ -1,4 +1,4 @@
-const frameworkversion = "1.10.0"
+const frameworkversion = "1.10.1"
 
 window.simpleFrameworks = {
     version    : frameworkversion,
