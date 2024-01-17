@@ -632,7 +632,7 @@ const iCandyDataSetting = {
         if (tags.includes('cream')) {
             methods = ['apply', '涂抹'];
         }
-        if (type == 'medicine') {
+        if (type == 'medicine' || tags.includes('medicine')) {
             methods = ['take', '服用'];
         }
         if (type == 'foods' || tags.includes('edible')) {

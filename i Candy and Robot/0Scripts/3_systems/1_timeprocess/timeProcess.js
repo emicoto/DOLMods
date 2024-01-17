@@ -115,6 +115,13 @@ Save.onLoad.add(data => {
 });
 
 Time.pass = function (sec) {
+    let passtime = sec;
+
+    // 如果没有被更长的遭遇战调整过，则按照本MOD内的设定跑
+    if (V.combat == 1 && passtime == 10) {
+        passtime = Math.clamp(60 * R.config.combatTime, 60, 300);
+    }
+
     const prevDate = new DateTime(V.startDate + V.timeStamp);
     const fragment = oldPass(sec) || '';
     const currentDate = Time.date;

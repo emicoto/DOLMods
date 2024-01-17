@@ -227,3 +227,23 @@ ps.tattoo's ModShopZone is location at Tattoo Choice
 <<widget "ModShopZone">>
     
 <</widget>>
+
+<<widget "iModSettingsButton">>
+	<div @class="_selectedSettings is 'mods' ? 'gold buttonStartSelected' : 'buttonStart'" >
+		<<button "Mod Settings">>
+			<<set _selectedSettings to "mods">>
+			<<replace #settingsDiv>><<iModSettings>><</replace>>
+			<<replace #settingsExit>><<settingsExit>><</replace>>
+		<</button>>
+	</div>
+<</widget>>
+
+<<widget "iModSettings">>
+<div class="solidBorderContainer settings-container">
+<i><<=lanSwitch(
+	'All the settings of <span class="gold">mods</span>.',
+	'所有<span class="gold">模组</span>的设置。'
+)>></i>
+</div>
+<hr>
+<</widget>>

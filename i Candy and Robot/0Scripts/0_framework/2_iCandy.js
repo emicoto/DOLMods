@@ -48,51 +48,43 @@ const iCandy = {
         return false;
     },
 
-    getStat(item, prop) {
+    resovle(type, item) {
         const general = ['aphrod', 'alcohol', 'nicotine'];
+        let key = 'drugStates';
+        if (type == 'flag') key = 'drugFlags';
+
         if (general.includes(item)) {
-            return prop ? R.drugStates.general[item][prop] : R.drugStates.general[item];
+            return R[key].general[item];
         }
 
         if (this.checkStat(item)) {
-            return prop ? R.drugStates.drugs[item][prop] : R.drugStates.drugs[item];
+            return R[key].drugs[item];
         }
+    },
+
+    getStat(item, prop) {
+        const stats = this.resovle('',item);
+        if (!stats) return;
+
+        return prop ? stats[prop] : stats;
     },
     setStat(item, prop, value) {
-        const general = ['aphrod', 'alcohol', 'nicotine'];
-        if (general.includes(item)) {
-            R.drugStates.general[item][prop] = value;
-            return R.drugStates.general[item][prop];
-        }
-        if (this.checkStat(item)) {
-            R.drugStates.drugs[item][prop] = value;
-            return R.drugStates.drugs[item][prop];
-        }
-    },
-    setValue(item, prop, value) {
-        const general = ['aphrod', 'alcohol', 'nicotine'];
-        if (general.includes(item)) {
-            R.drugStates.general[item][prop] = value;
-            return R.drugStates.general[item][prop];
-        }
+        const stats = this.resovle('',item);
+        if (!stats) return;
 
-        if (this.checkStat(item)) {
-            R.drugStates.drugs[item][prop] = value;
-            return R.drugStates.drugs[item][prop];
-        }
+        stats[prop] = value;
+        return stats[prop];
     },
 
-    addValue(item, prop, value) {
-        const general = ['aphrod', 'alcohol', 'nicotine'];
-        if (general.includes(item)) {
-            R.drugStates.general[item][prop] += value;
-            return R.drugStates.general[item][prop];
+    addStat(item, prop, value) {
+        const stats = this.resovle('',item);
+        if (stats[prop] == undefined) {
+            stats[prop] = value;
         }
-		
-        if (this.checkStat(item)) {
-            R.drugStates.drugs[item][prop] += value;
-            return R.drugStates.drugs[item][prop];
+        else {
+            stats[prop] += value;
         }
+        return stats[prop];
     },
 
     take(item, value) {
@@ -109,27 +101,29 @@ const iCandy = {
     },
 
     setFlag(item, prop, value) {
-        const general = ['aphrod', 'alcohol', 'nicotine'];
-        if (general.includes(item)) {
-            R.drugFlags.general[item][prop] = value;
-            return R.drugFlags.general[item][prop];
-        }
+        const flags = this.resovle('flag', item);
+        if (!flags) return;
 
-        if (this.checkStat(item)) {
-            R.drugFlags.drugs[item][prop] = value;
-            return R.drugFlags.drugs[item][prop];
-        }
+        flags[prop] = value;
+        return flags[prop];
     },
 
     getFlag(item, prop) {
-        const general = ['aphrod', 'alcohol', 'nicotine'];
-        if (general.includes(item)) {
-            return prop ? R.drugFlags.general[item][prop] : R.drugFlags.general[item];
-        }
+        const flags = this.resovle('flag', item);
+        if (!flags) return;
 
-        if (this.checkStat(item)) {
-            return prop ? R.drugFlags.drugs[item][prop] : R.drugFlags.drugs[item];
+        return prop ? flags[prop] : flags;
+    },
+
+    addFlag(item, prop, value) {
+        const flags = this.resovle('flag', item);
+        if (flags[prop] == undefined) {
+            flags[prop] = value;
         }
+        else {
+            flags[prop] += value;
+        }
+        return flags[prop];
     },
 
     setEquipEf(efId) {

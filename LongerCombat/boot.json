@@ -1,6 +1,6 @@
 {
   "name": "LongerCombat",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "styleFileList": [],
   "scriptFileList_inject_early": [
     "registLC.js"
@@ -22,9 +22,12 @@
       "modVersion": "1.0.0",
       "params": [
         {
-          "passage": "PassageFooter",
-          "findString": "<div id=\"gameVersionDisplay\">\n",
-          "replace": "<<longerCombat>>\n\n<div id=\"gameVersionDisplay\">\n"
+          "passage": " Widgets Effects",
+          "findString": "<<pass 10 seconds>>",
+          "replace": "<<set _timepass = iMod.getCf('longerCombat').time>><<pass _timepass>>"
+        },
+        {
+
         }
       ]
     }

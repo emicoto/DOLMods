@@ -209,7 +209,8 @@ function longerCombatInit() {
             midEjac   : true,
             ejacRate  : 80,
             moreRate  : 25,
-            moreTimes : 3
+            moreTimes : 3,
+            time      : 1
         });
 
         delete V.iModConfigs.longerMult;

@@ -4,6 +4,18 @@
 <<ind>><<set _link to lanSwitch('Garage', '旧车库') + ' (00:01)'>>
 <<link _link "BaseScene Orphanage Garage">><<pass 1>><</link>>
 <br><br>
+<<else>>
+	<<=lanSwitch(
+		"The end of the corridor has a door with the words 'Old Garage' on it. But the door is locked.",
+		"走廊尽头有一扇门，门上写着“旧车库”。但是门是锁着的。"
+	)>>	
+	<<if Time.dayState is 'day'>>
+		<<=lanSwitch(
+			"You hear someone working in the backyard.",
+			"你听到后院里有人在忙活。"
+		)>>
+	<</if>>
+	<br><br>
 <</if>>
 <</widget>>
 

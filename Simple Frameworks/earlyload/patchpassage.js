@@ -1286,6 +1286,10 @@
 
         'Widgets Settings' : [
             {
+                src         : '<div @class="_selectedSettings is \'gallery\'',
+                applybefore : '\n\t\t<<iModSettingsButton>>\n\t\t'
+            },
+            {
                 src : '$NPCName[_npcId].nam',
                 to  : '$NPCName[_npcId].displayname'
             }
@@ -1294,7 +1298,7 @@
             {
                 src : '<<relationshiptext>>',
                 // eslint-disable-next-line no-template-curly-in-string
-                to  : '<<if SugarCube.Macro.has(`${$NPCName[_i].nam.replace(/s/g, "")}Opinion`)>>\n\t\t<<ModaddNPCRelationText>>\n    <<else>>\n\t\t<<relationshiptext>>\n\t<</if>>\n\t<<if SugarCube.Macro.has($NPCName[_i].nam+"OpinionIcon")>>\n        <<ModOpinionIcon `"${$NPCName[_i].nam}"`>>\n\t<</if>>'
+                to  : '<<set _wname to $NPCName[_i].nam.replace(/s/g, "")>>\n\n<<if SugarCube.Macro.has(_wname + "Opinion")>>\n\t\t<<ModaddNPCRelationText>>\n\t<<else>>\n\t\t<<relationshiptext>>\n\t<</if>>\n\t<<if SugarCube.Macro.has(_wname+"OpinionIcon")>>\n\t\t<<ModOpinionIcon `$NPCName[_i].nam`>>\n\t<</if>>'
             }
         ],
         Widgets : [
@@ -1740,10 +1744,22 @@
 <</widget>>
 
 <<widget "ModOpinionIcon">>
-<<set _widget to $args[0].replace(/\\s/g, '')>>
-<<if SugarCube.Macro.has(_widget+'OpinionIcon')>>
-    <<print '<<'+_widget+'OpinionIcon>>'>>
-<</if>>
+    <<set _widget to $args[0].replace(/\\s/g, '')>>
+    <<run console.log($args[0], _widget)>>
+    <<if SugarCube.Macro.has(_widget+'OpinionIcon')>>
+        <<print '<<'+_widget+'OpinionIcon>>'>>
+    <</if>>
+<</widget>>
+
+<<widget "iModSettingsButton">>
+    <div id='modSettingButton' @class="_selectedSettings is 'mods' ? 'gold buttonStartSelected' : 'buttonStart'" >
+    <<button "Mod Settings">>
+        <<set _selectedSettings to "mods">>
+        <<replace #settingsOptions>><<settingsOptions>><</replace>>
+        <<replace #settingsDiv>><<iModSettings>><</replace>>
+        <<replace #settingsExit>><<settingsExit>><</replace>>
+    <</button>>
+    </div>
 <</widget>>
 
 <<widget "ModaddNPCRelationText">>

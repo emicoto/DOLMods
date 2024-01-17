@@ -1,4 +1,4 @@
-
+/*
 $(document).on(':passageinit', () => {
     if (!V) return;
     console.log('check money on init:', V.money);
@@ -54,3 +54,32 @@ function checkMoneyFunc() {
     return V.money / 100;
 }
 DefineMacroS('checkMoneyFunc', checkMoneyFunc);
+*/
+
+function testCombat() {
+    console.log('combat check:', V.combat);
+    
+    if (V.combat && V.combatturn == undefined) {
+        V.combatturn = 0;
+        console.log('combat start:', V.combatturn, V.NPCList, V.enemyarousal, V.enemyarousalmax, V.enemyhealth, V.enemyhealthmax);
+    }
+
+    if (V.combat) {
+        V.combatturn++;
+    }
+
+    console.log('combat turn:', V.combatturn);
+
+    if (V.enemyarousal >= V.enemyarousalmax || V.enemyhealth <= 0 || V.finish || T.combatend) {
+        console.log('combat turnning end:', V.combatturn, V.combat,  V.enemyarousal, V.enemyarousalmax, V.enemyhealth, V.enemyhealthmax, V.finish, T.combatend);
+    }
+
+    if (!V.combat) {
+        console.log('combat end:', V.combatturn, V.combat);
+        V.combatturn = undefined;
+    }
+
+    return '';
+}
+
+DefineMacroS('testCombat', testCombat);

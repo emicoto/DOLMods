@@ -54,7 +54,7 @@ class combatEvent {
 
     Skip(...event) {
         this.type = 'skipcheck';
-        this.skipevent = event;
+        this.skipEvent = event;
         return this;
     }
 
@@ -69,9 +69,8 @@ class combatEvent {
         return this;
     }
 
-    Config(display, config) {
+    Config(config) {
         this.configurable = true;
-        this.displayId = display;
         this.config = config;
         return this;
     }
@@ -81,6 +80,16 @@ class combatEvent {
             id : eventId,
             turn
         };
+        return this;
+    }
+
+    EnemyAction(...action) {
+        this.enemyAction = action;
+        return this;
+    }
+
+    EventAction(...action) {
+        this.eventAction = action;
         return this;
     }
 
@@ -102,9 +111,8 @@ class combatFilter {
         this.condition = condition;
     }
     
-    Config(name, config) {
+    Config(config) {
         this.configurable = true;
-        this.name = name;
         this.config = config;
         return this;
     }
@@ -113,12 +121,15 @@ class combatFilter {
         this.condition = callback;
         return this;
     }
+
+    set(prop, value) {
+        this[prop] = value;
+        return this;
+    }
 }
 
 /**
  * @class combatFeedback
- * @param {object} feedback
- * @param {object} config
  * @description 战斗中的反馈文本
  * @property {object} text      // 文本内容。一般为模板字符串
  * @property {object[]} args    // 文本参数
@@ -126,12 +137,11 @@ class combatFilter {
  * @property {string} type      // 文本类型
  * @property {string} pos       // 文本显示位置
  */
-function combatFeedback(id, text, config) {
-    this.id = id;
+function combatFeedback(text) {
     this.text = text;
-    for (const [key, value] of Object.entries(config)) {
-        this[key] = value;
-    }
+    this.args = [];
+    this.type = 'message';
+    this.pos = 'add';
 }
 
 /**
@@ -197,12 +207,15 @@ function turnConfig(config) {
     this.event = 'molest';
     this.type = 'enemyturn';
     this.current = 'start';
-    this.skipevent = [];
-    this.enemyaction = [];
-    this.playeraction = [];
+    this.skipEvent = [];
+    this.enemyAction = [];
+    this.playerAction = [];
+    this.eventAction = [];
 
-    for (const [key, value] of Object.entries(config)) {
-        this[key] = value;
+    if (config) {
+        for (const [key, value] of Object.entries(config)) {
+            this[key] = value;
+        }
     }
 }
 /**
@@ -313,6 +326,7 @@ const iCombat = {
         this.state = {};
         this.feedbacks = [];
         this.config = {};
+        delete this.temp;
     },
 
     pushFeedback(msg) {
@@ -379,54 +393,8 @@ const iCombat = {
     },
 
     getConfig(comId) {
-        return iMod.getCF(comId);
+        return iMod.getCf(comId);
     },
-
-    //-----------------------------------------------------------------------------
-    //
-    //   init process
-    //
-    //-----------------------------------------------------------------------------
-
-    /**
-     * @description 初始化战斗进程
-     */
-    init() {
-        this.state = new combatState();
-
-        // 检查否存在需要提前进行预处理的内容
-        for (const [event, command] of Object.entries(this.onInit)) {
-            if (command.condition && !command.condition()) continue;
-
-            // 执行预处理
-            const config = command.action(this, V.NPCList);
-
-            if (config && config.feedback) {
-                this.feedbacks.push(config.feedback);
-            }
-
-            if (command.forceskip || config?.forceskip) {
-                this.state.skip = true;
-                break;
-            }
-
-            if (config) {
-                for (const [key, value] of Object.entries(config)) {
-                    this.config[key] = value;
-                }
-            }
-
-            if (config?.next) {
-                this.state.event = config.next;
-            }
-        }
-
-        if (this.state.skip) return;
-
-        // 初始化完毕后，执行反馈文本。
-        this.pushFeedback();
-    },
-
     //-----------------------------------------------------------------------------
     //
     //    temporary process handle
@@ -443,6 +411,8 @@ const iCombat = {
             const com = checklist[i];
             const config = this.getConfig(com.id) || com.config;
 
+            console.log('check:', com.id, config, com.condition(config));
+
             if (com.condition(config)) {
                 this.state.skip = true;
                 this.state.event = `${com.id}-skip`;
@@ -451,9 +421,41 @@ const iCombat = {
         }
     },
 
-    initConfig(config) {
+    init() {
+        this.initNPC();
+        this.initConfig();
+        // 初始化完毕后，执行反馈文本。
+        this.pushFeedback('add');
+    },
+
+    initNPC() {
+        for (let i = 0; i < V.NPCList.length; i++) {
+            const npc = V.NPCList[i];
+            if (!npc.active || npc.active !== 'active') continue;
+            console.log('init npc:', npc, npc.name);
+
+            const list = Array.from(this.onInit.values());
+            for (let k = 0; k < list.length; k++) {
+                const com = list[k];
+                if (!com) continue;
+
+                const config = this.getConfig(com.id) || com.config;
+                if (com.condition && !com.condition(npc, config)) continue;
+
+                // 执行预处理
+                const feedback = com?.action(npc, config);
+
+                // 如果有反馈文本，则添加到反馈列表中
+                if (feedback) {
+                    this.feedbacks.push(feedback);
+                }
+            }
+        }
+    },
+
+    initConfig() {
         // 最后统一处理设置，确定战斗进程的配置
-        this.config = new combatConfig(config);
+        this.config = new combatConfig();
         this.config.enemytype = V.enemytype;
         
         // 更新situation
@@ -474,73 +476,137 @@ const iCombat = {
         this.state.turns = 0;
     },
 
-    initNPC() {
-        const configs = {};
 
-        for (let i = 0; i < V.NPCList.length; i++) {
-            const npc = V.NPCList[i];
-            if (npc.active !== 'active') continue;
-
-            for (let k = 0; k < this.onInit.length; k++) {
-                const com = this.onInit[k];
-                if (com.condition && !com.condition(npc)) continue;
-
-                const option = this.getConfig(com.id) || com.config;
-
-                // 执行预处理
-                const config = com.action(this, npc, option);
-
-                // 如果有反馈文本，则添加到反馈列表中
-                if (config && config.feedback) {
-                    this.feedbacks.push(config.feedback);
-                    delete config.feedback;
-                }
-
-                // 如果有配置，则添加到配置列表中
-                if (config) {
-                    configs[com.id] = config;
-                }
-            }
-        }
-
-        this.initConfig(configs);
-        // 初始化完毕后，执行反馈文本。
-        this.pushFeedback('add');
-    },
-
-    startTurn() {
+    turnStart() {
         this.state.turns += 1;
 
         this.turn = new turnConfig();
 
-        const turnstart = Array.from(this.onTurnStart.values());
+        // 初始化全局回合事件
+        const turnstart = Array.from(this.onTurnStart.values()).filter(com => com.type !== 'npc');
+        
         for (let i = 0; i < turnstart.length; i++) {
             const com = turnstart[i];
             const config = this.getConfig(com.id) || com.config;
 
             if (com.condition && !com.condition(config)) continue;
             // 执行预处理
-            const result = com.action(this, config);
-
-            if (result && result.feedback) {
-                this.feedbacks.push(result.feedback);
+            let feedback;
+            if (typeof com.action == 'function') {
+                feedback = com.action(this.turn, config);
             }
             
-            if (result?.skipevent) {
-                this.turn.skipevent.push(...result.skipevent);
+            // 如果有反馈文本，则添加到反馈列表中
+            if (feedback) {
+                this.feedbacks.push(feedback);
             }
 
-            if (result?.enemyaction) {
-                this.turn.enemyaction.push(...result.enemyaction);
+            // regist the turn action and event
+            const list = ['skipEvent', 'enemyAction', 'playerAction', 'eventAction'];
+            for (let k = 0; k < list.length; k++) {
+                const key = list[k];
+                if (com[key]) this.turn[key].push(...com[key]);
             }
+        }
 
-            if (result?.playeraction) {
-                this.turn.playeraction.push(...result.playeraction);
+        // 初始化npc回合事件，并获取npc的行为
+        const npcstart = Array.from(this.onTurnStart.values()).filter(com => com.type === 'npc');
+
+        for (let i = 0; i < npcstart.length; i++) {
+            const com = npcstart[i];
+            const config = this.getConfig(com.id) || com.config;
+
+            for (let n = 0; n < V.NPCList.length; n++) {
+                const npc = V.NPCList[n];
+                if (npc.active !== 'active') continue;
+
+                if (!npc.action) npc.action = [];
+
+                console.log('npc start:', com.id, npc, config, com.condition(npc, config));
+
+                if (com.condition && !com.condition(npc, config)) continue;
+                // 执行预处理
+                let feedback;
+                if (typeof com.action === 'function') {
+                    feedback = com.action(this.turn, npc, config);
+                }
+
+                // 如果有反馈文本，则添加到反馈列表中
+                if (feedback) {
+                    this.feedbacks.push(feedback);
+                }
+
+                // regist the turn action and event
+                const list = ['skipEvent', 'eventAction'];
+                for (let k = 0; k < list.length; k++) {
+                    const key = list[k];
+                    if (com[key]) this.turn[key].push(...com[key]);
+                }
+
+                if (com.enemyAction) {
+                    console.log('npc action:', com.enemyAction);
+                    npc.action.push(...com.enemyAction);
+                }
             }
         }
 
         // 初始化完毕后，执行反馈文本。
         this.pushFeedback();
+    },
+
+    playerTurn() {
+        const list = ['anus', 'vagina', 'penis', 'feet', 'left', 'right', 'chest', 'thigh', 'tail', 'mouth'];
+
+        list.forEach(part => {
+            const actpart = `${part}action`;
+            const act = V[actpart];
+            const npc = V.NPCList[`${part}target`];
+
+            console.log('on player turn:', actpart, act, npc);
+
+            const com = this.onPlayerTurn.get(act);
+            if (com) {
+                const config = this.getConfig(com.id) || com.config;
+                action.action(this.turn, npc, part, config);
+            }
+        });
+    },
+
+    enemyTurn() {
+        for (let n = 0; n < V.NPCList.length; n++) {
+            const npc = V.NPCList[n];
+
+            if (npc.active !== 'active' || !npc.active) continue;
+            if (npc.action.length == 0) continue;
+
+            const list = npc.action;
+            
+            for (let l = 0; l < list.length; l++) {
+                const com = this.onEnemyTurn.get(list[l]);
+                const config = this.getConfig(com.id) || com.config;
+                if (!com || com.condition(npc, config)) continue;
+
+                // 执行动作处理
+                let feedback;
+                if (typeof com.action === 'function') {
+                    feedback = com.action(this.turn, npc, config);
+                }
+
+                // 如果有反馈文本，则添加到反馈列表中
+                if (feedback) {
+                    this.feedbacks.push(feedback);
+                }
+            }
+
+            // 处理完后，清空npc的行为列表
+            npc.action = [];
+        }
+    },
+
+    actionEvent() {
+    },
+
+    endTurn() {
     },
     /**
      * @description 临时用的战斗进程
@@ -566,24 +632,15 @@ const iCombat = {
 
         // 回合结束时的预处理
         this.endTurn();
-    },
-    //-----------------------------------------------------------------------------
-    //
-    //    main process
-    //
-    //-----------------------------------------------------------------------------
-    mainProcess() {
-        if (!this.state.running) return;
-        if (this.state.skip) return;
-
-        let next;
-
-        // 执行完毕后，执行反馈文本。
-        this.pushFeedback();
     }
 };
 
 
 Object.defineProperties(window, {
-    iCombat : { value : iCombat, writable : false }
+    iCombat      : { value : iCombat, writable : false },
+    combatEvent  : { value : combatEvent, writable : false },
+    combatFilter : { value : combatFilter, writable : false },
+    combatState  : { value : combatState, writable : false },
+    combatConfig : { value : combatConfig, writable : false },
+    turnConfig   : { value : turnConfig, writable : false }
 });

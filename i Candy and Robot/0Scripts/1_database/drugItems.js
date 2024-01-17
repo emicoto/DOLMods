@@ -22,12 +22,21 @@ function onUseDrags(enemy) {
 
 
     if (tags.has('risky', 'strong', 'super', 'immediate')) {
-        iCandy.setValue(id, 'efTimer', V.timeStamp + this.hours * 60 * 60);
+        let totaltime = V.timeStamp + this.hours * 60 * 60;
+
+        // 连续使用时会延长药效，但会衰减至最低值
+        if (iCandy.getStat(id, 'efTimer') > V.timeStamp) {
+            const mult = Math.max(1 - iCandy.getStat(id, 'eftaken') * 0.1, 0.1);
+            totaltime = iCandy.getStat(id, 'efTimer') + this.hours * 30 * 30 * mult;
+            iCandy.addStat(id, 'eftaken', 1);
+        }
+
+        iCandy.setStat(id, 'efTimer', totaltime);
     }
 
     if (iCandy.checkStat(id)) {
-        iCandy.addValue(id, 'taken', 1);
-        iCandy.setValue(id, 'lastTime', V.timeStamp);
+        iCandy.addStat(id, 'taken', 1);
+        iCandy.setStat(id, 'lastTime', V.timeStamp);
 
         const take = iCandy.getStat(id, 'taken');
 
@@ -36,7 +45,7 @@ function onUseDrags(enemy) {
         }
         // 如果有戒断状态，清除戒断状态
         if (iCandy.getStat(id, 'withdraw') > 0) {
-            iCandy.setStat(id, 'withdraw', 1);
+            iCandy.setStat(id, 'withdraw', 0);
         }
     }
 
@@ -231,7 +240,8 @@ const iDrugs = [
         onHigh(min = 1) {
             // 如果在学习，会获得更好的学习效果。
             min = Math.max(min, 1);
-            this.getPalam('control', 2 * min);
+            const control = 2 * min * Math.mix(1 + iCandy.getStat(this.id, 'eftaken') * 0.2, 3);
+            this.getPalam('control', control);
 
             const flag = iCandy.getFlag(this.id, 'highonce');
             // 如果已经设置过flag，不再重复显示提醒
@@ -289,8 +299,9 @@ const iDrugs = [
         onUse : onUseDrags,
         onHigh(min = 1) {
             min = Math.max(min, 1);
-            this.getPalam('stress', -(2 * min));
-            this.getPalam('pain', -Number(min));
+            const mult = 1 + iCandy.getStat(this.id, 'eftaken') * 0.5;
+            this.getPalam('stress', -(2 * min * mult));
+            this.getPalam('pain', -min * mult);
 
             return `${lanSwitch(drugMsg[this.id].onHigh)}<<lstress>><<lpain>>`;
         },
@@ -338,9 +349,10 @@ const iDrugs = [
         onUse : onUseDrags,
         onHigh(min = 1) {
             min = Math.max(min, 1);
+            const mult = 1 + iCandy.getStat(this.id, 'eftaken') * 0.5;
 
-            this.getPalam('pain', -(5 * min));
-            this.getPalam('tiredness', -(5 * min));
+            this.getPalam('pain', -(5 * min * mult));
+            this.getPalam('tiredness', -(5 * min * mult));
 
             return `${lanSwitch(drugMsg[this.id].onHigh)}<<lpain>><<ltiredness>>`;
         }
@@ -394,7 +406,9 @@ const iDrugs = [
         onHigh(min = 1) {
             min = Math.max(min, 1);
 
-            this.getPalam('hallucinogen', 5 * min);
+            const mult = 1 + iCandy.getStat(this.id, 'eftaken') * 0.1;
+
+            this.getPalam('hallucinogen', 5 * min * mult);
 
             const _mult = 1 - Math.max(iCandy.getStat(this.id, 'taken') * 0.1, 0.3);
 
@@ -778,7 +792,7 @@ const magicDrugs = [
         maxOD     : 0,	  // 最大过量值，超过这个值会上瘾
         withdraw  : 16, // 出现戒断反应所需时间，单位是小时
         quit      : 64,  // 戒除需求时间，单位是天
-        hours     : 3.2,   // 药效持续时间，单位是小时
+        hours     : 2.6,   // 药效持续时间，单位是小时
         days      : 3, // 连续多少天会出现每日效果
 	
         _onUse : onUseDrags,

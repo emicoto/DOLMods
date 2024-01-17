@@ -7,8 +7,7 @@ function combatHandle() {
 
     if (V.combat == 1 && iCombat.state.running && !iCombat.state.skip) {
         if (iCombat.state.current == 'init') {
-            iCombat.state.event = 'afterInit';
-            iCombat.initNPC();
+            iCombat.init();
         }
 
         if (iCombat.state.current == 'start') {

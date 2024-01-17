@@ -14,6 +14,7 @@ function drugState() {
     this.withdraw = 0; // 是否处于戒断状态
     this.quitTimes = 0; // 戒除次数
     this.efTimer = 0; // 药效到期时间(timeStamp + timer)
+    this.eftaken = 0; // 药效持续时间内连续服用次数
     this.process = 0; // 上瘾进度
 }
 
@@ -321,7 +322,8 @@ const iCandyRobot = {
         disableStack   : false,
         disablePockets : false,
         keepHairs      : true,
-        shopPriceMult  : 1
+        shopPriceMult  : 1,
+        combatTime     : 1
     },
 
     // mechanical module stats

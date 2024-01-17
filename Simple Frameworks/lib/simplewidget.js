@@ -1,4 +1,4 @@
-const frameworkversion = "1.10.1"
+const frameworkversion = "1.10.2"
 
 window.simpleFrameworks = {
     version    : frameworkversion,
@@ -52,7 +52,8 @@ window.simpleFrameworks = {
         iModFame         : [],
         iModInit         : [],
         iModStatist      : [],
-        iModExtraStatist : []
+        iModExtraStatist : [],
+        iModSettings     : []
 
     },
 
@@ -123,9 +124,20 @@ window.simpleFrameworks = {
     <<set $upperwet to 0, $lowerwet to 0, $underlowerwet to 0, $underupperwet to 0>>
 <</link>>
 <br><br>
+`,
+
+        iModSettings : () => `
+<div class="solidBorderContainer settings-container">
+<i><<=lanSwitch(
+    'All the settings of <span class="gold">mods</span>.',
+    '所有<span class="gold">模组</span>的设置。'
+)>></i>
+</div>
+<hr>
 `
     },
 
+    // eslint-disable-next-line require-await
     async createMicroWidgets() {
         const print = {
             hasPassageArr : ({ passage, widget }) => {
@@ -161,6 +173,7 @@ window.simpleFrameworks = {
         for (const zone in this.data) {
             html += print.start(zone);
             
+            // eslint-disable-next-line no-loop-func
             this.data[zone].forEach(widget => {
                 if (String(widget) == '[object Object]' && typeof widget.passage == 'string') {
                     html += print.hasPassage(widget);
@@ -183,6 +196,7 @@ window.simpleFrameworks = {
         return 'ok';
     },
 
+    // eslint-disable-next-line require-await
     async createModInitMacro() {
         let html = '\n\n<<widget \'iModInitFunction\'>>\n';
         this.initFunction.forEach(func => {
