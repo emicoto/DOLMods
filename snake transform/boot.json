@@ -5,11 +5,9 @@
   "scriptFileList": [
     "setup.js"
   ],
-  "tweeFileList": [
-  ],
+  "tweeFileList": [],
   "imgFileList": [],
-  "additionFile": [
-  ],
+  "additionFile": [],
   "addonPlugin": [
     {
       "modName": "TweeReplacer",
@@ -17,18 +15,17 @@
       "modVersion": "1.0.0",
       "params": [
         {
-          "passage":"Widgets Canvas Model Main",
-          "findString":"<<set _modeloptions.fox_cheeks_type to $transformationParts.fox.cheeks>>",
-          "replaceFile":"tweePatch/canvasmodel-img.txt"
+          "passage": "Widgets Canvas Model Main",
+          "findString": "<<set _modeloptions.fox_cheeks_type to $transformationParts.fox.cheeks>>",
+          "replaceFile": "tweePatch/canvasmodel-img.txt"
         },
         {
-          "passage":"Widgets Mirror",
-          "findString":"\t<div class='tf-fox'>\n",
-          "replaceFile":"tweePatch/mirror.txt"
+          "passage": "Widgets Mirror",
+          "findString": "\t<div class='tf-fox'>\n",
+          "replaceFile": "tweePatch/mirror.txt"
         }
       ]
     },
-    
     {
       "modName": "ReplacePatcher",
       "addonName": "ReplacePatcherAddon",

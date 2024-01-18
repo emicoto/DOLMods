@@ -6,26 +6,27 @@ $(document).on(':passageinit', data => {
 // 数据初始化
 //
 //------------------------------------------------------------
-    if (!V.addMsg) {
+    if (!V.addMsg || !V.afterMsg) {
         V.addMsg = '';
-    }
-    if (!V.afterMsg) {
         V.afterMsg = '';
     }
+
     T.addMsg = ''; // 效果区的显示信息
     T.afterMsg = '';// addAfterMsg区的显示信息
 
     if (!V.iCandyRobot) return;
 
-    if (!R.combat || V.combat == 1) {
+    if (V.combat == 1) {
         R.combat = {
             angel : 0, total : 0
         };
     }
-    else if (V.combat == 0) {
+    else {
         R.combat = {};
     }
+
     if (passage() == 'Start') return;
+
     //------------------------------------------------------------
     //
     // 事件系统的运作
@@ -36,14 +37,15 @@ $(document).on(':passageinit', data => {
         tags  : clone(data.passage.tags),
         text  : clone(data.passage.text)
     };
+    const lastPsg =  Story.get(passage());
 
     console.log('check data in init:', data);
-    console.log('check passage in init:', passage(), psg);
+    console.log('check passage in init:', lastPsg.title, psg);
 
-    V.tvar.lastPassage = passage();
+    V.tvar.lastPassage = lastPsg.title;
 
     if (V.tvar.lastPassage == 'Start') {
-        V.tvar.lastPassage = 'Domus Street';
+        V.tvar.lastPassage = 'Bedroom';
     }
 
     // 更新上一次的出口点
@@ -64,11 +66,38 @@ $(document).on(':passageinit', data => {
     if (V.tvar.unsetAction) {
         delete V.tvar.unsetAction;
 		
-        F.resetTvar('useItem', 'img', 'passtime', 'onemore');
+        F.resetTvar('itemMsg','useItem', 'img', 'passtime', 'onemore');
         // 如果从物品事件出来，在这里就不再执行事件检测了
         return;
     }
-	
+
+    // 检测口袋更新状态。
+    // 在这里检测一下前后的passage。如果在洗澡场景，就跳过口袋更新检测.
+    if (
+        psg.title.has('Bath', 'Shower') && psg.text.includes('<<strip>>') ||
+        lastPsg.title.has('Bath', 'Shower') && lastPsg.text.includes('<<strip>>')
+    ) {
+        // do nothing
+        console.log('skip update pockets', psg.title, lastPsg.title);
+        V.tvar.bathskip = true;
+    }
+    
+    if (V.tvar.bathskip) {
+        if (V.location == 'home' && lastPsg.title == 'Bath Finish') {
+            V.tvar.bathskip = false;
+        }
+        else if (lastPsg.text.has('<<clotheson>>') && !psg.text.includes('<<clotheson>>')) {
+            V.tvar.bathskip = false;
+        }
+        else if (!psg.text.has('Bath', 'Shower')) {
+            V.tvar.bathskip = false;
+        }
+    }
+    else {
+        V.addMsg += iManager.updatePockets();
+    }
+
+    // 检测事件
     iEvent.eventReady(psg);
 
     if (V.tvar.jump) {
@@ -83,6 +112,7 @@ $(document).on(':passagestart', data => {
 //------------------------------------------------------------
 // 检测数值
 //------------------------------------------------------------
+
 
     //------------------------------------------------------------
     // 战斗处理
@@ -109,5 +139,5 @@ $(document).on(':passagedisplay', () => {
             new Wikifier(null, `<<append #addAfterMsg>>${V.afterMsg}<br><</append>>`);
             V.afterMsg = '';
         }
-    }, 30);
+    }, 40);
 });

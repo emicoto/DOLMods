@@ -272,7 +272,7 @@ const enemyAction = [
     // 当敌人口袋里有药物时会在一定兴奋值或愤怒值下给玩家喂药
     new combatEvent('takedrug', 'itemaction')
         .Cond(npc => npc.pocket.length > 0 && !npc.handItem
-              && (V.enemyarousal >= V.enemyarousalmax * 0.2 || V.enemyanger >= 100)
+              && (V.enemyarousal >= V.enemyarousalmax * 0.2 || V.enemyanger >= 80)
         )
         .Action((turn, npc) => {
             if (npc.pocket.length == 0 || npc.handItem) return;

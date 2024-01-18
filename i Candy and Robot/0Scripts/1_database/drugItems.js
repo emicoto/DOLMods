@@ -41,7 +41,7 @@ function onUseDrags(enemy) {
         const take = iCandy.getStat(id, 'taken');
 
         if (take > this.threshold) {
-            iCandy.addValue(id, 'overdose', 1);
+            iCandy.addStat(id, 'overdose', 1);
         }
         // 如果有戒断状态，清除戒断状态
         if (iCandy.getStat(id, 'withdraw') > 0) {

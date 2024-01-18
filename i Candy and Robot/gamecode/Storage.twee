@@ -1,33 +1,42 @@
 :: iCandy Widget Storagep [widget]
 <<widget "OpenHomeStorage">>
 <<if iEvent.getFlag('orphanage', 'garageinit') is 1>>
-<<ind>><<set _link to lanSwitch('Garage', '旧车库') + ' (00:01)'>>
-<<link _link "BaseScene Orphanage Garage">><<pass 1>><</link>>
+<<ind>>
+<<lanlink 'Garage (00:01)' '旧车库 (00:01)' "BaseScene Orphanage Garage">>
+	<<pass 1>>
+<</lanlink>>
 <br><br>
 <<else>>
 	<<=lanSwitch(
 		"The end of the corridor has a door with the words 'Old Garage' on it. But the door is locked.",
 		"走廊尽头有一扇门，门上写着“旧车库”。但是门是锁着的。"
 	)>>	
-	<<if Time.dayState is 'day'>>
+	<<if Time.dayState is 'day' and $passage isnot 'Garden'>>
 		<<=lanSwitch(
 			"You hear someone working in the backyard.",
 			"你听到后院里有人在忙活。"
 		)>>
+	<<else if Time.dayState is 'day'>>
+		<<=lanSwitch(
+			"You see the orphans busying themselves in the backyard with various of tools, looks like trying to renovate that dilapidated garage.",
+			"你看到了孤儿们拿着各种各样的工具在后院忙活着，似乎在试图修缮那个破旧的车库。"
+		)>>
+		<br><br>
+		<<lanlink 'Help' '帮忙' 'Event Orphanage FixGarage'>>
+			<<run iEvent.addFlag('orphanage', 'garageprocess', 1)>>
+		<</lanlink>>		
 	<</if>>
 	<br><br>
 <</if>>
 <</widget>>
 
 <<widget "OpenLockers">>
-<<set _link to lanSwitch('Open Locker', '打开储物柜')>>
-<<link _link "Actions LockerStorage">><</link>>
+<<lanlink 'Open Locker' '打开储物柜' 'Actions LockerStorage'>><</lanlink>>
 <br><br>
 <</widget>>
 
 <<widget "OpenStorage">>
-<<set _link to lanSwitch('Open Storage', '打开储物柜')>>
-<<link _link "Actions Storage">><</link>>
+<<lanlink "Open Storage" "打开储物柜" 'Actions Storage'>><</lanlink>>
 <br><br>
 <</widget>>
 
@@ -64,17 +73,14 @@ There is an old refrigerator in the corner of the right wall, where you can stor
 	<<set $tvar.onselect to false>>
 
 <<elseif $tvar.eventnext is true>>
-	<<set _link = getLan('next')>>
-	<<link _link $passage>>
+	<<link getLan('next') $passage>>
 		<<pass 1>>
 		<<if $tvar.scene.nextcode>>
 			<<=$tvar.scene.nextcode>>
 		<</if>>
 	<</link>>
-
 <<else>>
-	<<set _link = getLan('leave')>>
-	<<getouticon>><<link _link "Orphanage">>
+	<<getouticon>><<link getLan('leave') "Orphanage">>
 		<<run iEvent.unsetEvent();>>
 		<<pass 1>>
 	<</link>>    
@@ -91,16 +97,13 @@ There is an old refrigerator in the corner of the right wall, where you can stor
 </div>
 
 
-<<link 'Back' 'Orphanage'>><</link>>
-
 
 :: Event Orphanage Garage Intro
 <<set _passage to 'Orphanage Garage IntroText ' + setup.language >>
 
 <<include _passage>>
 
-<<set _link to lanSwitch('Next', '继续')>>
-<<link _link 'Orphanage'>><<tiredness 60>><<run iEvent.setFlag('orphanage', 'garageinit', 1); iEvent.unsetEvent()>><<pass 3 hour>><</link>>
+<<link getLan('next') 'Orphanage'>><<tiredness 60>><<run iEvent.setFlag('orphanage', 'garageinit', 1); iEvent.unsetEvent()>><<pass 3 hour>><</link>>
 
 :: Orphanage Garage IntroText CN
 在你来到后院时，你发现孤儿院里的小孩们正拿着扫帚拖把、锤子刷子螺丝刀等等，在车库前忙活。

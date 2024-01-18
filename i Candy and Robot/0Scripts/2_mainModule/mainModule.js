@@ -90,11 +90,17 @@ function iCandyInit() {
     console.log('on iCandyInit');
 
     for (const i in iModVariables) {
+        if (i == 'eFlags') continue;
         V[i] = clone(iModVariables[i]);
     }
 
-    for (const key in V.iShop) {
-        V.iShop[key].stocks = iShop.getshelf(key);
+    // 事件flag要单独处理，防止冲突覆盖
+    if (!V.eFlags) {
+        V.eFlags = {};
+    }
+
+    for (const i in iModVariables.eFlags) {
+        V.eFlags[i] = clone(iModVariables.eFlags[i]);
     }
 
     setup.iCandyMod = 'ready';
@@ -129,6 +135,12 @@ function iCandyInit() {
 }
 DefineMacroS('iCandyInit', iCandyInit);
 
+function iCandyShopInit() {
+    for (const key in V.iShop) {
+        V.iShop[key].stocks = iShop.getshelf(key);
+    }
+}
+DefineMacroS('iCandyShopInit', iCandyShopInit);
 
 function iCandyOldInit() {
     console.log('on iCandyOldInit');
@@ -241,6 +253,12 @@ function iCandyUpdate() {
                 office_building : 0,
                 beach           : 0
             };
+        }
+
+        // 将事件flag挪到新的位置
+        if (!V.eFlags) {
+            V.eFlags = R.flags;
+            delete R.flags;
         }
 
 

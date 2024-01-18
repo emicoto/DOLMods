@@ -2,6 +2,10 @@
 <<widget "daisoEntrance">>
 	<<set _link to lanSwitch("Daiso General Shop", "大创百货商店") + '(00:01)'>>
 	<<localIcon 'daiso'>><<link _link "BaseScene DaisoShop">>
+		<<if iEvent.getFlag('daiso', 'init') isnot 1>>
+			<<iCandyShopInit>>
+			<<run iEvent.setFlag('daiso', 'init', 1)>>
+		<</if>>
 		<<pass 1>>
 	<</link>>
 <</widget>>

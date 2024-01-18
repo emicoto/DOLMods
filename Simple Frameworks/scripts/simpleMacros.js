@@ -224,3 +224,244 @@ Macro.add('randomdata', {
         jQuery(this.output).wiki(defaultText);
     }
 });
+
+/*
+Macro.add(['lanLink', 'lanButton'], {
+    isAsync : true,
+    tags    : ['lan', 'linkcode'],
+    handler() {
+        let passage = this.args[0];
+
+        if (this.payload.length == 1) return this.error('no link text found');
+
+        const languages = this.payload.filter(data => data.name == 'lan').map(data => data.args);
+        const code = this.payload.filter(data => data.name == 'linkcode')[0]?.contents ?? null;
+
+        if (languages.length == 0) return this.error('no language text found');
+
+        if (Config.debug) console.log(languages, code);
+
+        let displaytext = '';
+        for (let i = 0; i < languages.length; i++) {
+            if (languages[i][0] == setup.language) {
+                displaytext = languages[i][1];
+                break;
+            }
+        }
+
+        if (displaytext == '') {
+            displaytext = languages[0][1];
+        }
+
+        const link = jQuery(document.createElement(this.name === 'lanButton' ? 'button' : 'a'));
+        link.wikiWithOptions({ profile : 'core' }, displaytext);
+
+        if (!passage) {
+            link.addClass('link-internal');
+        }
+        else {
+            link.attr('data-passage', passage);
+
+            if (Story.has(passage)) {
+                link.addClass('link-internal');
+                T.link = true;
+
+                if (Config.addVisitedLinkClass && State.hasPlayed(passage)) {
+                    $link.addClass('link-visited');
+                }
+            }
+            else {
+                link.addClass('link-broken');
+            }
+        }
+
+        link.addClass(`macro-${this.name == 'lanButton' ? 'button' : 'link'}`)
+            .ariaClick(
+                {
+                    namespace : '.macros',
+                    one       : typeof passage == 'string' && passage.length > 0
+                },
+                this.createShadowWrapper(
+                    typeof code == 'string' ?
+                        () => {
+                            Wikifier.wikifyEval(code.trim());
+                        }
+                        : null,
+                    
+                    typeof passage == 'string' && passage.length > 0 ?
+                        () => {
+                            const target = document.querySelector('#storyCaptionDiv');
+                            window.scrollUIBar = target ? target.scrollTop : null;
+                            window.scrollMain = document.scrollingElement.scrollTop;
+                            SugarCube.Engine.play(passage);
+                        }
+                        : null
+                )
+
+            )
+            .appendTo(this.output);
+    }
+});
+*/
+
+// escape all the space inside the '' or ""
+function escapeSpaceInsideQuote(source) {
+    const patch = source.match(/".*?"|'.*?'/g);
+    if (patch) {
+        patch.forEach(text => {
+            source = text.replaceAll(' ', '_');
+        });
+    }
+    return text;
+}
+
+Macro.add(['lanlink', 'lanbutton'], {
+    isAsync : true,
+    tags    : null,
+    handler() {
+        if (this.args.length == 0) return this.error('no args found');
+
+        const args = this.args;
+        
+        let displaytext;
+        let passage = null;
+        const code = this.payload[0].contents;
+
+        // if using object or array
+        if (typeof args[0] == 'object' && args.length <= 2) {
+            displaytext = lanSwitch(args[0]);
+            if (args.length == 2) passage = args[1];
+        }
+        else if (typeof args[0] == 'object' && args.length > 2) {
+            return this.error('too many object args');
+        }
+
+        // if using global variable. if just a string like "go out." then should has ' or " to wrap it
+        const checksanity = function(src) {
+            const check = {
+                gval : 0,
+                val  : 0,
+                func : 0,
+                str  : 0
+            };
+
+            // escape all the space inside the quote
+            src = escapeSpaceInsideQuote(src);
+
+            const source = src.split(' ');
+            // then check the source and analyze it
+            for (let i = 0; i < source.length; i++) {
+                const text = source[i];
+                if (text.startsWith('State.')) {
+                    check.val++;
+                }
+                else if (text.match(/^[a-zA-Z0-9]*?(\.\S|\[)/)) {
+                    check.gval++;
+                }
+                else if (text[0].has('"', "'") == false && text[ text.length - 1 ].has('"', "'") == false && source[i].has('(', ')') == 2) {
+                    check.func++;
+                }
+                else {
+                    check.str++;
+                }
+            }
+
+            return check;
+        };
+
+        const check = checksanity(args.full);
+
+        console.log('lanlink check args:', args, check);
+
+        // if is global variable and length is lte 2
+        if (args.length <= 2 && check.gval == 1) {
+            const variable = args[0].replaceAll('$', 'V.').replaceAll('_', 'T');
+            // eslint-disable-next-line no-eval
+            displaytext = lanSwitch(eval(variable));
+            if (args.length == 2) passage = args[1];
+        }
+        else if (args.length > 2 && check.gval > 1) {
+            return this.error('too many global variable args');
+        }
+
+
+        // if is string but found function or no string found
+        if (args.length == 2 && check.func == 1 || check.str == 0) {
+            displaytext = args[0];
+            passage = args[1];
+        }
+
+        // if is two string;
+        if (args.length == 2 && check.str == 2) {
+            displaytext = lanSwitch(args[0], args[1]);
+        }
+
+        // just one string
+        if (args.length == 1 && typeof args[0] == 'string') {
+            displaytext = args[0];
+        }
+        
+        // if no valid display text found
+        if (args.length == 1 && !displaytext) {
+            return this.error('no valid display text found');
+        }
+
+        if (!displaytext && args.length > 2) {
+            passage = args.pop();
+            displaytext = lanSwitch(args);
+        }
+        else if (!displaytext && args.length == 2) {
+            displaytext = lanSwitch(args);
+        }
+
+        if (Config.debug) console.log(displaytext, passage);
+
+        const link = jQuery(document.createElement(this.name === 'lanbutton' ? 'button' : 'a'));
+        link.wikiWithOptions({ profile : 'core' }, displaytext);
+
+        if (!passage) {
+            link.addClass('link-internal');
+        }
+        else {
+            link.attr('data-passage', passage);
+
+            if (Story.has(passage)) {
+                link.addClass('link-internal');
+                T.link = true;
+
+                if (Config.addVisitedLinkClass && State.hasPlayed(passage)) {
+                    $link.addClass('link-visited');
+                }
+            }
+            else {
+                link.addClass('link-broken');
+            }
+        }
+
+        link.addClass(`macro-${this.name == 'lanButton' ? 'button' : 'link'}`)
+            .ariaClick(
+                {
+                    namespace : '.macros',
+                    one       : passage != null
+                },
+                this.createShadowWrapper(
+                    code !== '' ?
+                        () => {
+                            Wikifier.wikifyEval(code.trim());
+                        }
+                        : null,
+                    
+                    typeof passage == 'string' && passage.length > 0 ?
+                        () => {
+                            const target = document.querySelector('#storyCaptionDiv');
+                            window.scrollUIBar = target ? target.scrollTop : null;
+                            window.scrollMain = document.scrollingElement.scrollTop;
+                            SugarCube.Engine.play(passage);
+                        }
+                        : null
+                )
+
+            )
+            .appendTo(this.output);
+    }
+});

@@ -112,12 +112,12 @@ const pocketUI = {
             else if (method) {
                 _html += `
             <<link "${method}" "Actions UseItems">>
-                <<set $tvar.useItem to ["${pos}", ${i}]>>
-                    <<set $tvar.img to "${img}">>
-                    <<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>
-                        <<set $tvar.exitPassage to $passage>>
-                    <</if>>
-                    <<run console.log('on use check', $tvar.useItem, $tvar.img, $tvar.exitPassage)>>
+                <<set $tvar.itemMsg to im.useFromInv("${pos}", ${i})>>
+                <<set $tvar.img to "${img}">>
+                <<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>
+                    <<set $tvar.exitPassage to $passage>>
+                <</if>>
+                <<run console.log('on use check', $tvar.useItem, $tvar.img, $tvar.exitPassage)>>
             <</link>>
             </span>
             <span class='itemaction'>`;
@@ -302,26 +302,35 @@ const pocketUI = {
     },
 
     transfer(pos, slot) {
-        const item = Pocket.get(pos).select(slot);
-        const img = this.iniData(item, 1).img;
-        const checklist = ['bag', 'cart', 'wallet'];
+        const _item = Pocket.get(pos).select(slot);
+        const item = this.iniData(_item, 1);
+        const checklist = Pocket.list;
+        checklist.push('wallet');
+
         if (V.tvar.storage) {
             checklist.push(V.tvar.storage);
         }
 
         const list = checklist.reduce((result, key) => {
+            if (key == pos) return result;
             if (im.storeable(key, pos, slot)) {
-                result.push(key);
+                const equip = iManager.getEquip(key);
+                const obj = {
+                    key,
+                    name : equip?.name || iData.storage[key]
+                };
+                result.push(obj);
             }
             return result;
         }, []);
 
         let html = `要将<img class='icon' src='${img}'><span class='teal'>${item.name}</span>移动到哪里？<br><br>`;
 
-        list.forEach(key => {
+        list.forEach(obj => {
+            const { key, name } = obj;
             html += `
             <span class='itemaction'>
-                <<link ${lanSwitch(iData.storage[key])} $passage>>
+                <<link ${lanSwitch(name)} $passage>>
                     <<run V.addMsg = im.putStorage('${key}', '${pos}', ${slot}, ${item.count})>>
                     <<addclass '#messageBox' 'hidden'>>
                     <<addclass '#background' 'hidden'>>

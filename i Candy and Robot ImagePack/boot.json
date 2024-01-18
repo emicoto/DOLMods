@@ -1,6 +1,6 @@
 {
   "name": "i, Candy + Robot Imagepack",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "modPacker": {
     "modScriptFolder": {
       "imgFileList": "img/**/*.png"

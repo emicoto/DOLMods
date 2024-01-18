@@ -15,7 +15,7 @@ const iManager = {
 	 * @returns {  iStack | void }
 	 */
     getEquip(type) {
-        if (V.iPockets.equip[type].id !== 'none') {
+        if (V.iPockets.equip[type]?.id !== 'none') {
             return V.iPockets.equip[type];
         }
     },
@@ -635,7 +635,7 @@ const iManager = {
 
         pocket.sortOut();
 
-        return msg;
+        V.tvar.message = msg;
     },
 
 
@@ -687,7 +687,7 @@ const iManager = {
 
         // throw the item use message and event
         if (situation?.includes('use')) {
-            msg += P.templet(sMsg.useItem, iData.useMethods(data.type, data.tags, data.name));
+            msg += P.templet(sMsg.useItem, iData.useMethods(data.type, data.tags), data.name);
 
             if (itemMsg[data.id]) {
                 msg += `<br>${lanSwitch(itemMsg[data.id])}`;
@@ -748,11 +748,23 @@ const iManager = {
     putStorage(local, type, pos, amount = 1) {
         const item = this.takeSelected(type, pos, amount);
         const storage = Pocket.get(local);
+        let sname = iData.storage[local];
+
+        if (local == 'held') {
+            sname = this.getEquip('held').name;
+        }
+
+        if (local == 'body' && Pocket.getMaxSlot('body') <= 2) {
+            sname = iData.storage.hand;
+        }
 
         storage.add(item);
-
         this.resetCheckmode();
-        return P.templet(sMsg.putStorage, item.name, amount, iData.storage[local]);
+
+        if (local == 'hole') {
+            return P.templet(sMsg.insertAnal, item.name, amount);
+        }
+        return P.templet(sMsg.putStorage, item.name, amount, sname);
     },
 
     storeable(type, itempos, itemindex) {

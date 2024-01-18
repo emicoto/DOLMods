@@ -126,7 +126,7 @@ class iStack {
         this.id = data.id;
         this.uid = data.id;
 
-        this.name = lanSwitch(data.name);
+        this.name = data.name;
         this.count = num;
 
         console.log('iStack:', obj);

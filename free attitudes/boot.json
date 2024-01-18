@@ -2,13 +2,10 @@
   "name": "Free Attitudes",
   "version": "1.0.0",
   "styleFileList": [],
-  "scriptFileList": [
-  ],
-  "tweeFileList": [
-  ],
+  "scriptFileList": [],
+  "tweeFileList": [],
   "imgFileList": [],
-  "additionFile": [
-  ],
+  "additionFile": [],
   "addonPlugin": [
     {
       "modName": "TweeReplacer",

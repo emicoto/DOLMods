@@ -77,12 +77,18 @@ function buildZip() {
 					filepathList = filepathList.map((filepathItem)=>path.relative(filepath, filepathItem).replace(/\\/gim,"/").replace(/^\.\.\//,"").normalize()).sort();
 					console.log(filepathList);	
 					boot[modScript] = filepathList;
-
 				}
-				fs.writeFileSync(path.join(file, "boot.json"), JSON.stringify(boot, null, 2));
 			}
 		}
-		const output = fs.createWriteStream(path.join("build", `${file} ${boot.version}.zip`));
+		
+		if (boot.build){
+			boot.build = (parseInt(boot.build) + 1).toString();
+		}
+		
+		// save boot.json
+		fs.writeFileSync(path.join(file, "boot.json"), JSON.stringify(boot, null, 2));
+
+		const output = fs.createWriteStream(path.join("build", `${file} ver${boot.version}${boot.build ? ' build_' + boot.build : ''}.zip`));
 		zip.pipe(output);
 		zip.directory(file, false);
 		zip.finalize();
@@ -113,6 +119,7 @@ function setBootVersionMajor(directory: string) {
 	if (result) {
 		boot.version = result;
 	}
+	boot.build = '0';
 	fs.writeFileSync(path.join(directory, "boot.json"), JSON.stringify(boot, null, 2));
 	return boot;
 }
@@ -127,6 +134,7 @@ function setBootVersionMinor(directory: string) {
 	}
 
 	boot.version = semver.inc(boot.version, "minor");
+	boot.build = '0';
 	fs.writeFileSync(path.join(directory, "boot.json"), JSON.stringify(boot, null, 2));
 	return boot;
 }
@@ -141,6 +149,7 @@ function setBootVersionPatch(directory: string) {
 		boot.version = ver.join(".");
 	}
 	boot.version = semver.inc(boot.version, "patch");
+	boot.build = (parseInt(boot.build) + 1).toString();
 	fs.writeFileSync(path.join(directory, "boot.json"), JSON.stringify(boot, null, 2));
 	return boot;
 }
@@ -157,6 +166,8 @@ function setBootVersionFix(directory: string) {
 		ver[3] = (parseInt(ver[3]) + 1).toString();
 		boot.version = ver.join(".");
 	}
+	boot.build = (parseInt(boot.build) + 1).toString();
+
 	fs.writeFileSync(path.join(directory, "boot.json"), JSON.stringify(boot, null, 2));
 	return boot;
 }

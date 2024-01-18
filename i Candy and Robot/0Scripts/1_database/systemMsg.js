@@ -261,7 +261,7 @@ const sMsg = {
     },
 
     useItem : {
-        EN : 'You {1} the {0}.',
+        EN : 'You {0} the {1}.',
         CN : '你{0}了{1}。'
     },
 
@@ -283,6 +283,16 @@ const sMsg = {
     noSpace : {
         EN : 'You have no space for {0}.',
         CN : '你身上位置不够了。'
+    },
+
+    putStorage : {
+        EN : 'You put {0} x {1} into {2}.',
+        CN : '你将{0} x {1}放进了{2}。'
+    },
+
+    insertAnal : {
+        EN : 'You put {0} x {1} into your anal.',
+        CN : '你将{0} x {1}塞进了你的肛门里。'
     },
 
     whackdrugs_success : {

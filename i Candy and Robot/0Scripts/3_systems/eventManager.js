@@ -2,28 +2,29 @@ const eventManager = {
     data   : {},
     widget : {},
 
-    setFlag(event, prop, value) {
-        if (!R.flags[event]) {
-            R.flags[event] = {};
+    initFlag(event, prop) {
+        if (!V.eFlags[event]) {
+            V.eFlags[event] = {};
         }
-        R.flags[event][prop] = value;
+        if (prop && !V.eFlags[event][prop]) {
+            V.eFlags[event][prop] = 0;
+        }
+    },
+    setFlag(event, prop, value) {
+        this.initFlag(event, prop);
+        V.eFlags[event][prop] = value;
 
-        return R.flags[event];
+        return V.eFlags[event];
     },
     addFlag(event, prop, value) {
-        if (!R.flags[event]) {
-            R.flags[event] = {};
-        }
-        if (!R.flags[event][prop]) {
-            R.flags[event][prop] = 0;
-        }
-        R.flags[event][prop] += value;
+        this.initFlag(event, prop);
+        V.eFlags[event][prop] += value;
         
-        return R.flags[event];
+        return V.eFlags[event];
     },
     getFlag(event, prop) {
-        if (!R.flags[event]) return;
-        return prop ? R.flags[event][prop] : R.flags[event];
+        this.initFlag(event);
+        return prop ? V.eFlags[event][prop] : V.eFlags[event];
     },
 
     // regist event for static location event
@@ -94,7 +95,9 @@ const eventManager = {
 
         // get the event by certain key
         if (type == 'get' && key) {
-            const _data = eventdata.filter(data => data.episode == key && !branch || data.episode == key && data.branch == branch);
+            const _data = eventdata.filter(
+                data => data.episode == key && !branch || data.episode == key && data.branch == branch
+            );
             data = clone(_data[0]);
         }
         

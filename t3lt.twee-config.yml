@@ -10,7 +10,18 @@ sugarcube-2:
       name: lthirst
     actionUI:
       name: actionUI
-    
+    lanLink:
+      name: lanLink
+      container: true
+    lanlink:
+      name: lanlink
+      container: true
+    lan:
+      name: lan
+    linkcode:
+      name: linkcode
+      container: true
+      
     sleepy:
       name: sleepy
     lllsleepy:
@@ -25,7 +36,6 @@ sugarcube-2:
       name: ggsleepy
     gggsleepy:
       name: gggsleepy
-    
     health:
       name: health
     lllhealth:
@@ -40,14 +50,12 @@ sugarcube-2:
       name: gghealth
     ggghealth:
       name: ggghealth
-
     sick:
       name: sick
     lsick:
       name: lsick
     gsick:
       name: ggsick
-
     linkEventEnd:
       name: linkEventEnd
     pcpn:
@@ -82,7 +90,7 @@ sugarcube-2:
     localIcon:
       name: localIcon
     itemIcons:
-      name: itemIcons  
+      name: itemIcons
     useItem:
       name: useItems
     iMedicineLink:
@@ -8224,3 +8232,6 @@ sugarcube-2:
       name: feetActionsMachine
     generateActionsMachine:
       name: generateActionsMachine
+    lanbutton:
+      name: lanbutton
+      container: true

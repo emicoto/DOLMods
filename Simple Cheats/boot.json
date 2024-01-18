@@ -1,51 +1,51 @@
 {
-	"name": "Simple Cheats",
-	"version": "1.0.0",
-	"scriptFileList_inject_early": [
-		"regist.js"
-	],
-	"scriptFileList_earlyload": [],
-	"scriptFileList_preload": [],
-	"styleFileList": [],
-	"scriptFileList": [
-		"cheats.js"
-	],
-	"tweeFileList": [
-		"Cheats.twee"
-	],
-	"imgFileList": [],
-	"additionFile": [],
-	"addonPlugin": [
-		{
-			"modName": "TweeReplacer",
-			"addonName": "TweeReplacerAddon",
-			"modVersion": "1.0.0",
-			"params": [
-				{
-					"passage": "StoryCaption",
-					"findString": "<<if $dancing is 0 and $combat is 0 and $passage isnot \"Start2\" and $cheatdisable is \"f\" or $debug is 1>>",
-					"replace": "<<if $dancing is 0 and $combat is 0 and $passage isnot \"Start2\" or $debug is 1>>"
-				},
-				{
-					"passage": "Furniture Shop Papers",
-					"findString": "<<set _normalisedName to Util.escape(_chosenWallpaperCustom).replace(/[/g, \"&#91;\").replace(/]/g, \"&#93;\")>>",
-					"replace": "<<set _normalisedName to _chosenWallpaperCustom>>"
-				}
-			]
-		}
-	],
-	"dependenceInfo": [
-		{
-			"modName": "TweeReplacer",
-			"version": "^1.0.0"
-		},
-		{
-			"modName": "ReplacePatcher",
-			"version": "^1.0.0"
-		},
-		{
-			"modName": "Simple Frameworks",
-			"version": ">=1.0.0"
-		}
-	]
+  "name": "Simple Cheats",
+  "version": "1.0.0",
+  "scriptFileList_inject_early": [
+    "regist.js"
+  ],
+  "scriptFileList_earlyload": [],
+  "scriptFileList_preload": [],
+  "styleFileList": [],
+  "scriptFileList": [
+    "cheats.js"
+  ],
+  "tweeFileList": [
+    "Cheats.twee"
+  ],
+  "imgFileList": [],
+  "additionFile": [],
+  "addonPlugin": [
+    {
+      "modName": "TweeReplacer",
+      "addonName": "TweeReplacerAddon",
+      "modVersion": "1.0.0",
+      "params": [
+        {
+          "passage": "StoryCaption",
+          "findString": "<<if $dancing is 0 and $combat is 0 and $passage isnot \"Start2\" and $cheatdisable is \"f\" or $debug is 1>>",
+          "replace": "<<if $dancing is 0 and $combat is 0 and $passage isnot \"Start2\" or $debug is 1>>"
+        },
+        {
+          "passage": "Furniture Shop Papers",
+          "findString": "<<set _normalisedName to Util.escape(_chosenWallpaperCustom).replace(/[/g, \"&#91;\").replace(/]/g, \"&#93;\")>>",
+          "replace": "<<set _normalisedName to _chosenWallpaperCustom>>"
+        }
+      ]
+    }
+  ],
+  "dependenceInfo": [
+    {
+      "modName": "TweeReplacer",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "ReplacePatcher",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "Simple Frameworks",
+      "version": ">=1.0.0"
+    }
+  ]
 }

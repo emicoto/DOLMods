@@ -90,18 +90,6 @@ const DrugsProcess = {
 	
             // 戒断时间大于戒断反应时间的话，运行戒断效果并获得通知
             if (stats.lastTime > 0 && withdrawTimer >= withdraw && stats.withdraw == 0) {
-                // 如果设置了function，运行function
-                if (typeof data.onWithdraw == 'function') {
-                    timeRec.set(`drug_onwithdraw_${item}`, data.onWithdraw());
-                }
-                else if (drugMsg[item]?.onWithdraw) {
-                    timeRec.set(`drug_onwithdraw_${item}`, lanSwitch(drugMsg[item].onWithdraw));
-                }
-                // 没有则运行默认的戒断效果
-                else {
-                    const name = type == 'general' ? item : data.name;
-                    timeRec.set(`drug_onwithdraw_${item}`, generalWithdraw(name));
-                }
                 // 设置戒断状态
                 stats.withdraw = 1;
             }
@@ -173,6 +161,22 @@ const DrugsProcess = {
             // 如果超量值大于零，同时没有引起戒断反应，且连续嗑药次数大于每日buff需求值，设置每日buff
             if (type !== 'general' && stats.overdose > 0 && stats.withdraw == 0 && stats.takeDays >= data.days) {
                 itemFlags[item].daily = 1;
+            }
+
+            // 如果有戒断状态，则运行每日戒断效果。
+            if (stats.withdraw == 1) {
+                // 如果设置了function，运行function
+                if (typeof data.onWithdraw == 'function') {
+                    timeRec.set(`drug_onwithdraw_${item}`, data.onWithdraw());
+                }
+                else if (drugMsg[item]?.onWithdraw) {
+                    timeRec.set(`drug_onwithdraw_${item}`, lanSwitch(drugMsg[item].onWithdraw));
+                }
+                // 没有则运行默认的戒断效果
+                else {
+                    const name = type == 'general' ? item : data.name;
+                    timeRec.set(`drug_onwithdraw_${item}`, generalWithdraw(name));
+                }
             }
 			
             // 每日清零当日计数器

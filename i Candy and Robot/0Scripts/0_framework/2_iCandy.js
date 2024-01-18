@@ -87,16 +87,43 @@ const iCandy = {
         return stats[prop];
     },
 
+    calcDose(item, value) {
+        const data = setup.addictions[item];
+        if (!data) return;
+        let dose = this.getStat(item, 'dose') ?? 0;
+
+        if (!dose) dose = this.addStat(item, 'dose', value);
+        else if ((dose + value) / 150 < 1) {
+            dose = this.addStat(item, 'dose', value);
+        }
+
+        return Math.floor((dose + value) / 150 + 0.5);
+    },
+
     take(item, value) {
         value = Number(value);
         if (!value) return;
+
         const data = setup.addictions[item];
+        if (!data) return;
 
-        R.drugStates.general[item].taken += Math.max(Math.floor(value / 100 + 0.5), 1);
-        R.drugStates.general[item].lastTime = V.timeStamp;
+        const dose = this.calcDose(item, value);
+        const stat = this.getStat(item)
 
-        if (R.drugStates.general[item].taken > data.threshold) {
-            R.drugStates.general[item].overdose++;
+        if (dose > 0) {
+            this.addStat(item, 'taken', Math.max(Math.floor(value / 100 + 0.5), 1));
+        }
+        
+        this.setStat(item, 'lastTime', V.timeStamp);
+
+        // 如果大于安全阈值，增加overdose
+        if (stat.taken > data.threshold) {
+            stat.overdose++;
+        }
+
+        // 清除戒断状态
+        if (stat.withdraw > 0) {
+            stat.withdraw = 0;
         }
     },
 

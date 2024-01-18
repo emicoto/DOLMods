@@ -22,24 +22,37 @@
 <br>
 
 <!-- 设置项目  -->
-<div class="settingsToggle">
+<div class="numberslider-inline">
     <label>
+    <<=lanSwitch(
+        "disable random ruffle hairs",
+        "禁止自动弄乱头发"
+    )>>    
     <<checkbox "$iCandyRobot.config.keepHairs" false true autocheck>>
-    <mouse class="tooltip-small linkBlue">(?)
+    </label>
+</div>
+
+<div class="numberslider-inline">
+    <label>
     <span>
-        <<=lanSwitch(
-            "disable random ruffle hairs",
-            "禁止自动弄乱头发"
-        )>>
+        <<lanSwitch 'Time every turn(min)' '每回合时间(分)'>>: 
+        <mouse class="tooltip-small linkBlue">(?)
+        <span>
+            <<=lanSwitch(
+                "Adjust the time per turn of combat. If you have installed longer combat, the time won't be doubled, instead will be replaced by longer combat's setting.",
+                "调节战斗时每回合的时间。如果装了更长的遭遇战，时间并不会累加，而是以更长的遭遇战的设置为准。"
+            )>>
+        </span>
+        </mouse>
     </span>
-    </mouse>
-        <<=lanSwitch(
-            "disable random ruffle hairs",
-            "禁止自动弄乱头发"
-        )>>
+    <<numberslider "$iCandyRobot.config.combatTime" $iCandyRobot.config.combatTime 1 10 1>>
     </label>
 </div>
 
 </div>
 <br><br>
+<</widget>>
+
+<<widget "iCandySettings">>
+<!-- 详细设定 -->
 <</widget>>

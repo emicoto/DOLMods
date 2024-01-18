@@ -9,9 +9,9 @@ const iModAddictions = {
     alcohol : {
         name      : ['alcohol', '酒精'],
         threshold : 3,
-        maxOD     : 10,
+        maxOD     : 16,
         withdraw  : 60,
-        quit      : 28,
+        quit      : 14,
         hours     : 0,
         process   : 0.2,
         methods   : ['drink', '喝'],
@@ -20,20 +20,20 @@ const iModAddictions = {
 
     aphrod : {
         name      : ['aphrodisiacs', '催情剂'],
-        threshold : 0,
-        maxOD     : 4,
+        threshold : 2,
+        maxOD     : 8,
         withdraw  : 30,
-        quit      : 28,
+        quit      : 12,
         hours     : 0,
         process   : 0.4,
         methods   : ['take', '吸收'],
-        recover   : 5
+        recover   : 6
     },
 
     nicotine : {
         name      : ['nicotine', '尼古丁'],
         threshold : 0,
-        maxOD     : 6,
+        maxOD     : 7,
         withdraw  : 36,
         quit      : 28,
         hours     : 0,
@@ -612,7 +612,11 @@ const iCandyDataSetting = {
         hideout      : ['hideout','藏身处'],
         howllow      : ['howllow','树洞'],
         bag          : ['bag','背包'],
-        cart         : ['cart','手推车']
+        cart         : ['cart','手推车'],
+        hole         : ['secrect pocket','秘密口袋'],
+        body         : ['pocket', '口袋'],
+        hand         : ['hand', '手上'],
+        held         : ['held bag', '手提袋']
     },
 
     batchUnit : ['canned', 'bottle', 'packed', 'bagged', 'boxed', 'roll', 'set', 'box'],

@@ -1,6 +1,7 @@
 {
   "name": "i, Candy + Robot",
   "version": "2.4.5",
+  "build": "3",
   "modPacker": {
     "modVersionJs": {
       "file": "0Scripts/0_framework/0_modversion.js",
@@ -57,6 +58,8 @@
     "0Scripts/3_systems/jQueryEvent.js",
     "0Scripts/3_systems/moneyHandle.js",
     "0Scripts/3_systems/printer.js",
+    "0Scripts/4_widget/0_linkzone.js",
+    "0Scripts/4_widget/linkdata.js",
     "gamecode/Scene/Chinatown/eventRegist.js",
     "gamecode/Scene/Daiso/eventRegist.js",
     "gamecode/Scene/SceneRegist.js"

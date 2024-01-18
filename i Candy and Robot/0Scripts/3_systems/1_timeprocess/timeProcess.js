@@ -123,28 +123,26 @@ Time.pass = function (sec) {
     }
 
     const prevDate = new DateTime(V.startDate + V.timeStamp);
-    const fragment = oldPass(sec) || '';
+    const fragment = oldPass(passtime) || '';
     const currentDate = Time.date;
 
     if (!T.addMsg) {
         T.addMsg = '';
     }
 
-    console.log('passed time:',sec);
+    console.log('passed time:',passtime);
     console.log('prevDate:',prevDate);
     console.log('currentDate:', currentDate);
 
     TimeHandle.prevDate = prevDate;
     TimeHandle.currentDate = currentDate;
 	
-    iTimeHandle(sec);
+    iTimeHandle(passtime);
 	
     if (V.combat == 1) {
         iCombatHandle();
         iCombatActionHandle();
     }
-
-    V.addMsg += iManager.updatePockets();
 
     return fragment;
 };
@@ -330,6 +328,10 @@ function dayProcess(sec, day, weekday) {
     }
 
     R.flags.repairshop.today = 0;
+
+    if (iEvent.getFlag('orphanage', 'garageprocess') < 6 || !iEvent.getFlag('orphanage', 'garageprocess')) {
+        iEvent.addFlag('orphanage', 'garageprocess', 1);
+    }
 
     // 事件flag的清理
     const chinatown = iEvent.getFlag('chinatown');

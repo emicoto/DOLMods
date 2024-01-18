@@ -199,8 +199,8 @@ function combatConfig(config) {
 
  * @property {string} type          // 当前回合的类型
  * @property {string} current       // 当前回合的状态
- * @property {string[]} enemyaction // 敌人行为列表
  * @property {string[]} playeraction// 玩家行为列表
+ * @property {object[]} next      // 下一回合的配置
  */
 function turnConfig(config) {
     this.skip = false;
@@ -208,9 +208,9 @@ function turnConfig(config) {
     this.type = 'enemyturn';
     this.current = 'start';
     this.skipEvent = [];
-    this.enemyAction = [];
     this.playerAction = [];
     this.eventAction = [];
+    this.next = [];
 
     if (config) {
         for (const [key, value] of Object.entries(config)) {
@@ -479,8 +479,11 @@ const iCombat = {
 
     turnStart() {
         this.state.turns += 1;
-
+        const next = this.turn.next;
         this.turn = new turnConfig();
+        if (next) {
+            this.turn.enemysetting = next;
+        }
 
         // 初始化全局回合事件
         const turnstart = Array.from(this.onTurnStart.values()).filter(com => com.type !== 'npc');
@@ -595,6 +598,14 @@ const iCombat = {
                 // 如果有反馈文本，则添加到反馈列表中
                 if (feedback) {
                     this.feedbacks.push(feedback);
+                }
+
+                // 如果有联动动作，则添加到下一回合npc的行为列表中
+                if (com.next) {
+                    const next = this.onEnemyTurn.get(com.next.id);
+                    if (next) {
+                        npc.action.push(com.next.id);
+                    }
                 }
             }
 

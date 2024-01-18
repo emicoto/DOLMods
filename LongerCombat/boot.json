@@ -1,6 +1,6 @@
 {
   "name": "LongerCombat",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "styleFileList": [],
   "scriptFileList_inject_early": [
     "registLC.js"
@@ -22,12 +22,9 @@
       "modVersion": "1.0.0",
       "params": [
         {
-          "passage": " Widgets Effects",
+          "passage": "Widgets Effects",
           "findString": "<<pass 10 seconds>>",
           "replace": "<<set _timepass = iMod.getCf('longerCombat').time>><<pass _timepass>>"
-        },
-        {
-
         }
       ]
     }
@@ -45,5 +42,6 @@
       "modName": "Simple Frameworks",
       "version": "^1.6.0"
     }
-  ]
+  ],
+  "build": "3"
 }

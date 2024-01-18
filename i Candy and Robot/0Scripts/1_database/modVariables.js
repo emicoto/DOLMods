@@ -384,9 +384,6 @@ const iCandyRobot = {
         ills        : []
     },
 
-    // event modules
-    flags : iEventFlags,
-
     // storage owned state
     warehouseOwned : 0,
     lockerOwned    : {
@@ -420,6 +417,9 @@ const iModVariables = {
         exitPassage : '',
         scene       : {},
         eventnext   : false
-    }
+    },
+
+    // event modules
+    eflags : iEventFlags
 };
 

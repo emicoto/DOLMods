@@ -12,6 +12,7 @@ simpleFrameworks.addto('ModCharaDescription', 'charadesDrugs');
 simpleFrameworks.addto('ModSkillsBox', 'candySkills');
 
 simpleFrameworks.addto('iModOptions', 'iCandyOptions');
+simpleFrameworks.addto('iModSettings', 'iCandySettings');
 simpleFrameworks.addto('iModCheats', 'iCandyCheats');
 
 simpleFrameworks.addto('ModShopZone', {
@@ -19,23 +20,6 @@ simpleFrameworks.addto('ModShopZone', {
     widget  : 'ExtraPharmacy'
 });
 
-simpleFrameworks.addto('ExtraLinkZone', {
-    passage : 'Shopping Centre',
-    widget  : 'daisoEntrance'
-},{
-    passage : 'Harvest Street',
-    widget  : 'almondPathEntry'
-});
+simpleFrameworks.addto('ExtraLinkZone', 'iCandyExtraLink');
+simpleFrameworks.addto('BeforeLinkZone', 'iCandyBeforeLink');
 
-simpleFrameworks.addto('BeforeLinkZone', {
-    passage : ['Harvest Street', 'Mer Street'],
-    widget  : 'chinatownExplore'
-},{
-    passage : 'Orphanage',
-    widget  : 'OpenHomeStorage'
-});
-
-simpleFrameworks.addto('iModDone', {
-    passage : ['Canteen Lunch Robin', 'Canteen Lunch Robin CD 1', 'Robin Kiyoura Start', 'Canteen Lunch Kylar', 'Canteen Lunch Sydney', 'Canteen Lunch'],
-    widget  : 'fillHungerSchool'
-});

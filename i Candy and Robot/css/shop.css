@@ -244,3 +244,8 @@
     font-size: small;
     color: chartreuse;
 }
+
+.overrideUIBar {
+    position: fixed;
+    z-index: 999;
+}

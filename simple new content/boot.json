@@ -1,6 +1,6 @@
 {
   "name": "SimpleContent",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "scriptFileList_inject_early": [
     "newContent.js"
   ],

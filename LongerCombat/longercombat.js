@@ -1,5 +1,4 @@
 function simpleEjaculation() {
-    V.ejaculating = 1;
     let html = '';
     for (let i = 0; i < V.enemynomax; i++) {
         if (V.NPCList[i].stance == 'defeated') continue;
@@ -149,9 +148,9 @@ function simpleEjaculation() {
     }
 
     const whitelistnpc = ['Avery', 'Briar', 'Darryl', 'Eden', 'Harper', 'Landry', 'Morgan', 'Whitney', 'Remy', 'Wren'];
-    if (html.length > 2 && !V.npc.containsAn(...whitelistnpc)) {
+    if (html.length > 2 && !V.npc.has(...whitelistnpc)) {
         console.log(html);
-        T.outputHtml = html;
+        T.outputHtml += html;
     }
 }
 
@@ -173,16 +172,40 @@ function longerCombat() {
             V.enemyarousalmax = V.enemyarousalmax * mult + random(1, 99) + Math.random();
         }
 
-        if (Math.floor(V.enemyarousal / 500) > Math.floor(V.lastejaculated / 500) && V.NPCList[0].penis && V.NPCList[i].penis !== 'none') {
+        T.outputHtml = '';
+
+        if (Math.floor(V.enemyarousal / 500) > Math.floor(V.lastejaculated / 500) && V.NPCList[0].penis && V.NPCList[0].penis !== 'none') {
             V.lastejaculated = V.enemyarousal;
             if (midEjac == true && random(100) <= ejacRate) {
                 simpleEjaculation();
+                V.finish = 0;
+                T.endcombat = 0;
             }
         }
 
         if (random(100) < moreRate && V.enemyarousal / V.enemyarousalmax >= 0.9 && V.overEjaculated < moreTimes) {
-            V.enemyarousal = V.enemyarousal - (V.enemyarousalmax * 0.1 + random(50, 500));
+            V.enemyarousal = V.enemyarousal - (V.enemyarousalmax * 0.3 + random(50, 500));
+            V.finish = 0;
+            T.endcombat = 0;
             V.overEjaculated++;
+
+            const source = Story.get(V.passage).text;
+            const result = source.match(/<<link(.+)(Next|继续)([\s\S]*?)>>(.+|)<<\/link>>/);
+            let code = '';
+            if (result[4] && result[4].length > 0) {
+                code = result[4];
+            }
+            console.log('one more time from longer combat!', V.passage, result);
+
+            T.outputHtml += lanSwitch(
+                `"You are so great, we should do one more time!" ${V.enemynomax > 1 ?  'they say' : '<<person1>><<person>> says'}.`,
+                `“你太棒了，我们应该再来一次！”${V.enemynomax > 1 ? '他们' : '<<person1>><<person>>'}说道。`);
+            
+            T.outputHtml += '<br><br>';
+
+            setTimeout(() => {
+                new Wikifier(null, `<<replace span#next>><<link ${lanSwitch('Next', '继续')} $passage>>${code}<</link>><</replace>>`);
+            }, 60);
         }
     }
     else {
@@ -234,6 +257,6 @@ $(document).on(':passageinit', () => {
 
 $(document).on(':passagedisplay', () => {
     if (T.outputHtml) {
-        new Wikifier(null, `<<append #addAfterMsg transition>>${T.outputHtml}<br><</append>>`);
+        new Wikifier(null, `<<append #addAfterMsg>>${T.outputHtml}<br><</append>>`);
     }
 });
