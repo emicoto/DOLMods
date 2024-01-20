@@ -73,7 +73,6 @@
         <<=lanSwitch('The items in the basket:', '洗衣篮里面有：')>>
         <br>
         <<=Pocket.get('bathBasket').countDesc().join(', ')>>
-        <br><br>
     <</replace>>        
 <</lanLink>>
 <br>

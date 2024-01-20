@@ -63,7 +63,6 @@ The toybox isn't very big, but it's enough to store some things.
         <<=lanSwitch('The items in the toybox:', '玩具箱里面有：')>>
         <br>
         <<=Pocket.get('homeToybox').countDesc().join(', ')>>
-        <br><br>
     <</replace>>        
 <</lanLink>>
 <br>
