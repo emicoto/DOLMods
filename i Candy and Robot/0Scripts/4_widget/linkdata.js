@@ -23,6 +23,10 @@ iData.addto(
     {
         passage : 'Garden',
         widget  : 'OpenHomeStorage'
+    },
+    {
+        passage : 'Bathroom',
+        widget  : 'BathroomOption'
     }
 );
 

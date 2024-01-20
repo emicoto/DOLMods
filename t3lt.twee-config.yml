@@ -25,8 +25,8 @@ sugarcube-2:
     lanLink:
       name: lanLink
       container: true
-    display:
-      name: display
+    lan:
+      name: lan
     linkcode:
       name: linkcode
     sleepy:

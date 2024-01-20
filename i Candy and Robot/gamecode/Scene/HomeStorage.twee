@@ -3,8 +3,8 @@
 	<<if iEvent.getFlag('orphanage', 'garageinit') is 1>>
 		<<ind>>
 		<<lanLink 'BaseScene Orphanage Garage'>>
-			<<display 'EN' 'Garage (00:01)'>>
-			<<display 'CN' '旧车库 (00:01)'>>
+			<<lan 'EN' 'Garage (00:01)'>>
+			<<lan 'CN' '旧车库 (00:01)'>>
 			<<linkcode>><<pass 1>>
 		<</lanLink>>
 		<br><br>
@@ -33,8 +33,8 @@
 				)>>
 			<<else>>
 				<<lanLink 'Event Orphanage FixGarage'>>
-					<<display 'EN' 'Help'>>
-					<<display 'CN' '帮忙'>>
+					<<lan 'EN' 'Help'>>
+					<<lan 'CN' '帮忙'>>
 					<<linkcode>>
 						<<run iEvent.addFlag('orphanage', 'garagehelp', 1)>>
 						<<run iEvent.addFlag('orphanage', 'garagehelptoday', 1)>>
@@ -48,16 +48,16 @@
 
 <<widget "OpenLockers">>
 	<<lanLink 'Actions LockerStorage'>>
-		<<display 'EN' 'Open Locker'>>
-		<<display 'CN' '打开储物柜'>>
+		<<lan 'EN' 'Open Locker'>>
+		<<lan 'CN' '打开储物柜'>>
 	<</lanLink>>
 	<br><br>
 <</widget>>
 
 <<widget "OpenStorage">>
 	<<lanLink 'Actions Storage'>>
-		<<display 'EN' 'Open Storage'>>
-		<<display 'CN' '打开储物柜'>>
+		<<lan 'EN' 'Open Storage'>>
+		<<lan 'CN' '打开储物柜'>>
 	<</lanLink>>
 	<br><br>
 <</widget>>

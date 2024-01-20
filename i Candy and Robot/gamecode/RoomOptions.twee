@@ -11,8 +11,8 @@
     <br>
     <<ind>>
     <<lanLink 'Scene Bedroom Toybox'>>
-        <<display 'EN' 'Check toybox'>>
-        <<display 'CN' '查看玩具箱'>>
+        <<lan 'EN' 'Check toybox'>>
+        <<lan 'CN' '查看玩具箱'>>
     <</lanLink>>
     <br><br>
 
@@ -27,4 +27,8 @@
 
 <</if>>
 
+<</widget>>
+
+<<widget "BathroomOption">>
+    
 <</widget>>

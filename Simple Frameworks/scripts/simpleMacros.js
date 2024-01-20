@@ -228,13 +228,13 @@ Macro.add('randomdata', {
 
 Macro.add(['lanLink', 'lanButton'], {
     isAsync : true,
-    tags    : ['display', 'linkcode'],
+    tags    : ['lan', 'linkcode'],
     handler() {
         const passage = this.args[0];
 
         if (this.payload.length == 1) return this.error('no link text found');
 
-        const languages = this.payload.filter(data => data.name == 'display').map(data => data.args);
+        const languages = this.payload.filter(data => data.name == 'lan').map(data => data.args);
         const code = this.payload.filter(data => data.name == 'linkcode')[0]?.contents ?? null;
 
         if (languages.length == 0) return this.error('no language text found');
