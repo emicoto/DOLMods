@@ -7,7 +7,7 @@
 车库很久之前就存在了，
 <<if !iEvent.getFlag('orphanage', 'garageprocess')>>
 但是一直被作为仓库用，里面堆满了杂物，很久没人打理了，就连门窗都破破烂烂的。
-<<elseif iEven.getFlag('orphanage', 'garageprocess') lte 3>>
+<<elseif iEvent.getFlag('orphanage', 'garageprocess') lte 3>>
 只是一直没被打理过。最近孩子们开始修缮车库，你也可以帮忙。
 <<else>>
 只是没怎么被打理。在孩子们的努力下车库看起来好很多了，你也可以帮忙。
@@ -25,7 +25,7 @@ but it's been locked for a long time.
 The garage has been there for a long time,
 <<if !iEvent.getFlag('orphanage', 'garageprocess')>>
 but it's been used as a storage, filled with clutter and debris, and hasn't been cleaned up for a long time. Even the doors and windows are broken.
-<<elseif iEven.getFlag('orphanage', 'garageprocess') lte 3>>
+<<elseif iEvent.getFlag('orphanage', 'garageprocess') lte 3>>
 but it hasn't been cleaned up. Recently the children started to renovate the garage, and you can help.
 <<else>>
 but it hasn't been cleaned up. The garage looks much better now thanks to the children's efforts, and you can help.

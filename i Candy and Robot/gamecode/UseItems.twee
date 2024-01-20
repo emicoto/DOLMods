@@ -2,7 +2,7 @@
 <div id='addMsg'></div><<effects>><div id='addAfterMsg'></div>
 
 <<imgIcon $tvar.img>>  
-<<=$tvar.itemMsg>>
+<<=$tvar.message>>
 <br><br>
 
 

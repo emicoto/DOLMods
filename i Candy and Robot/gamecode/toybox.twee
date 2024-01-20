@@ -26,12 +26,12 @@ The toybox isn't very big, but it's enough to store some things.
         <<lan 'EN' 'Transfer everything from your pockets to the toybox'>>
         <<lan 'CN' '将身上东西全部放进玩具箱里'>>
         <<linkcode>>
-            <<set $addMsg to lanSwitch('You put everything in your pockets into the toybox.', '你将身上的东西都放进了玩具箱。')>>
+            <<set $addMsg += lanSwitch('You put everything in your pockets into the toybox.', '你将身上的东西都放进了玩具箱。')>>
             <<run 
-                const container = Pocket.get('body')
+                const container = Pocket.get('homeToybox')
                 const items = Pocket.get('body').slots;
                 container.add(items);
-                container.updateInex();
+                container.updateIndex();
                 Pocket.get('body').clear();
             >>            
     <</lanLink>>
@@ -43,7 +43,7 @@ The toybox isn't very big, but it's enough to store some things.
         <<lan 'EN' 'Take everything out of the toybox'>>
         <<lan 'CN' '把玩具箱里的东西都拿走'>>
         <<linkcode>>
-        <<set $addMsg to lanSwitch('You take everything out of the toybox.', '你将玩具箱里的东西都拿走了。')>>
+        <<set $addMsg += lanSwitch('You take everything out of the toybox.', '你将玩具箱里的东西都拿走了。')>>
         <<run 
             const items = Pocket.get('homeToybox').slots;
             im.addItems(items);

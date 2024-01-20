@@ -131,11 +131,13 @@ $(document).on(':passagedisplay', () => {
         }
 
         if (V.addMsg.length > 2) {
+            console.log('addMsg:', V.addMsg);
             new Wikifier(null, `<<append #addMsg>>${V.addMsg}<</append>>`);
             V.addMsg = '';
         }
 
         if (V.afterMsg.length > 2) {
+            console.log('afterMsg:', V.afterMsg);
             new Wikifier(null, `<<append #addAfterMsg>>${V.afterMsg}<br><</append>>`);
             V.afterMsg = '';
         }

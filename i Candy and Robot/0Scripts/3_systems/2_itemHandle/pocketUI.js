@@ -103,6 +103,7 @@ const pocketUI = {
             <<link "${method}" $passage>>            
                     <<set $addMsg += "<<imgIcon '${img}'>>" >>
                     <<set $addMsg += Items.get("${id}").onEquip("${pos}", "${i}")>>
+                    <<run console.log('on equip check', $addMsg)>>
                 <</link>>
             </span>
             <span class='itemaction'>`;
