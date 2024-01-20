@@ -66,8 +66,9 @@ $(document).on(':passageinit', data => {
     }
 
     // 刚刷新时跳过事件检测
-    if (setup.gamereloadcheck === true) {
-        setup.gamereloadcheck = false;
+    if (setup.gamereloadcheck === true || setup.gameSettingChange === true) {
+        delete setup.gamereloadcheck;
+        delete setup.gameSettingChange;
         return;
     }
 

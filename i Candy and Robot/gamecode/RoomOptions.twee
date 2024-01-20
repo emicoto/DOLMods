@@ -4,12 +4,11 @@
 <<if $passage is 'Bedroom'>>
     <!-- 孤儿院里的卧室 -->
     <br>
-    <<localIcon 'toybox'>>
     <<=lanSwitch(
     'An old toybox is in the corner of your room, it is the one you have been using since you were a small child.',
     '你的房间角落放着一个陈旧的玩具箱，那是你从小用到大的。')>>
     <br>
-    <<ind>>
+    <<localIcon 'toybox'>>
     <<lanLink 'Scene Bedroom Toybox'>>
         <<lan 'EN' 'Check toybox'>>
         <<lan 'CN' '查看玩具箱'>>

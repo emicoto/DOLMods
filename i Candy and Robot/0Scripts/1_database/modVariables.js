@@ -407,8 +407,9 @@ const iModVariables = {
     // 通用变量
     iPockets,
     iStorage,
-    iRecipe : vRecipe,
-    iShop   : vShop,
+    iRecipe    : vRecipe,
+    iShop      : vShop,
+    iContainer : {},
 
     // 技能
     chemical   : 0,

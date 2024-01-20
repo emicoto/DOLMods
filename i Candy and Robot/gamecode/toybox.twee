@@ -1,7 +1,7 @@
 :: Toybox Description CN
 你靠近了玩具箱。
 <br><br>
-
+<<localIcon 'toybox'>><br>
 这是个绿色的木质箱子，看着圆滚滚的。喷涂在上面的图案已经模糊不清了，但你还是能勉强看出来是个小怪兽。
 <br>
 箱子并不大，但也够你存放一些东西。
@@ -10,6 +10,7 @@
 :: Toybox Description EN
 You approach the toybox.
 <br><br>
+<<localIcon 'toybox'>><br>
 It's a green wooden chest that looks quite round. 
 The pattern painted on it has faded over time, but you can still make out that it's a little monster. 
 <br>
