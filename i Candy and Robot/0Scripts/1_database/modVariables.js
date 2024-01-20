@@ -104,7 +104,8 @@ const iStorage = {
     hideout      : new Pocket('storage', 'hideout', 6), // 隐藏地点
     howllow      : new Pocket('storage', 'howllow', 6), // 隐藏地点
 
-    homeToybox : new Pocket('storage', 'homeToybox', 5) // 孤儿院房间里的玩具箱
+    homeToybox : new Pocket('storage', 'homeToybox', 5), // 孤儿院房间里的玩具箱
+    bathBasket : new Pocket('storage', 'bathBasket', 5) // 浴室里的洗衣篮
 };
 
 iStorage.home.slots.push(

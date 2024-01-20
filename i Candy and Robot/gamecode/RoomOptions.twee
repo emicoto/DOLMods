@@ -31,4 +31,53 @@
 
 <<widget "BathroomOption">>
     
+    <<if Pocket.get('body').count() > 0 && Pocket.get('bathBasket').remains() gte Pocket.get('body').count()>>
+        <<ind>>
+        <<lanLink $passage>>
+            <<lan 'EN' 'Stow everything from your pockets to the basket.'>>
+            <<lan 'CN' '将身上东西暂存在篮子里'>>
+            <<linkcode>>
+                <<set $addMsg += lanSwitch('You stow everything in your pockets to the basket.', '你将将身上东西暂存在篮子里。')>>
+                <<run 
+                    const container = Pocket.get('bathBasket')
+                    const items = Pocket.get('body').slots;
+                    container.add(items);
+                    container.updateIndex();
+                    Pocket.get('body').clear();
+                >>
+        <</lanLink>>
+        <br><br>
+    <</if>>
+
+<<if Pocket.get('bathBasket').count() > 0 && Pocket.getRemain() >= Pocket.get('bathBasket').count()>>
+    <<lanLink $passage>>
+        <<lan 'EN' 'Take everything out of the basket'>>
+        <<lan 'CN' '把篮子里的东西都拿走'>>
+        <<linkcode>>
+        <<set $addMsg += lanSwitch('You take everything out of the basket', '你将篮子里的东西都拿走了。')>>
+        <<run 
+            const items = Pocket.get('bathBasket').slots;
+            im.addItems(items);
+            Pocket.get('bathBasket').clear();
+            im.updatePockets();
+        >>        
+    <</lanLink>>
+    <br><br>
+<</if>>
+
+<<lanLink>>
+    <<lan 'EN' 'Check the basket'>>
+    <<lan 'CN' '检查洗衣篮'>>
+    <<linkcode>>
+    <<replace #basket transition>>
+        <<=lanSwitch('The items in the basket:', '洗衣篮里面有：')>>
+        <br>
+        <<=Pocket.get('bathBasket').countDesc().join(', ')>>
+        <br><br>
+    <</replace>>        
+<</lanLink>>
+<br>
+<div id='basket'></div>
+<br><br>
+
 <</widget>>
