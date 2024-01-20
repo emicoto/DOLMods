@@ -103,7 +103,6 @@ const pocketUI = {
             <<link "${method}" $passage>>            
                     <<set $addMsg += "<<imgIcon '${img}'>>" >>
                     <<set $addMsg += Items.get("${id}").onEquip("${pos}", "${i}")>>
-                    <<run console.log('on equip check', $addMsg)>>
                 <</link>>
             </span>
             <span class='itemaction'>`;
@@ -113,12 +112,12 @@ const pocketUI = {
             else if (method) {
                 _html += `
             <<link "${method}" "Actions UseItems">>
-                <<set $tvar.itemMsg to im.useFromInv("${pos}", ${i})>>
+                <<set $tvar.message to im.useFromInv("${pos}", ${i})>>
                 <<set $tvar.img to "${img}">>
                 <<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>
                     <<set $tvar.exitPassage to $passage>>
                 <</if>>
-                <<run console.log('on use check', $tvar.useItem, $tvar.img, $tvar.exitPassage)>>
+                <<run console.log('on use check', $tvar.message, $tvar.img, $tvar.exitPassage)>>
             <</link>>
             </span>
             <span class='itemaction'>`;
@@ -211,12 +210,12 @@ const pocketUI = {
                 _html += `
             <span class="itemaction">
                 <<link "${method}" "Actions UseItems">>
-                    <<set $tvar.useItem to ["${location}", ${i}]>>
+                    <<set $tvar.message to im.useFromInv("${pos}", ${i})>>
                     <<set $tvar.img to "${img}">>
                     <<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>
                         <<set $tvar.exitPassage to $passage>>
                     <</if>>
-                    <<run console.log('on use check', $tvar.useItem, $tvar.img, $tvar.exitPassage)>>
+                    <<run console.log('on use check', $tvar.message, $tvar.img, $tvar.exitPassage)>>
                 <</link>>
             </span>`;
 
@@ -332,7 +331,7 @@ const pocketUI = {
             html += `
             <span class='itemaction'>
                 <<link ${lanSwitch(name)} $passage>>
-                    <<run V.addMsg += im.putStorage('${key}', '${pos}', ${slot}, ${item.count})>>
+                    <<run V.addMsg += im.putStorage('${key}', '${pos}', ${slot}, ${_item.count})>>
                     <<addclass '#messageBox' 'hidden'>>
                     <<addclass '#background' 'hidden'>>
                 <</link>>
