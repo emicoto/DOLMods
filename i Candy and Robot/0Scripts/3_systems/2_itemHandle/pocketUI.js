@@ -332,7 +332,7 @@ const pocketUI = {
             const { key, name } = obj;
             html += `
             <span class='itemaction'>
-                <<link ${lanSwitch(name)} $passage>>
+                <<link "${lanSwitch(name)}" $passage>>
                     <<run V.addMsg += im.putStorage('${key}', '${pos}', ${slot}, ${_item.count})>>
                     <<addclass '#messageBox' 'hidden'>>
                     <<addclass '#background' 'hidden'>>
@@ -342,11 +342,13 @@ const pocketUI = {
 
         html += `
         <span class='itemaction'>
-        <<link ${lanSwitch(['Cancel', '取消'])}>>
+        <<link "${lanSwitch('Cancel', '取消')}">>
             <<addclass '#messageBox' 'hidden'>>
             <<addclass '#background' 'hidden'>>
         <</link>>
     </span>`;
+
+        console.log(html);
 
         new Wikifier(null, `<<replace #messageBox>>${html}<</replace>><<removeclass #messageBox 'hidden'>><<removeclass #background 'hidden'>>`);
     }

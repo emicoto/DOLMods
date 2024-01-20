@@ -56,18 +56,24 @@ $(document).on(':passageinit', data => {
     // 初始化场景设置
     iEvent.initBaseScene(psg);
 
-    // 刚刷新时跳过事件检测
-    if (setup.gamereloadcheck) {
-        setup.gamereloadcheck = false;
-        return;
-    }
-
     // 如果刚从动作事件里退出
     if (V.tvar.unsetAction) {
         delete V.tvar.unsetAction;
 		
-        F.resetTvar('message','useItem', 'img', 'passtime', 'onemore');
+        F.resetTvar('message','useItem', 'img', 'passtime', 'onemore', 'usemethod');
         // 如果从物品事件出来，在这里就不再执行事件检测了
+        return;
+    }
+
+    // 刚刷新时跳过事件检测
+    if (setup.gamereloadcheck === true) {
+        setup.gamereloadcheck = false;
+        return;
+    }
+
+    // 刚读档时
+    if (iCandy.onLoad === true) {
+        iCandy.onLoad = false;
         return;
     }
 
