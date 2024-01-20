@@ -22,7 +22,7 @@ The toybox isn't very big, but it's enough to store some things.
 <br><br>
 
 <<if Pocket.get('body').count() > 0 && Pocket.get('homeToybox').remains() gte Pocket.get('body').count()>>
-    <<lanLink>>
+    <<lanLink $passage>>
         <<lan 'EN' 'Transfer everything from your pockets to the toybox'>>
         <<lan 'CN' '将身上东西全部放进玩具箱里'>>
         <<linkcode>>
@@ -39,7 +39,7 @@ The toybox isn't very big, but it's enough to store some things.
 <</if>>
 
 <<if Pocket.get('homeToybox').count() > 0 && Pocket.getRemain() >= Pocket.get('homeToybox').count()>>
-    <<lanLink>>
+    <<lanLink $passage>>
         <<lan 'EN' 'Take everything out of the toybox'>>
         <<lan 'CN' '把玩具箱里的东西都拿走'>>
         <<linkcode>>
