@@ -1,29 +1,34 @@
 // Brothel Basement
-iEvent.registEvent('location',
-                   {
-                       entrypassage : 'Brothel Basement',
-                       scene        : 'Brothel Basement',
-                       exit         : 'Brothel Basement',
+iEvent
+    .registEvent(
+        'location',
 
-                       episode   : 'DrugsIntro',
-                       type      : 'Event',
-                       phase     : 3,
-                       eventnext : true,
-                       require   : data => iEvent.getFlag('brothel', 'drugsintro') !== 1 &&
-    V.brothel_basement_intro == 1 && V.tvar.lastPassage == 'Brothel'
-                   },
-                   {
-                       match : /[a-zA-Z]+ Street$|Park$/,
+        {
+            entrypassage : 'Brothel Basement',
+            scene        : 'Brothel Basement',
+            exit         : 'Brothel Basement',
 
-                       type     : 'Event',
-                       toward   : 'Chinatown RandomRumors',
-                       initcode : '<<set $tvar.scene.branch to random(1,4)>><<set $tvar.scene.exit to $tvar.lastPassage>>',
-                       endcode  : '<<set $eventskip to 1>><<run iEvent.addFlag("chinatown", "rumors", 1); iEvent.addFlag("chinatown", "rumorstoday", 1)>>',
-                       require  : data => iEvent.getFlag('chinatown', 'intro') == undefined &&
-V.location == 'town' && F.noEventRunning() && random(100) < 30 &&
-Time.days > 2 && iEvent.getFlag('chinatown', 'rumorstoday') < 2
-                   }
-);
+            episode   : 'DrugsIntro',
+            type      : 'Event',
+            phase     : 3,
+            eventnext : true,
+            require   : data => iEvent.getFlag('brothel', 'drugsintro') !== 1
+            && V.brothel_basement_intro == 1 && V.tvar.lastPassage == 'Brothel'
+        },
+
+        {
+            match : /[a-zA-Z]+ Street$|Park$/,
+
+            type     : 'Event',
+            toward   : 'Chinatown RandomRumors',
+            initcode : '<<set $tvar.scene.branch to random(1,4)>><<set $tvar.scene.exit to $tvar.lastPassage>>',
+            endcode  : '<<set $eventskip to 1>><<run iEvent.addFlag("chinatown", "rumors", 1); iEvent.addFlag("chinatown", "rumorstoday", 1)>>',
+            require  : data => iEvent.getFlag('chinatown', 'intro') == undefined
+            && V.location == 'town' && F.noEventRunning() && random(100) < 30
+            && Time.days > 2 && iEvent.getFlag('chinatown', 'rumorstoday') < 2
+        }
+    );
+
 
 iEvent.registPsg('Brothel Basement Sex', () => {
     iEvent.addFlag('brothel', 'prostitution', 1);
@@ -36,7 +41,6 @@ iEvent.registEvent('Passout', {
     require : () => {
         let passout = iEvent.getFlag('harvest', 'passout') || 0;
         passout += iEvent.getFlag('mer', 'passout') || 0;
-
         return iEvent.getFlag('chinatown', 'prologue') == undefined && V.bus == 'harvest' && passout  >= 3 && Time.days > 2;
     }
 });
@@ -136,15 +140,18 @@ iEvent.registPsg('Livestock Field River', () => {
 });
 
 
-iEvent.registEvent('location',
-                   {
-                       entrypassage : 'Garden',
-                       toward       : 'Orphanage Garage Intro',
+iEvent
+    .registEvent(
+        'location',
+        {
+            entrypassage : 'Garden',
+            toward       : 'Orphanage Garage Intro',
     
-                       type    : 'Event',
-                       require : () => !iEvent.getFlag('orphanage', 'garageinit') && iEvent.getFlag('time', 'days') >= 6 && Time.dayState == 'day'
-                   }
-);
+            type    : 'Event',
+            require : () => !iEvent.getFlag('orphanage', 'garageinit')
+            && iEvent.getFlag('orphanage', 'garageprocess') >= 6 && Time.dayState == 'day'
+        }
+    );
 
 /*
 iEvent.registEvent('Passout',

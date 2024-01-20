@@ -1,7 +1,7 @@
 {
   "name": "i, Candy + Robot",
   "version": "2.4.5",
-  "build": "3",
+  "build": "5",
   "modPacker": {
     "modVersionJs": {
       "file": "0Scripts/0_framework/0_modversion.js",
@@ -71,6 +71,7 @@
     "gamecode/PalamWidget.twee",
     "gamecode/Pocket.twee",
     "gamecode/Robot.twee",
+    "gamecode/RoomOptions.twee",
     "gamecode/Scene/Brothel.twee",
     "gamecode/Scene/Chinatown/Almond.twee",
     "gamecode/Scene/Chinatown/HKCafe.twee",
@@ -91,11 +92,13 @@
     "gamecode/Scene/Daiso/Intro.twee",
     "gamecode/Scene/Daiso/Main.twee",
     "gamecode/Scene/Daiso/Scene.twee",
+    "gamecode/Scene/GarageRenovate.twee",
+    "gamecode/Scene/HomeStorage.twee",
     "gamecode/Scene/Pharmacy.twee",
     "gamecode/Scene/Warehouse.twee",
-    "gamecode/Storage.twee",
     "gamecode/UseItems.twee",
-    "gamecode/Widgets.twee"
+    "gamecode/Widgets.twee",
+    "gamecode/toybox.twee"
   ],
   "imgFileList": [],
   "additionFile": [
@@ -137,8 +140,8 @@
         },
         {
           "passage": "Widgets",
-          "findString": "<</if>>\n<</widget>>\n\n\n<<widget \"tableText\">>",
-          "replaceFile": "replaceFiles/bedroomWidget.txt"
+          "findString": "<<widget \"roomoptions\">>",
+          "replace": "<<widget \"roomoptions\">>\n\n<<iCandyRoomOption>>\n\n"
         },
         {
           "passage": "Widgets",

@@ -327,13 +327,25 @@ function dayProcess(sec, day, weekday) {
         R.robot.power = Math.max(0, R.robot.power - 1);
     }
 
-    R.flags.repairshop.today = 0;
-
-    if (iEvent.getFlag('orphanage', 'garageprocess') < 6 || !iEvent.getFlag('orphanage', 'garageprocess')) {
-        iEvent.addFlag('orphanage', 'garageprocess', 1);
+    // 孤儿院的事件处理
+    const orphanage = iEvent.getFlag('orphanage');
+    if (typeof orphanage.garageprocess == 'undefined') {
+        orphanage.garageprocess = 0;
+    }
+    if (!orphanage.garageinit) {
+        orphanage.garageprocess++;
+    }
+    if (orphanage.garagehelptoday > 0) {
+        orphanage.garageprocess++;
+    }
+    // 清理每日flag
+    for (const key in orphanage) {
+        if (key.includes('today')) {
+            orphanage[key] = 0;
+        }
     }
 
-    // 事件flag的清理
+    // 唐人街的事件处理
     const chinatown = iEvent.getFlag('chinatown');
     for (const key in chinatown) {
         if (key.includes('today')) {

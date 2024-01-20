@@ -1,0 +1,118 @@
+:: iCandy Widget HomeStorage [widget]
+<<widget "OpenHomeStorage">>
+	<<if iEvent.getFlag('orphanage', 'garageinit') is 1>>
+		<<ind>>
+		<<lanLink 'BaseScene Orphanage Garage'>>
+			<<display 'EN' 'Garage (00:01)'>>
+			<<display 'CN' '旧车库 (00:01)'>>
+			<<linkcode>><<pass 1>>
+		<</lanLink>>
+		<br><br>
+	<<else>>
+		<<if Time.dayState is 'day' and $passage isnot 'Garden'>>
+			<<=lanSwitch(
+				"The end of the corridor has a door with the words 'Old Garage' on it. But the door is locked.",
+				"走廊尽头有一扇门，门上写着“旧车库”。但是门是锁着的。"
+			)>>
+			<<=lanSwitch(
+				"You hear someone working in the backyard.",
+				"你听到后院里有人在忙活。"
+			)>>
+		<<elseif $passage is 'Garden' and Time.dayState is 'day'>>
+			<<if iEvent.getFlag('orphanage', 'garageprocess') is undefined>>
+				<<run iEvent.addFlag('orphanage', 'garageprocess', 1)>>
+			<</if>>
+
+			<<lanPassage 'Scene Garden GarageDescription'>>
+			<br><br>
+
+			<<if iEvent.getFlag('orphanage', 'garagehelptoday') is 1>>
+				<<=lanSwitch(
+					'You already helped today.',
+					'你今天已经帮过忙了。'
+				)>>
+			<<else>>
+				<<lanLink 'Event Orphanage FixGarage'>>
+					<<display 'EN' 'Help'>>
+					<<display 'CN' '帮忙'>>
+					<<linkcode>>
+						<<run iEvent.addFlag('orphanage', 'garagehelp', 1)>>
+						<<run iEvent.addFlag('orphanage', 'garagehelptoday', 1)>>
+				<</lanLink>>
+			<</if>>
+
+		<</if>>
+		<br><br>
+	<</if>>
+<</widget>>
+
+<<widget "OpenLockers">>
+	<<lanLink 'Actions LockerStorage'>>
+		<<display 'EN' 'Open Locker'>>
+		<<display 'CN' '打开储物柜'>>
+	<</lanLink>>
+	<br><br>
+<</widget>>
+
+<<widget "OpenStorage">>
+	<<lanLink 'Actions Storage'>>
+		<<display 'EN' 'Open Storage'>>
+		<<display 'CN' '打开储物柜'>>
+	<</lanLink>>
+	<br><br>
+<</widget>>
+
+:: Orphanage Garage localDescription CN
+你来到后院的车库，里面有一些箱子和储物架。 
+<br>
+在右手边的墙角还有有个老式冰箱，可以存放一些食材。
+<br><br>
+
+:: Orphanage Garage localDescription EN
+You are in the garage at backyard. There are some boxes and shelves. 
+<br>
+There is an old refrigerator in the corner of the right wall, where you can store some food.
+<br><br>
+
+:: BaseScene Orphanage Garage [scene]
+<<set $outside to 0>><<effects>>
+<div id='locationdes'>
+<<if (!$tvar.scene.passage || $tvar.scene.type == 'Scene') and $phase is 0>>
+	<<lanPassage 'Orphanage Garage localDescription'>>
+<</if>>
+</div>
+
+<div id='content'>
+	<<if $tvar.scene.passage>>
+		<<include $tvar.scene.passage>>
+	<<else>> <!-- if $tvar.shop is daiso -->
+		<<include 'Scene Orphanage Garage'>>
+	<</if>>
+</div>
+
+<<if $tvar.onselect is true>>
+	<<set $tvar.onselect to false>>
+
+<<elseif $tvar.eventnext is true>>
+	<<link getLan('next') $passage>>
+		<<pass 1>>
+		<<if $tvar.scene.nextcode>>
+			<<=$tvar.scene.nextcode>>
+		<</if>>
+	<</link>>
+<<else>>
+	<<getouticon>><<link getLan('leave') "Orphanage">>
+		<<run iEvent.unsetEvent();>>
+		<<pass 1>>
+	<</link>>    
+<</if>>
+
+:: Scene Orphanage Garage
+<<set $tvar.storage to 'home'>>
+<<set _storage to []>>
+<<lanSwitch "The items in storage:" "车库里的物品：">>
+<br>
+
+<div id='container'>
+<<=pocketUI.storage('home')>>
+</div>

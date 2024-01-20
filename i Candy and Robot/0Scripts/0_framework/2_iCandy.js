@@ -108,7 +108,7 @@ const iCandy = {
         if (!data) return;
 
         const dose = this.calcDose(item, value);
-        const stat = this.getStat(item)
+        const stat = this.getStat(item);
 
         if (dose > 0) {
             this.addStat(item, 'taken', Math.max(Math.floor(value / 100 + 0.5), 1));

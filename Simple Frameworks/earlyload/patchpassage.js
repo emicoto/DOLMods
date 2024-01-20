@@ -1520,15 +1520,15 @@
         }
         else if (title == 'PassageHeader') {
             // add div to passage header
-            passage.content = `<div id="passage-header">${passage.content}</div>`;
+            passage.content = `<div id="passage-header">\n${passage.content}\n</div>`;
         }
         else if (title == 'PassageFooter') {
             // add div to passage footer
-            passage.content = `<div id="passage-footer">${passage.content}</div>`;
+            passage.content = `<div id="passage-footer">\n${passage.content}\n</div>`;
         }
         else {
             // add div to passage content
-            passage.content = `<div id="passage-content">${passage.content}</div>`;
+            passage.content = `<div id="passage-content">\n${passage.content}\n</div>`;
         }
         
 
@@ -1887,7 +1887,10 @@
         patchScene,
         patchPassage,
         patchWidget,
-        afterPatchModToGame
+        afterPatchModToGame,
+        applygroup,
+        applymatch,
+        applysrc
     };
 
     await afterPatchModToGame();

@@ -1,0 +1,76 @@
+:: Toybox Description CN
+你靠近了玩具箱。
+<br><br>
+
+这是个绿色的木质箱子，看着圆滚滚的。喷涂在上面的图案已经模糊不清了，但你还是能勉强看出来是个小怪兽。
+<br>
+箱子并不大，但也够你存放一些东西。
+
+
+:: Toybox Description EN
+You approach the toybox.
+<br><br>
+It's a green wooden chest that looks quite round. 
+The pattern painted on it has faded over time, but you can still make out that it's a little monster. 
+<br>
+The toybox isn't very big, but it's enough to store some things.
+
+
+:: Scene Bedroom Toybox
+
+<<lanPassage 'Toybox Description'>>
+<br><br>
+
+<<if Pocket.get('body').count() > 0 && Pocket.get('homeToybox').remains() gte Pocket.get('body').count()>>
+    <<lanLink>>
+        <<display 'EN' 'Transfer everything from your pockets to the toybox'>>
+        <<display 'CN' '将身上东西全部放进玩具箱里'>>
+        <<linkcode>>
+            <<set $addMsg to lanSwitch('You put everything in your pockets into the toybox.', '你将身上的东西都放进了玩具箱。')>>
+            <<run 
+                const container = Pocket.get('body')
+                const items = Pocket.get('body').slots;
+                container.add(items);
+                container.updateInex();
+                Pocket.get('body').clear();
+            >>            
+    <</lanLink>>
+    <br><br>
+<</if>>
+
+<<if Pocket.get('homeToybox').count() > 0 && Pocket.getRemain() >= Pocket.get('homeToybox').count()>>
+    <<lanLink>>
+        <<display 'EN' 'Take everything out of the toybox'>>
+        <<display 'CN' '把玩具箱里的东西都拿走'>>
+        <<linkcode>>
+        <<set $addMsg to lanSwitch('You take everything out of the toybox.', '你将玩具箱里的东西都拿走了。')>>
+        <<run 
+            const items = Pocket.get('homeToybox').slots;
+            im.addItems(items);
+            Pocket.get('homeToybox').clear();
+            im.updatePockets();
+        >>        
+    <</lanLink>>
+
+    <br><br>
+<</if>>
+
+<<lanLink>>
+    <<display 'EN' 'Check the toybox'>>
+    <<display 'CN' '检查玩具箱'>>
+    <<linkcode>>
+    <<replace #toybox transition>>
+        <<=lanSwitch('The items in the toybox:', '玩具箱里面有：')>>
+        <br>
+        <<=Pocket.get('homeToybox').countDesc().join(', ')>>
+        <br><br>
+    <</replace>>        
+<</lanLink>>
+<br>
+<div id='toybox'></div>
+<br><br>
+
+<<lanLink 'Bedroom'>>
+    <<display 'EN' 'Step back'>>
+    <<display 'CN' '返回'>>
+<</lanLink>>

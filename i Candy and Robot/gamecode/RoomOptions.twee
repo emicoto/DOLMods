@@ -1,0 +1,30 @@
+:: iCandy RoomOptions [widget]
+<<widget 'iCandyRoomOption'>>
+<!-- 房间选项  -->
+<<if $passage is 'Bedroom'>>
+    <!-- 孤儿院里的卧室 -->
+    <br>
+    <<localIcon 'toybox'>>
+    <<=lanSwitch(
+    'An old toybox is in the corner of your room, it is the one you have been using since you were a small child.',
+    '你的房间角落放着一个陈旧的玩具箱，那是你从小用到大的。')>>
+    <br>
+    <<ind>>
+    <<lanLink 'Scene Bedroom Toybox'>>
+        <<display 'EN' 'Check toybox'>>
+        <<display 'CN' '查看玩具箱'>>
+    <</lanLink>>
+    <br><br>
+
+<</if>>
+
+<!-- 安全屋通用选项 -->
+<<if F.inSafeHouse()>>
+
+    <<if R.mechStats.toolbox is 1>>
+        <<localIcon 'toolbox'>>
+    <</if>>
+
+<</if>>
+
+<</widget>>

@@ -1,4 +1,4 @@
-:: iMod Widgets [widget]
+:: iCandy Widgets [widget]
 
 <<widget "candySkills">>
 <<set _mechanicConfig = { 
@@ -101,4 +101,9 @@
             '学校的午餐填饱了你的肚子。',
         )>> <<lllhunger>> <<llthirst>>
     <</append>>
+<</widget>>
+
+<<widget "lanPassage">>
+    <<set _passage to `${$args[0]} ${setup.language}`>>
+    <<include _passage>>
 <</widget>>

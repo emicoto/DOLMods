@@ -1,5 +1,17 @@
 sugarcube-2:
   macros:
+    lanPassage:
+      name: lanPassage
+    gmechanic:
+      name: gmechanic
+    ggmechanic:
+      name: ggmechanic
+    gggmechanic:
+      name: gggmechanic
+    gmechanicDes:
+      name: gmechanicDes
+    gainMechanic:
+      name: gainMechanic
     thirsty:
       name: thirsty
     lllthirst:
@@ -13,15 +25,10 @@ sugarcube-2:
     lanLink:
       name: lanLink
       container: true
-    lanlink:
-      name: lanlink
-      container: true
-    lan:
-      name: lan
+    display:
+      name: display
     linkcode:
       name: linkcode
-      container: true
-      
     sleepy:
       name: sleepy
     lllsleepy:

@@ -101,6 +101,14 @@ const iUtil = {
         return V.location;
     },
 
+    inSafeHouse() {
+        const safehouse = [
+            'Bedroom', 'Cabin Actions', 'Farm Bedroom', 'Temple Bunk', 'BaseScene YourApartment', 'Lake House Bedroom', 'BaseScene HotSpringHouse'
+        ];
+
+        return safehouse.includes(V.passage);
+    },
+
     hasLockers() {
         const local = this.getLocation();
         // 学校的储物柜是免费的。

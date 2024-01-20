@@ -1,0 +1,286 @@
+:: Scene Garden GarageDescription CN
+你看到了孤儿们拿着各种各样的工具在后院忙活着，似乎在试图修缮那个破旧的车库。
+<br><br>
+
+车库靠近孤儿院主楼后院，门厅后面就有出口直接到车库，只是之前都是锁着的。
+<br>
+车库很久之前就存在了，
+<<if !iEvent.getFlag('orphanage', 'garageprocess')>>
+但是一直被作为仓库用，里面堆满了杂物，很久没人打理了，就连门窗都破破烂烂的。
+<<elseif iEven.getFlag('orphanage', 'garageprocess') lte 3>>
+只是一直没被打理过。最近孩子们开始修缮车库，你也可以帮忙。
+<<else>>
+只是没怎么被打理。在孩子们的努力下车库看起来好很多了，你也可以帮忙。
+<</if>>
+
+:: Scene Garden GarageDescription EN
+You see the orphans busying themselves in the backyard with various of tools, looks like trying to renovate that dilapidated garage.
+<br><br>
+
+The garage is located near the orphanage's main building, 
+and there's an exit behind the hall that leads directly to the garage, 
+but it's been locked for a long time.
+<br><br>
+
+The garage has been there for a long time,
+<<if !iEvent.getFlag('orphanage', 'garageprocess')>>
+but it's been used as a storage, filled with clutter and debris, and hasn't been cleaned up for a long time. Even the doors and windows are broken.
+<<elseif iEven.getFlag('orphanage', 'garageprocess') lte 3>>
+but it hasn't been cleaned up. Recently the children started to renovate the garage, and you can help.
+<<else>>
+but it hasn't been cleaned up. The garage looks much better now thanks to the children's efforts, and you can help.
+<</if>>
+
+:: Event Orphanage FixGarage
+<<set _process to iEvent.getFlag('orphanage', 'garageprocess')>>
+<<set $phase to Math.clamp(Math.ceil(_process/2), 2, 4)>>
+
+<<set _passage to `Orphanage FixGarageText ${$phase} ${setup.language}`>>
+
+<<include _passage>>
+
+<<link getLan('next') 'Orphanage'>><<pass 3 hour>><</link>>
+
+:: Orphanage FixGarageText KidsReaction CN
+<<if iEvent.getFlag('orphanage', 'garagehelp') is 1>>
+	“啊！是你！<<=sexSwitch('pc', '大姐姐', '大哥哥')>>。院长说最近囤积的杂物太多了，要把车库修了改成仓库。”
+	<br>
+	一名<<if $phase is 4>>满脸油漆的<</if>>小孩在注意到你的到来后，向你打了个招呼并说明了情况。
+	<br>
+	“
+	<<if iCandy.config.lostdegree>>
+		我们打算靠自己把车库修好，这样的话就能帮鲁比院长省钱了！
+	<<else>>
+		贝利院长说，反正最后用的人也是我们，所以就让我们自己来修了。
+	<</if>>
+	”
+<<elseif iEvent.getFlag('orphanage', 'garagehelp') gte 2>>
+	“啊！是你！<<=sexSwitch('pc', '大姐姐', '大哥哥')>>。今天也来帮忙了吗？”
+	<br>
+	<<if $phase is 4>>
+		几个满脸油漆的孩子看到你的到来，都很开心地向你打了个招呼。
+	<<else>>
+		孩子们看到你的到来，都很开心地向你打了个招呼。
+	<</if>>
+<</if>>
+
+:: Orphanage FixGarageText KidsReaction EN
+<<if iEvent.getFlag('orphanage', 'garagehelp') is 1>>
+	"Ah! It's you! <<=sexSwitch('pc', 'big sister', 'big brother')>>. "
+	<br>
+	"The <<=sexSwitch("Bailey", "headmistress","headmaster")>> said that there's been too much clutter in the orphanage lately, so <<nnpc_he 'Bailey'>> finally decided to fix up the garage and convert it into a storage space. "
+	<br>
+	An orphan <<if $phase is 4>>with paint on face  <</if>>greets you and explains the situation.
+	<br>
+	"
+	<<if iCandy.config.lostdegree>>
+		We're planning to fix up the garage ourselves, so we can save money for <<=sexSwitch('Ruby', 'Miss', 'Mr.')>> Ruby!
+	<<else>>
+		Bailey said that since we're the ones who will be using it in the end, we might fix it up by ourselves.
+	<</if>>
+	"
+<<elseif iEvent.getFlag('orphanage', 'garagehelp') gte 2>>
+	"<<=sexSwitch('pc', 'big sister', 'big brother')>>. Are you here to help today?"
+	<br>
+	<<if $phase is 4>>
+		Several orphans with paint on their face greet you happily after notices your approach.
+	<<else>>
+		The orphans greet you happily after notice your approach.
+	<</if>>
+<</if>>
+
+:: Orphanage FixGarageText 1 CN
+你走上前，拿起一些工具试图帮忙。
+<br><br>
+
+<<include 'Orphanage FixGarageText KidsReaction CN'>>
+<br><br>
+
+你点了点头，然后拿起垃圾袋开始帮孩子们一起整理杂物跟工具。
+<br>
+把垃圾扔掉，清理蜘蛛网，杂物归类装箱都暂时堆放在院子里，工具也一一清点放置好。
+<br>
+清点车库时，你们发现翻修车库需要的材料基本都能在车库里找到。 水泥、木板、油漆、瓦块……各种材料勉强够用。
+<br><br>
+
+虽然进度不大，但是总算是把车库清理干净了。因为你的帮忙，孩子们也很开心。
+<br><br>
+
+:: Orphanage FixGarageText 1 EN
+You walk up and pick up some tools to help.
+<br><br>
+
+<<include 'Orphanage FixGarageText KidsReaction EN'>>
+<br><br>
+
+You nod in understanding and pick up a garbage bag, joining in to help with the cleanup.
+<br>
+Trash is thrown out, cobwebs are cleaned up, clutter is categorized and boxed up and temporarily stacked in the yard, and tools are inventoried and put away.
+<br><br>
+
+When you inventory the items in the garage, you find that most of the materials needed for the renovation are already available. 
+<br>
+There's cement, wooden boards, paint, roof tiles, and various other materials – enough to get the job done, albeit just barely.
+<br><br>
+
+It's not much progress, but you've finally cleaned up the garage. The kids are happy because of your help.
+<br><br>
+
+:: Orphanage FixGarageText 2 CN
+你走上前，拿起一些工具试图帮忙。
+<br><br>
+
+<<include 'Orphanage FixGarageText KidsReaction CN'>>
+<br><br>
+
+你点了点头，然后拿起锤子搬起木板，爬着梯子到屋顶上，帮孩子们一起修补屋顶。
+<br>
+经过你们的共同努力，今天把漏水的屋顶修好了，并修补了一些外墙的破损。
+<br>
+看着车库在你们努力下一点点被修缮好，你们都感到很有成就感。
+<br><br>
+
+:: Orphanage FixGarageText 2 EN
+You walk up and pick up some tools to help.
+<br><br>
+
+<<include 'Orphanage FixGarageText KidsReaction EN'>>
+<br><br>
+
+You nod, then pick up a hammer. You bring a wooden board, climb up a ladder to reach the roof, and join the children in repairing it.
+<br>
+With your combined efforts, you successfully fix the leaky roof today and patch up some of the damaged areas on the exterior walls.
+<br><br>
+
+As you all watch the garage gradually come together through your hard work, a sense of accomplishment fills the air.
+<br><br>
+
+:: Orphanage FixGarageText 3 CN
+你走上前，拿起一些工具试图帮忙。
+<br><br>
+
+<<include 'Orphanage FixGarageText KidsReaction CN'>>
+<br><br>
+
+你点点头，然后拿起锤子和钉子，帮孩子们一起修补门窗。
+<br>
+经过你们的共同努力，今天把车库的门窗都修好了，并给车库的地板简单抹了一层水泥，算是把地板上的窟窿都补上了。
+<br>
+看着车库在你们努力下一点点被修缮好，你们都感到很有成就感。
+<br><br>
+
+:: Orphanage FixGarageText 3 EN
+You walk up and pick up some tools to help.
+<br><br>
+
+<<include 'Orphanage FixGarageText KidsReaction EN'>>
+<br><br>
+
+You nod, then pick up a hammer and some nails, and join the children in repairing the doors and windows.
+<br>
+With your combined efforts, you successfully fix the doors and windows of the garage today, and give the garage floor a simple layer of cement, which is considered to have patched up all the holes on the floor.
+<br><br>
+
+As you all watch the garage gradually come together through your hard work, a sense of accomplishment fills the air.
+<br><br>
+
+:: Orphanage FixGarageText 4 CN
+你走上前，拿起一些工具试图帮忙。
+<br>
+你注意到经过几天的努力，车库基本修好了，只是还没刷墙。
+<br><br>
+
+<<include 'Orphanage FixGarageText KidsReaction CN'>>
+<br><br>
+
+你点点头，然后拿起刷子和油漆桶，加入孩子们的队伍，开始刷墙。
+<br>
+经过你们的共同努力，今天把车库的墙壁从里里外外都刷了一遍，
+再经过一天的干燥，安装好储物的架子，车库的改装就算完成了。
+<br><br>
+
+看着几乎焕然一新的车库，你们都很开心，为自己的努力感到骄傲。
+<br><br>
+
+:: Orphanage FixGarageText 4 EN
+You walk up and pick up some tools to help.
+<br>
+You notice that after several days of hard work, the garage is basically fixed, but the walls have not been painted yet.
+<br><br>
+
+<<include 'Orphanage FixGarageText KidsReaction EN'>>
+<br><br>
+
+You nod, then pick up a brush and a paint bucket, joining the orphans in their work, and you all start painting the walls.
+<br>
+Through your collective efforts, you manage to paint the walls of the garage thoroughly, both inside and out.
+<br>
+Once the paint is complete dry, you can install storage shelves, and the garage renovation will be complete.
+<br><br>
+
+As you all look at the nearly renovated garage, a sense of pride and accomplishment fills the air.
+<br><br>
+
+
+:: Event Orphanage Garage Intro
+<<set _passage to 'Orphanage Garage IntroText ' + setup.language >>
+<<gainMechanic 10>>
+
+<<include _passage>>
+
+<<link getLan('next') 'Orphanage'>><<tiredness 60>><<run iEvent.setFlag('orphanage', 'garageinit', 1); iEvent.unsetEvent()>><<pass 2 hour>><</link>>
+
+:: Orphanage Garage IntroText CN
+在你来到后院时，你发现孤儿院里的小孩们正拿着扫帚拖把抹布，在车库里忙活。
+<br>
+车库已经翻新好了，现在孩子们正在打扫车库，准备安装储物架以及给旧冰箱通电。
+<br><br>
+
+“<<=sexSwitch('pc', '大姐姐', '大哥哥')>>，你来了啊。”
+<br>
+一名小孩注意到你的到来，向你打了个招呼。
+<br><br>
+
+你点点头，也拿起扫帚跟抹布，帮孩子们一起打扫车库。
+<br>
+清扫之前为了刷墙而铺满地的报纸，擦拭门窗上沾到的油漆，再把储物架安装好，把有用的东西都归类放好，这下车库的改造就算完成了。
+<br>
+最后再把旧冰箱进行一些简单的维修，确保它能安全使用，再通上电，之后就可以把食物放进去了。<<gmechanic>> <<gmechanicDes '你习得了一点机械技能。'>>
+<br><br>
+
+经过几天的辛勤劳动，车库总算改装完毕。孩子们开心地拉着你的手一起转圈，为自己的努力感到骄傲。
+<br><br>
+
+<span class='yellow'>你可以使用车库来存放物品了。</span>
+<br><br>
+
+:: Orphanage Garage IntroText EN
+When you come to the backyard of the orphanage, 
+you notice the orphans are busy with brooms, mops, and rags in the garage.
+<br>
+The garage has been renovated, and the orphans are cleaning it up, preparing to install storage shelves and power the old refrigerator.
+<br><br>
+
+"<<=sexSwitch('pc', 'Big sister', 'Big brother')>>, you're here."
+<br>
+An orphan notices your approach and greets you.
+<br><br>
+
+You nod and pick up a broom and a rag, helping the orphans with the garage cleanup.
+<br>
+
+You remove the newspapers that were used to protect the floor during painting,
+wipe off the paint splatters on the doors and windows.
+<br>
+After install the storage shelves and organize the useful items to shelves, the garage renovation is finally complete.
+<br><br>
+
+At the end, you try to simpely repair the old refrigerator, ensuring it's safe to use. After connect it to power, you can start storing food inside.
+<<gmechanic>> <<gmechanicDes 'You learned a bit of mechanical.'>>
+<br><br>
+
+After several days of hard work, the garage renovation is finally complete. The orphans happily hold your hand and dance in circles, proud of their efforts.
+<br><br>
+
+<span class='yellow'>You can use the garage to store items now.</span>
+<br><br>

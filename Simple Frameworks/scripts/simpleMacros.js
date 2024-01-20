@@ -225,16 +225,16 @@ Macro.add('randomdata', {
     }
 });
 
-/*
+
 Macro.add(['lanLink', 'lanButton'], {
     isAsync : true,
-    tags    : ['lan', 'linkcode'],
+    tags    : ['display', 'linkcode'],
     handler() {
-        let passage = this.args[0];
+        const passage = this.args[0];
 
         if (this.payload.length == 1) return this.error('no link text found');
 
-        const languages = this.payload.filter(data => data.name == 'lan').map(data => data.args);
+        const languages = this.payload.filter(data => data.name == 'display').map(data => data.args);
         const code = this.payload.filter(data => data.name == 'linkcode')[0]?.contents ?? null;
 
         if (languages.length == 0) return this.error('no language text found');
@@ -302,7 +302,7 @@ Macro.add(['lanLink', 'lanButton'], {
             .appendTo(this.output);
     }
 });
-*/
+
 
 // escape all the space inside the '' or ""
 function escapeSpaceInsideQuote(source) {
@@ -315,6 +315,7 @@ function escapeSpaceInsideQuote(source) {
     return text;
 }
 
+/*
 Macro.add(['lanlink', 'lanbutton'], {
     isAsync : true,
     tags    : null,
@@ -337,7 +338,7 @@ Macro.add(['lanlink', 'lanbutton'], {
         }
 
         // if using global variable. if just a string like "go out." then should has ' or " to wrap it
-        const checksanity = function(src) {
+        const checksanity = function (src) {
             const check = {
                 gval : 0,
                 val  : 0,
@@ -465,3 +466,47 @@ Macro.add(['lanlink', 'lanbutton'], {
             .appendTo(this.output);
     }
 });
+*/
+
+/*
+Macro.add('lanPassage', {
+    tags : null,
+    handler() {
+        const args = this.args;
+        if (args.length == 0) return this.error('no args found');
+        if (args.length > 1) return this.error('too many args found');
+
+        let title = args[0];
+        if (!Story.has(title) && !Story.has(`${title} ${setup.language}`) && !Story.has(`${title} EN`)) {
+            return this.error(`passage "${title}" + ${setup.language} does not exist`);
+        }
+
+        // Custom debug view setup.
+        if (Config.debug) {
+            this.debugView.modes({ block : true });
+        }
+
+        if (Story.has(`${title} ${setup.language}`)) {
+            title = `${title} ${setup.language}`;
+        }
+        else if (Story.has(`${title} EN`)) {
+            title = `${title} EN`;
+        }
+
+        const passage = Story.get(title);
+        let $el;
+
+        if (this.args[1]) {
+            $el = jQuery(document.createElement(this.args[1]))
+                .addClass(`${passage.domId} macro-${this.name}`)
+                .attr('data-passage', passage.title)
+                .appendTo(this.output);
+        }
+        else {
+            $el = jQuery(this.output);
+        }
+
+        $el.wiki(passage.processText());
+    }
+});
+*/

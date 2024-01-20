@@ -65,7 +65,7 @@
 :: Robot Option [widget]
 
 <<widget "iRobotMechchoptions">>
-    <br>
+    <br><br>
     道具：<br>
 	<<if R.robot.condition lt 10>>
 		<<link [[打开工具盒|Room Robot]]>><</link>>

@@ -102,7 +102,9 @@ const iStorage = {
     bushes_park  : new Pocket('storage', 'bushes_park', 6), // 公园灌木丛
     trashbin_elk : new Pocket('storage', 'trashbin_elk', 6), // 麋鹿酒吧垃圾桶
     hideout      : new Pocket('storage', 'hideout', 6), // 隐藏地点
-    howllow      : new Pocket('storage', 'howllow', 6) // 隐藏地点
+    howllow      : new Pocket('storage', 'howllow', 6), // 隐藏地点
+
+    homeToybox : new Pocket('storage', 'homeToybox', 5) // 孤儿院房间里的玩具箱
 };
 
 iStorage.home.slots.push(

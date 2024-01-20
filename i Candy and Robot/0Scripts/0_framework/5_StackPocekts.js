@@ -394,6 +394,33 @@ class Pocket {
     }
 
     /**
+     * count the stacks in the inventory
+     * @returns {number}
+     */
+    count() {
+        return this.slots.length;
+    }
+
+    /**
+     * clear the inventory
+     */
+    clear() {
+        this.slots = [];
+    }
+
+    /**
+     * get full description of the inventory
+     * @returns {string[]}
+     */
+    countDesc() {
+        const html = [];
+        this.slots.forEach(stack => {
+            html.push(`${stack.name} x ${stack.count}`);
+        });
+        return html;
+    }
+
+    /**
 	 * get a stack by setting
      * @param { 'id'| 'uid' | ''type } prop
 	 * @param {string} value must match the prop

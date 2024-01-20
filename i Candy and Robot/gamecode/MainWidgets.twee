@@ -1,4 +1,4 @@
-:: iMod [widget]
+:: iCandy Main Widgets [widget]
 <<widget "iCandyHeader">>
 <!-- 在PassageHeader里的处理  -->
 <<run console.log('check passage in header:',passage())>>
