@@ -226,7 +226,7 @@ const pocketUI = {
             _html += `
             <span class="itemaction">
                 <<link "${getLan('take')}" $passage>>
-                    <<run V.addMsg = im.takeStorage("${location}", ${i}, T.storage[${i}])>>
+                    <<run V.addMsg += im.takeStorage("${location}", ${i}, T.storage[${i}])>>
                 <</link>>
             </span>
             <span class="itemaction">
@@ -305,7 +305,7 @@ const pocketUI = {
     transfer(pos, slot) {
         const _item = Pocket.get(pos).select(slot);
         const item = this.iniData(_item, 1);
-        const checklist = Pocket.list;
+        const checklist = clone(Pocket.list);
         checklist.push('wallet');
 
         if (V.tvar.storage) {
@@ -332,7 +332,7 @@ const pocketUI = {
             html += `
             <span class='itemaction'>
                 <<link ${lanSwitch(name)} $passage>>
-                    <<run V.addMsg = im.putStorage('${key}', '${pos}', ${slot}, ${item.count})>>
+                    <<run V.addMsg += im.putStorage('${key}', '${pos}', ${slot}, ${item.count})>>
                     <<addclass '#messageBox' 'hidden'>>
                     <<addclass '#background' 'hidden'>>
                 <</link>>

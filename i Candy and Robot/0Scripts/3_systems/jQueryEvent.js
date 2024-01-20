@@ -109,19 +109,21 @@ $(document).on(':passageinit', data => {
 });
 
 $(document).on(':passagestart', data => {
-//------------------------------------------------------------
-// 检测数值
-//------------------------------------------------------------
+    console.log('on passagestart:', '$addMsg:', V.addMsg, '$afterMsg:', V.afterMsg, '_addMsg' ,T.addMsg, '_afterMsg' , T.afterMsg);
+
+    //------------------------------------------------------------
+    // 检测数值
+    //------------------------------------------------------------
 
 
     //------------------------------------------------------------
     // 战斗处理
     //------------------------------------------------------------
-
-
 });
 
 $(document).on(':passagedisplay', () => {
+    console.log('on passagedisplay:', '$addMsg:', V.addMsg, '$afterMsg:', V.afterMsg, '_addMsg' ,T.addMsg, '_afterMsg' , T.afterMsg);
+
     setTimeout(() => {
         if (T.addMsg.length > 2) {
             new Wikifier(null, `<<append #addMsg transition>>${T.addMsg}<</append>>`);

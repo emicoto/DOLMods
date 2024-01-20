@@ -130,10 +130,11 @@ const iManager = {
 
     checkUnequip(item) {
         let availableSlot = 0;
-        for (const i in Pocket.list) {
-            if (item.equip == Pocket.list[i]) continue;
+        for (let i = 0; i < Pocket.list.length; i++) {
+            const key = Pocket.list[i];
+            if (item.equip == key) continue;
 
-            const pocket = Pocket.get(Pocket.list[i]);
+            const pocket = Pocket.get(key);
             availableSlot += pocket.max();
         }
         return availableSlot;
