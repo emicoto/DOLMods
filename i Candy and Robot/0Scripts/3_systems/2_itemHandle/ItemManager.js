@@ -635,8 +635,9 @@ const iManager = {
         console.log(pocket, item);
 
         pocket.sortOut();
-
         V.tvar.message = msg;
+
+        return msg;
     },
 
 
@@ -662,7 +663,7 @@ const iManager = {
         let msg = '';
         let dropMsg = '';
         const usage = data.usage || 1;
-        const times = situation == 'useall' ? Math.ceil(item.count / usage) : 1;
+        const times = situation == 'useall' ? Math.floor(item.count / usage) : 1;
 
         console.log('on use item:', situation, times, usage);
 
@@ -688,6 +689,10 @@ const iManager = {
 
         // throw the item use message and event
         if (situation?.includes('use')) {
+            if (item.count >= usage) {
+                V.tvar.onemore = true;
+            }
+
             msg += P.templet(sMsg.useItem, iData.useMethods(data.type, data.tags), data.name);
 
             if (itemMsg[data.id]) {

@@ -66,7 +66,7 @@ $(document).on(':passageinit', data => {
     if (V.tvar.unsetAction) {
         delete V.tvar.unsetAction;
 		
-        F.resetTvar('itemMsg','useItem', 'img', 'passtime', 'onemore');
+        F.resetTvar('message','useItem', 'img', 'passtime', 'onemore');
         // 如果从物品事件出来，在这里就不再执行事件检测了
         return;
     }

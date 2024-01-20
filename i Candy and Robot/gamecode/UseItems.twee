@@ -7,9 +7,16 @@
 
 
 <<if $tvar.onemore>>
-    <<set _link = lanSwitch('One More', '再来一个')>>
+    <<set _link = lanSwitch('One more', '再来一个')>>
     <<link _link $passage>>
         <<set $tvar.onemore to undefined>>
+        <<run im.useFromInv($tvar.useItem[0], $tvar.useItem[1])>>
+    <</link>>
+    <br>
+    <<set _link = lanSwitch(`${$tvar.usemethod} all`, `一次${$tvar.usemethod}完`)>>
+    <<link _link $passage>>
+        <<set $tvar.onemore to undefined>>
+        <<run im.useFromInv($tvar.useItem[0], $tvar.useItem[1], 'useall')>>
     <</link>>
     <br>
 <</if>>

@@ -39,7 +39,7 @@
             <<linkcode>>
                 <<set $addMsg += lanSwitch('You stow everything in your pockets to the basket.', '你将将身上东西暂存在篮子里。')>>
                 <<run 
-                    const container = Pocket.get('bathBasket')
+                    const container = Pocket.get('bathBasket');
                     const items = Pocket.get('body').slots;
                     container.add(items);
                     container.updateIndex();
