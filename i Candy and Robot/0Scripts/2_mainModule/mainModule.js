@@ -145,7 +145,17 @@ DefineMacroS('iCandyShopInit', iCandyShopInit);
 function iCandyOldInit() {
     console.log('on iCandyOldInit');
     for (const i in iModVariables) {
+        if (i == 'eFlags') continue;
         V[i] = clone(iModVariables[i]);
+    }
+
+    // 事件flag要单独处理，防止冲突覆盖
+    if (!V.eFlags) {
+        V.eFlags = {};
+    }
+
+    for (const i in iModVariables.eFlags) {
+        V.eFlags[i] = clone(iModVariables.eFlags[i]);
     }
 }
 iCandy.manualInit = iCandyOldInit;

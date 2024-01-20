@@ -9,38 +9,47 @@
 		<</lanLink>>
 		<br><br>
 	<<else>>
-		<<if Time.dayState is 'day' and $passage isnot 'Garden'>>
+		<<if $passage is 'Garden'>>
+			<<if Time.dayState is 'day'>>
+				<<if iEvent.getFlag('orphanage', 'garageprocess') is undefined>>
+					<<run iEvent.addFlag('orphanage', 'garageprocess', 1)>>
+				<</if>>
+
+				<<lanPassage 'Scene Garden GarageDescription'>>
+				<br><br>
+
+				<<if iEvent.getFlag('orphanage', 'garagehelptoday') is 1>>
+					<<=lanSwitch(
+						'You already helped today.',
+						'你今天已经帮过忙了。'
+					)>>
+				<<else>>
+					<<lanLink 'Event Orphanage FixGarage'>>
+						<<lan 'EN' 'Help'>>
+						<<lan 'CN' '帮忙'>>
+						<<linkcode>>
+							<<run iEvent.addFlag('orphanage', 'garagehelp', 1)>>
+							<<run iEvent.addFlag('orphanage', 'garagehelptoday', 1)>>
+					<</lanLink>>
+				<</if>>
+			<<else>>
+				<<=lanSwitch(
+					"In the garden you can see the old garage, but you can't use it at this moment.",
+					"在院子里你能看到破旧的车库，但你现在还没法用它。"
+				)>>
+			<</if>>
+
+		<<else>>
 			<<=lanSwitch(
 				"The end of the corridor has a door with the words 'Old Garage' on it. But the door is locked.",
 				"走廊尽头有一扇门，门上写着“旧车库”。但是门是锁着的。"
 			)>>
-			<<=lanSwitch(
-				"You hear someone working in the backyard.",
-				"你听到后院里有人在忙活。"
-			)>>
-		<<elseif $passage is 'Garden' and Time.dayState is 'day'>>
-			<<if iEvent.getFlag('orphanage', 'garageprocess') is undefined>>
-				<<run iEvent.addFlag('orphanage', 'garageprocess', 1)>>
-			<</if>>
-
-			<<lanPassage 'Scene Garden GarageDescription'>>
-			<br><br>
-
-			<<if iEvent.getFlag('orphanage', 'garagehelptoday') is 1>>
+			<<if Time.dayState is 'day'>>
 				<<=lanSwitch(
-					'You already helped today.',
-					'你今天已经帮过忙了。'
+					"You hear someone working in the garden.",
+					"你听到院子里有人在忙活。"
 				)>>
-			<<else>>
-				<<lanLink 'Event Orphanage FixGarage'>>
-					<<lan 'EN' 'Help'>>
-					<<lan 'CN' '帮忙'>>
-					<<linkcode>>
-						<<run iEvent.addFlag('orphanage', 'garagehelp', 1)>>
-						<<run iEvent.addFlag('orphanage', 'garagehelptoday', 1)>>
-				<</lanLink>>
 			<</if>>
-
 		<</if>>
 		<br><br>
 	<</if>>
