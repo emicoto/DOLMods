@@ -114,6 +114,8 @@ const pocketUI = {
             <<link "${method}" "Actions UseItems">>
                 <<run im.useFromInv("${pos}", ${i})>>
                 <<set $tvar.img to "${img}">>
+                <<set $tvar.useItem to [${pos}, ${i}]>>
+                <<set $tvar.usemethod to "${method}">>
                 <<if $passage.has("Actions UseItems", "Actions DropItems", "Actions TransferItem") is false>>
                     <<set $tvar.exitPassage to $passage>>
                 <</if>>
