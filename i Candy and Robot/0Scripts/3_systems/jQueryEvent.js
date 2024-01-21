@@ -66,42 +66,20 @@ $(document).on(':passageinit', data => {
     }
 
     // 刚刷新时跳过事件检测
-    if (setup.gamereloadcheck === true || setup.gameSettingChange === true) {
+    if (setup.gamereloadcheck === true) {
         delete setup.gamereloadcheck;
-        delete setup.gameSettingChange;
         return;
     }
+
+    iCandyRecover();
+    
+    // 检测口袋更新状态。
+    updatePocketsAtCheckBath(psg, lastPsg);
 
     // 刚读档时
     if (iCandy.onLoad === true) {
         iCandy.onLoad = false;
         return;
-    }
-
-    // 检测口袋更新状态。
-    // 在这里检测一下前后的passage。如果在洗澡场景，就跳过口袋更新检测.
-    if (
-        psg.title.has('Bath', 'Shower') && psg.text.includes('<<strip>>') ||
-        lastPsg.title.has('Bath', 'Shower') && lastPsg.text.includes('<<strip>>')
-    ) {
-        // do nothing
-        console.log('skip update pockets', psg.title, lastPsg.title);
-        V.tvar.bathskip = true;
-    }
-    
-    if (V.tvar.bathskip) {
-        if (V.location == 'home' && lastPsg.title == 'Bath Finish') {
-            V.tvar.bathskip = false;
-        }
-        else if (lastPsg.text.has('<<clotheson>>') && !psg.text.includes('<<clotheson>>')) {
-            V.tvar.bathskip = false;
-        }
-        else if (!psg.text.has('Bath', 'Shower')) {
-            V.tvar.bathskip = false;
-        }
-    }
-    else {
-        V.addMsg += iManager.updatePockets();
     }
 
     // 检测事件

@@ -43,8 +43,9 @@ function combatCheckBefore() {
     // 非战斗场景跳过
     if (V.combat == 0) return 'skip';
     if (V.stalk == true) return 'skip';
+    
     // 游戏前三天大概率跳过
-    if (Time.days < 3 && random(100) < 80) {
+    if (Time.days < 3) {
         R.combat.skip = true;
         return 'skip';
     }

@@ -560,19 +560,22 @@ const iCombat = {
     playerTurn() {
         const list = ['anus', 'vagina', 'penis', 'feet', 'left', 'right', 'chest', 'thigh', 'tail', 'mouth'];
 
-        list.forEach(part => {
+        for (let i = 0; i < list.length; i++) {
+            const part = list[i];
             const actpart = `${part}action`;
             const act = V[actpart];
             const npc = V.NPCList[`${part}target`];
 
             console.log('on player turn:', actpart, act, npc);
 
+            if (actpart == 0) continue;
+
             const com = this.onPlayerTurn.get(act);
             if (com) {
                 const config = this.getConfig(com.id) || com.config;
                 action.action(this.turn, npc, part, config);
             }
-        });
+        }
     },
 
     enemyTurn() {

@@ -248,11 +248,11 @@ const iManager = {
 
         // 获取物品的提示
         if (situation == 'getone') {
-            html = P.templet(sMsg.getItems, itemStacks[0].name, itemStacks[0].count);
+            html += P.templet(sMsg.getItem, itemStacks[0].name, itemStacks[0].count);
         }
         else if (situation == 'getmulti') {
             stacks.forEach(item => {
-                html += P.templet(sMsg.getItems, item.name, item.count);
+                html += P.templet(sMsg.getItem, item.name, item.count);
             });
         }
         // if pockets be disabled then throw all items to global inventory
@@ -813,3 +813,39 @@ Object.defineProperties(window, {
         }
     }
 });
+
+
+//-----------------------------------------------------------------------
+//
+//                          Extra Functions
+//
+//-----------------------------------------------------------------------
+function updatePocketsAtCheckBath(psg, lastPsg) {
+    // 检测口袋更新状态。
+    // 在这里检测一下前后的passage。如果在洗澡场景，就跳过口袋更新检测.
+    if (
+        psg.title.has('Bath', 'Shower') && psg.text.includes('<<strip>>') ||
+        lastPsg.title.has('Bath', 'Shower') && lastPsg.text.includes('<<strip>>')
+    ) {
+        // do nothing
+        console.log('skip update pockets', psg.title, lastPsg.title);
+        V.tvar.bathskip = true;
+    }
+    
+    if (V.tvar.bathskip) {
+        if (V.location == 'home' && lastPsg.title == 'Bath Finish') {
+            V.tvar.bathskip = false;
+        }
+        else if (lastPsg.text.has('<<clotheson>>') && !psg.text.includes('<<clotheson>>')) {
+            V.tvar.bathskip = false;
+        }
+        else if (!psg.text.has('Bath', 'Shower')) {
+            V.tvar.bathskip = false;
+        }
+    }
+    else {
+        V.addMsg += iManager.updatePockets();
+    }
+}
+
+window.updatePocketsAtCheckBath = updatePocketsAtCheckBath;
