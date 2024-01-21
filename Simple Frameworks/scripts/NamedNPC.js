@@ -5,14 +5,21 @@
 //
 //------------------------------------------------------
 class NamedNPC {
+    /**
+     * A list of all named NPC objects.
+     */
     static database = [];
     /**
-	 *
-	 * @param {NamedNPC} npc
-	 */
+     * Add a new NPC object or multiple new NPC objects.
+     *
+     * @param {...NamedNPC} npc The NPC object(s) to be added.
+     */
     static add(...npc) {
         this.database.push(...npc);
     }
+    /**
+     * Clear/clean up the NPCs.
+     */
     static clear() {
         // - 清理非法NPC
         console.log('start to reslove npcs....', clone(V.NPCName) , clone(setup.NPCNameList));
@@ -28,9 +35,20 @@ class NamedNPC {
         V.NPCNameList = setup.NPCNameList;
         console.log('npcs resloving done!');
     }
+
+    /**
+     * Check if a named NPC is stored in the database.
+     *
+     * @param {string} name The name of an NPC.
+     * @returns {number} The index at which the first NPC with a matching name can be
+     * found in the array, or -1 if it is not present.
+     */
     static has(name) {
         return this.database.findIndex(npc => npc.nam == name);
     }
+    /**
+     * Update all the NPCs stored in the class database with basic properties defined in this code block.
+     */
     static update() {
         const hasnpc = name => V.NPCName.filter(npc => npc.nam == name)[0];
         console.log('start to update npcs....');
@@ -76,7 +94,7 @@ class NamedNPC {
 
         V.NPCName = npcs;
         V.NPCNameList = list;
-        
+
         // 更新显示名称
         V.NPCName.forEach(npc => {
             if (npc.displayname == undefined && setup.DOLNPCNames[npc.nam]) {
@@ -103,10 +121,21 @@ class NamedNPC {
             }
         });
     }
+
+    /**
+     * Initialize the NPCs by updating them.
+     */
     static init() {
         this.update();
         console.log('addNamedNPC', 'init mod npc from storyinit', V.NPCName, setup.NPCNameList);
     }
+
+    /**
+     * Reset the NPC with the provided data
+     *
+     * @param {NamedNPC} npc The NPC data to be reset.
+     * @returns {NamedNPC} The reset NPC data.
+     */
     static reset(npc) {
         const data = new NamedNPC(npc.nam, npc.title, npc.des, npc.type);
         for (const i in npc) {
@@ -114,6 +143,15 @@ class NamedNPC {
         }
         return data;
     }
+
+    /**
+     * Constructor to create a new object of the NamedNPC class.
+     *
+     * @param {string} name The name of the NPC
+     * @param {string} title The title of the NPC
+     * @param {string} des The description of the NPC
+     * @param {string} type The type of the NPC
+     */
     constructor(name, title, des, type) {
         this.nam = name;
         this.description = name;
@@ -167,12 +205,27 @@ class NamedNPC {
             kiss        : false
         };
     }
+
+    /**
+     * Initialize the NPC with gender and age.
+     *
+     * @param {string} gender The gender of the NPC.
+     * @param {string} age The age of the NPC.
+     * @returns {NamedNPC} The NPC with set gender and age.
+     */
     Init(gender, age) {
         this.setGender(gender);
         this.setAge(age);
 
         return this;
     }
+
+    /**
+     * Set the age group of the NPC.
+     *
+     * @param {string} age The age group of the NPC ('teen' or 'adult').
+     * @returns {NamedNPC} The NPC with set age group.
+     */
     setAge(age) {
         if (age == 'teen') {
             this.teen = 1;
@@ -184,10 +237,23 @@ class NamedNPC {
         }
         return this;
     }
+    /**
+     * Set the specific key to the provided value.
+     *
+     * @param {string} key The key to set.
+     * @param {any} value The value of the key.
+     * @returns {NamedNPC} The NPC with the key set to the provided value.
+     */
     setValue(key, value) {
         this[key] = value;
         return this;
     }
+    /**
+     * Set the pronouns for the NPC based on their gender.
+     *
+     * @param {string} gender The gender of the NPC.
+     * @returns {NamedNPC} The NPC after updating their pronouns.
+     */
     setPronouns(gender) {
         if (gender == 'm') {
             this.pronouns = {
@@ -215,6 +281,13 @@ class NamedNPC {
         }
         return this;
     }
+
+    /**
+     * Set the gender for the NPC.
+     *
+     * @param {string} gender The gender to set for the NPC.
+     * @returns {NamedNPC} The NPC after updating their gender.
+     */
     setGender(gender) {
         this.gender = gender;
         this.penis = gender == 'm' ? 'clothed' : 'none';
@@ -225,29 +298,67 @@ class NamedNPC {
         this.setPronouns();
         return this;
     }
+
+    /**
+     * Set the penis size and description for the NPC.
+     *
+     * @param {number} size The size of the penis.
+     * @param {string} des The description of the penis.
+     * @returns {NamedNPC} The NPC after updating their penis size and description.
+     */
     setPenis(size, des) {
         this.penissize = size;
         this.penisdesc = des;
         return this;
     }
+
+    /**
+     * Set the breast size and description for the NPC.
+     *
+     * @param {number} size The size of the breasts.
+     * @param {string} des The description of the breast.
+     * @param {string} desc The description of the breastsdesc.
+     * @returns {NamedNPC} The NPC after updating their breast size and description.
+     */
     setBreasts(size, des, desc) {
         this.breastsize = size;
         this.breastdesc = des;
         this.breastsdesc = desc;
         return this;
     }
+    /**
+     * Sets the skin, eye and hair color of the NPC.
+     *
+     * @param {string} skin The skin color.
+     * @param {string} eye The eye color.
+     * @param {string} hair The hair color.
+     * @returns {NamedNPC} The NPC after updating their color properties.
+     */
     setColour(skin, eye, hair) {
         this.skincolour = skin;
         this.eyeColour = eye;
         this.hairColour = hair;
         return this;
     }
+
+    /**
+     * Set the virginity status of the NPC.
+     *
+     * @param {object} object The virginity object.
+     * @returns {NamedNPC} The NPC after updating their virginity status.
+     */
     setVirginity(object) {
         for (const i in object) {
             this.virginity[i] = object[i];
         }
         return this;
     }
+
+    /**
+     * Set the pregnancy details of the NPC.
+     *
+     * @returns {NamedNPC} The NPC after setting their pregnancy details.
+     */
     setPregnancy() {
         const pregnancy = {
             fetus             : [],
@@ -278,16 +389,46 @@ class NamedNPC {
         this.pregnancyAvoidance = 50;
         return this;
     }
+
+    /**
+     * Set custom pronouns for the NPC.
+     *
+     * @param {object} object An object containing custom pronouns.
+     * @returns {NamedNPC} The NPC after setting their custom pronouns.
+     * @example
+     * obj.setCustomPronouns( {
+     *                 he      : 'he',
+     *                 his     : 'his',
+     *                 hers    : 'hers',
+     *                 him     : 'him',
+     *                 himself : 'himself',
+     *                 man     : 'man',
+     *                 boy     : 'boy',
+     *                 men     : 'men'
+     *             });
+     */
     setCustomPronouns(object) {
         for (const i in object) {
             this.pronouns[i] = object[i];
         }
         return this;
     }
+
+    /**
+     * Designate this NPC as important.
+     *
+     * @returns {NamedNPC} The NPC marked as important.
+     */
     isImportant() {
         setup.ModNpcImportant.push(this.nam);
         return this;
     }
+
+    /**
+     * Designate this NPC as special.
+     *
+     * @returns {NamedNPC} The NPC marked as special.
+     */
     isSpecial() {
         setup.ModNpcSpecial.push(this.nam);
         return this;
@@ -364,7 +505,7 @@ setup.ModLoveInterest = function () {
     T.loveInterestSelections = {};
     const non = lanSwitch('None', '没有人');
     T.loveInterestSelections[non] = 'None';
-    
+
     T.potentialLoveInterests.forEach(nnpc => {
         if (nnpc !== 'None') {
             const key = C.npc[nnpc].displayname;
