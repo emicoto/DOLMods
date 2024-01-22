@@ -20,7 +20,9 @@
     "paths": {
     },
     "types": [
-//      "./**/*.d.ts"
+      // add the types like this if you need use it from other place/project
+      // or commit it and run the `tsc` to generate the new .d.ts file from the .js file (but that include many wrong)
+//      "./types/**/*.d.ts"
     ]
   }
 }
