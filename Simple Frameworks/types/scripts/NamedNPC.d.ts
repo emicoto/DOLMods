@@ -4,16 +4,19 @@ declare class NamedNPC {
      * A list of all named NPC objects.
      */
     static database: any[];
+
     /**
      * Add a new NPC object or multiple new NPC objects.
      *
      * @param {...NamedNPC} npc The NPC object(s) to be added.
      */
     static add(...npc: NamedNPC[]): void;
+
     /**
      * Clear/clean up the NPCs.
      */
     static clear(): void;
+
     /**
      * Check if a named NPC is stored in the database.
      *
@@ -22,15 +25,19 @@ declare class NamedNPC {
      * found in the array, or -1 if it is not present.
      */
     static has(name: string): number;
+
     /**
      * Update all the NPCs stored in the class database with basic properties defined in this code block.
      */
     static update(): void;
+
     static switchlan(): void;
+
     /**
      * Initialize the NPCs by updating them.
      */
     static init(): void;
+
     /**
      * Reset the NPC with the provided data
      *
@@ -38,6 +45,7 @@ declare class NamedNPC {
      * @returns {NamedNPC} The reset NPC data.
      */
     static reset(npc: NamedNPC): NamedNPC;
+
     /**
      * Constructor to create a new object of the NamedNPC class.
      *
@@ -47,6 +55,7 @@ declare class NamedNPC {
      * @param {string} type The type of the NPC
      */
     constructor(name: string, title: string, des: string, type: string);
+
     nam: string;
     description: string;
     title_lan: string;
@@ -95,6 +104,7 @@ declare class NamedNPC {
         temple: boolean;
         kiss: boolean;
     };
+
     /**
      * Initialize the NPC with gender and age.
      *
@@ -103,6 +113,7 @@ declare class NamedNPC {
      * @returns {NamedNPC} The NPC with set gender and age.
      */
     Init(gender: string, age: string): NamedNPC;
+
     /**
      * Set the age group of the NPC.
      *
@@ -110,6 +121,7 @@ declare class NamedNPC {
      * @returns {NamedNPC} The NPC with set age group.
      */
     setAge(age: string): NamedNPC;
+
     /**
      * Set the specific key to the provided value.
      *
@@ -118,6 +130,7 @@ declare class NamedNPC {
      * @returns {NamedNPC} The NPC with the key set to the provided value.
      */
     setValue(key: string, value: any): NamedNPC;
+
     /**
      * Set the pronouns for the NPC based on their gender.
      *
@@ -125,6 +138,7 @@ declare class NamedNPC {
      * @returns {NamedNPC} The NPC after updating their pronouns.
      */
     setPronouns(gender: string): NamedNPC;
+
     pronouns: {
         he: string;
         his: string;
@@ -135,6 +149,7 @@ declare class NamedNPC {
         boy: string;
         men: string;
     };
+
     /**
      * Set the gender for the NPC.
      *
@@ -142,7 +157,9 @@ declare class NamedNPC {
      * @returns {NamedNPC} The NPC after updating their gender.
      */
     setGender(gender: string): NamedNPC;
+
     gender: string;
+
     /**
      * Set the penis size and description for the NPC.
      *
@@ -151,6 +168,7 @@ declare class NamedNPC {
      * @returns {NamedNPC} The NPC after updating their penis size and description.
      */
     setPenis(size: number, des: string): NamedNPC;
+
     /**
      * Set the breast size and description for the NPC.
      *
@@ -160,6 +178,7 @@ declare class NamedNPC {
      * @returns {NamedNPC} The NPC after updating their breast size and description.
      */
     setBreasts(size: number, des: string, desc: string): NamedNPC;
+
     /**
      * Sets the skin, eye and hair color of the NPC.
      *
@@ -169,6 +188,7 @@ declare class NamedNPC {
      * @returns {NamedNPC} The NPC after updating their color properties.
      */
     setColour(skin: string, eye: string, hair: string): NamedNPC;
+
     /**
      * Set the virginity status of the NPC.
      *
@@ -176,12 +196,14 @@ declare class NamedNPC {
      * @returns {NamedNPC} The NPC after updating their virginity status.
      */
     setVirginity(object: object): NamedNPC;
+
     /**
      * Set the pregnancy details of the NPC.
      *
      * @returns {NamedNPC} The NPC after setting their pregnancy details.
      */
     setPregnancy(): NamedNPC;
+
     /**
      * Set custom pronouns for the NPC.
      *
@@ -200,12 +222,14 @@ declare class NamedNPC {
      *             });
      */
     setCustomPronouns(object: object): NamedNPC;
+
     /**
      * Designate this NPC as important.
      *
      * @returns {NamedNPC} The NPC marked as important.
      */
     isImportant(): NamedNPC;
+
     /**
      * Designate this NPC as special.
      *
@@ -219,13 +243,13 @@ declare global {
     interface Window {
         NamedNPC: typeof NamedNPC;
     }
+}
 
-    var setup: {
-        addNPCList: any[];
-        ModNpcSetting: any[];
-        ModNpcImportant: string[];
-        ModNpcSpecial: string[];
-        ModSocialSetting: () => void;
-        ModLoveInterest: () => void;
-    }
+declare interface setup {
+    addNPCList: any[];
+    ModNpcSetting: any[];
+    ModNpcImportant: string[];
+    ModNpcSpecial: string[];
+    ModSocialSetting: () => void;
+    ModLoveInterest: () => void;
 }
