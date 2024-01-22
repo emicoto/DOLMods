@@ -2,7 +2,7 @@
 
 <<widget "candySkills">>
 <<set _mechanicConfig = { 
-    name : lanSwitch('Mechanic','机械'),	
+    name : lanSwitch('Mechanical','机械'),	
     displayType : "grade",
     currentValue : $mechanical,
     modifier: 100, 

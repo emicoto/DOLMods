@@ -71,6 +71,15 @@ const eventManager = {
         }, Engine.minDomActionTime + 10);
     },
 
+    set(passage) {
+        V.tvar.scene = {
+            passage   : `Scene ${V.currentScene} ${passage}`,
+            type      : 'Scene',
+            event     : V.currentScene,
+            startTime : V.timeStamp
+        };
+    },
+
     // set event by certain keys
     setEvent(type, event, key, branch) {
         const eventdata = this.getEvent(event);

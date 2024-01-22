@@ -1,7 +1,7 @@
 :: iCandy Palam Widgets [widget]
 
 <<widget "gmechanicDes">>
-<span style='font-size:smaller; color:seagreen'> <<print $args[0]>></span>
+<span style='color:lightslategrey'> <<print $args[0]>></span>
 <</widget>>
 
 <<widget "gainMechanic">>
@@ -26,18 +26,18 @@
 
 <<widget "gmechanic">>
 	<<if $statdisable is "f">> |
-		<span style='color:cornflowerblue'>+ <<lanSwitch 'Mechanic' '机械'>></span>
+		<span style='color:deepskyblue'>+ <<lanSwitch 'Mechanical' '机械'>></span>
 	<</if>>
 <</widget>>
 
 <<widget "ggmechanic">>
 	<<if $statdisable is "f">> |
-		<span style='color:cornflowerblue'>+ + <<lanSwitch 'Mechanic' '机械'>></span>
+		<span style='color:deepskyblue'>+ + <<lanSwitch 'Mechanical' '机械'>></span>
 	<</if>>
 <</widget>>
 <<widget "gggmechanic">>
 	<<if $statdisable is "f">> |
-		<span style='color:cornflowerblue'>+ + + <<lanSwitch 'Mechanic' '机械'>></span>
+		<span style='color:deepskyblue'>+ + + <<lanSwitch 'Mechanical' '机械'>></span>
 	<</if>>
 <</widget>>
 

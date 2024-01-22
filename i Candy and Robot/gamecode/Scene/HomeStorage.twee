@@ -119,9 +119,9 @@ There is an old refrigerator in the corner of the right wall, where you can stor
 :: Scene Orphanage Garage
 <<set $tvar.storage to 'home'>>
 <<set _storage to []>>
+
 <<lanSwitch "The items in storage:" "车库里的物品：">>
 <br>
-
 <div id='container'>
 <<=pocketUI.storage('home')>>
 </div>

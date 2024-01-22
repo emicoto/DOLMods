@@ -74,6 +74,15 @@ useful to initial your mod data before start
 
 <</widget>>
 
+ModDegreesBox xone
+you can add your core degrees skill setting to this zone.
+let your skill show up at characterist panel
+
+//模组添加的角色面板内容
+//核心技能/程度属性盒子
+<<widget "ModDegreesBox">>
+
+<</widget>>
 
 ModSkillsBox zone
 you can add your skill setting to this zone.

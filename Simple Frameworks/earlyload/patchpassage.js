@@ -1232,12 +1232,16 @@
     const widgetPassage = {
         Characteristics : [
             {
+                src        : '<<characteristic-box _deviancyConfig>>',
+                applyafter : '\n\n<<ModDegreesBox>>\n\n'
+            },
+            {
                 src        : '<<characteristic-box _housekeepingConfig>>',
-                applyafter : '\n<<ModSkillsBox>>\n'
+                applyafter : '\n\n<<ModSkillsBox>>\n\n'
             },
             {
                 src        : '<<bodywriting>>',
-                applyafter : '\n<<ModCharaDescription>>\n'
+                applyafter : '\n\n<<ModCharaDescription>>\n\n'
             }
         ],
         overlayReplace : [

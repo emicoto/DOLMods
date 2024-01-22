@@ -1,4 +1,4 @@
-const frameworkversion = "1.10.2"
+const frameworkversion = "1.11.0"
 
 window.simpleFrameworks = {
     version    : frameworkversion,
@@ -30,6 +30,7 @@ window.simpleFrameworks = {
     initFunction : [],
 
     data : {
+        ModDegreesBox              : [],
         ModSkillsBox               : [],
         ModCharaDescription        : [],
         ModCaptionDescription      : [],
