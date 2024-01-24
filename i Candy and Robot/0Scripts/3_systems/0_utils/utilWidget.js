@@ -5,14 +5,6 @@ const iUtil = {
         });
     },
 
-    countHomeStorage() {
-        let count = 0;
-        for (const i in V.iStorage.home) {
-            count += V.iStorage.home[i];
-        }
-        return count;
-    },
-
     countMechaItems() {
         let count = 0;
         for (const i in R.mechStats.tools) {
@@ -144,36 +136,3 @@ Object.defineProperties(window, {
 	
 });
 
-window.updateOptions = function () {
-    if (T.currentOverlay === 'options' && T.optionsRefresh && V.passage !== 'Start') {
-        updatehistorycontrols();
-        const optionsData = clone(V.options);
-        const tmpButtons = T.buttons;
-        const tmpKey = T.key;
-
-        setup.gameSettingChange = true;
-
-        if (!State.restore()) return; // don't do anything if state couldn't be restored
-        V.options = optionsData;
-        tanned(0, 'ignoreCoverage');
-        State.show();
-
-        T.key = tmpKey;
-        T.buttons = tmpButtons;
-        T.buttons.setupTabs();
-        if (T.key !== 'options') {
-            T.buttons.setActive(T.buttons.activeTab);
-        }
-    }
-};
-
-window.closeOverlay = function () {
-    wikifier('journalNotesTextareaSave');
-    window.updateOptions();
-
-    delete T.currentOverlay;
-    delete V.tempDisable;
-    T.buttons.reset();
-    $('#customOverlay').addClass('hidden').parent()
-        .addClass('hidden');
-};

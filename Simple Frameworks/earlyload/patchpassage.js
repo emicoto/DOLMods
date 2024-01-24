@@ -1506,10 +1506,34 @@
         }
 	
         if (source.includes('<<stateman>>')) {
-            source = source.replace('<<stateman>>', '<div id="addAfterMsg"></div>\n<<stateman>>');
+            source = source.replace('<<stateman>>', '<div id="addAfterMsg"></div>\n\n<<stateman>>');
             patchedPassage[title] = 1;
         }
 
+        if (source.includes('<<stateabomination>>')) {
+            source = source.replace('<<stateabomination>>', '<div id="addAfterMsg"></div>\n\n<<stateabomination>>');
+            patchedPassage[title] = 1;
+        }
+
+        if (source.includes('<<effectstentacles>>')) {
+            source = source.replace('<<effectstentacles>>', '<<effectstentacles>>\n\n<div id="addAfterMsg"></div>\n\n');
+            patchedPassage[title] = 1;
+        }
+
+        if (source.includes('<<vore>>')) {
+            source = source.replace('<<vore>>', '<<vore>>\n\n<div id="addAfterMsg"></div>\n\n');
+            patchedPassage[title] = 1;
+        }
+
+        if (source.includes('<<swarm>>')) {
+            source = source.replace('<<swarm>>', '<<swarm>>\n\n<div id="addAfterMsg"></div>\n\n');
+            patchedPassage[title] = 1;
+        }
+
+        if (source.includes('<<masturbationeffects>>')) {
+            source = source.replace('<<masturbationeffects>>', '<<masturbationeffects>>\n\n<div id="addAfterMsg"></div>\n\n');
+            patchedPassage[title] = 1;
+        }
         passage.content = source;
 	
         return passage;
@@ -1680,7 +1704,7 @@
     // patchlocationtag
     function patchLocationTag(passage, title) {
         const source = passage.content;
-        const Keys = ['Accept', 'Approach', 'Arrest', 'Ask', 'Avoid', 'Away','Assault', 'Box', 'Break', 'Buy', 'Cat', 'Chase', 'Chastity', 'Chat', 'Christmas', 'Clean', 'Cow', 'Cuddle', 'Daydream', 'Dinner', 'Dog', 'Drink', 'End', 'Escape', 'Event', 'Ex ', 'Exam', 'Exhibit', 'Exposed', 'Finish', 'Flirt', 'Fox', 'Gift', 'Halloween', 'Hand', 'Harpy', 'Help', 'Hide', 'Horse', 'Hug', 'Ignore', 'Intro', 'Job', 'Join', 'Kiss', 'Leash', 'Leave', 'Lesson', 'Lichen', 'Lock', 'Look', 'Lunch', 'Masturb', 'Meek', 'Milk', 'Molestation', 'Nude', 'Obey', 'Offer', 'Okay', 'Oral', 'Party', 'Pay', 'Pet', 'Pill', 'Play', 'Pose', 'Punish', 'Push', 'Rage', 'Rape', 'Refuse', 'Rescue', 'Resist', 'Rest', 'Return', 'Sale', 'Seduce', 'Sell', 'Sex', 'Shove', 'Shy', 'Sit ', 'Slime', 'Snake', 'Sneak', 'Spit', 'Start', 'Steal', 'Strip', 'Struggle', 'Study', 'Sub', 'Swarm', 'Swim', 'Swin', 'Talk', 'Tease', 'Test', 'Towel', 'Wait', 'Wash', 'Watch', 'Whore', 'Work', 'Tutorial'];
+        const Keys = ['Accept', 'Approach', 'Arrest', 'Ask', 'Avoid', 'Away','Assault', 'Box', 'Break', 'Buy', 'Cat', 'Chase', 'Chastity', 'Chat', 'Christmas', 'Clean', 'Cow', 'Cuddle', 'Daydream', 'Dinner', 'Dog', 'Drink', 'End', 'Escape', 'Event', 'Ex ', 'Exam', 'Exhibit', 'Expose', 'Finish', 'Flirt', 'Fox', 'Gift', 'Halloween', 'Hand', 'Harpy', 'Help', 'Hide', 'Horse', 'Hug', 'Ignore', 'Intro', 'Job', 'Join', 'Kiss', 'Leash', 'Leave', 'Lesson', 'Lichen', 'Lock', 'Look', 'Lunch', 'Masturb', 'Meek', 'Milk', 'Molestation', 'Nude', 'Obey', 'Offer', 'Okay', 'Oral', 'Party', 'Pay', 'Pet', 'Pill', 'Play', 'Pose', 'Punish', 'Push', 'Rage', 'Rape', 'Refuse', 'Rescue', 'Resist', 'Rest', 'Return', 'Sale', 'Seduce', 'Sell', 'Sex', 'Shove', 'Shy', 'Sit ', 'Slime', 'Snake', 'Sneak', 'Spit', 'Start', 'Steal', 'Strip', 'Struggle', 'Study', 'Sub', 'Swarm', 'Swim', 'Swin', 'Talk', 'Tease', 'Test', 'Towel', 'Wait', 'Wash', 'Watch', 'Whore', 'Work', 'Tutorial', 'Agree', 'Allow', 'Ass', 'Breasts', 'Scream', 'Flaunt', 'Protest', 'Thank', 'Result', 'Angry', 'Walk', 'Take', 'Apolog', 'Remove', 'Penis', 'Vagina', 'Decline', 'Flash'];
         const actions = ['<<voreactions>>', '<<swarmactions>>','<<masturbationactions>>','<<farm_milk_actions>>', '<<danceactions>>', '<<machine_actions>>','<<chikanmolestactions>>','<<meetingmolestactions>>','<<meetingpetactions>>','<<spa_actions>>','<<dancestripactions>>'];
 
         if (

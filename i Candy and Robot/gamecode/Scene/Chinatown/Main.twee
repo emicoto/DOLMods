@@ -42,7 +42,7 @@
         <</if>>
     <</link>>
 
-<<elseif !$tvar.scene.passage or $tvar.scene.type == 'Scene'>>
+<<elseif not $tvar.scene.start or $tvar.scene.type is 'Scene'>>
     <<chinatownLinkLocation>>
 
 <<else>>

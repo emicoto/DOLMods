@@ -45,10 +45,11 @@
                     Pocket.get('body').clear();
                 >>
         <</lanLink>>
-        <br><br>
+        <br>
     <</if>>
 
 <<if Pocket.get('bathBasket').count() > 0 && Pocket.getRemain() >= Pocket.get('bathBasket').count()>>
+    <<ind>>
     <<lanLink $passage>>
         <<lan 'EN' 'Take everything out of the basket'>>
         <<lan 'CN' '把篮子里的东西都拿走'>>
@@ -61,7 +62,7 @@
             im.updatePockets();
         >>        
     <</lanLink>>
-    <br><br>
+    <br>
 <</if>>
 
 <<lanLink>>
@@ -76,6 +77,6 @@
 <</lanLink>>
 <br>
 <div id='basket'></div>
-<br><br>
+<br>
 
 <</widget>>

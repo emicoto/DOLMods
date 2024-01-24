@@ -5,8 +5,8 @@ iEvent
 
         {
             entrypassage : 'Brothel Basement',
-            scene        : 'Brothel Basement',
             exit         : 'Brothel Basement',
+            scene        : 'BrothelBasement',
 
             episode   : 'DrugsIntro',
             type      : 'Event',

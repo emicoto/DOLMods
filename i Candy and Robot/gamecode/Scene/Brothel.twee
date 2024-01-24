@@ -1,6 +1,6 @@
 :: iMod Widget Brothel [widget]
 <<widget "brothelDrugs">>
-	<<if R.flags.brothel.intro is 1>>
+	<<if iEvent.getFlag('brothel', 'drugintro') is 1>>
 		当你走在妓院过道里时，偶尔能看到一些瘾君子哆嗦着身体匆匆路过。<br>
 		/*<<set R.flags.brothel.intro to 1>>*/
 	<<else>>
@@ -8,7 +8,7 @@
 <</widget>>
 
 
-:: BaseScene Brothel Basement
+:: BaseScene BrothelBasement
 <<if $phase is 0>>
 <<=lanSwitch(
 	'You are in the brothel basement. A row of small rooms lines one wall. Inside each is a single <<if $awareness gte 200>>gloryhole<<else>>hole<</if>>.',

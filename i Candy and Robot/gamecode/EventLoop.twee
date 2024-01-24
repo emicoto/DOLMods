@@ -34,17 +34,14 @@
 	<<BeforeLinkZone>>
 
 	<<else>>
-		<!-- 事件结束时，显示离开或返回正常场景的链接，并清楚事件flag -->
+		<!-- 事件结束时，显示离开或返回正常场景的链接，并清除事件flag -->
 		<<set _link = lanSwitch('Next', '继续')>>
         <<if $tvar.scene.leaveLink>>
             <<set _link = lanSwitch($tvar.scene.leaveLink)>>
         <</if>>
 
 		<<link _link $tvar.exitPassage>>
-			<<run iEvent.unsetEvent()>>
-			<<if $tvar.endcode>>
-				<<=$tvar.endcode>>
-			<</if>>
+			<<run iEvent.unsetEvent('onEnd')>>
 			<<pass 5>>
 		<</link>>    
 	<</if>>

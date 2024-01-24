@@ -317,11 +317,19 @@ class Pocket {
         return inventory;
     }
 
-    // get all stack by item uid from all inventory
-    static search(itemId) {
+    // find all stack by item id from all inventory, return the total count
+    static has(itemId) {
         return this.list.reduce((total, type) => {
             const inventory = this.get(type);
-            const _stacks = inventory.getById(itemId);
+            return total + inventory.has(itemId);
+        }, 0);
+    }
+
+    // find all stack by item id from all inventory
+    static find(itemId) {
+        return this.list.reduce((total, type) => {
+            const inventory = this.get(type);
+            const _stacks = inventory.get('id', itemId);
             if (_stacks.length > 0) {
                 total.total += _stacks.reduce((total, stack) => total + stack.count, 0);
                 total.stacks.push(..._stacks);
@@ -438,6 +446,18 @@ class Pocket {
 	 */
     getAll(prop = 'uid', value) {
         return this.slots.filter(stack => stack[prop] == value);
+    }
+
+    /**
+     * find the all stack and return total count
+     */
+    has(itemId) {
+        return this.slots.reduce((total, stack) => {
+            if (stack.id == itemId) {
+                total += stack.count;
+            }
+            return total;
+        }, 0);
     }
 
     /**

@@ -328,7 +328,7 @@ const pocketUI = {
             return result;
         }, []);
 
-        let html = `要将<img class='icon' src='${img}'><span class='teal'>${item.name}</span>移动到哪里？<br><br>`;
+        let html = `要将<img class='icon' src='${item.img}'><span class='teal'>${item.name}</span>移动到哪里？<br><br>`;
 
         list.forEach(obj => {
             const { key, name } = obj;

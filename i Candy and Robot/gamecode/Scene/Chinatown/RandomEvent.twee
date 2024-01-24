@@ -147,8 +147,8 @@
 
 :: Event Chinatown Random_Goat Trap Pay::Script
 <<stress 10>><<trauma 10>>
-<<if $money >= $tvar.debt>>
-    <<set $money -= $tvar.debt>>
+<<if $money >= $tvar.debt*100>>
+    <<set $money -= $tvar.debt*100>>
     <<run delete V.tvar.debt>>
 <<else>>
     <<set $money = 0>>
