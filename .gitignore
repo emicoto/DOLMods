@@ -13,3 +13,7 @@ test content/*
 
 #!.yarn/cache
 .pnp.*
+
+dist
+.idea
+
