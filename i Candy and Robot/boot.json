@@ -1,7 +1,7 @@
 {
   "name": "i, Candy + Robot",
   "version": "2.4.5",
-  "build": "34",
+  "build": "37",
   "modPacker": {
     "modVersionJs": {
       "file": "0Scripts/0_framework/0_modversion.js",
@@ -66,7 +66,8 @@
     "gamecode/Scene/Daiso/eventRegist.js",
     "gamecode/Scene/EventRegist.js",
     "gamecode/Scene/PassageInterferer.js",
-    "gamecode/Scene/SceneRegist.js"
+    "gamecode/Scene/SceneRegist.js",
+    "gamecode/Scene/mapData.js"
   ],
   "tweeFileList": [
     "gamecode/EventLoop.twee",

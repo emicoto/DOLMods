@@ -6,13 +6,21 @@
   ],
   "scriptFileList_earlyload": [],
   "scriptFileList_preload": [],
-  "styleFileList": [],
+  "styleFileList": [
+    "citylight.mp3"
+  ],
   "scriptFileList": [
     "test2.js"
   ],
-  "tweeFileList": [],
-  "imgFileList": [],
-  "additionFile": [],
+  "tweeFileList": [
+    "test.twee"
+  ],
+  "imgFileList": [
+    "citylight.mp3"
+  ],
+  "additionFile": [
+    "citylight.mp3"
+  ],
   "addonPlugin": [
     {
       "modName": "TweeReplacer",
