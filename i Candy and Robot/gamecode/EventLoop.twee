@@ -46,3 +46,17 @@
 		<</link>>    
 	<</if>>
 </div>
+
+:: EventStage [stage]
+<<effects>>
+<div id='content'></div>
+
+<div id='addAfterMsg'></div>
+
+<div id='linkArea'>
+	<<=iEvent.Cycle.getActions()>>
+</div>
+
+<script>
+	iEvent.Cycle.start();
+</script>

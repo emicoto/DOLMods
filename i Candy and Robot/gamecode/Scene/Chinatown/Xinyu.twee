@@ -100,3 +100,37 @@
 
 <</if>>
 </div>
+
+:: Chara Xinyu Intro [stage]
+<div id='content'>
+    <<include $tvar.scene.fullTitle>>
+</div>
+
+<div id='linkArea'>
+<<if $phase is $scene.maxPhase>>
+   <<link getLan('next') 'MainStage AlmondForest'>><<run iEvent.scene.unset()>><</link>>
+   <br>
+<<elseif iEvent.getFlag('Xinyu', 'ask') isnot 10 and $phase lte 4>>
+<<lanLink $passage>>
+    <<lan 'EN' 'Try to approach'>>
+    <<lan 'CN' '试着沟通'>>
+    <<linkcode>>
+    <<run iEvent.addFlag('Xinyu', 'ask', 1);
+        if (Tvar.scene.current == 'FirstTime' && V.phase == 4 && iEvent.getFlag('Xinyu', 'ask') < 10) {
+            V.phase -= 1;
+        }
+        else if (Tvar.scene.current == 'Again' && iEvent.getFlag('Xinyu', 'ask') < 10) {
+            V.phase -= 1;
+        }
+    >>
+<</lanLink>>
+<br>
+<<lanLink $passage>>
+    <<lan 'EN' 'Maybe next time'>>
+    <<lan 'CN' '算了'>>
+    <<linkcode>>
+    <<goBranchEnd 'GiveUp'>>
+<</lanLink>>
+<br>
+<</if>>
+</div>

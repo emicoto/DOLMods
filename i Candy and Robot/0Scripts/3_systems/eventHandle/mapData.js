@@ -4,17 +4,43 @@ class BoardData {
         this.type = 'world';
         this.id = boardId;
     }
-    
-    has(location) {
-        return this.locations.has(location);
+
+    /**
+     * check if this board has the location
+     * @param {*} stageId
+     * @returns {boolean}
+     */
+    has(stageId) {
+        return this.locations.has(stageId);
     }
 
-    get(location) {
-        return this.locations.get(location);
+    /**
+     * get location data by variable name
+     * @param {string} vname
+     * @returns {iMap | void}
+     */
+    getByV(vname) {
+        for (const [key, value] of this.locations) {
+            if (value.name == vname) return this.locations.get(key);
+        }
     }
 
+    /**
+     * get location data by stageId
+     * @param {*} stageId
+     * @returns {iMap}
+     */
+    get(stageId) {
+        return this.locations.get(stageId);
+    }
+
+    /**
+     * add locations to this board
+     * @param  {...iMap} locations
+     */
     add(...locations) {
         locations.forEach(location => {
+            location.parent = this.id;
             this.locations.set(location.stageId, location);
         });
     }
@@ -22,39 +48,59 @@ class BoardData {
 
 class iMap {
     static data = {};
+    static local = null;
 
-    static current = null;
+    // get alley name
+    static alley() {
+        if (V.passage.includes('Commercial')) return 'commercial_alley';
+        else if (V.passage.includes('Industrial')) return 'industrial_alley';
+        else if (V.passage.includes('Residential')) return 'residential_alley';
 
-    static location() {
+        const location = this.getByV(V.bus);
+        return `${location.area}_alley`;
+    }
+
+    // get current location variable name
+    static currentLoc() {
         // 巴士里直接返回巴士
-        if (V.passage == 'Bus' || V.passage.includes('Bus')) {
+        if (V.passage.includes('Bus')) {
             return 'bus';
         }
 
-        if (V.passage.includes('Stall')) {
-            return 'market';
+        // 市场里直接返回市场
+        if (V.passage.has('Stall', 'Market')  && V.location == 'town') {
+            return 'connudatus_market';
         }
 
+        // 根据bus返回
         if (V.location == 'town') {
-            // 根据bus返回
             return V.bus;
         }
 
+        // 如果是农场，根据passage返回地点
         if (V.location == 'farm' && V.passage.includes('Livestock')) {
             return 'livestock';
         }
 
         if (V.location == 'alley') {
-            // 根据passage返回地点
-            if (V.passage.includes('Commercial')) return 'commercial_alley';
-            if (V.passage.includes('Industrial')) return 'industrial_alley';
-            if (V.passage.includes('Residential')) return 'residential_alley';
+            return this.alley();
         }
 
         return V.location;
     }
 
-    static getScenePassage(scene) {
+    // get current location data
+    static current() {
+        if (this.local && this.local.name == V.location) {
+            return this.local;
+        }
+
+        const data = this.getByV(this.currentLoc());
+        this.local = data;
+        return data;
+    }
+
+    static getFullStage(scene) {
         const keys = Object.keys(this.data);
         for (let i = 0; i < keys.length; i++) {
             const board = this.data[keys[i]];
@@ -65,6 +111,7 @@ class iMap {
             }
         }
     }
+
     /**
      * @param {string} mapId
      * @returns {boardData}
@@ -74,12 +121,33 @@ class iMap {
         return this.data[mapId];
     }
 
-    static get(localtionId) {
+    /**
+     * get location data by stageId
+     * @param {string} stageId
+     * @returns
+     */
+    static get(stageId) {
         const keys = Object.keys(this.data);
         for (let i = 0; i < keys.length; i++) {
             const board = this.data[keys[i]];
-            if (board.has(localtionId)) {
-                return board.get(localtionId);
+            if (board.has(stageId)) {
+                return board.get(stageId);
+            }
+        }
+    }
+    
+    /**
+     * get location data by variable name
+     * @param {string} vname
+     * @returns {iMap | void}
+     */
+    static getByV(vname) {
+        const keys = Object.keys(this.data);
+        for (let i = 0; i < keys.length; i++) {
+            const board = this.data[keys[i]];
+            const location = board.getByV(vname);
+            if (location) {
+                return location;
             }
         }
     }
@@ -112,12 +180,16 @@ class iMap {
             return `MainStage ${this.stageId}`;
         }
 
+        if (this.tags.includes('mirrorstage')) {
+            return `Stage ${this.stageId.replace(/\s/g, '')}`;
+        }
+
         return `Stage ${this.stageId}`;
     }
 
     go() {
         V.location = this.name;
-        iMap.current = this;
+        iMap.local = this;
     }
 
     /**
@@ -403,7 +475,7 @@ iMap.set('Tauyuan').add(
         .Type('building')
         .Tags('safehouse')
         .Cond(
-            () => iMap.location() == 'hotspring' || Tvar.moonforest.forward >= 5 && random(100) < 20
+            () => iMap.currentLoc() == 'hotspring' || Tvar.moonforest.forward >= 5 && random(100) < 20
         )
         .Locations({
             moonforest  : -2,
@@ -500,20 +572,18 @@ iMap.set('DolTown').add(
         .Group('DolTown')
         .Area('industrial')
         .Tags('nonestage')
-        .Type('town')
+        .Type('town'),
+    
+    new iMap('brothel', 'Brothel Basement')
+        .Group('Brothel')
+        .Area('industrial')
+        .Tags('mirrorstage')
+        .Type('building')
 );
 
-
-Object.defineProperties(iMap, {
-    current : {
-        get() {
-            return iMap.data[iMap.location()];
-        }
+Object.defineProperty(window, 'iMap', {
+    get() {
+        return iMap;
     }
 });
-
-Object.defineProperty(window, 'iMap', {
-    get : () => iMap
-});
-
 

@@ -1,7 +1,11 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable no-unused-vars */
+
+// eslint-disable-next-line prefer-const
+let regist = iEvent.register;
+
 // 角色登场或与角色交互时触发的事件
-iEvent.onChara('Xinyu')
+regist.onChara('Xinyu')
     .add(
         new SceneData('Intro')
             .Trigger({
@@ -15,14 +19,14 @@ iEvent.onChara('Xinyu')
             .Cond((chara, flag) => flag.intro == undefined && flag.known == 1) // 系列事件的条件
             .Branches(
                 {
-                    name       : 'FirstTime',
-                    totalPhase : 6,
+                    name     : 'FirstTime',
+                    maxPhase : 6,
 
                     cond : (chara, flag) => flag.intro == undefined // 分支事件的条件
                 },
                 {
-                    name       : 'Again',
-                    totalPhase : 2,
+                    name     : 'Again',
+                    maxPhase : 2,
 
                     cond : (chara, flag) => flag.intro == 1
                 }
@@ -63,7 +67,7 @@ iEvent.onChara('Xinyu')
 
 
 // 进入场景时触发的事件
-iEvent.onScene('Chinatown')
+regist.onScene('Chinatown')
     .add(
         // Eventlist
         new SceneData()
@@ -74,7 +78,7 @@ iEvent.onScene('Chinatown')
 // 这些链接会出现在对应的互动菜单中，或在Place of interest/next之前。
 
 // scene指有地图详细档案的新场景。链接会出现在地图互动菜单中。
-iEvent.onLink('scene', 'Chinatown')
+regist.onLink('scene', 'Chinatown')
     .add(
         // actionlist
         new ActionData()
@@ -82,27 +86,27 @@ iEvent.onLink('scene', 'Chinatown')
 
 // chara指角色的互动。如果当前场景时符合系统的新场景，链接会出现在角色互动菜单中。
 // 否则，链接则会排列在最后一个链接之前。
-iEvent.onLink('chara', 'Xinyu')
+regist.onLink('chara', 'Xinyu')
     .add(
         new ActionData()
     );
 
 // 旧场景的完整标题。链接会排列在最后一个链接之前。
-iEvent.onLink('passage', 'PassageFullTitle')
+regist.onLink('passage', 'PassageFullTitle')
     .add(
         new ActionData()
     );
 
 
 // 时间变化时触发的事件。时间变化类型只有common。
-iEvent.onTime('common')
+regist.onTime('common')
     .add(
         // Eventlist
         new SceneData()
     );
 
 // 状态变化时触发的事件，不特定状态时，都加到common里
-iEvent.onState('stateType')
+regist.onState('stateType')
     .add(
         // Eventlist
         new SceneData()
@@ -110,12 +114,12 @@ iEvent.onState('stateType')
 ;
 
 // 段落变化时触发的事件
-iEvent.onPassage('Brothel Basement')
+regist.onPassage('Brothel Basement')
     .add(
     // Eventlist
         new SceneData('DrugsIntro')
             .Setting({
-                totalPhase : 3,
+                maxPhase   : 3,
                 nextButton : true,
 
                 exit : 'Brothel Basement'
@@ -128,7 +132,7 @@ iEvent.onPassage('Brothel Basement')
             )
     );
 
-iEvent.onPassage('Garden')
+regist.onPassage('Garden')
     .add(
         new SceneData('GarageIntro')
             .Flag('orphanage')
@@ -140,7 +144,7 @@ iEvent.onPassage('Garden')
     );
 
 // 不特定段落时，都加到common里
-iEvent.onPassage('common')
+regist.onPassage('common')
     .add(
         new SceneData('ChinatownRumors')
             .Trigger(

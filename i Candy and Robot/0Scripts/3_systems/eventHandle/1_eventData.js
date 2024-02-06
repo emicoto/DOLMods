@@ -2,14 +2,15 @@ class SceneData {
     /**
      * when the event is a branch, the eventId is the branchId
      * @param {string} eventId
-     * @param {'main' | 'branch'} type
+     * @param {'main' | 'branch'} format
+     * @param { 'Event' | 'Scene' | 'Action' | 'Chara'} type
      * @param {string} parent
      */
-    constructor(eventId, type = 'main', parent) {
+    constructor(eventId, type = 'Event', format = 'main', parent = null) {
         /**
          * @type {'main' | 'branch'}
          */
-        this.type = type;
+        this.format = format;
         if (parent) {
             this.eventId = eventId;
             this.parent = parent;
@@ -17,6 +18,11 @@ class SceneData {
         else {
             this.eventId = eventId;
         }
+        /**
+         * @type {'Event' | 'Scene' | 'Action' | 'Chara'}
+         */
+        this.type = type;
+
         this.triggerType = 'scene';
         this.priority = 0;
         this.flagfields = [];
@@ -25,11 +31,10 @@ class SceneData {
          */
         this.branches = [];
         this.actions = {};
-        this.playType = 'scene';
         /**
          * @type {number}
          */
-        this.totalPhase = 0;
+        this.maxPhase = 0;
     }
     /**
      * @param {SceneData} obj
@@ -49,6 +54,15 @@ class SceneData {
      */
     set(prop, value) {
         this[prop] = value;
+        return this;
+    }
+
+    /**
+     * @param {'Event' | 'Scene' | 'Action' | 'Chara'} type
+     * @returns {SceneData}
+     */
+    Type(type) {
+        this.type = type;
         return this;
     }
 
@@ -86,8 +100,14 @@ class SceneData {
 
     Branches(...branches) {
         branches.forEach(branch => {
-            const data = new SceneData(branch.name, 'branch', this.eventId);
+            if (branch.name) {
+                branch.eventId = branch.name;
+                delete branch.name;
+            }
+            const data = new SceneData(branch.eventId, this.type, 'branch', this.eventId);
             data.assign(branch);
+            data.playType = this.playType;
+            data.triggerType = 'branch';
             this.branches.push(data);
         });
         return this;
@@ -98,6 +118,12 @@ class SceneData {
         return this;
     }
 
+    /**
+     * @param {'nextButton' | 'leave' | 'onPhase' | 'before' | 'after' | 'branch_X' | 'phase_X'} action
+     * the X should be number or branchId
+     * @param {function | string} arg the string should be twee code
+     * @returns {SceneData}
+     */
     Action(action, arg) {
         if (action.has('next')) {
             this.nextButton = true;
@@ -119,25 +145,18 @@ class SceneData {
         this.leaveLink = displaylink;
         return this;
     }
-
+    /**
+     * @param {'scene' | 'jump' | 'local'} type
+     * @param {string} arg
+     * @returns {SceneData}
+     */
     PlayType(type, arg) {
         this.playType = type;
 
         if (arg) {
-            if (type == 'scene') {
-                const passage = iMap.getScenePassage(arg);
-                if (passage) {
-                    this.jumpToward = passage;
-                    this.stage = arg;
-                }
-                else {
-                    this.jumpToward = `Scene ${arg}`;
-                }
-            }
-            else if (type == 'jump') {
-                this.jumpToward = `Event ${arg}`;
-            }
+            this.playArg = arg;
         }
+
         return this;
     }
 
@@ -176,29 +195,27 @@ class SceneData {
         this.branches.sort((a, b) => b.priority - a.priority);
     }
 
-    // get available branch Id, if no branch available, return false
-    getBranchId() {
+    // get a branch by random
+    getRandomBranch() {
+        if (this.branches.length == 0) {
+            return `No${Random(1, this.randomBranch)}`;
+        }
+        return this.branches[Random(0, this.branches.length - 1)];
+    }
+
+    /**
+     * get available branch, if no branch available, return false
+     * @returns {string | SceneData | false}
+     */
+    getBranch() {
         if (this.randomBranch) {
-            return `No${random(1, this.randomBranch)}`;
+            return `No${Random(1, this.randomBranch)}`;
         }
 
         for (let i = 0; i < this.branches.length; i++) {
             if (this.branches[i].cond()) {
-                return this.branches[i].eventId;
+                return this.branches[i];
             }
-        }
-        return false;
-    }
-
-    // get available branch, if no branch available, return false
-    getBranch() {
-        if (this.randomBranch) {
-            return `No${random(1, this.randomBranch)}`;
-        }
-
-        const branchId = this.getBranchId();
-        if (branchId) {
-            return this.branches.find(branch => branch.eventId == branchId);
         }
         return false;
     }
@@ -267,7 +284,7 @@ class SeriesData {
         events.forEach(event => {
             const eventData = this.initData(event);
 
-            if (eventData.type == 'branch' && eventData.parent) {
+            if (eventData.format == 'branch' && eventData.parent) {
                 try {
                     const parent = this.get(eventData.parent);
                     parent.branches.push(eventData);
@@ -275,6 +292,7 @@ class SeriesData {
                 }
                 catch (e) {
                     console.warn(`Parent Event ${eventData.parent} not found when adding branch ${eventData.eventId} to series ${this.id}, waiting for parent to be added.`);
+                    console.warn(e);
                     this.events.push(eventData);
                 }
             }
@@ -285,6 +303,10 @@ class SeriesData {
         return this;
     }
 
+    /**
+     * @param {SceneData | object} data
+     * @returns {SceneData}
+     */
     initData(data) {
         let newData;
 
@@ -292,7 +314,7 @@ class SeriesData {
             newData = data;
         }
         else {
-            newData = new SceneData(data.eventId, data.type);
+            newData = new SceneData(data.eventId, data.type, data.format, data.parent);
             newData.assign(data);
         }
 
@@ -301,6 +323,9 @@ class SeriesData {
 
         if (this.entryPoint == 'chara') {
             this.initChara(newData);
+        }
+        else {
+            this.initDataType(newData);
         }
 
         return newData;
@@ -312,6 +337,24 @@ class SeriesData {
         }
         else if (data.character.includes(this.id) == false) {
             data.character.push(this.id);
+        }
+
+        data.type = 'Chara';
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    initDataType(data) {
+        if (data.playType) return;
+
+        switch (this.entryPoint) {
+        case 'passage':
+            data.playType = 'jump';
+            break;
+        case 'chara':
+            data.playType = 'local';
+            break;
+        default:
+            data.playType = 'scene';
         }
     }
 
@@ -325,3 +368,219 @@ class SeriesData {
     }
 }
 
+class Scene {
+    /**
+     * @param {string} type
+     * @param {SceneData} data
+     */
+    constructor(type = 'Scene', title, data = null) {
+        this.type = type;
+        this.baseTitle = title;
+        this.data = data;
+
+        if (this.data == null && V.stage) {
+            this.stage = V.stage;
+            this.fullTitle = `Scene ${V.stage} ${title}`;
+        }
+
+        this.startTime = V.timeStamp;
+        this.exit = V.passage;
+    }
+
+    //----------------------------------------------------------------
+    // initialize
+    //----------------------------------------------------------------
+    initSource(data) {
+        const source = new SceneData(data.eventId, data.type, data.format, data.parent);
+        source.assign(data);
+
+        this.data = source;
+    }
+
+    InitData() {
+        const data = this.data;
+        if (!data) return this;
+
+        this.initSource(data);
+
+        this.type = data.type;
+        this.series = data.seriesId;
+        this.eventId = data.eventId;
+        this.entryPoint = data.entryPoint;
+
+        if (data.availableBranch) {
+            this.initBranch(data.availableBranch);
+        }
+
+        this.initStage(data);
+
+        this.startTime = V.timeStamp;
+        this.exit = data.exit || V.passage;
+        this.maxPhase = data.maxPhase || 0;
+
+        return this;
+    }
+
+    /**
+     * @description init the stage and base title of the scene
+     */
+    initStage(data) {
+        // if has arg but not local
+        if (data.playArg && data.playType !== 'local') {
+            this.stage = this.getStage(data, data.playArg);
+        }
+        // no arg
+        else {
+            if (data.playType == 'jump') {
+                this.stage = this.getStage(data);
+            }
+            else {
+                const location = iMap.getFullStage(data.seriesId);
+                if (location) {
+                    this.location = data.seriesId.replace(/\s/g, '');
+                    this.stage = location;
+                }
+                else if (V.stage) {
+                    this.stage = iMap.getFullStage(V.stage);
+                }
+            }
+        }
+        this.baseTitle = this.combineTitle();
+    }
+
+    /**
+     * @description check and init if the scene has branch data
+     */
+    initBranch(branch) {
+        if (typeof branch == 'string') {
+            this.branch = [branch];
+        }
+        else if (typeof branch == 'object') {
+            const data = branch;
+
+            this.branch = [data.eventId];
+            this.data.assign(data);
+            delete this.data.availableBranch;
+        }
+    }
+
+    /**
+     * @description on event initialize
+     */
+    Init() {
+        const { character, actions } = this.data;
+        // if has characters
+        if (character) {
+            character.forEach(chara => {
+                wikifier('npc', chara);
+            });
+
+            wikifier('person1');
+        }
+
+        if (actions.before) {
+            if (typeof actions.before == 'function') {
+                actions.before();
+            }
+            else {
+                new Wikifier(null, actions.before);
+            }
+        }
+    }
+
+    //----------------------------------------------------------------
+    // util functions
+    //----------------------------------------------------------------
+    /**
+     * get the stage title
+     * @param {SceneData} data
+     * @param {string} arg
+     * @returns {string}
+     */
+    getStage(data, arg) {
+        const location = iMap.getFullStage(arg);
+        if (location) {
+            this.location = arg;
+            return location;
+        }
+
+        if (arg) {
+            return `Stage ${arg}`;
+        }
+
+        if (data.jumpToward) {
+            return data.jumpToward;
+        }
+
+        return this.combineTitle();
+    }
+
+    /**
+     * combine the base title of the scene
+     * @returns {string}
+     */
+    combineTitle() {
+        const { type, eventId, seriesId, parent } = this.data;
+        let title = type;
+        if (seriesId !== 'common') {
+            if (this.data.entryPoint == 'passage') {
+                title += ` ${seriesId.replace(/\s/g, '')}`;
+            }
+            else {
+                title += ` ${seriesId}`;
+            }
+        }
+        if (parent) {
+            title += ` ${parent}`;
+        }
+        else if (eventId) {
+            title += ` ${eventId}`;
+        }
+        return title;
+    }
+
+    /**
+     * get the full title of the scene
+     * @param {1 | true} stage
+     * @returns {string}
+     */
+    getFullTitle(stage = null) {
+        let title = this.baseTitle;
+        const phase = this.maxPhase || 0;
+
+        if (this.branch) {
+            title += ` ${this.branch.join(' ')}`;
+            this.current = this.branch[this.branch.length - 1];
+        }
+
+        if (phase > 0 && V.phase < phase && stage == null) {
+            title = `${title} ${V.phase + 1}`;
+            console.log(`Phase ${V.phase + 1} of ${phase}`, this.baseTitle);
+        }
+
+        return title;
+    }
+
+    /*
+    * get the language of the scene
+    * @returns {string}
+    */
+    getLanguage() {
+        const fullTitle = this.getFullTitle();
+
+        if (Story.has(`${fullTitle} ${setup.language}`)) {
+            return `${fullTitle} ${setup.language}`;
+        }
+
+        // if has default language
+        if (Story.has(`${fullTitle} CN`)) {
+            return `${fullTitle} CN`;
+        }
+
+        if (Story.has(`${fullTitle} EN`)) {
+            return `${fullTitle} EN`;
+        }
+
+        return fullTitle;
+    }
+}
