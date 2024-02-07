@@ -2,44 +2,36 @@ class SceneData {
     /**
      * when the event is a branch, the eventId is the branchId
      * @param {string} eventId
-     * @param {'main' | 'branch'} format
-     * @param { 'Event' | 'Scene' | 'Action' | 'Chara'} type
+     * @param {EventType} type
      * @param {string} parent
      */
-    constructor(eventId, type = 'Event', format = 'main', parent = null) {
+    constructor(eventId, type = 'Event', parent = '') {
         /**
-         * @type {'main' | 'branch'}
+         * @type {eventFormat}
          */
-        this.format = format;
-        if (parent) {
+        this.format = 'main';
+        this.seriesId = 'common';
+
+        if (parent !== '') {
             this.eventId = eventId;
             this.parent = parent;
+            this.format = 'branch';
         }
         else {
             this.eventId = eventId;
         }
-        /**
-         * @type {'Event' | 'Scene' | 'Action' | 'Chara'}
-         */
         this.type = type;
-
+        /**
+         * @type {TriggerType}
+         */
         this.triggerType = 'scene';
         this.priority = 0;
         this.flagfields = [];
-        /**
-         * @type {SceneData[]}
-         */
         this.branches = [];
         this.actions = {};
-        /**
-         * @type {number}
-         */
         this.maxPhase = 0;
     }
-    /**
-     * @param {SceneData} obj
-     * @returns {SceneData}
-     */
+
     assign(obj) {
         for (const key in obj) {
             this[key] = clone(obj[key]);
@@ -58,7 +50,7 @@ class SceneData {
     }
 
     /**
-     * @param {'Event' | 'Scene' | 'Action' | 'Chara'} type
+     * @param {EventType} type
      * @returns {SceneData}
      */
     Type(type) {
@@ -67,15 +59,13 @@ class SceneData {
     }
 
     /**
-     * @param {{
-     * type: 'entry' | 'action' | 'localAction' |'scene' | 'cond',
-     * location: string[],
-     * cond: function
-     * }} trigger
+     * @param {triggerOption} trigger
      * @returns {SceneData}
      */
     Trigger(trigger) {
         this.triggerType = trigger.type;
+        delete trigger.type;
+
         this.triggerOptions = trigger;
         return this;
     }
@@ -119,7 +109,7 @@ class SceneData {
     }
 
     /**
-     * @param {'nextButton' | 'leave' | 'onPhase' | 'before' | 'after' | 'branch_X' | 'phase_X'} action
+     * @param {actionType} action
      * the X should be number or branchId
      * @param {function | string} arg the string should be twee code
      * @returns {SceneData}
@@ -219,7 +209,12 @@ class SceneData {
         }
         return false;
     }
+
+    findBranch(id) {
+        return this.branches.find(branch => branch.eventId == id);
+    }
 }
+
 
 class ActionData {
     /**
@@ -393,18 +388,20 @@ class Scene {
     initSource(data) {
         const source = new SceneData(data.eventId, data.type, data.format, data.parent);
         source.assign(data);
-
         this.data = source;
     }
 
-    InitData() {
+    initData() {
         const data = this.data;
         if (!data) return this;
+        // make a backup of the source data
+        this.source = clone(data);
 
+        // init source data
         this.initSource(data);
 
         this.type = data.type;
-        this.series = data.seriesId;
+        this.seriesId = data.seriesId;
         this.eventId = data.eventId;
         this.entryPoint = data.entryPoint;
 
@@ -520,7 +517,7 @@ class Scene {
      * @returns {string}
      */
     combineTitle() {
-        const { type, eventId, seriesId, parent } = this.data;
+        const { type, eventId, seriesId } = this;
         let title = type;
         if (seriesId !== 'common') {
             if (this.data.entryPoint == 'passage') {
@@ -530,10 +527,7 @@ class Scene {
                 title += ` ${seriesId}`;
             }
         }
-        if (parent) {
-            title += ` ${parent}`;
-        }
-        else if (eventId) {
+        if (eventId) {
             title += ` ${eventId}`;
         }
         return title;
@@ -582,5 +576,39 @@ class Scene {
         }
 
         return fullTitle;
+    }
+
+    /**
+     * init the data from the branch
+     * @param {SceneData} branch
+     * @returns
+     */
+    initBranchData(branch) {
+        if (!branch) {
+            const current = this.branch[this.branch.length - 1];
+            branch = this.data.findBranch(current);
+        }
+        if (!branch) return;
+
+        this.initSource(this.source);
+        
+        const list = ['maxPhase', 'actions', 'flagfields', 'character', 'exit', 'leaveLink', 'eventId', 'parent'];
+
+        for (const key of list) {
+            if (typeof data[key] !== 'undefined') {
+                this.data[key] = data[key];
+            }
+        }
+
+        this.data.format = 'branch';
+        this.maxPhase = this.data.maxPhase;
+    }
+
+    /**
+     * restore the scene to the source data
+     */
+    restore() {
+        this.initSource(this.source);
+        this.maxPhase = this.source.maxPhase;
     }
 }

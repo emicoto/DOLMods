@@ -481,7 +481,7 @@ const iEvent = (() => {
             }
 
             // init the scene data
-            scene.InitData();
+            scene.initData();
     
             // set the scene
             Tvar.scene = scene;
@@ -700,6 +700,119 @@ const iEvent = (() => {
                     this.unset('fix');
                 }
             }
+        },
+
+        //-----------------------------------------------------
+        //
+        // branch handle during event
+        //
+        //-----------------------------------------------------
+        /**
+         * add a branch to the current event
+         * @param {string} branchId
+         */
+        add(branchId) {
+            const scene = Tvar.scene;
+            if (!scene) return;
+
+            if (!scene.branch || scene.branch.length == 0) {
+                scene.branch = [];
+            }
+
+            if (!scene.phases) {
+                scene.phases = {};
+            }
+
+            scene.branch.push(branchId);
+            if (scene.current) {
+                scene.phases[scene.current] = V.phase;
+            }
+            else {
+                scene.phases.main = V.phase;
+            }
+            scene.current = branchId;
+            scene.initBranchData();
+            V.phase = 0;
+        },
+
+        /**
+         * remove the last branch from the current event
+         * @param {number} phase
+         */
+        pop(phase = 0) {
+            const scene = Tvar.scene;
+            if (!scene || !scene.branch || scene.branch.length == 0) return;
+
+            const last = scene.branch.pop();
+            scene.phases[last] = V.phase;
+
+            scene.current = scene.branch[ scene.branch.length - 1 ];
+            scene.initBranchData();
+            V.phase = phase;
+        },
+
+        /**
+         * remove all the branch from the current event
+         * @param {number} phase
+         */
+        back(phase = 0) {
+            const scene = Tvar.scene;
+            if (!scene || !scene.branch || scene.branch.length == 0) return;
+
+            const last = scene.branch[ scene.branch.length - 1 ];
+            scene.phases[last] = V.phase;
+
+            scene.current = scene.branch[0];
+            scene.branch = [scene.current];
+            scene.initBranchData();
+            V.phase = phase;
+        },
+
+        /**
+         * clear the branch list of the current event
+         */
+        clear(phase = 0) {
+            const scene = Tvar.scene;
+            if (!scene) return;
+
+            scene.branch = [];
+            scene.current = 'main';
+            scene.restore();
+            V.phase = phase;
+        },
+
+        /**
+         * jump to the selected branch of the current event
+         * @param {string} branchId
+         * @param {number} phase
+         */
+        goto(branchId, phase = 0) {
+            const scene = Tvar.scene;
+            if (!scene) return;
+
+            // if already in the branch list
+            // then splice the list let the selected branch is the last one
+            const branch = scene.branch;
+            if (branch && branch.includes(branchId)) {
+                const index = scene.branch.indexOf(branchId);
+                branch.splice(index, branch.length - index);
+            }
+            else {
+                // if not in the list then reset the list and add the selected branch
+                scene.branch = [];
+                scene.current = branchId;
+            }
+
+            scene.branch = [branchId];
+            V.phase = phase;
+        },
+
+        /**
+         * set phase of the current event
+         * @param {number} phase
+         */
+        phase(phase) {
+
         }
     };
 
@@ -742,6 +855,17 @@ const iEvent = (() => {
 
             this.initStage(psg);
 
+            // if already in the event, return;
+            if (Tvar.scene?.start || V.combat == 1) return;
+            
+            console.log(
+                'event handle system on main cycle on passage init.\n',
+                'passage:',psg.title,
+                'prev passage:', lastPsg.title,
+                'cutrent stage:', V.stage,
+                'temp vars:', Tvar
+            );
+
             // get local characters
             iChara.initLocal();
 
@@ -770,6 +894,9 @@ const iEvent = (() => {
          */
         after(passage) {
             if (passage.title == 'Start') return;
+
+            // fix the wrong event if player using cheats
+            sceneHandle.fix(passage);
 
             // patch the passage content
             this.onPatch(passage);

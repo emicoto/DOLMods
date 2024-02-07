@@ -80,7 +80,7 @@ class SelectCase {
             throw new Error('cond must be a number or number[]');
         }
         const cond = {
-            c       : cond,
+            c       : _cond,
             isMatch : 'number'
         };
         this.check(cond);
@@ -107,7 +107,7 @@ class SelectCase {
 	 * select.has("f"); // "unknown"
 	 */
     caseMatchS(_cond, result) {
-        if (typeof cond == 'string') _cond = [cond];
+        if (typeof _cond == 'string') _cond = [_cond];
         else if (Array.isArray(_cond)) {
             _cond.forEach(c => {
                 if (typeof c !== 'string') throw new Error('cond must be a string or string[]');
@@ -117,7 +117,7 @@ class SelectCase {
             throw new Error('cond must be a string or string[]');
         }
         const cond = {
-            c       : cond,
+            c       : _cond,
             isMatch : 'string'
         };
         this.check(cond);
@@ -243,6 +243,7 @@ class SelectCase {
         else if (this.condtype !== check) throw new Error('number and string cannot be compare at same time');
     }
 
+    // eslint-disable-next-line class-methods-use-this
     type(cond) {
         if (Array.isArray(cond)) {
             switch (typeof cond[0]) {
@@ -254,6 +255,7 @@ class SelectCase {
                 return 'string[]';
             case 'object':
                 if (cond?.isMatch) return `match${cond.isMatch}`;
+                break;
             default:
                 throw new Error('selectcase only accept string or number');
             }
