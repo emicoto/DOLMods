@@ -812,7 +812,10 @@ const iEvent = (() => {
          * @param {number} phase
          */
         phase(phase) {
+            const scene = Tvar.scene;
+            if (!scene) return;
 
+            V.phase = phase;
         }
     };
 
