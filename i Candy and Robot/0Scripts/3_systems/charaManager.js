@@ -189,6 +189,27 @@ class CharaData {
 
 const iChara = {
     data : {},
+    /**
+     * @description add the chara data to the chara manager
+     * @param {string} CharaId
+     * @param {CharaData} data
+     */
+    add(CharaId, data) {
+        const chara = new CharaData(CharaId, data.color);
+
+        for (const key in data) {
+            chara[key] = clone(data[key]);
+        }
+
+        this.data[CharaId] = chara;
+        return this.data[CharaId];
+    },
+
+    //----------------------------------------
+    //
+    // temporary function
+    //
+    //----------------------------------------
     XinyuCheck() {
         if (!C.npc.Xinyu) return;
 
@@ -219,24 +240,21 @@ const iChara = {
         }
     },
 
+    //----------------------------------------
+    // get current location of selected character
+    //----------------------------------------
     currentLoc(charaId) {
         if (!this.data[charaId]) return;
         return this.data[charaId].current();
     },
 
-    /**
-     * @description add the chara data to the chara manager
-     * @param {string} CharaId
-     * @param {CharaData} data
-     */
-    add(CharaId, data) {
-        const chara = new CharaData(CharaId, data.color);
-
-        for (const key in data) {
-            chara[key] = clone(data[key]);
+    //----------------------------------------
+    // update all character location
+    //----------------------------------------
+    updateLocation() {
+        for (const key in this.data) {
+            this.data[key].update();
         }
-
-        this.data[CharaId] = chara;
     }
 };
 

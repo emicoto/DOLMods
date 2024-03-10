@@ -309,7 +309,7 @@ class SeriesData {
             newData = data;
         }
         else {
-            newData = new SceneData(data.eventId, data.type, data.format, data.parent);
+            newData = new SceneData(data.eventId, data.type, data.parent);
             newData.assign(data);
         }
 

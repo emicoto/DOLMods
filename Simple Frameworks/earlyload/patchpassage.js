@@ -25,6 +25,10 @@
         ],
         StoryCaption : [
             {
+                src   : '<<img>>',
+                after : '\n\n\t\t<<CustomImgLayer>>\n'
+            },
+            {
                 src : '<<schoolday>>\n\t\t<br>',
                 to  : '<<schoolday>>\n\t\t<div id="captionTextBox">\n\t\t<<ModCaptionDescription>><br>\n\t\t\t'
             },

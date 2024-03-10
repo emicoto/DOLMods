@@ -135,46 +135,94 @@ slog('log', 'simple framework start at util.js')
     }
 
     // deep clone an object
-    function clone(obj) {
+    function clone(orig) {
+        /*
+			Immediately return the primitives and functions.
+		*/
+        if (typeof orig !== 'object' || orig === null) {
+            return orig;
+        }
+
+        /*
+			Unbox instances of the primitive exemplar objects.
+		*/
+        if (orig instanceof String) {
+            return String(orig);
+        }
+        if (orig instanceof Number) {
+            return Number(orig);
+        }
+        if (orig instanceof Boolean) {
+            return Boolean(orig);
+        }
+
+        /*
+			Honor native clone methods.
+		*/
+        if (typeof orig.clone === 'function') {
+            return orig.clone(true);
+        }
+        if (orig.nodeType && typeof orig.cloneNode === 'function') {
+            return orig.cloneNode(true);
+        }
+
+        /**
+		 *  handle function
+		 */
+        if (orig instanceof Function) {
+            const copy = function () {
+                return orig.apply(this, arguments);
+            };
+            copy.prototype = orig.prototype;
+            return copy;
+        }
+
+        /*
+			Create a copy of the original object.
+
+			NOTE: Each non-generic object that we wish to support must be
+			explicitly handled below.
+		*/
         let copy;
 
-        // Handle the 3 simple types, and null or undefined
-        if (obj == null || typeof obj != 'object') return obj;
-
-        // Handle Date
-        if (obj instanceof Date) {
-            copy = new Date();
-            copy.setTime(obj.getTime());
-            return copy;
+        // Handle instances of the core supported object types.
+        if (orig instanceof Array) {
+            copy = new Array(orig.length);
+        }
+        else if (orig instanceof Date) {
+            copy = new Date(orig.getTime());
+        }
+        else if (orig instanceof Map) {
+            copy = new Map();
+            orig.forEach((val, key) => copy.set(key, clone(val)));
+        }
+        else if (orig instanceof RegExp) {
+            copy = new RegExp(orig);
+        }
+        else if (orig instanceof Set) {
+            copy = new Set();
+            orig.forEach(val => copy.add(clone(val)));
         }
 
-        // Handle Array
-        if (obj instanceof Array) {
-            copy = [];
-            for (let i = 0, len = obj.length; i < len; i++) {
-                copy[i] = clone(obj[i]);
-            }
-            return copy;
+        // Handle instances of unknown or generic objects.
+        else {
+            // We try to ensure that the returned copy has the same prototype as
+            // the original, but this will probably produce less than satisfactory
+            // results on non-generics.
+            copy = Object.create(Object.getPrototypeOf(orig));
         }
 
-        // Handle Function
-        if (obj instanceof Function) {
-            copy = function () {
-                return obj.apply(this, arguments);
-            };
-            return copy;
-        }
+        /*
+			Duplicate the original object's own enumerable properties, which will
+			include expando properties on non-generic objects.
 
-        // Handle Object
-        if (obj instanceof Object) {
-            copy = {};
-            for (const attr in obj) {
-                if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
-            }
-            return copy;
-        }
+			NOTE: This preserves neither symbol properties nor ES5 property attributes.
+			Neither does the delta coding or serialization code, however, so it's not
+			really an issue at the moment.
+		*/
+        Object.keys(orig).forEach(name => copy[name] = clone(orig[name]));
 
-        throw new Error(`Unable to copy obj as type isn't supported ${obj.constructor.name}`);
+        return copy;
     }
 
     // count an element in a 2d array

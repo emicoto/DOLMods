@@ -42,6 +42,7 @@ window.simpleFrameworks = {
         BeforeLinkZone : [],
         ExtraLinkZone  : [],
         ModShopZone    : [],
+        CustomImgLayer : [],
 
         iModDone         : [],
         iModReady        : [],

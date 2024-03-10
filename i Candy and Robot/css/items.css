@@ -133,7 +133,7 @@
     border-radius: 10px;
     padding: 1.2em;
     box-shadow: 6px 10px 8px 5px rgb(0 0 0 / 30%);
-    z-index: 10001;
+    z-index: 1001;
     backdrop-filter: blur(6px);
 }
 

@@ -4,10 +4,37 @@
 
 const htmlTools = {
     /**
-     * @description append a new div with id extraContent before the first image or link in div passage-content
+     * @description append a new div with id before the first image or link in div passage-content
      * @param {string} eId
+     * @returns {HTMLElement}
+     * @example
+     * appendPatch('<<anywidget>>')
+     * will append a new div with id extraContent and content <<anywidget>>
+     *
+     * appendPatch('myContent', '<<anywidget>>')
+     * 'myContent' is the id of the new div, and <<anywidget>> is the content
+     *
+     * appendPatch()
+     * will just append a new div with id 'extraContent'
      */
-    appendPatch(eId = 'patchContent') {
+    appendPatch(/** eId,  content */) {
+        let eId;
+        let content = '';
+
+        switch (arguments.length) {
+        case 0:
+            eId = 'extraContent';
+            break;
+        case 1:
+            eId = 'extraContent';
+            content = arguments[0];
+            break;
+        default:
+            eId = arguments[0];
+            content = arguments[1];
+            break;
+        }
+
         // if has icon image, then find the first image in div passage-content, else find the first link
         let element = document.querySelector('#passage-content img');
         if (!element) {
@@ -20,14 +47,25 @@ const htmlTools = {
 
         // insert the new div before the element
         element.parentNode.insertBefore(div, element);
+        new Wikifier(null, `<<append "#${eId}">>${content}<</append>>`);
+
+        return div;
     },
 
     /**
      * @description replace the oldlink with newlink
-     * @param {string | string[]} oldlink
+     * @param {string | language} oldlink
      * @param {string} newlink
+     * @returns {HTMLElement}
+     * @example
+     * replaceLink('oldlink', '<<link newlink>><</link>>')
+     * replacelink({CN:'旧链接', EN:'oldlink'}, '<<link newlink>><</link>>')
     */
     replaceLink(oldlink, newlink) {
+        if (typeof oldlink == 'object') {
+            oldlink = lanSwitch(oldlink);
+        }
+
         // find the oldlink in elements
         const links = document.getElementsByClassName('macro-link');
         let elements;
@@ -48,19 +86,38 @@ const htmlTools = {
 
         // wikifier the newlink
         new Wikifier(null, `<<replace "#patchlink">>${newlink}<</replace>>`);
+
+        return newlinkPatch;
     },
 
     /**
-     * @description append content before certain link
+     * @description insert content before/after certain link
+     * @param {'before' | 'after'} position;
+     * @param {string} eId;
      * @param {string | language} link;
      * @param {string} content;
+     * @returns {HTMLElement}
+     * @example
+     * insertToLink({link: 'linktext', content:'<<anywidget>>'})
+     * //will insert a new div with content before the certain link
+     * //the default id of new div is 'patchContent'
+     *
+     * insertToLink({pos: 'after', link: 'linktext', content:'<<anywidget>>'})
+     * //will insert a new div with content after the certain link
+     *
+     * insertToLink({eId: 'myContent', link: 'linktext', content:'<<anywidget>>'})
+     * //'myContent' is the id of the new div
      */
-    appendBeforeLink(link, content) {
+    insertToLink(options) {
+        if (typeof options.link == 'object') {
+            link = lanSwitch(options.link);
+        }
+
         const doc = document.getElementById('passage-content');
         const links = doc.getElementsByClassName('macro-link');
         let element;
         for (let i = 0; i < links.length; i++) {
-            if (links[i].innerHTML.has(link)) {
+            if (links[i].innerHTML.has(options.link)) {
                 element = links[i];
                 break;
             }
@@ -69,17 +126,37 @@ const htmlTools = {
 
         // append content before the element
         const div = document.createElement('div');
-        div.id = 'patchContent';
-        doc.insertBefore(div, element);
+        div.id = options.eId ?? 'patchContent';
+
+        let pos = 'beforebegin';
+        if (options.pos == 'after') {
+            pos = 'afterend';
+        }
+
+        // if position is before then check the link previous sibling is image or not
+        // if so then insert before the image
+        if (pos == 'beforebegin') {
+            if (element.previousElementSibling.tagName == 'IMG') {
+                element = element.previousElementSibling;
+            }
+        }
+
+        element.insertAdjacentElement(pos, div);
 
         // wikifier the content
-        new Wikifier(null, `<<append "#patchContent">>${content}<</append>>`);
+        new Wikifier(null, `<<append "#patchContent">>${options.content ?? ''}<</append>>`);
+
+        return div;
     },
 
     /**
      * @description replace text at TEXT_NODE
      * @param {string | language} oldtext
-     * @param {string} newtext
+     * @param {string | language} newtext
+     * @example
+     * replaceText('oldtext', 'newtext')
+     * replaceText({CN:'旧文本', EN:'oldtext'}, 'newtext')
+     * replaceText('oldtext', {CN:'新文本', EN:'newtext'})
      */
     replaceText(oldtext, newtext) {
         const doc = document.getElementById('passage-content');
@@ -88,6 +165,10 @@ const htmlTools = {
 
         if (typeof oldtext == 'object') {
             oldtext = lanSwitch(oldtext);
+        }
+
+        if (typeof newtext == 'object') {
+            newtext = lanSwitch(newtext);
         }
 
         for (let i = 0; i < textNodes.length; i++) {

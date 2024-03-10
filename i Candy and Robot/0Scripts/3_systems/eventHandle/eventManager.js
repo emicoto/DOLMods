@@ -687,14 +687,14 @@ const iEvent = (() => {
                 return;
             }
 
-            // if the stage is match but is chara event and the chara location is not match78//////
+            // if the stage is match but is chara event and the chara location is not match
             if (data.entryPoint == 'chara') {
                 if (scene.data.location && scene.data.location.includes(iMap.currentLoc()) == false) {
                     console.warn('event handle system on fix, the chara location is not match:', scene, passage);
                     this.unset('fix');
                 }
 
-                const charaLocation = iChara.currentLoc();
+                const charaLocation = iChara.currentLoc(data.seriesId);
                 if (charaLocation && charaLocation !== iMap.currentLoc()) {
                     console.warn('event handle system on fix, the chara location is not match:', scene, passage);
                     this.unset('fix');
@@ -870,7 +870,7 @@ const iEvent = (() => {
             );
 
             // get local characters
-            iChara.initLocal();
+            iChara.updateLocation();
 
             const event = [];
             // check local events

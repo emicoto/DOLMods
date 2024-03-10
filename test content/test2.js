@@ -83,3 +83,9 @@ function testCombat() {
 }
 
 DefineMacroS('testCombat', testCombat);
+
+
+prehistory.before = function (task) {
+    console.log('running at prehistory.before');
+    console.log('before passage:', this, task, passage());
+};
