@@ -79,10 +79,16 @@ const CustomPopup = (() => {
         showPopup();
     }
 
+    function setPopup(content) {
+        drawPopup('', content);
+        showPopup();
+    }
+
     return Object.freeze({
-        set   : createPopup,
-        draw  : drawPopup,
-        close : destroyPopup,
+        set    : setPopup,
+        create : createPopup,
+        draw   : drawPopup,
+        close  : destroyPopup,
 
         show : showPopup,
         hide : hidePopup,
