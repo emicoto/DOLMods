@@ -11,10 +11,18 @@ const iEvent = (() => {
     const database = {
         events : {
             chara : {},
-            scene : {},
+            scene : {
+                common : new SeriesData('common', 'scene')
+            },
     
-            time  : {},
-            state : {},
+            time : {
+                common : new SeriesData('common', 'time')
+            },
+            state : {
+                common     : new SeriesData('common', 'state'),
+                maxstress  : new SeriesData('maxstress', 'state'),
+                maxarousal : new SeriesData('maxarousal', 'state')
+            },
     
             passage : {}
         },
@@ -824,27 +832,63 @@ const iEvent = (() => {
     //  Event Cycle
     //
     //---------------------------------------------
+    /**
+     *
+     * @param {string[]} flagfields
+     */
+    function getFlagField(flagfields) {
+        const flags = {};
+        if (!flagfields || flagfields.length == 0) return flags;
+
+        for (const field of flagfields) {
+            flags[field] = shortcuts.getFlag(field);
+        }
+        return flags;
+    }
+
     const lifeCycle = {
+        env   : null,
+        tv    : null,
+        map   : null,
+        chara : null,
+
+        init(env, tvar, map, chara) {
+            this.env = env;
+            this.tv = tvar;
+            this.map = map;
+            this.chara = chara;
+        },
+
         /**
          * @description init stage
          * @param {Passage} psg
          */
         initStage(passage) {
+            const env = this.env;
+            
             if (passage.tags.includes('stage')) {
                 const tags = passage.title.split(' ');
-                V.stage = tags[1];
+                env.stage = tags[1];
                 if (tags[0] == 'MainStage') {
-                    V.mainStage = tags[1];
+                    env.mainStage = tags[1];
                 }
+            }
+            else if (this.tv.scene?.start) {
+                // keep the current stage when the event is running
             }
             else {
                 // record the available previous stage
-                if (V.stage) {
-                    V.prevStage = V.stage;
+                if (env.stage) {
+                    env.prevStage = env.stage;
                 }
-                V.stage = undefined;
+                env.stage = undefined;
+
+                // reset the mainstage when out of the stage
+                if (passage.title.has('Stage', 'Scene') == false) {
+                    env.mainStage = undefined;
+                }
             }
-            console.log('initStage:', V.stage, passage);
+            console.log('initStage:', env.stage, passage);
         },
 
         /**
@@ -855,18 +899,20 @@ const iEvent = (() => {
          */
         main(lastPsg, psg) {
             if (psg.title == 'Start') return;
+            const env = this.env;
+            const tv = this.tv;
 
             this.initStage(psg);
 
             // if already in the event, return;
-            if (Tvar.scene?.start || V.combat == 1) return;
+            if (tv?.scene?.start || env.combat == 1) return;
             
             console.log(
                 'event handle system on main cycle on passage init.\n',
                 'passage:',psg.title,
                 'prev passage:', lastPsg.title,
-                'cutrent stage:', V.stage,
-                'temp vars:', Tvar
+                'cutrent stage:', env.stage,
+                'temp vars:', tv
             );
 
             // get local characters
@@ -876,11 +922,14 @@ const iEvent = (() => {
             // check local events
             event.push(this.onState(lastPsg));
 
+            event.push(this.onTime(lastPsg));
+
             if (psg.tags.has('stage', 'scene')) {
-                event.push(this.onScene(psg));
+                event.push(this.onScene());
             }
 
-            event.push(this.onPassage(psg));
+            event.push(this.onPassage(psg.title));
+
 
             // if has event, then set the event
             for (const e of event) {
@@ -911,11 +960,170 @@ const iEvent = (() => {
             this.onLink(passage);
         },
 
-        time() {
-            const psg = Story.get(passage());
-
+        // check the time pass event;
+        onTime(lastPsg) {
             // get the time events
-            this.onTime(psg);
+            const events = getData('time', 'common').events;
+            const timeState = this.tv.timeState;
+
+            if (timeState.passTime <= 10) {
+                return;
+            }
+
+            for (const event of events) {
+                const flag = getFlagField(event.flagfields);
+                if (event.cond(lastPsg, timeState, flag)) {
+                    return sceneHandle.set(event, lastPsg);
+                }
+            }
+        },
+
+        onState(passage) {
+            const env = this.env;
+            /**
+             * @type {SeriesData}
+             */
+            const passout = getData('state', 'maxstress');
+            for (const event of passout.events) {
+                const flag = getFlagField(event.flagfields);
+                if (env.stress >= env.stressmax && event.cond(passage, flag)) {
+                    return event;
+                }
+            }
+
+            /**
+             * @type {SeriesData}
+             */
+            const maxarousal = getData('state', 'maxarousal');
+            for (const event of maxarousal.events) {
+                const flag = getFlagField(event.flagfields);
+                if (env.arousal >= env.arousalmax && event.cond(passage, flag)) {
+                    return event;
+                }
+            }
+
+            /**
+             * @type {SeriesData}
+             */
+            const state = getData('state', 'common');
+            for (const event of state.events) {
+                const flag = getFlagField(event.flagfields);
+                if (event.cond(passage, flag)) {
+                    return event;
+                }
+            }
+        },
+
+        onScene() {
+            const scene = getData('scene', this.env.stage);
+            if (!scene) {
+                return;
+            }
+
+            for (const series in scene) {
+                const data = scene[series];
+                for (const event of data.events) {
+                    const flag = getFlagField(event.flagfields);
+                    if (event.cond(flag)) {
+                        return event;
+                    }
+                }
+            }
+        },
+        /**
+         * @param {string} passage
+         * @returns {SceneData}
+         */
+        onPassage(passage) {
+            const series = getData('passage', passage);
+            if (!series) {
+                return;
+            }
+
+            for (const event of series.events) {
+                const flag = getFlagField(event.flagfields);
+                if (event.cond(flag)) {
+                    return event;
+                }
+            }
+        },
+
+        onPatch(passage) {
+            const patch = database.patch[passage.title];
+            if (!patch || patch.length === 0) return;
+            let i = 0;
+            for (const data of patch) {
+                // if has action, then run the patch action
+                if (typeof data.action == 'function') {
+                    data.action();
+                    continue;
+                }
+
+                // otherwise apply the patch content
+                const html = typeof data.content == 'function' ? data.content() : data.content;
+                let eid;
+
+                switch (data.position) {
+                case 'beforeLink':
+                    eid = 'patchA';
+                    htmlTools.append('before', 'patchA');
+                    break;
+                case 'afterLink':
+                    eid = 'patchB';
+                    htmlTools.append('after', 'patchB');
+                    break;
+                case 'beforeContent':
+                    eid = 'patchC';
+                    htmlTools.append('beforemain', 'patchC');
+                    break;
+                case 'afterContent':
+                    eid = 'patchD';
+                    htmlTools.append('aftermain', 'patchD');
+                    break;
+                default:
+                    eid = 'patchNode';
+                    break;
+                }
+
+                if (eid !== 'patchNode') {
+                    new Wikifier(null, `<<append #${eid}>>${html}<</append>>`);
+                }
+                else {
+                    const option = {
+                        link    : data.node,
+                        content : html,
+                        pos     : data.position == 'beforeNode' ? 'before' : 'after',
+                        eid     : `patchNode_${i}`
+                    };
+                    htmlTools.insertToLink(option);
+                }
+
+                i++;
+            }
+        },
+
+        onChara(passage) {
+            const env = this.env;
+            const chara = this.chara;
+            // if already in the event, return;
+            if (this.tv.scene?.start || env.combat == 1 || env.phase !== 0) return;
+
+            // check the local chara
+            const local = chara.getLocalChara();
+            if (local.length == 0) return;
+
+            for (const charaId of local) {
+                const actions = chara.getAction(charaId);
+                const data = chara.getData(charaId);
+                if (!actions) continue;
+
+                for (const act of actions) {
+                    const flag = getFlagField(act.flagfields);
+                    if (act.cond(passage, data, flag)) {
+                        chara.setAction(charaId, act);
+                    }
+                }
+            }
         }
     };
 
@@ -930,7 +1138,7 @@ const iEvent = (() => {
         getFlag  : { value : shortcuts.getFlag },
         addFlag  : { value : shortcuts.addFlag },
 
-        chekcer   : { value : checker },
+        checker   : { value : checker },
         onPatch   : { value : onPatch },
         playScene : { value : playScene },
 

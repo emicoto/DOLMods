@@ -23,7 +23,8 @@
     "scripts/simpleMacros.js",
     "scripts/NamedNPC.js",
     "scripts/onSetup.js",
-    "scripts/CNCodeResolver.js"
+    "scripts/CNCodeResolver.js",
+    "scripts/customUI.js"
   ],
   "tweeFileList": [],
   "imgFileList": [],
@@ -48,5 +49,5 @@
       "version": "^1.0.0"
     }
   ],
-  "build": "2"
+  "build": "3"
 }

@@ -105,8 +105,8 @@ regist.onTime('common')
         new SceneData()
     );
 
-// 状态变化时触发的事件，不特定状态时，都加到common里
-regist.onState('stateType')
+// 状态变化时触发的事件, 状态事件只有maxstress, common。
+regist.onState('common')
     .add(
         // Eventlist
         new SceneData()
@@ -175,3 +175,15 @@ regist.onPassage('common')
                 flag.rumorstoday++;
             })
     );
+
+regist.patchTo('passageName')
+    .add(
+        {
+            content  : 'a whole new content.', // the content to replace, could be string or function
+            position : '', // beforeContent, afterContent, beforeLink, afterLink, beforeNode, afterNode
+            node     : 'linkname', // the name of link show at html, could be string or language object
+            action   : function () {
+                // the action to do when the patch is applied
+            }
+        }
+    )

@@ -17,39 +17,82 @@ const htmlTools = {
      * appendPatch()
      * will just append a new div with id 'extraContent'
      */
-    appendPatch(/** eId,  content */) {
+    appendPatch(pos, ...args) {
         let eId;
         let content = '';
 
-        switch (arguments.length) {
+        switch (args.length) {
         case 0:
             eId = 'extraContent';
             break;
         case 1:
             eId = 'extraContent';
-            content = arguments[0];
+            content = args[0];
             break;
         default:
-            eId = arguments[0];
-            content = arguments[1];
+            eId = args[0];
+            content = args[1];
             break;
         }
 
-        // if has icon image, then find the first image in div passage-content, else find the first link
-        let element = document.querySelector('#passage-content img');
-        if (!element) {
-            element = document.querySelector('#passage-content a');
+        if (pos == 'before') {
+            // find the first image in div passage-content, else find the first link
+            let element = document.querySelector('#passage-content .macro-link');
+            // check if has image before link
+            if (element && element.previousElementSibling.tagName == 'IMG') {
+                element = element.previousElementSibling;
+            }
+
+            // make a new div with id extraContent
+            const div = document.createElement('div');
+            div.id = eId;
+
+            // insert the new div before the element
+            element.insertAdjacentElement('beforebegin', div);
+            new Wikifier(null, `<<append "#${eId}">>${content}<</append>>`);
+
+            return div;
         }
 
-        // make a new div with id extraContent
+        // if position is after, then find the last link in div passage-content
+        const dom = document.getElementById('passage-content');
+        const links = dom.getElementsByClassName('macro-link');
+        const element = links[links.length - 1];
+        
         const div = document.createElement('div');
         div.id = eId;
-
-        // insert the new div before the element
-        element.parentNode.insertBefore(div, element);
+        element.insertAdjacentElement('afterend', div);
         new Wikifier(null, `<<append "#${eId}">>${content}<</append>>`);
 
         return div;
+    },
+
+    append(pos, eId) {
+        let element = document.getElementById(eId);
+        if (element) {
+            return element;
+        }
+
+        switch (pos) {
+        case 'before':
+            element = this.appendPatch(pos, eId);
+            break;
+        case 'after':
+            element = this.appendPatch(pos, eId);
+            break;
+        case 'beforemain':
+            element = document.createElement('div');
+            element.id = eId;
+            document.getElementById('passage-content').insertAdjacentElement('afterbegin', element);
+            break;
+        case 'aftermain':
+            element = document.createElement('div');
+            element.id = eId;
+            document.getElementById('passage-content').insertAdjacentElement('beforeend', element);
+            break;
+        }
+
+        return element;
     },
 
     /**
@@ -124,9 +167,14 @@ const htmlTools = {
         }
         if (!element) return;
 
-        // append content before the element
-        const div = document.createElement('div');
-        div.id = options.eId ?? 'patchContent';
+        // check div if already exist, if not then create a new one
+        let div = document.getElementById(options.eId);
+        const eID = options.eId ?? 'patchContent';
+        
+        if (!div) {
+            div = document.createElement('div');
+            div.id = eID;
+        }
 
         let pos = 'beforebegin';
         if (options.pos == 'after') {
@@ -144,7 +192,7 @@ const htmlTools = {
         element.insertAdjacentElement(pos, div);
 
         // wikifier the content
-        new Wikifier(null, `<<append "#patchContent">>${options.content ?? ''}<</append>>`);
+        new Wikifier(null, `<<append "#${eID}">>${options.content ?? ''}<</append>>`);
 
         return div;
     },
