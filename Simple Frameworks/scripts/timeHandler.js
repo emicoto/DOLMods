@@ -106,19 +106,22 @@ Time.pass = function (passtime) {
     // initialize the time data
     const prevDate = new DateTime(V.startDate + V.timeStamp);
     const passData = Object.seal({
-        passed : passtime,
+        passed    : passtime,
+        timeStamp : V.timeStamp,
+
         prev   : Object.freeze(prevDate),
         option : {},
 
         current() {
             let passed = this.passed;
-            console.log('passed:', passed);
+            const stamp = this.timeStamp;
+            console.log('passed:', passed, 'stamp:', stamp);
 
             if (typeof passed !== 'number' || isNaN(passed)) {
                 passed = 0;
             }
 
-            return new DateTime(V.startDate + V.timeStamp + passed);
+            return new DateTime(V.startDate + stamp + passed);
         }
     });
     TimeHandle.passData = passData;
