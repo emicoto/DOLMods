@@ -17,6 +17,12 @@ const TimeHandle = {
         onAfter  : []
     },
 
+    /**
+     * @description calculate the total passed days of the month
+     * @param {number} current
+     * @param {number} passed
+     * @returns {number}
+     */
     monthDays(current, passed) {
         const monthDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         let days = monthDay[current - 1];
@@ -32,11 +38,18 @@ const TimeHandle = {
         return days;
     },
 
+    /**
+     * @description calculate the total passed time
+     * @param {DateTime} prev
+     * @param {DateTime} current
+     * @param {number} passedSec
+     * @returns {{passed:number, sec:number, min:number, hour:number, day:number, month:number, year:number, weekday:number[]}}
+     */
     passTime(prev, current, passedSec) {
         this.prevDate = prev;
         this.currentDate = current;
 
-        const sec = passedSec % 60;
+        const sec = passedSec;
 
         // calculate total passed minutes
         let min = current.minute - prev.minute;
@@ -101,6 +114,11 @@ const TimeHandle = {
         }
     },
 
+    /**
+     * @description forward or backward the time
+     * @param {{min:number, hour:number, day:number, month:number, year:nun=mber}} option
+     * @param {boolean} backward
+     */
     timeTravel(option,  backward = false) {
         const { min = 0, hour = 0, day = 0, month = 0, year = 0 } = option;
         let passed = min * 60 + hour * 3600 + day * 86400 + month * 2592000 + year * 31536000;
