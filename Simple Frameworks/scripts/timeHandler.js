@@ -99,6 +99,21 @@ const TimeHandle = {
 
             eventData.func(timeData);
         }
+    },
+
+    timeTravel(option,  backward = false) {
+        const { min = 0, hour = 0, day = 0, month = 0, year = 0 } = option;
+        let passed = min * 60 + hour * 3600 + day * 86400 + month * 2592000 + year * 31536000;
+        if (backward) {
+            passed = -passed;
+        }
+
+        let stamp = V.timeStamp + passed;
+        if (stamp < 0) {
+            stamp = 0;
+        }
+
+        Time.set(stamp);
     }
 };
 
