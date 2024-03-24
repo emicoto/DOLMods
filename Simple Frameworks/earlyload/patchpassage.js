@@ -14,7 +14,7 @@
         PassageHeader : [
             {
                 src : '<<unset $bypassHeader>>',
-                to  : "<<unset $bypassHeader>>\n<div id='headerPopUp'></div><<iModHeader>>"
+                to  : "<<unset $bypassHeader>>\n<div id='headerMsg'></div><<iModHeader>>"
             }
         ],
         PassageFooter : [
@@ -1250,7 +1250,7 @@
         ],
         overlayReplace : [
             {
-                src : '</div>\n\t<<closeButton>>\n<</widget>>\n\n<<widget \"titleSaves\">>',
+                src : '</div>\n\t<<closeButton>>\n<</widget>>\n\n<<widget "titleSaves">>',
                 to  : '\t\t<<button lanSwitch(\'Mods\', \'模组设置\')>>\n\t\t<<toggleTab>>\n\t\t<<replace #customOverlayContent>><<iModOptions>><</replace>>\n\t\t<</button>>\n\n</div>\n\t<<closeButton>>\n<</widget>>\n\n<<widget "titleSaves">>'
             },
             {
@@ -1305,8 +1305,7 @@
         'Widgets Named Npcs' : [
             {
                 src : '<<relationshiptext>>',
-                // eslint-disable-next-line no-template-curly-in-string
-                to  : '<<set _wname to $NPCName[_i].nam.replace(/s/g, "")>>\n\n<<if SugarCube.Macro.has(_wname + "Opinion")>>\n\t\t<<ModaddNPCRelationText>>\n\t<<else>>\n\t\t<<relationshiptext>>\n\t<</if>>\n\t<<if SugarCube.Macro.has(_wname+"OpinionIcon")>>\n\t\t<<ModOpinionIcon `$NPCName[_i].nam`>>\n\t<</if>>'
+                to  : '<<ModRelationshipText $NPCName[_i].nam>>'
             }
         ],
         Widgets : [
@@ -1736,7 +1735,6 @@
         else {
             patchScene(passage, title);
             patchPassage(passage, title);
-            patchLocationTag(passage, title);
         }
     }
 	
@@ -1775,14 +1773,6 @@
 	<<print '<<'+_key+'>>'>>
 <</widget>>
 
-<<widget "ModOpinionIcon">>
-    <<set _widget to $args[0].replace(/\\s/g, '')>>
-    <<run console.log($args[0], _widget)>>
-    <<if SugarCube.Macro.has(_widget+'OpinionIcon')>>
-        <<print '<<'+_widget+'OpinionIcon>>'>>
-    <</if>>
-<</widget>>
-
 <<widget "iModSettingsButton">>
     <div id='modSettingButton' @class="_selectedSettings is 'mods' ? 'gold buttonStartSelected' : 'buttonStart'" >
     <<button "Mod Settings">>
@@ -1796,7 +1786,9 @@
 
 <<widget "ModaddNPCRelationText">>
 <<print C.npc[_npc].description>>
-<<set _widget to _npc.replace(/\\s/g, '')>>
+<<set _widget to _npc.replace(' ', '')>>
+<<run console.log('npc mod relation text:', _widget, _npc)>>
+
 <<if SugarCube.Macro.has(_widget+'Opinion')>>
     <<print '<<'+_widget+'Opinion>>'>>
 <<else>>

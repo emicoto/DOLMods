@@ -1,6 +1,6 @@
 const oldPass = Time.pass;
 
-const TimeHandle = {
+const timeRec = {
     prevDate    : {},
     currentDate : {},
     passTime(pass) {
@@ -422,7 +422,7 @@ function timeEffectHandle() {
 }
 
 Object.defineProperties(window.iCandy, {
-    timeRec       : { value : TimeHandle, writable : false },
+    timeRec       : { value : timeRec, writable : false },
     timeHandle    : { value : iTimeHandle, writable : false },
     minuteProcess : { value : minuteProcess, writable : false },
     hourProcess   : { value : hourProcess, writable : false },
@@ -432,5 +432,5 @@ Object.defineProperties(window.iCandy, {
 });
 
 Object.defineProperties(window, {
-    timeRec : { value : TimeHandle, writable : false }
+    timeRec : { value : timeRec, writable : false }
 });

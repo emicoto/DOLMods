@@ -97,8 +97,61 @@ const CustomPopup = (() => {
     });
 })();
 
-Object.defineProperty(window, 'CustomPopup', {
-    value    : CustomPopup,
-    writable : false
+const HeaderMsg = (() => {
+    let _Msglogs = [];
+
+    function clearLogs() {
+        _Msglogs = [];
+    }
+
+    function addLog(log) {
+        _Msglogs.push(log);
+    }
+
+    function print() {
+        if (_Msglogs.length === 0) return '';
+        return _Msglogs.join('<br>\n');
+    }
+
+    function append() {
+        const msgdiv = document.createElement('div');
+        msgdiv.id = 'headerMsg';
+
+        document.getElementById('passage-content').insertAdjacentElement('afterbegin', msgdiv);
+    }
+
+    function show() {
+        const header = document.getElementById('headerMsg');
+        if (!header) append();
+
+        const html = print();
+
+        new Wikifier(null, `<<replace "#headerMsg" transition>>${html}<</replace>>`);
+    }
+
+    return Object.freeze({
+        get logs() {
+            return _Msglogs;
+        },
+
+        add   : addLog,
+        clear : clearLogs,
+        show
+    });
+})();
+
+
+Object.defineProperties(window, {
+    CustomPopup : { get : () => CustomPopup },
+    HeaderMsg   : { get : () => HeaderMsg }
 });
 
+
+$(document).on(':passageend', () => {
+    if (HeaderMsg.logs.length > 0) {
+        HeaderMsg.show();
+        HeaderMsg.clear();
+    }
+});
+
+DefineMacroS('addHeaderMsg', HeaderMsg.add);

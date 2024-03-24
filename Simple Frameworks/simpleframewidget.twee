@@ -181,6 +181,21 @@
 <</if>>
 <</widget>>
 
+<<widget "ModRelationshipText">>
+<<set _wname to $args[0].replace(/s/g, "")>>
+<<run console.log('call from relationship text',_wname, $args[0])>>
+
+<<if SugarCube.Macro.has(_wname + "Opinion")>>
+    <<ModaddNPCRelationText>>
+<<else>>
+    <<relationshiptext>>
+<</if>>
+
+<<if SugarCube.Macro.has(_wname+"OpinionIcon")>>
+    <<ModOpinionIcon $NPCName[_i].nam>>
+<</if>>
+<</widget>>
+
 <<widget "ModOpinionIcon">>
 <<if SugarCube.Macro.has($args[0]+'OpinionIcon')>>
     <<print '<<'+$args[0]+'OpinionIcon>>'>>

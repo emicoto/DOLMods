@@ -1,6 +1,6 @@
 {
   "name": "Simple Frameworks",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "modPacker": {
     "modVersionJs": {
       "file": "lib/simplewidget.js",
@@ -21,6 +21,7 @@
   ],
   "scriptFileList": [
     "scripts/simpleMacros.js",
+    "scripts/timeHandler.js",
     "scripts/NamedNPC.js",
     "scripts/onSetup.js",
     "scripts/CNCodeResolver.js",

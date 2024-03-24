@@ -121,6 +121,30 @@ function sexSwitch(npc, female, male) {
 window.sexSwitch = sexSwitch;
 DefineMacroS('sexSwitch', sexSwitch);
 
+function relationshipTextHook(npcnam) {
+    const wname = npcnam.replace(/\s/g, '').replace(' ', '');
+    const widget = `${wname}Opinion`;
+    const widgetIcon = `${wname}OpinionIcon`;
+
+    console.log('call from relationship text hook:',npcnam, wname);
+    console.log('widgets:', widget, Macro.has(widget), Macro.has(widgetIcon), widgetIcon);
+
+    let text = '<<relationshiptext>>';
+
+    if (Macro.has(widget)) {
+        text = `<<ModaddNPCRelationText ${npcnam}>>`;
+    }
+
+    if (Macro.has(widgetIcon)) {
+        text += `<<${widgetIcon}>>`;
+    }
+
+    console.log('relationship text:', text);
+
+    return text;
+}
+DefineMacroS('ModRelationshipText', relationshipTextHook);
+
 /**
  * Retrieves the language-specific pronoun for a given non-player character (NPC) or player.
  *
