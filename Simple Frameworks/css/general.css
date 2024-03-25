@@ -103,3 +103,9 @@
     padding-top: 6px;
     overflow-y: auto;
 }
+
+.CustomLocation {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}

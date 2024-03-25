@@ -2,3 +2,4 @@
 
         <<case "almond_path" "chinatown" "shingwong" "institute" >>
             <img id="location" @src="_imgLoc +  _weather_display + '/'+ $location + _dayState + '.png' ">
+9

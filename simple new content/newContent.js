@@ -13,6 +13,7 @@ simpleFrameworks.addto('iModOptions', 'myOptionsA', 'myOptionsB', 'myOptionsC');
 simpleFrameworks.addto('ModCaptionDescription', 'TestCaption');
 simpleFrameworks.addto('ModCaptionAfterDescription', 'TestCaptionAfter');
 simpleFrameworks.addto('iModReady', 'newMoney');
+simpleFrameworks.addto('CustomImgLayer', 'testLocation');
 /*
 simpleFrameworks.addto('iModFooter', {
     passage:'Start', //set what passage your widget will show up

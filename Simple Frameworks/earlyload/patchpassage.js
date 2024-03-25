@@ -26,7 +26,7 @@
         StoryCaption : [
             {
                 src   : '<<img>>',
-                after : '\n\n\t\t<<CustomImgLayer>>\n'
+                applyafter : '\n\n\t\t<<CustomImgLayer>>\n'
             },
             {
                 src : '<<schoolday>>\n\t\t<br>',
@@ -1782,6 +1782,14 @@
         <<replace #settingsExit>><<settingsExit>><</replace>>
     <</button>>
     </div>
+<</widget>>
+
+<<widget "ModLocationIMG">>
+<<if setup.ModLocationPNG.includes($location)>>
+<img id='location' class='CustomLocation' @src="_imgLoc + _weather_display + '/$location' + _dayState + '.png'">
+<<elseif setup.ModLocationGIF.includes($location)>>
+<img id='location' class='CustomLocation' @src="_imgLoc + _weather_display + '/$location' + _dayState + '.gif'">
+<</if>>
 <</widget>>
 
 <<widget "ModaddNPCRelationText">>

@@ -1,4 +1,4 @@
-const frameworkversion = "1.13.0"
+const frameworkversion = "1.13.1"
 
 window.simpleFrameworks = {
     version    : frameworkversion,
@@ -136,7 +136,8 @@ window.simpleFrameworks = {
 )>></i>
 </div>
 <hr>
-`
+`,
+        CustomImgLayer : () => '\n<<ModLocationIMG>>',
     },
 
     // eslint-disable-next-line require-await

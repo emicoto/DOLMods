@@ -71,3 +71,9 @@ setup your UIBar
 		<img scr='img/opinionIcon/robin.png'>
 	<</if>>
 <</widget>>
+
+<<widget 'testLocation'>>
+<<if $location is 'domus'>>
+	<img id="location" class="CustomLocation" @src="_imgLoc + _weather_display + '/almond_path' + _dayState + '.png'">
+<</if>>
+<</widget>>

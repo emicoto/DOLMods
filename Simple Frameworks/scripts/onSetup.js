@@ -63,6 +63,9 @@ setup.dolbus = [
     'lakebus'
 ];
 
+setup.ModLocationPNG = [];
+setup.ModLocationGIF = [];
+
 const lancheck = setInterval(() => {
     if (typeof setup !== 'object') { return; }
 
