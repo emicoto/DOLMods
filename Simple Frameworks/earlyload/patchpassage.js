@@ -1793,7 +1793,7 @@
 <</widget>>
 
 <<widget "ModaddNPCRelationText">>
-<<print C.npc[_npc].description>>
+<<print C.npc[_npc].displayname>>
 <<set _widget to _npc.replace(' ', '')>>
 <<run console.log('npc mod relation text:', _widget, _npc)>>
 
