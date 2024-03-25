@@ -46,8 +46,8 @@ const myNpcSetting = {
     },
 
     Sampler : {
-        important : () => V.sampler.process > 50, // all those value can set as function check with conditions
-        love      : { displayname : ['Devotion', '忠诚'], requirements : () => V.sample.condition > 50 },
+        important : () => V.sampler?.process > 50, // all those value can set as function check with conditions
+        love      : { displayname : ['Devotion', '忠诚'], requirements : () => V.sample?.condition > 50 },
 
         // also you can just set a boolean for loveInterest, make your npc is important but disable the selection from love interest
         loveInterest : false

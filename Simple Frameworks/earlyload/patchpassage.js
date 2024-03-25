@@ -1400,12 +1400,14 @@
         }
         return source;
     };
+
     const applymatch = function (source, matcher, set) {
         if (source.match(matcher) == null) return source;
 		
         const [txt, txt1] = source.match(matcher);
         return applysrc(source, txt, set);
     };
+
     const applygroup = function (source, srctxt, set) {
         if (set.to) {
             source = source.split(srctxt).join(set.to);
@@ -1419,6 +1421,53 @@
         return source;
     };
 
+    const matchAndApply = function (set, source, title) {
+        if (set.src && source.includes(set.src)) {
+            source = applysrc(source, set.src, set);
+        }
+        else if (set.src) {
+            console.warn('match failed:', set.src, title);
+        }
+        if (set.srcmatch && source.match(set.srcmatch)) {
+            source = applymatch(source, set.srcmatch, set);
+        }
+        else if (set.srcmatch) {
+            console.warn('match failed:', set.srcmatch, title);
+        }
+
+        if (set.srcmatchgroup && source.match(set.srcmatchgroup)) {
+            const txt = source.match(set.srcmatchgroup);
+            if (txt.length > 0) {
+                for (let i = 0; i < txt.length; i++) {
+                    const text = txt[i];
+                    if (set.find) {
+                        const res = applysrc(text, set.find, set);
+                        source = source.replace(text, res);
+                    }
+                    else if (set.findmatch) {
+                        const [txt1, txt2] = text.match(set.findmatch);
+                        const res = applysrc(txt[i], txt1, set);
+                        source = source.replace(text, res);
+                    }
+                    else {
+                        source = applysrc(source, text, set);
+                    }
+                }
+            }
+        }
+        else if (set.srcmatchgroup) {
+            console.warn('match failed:', set.srcmatchgroup, title);
+        }
+        if (set.srcgroup && source.includes(set.srcgroup)) {
+            source = applygroup(source, set.srcgroup, set);
+        }
+        else if (set.srcgroup) {
+            console.warn('match failed:', set.srcgroup, title);
+        }
+
+        return source;
+    };
+
     // 能批处理的批处理。街道和地点，以及战斗场景
     function patchScene(passage, title) {
         let source = String(passage.content);
@@ -1426,48 +1475,7 @@
 	
         if (locationPassage[title]) {
             locationPassage[title].forEach(set => {
-                if (set.src && source.includes(set.src)) {
-                    source = applysrc(source, set.src, set);
-                }
-                else if (set.src) {
-                    console.warn('match failed:', set.src, title);
-                }
-                if (set.srcmatch && source.match(set.srcmatch)) {
-                    source = applymatch(source, set.srcmatch, set);
-                }
-                else if (set.srcmatch) {
-                    console.warn('match failed:', set.srcmatch, title);
-                }
-
-                if (set.srcmatchgroup && source.match(set.srcmatchgroup)) {
-                    const txt = source.match(set.srcmatchgroup);
-                    if (txt.length > 0) {
-                        for (let i = 0; i < txt.length; i++) {
-                            const text = txt[i];
-                            if (set.find) {
-                                const res = applysrc(text, set.find, set);
-                                source = source.replace(text, res);
-                            }
-                            else if (set.findmatch) {
-                                const [txt1, txt2] = text.match(set.findmatch);
-                                const res = applysrc(txt[i], txt1, set);
-                                source = source.replace(text, res);
-                            }
-                            else {
-                                source = applysrc(source, text, set);
-                            }
-                        }
-                    }
-                }
-                else if (set.srcmatchgroup) {
-                    console.warn('match failed:', set.srcmatchgroup, title);
-                }
-                if (set.srcgroup && source.includes(set.srcgroup)) {
-                    applygroup(source, set.srcgroup, set);
-                }
-                else if (set.srcgroup) {
-                    console.warn('match failed:', set.srcgroup, title);
-                }
+                source = matchAndApply(set, source, title);
             });
 			
             if (title === 'StoryCaption') {
@@ -1491,7 +1499,7 @@
         }
 	
         if (source.includes('<<streeteffects>>')) {
-            source = source.replace('<<streeteffects>>', '<<streeteffects>>\n<div id=\"addAfterMsg\"></div>');
+            source = source.replace('<<streeteffects>>', '<<streeteffects>>\n<div id="addAfterMsg"></div>');
             patchedPassage[title] = 1;
         }
 	
@@ -1537,6 +1545,7 @@
             source = source.replace('<<masturbationeffects>>', '<<masturbationeffects>>\n\n<div id="addAfterMsg"></div>\n\n');
             patchedPassage[title] = 1;
         }
+        
         passage.content = source;
 	
         return passage;
@@ -1684,7 +1693,7 @@
                 console.warn('match failed:', set.srcmatchgroup, title);
             }
             if (set.srcgroup && source.includes(set.srcgroup)) {
-                applygroup(source, set.srcgroup, set);
+                source = applygroup(source, set.srcgroup, set);
             }
             else if (set.srcgroup) {
                 console.warn('match failed:', set.srcgroup, title);
