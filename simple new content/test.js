@@ -17,3 +17,22 @@ function newMoney() {
 }
 
 DefineMacroS('newMoney', newMoney);
+
+new TimeEvent('onDay', 'NewYear')
+    .Cond(timeData => timeData.current.month === 1 && timeData.current.day === 1)
+    .Action(timeData => {
+        console.log('Happy New Year!', timeData);
+    });
+
+TimeHandle.set('onAfter', {
+    eventId : 'AfterEvent',
+    func(timeData) {
+        // do something after the time pass
+        console.log('After event:', timeData);
+    },
+    cond(timeData) {
+        // check the condition before the event
+        console.log('After event condition:', timeData);
+        return true;
+    }
+});

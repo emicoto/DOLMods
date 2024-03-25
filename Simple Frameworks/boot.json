@@ -5,6 +5,12 @@
     "modVersionJs": {
       "file": "lib/simplewidget.js",
       "regex": "^(const frameworkversion =)(.*)"
+    },
+    "modScriptFolder": {
+      "styleFileList": "css/**/*.css",
+      "scriptFileList": [
+        "scripts/**/*.js"
+      ]
     }
   },
   "scriptFileList_inject_early": [
@@ -20,12 +26,13 @@
     "css/general.css"
   ],
   "scriptFileList": [
-    "scripts/simpleMacros.js",
-    "scripts/timeHandler.js",
-    "scripts/NamedNPC.js",
-    "scripts/onSetup.js",
     "scripts/CNCodeResolver.js",
-    "scripts/customUI.js"
+    "scripts/NamedNPC.js",
+    "scripts/customUI.js",
+    "scripts/domTool.js",
+    "scripts/onSetup.js",
+    "scripts/simpleMacros.js",
+    "scripts/timeHandler.js"
   ],
   "tweeFileList": [],
   "imgFileList": [],
@@ -50,5 +57,5 @@
       "version": "^1.0.0"
     }
   ],
-  "build": "5"
+  "build": "6"
 }

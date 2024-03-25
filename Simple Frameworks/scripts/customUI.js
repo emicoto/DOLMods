@@ -154,4 +154,4 @@ $(document).on(':passageend', () => {
     }
 });
 
-DefineMacroS('addHeaderMsg', HeaderMsg.add);
+DefineMacro('addHeaderMsg', HeaderMsg.add);

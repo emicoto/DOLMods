@@ -13,7 +13,6 @@ NamedNPC.add(
         .setColour('pale', 'brown', 'blond') // no necessary, but if want to set skin/eye/hair color before start, will automaticall set color by vanilla initianazation
         .setPregnancy() // no necessary, but if want to enable their pregnancy before start
         .isImportant() // no necessary, but if want to set as love interest
-    // .isSpecial()  no necessary, but if want to set as hidden npc as Wraith
 );
 
 // also you can add alot at once. dont forget the small comma
@@ -41,7 +40,7 @@ const myNpcSetting = {
     Tester : {
         important    : true,  // set as love interest. also need to set as important when add npc,
         dom          : { name : 'Trust', maxValue : 100, activeIcon : 'img/ui/confidence.png', color : 'blue' },
-        loveInterest : () => V.tester.humanity > 80 && V.tester.emotional > 60 && V.tester.desire > 10
+        loveInterest : () => V.tester?.humanity > 80 && V.tester?.emotional > 60 && V.tester?.desire > 10
         // config the condition of selectable potential love interest.
         // if no config then they will always show up at the selection box
     },

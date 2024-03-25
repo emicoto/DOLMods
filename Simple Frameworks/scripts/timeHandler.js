@@ -84,6 +84,11 @@ const TimeHandle = {
             min = 60 * hour;
         }
 
+        let week = 0;
+        if (day > 0 && current.weekDay <= prev.weekDay) {
+            week = 1 + Math.floor(day / 7);
+        }
+
         return {
             passed  : passedSec,
             sec,
@@ -92,7 +97,8 @@ const TimeHandle = {
             day,
             month,
             year,
-            weekday : [prev.weekDay, current.weekDay]
+            weekday : [prev.weekDay, current.weekDay],
+            week
         };
     },
 
@@ -128,6 +134,7 @@ const TimeHandle = {
 
         let stamp = V.timeStamp + passed;
         if (stamp < 0) {
+            V.startDate += stamp;
             stamp = 0;
         }
 
@@ -185,7 +192,7 @@ Time.pass = function (passtime) {
     timeData.current = currentDate;
     timeData.option = passData.option;
 
-    const { sec, min, hour, day, month, year, weekday } = timeData;
+    const { sec, min, hour, day, month, year, weekday, week } = timeData;
 
     console.log(
         'time handle data:\n',
@@ -226,9 +233,7 @@ Time.pass = function (passtime) {
     }
 
     // check week events
-    if (TimeHandle.get('onWeek').length > 0 &&
-        (weekday[1] < weekday[0] || passtime / 604800 >= 1)
-    ) {
+    if (TimeHandle.get('onWeek').length > 0 && (week > 0 || passtime / 604800 >= 1)) {
         TimeHandle.run('onWeek', timeData);
     }
 
@@ -267,25 +272,6 @@ class TimeEvent {
     }
 }
 
-
-new TimeEvent('onDay', 'NewYear')
-    .Cond(timeData => timeData.current.month === 1 && timeData.current.day === 1)
-    .Action(timeData => {
-        console.log('Happy New Year!', timeData);
-    });
-
-TimeHandle.set('onAfter', {
-    eventId : 'AfterEvent',
-    func(timeData) {
-        // do something after the time pass
-        console.log('After event:', timeData);
-    },
-    cond(timeData) {
-        // check the condition before the event
-        console.log('After event condition:', timeData);
-        return true;
-    }
-});
 
 Object.defineProperties(window, {
     TimeEvent  : { value : TimeEvent },
