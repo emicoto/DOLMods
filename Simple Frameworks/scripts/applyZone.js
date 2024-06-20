@@ -4,7 +4,7 @@ const ApplyZone = (() => {
 
     const mapContent = ['Places of', 'Points of', '可访问地点', '感兴趣地点'];
 
-    const nextContent = ['Next', '继续', 'Continue', 'Move on', '前进', '下一步'];
+    const nextContent = ['Next', '继续', 'Continue', 'Move on', '前进', '下一步', 'Accept', 'Refuse', 'Reject', '接受', '拒绝', 'Return', '返回', 'Finish', '结束', 'End'];
 
     const lastContent = ['Setting', '设置', 'Option', 'Config', 'Leave', '离开', '出去', 'Get Out'];
 
@@ -128,12 +128,18 @@ const ApplyZone = (() => {
         
             this.resetSanity();
 
-            if (innerHTML.has(mapContent)) {
-                this.onMap = true;
+            const nodes = this.nodes;
+
+            for (const node of nodes) {
+                if (!node) continue;
+                if (node.nodeName === '#text' && node.textContent.has(mapContent)) {
+                    this.onMap = true;
+                }
+                if (node.nodeName === 'A' && node.classList.contains('macro-link') && node.textContent.has(nextContent)) {
+                    this.hasNext = true;
+                }
             }
-            else if (innerHTML.has(nextContent)) {
-                this.hasNext = true;
-            }
+
             if (innerHTML.has('addAfterMsg')) {
                 this.msgZone = el.querySelector('#addAfterMsg');
             }
