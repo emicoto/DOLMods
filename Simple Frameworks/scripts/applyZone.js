@@ -4,7 +4,7 @@ const ApplyZone = (() => {
 
     const mapContent = ['Places of', 'Points of', '可访问地点', '感兴趣地点'];
 
-    const nextContent = ['Next', '继续', 'Continue', 'Move on', '前进', '下一步', 'Accept', 'Refuse', 'Reject', '接受', '拒绝', 'Return', '返回', 'Finish', 'End', '结束', 'Obey', '遵从', '服从', '遵命', '听从', '听命', 'Ignore', '忽略', '无视', '不理', '忽略', 'Agree', 'Nod', '同意', '点头', 'Deny', '否认'];
+    const nextContent = ['Next', '继续', 'Continue', 'Move on', '前进', '下一步', 'Accept', 'Refuse', 'Reject', '接受', '拒绝', 'Return', '返回', 'Finish', 'End', '结束', 'Obey', '遵从', '服从', '遵命', '听从', '听命', 'Ignore', '忽略', '无视', '不理', '忽略', 'Agree', 'Nod', '同意', '点头', 'Deny', 'Disagree','否认', '反对', 'Decline'];
 
     const lastContent = ['Setting', '设置', 'Option', 'Config', 'Leave', '离开', '出去', 'Get Out'];
 
