@@ -22,18 +22,18 @@ class NamedNPC {
      */
     static clear() {
         // - 清理非法NPC
-        console.log('start to reslove npcs....', clone(V.NPCName) , clone(setup.NPCNameList));
+        console.log('[SFInfo] start to reslove npcs....', clone(V.NPCName) , clone(setup.NPCNameList));
         const newnpcs = [];
         for (let i = 0; i < V.NPCName.length; i++) {
             const npc = V.NPCName[i];
             if (setup.NPCNameList.includes(npc.nam)) {
-                console.log('resloving npcs...', npc.nam);
+                console.log('[SFInfo] resloving npcs...', npc.nam);
                 newnpcs.push(V.NPCName[i]);
             }
         }
         V.NPCName = newnpcs;
         V.NPCNameList = setup.NPCNameList;
-        console.log('npcs resloving done!');
+        console.log('[SFInfo] npcs resloving done!');
     }
 
     /**
@@ -51,12 +51,12 @@ class NamedNPC {
      */
     static update() {
         const hasnpc = name => V.NPCName.filter(npc => npc.nam == name)[0];
-        console.log('start to update npcs....');
+        console.log('[SFInfo] start to update npcs....');
 
         this.database.forEach(data => {
             const npc = clone(data);
             if (V.NPCNameList.includes(npc.nam) === false || !hasnpc(npc.nam)) {
-                console.log('update npcs:', npc.nam);
+                console.log('[SFInfo] update npcs:', npc.nam);
                 npc.title = lanSwitch(npc.title_lan);
                 npc.displayname = lanSwitch(npc.displayname_lan);
 
@@ -127,7 +127,7 @@ class NamedNPC {
      */
     static init() {
         this.update();
-        console.log('addNamedNPC', 'init mod npc from storyinit', V.NPCName, setup.NPCNameList);
+        console.log('[SFDebug] addNamedNPC', 'init mod npc from storyinit', V.NPCName, setup.NPCNameList);
     }
 
     /**

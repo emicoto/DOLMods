@@ -225,16 +225,18 @@ const ApplyZone = (() => {
 
         applyMsgCombat() {
             let node = null;
+            const addMsg = createDiv('addAfterMsg');
+            this.msgZone = addMsg;
+            
             if (V.stalk) {
                 node = this.el.querySelector('.div_stalk');
-                const addMsg = createDiv('addAfterMsg');
-                this.msgZone = addMsg;
+
                 node.parentNode.insertBefore(addMsg, node);
                 return;
             }
 
             node = this.nodes[1];
-            node.appendChild(div);
+            node.appendChild(addMsg);
         }
 
         applyBeforeLink() {
@@ -265,7 +267,7 @@ const ApplyZone = (() => {
                 }
             }
 
-            console.log('prev:', prev);
+            console.log('[SFDebug] prevNode:', prev);
 
             const beforeLink = createDiv('beforeLink');
             prev.parentNode.insertBefore(beforeLink, prev.nextSibling);
@@ -295,7 +297,7 @@ const ApplyZone = (() => {
                 }
                 else if (V.options.mapTop !== true && isMap(node)) {
                     lastNode = node;
-                    console.log('map:', node);
+                    console.log('[SFDebug] mapNode:', node);
                     break;
                 }
             }

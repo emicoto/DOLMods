@@ -126,8 +126,8 @@ function relationshipTextHook(npcnam) {
     const widget = `${wname}Opinion`;
     const widgetIcon = `${wname}OpinionIcon`;
 
-    console.log('call from relationship text hook:',npcnam, wname);
-    console.log('widgets:', widget, Macro.has(widget), Macro.has(widgetIcon), widgetIcon);
+    console.log('[SFDebug] call from relationship text hook:',npcnam, wname);
+    console.log('[SFDebug] widgets:', widget, Macro.has(widget), Macro.has(widgetIcon), widgetIcon);
 
     let text = '<<relationshiptext>>';
 
@@ -139,7 +139,7 @@ function relationshipTextHook(npcnam) {
         text += `<<${widgetIcon}>>`;
     }
 
-    console.log('relationship text:', text);
+    console.log('[SFDebug] relationship text:', text);
 
     return text;
 }
@@ -266,8 +266,8 @@ Macro.add('randomdata', {
         const len = this.payload.length;
         const rateMode = this.payload[0].source.includes('rate');
 
-        console.log(this.payload);
-        if (len == 1) return this.error(`no data found from randomdata: ${this.payload[0].source}${this.payload[0].contents}`);
+        console.log('[SFDebug/randomdata] payload:',this.payload);
+        if (len == 1) return this.error(`[SFDebug] no data found from randomdata: ${this.payload[0].source}${this.payload[0].contents}`);
 
         if (!rateMode) {
             const index = random(1, len - 1);
@@ -298,7 +298,7 @@ Macro.add('randomdata', {
             defaultText = datas[0].contents;
         }
 
-        console.log(datas);
+        console.log('[SFDebug/randomdata] datas:',datas);
 
         // get total rate
         let total = datas.reduce((res, cur) => res + cur.rate, 0);
@@ -311,7 +311,7 @@ Macro.add('randomdata', {
             const rate = random(1, total);
 
             if (Config.debug) {
-                console.log('random rate:', rate, 'total:', total, 'data rate:', data.rate, 'data:', data.contents);
+                console.log('[SFDebug/randomdata] random rate:', rate, 'total:', total, 'data rate:', data.rate, 'data:', data.contents);
             }
 
             if (rate < data.rate) {
@@ -333,14 +333,14 @@ Macro.add(['lanLink', 'lanButton'], {
     handler() {
         const passage = this.args[0];
 
-        if (this.payload.length == 1) return this.error('no link text found');
+        if (this.payload.length == 1) return this.error('[SFDebug/lanlink] no link text found');
 
         const languages = this.payload.filter(data => data.name == 'lan').map(data => data.args);
         const code = this.payload.filter(data => data.name == 'linkcode')[0]?.contents ?? null;
 
-        if (languages.length == 0) return this.error('no language text found');
+        if (languages.length == 0) return this.error('[SFDebug/lanlink] no language text found');
 
-        if (Config.debug) console.log(languages, code);
+        if (Config.debug) console.log('[SFDebug/lanlink] ',languages, code);
 
         let displaytext = '';
         for (let i = 0; i < languages.length; i++) {

@@ -18,6 +18,7 @@ function newMoney() {
 
 DefineMacroS('newMoney', newMoney);
 
+
 new TimeEvent('onDay', 'NewYear')
     .Cond(timeData => timeData.current.month === 1 && timeData.current.day === 1)
     .Action(timeData => {
@@ -32,8 +33,8 @@ new TimeEvent('onSec', 'myTimer')
         console.log(timeData);
 
         // 经过时间检测与更新
-        if (timeData.passData.passed > 0) {
-            V.mytimer = V.mytimer - timeData.passData.passed;
+        if (timeData.passed > 0) {
+            V.mytimer = V.mytimer - timeData.passed;
         }
     });
 

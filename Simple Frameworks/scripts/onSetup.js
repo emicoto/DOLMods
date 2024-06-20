@@ -100,7 +100,7 @@ setup.addModTrait = function () {
         'Acceptance Traits'
     ];
 
-    console.log(Traits);
+    console.log('[SFDebug] Traits:',Traits);
     const initTraits = function (trait) {
         const { addto, name, cond, text, colour } = trait;
         let index;
@@ -176,7 +176,7 @@ setup.addBodyWriting = function () {
 setup.modCombatActions = [];
 
 setup.ModCombatSetting = function () {
-    console.log('ModCombatSetting', T.args);
+    console.log('[SFDebug] ModCombatSetting:', T.args);
     const [actions, actiontype] = T.args;
 
     setup.modCombatActions.forEach(setupAction => {
@@ -192,7 +192,7 @@ setup.ModCombatSetting = function () {
 };
 
 function modCombatDifficul(diffAction, action) {
-    console.log('modCombatDifficul', T.args, action, diffAction);
+    console.log('[SFDebug] modCombatDifficul:', T.args, action, diffAction);
 
     const actionObj = setup.modCombatActions.filter(action => action.value == diffAction)[0];
     if (actionObj && actionObj.widget && Macro.has(actionObj.widget)) {
@@ -360,7 +360,7 @@ const iModManager = {
         const modvar = eval(`V.${type}`);
 
         if (typeof modvar.set !== 'function' || modvar.initver !== 1) {
-            console.log('init on ready:', type);
+            console.log('[SFInfo] init on ready:', type);
             modvar.set = function (prop, args1, args2) {
                 if (!this[prop] && args2) {
                     this[prop] = {
@@ -411,6 +411,8 @@ const iModManager = {
      */
     play(zone, passageTitle) {
         const data = simpleFrameworks.data[zone];
+        console.log('[SFDebug] checkzone:', zone, data);
+
         if (!data) return '';
         if (data.length == 0) return '';
 
@@ -432,7 +434,12 @@ const iModManager = {
 
                 return result;
             }
+
+            result += `<<${widgets}>>`;
+            return result;
         }, '');
+
+        console.log('[SFDebug] zoneHtml:',html);
 
         return html;
     },
@@ -495,7 +502,7 @@ Save.onLoad.add(checkUpdate);
 
 $(document).one(':passagedisplay', () => {
     if (passage() == 'Start' && setup.modCombatActions.length > 0) {
-        console.log('Mod Combat Colours Setting');
+        console.log('[SFDebug] Initializing Mod Combat Colours Setting...');
         setup.modCombatActions.forEach(action => {
             const { value, color, mainType } = action;
             if (typeof color === 'string' && typeof mainType === 'string') {
@@ -533,11 +540,10 @@ postdisplay.onPost = function () {
         return;
     }
 
-
-    if (V.combat == 0) {
-        ApplyZone.applyZone();
+    if (V.combat == 1) {
+        ApplyZone.applyCombat();
     }
     else {
-        ApplyZone.applyCombat();
+        ApplyZone.applyZone();
     }
 };

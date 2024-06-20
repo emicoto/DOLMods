@@ -255,12 +255,13 @@ window.simpleFrameworks = {
 
         for (let zone in data) {
             let _html = print.start(zone);
+            _html += `<<=iMod.play("${zone}")>>`;
             _html += print.end(zone, data[zone].length);
             html += _html;
         }
 
         this.widgethtml = html;
-        console.log(this.widgethtml);
+        console.log('[SFDebug] widgetHtml: ', this.widgethtml);
 
         return 'ok';
     },
@@ -350,26 +351,5 @@ window.simpleFrameworks = {
         return 'ok';
     },
 
-    widgethtml : '',
-
-    getModFullList() {
-        const ml = modModLoadController.gSC2DataManager.modLoader;
-        return ml.modLoadRecord;
-    },
-
-    getModList() {
-        const ml = modModLoadController.gSC2DataManager.modLoader;
-        return ml.modLoadRecord.filter(mod => mod.from == 'IndexDB');
-    },
-
-    getPreModList() {
-        const ml = modModLoadController.gSC2DataManager.modLoader;
-        return ml.modLoadRecord.filter(mod => mod.from == 'Local');
-    },
-
-    hasMod(modname) {
-        const ml = modModLoadController.gSC2DataManager.modLoader;
-        return ml.modLoadRecord.some(mod => mod.name == modname);
-    }
-};
-
+    widgethtml : ''
+}

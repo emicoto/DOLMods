@@ -1,3 +1,4 @@
+/*
 const newItems = [
     {
         tags : ['candy', 'food'], // Tag management system for logical judgment, categorization, and searching
@@ -87,7 +88,7 @@ const recipe = [
 
 Items.addRecipes(recipe);
 // the item system currently need i Robot Candy to work.
-
+*/
 
 // define an array to setup your tattoos.
 // almost same as vanilla, but you can skip some keys. skipped key will set to default var

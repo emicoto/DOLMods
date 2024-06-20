@@ -4,25 +4,13 @@
     // 这样才能确保这个文件的返回值会被JsPreloader正确接收
 
     // 自执行函数，会在mod插入html时执行此处内容
-    console.log('simple frameworks preload patch passage');
+    console.log('[SFInfo] simple frameworks preload patch passage');
     const modUtils = window.modUtils;
 
     const patchedPassage = {};
 
     // 一些需要特殊处理的location Passage
     const locationPassage = {
-        PassageHeader : [
-            {
-                src : '<<unset $bypassHeader>>',
-                to  : "<<unset $bypassHeader>>\n<div id='headerMsg'></div><<iModHeader>>"
-            }
-        ],
-        PassageFooter : [
-            {
-                src : '<div id="gameVersionDisplay">',
-                to  : "<div id='footerMsg'></div><<iModFooter>>\n<div id=\"gameVersionDisplay\">"
-            }
-        ],
         StoryCaption : [
             {
                 src   : '<<img>>',
@@ -272,7 +260,7 @@
             let [txt1, code] = widget.match(/\/\* 北极星模组 \*\/(.+)\/\* 北极星 \*\//);
             code = code.replace(/\[n\]/g, '\n');
             source = source.replace(code, '\t\t<<run\n\t\t\tconst bjxnpc = {\n\t\t\t\t"泰勒": {nam : "泰勒", title: "探险家", insecurity: "weak", teen: 1},\n\t\t\t\t"凯西": {nam : "凯西", title: "逃学者", insecurity: "weak", teen: 1},\n\t\t\t\t"塞伦": {nam : "塞伦", title: "见习信徒", insecurity: "skill", teen: 1},\n\t\t\t\t"帕鲁提": {nam : "帕鲁提", title: "巫师", insecurity: "skill", teen: 1, type: "cat", claws: "claws"}\n\t\t\t};\n\n\t\t\tObject.assign(_newNNPCs, bjxnpc)\n\t\t>>\n\t\t<<for _npc range Object.keys(_newNNPCs)>>\n\t\t\t<<if !$NPCNameList.includes(_newNNPCs[_npc].nam)>>\n\t\t\t\t<<newNamedNpc _newNNPCs[_npc]>>\n\t\t\t\t<<set _npcsAdded to true>>\n\t\t\t<</if>>\n\t\t<</for>>\n\t\t');
-            console.log('北极星检测', source);
+            console.log('[SFInfo] 北极星检测', source);
             simpleFrameworks.bjxpatch = true;
         }
 		
@@ -388,18 +376,16 @@
 	
     // 简单粗暴的批量脚本，在对应位置增加文本区域。
     function patchPassage(passage, title) {
-        const source = String(passage.content);
-
         if (title == 'StoryCaption') {
             // nothing to do at storycaption
         }
         else if (title == 'PassageHeader') {
             // add div to passage header
-            passage.content = `<div id="passage-header">\n${passage.content}\n</div>`;
+            passage.content = `<div id="passage-header">\n${passage.content}\n<div id='headerMsg'></div><<iModHeader>></div>`;
         }
         else if (title == 'PassageFooter') {
             // add div to passage footer
-            passage.content = `<div id="passage-footer">\n${passage.content}\n</div>`;
+            passage.content = `<div id="passage-footer">\n${passage.content}\n<<iModFooter>></div>`;
         }
         else {
             // add div to passage content
@@ -409,9 +395,6 @@
 
         // 处理过的就跳过
         if (patchedPassage[title]) return passage;
-        if (source.includes('<<effects>>' === false)) {
-            return passage;
-        }
 
         return passage;
     }
@@ -554,11 +537,11 @@
         const SCdata = oldSCdata.cloneSC2DataInfo();
         const passageData = SCdata.passageDataItems.map;
 
-        console.log(passageData);
+        console.log('[SFDebug] passageData: ' , passageData);
 		
         await simpleWidgetInit(passageData);
 
-        console.log('Simple Framework patching passage...');
+        console.log('[SFDebug] Simple Framework patching passage...');
 
         for (const [title, passage] of passageData) {
             try {

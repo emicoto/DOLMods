@@ -155,7 +155,7 @@ Time.pass = function (passtime) {
         current() {
             let passed = this.passed;
             const stamp = this.timeStamp;
-            console.log('passed:', passed, 'stamp:', stamp);
+            console.log('[SFDebug/timeHandle] passed:', passed, 'stamp:', stamp);
 
             if (typeof passed !== 'number' || isNaN(passed)) {
                 passed = 0;
@@ -165,7 +165,7 @@ Time.pass = function (passtime) {
         }
     });
     TimeHandle.passData = passData;
-    console.log('passData:', TimeHandle.passData);
+    console.log('[SFDebug/timeHandle] passData:', TimeHandle.passData);
 
     if (TimeHandle.get('onBefore').length > 0) {
         TimeHandle.run('onBefore', passData);
@@ -183,9 +183,9 @@ Time.pass = function (passtime) {
     // get the current date
     const currentDate = Time.date;
 
-    console.log('passed time:', passtime);
-    console.log('prevDate:', prevDate);
-    console.log('currentDate:', currentDate);
+    console.log('[SFDebug/timeHandle] passed time:', passtime);
+    console.log('[SFDebug/timeHandle] prevDate:', prevDate);
+    console.log('[SFDebug/timeHandle] currentDate:', currentDate);
 
     const timeData = TimeHandle.passTime(prevDate, currentDate, passtime);
     timeData.prev = prevDate;
@@ -195,7 +195,7 @@ Time.pass = function (passtime) {
     const { sec, min, hour, day, month, year, weekday, week } = timeData;
 
     console.log(
-        'time handle data:\n',
+        '[SFDebug/timeHandle] timedata:\n',
         `sec: ${sec}\n`,
         `min: ${min}\n`,
         `hour: ${hour}\n`,

@@ -268,7 +268,6 @@ slog('log', 'simple framework start at util.js')
 
     Object.defineProperties(window, {
         inrange       : { value : inrange },
-        random        : { value : random },
         Random        : { value : random },
         maybe         : { value : maybe },
         compares      : { value : compares },
