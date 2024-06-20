@@ -215,7 +215,6 @@ class SceneData {
     }
 }
 
-
 class ActionData {
     /**
      * @param {string} actionId

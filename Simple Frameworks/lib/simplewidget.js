@@ -1,4 +1,4 @@
-const frameworkversion = "1.13.1"
+const frameworkversion = '1.13.1';
 
 window.simpleFrameworks = {
     version    : frameworkversion,
@@ -44,18 +44,18 @@ window.simpleFrameworks = {
         ModShopZone    : [],
         CustomImgLayer : [],
 
-        iModDone         : [],
-        iModReady        : [],
+        iModInit         : [],
         iModHeader       : [],
         iModFooter       : [],
+        iModReady        : [],
+        iModDone         : [],
         iModOptions      : [],
+        iModSettings     : [],
         iModCheats       : [],
         iModStatus       : [],
         iModFame         : [],
-        iModInit         : [],
         iModStatist      : [],
-        iModExtraStatist : [],
-        iModSettings     : []
+        iModExtraStatist : []
 
     },
 
@@ -64,29 +64,6 @@ window.simpleFrameworks = {
             const init = initfunc;
             if (typeof init == 'function') init();
         });
-    },
-
-    playWidgets(zone, passageTitle = '') {
-        if (!this.data[zone]) return '';
-        if (this.data[zone].length == 0) return '';
-
-        const html = this.data[zone].reduce((result, widgets) => {
-            if (String(widgets) == '[object Object]' && typeof widgets.passage == 'string' && widgets.passage == passageTitle) {
-                result += `<<${widgets.widget}>>`;
-            }
-            else if (String(widgets) == '[object Object]' && Array.isArray(widgets.passage) && widgets.passage.includes(passageTitle)) {
-                result += `<<${widgets.widget}>>`;
-            }
-            else if (String(widgets) == '[object Object]' && (typeof widgets.passage == 'undefined' || widgets.passage.length == 0)) {
-                result += `<<${widgets.widget}>>`;
-            }
-            else if (typeof widgets == 'string') {
-                result += `<<${widgets.widget}>>`;
-            }
-            return result;
-        }, '');
-
-        return html;
     },
 
     default : {
@@ -137,7 +114,41 @@ window.simpleFrameworks = {
 </div>
 <hr>
 `,
-        CustomImgLayer : () => '\n<<ModLocationIMG>>',
+        CustomImgLayer : () => '\n<<ModLocationIMG>>'
+    },
+
+    // eslint-disable-next-line require-await
+    async createWidgets() {
+        const data = this.data;
+        const print = {
+            start : zone => {
+                let html = `\n\n<<widget "${zone}">>\n`;
+                const defaultTemp = this.default[zone];
+
+                if (typeof defaultTemp === 'function') {
+                    html += `${defaultTemp()}\n`;
+                }
+                else if (typeof defaultTemp === 'string') {
+                    html += `${defaultTemp}\n`;
+                }
+                return html;
+            },
+            end : (zone, length) => {
+                let html = '<</widget>>\n';
+                const br = ['ModShopZone','ModCaptionAfterDescription','ExtraLinkZone'];
+                if (br.includes(zone) && length > 0) {
+                    html = `<br>${html}`;
+                }
+                return html;
+            }
+        };
+
+        data.forEach((widgets, zone) => {
+            let html = print.start(zone);
+            html += `<<=iMod.play("${zone}")>>\n`;
+            html += print.end(zone, widgets.length);
+            this.widgethtml += html;
+        });
     },
 
     // eslint-disable-next-line require-await

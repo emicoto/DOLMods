@@ -404,6 +404,37 @@ const iModManager = {
         }
 
         return V[`iMod${type}`][prop];
+    },
+
+    /**
+     * play widgets from the given zone
+     */
+    play(zone, passageTitle) {
+        const data = simpleFrameworks.data[zone];
+        if (!data) return '';
+        if (data.length == 0) return '';
+
+        const title = passageTitle ?? V.passage;
+
+        const html = data.reduce((result, widgets) => {
+            if (String(widgets) == '[object Object]') {
+                if (
+                    typeof widgets.passage == 'string' && widgets.passage == title ||
+                    Array.isArray(widgets.passage) && widgets.passage.includes(title) ||
+                    typeof widgets.passage == 'undefined' ||
+                    widgets.passage.length == 0
+                ) {
+                    result += `<<${widgets.widget}>>`;
+                }
+                else if (typeof widgets == 'string') {
+                    result += `<<${widgets.widget}>>`;
+                }
+
+                return result;
+            }
+        }, '');
+
+        return html;
     }
 
 };

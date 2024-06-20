@@ -24,6 +24,19 @@ new TimeEvent('onDay', 'NewYear')
         console.log('Happy New Year!', timeData);
     });
 
+
+new TimeEvent('onSec', 'myTimer')
+    // eslint-disable-next-line prefer-arrow-callback
+    .Action(function (timeData) {
+        console.log('myTimer:', V.mytimer);
+        console.log(timeData);
+
+        // 经过时间检测与更新
+        if (timeData.passData.passed > 0) {
+            V.mytimer = V.mytimer - timeData.passData.passed;
+        }
+    });
+
 TimeHandle.set('onAfter', {
     eventId : 'AfterEvent',
     func(timeData) {

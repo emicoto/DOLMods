@@ -1,94 +1,64 @@
 :: Simple Widget Frameworks [Widget]
+
 <<widget "BeforeLinkZone">>
+<div id='beforelink'>
+    <<=iMod.play('BeforeLinkZone')>>
+</div>
 
 <</widget>>
 
 
 <<widget "ExtraLinkZone">>
-
+<div id='extralink'>
+    <<=iMod.play('ExtraLinkZone')>>
+</div>
 
 <</widget>>
 
+<<widget "ModShopZone">>
+<div id='modshop'>
+    <<=iMod.play('ModShopZone')>>
+</div>
+
+<</widget>>
+
+<<widget "CustomImgLayer">>
+    <<ModLocationIMG>>
+<</widget>>
+
+
+
+<<widget "iModInit">>
+   <<iModInitFunction>>
+   <<run setup.addBodyWriting()>>
+   <<=iMod.play('iModInit')>>
+<</widget>>
 
 <<widget "iModHeader">>
-
-
+<div id='iModHeader'>
+    <<=iMod.play('iModHeader')>>
+</div>
 <</widget>>
 
 
 <<widget 'iModFooter'>>
-
+<div id='iModFooter'>
+    <<=iMod.play('iModFooter')>>
+</div>
 
 <</widget>>
 
 
 <<widget 'iModReady'>>
-
+<<iModonReady>>
+<<=iMod.play('iModReady')>>
 
 <</widget>>
 
 
 <<widget 'iModDone'>>
+<<=iMod.play('iModDone')>>
 
-
-<</widget>>
-
-
-<<widget 'iModInit'>>
-
-<</widget>>
-
-<<widget 'iModInitFunction'>>
-
-
-<</widget>>
-
-
-<<widget "ModSkillsBox">>
-
-
-<</widget>>
-
-
-<<widget "ModCharaDescription">>
-
-<</widget>>
-
-
-<<widget "ModCaptionDescription">>
-
-
-<</widget>>
-
-<<widget "ModCaptionAfterDescription">>
-
-
-<</widget>>
-
-<<widget "ModStatusBar">>
-
-
-<</widget>>
-
-
-<<widget "ModMenuBig">>
-
-<</widget>>
-
-
-<<widget "ModMenuSmall">>
-
-
-<</widget>>
-
-<<widget "iModCheats">>
-<span class="gold"><<lanSwitch "Cheats Extends Mods" "作弊扩展">></span>
-<br>
-<<set _link = lanSwitch("Dry yourself", "一键烘干")>>
-<<link _link $passage>>
-    <<set $upperwet to 0, $lowerwet to 0, $underlowerwet to 0, $underupperwet to 0>>
-<</link>>
-<br>
 <</widget>>
 
 
@@ -97,29 +67,182 @@
 <span class="gold"><<lanSwitch "Simple Framework" "简易框架" >></span>
 <br>
 
-<<lanSwitch "Current Language Setting: " "当前语言设定：">>
+<<lanSwitch "Current Modds Language Setting: " "当前模组语言设定：">>
 <<set _output to lanSwitch("English","中文")>>
 <<link _output $passage>>
-    <<if setup.language is 'EN'>>
-        <<set setup.language to 'CN'>>
-    <<else>>
-        <<set setup.language to 'EN'>>
-    <</if>>
+	<<if setup.language is 'EN'>>
+		<<set setup.language to 'CN'>>
+        <<run iMod.setCf('language', 'CN')>>
+	<<else>>
+		<<set setup.language to 'EN'>>
+        <<run iMod.setCf('language', 'EN')>>
+	<</if>>
+    <<run $(document).trigger(':switchlanguage')>>
+<</link>>
+　　
+<<set _output to lanSwitch("Confirm", "确认")>>
+<<link _output $passage>>
 <</link>>
 <br><br>
 
+<<=iMod.play('iModOptions')>>
+<</widget>>
 
+<<widget "iModSettings">>
+<div class="solidBorderContainer settings-container">
+<i><<=lanSwitch(
+    'All the settings of <span class="gold">mods</span>.',
+    '所有<span class="gold">模组</span>的设置。'
+)>></i>
+</div>
+<hr>
+
+<<=iMod.play('iModSettings')>>
+<</widget>>
+
+
+<<widget "iModCheats">>
+<span class="gold"><<lanSwitch "Cheats Extends Mods" "作弊扩展">></span>
+<br>
+<<set _link = lanSwitch("Dry yourself", "一键烘干")>>
+<<link _link $passage>>
+    <<set $upperwet to 0, $lowerwet to 0, $underlowerwet to 0, $underupperwet to 0>>
+<</link>>
+<br><br>
+
+<<=iMod.play('iModCheats')>>
 <</widget>>
 
 
 <<widget "iModStatus">>
-    
+<<=iMod.play('iModStatus')>>
+
 <</widget>>
 
 <<widget "iModFame">>
-    
+<<=iMod.play('iModFame')>>
+
 <</widget>>
 
+<<widget "iModStatist">>
+<<=iMod.play('iModStatist')>>
+
+<</widget>>
+
+<<widget "iModExtraStatist">>
+<<=iMod.play('iModExtraStatist')>>
+
+<</widget>>
+
+
+<<widget "ModDegreesBox">>
+<<=iMod.play('ModDegreesBox')>>
+
+<</widget>>
+
+
+<<widget "ModSkillsBox">>
+<<=iMod.play('ModSkillsBox')>>
+
+<</widget>>
+
+
+<<widget "ModCharaDescription">>
+<<=iMod.play('ModCharaDescription')>>
+
+<</widget>>
+
+
+<<widget "ModCaptionDescription">>
+<<=iMod.play('ModCaptionDescription')>>
+
+<</widget>>
+
+<<widget "ModCaptionAfterDescription">>
+<<=iMod.play('ModCaptionAfterDescription')>>
+
+<</widget>>
+
+<<widget "ModStatusBar">>
+<<=iMod.play('ModStatusBar')>>
+
+<</widget>>
+
+
+<<widget "ModMenuBig">>
+<<=iMod.play('ModMenuBig')>>
+
+<</widget>>
+
+
+<<widget "ModMenuSmall">>
+<<=iMod.play('ModMenuSmall')>>
+
+<</widget>>
+
+
+
+<<widget "ModRelationshipText">>
+<<set _wname to $args[0].replace(/s/g, "")>>
+<<run console.log('call from relationship text',_wname, $args[0])>>
+
+<<if SugarCube.Macro.has(_wname + "Opinion")>>
+    <<ModaddNPCRelationText>>
+<<else>>
+    <<relationshiptext>>
+<</if>>
+
+<<if SugarCube.Macro.has(_wname+"OpinionIcon")>>
+    <<ModOpinionIcon $NPCName[_i].nam>>
+<</if>>
+<</widget>>
+
+<<widget "ModOpinionIcon">>
+<<if SugarCube.Macro.has($args[0]+'OpinionIcon')>>
+    <<print '<<'+$args[0]+'OpinionIcon>>'>>
+<</if>>
+<</widget>>
+
+<<widget "iModReplace">>
+	<<set _key to _args[0]>>
+	<<if !_key>>
+		<<exit>>
+	<</if>>
+
+	<<if _currentOverlay is _key>>
+		<<run closeOverlay()>>
+		<<exit>>
+	<</if>>
+
+	<<script>>
+		T.buttons.toggle();
+		updateOptions();
+		T.currentOverlay = T.key;
+		$("#customOverlay").removeClass("hidden").parent().removeClass("hidden");
+		$("#customOverlay").attr("data-overlay", T.currentOverlay);
+	<</script>>
+	<<print '<<'+_key+'>>'>>
+<</widget>>
+
+
+<<widget "iModSettingsButton">>
+    <div id='modSettingButton' @class="_selectedSettings is 'mods' ? 'gold buttonStartSelected' : 'buttonStart'" >
+    <<button "Mod Settings">>
+        <<set _selectedSettings to "mods">>
+        <<replace #settingsOptions>><<settingsOptions>><</replace>>
+        <<replace #settingsDiv>><<iModSettings>><</replace>>
+        <<replace #settingsExit>><<settingsExit>><</replace>>
+    <</button>>
+    </div>
+<</widget>>
+
+<<widget "ModLocationIMG">>
+    <<if setup.ModLocationPNG.includes($location)>>
+    <img id='location' class='CustomLocation' @src="_imgLoc + _weather_display + '/$location' + _dayState + '.png'">
+    <<elseif setup.ModLocationGIF.includes($location)>>
+    <img id='location' class='CustomLocation' @src="_imgLoc + _weather_display + '/$location' + _dayState + '.gif'">
+    <</if>>
+<</widget>>
 
 <<widget "ModaddNPCRelationText">>
 <<if SugarCube.Macro.has($args[0]+'Opinion')>>
@@ -179,51 +302,4 @@
         <</if>>
     <</if>>
 <</if>>
-<</widget>>
-
-<<widget "ModRelationshipText">>
-<<set _wname to $args[0].replace(/s/g, "")>>
-<<run console.log('call from relationship text',_wname, $args[0])>>
-
-<<if SugarCube.Macro.has(_wname + "Opinion")>>
-    <<ModaddNPCRelationText>>
-<<else>>
-    <<relationshiptext>>
-<</if>>
-
-<<if SugarCube.Macro.has(_wname+"OpinionIcon")>>
-    <<ModOpinionIcon $NPCName[_i].nam>>
-<</if>>
-<</widget>>
-
-<<widget "ModOpinionIcon">>
-<<if SugarCube.Macro.has($args[0]+'OpinionIcon')>>
-    <<print '<<'+$args[0]+'OpinionIcon>>'>>
-<</if>>
-<</widget>>
-
-<<widget "iModReplace">>
-	<<set _key to _args[0]>>
-	<<if !_key>>
-		<<exit>>
-	<</if>>
-
-	<<if _currentOverlay is _key>>
-		<<run closeOverlay()>>
-		<<exit>>
-	<</if>>
-
-	<<script>>
-		T.buttons.toggle();
-		updateOptions();
-		T.currentOverlay = T.key;
-		$("#customOverlay").removeClass("hidden").parent().removeClass("hidden");
-		$("#customOverlay").attr("data-overlay", T.currentOverlay);
-	<</script>>
-	<<print '<<'+_key+'>>'>>
-<</widget>>
-
-
-<<widget "ModShopZone">>
-    
 <</widget>>
