@@ -215,12 +215,6 @@
                 to       : '_npcData.displayname'
             }
         ],
-        'Widgets Cabin' : [
-            {
-                srcmatch    : /<<link \[\[(Settings|设置)|Cabin Settings\]\]>><<\/link>>/,
-                applybefore : '<<ExtraLinkZone>>\n'
-            }
-        ],
         'Widgets Underground' : [
             {
                 src        : '<<widget "undergroundCellOptions">>',
@@ -510,8 +504,9 @@
     }
 	
     async function simpleWidgetInit(passageData) {
-        await simpleFrameworks.createMicroWidgets();
+        await simpleFrameworks.createWidgets();
         await simpleFrameworks.createModInitMacro();
+        await simpleFrameworks.createSpecialWidgets();
 
         // modUtils.updatePassageData('Simple Widget Frameworks', '', ['widget'], 0)
         let data = {

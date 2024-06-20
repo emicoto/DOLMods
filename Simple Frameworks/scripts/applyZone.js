@@ -9,7 +9,7 @@ const ApplyZone = (() => {
     const lastContent = ['Setting', '设置', 'Option', 'Config', 'Leave', '离开', '出去', 'Get Out'];
 
     function removeEmptyTextNode(node) {
-        if (node.nodeName !== '#text') {
+        if (!node || node.nodeName !== '#text') {
             return null;
         }
         return node.textContent.replace(/[\t\n]/gim, '').trim();
@@ -59,6 +59,14 @@ const ApplyZone = (() => {
         
             return ApplyZone.instance.getDebug();
         }
+        static applyCombat(id = 'passage-content') {
+            ApplyZone.instance ??= new ApplyZone(id);
+            ApplyZone.instance.id = id;
+            ApplyZone.instance.applyCombat();
+
+            return ApplyZone.instance.getDebug();
+        }
+
         constructor(id = 'passage-content') {
             this._id = id;
             this.resetSanity();
@@ -146,14 +154,36 @@ const ApplyZone = (() => {
                 this.applyMsg();
             }
 
+            const links = this.el.querySelectorAll('.macro-link');
+
+            // no link zone on event page and streetevent page
+            if (links.length <= 1 || V.event && V.event?.buffer[0].area.includes('eventsstreet')) {
+                return;
+            }
+
             if (this.beforeLink == null) {
                 this.applyBeforeLink();
+            }
+
+            // no extra link zone on some page aleast has more than 2 links
+            if (links.length <= 2) {
+                return;
             }
 
             if (this.extraLink == null) {
                 this.applyExtraLink();
             }
         }
+
+        applyCombat() {
+            this.removeUnusedNode();
+            this.sanityCheck();
+
+            if (this.msgZone == null) {
+                this.applyMsgCombat();
+            }
+        }
+
         getDebug() {
             return {
                 el      : this.el,
@@ -165,9 +195,13 @@ const ApplyZone = (() => {
                 extra   : this.extraLink
             };
         }
+
         applyMsg() {
             const list = [];
             for (const node of this.nodes) {
+                if (!node) {
+                    continue;
+                }
                 if (isIconImg(node) || isMacroLink(node) || node.textContent.has(mapContent)) {
                     break;
                 }
@@ -189,6 +223,20 @@ const ApplyZone = (() => {
             lastText.parentNode.insertBefore(addMsg, lastText.nextSibling);
         }
 
+        applyMsgCombat() {
+            let node = null;
+            if (V.stalk) {
+                node = this.el.querySelector('.div_stalk');
+                const addMsg = createDiv('addAfterMsg');
+                this.msgZone = addMsg;
+                node.parentNode.insertBefore(addMsg, node);
+                return;
+            }
+
+            node = this.nodes[1];
+            node.appendChild(div);
+        }
+
         applyBeforeLink() {
             const link = this.el.querySelector('.macro-link');
 
@@ -199,6 +247,8 @@ const ApplyZone = (() => {
                 let start = 0;
                 const nodes = this.nodes;
                 for (let i = 0; i < nodes.length; i++) {
+                    if (!nodes[i]) continue;
+
                     if (nodes[i] === link) {
                         start = i;
                         break;
@@ -207,6 +257,7 @@ const ApplyZone = (() => {
 
                 for (let i = start; i > 0; i--) {
                     const node = nodes[i];
+                    if (!node) continue;
                     if (isBreakline(node)) {
                         prev = node;
                         break;
@@ -229,6 +280,8 @@ const ApplyZone = (() => {
             let lastNode = null;
 
             for (const node of nodes) {
+                if (!node) continue;
+
                 if (isIconImg(node) && node.src.has('get_out', 'get_in')) {
                     lastNode = node;
                     break;

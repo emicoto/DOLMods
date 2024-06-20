@@ -1,10 +1,10 @@
-const frameworkversion = '1.13.1';
+const frameworkversion = "2.0.0"
 
 window.simpleFrameworks = {
     version    : frameworkversion,
     name       : 'Simple Frameworks',
     author     : 'Lune',
-    lastUpdate : '2024.01.04',
+    lastUpdate : '2024.06.20',
     onInit(...widgets) {
         widgets.forEach(widget => {
             if (String(widget) == '[object Object]' && widget.name) {
@@ -117,6 +117,114 @@ window.simpleFrameworks = {
         CustomImgLayer : () => '\n<<ModLocationIMG>>'
     },
 
+    specialWidget : {
+        iModReplace : () => `
+<<widget "iModReplace">>
+	<<set _key to _args[0]>>
+	<<if !_key>>
+		<<exit>>
+	<</if>>
+
+	<<if _currentOverlay is _key>>
+		<<run closeOverlay()>>
+		<<exit>>
+	<</if>>
+
+	<<script>>
+		T.buttons.toggle();
+		updateOptions();
+		T.currentOverlay = T.key;
+		$("#customOverlay").removeClass("hidden").parent().removeClass("hidden");
+		$("#customOverlay").attr("data-overlay", T.currentOverlay);
+	<</script>>
+	<<print '<<'+_key+'>>'>>
+<</widget>>`,
+
+        iModSettingsButton : () => `
+<<widget "iModSettingsButton">>
+    <div id='modSettingButton' @class="_selectedSettings is 'mods' ? 'gold buttonStartSelected' : 'buttonStart'" >
+    <<button "Mod Settings">>
+        <<set _selectedSettings to "mods">>
+        <<replace #settingsOptions>><<settingsOptions>><</replace>>
+        <<replace #settingsDiv>><<iModSettings>><</replace>>
+        <<replace #settingsExit>><<settingsExit>><</replace>>
+    <</button>>
+    </div>
+<</widget>>
+`,
+
+        ModLocationIMG : () => `
+<<widget "ModLocationIMG">>
+    <<if setup.ModLocationPNG.includes($location)>>
+    <img id='location' class='CustomLocation' @src="_imgLoc + _weather_display + '/$location' + _dayState + '.png'">
+    <<elseif setup.ModLocationGIF.includes($location)>>
+    <img id='location' class='CustomLocation' @src="_imgLoc + _weather_display + '/$location' + _dayState + '.gif'">
+    <</if>>
+<</widget>>
+`,
+        ModaddNPCRelationText : () => `
+<<widget "ModaddNPCRelationText">>
+<<if SugarCube.Macro.has($args[0]+'Opinion')>>
+    <<print '<<'+$args[0]+'Opinion>>'>>
+<<else>>
+    <<print C.npc[_npc].description>>
+    <<if C.npc[_npc].love gte $npclovehigh>>
+        <<if C.npc[_npc].dom gte $npcdomhigh>>
+            <<=lanSwitch(
+                "thinks you're <span class='green'>adorable.</span>",
+                "觉得你<span class='green'>十分惹人疼爱。</span>"
+            )>>
+        <<elseif C.npc[_npc].dom lte $npcdomlow>>
+            <<=lanSwitch(
+                "thinks you're <span class='green'>inspiring.</span>",
+                "觉得你<span class='green'>令人心动。</span>"
+            )>>
+        <<else>>
+            <<=lanSwitch(
+                "thinks you're <span class='green'>delightful.</span>",
+                "觉得你<span class='green'>令人愉快。</span>"
+            )>>
+        <</if>>
+    <<elseif C.npc[_npc].love lte $npclovelow>>
+        <<if C.npc[_npc].dom gte $npcdomhigh>>
+            <<=lanSwitch(
+                "thinks you're <span class='red'>pathetic.</span>",
+                "认为你<span class='red'>十分可悲。</span>"
+            )>>
+        <<elseif C.npc[_npc].dom lte $npcdomlow>>
+            <<=lanSwitch(
+                "thinks you're <span class='red'>irritating.</span>",
+                "认为你<span class='red'>使人恼火。</span>"
+            )>>
+        <<else>>
+            <<=lanSwitch(
+                "thinks you're <span class='red'>terrible.</span>",
+                "认为你<span class='red'>非常讨厌。</span>"
+            )>>
+        <</if>>
+    <<else>>
+        <<if C.npc[_npc].dom gte $npcdomhigh>>
+            <<=lanSwitch(
+                "thinks you're <span class='pink'>cute.</span>",
+                "认为你<span class='pink'>很可爱。</span>"
+            )>>
+        <<elseif C.npc[_npc].dom lte $npcdomlow>>
+            <<=lanSwitch(
+                "<span class='teal'>looks up to you.</span>",
+                "<span class='teal'>敬仰着你。</span>",
+            )>>
+        <<else>>
+            <<=lanSwitch(
+                'has no strong opinion of you.',
+                '对你没什么看法。'
+            )>>
+        <</if>>
+    <</if>>
+<</if>>
+<</widget>>
+`
+    },
+
     // eslint-disable-next-line require-await
     async createWidgets() {
         const data = this.data;
@@ -143,12 +251,18 @@ window.simpleFrameworks = {
             }
         };
 
-        data.forEach((widgets, zone) => {
-            let html = print.start(zone);
-            html += `<<=iMod.play("${zone}")>>\n`;
-            html += print.end(zone, widgets.length);
-            this.widgethtml += html;
-        });
+        let html = '\n';
+
+        for (let zone in data) {
+            let _html = print.start(zone);
+            _html += print.end(zone, data[zone].length);
+            html += _html;
+        }
+
+        this.widgethtml = html;
+        console.log(this.widgethtml);
+
+        return 'ok';
     },
 
     // eslint-disable-next-line require-await
@@ -184,6 +298,7 @@ window.simpleFrameworks = {
         };
 
         let html = '\r\n';
+        const data = this.data;
         for (const zone in this.data) {
             html += print.start(zone);
             
@@ -223,6 +338,38 @@ window.simpleFrameworks = {
         return 'ok';
     },
 
-    widgethtml : ''
+    // eslint-disable-next-line require-await
+    async createSpecialWidgets() {
+        let html = '\n\n';
+        for (const widget in this.specialWidget) {
+            html += this.specialWidget[widget]();
+        }
+
+        this.widgethtml += html;
+
+        return 'ok';
+    },
+
+    widgethtml : '',
+
+    getModFullList() {
+        const ml = modModLoadController.gSC2DataManager.modLoader;
+        return ml.modLoadRecord;
+    },
+
+    getModList() {
+        const ml = modModLoadController.gSC2DataManager.modLoader;
+        return ml.modLoadRecord.filter(mod => mod.from == 'IndexDB');
+    },
+
+    getPreModList() {
+        const ml = modModLoadController.gSC2DataManager.modLoader;
+        return ml.modLoadRecord.filter(mod => mod.from == 'Local');
+    },
+
+    hasMod(modname) {
+        const ml = modModLoadController.gSC2DataManager.modLoader;
+        return ml.modLoadRecord.some(mod => mod.name == modname);
+    }
 };
 

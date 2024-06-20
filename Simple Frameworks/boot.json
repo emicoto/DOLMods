@@ -1,6 +1,6 @@
 {
   "name": "Simple Frameworks",
-  "version": "1.13.1",
+  "version": "2.0.0",
   "modPacker": {
     "modVersionJs": {
       "file": "lib/simplewidget.js",
@@ -28,13 +28,16 @@
   "scriptFileList": [
     "scripts/CNCodeResolver.js",
     "scripts/NamedNPC.js",
+    "scripts/applyZone.js",
     "scripts/customUI.js",
     "scripts/domTool.js",
     "scripts/onSetup.js",
     "scripts/simpleMacros.js",
     "scripts/timeHandler.js"
   ],
-  "tweeFileList": [],
+  "tweeFileList": [
+    "twee/SimpleWidget.twee"
+  ],
   "imgFileList": [],
   "additionFile": [
     "readme.txt"
@@ -57,5 +60,5 @@
       "version": "^1.0.0"
     }
   ],
-  "build": "19"
+  "build": "1"
 }

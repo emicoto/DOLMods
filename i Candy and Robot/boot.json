@@ -1,7 +1,7 @@
 {
   "name": "i, Candy + Robot",
   "version": "2.4.5",
-  "build": "64",
+  "build": "87",
   "modPacker": {
     "modVersionJs": {
       "file": "0Scripts/0_framework/0_modversion.js",
@@ -54,7 +54,6 @@
     "0Scripts/3_systems/combatHandle/0_combatSystem.js",
     "0Scripts/3_systems/combatHandle/combatHandle.js",
     "0Scripts/3_systems/combatHandle/combatSetting.js",
-    "0Scripts/3_systems/eventHandle/0_eventTools.js",
     "0Scripts/3_systems/eventHandle/1_eventData.js",
     "0Scripts/3_systems/eventHandle/eventManager.js",
     "0Scripts/3_systems/eventHandle/mapData.js",

@@ -435,6 +435,33 @@ const iModManager = {
         }, '');
 
         return html;
+    },
+
+    // add to location
+    addLocation(...args) {
+        if (args.length == 0) return;
+
+        let local = {};
+
+        if (args.length == 1 && String(args[0]) == '[object Object]') {
+            local = args[0];
+        }
+        else {
+            local = {
+                displayName   : lanSwitch(args[0]),
+                targetPassage : args[1],
+                entryPassage  : args[2],
+                position      : 'before',
+                condition     : 'skipEvent',
+                action        : '',
+                desc          : '',
+                descPos       : 'before',
+                value         : ''
+            };
+        }
+
+        setup.locationEntries.push(local);
+        return local;
     }
 
 };
@@ -499,3 +526,18 @@ $(document).on(':passagedisplay', () => {
 $(document).on(':switchlanguage', () => {
     NamedNPC.switchlan();
 });
+
+
+postdisplay.onPost = function () {
+    if (!V.passage || V.passage == 'Start' || V.passage == 'Downgrade Waiting Room') {
+        return;
+    }
+
+
+    if (V.combat == 0) {
+        ApplyZone.applyZone();
+    }
+    else {
+        ApplyZone.applyCombat();
+    }
+};
