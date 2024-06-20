@@ -30,11 +30,21 @@ new TimeEvent('onSec', 'myTimer')
     // eslint-disable-next-line prefer-arrow-callback
     .Action(function (timeData) {
         console.log('myTimer:', V.mytimer);
+        if (V.mytimer == undefined) {
+            V.mytimer = 1000;
+        }
         console.log(timeData);
 
         // 经过时间检测与更新
-        if (timeData.passed > 0) {
-            V.mytimer = V.mytimer - timeData.passed;
+        if (timeData.passed > 0 && V.mytimer > 0) {
+            V.mytimer = Math.max(V.mytimer - timeData.passed, 0);
+            console.log('mytimer:', V.mytimer);
+        }
+        if (V.mytimer <= 0) {
+            console.log('Time out!');
+            if (random(100) < 50) {
+                V.mytimer = 1000;
+            }
         }
     });
 

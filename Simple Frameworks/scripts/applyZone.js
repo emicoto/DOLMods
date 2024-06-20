@@ -4,7 +4,7 @@ const ApplyZone = (() => {
 
     const mapContent = ['Places of', 'Points of', '可访问地点', '感兴趣地点'];
 
-    const nextContent = ['Next', '继续', 'Continue', 'Move on', '前进', '下一步', 'Accept', 'Refuse', 'Reject', '接受', '拒绝', 'Return', '返回', 'Finish', '结束', 'End'];
+    const nextContent = ['Next', '继续', 'Continue', 'Move on', '前进', '下一步', 'Accept', 'Refuse', 'Reject', '接受', '拒绝', 'Return', '返回', 'Finish', '结束', 'End', 'Obey', 'Ignore', '遵从', '忽略', '服从', '无视'];
 
     const lastContent = ['Setting', '设置', 'Option', 'Config', 'Leave', '离开', '出去', 'Get Out'];
 
@@ -48,6 +48,25 @@ const ApplyZone = (() => {
 
     function isText(node) {
         return node.nodeName === '#text' || node.nodeName === 'SPAN' || node.nodeName === 'U' || node.nodeName === 'I' || node.nodeName === 'B';
+    }
+
+    function eventCheck() {
+        const event = V.event;
+
+        if (!event) {
+            return false;
+        }
+
+        const eventBuffer = event.buffer;
+        for (const buffer of eventBuffer) {
+            for (const area of buffer.area) {
+                if (area.includes('events')) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     class ApplyZone {
@@ -153,6 +172,10 @@ const ApplyZone = (() => {
             }
         }
         apply() {
+            if (this.el == null) {
+                return;
+            }
+
             this.removeUnusedNode();
             this.sanityCheck();
 
@@ -163,7 +186,7 @@ const ApplyZone = (() => {
             const links = this.el.querySelectorAll('.macro-link');
 
             // no link zone on event page and streetevent page
-            if (links.length <= 1 || V.event && V.event?.buffer[0].area.includes('eventsstreet')) {
+            if (links.length <= 1 || eventCheck()) {
                 return;
             }
 
@@ -182,6 +205,10 @@ const ApplyZone = (() => {
         }
 
         applyCombat() {
+            if (this.el == null) {
+                return;
+            }
+
             this.removeUnusedNode();
             this.sanityCheck();
 
@@ -233,11 +260,11 @@ const ApplyZone = (() => {
             let node = null;
             const addMsg = createDiv('addAfterMsg');
             this.msgZone = addMsg;
-            
-            if (V.stalk) {
-                node = this.el.querySelector('.div_stalk');
 
-                node.parentNode.insertBefore(addMsg, node);
+            const stalk = this.el.querySelector('.div_stalk');
+            
+            if (stalk !== null) {
+                stalk.parentNode.insertBefore(addMsg, stalk);
                 return;
             }
 
