@@ -493,12 +493,6 @@ DefineMacroS('iModonReady', iModonReady);
 //  进程处理
 //
 //------------------------------------------------------
-setup.NPCFrameworkOnLoad = false;
-function checkUpdate() {
-    setup.NPCFrameworkOnLoad = true;
-}
-
-Save.onLoad.add(checkUpdate);
 
 $(document).one(':passagedisplay', () => {
     if (passage() == 'Start' && setup.modCombatActions.length > 0) {
@@ -512,28 +506,18 @@ $(document).one(':passagedisplay', () => {
     }
 });
 
-$(document).on(':passagedisplay', () => {
-    // 读档时的处理
-    if (setup.NPCFrameworkOnLoad === true && V.passage !== 'Start' && V.passage !== 'Downgrade Waiting Room') {
-        NamedNPC.clear();
-        NamedNPC.update();
-        setup.NPCFrameworkOnLoad = false;
-    }
-    else if (setup.NPCFrameworkOnLoad === true && V.passage == 'Downgrade Waiting Room') {
-        setup.NPCFrameworkOnLoad = false;
-        setup.NPCFrameworkOnDowngrade = true;
-    }
-    else if (setup.NPCFrameworkOnDowngrade === true && V.passage !== 'Downgrade Waiting Room') {
-        NamedNPC.clear();
-        NamedNPC.update();
-        setup.NPCFrameworkOnDowngrade = false;
-    }
-});
 
 $(document).on(':switchlanguage', () => {
     NamedNPC.switchlan();
 });
 
+
+setup.iModInit = true;
+function updateNPCs() {
+    setup.iModOnLoad = true;
+}
+
+Save.onLoad.add(updateNPCs);
 
 postdisplay.onPost = function () {
     if (!V.passage || V.passage == 'Start' || V.passage == 'Downgrade Waiting Room') {
@@ -545,5 +529,12 @@ postdisplay.onPost = function () {
     }
     else {
         ApplyZone.applyZone();
+    }
+
+    if (setup.iModOnLoad || setup.iModInit) {
+        NamedNPC.clear();
+        NamedNPC.update();
+        setup.iModOnLoad = false;
+        setup.iModInit = false;
     }
 };

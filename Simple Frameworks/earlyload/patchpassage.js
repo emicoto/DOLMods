@@ -13,7 +13,7 @@
     const locationPassage = {
         StoryCaption : [
             {
-                src   : '<<img>>',
+                src        : '<<img>>',
                 applyafter : '\n\n\t\t<<CustomImgLayer>>\n'
             },
             {
@@ -187,6 +187,14 @@
             {
                 src : '<<relationshiptext>>',
                 to  : '<<ModRelationshipText $NPCName[_i].nam>>'
+            },
+            {
+                src : '<<NPC_CN_NAME _npc>>',
+                to  : 'C.npc[_npc].displayname'
+            },
+            {
+                src : '\t\t\t_npc',
+                to  : '\t\t\tC.npc[_npc].displayname'
             }
         ],
         Widgets : [

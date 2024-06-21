@@ -9,10 +9,10 @@ const ApplyZone = (() => {
     const lastContent = ['Setting', '设置', 'Option', 'Config', 'Leave', '离开', '出去', 'Get Out'];
 
     function removeEmptyTextNode(node) {
-        if (!node || node.nodeName !== '#text') {
-            return null;
+        if (node?.nodeName === '#text') {
+            return node.textContent.replace(/[\t\n]/gim, '').trim();
         }
-        return node.textContent.replace(/[\t\n]/gim, '').trim();
+        return null;
     }
 
     function createDiv(id) {
@@ -104,7 +104,16 @@ const ApplyZone = (() => {
             return  document.getElementById(this.id);
         }
         get nodes() {
-            return this.el.childNodes;
+            return this.el?.childNodes ;
+        }
+        get nodeList() {
+            const nodes = this.nodes;
+            return nodes?.values().reduce((acc, node) => {
+                if (node) {
+                    acc.push(node);
+                }
+                return acc;
+            }, []) ?? [];
         }
         resetSanity() {
             this.onMap = false;
@@ -114,7 +123,7 @@ const ApplyZone = (() => {
             this.extraLink = null;
         }
         removeUnusedNode() {
-            const nodelist = this.el.childNodes;
+            const nodelist = this.nodeList;
             const removeList = [];
             const nodesLength = nodelist.length;
             for (let i = 0; i < nodesLength; i++) {
@@ -142,15 +151,12 @@ const ApplyZone = (() => {
             });
         }
         sanityCheck() {
-            const el = this.el;
-            const innerHTML = this.el.innerHTML;
-        
             this.resetSanity();
-
-            const nodes = this.nodes;
-
+            
+            const el = this.el;
+            const innerHTML = this.el?.innerHTML;
+            const nodes = this.nodeList;
             for (const node of nodes) {
-                if (!node) continue;
                 if (node.nodeName === '#text' && node.textContent.has(mapContent)) {
                     this.onMap = true;
                 }
@@ -231,10 +237,7 @@ const ApplyZone = (() => {
 
         applyMsg() {
             const list = [];
-            for (const node of this.nodes) {
-                if (!node) {
-                    continue;
-                }
+            for (const node of this.nodeList) {
                 if (isIconImg(node) || isMacroLink(node) || node.textContent.has(mapContent)) {
                     break;
                 }
@@ -311,12 +314,10 @@ const ApplyZone = (() => {
 
         applyExtraLink() {
         // find get out/get in img or setting link or leave link or svg
-            const nodes = this.nodes;
+            const nodes = this.nodeList;
             let lastNode = null;
 
             for (const node of nodes) {
-                if (!node) continue;
-
                 if (isIconImg(node) && node.src.has('get_out', 'get_in')) {
                     lastNode = node;
                     break;

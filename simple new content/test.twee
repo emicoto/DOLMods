@@ -60,9 +60,12 @@ setup your UIBar
 <</widget>>
 
 <<widget "TesterOpinion">>
-<<=lanSwitch("thinks you're its master.", '觉得你是它的主人。')>>
+<<print C.npc['Tester'].displayname>> <<=lanSwitch("thinks you're its master.", '觉得你是它的主人。')>>
 <</widget>>
 
+<<widget "SamplerOpinion">>
+<<print C.npc['Sampler'].displayname>> <<=lanSwitch("thinks you're cool.", "觉得你很酷。")>>
+<</widget>>
 
 <<widget "RobinOpinionIcon">>
 	<<if C.npc.Robin.love gte 30>>

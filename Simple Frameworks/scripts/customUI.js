@@ -117,7 +117,7 @@ const HeaderMsg = (() => {
         const msgdiv = document.createElement('div');
         msgdiv.id = 'headerMsg';
 
-        document.getElementById('passage-content').insertAdjacentElement('afterbegin', msgdiv);
+        document.getElementById('passage-header').insertAdjacentElement('afterbegin', msgdiv);
     }
 
     function show() {

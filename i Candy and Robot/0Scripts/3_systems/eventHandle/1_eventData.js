@@ -1,3 +1,10 @@
+//----------------------------------------------------------------
+// SceneData
+//
+// this class is used to store the basic data of the event
+// and define how the event will be triggered and run
+//----------------------------------------------------------------
+
 class SceneData {
     /**
      * when the event is a branch, the eventId is the branchId
@@ -40,6 +47,7 @@ class SceneData {
     }
 
     /**
+     * set value to any property
      * @param {string} prop
      * @param {*} value
      * @returns {SceneData}
@@ -50,6 +58,7 @@ class SceneData {
     }
 
     /**
+     * set the eventtype of this event
      * @param {EventType} type
      * @returns {SceneData}
      */
@@ -59,6 +68,7 @@ class SceneData {
     }
 
     /**
+     * set the trigger of this event
      * @param {triggerOption} trigger
      * @returns {SceneData}
      */
@@ -70,11 +80,17 @@ class SceneData {
         return this;
     }
 
+    /**
+     * set flag fields of this event which will be checked when the event is triggered
+     * @param  {...string} fields
+     * @returns {SceneData}
+     */
     Flag(...fields) {
         this.flagfields = fields;
         return this;
     }
     /**
+     * set the condition of this event
      * @param {function} callback
      * @returns {SceneData}
      */
@@ -83,11 +99,21 @@ class SceneData {
         return this;
     }
 
+    /**
+     * enroll the character of this event
+     * @param  {...string} chara
+     * @returns {SceneData}
+     */
     Character(...chara) {
         this.character = chara;
         return this;
     }
 
+    /**
+     * enroll the branch of this event
+     * @param  {...SceneData} branches
+     * @returns {SceneData}
+     */
     Branches(...branches) {
         branches.forEach(branch => {
             if (branch.name) {
@@ -103,14 +129,28 @@ class SceneData {
         return this;
     }
 
+    /**
+     * set the branch size if the event has random branch
+     * @param {number} size
+     * @returns {SceneData}
+     */
     RandomBranch(size = 2) {
         this.randomBranch = size;
         return this;
     }
 
     /**
+     * set actions when the event is running
      * @param {actionType} action
-     * the X should be number or branchId
+     * actiontype: nextButton/leave/onPhase/before/after/branch_X/phase_X, X is the number or id of the branch or phase
+     * the action will be triggered when the condition is met
+     * nextButton: trigger when the next button is clicked
+     * leave: trigger when the event is leaving
+     * onPhase: trigger when the phase is changing
+     * before: trigger before the event starts
+     * after: trigger after the event ends
+     * branch_X: trigger when the branch X starts
+     * phase_X: trigger when the phase X starts
      * @param {function | string} arg the string should be twee code
      * @returns {SceneData}
      */
@@ -136,6 +176,10 @@ class SceneData {
         return this;
     }
     /**
+     * set the event play type
+     * is a normal scene (need match location)
+     * or forced to jump to another scene
+     * or just run on the local location stage
      * @param {'scene' | 'jump' | 'local'} type
      * @param {string} arg
      * @returns {SceneData}
@@ -150,6 +194,11 @@ class SceneData {
         return this;
     }
 
+    /**
+     * any other setting of the event
+     * @param {any} setting
+     * @returns {SceneData}
+     */
     Setting(setting) {
         for (const key in setting) {
             this[key] = setting[key];
@@ -157,6 +206,11 @@ class SceneData {
         return this;
     }
 
+    /**
+     * jump to the specific passage
+     * @param {string} fulltitle
+     * @returns {SceneData}
+     */
     Jump(fulltitle) {
         this.jumpToward = fulltitle;
         return this;
@@ -215,6 +269,12 @@ class SceneData {
     }
 }
 
+//----------------------------------------------------------------
+// ActionData
+//
+// this class is used to set up an generic action to multiple locations
+// the action button will show up when the condition is met
+//----------------------------------------------------------------
 class ActionData {
     /**
      * @param {string} actionId
@@ -227,6 +287,11 @@ class ActionData {
         this.displayname = {};
     }
 
+    /**
+     * the condition of availability
+     * @param {function} callback
+     * @returns {ActionData}
+     */
     Cond(callback) {
         this.cond = callback;
         return this;
@@ -248,16 +313,33 @@ class ActionData {
         return this;
     }
 
+    /**
+     * set the action script when the action is triggered
+     * @param {string} tweecode
+     * @returns {ActionData}
+     */
     Action(tweecode = '') {
         this.actionCode = tweecode;
+        return this;
     }
 
+    /**
+     * enroll this action to specific location
+     * @param  {...string} location
+     * @returns {ActionData}
+     */
     Location(...location) {
         this.location = location;
         return this;
     }
 }
 
+//----------------------------------------------------------------
+// SeriesData
+//
+// this class is used to store the event series data
+// and provide the basic functions to manage the events
+//----------------------------------------------------------------
 class SeriesData {
     /**
      * @param {string} seriesId
@@ -362,6 +444,13 @@ class SeriesData {
     }
 }
 
+
+//----------------------------------------------------------------
+// Scene
+//
+// this class is used to generate a running scene from the event data
+// and provide some basic functions to help the scene running
+//----------------------------------------------------------------
 class Scene {
     /**
      * @param {string} type

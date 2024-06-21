@@ -35,9 +35,7 @@
     "scripts/simpleMacros.js",
     "scripts/timeHandler.js"
   ],
-  "tweeFileList": [
-    "twee/SimpleWidget.twee"
-  ],
+  "tweeFileList": [],
   "imgFileList": [],
   "additionFile": [
     "readme.txt"
@@ -60,5 +58,5 @@
       "version": "^1.0.0"
     }
   ],
-  "build": "3"
+  "build": "10"
 }

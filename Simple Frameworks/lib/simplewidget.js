@@ -167,7 +167,7 @@ window.simpleFrameworks = {
 <<if SugarCube.Macro.has($args[0]+'Opinion')>>
     <<print '<<'+$args[0]+'Opinion>>'>>
 <<else>>
-    <<print C.npc[_npc].description>>
+    <<print C.npc[_npc].displayname>>
     <<if C.npc[_npc].love gte $npclovehigh>>
         <<if C.npc[_npc].dom gte $npcdomhigh>>
             <<=lanSwitch(
