@@ -1,6 +1,7 @@
 :: ASimpleContentTest [widget]
 <<widget "aSimpleTest">>
     <div id='test'>just a simple test. make this show at top of every passage!</div>
+	<<link 'Click to Test Passage' 'a Test Passage'>><</link>>
 <</widget>>
 
 <<widget "myOptionsA">>
@@ -80,3 +81,10 @@ setup your UIBar
 	<img id="location" class="CustomLocation" @src="_imgLoc + _weather_display + '/almond_path' + _dayState + '.png'">
 <</if>>
 <</widget>>
+
+
+:: a Test Passage
+
+这是一个测试。点击链接返回doms街道。
+
+<<link 'back' 'Domus Street'>><</link>>

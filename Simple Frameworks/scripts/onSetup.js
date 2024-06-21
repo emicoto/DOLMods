@@ -538,3 +538,16 @@ postdisplay.onPost = function () {
         setup.iModInit = false;
     }
 };
+
+
+$(document).on(':passageinit', data => {
+    console.log('[SFDebug] passageinit:',data?.passage);
+    if (data.passage && data.passage.title == 'Start') {
+        return;
+    }
+
+    const source = data.passage.element.innerText;
+    if (!source.includes('passage-content')) {
+        data.passage.element.innerText = `<div id='passage-content'>${source}</div>`;
+    }
+});
