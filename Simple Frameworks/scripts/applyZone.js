@@ -4,7 +4,7 @@ const ApplyZone = (() => {
 
     const mapContent = ['Places of', 'Points of', '可访问地点', '感兴趣地点'];
 
-    const nextContent = ['Next', '继续', 'Continue', 'Move on', '前进', '下一步', 'Accept', 'Refuse', 'Reject', '接受', '拒绝', 'Return', '返回', 'Finish', 'End', '结束', 'Obey', '遵从', '服从', '遵命', '听从', '听命', 'Ignore', '忽略', '无视', '不理', '忽略', 'Agree', 'Nod', '同意', '点头', 'Deny', 'Disagree','否认', '反对', 'Decline'];
+    const nextContent = ['Next', '继续', 'Continue', '下一步', 'Accept', 'Refuse', 'Reject', '接受', '拒绝', 'Finish', 'End', '结束', 'Obey', '遵从', '服从', '遵命', '听从', '听命', 'Ignore', '忽略', '无视', '不理', '忽略', 'Agree', 'Nod', '同意', '点头', 'Deny', 'Disagree','否认', '反对', 'Decline', 'Run', '跑'];
 
     const lastContent = ['Setting', '设置', 'Option', 'Config', 'Leave', '离开', '出去', 'Get Out'];
 
@@ -53,7 +53,7 @@ const ApplyZone = (() => {
     function eventCheck() {
         const event = V.event;
 
-        if (!event) {
+        if (!event || typeof T.eventpoolRunning === 'string') {
             return false;
         }
 
@@ -191,8 +191,8 @@ const ApplyZone = (() => {
 
             const links = this.el.querySelectorAll('.macro-link');
 
-            // no link zone on event page and streetevent page
-            if (links.length <= 1 || eventCheck()) {
+            // no link zone on event page and streetevent page and aleast has 2 links
+            if (links.length <= 1 || eventCheck() || this.hasNext === true) {
                 return;
             }
 
@@ -200,7 +200,7 @@ const ApplyZone = (() => {
                 this.applyBeforeLink();
             }
 
-            // no extra link zone on some page aleast has more than 2 links
+            // no extra link zone on some page aleast has 3 links
             if (links.length <= 2) {
                 return;
             }
@@ -336,7 +336,7 @@ const ApplyZone = (() => {
                 }
             }
 
-            if (lastNode == null && (this.onMap || !this.hasNext)) {
+            if (lastNode == null && this.onMap) {
                 lastNode = nodes[nodes.length - 1];
             }
 
@@ -356,4 +356,33 @@ Object.defineProperty(window, 'ApplyZone', {
     value        : ApplyZone,
     writable     : false,
     configurable : false
+});
+
+
+Macro.delete('runeventpool');
+
+Macro.add('runeventpool', {
+    skipArgs : true,
+    handler() {
+        let pick = T.eventpool.find(e => e.name === V.eventPoolOverride);
+        if (pick) {
+            delete V.eventPoolOverride;
+        }
+        else if (T.eventpool.includes(V.eventPoolOverride)) {
+            pick = V.eventPoolOverride;
+            delete V.eventPoolOverride;
+        }
+        else {
+            pick = rollWeightedRandomFromArray(T.eventpool);
+        }
+        if (!pick) throw new Error('Event pool is empty');
+        // Jimmy: For tracking where in the code you may be.
+        // E.G: ['eventAmbient', >>'autumn_anystreet_2'<<, 'generate1']
+        T.eventpoolRunning = pick.name;
+        console.log('[SFDebug/runeventpool] EventPool:', T.eventpoolRunning, pick);
+
+        DOL.Stack.push(pick.name);
+        jQuery(this.output).wiki(pick.content);
+        DOL.Stack.pop();
+    }
 });
