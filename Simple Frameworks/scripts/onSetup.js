@@ -513,6 +513,7 @@ $(document).on(':switchlanguage', () => {
 
 
 setup.iModInit = true;
+
 function updateNPCs() {
     setup.iModOnLoad = true;
 }
@@ -520,7 +521,12 @@ function updateNPCs() {
 Save.onLoad.add(updateNPCs);
 
 postdisplay.onPost = function () {
-    if (!V.passage || V.passage == 'Start' || V.passage == 'Downgrade Waiting Room') {
+    const passage = this;
+    if (!passage || passage.tags.has('widget')) {
+        return;
+    }
+
+    if (!V.passage || passage.title == 'Start' || passage.title == 'Downgrade Waiting Room' || V.passage == 'Start' || V.passage == 'Downgrade Waiting Room') {
         return;
     }
 
@@ -530,8 +536,19 @@ postdisplay.onPost = function () {
     else {
         ApplyZone.applyZone();
     }
+};
 
-    if (setup.iModOnLoad || setup.iModInit) {
+postdisplay.onPostNpc = function () {
+    const passage = this;
+    if (!passage || passage.tags.has('widget')) {
+        return;
+    }
+
+    if (!V.passage || passage.title == 'Start' || passage.title == 'Downgrade Waiting Room' || V.passage == 'Start' || V.passage == 'Downgrade Waiting Room') {
+        return;
+    }
+
+    if (setup.iModOnLoad || setup.iModInit || setup.iModOnDowngrade) {
         NamedNPC.clear();
         NamedNPC.update();
         setup.iModOnLoad = false;
@@ -539,15 +556,19 @@ postdisplay.onPost = function () {
     }
 };
 
-
-$(document).on(':passageinit', data => {
-    console.log('[SFDebug] passageinit:',data?.passage);
-    if (data.passage && data.passage.title == 'Start') {
+prehistory.updatePassageDiv = function () {
+    console.log('[SFDebug] onPreInit:', this, this.title, this.element);
+    const passage = this;
+    if (!passage || passage.tags.has('widget')) {
         return;
     }
 
-    const source = data.passage.element.innerText;
-    if (!source.includes('passage-content')) {
-        data.passage.element.innerText = `<div id='passage-content'>${source}</div>`;
+    if (passage.title == 'Start' || passage.title == 'Downgrade Waiting Room') {
+        return;
     }
-});
+
+    const source = passage.element.innerText;
+    if (!source.includes('passage-content')) {
+        passage.element.innerText = `<div id='passage-content'>${source}</div>`;
+    }
+};

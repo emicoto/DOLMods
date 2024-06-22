@@ -190,11 +190,11 @@
             },
             {
                 src : '<<NPC_CN_NAME _npc>>',
-                to  : 'C.npc[_npc].displayname'
+                to  : '<<=C.npc[_npc].displayname>>'
             },
             {
                 src : '\t\t\t_npc',
-                to  : '\t\t\tC.npc[_npc].displayname'
+                to  : '\t\t\t<<=C.npc[_npc].displayname>>'
             }
         ],
         Widgets : [
