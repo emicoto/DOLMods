@@ -329,7 +329,7 @@ const iEvent = (() => {
     const checker = {
         // 在开始前进行检查，如果不符合条件则报错并重置。
         error(scene, message) {
-            console.error('event handle system on error:', Tvar.passage, Tvar.passagePrev, message, scene);
+            console.error('[SF/EventHandle] found error on checker:', Tvar.passage, Tvar.passagePrev, message, scene);
 
             setTimeout(() => {
                 new Wikifier('#passage-footer', `<<error {
@@ -519,7 +519,7 @@ const iEvent = (() => {
                 scene.init = true;
             }
             
-            console.log('event handle system on setEvent:', scene, Tvar);
+            console.log('[SF/EventHandle] run on setEvent:', scene, Tvar);
         },
 
         /**
@@ -571,7 +571,7 @@ const iEvent = (() => {
                 Tvar.nextButton = false;
             }
 
-            console.log('event handle system on initEvent:', scene, Tvar, V.phase);
+            console.log('[SF/EventHandle] run on initEvent:', scene, Tvar, V.phase);
 
             T.link = true;
         },
@@ -888,7 +888,7 @@ const iEvent = (() => {
                     env.mainStage = undefined;
                 }
             }
-            console.log('initStage:', env.stage, passage);
+            console.log('[SF/EventHandle] run on initStage:', env.stage, passage);
         },
 
         /**
@@ -908,7 +908,7 @@ const iEvent = (() => {
             if (tv?.scene?.start || env.combat == 1) return;
             
             console.log(
-                'event handle system on main cycle on passage init.\n',
+                '[SF/EventHandle] run on main cycle on passage init.\n',
                 'passage:',psg.title,
                 'prev passage:', lastPsg.title,
                 'cutrent stage:', env.stage,
@@ -1127,7 +1127,32 @@ const iEvent = (() => {
         }
     };
 
+    function initAllData() {
+        for (const key in database.events) {
+            sortData(database.events[key]);
+        }
+
+        if (typeof Tvar == 'undefined' || typeof Tvar.tvar == 'undefined') {
+            V.tvar = {
+                init : 1
+            };
+            Object.defineProperty(window, 'Tvar', { get : () => V.tvar });
+            
+            console.log('[SF/EventHandle] variable Tvar is ready:', Tvar, V.tvar);
+        }
+
+        if (typeof V.eFlags == 'undefined' || typeof Flags == 'undefined') {
+            V.eFlags = {
+                init : 1
+            };
+            Object.defineProperty(window, 'Flags', { get : () => V.eFlags });
+
+            console.log('[SF/EventHandle] variable Flags ready:', Flags, V.eFlags);
+        }
+    }
+
     return Object.defineProperties({}, {
+        init     : { get : () => initAllData },
         data     : { get : () => database },
         getData  : { value : getData },
         sortData : { value : sortData },
@@ -1143,7 +1168,6 @@ const iEvent = (() => {
         playScene : { value : playScene },
 
         scene : { get : () => sceneHandle },
-        cycle : { get : () => lifeCycle }
-
+        cycle : { get : () => lifeCycle },
     });
 })();

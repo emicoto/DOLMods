@@ -68,10 +68,7 @@ const htmlTools = {
     },
 
     append(pos, eId) {
-        let element = document.getElementById(eId);
-        if (element) {
-            return element;
-        }
+        let element = this.createDiv(eId);
 
         switch (pos) {
         case 'before':
@@ -81,13 +78,9 @@ const htmlTools = {
             element = this.appendPatch(pos, eId);
             break;
         case 'beforemain':
-            element = document.createElement('div');
-            element.id = eId;
             document.getElementById('passage-content').insertAdjacentElement('afterbegin', element);
             break;
         case 'aftermain':
-            element = document.createElement('div');
-            element.id = eId;
             document.getElementById('passage-content').insertAdjacentElement('beforeend', element);
             break;
         }
@@ -131,6 +124,131 @@ const htmlTools = {
         new Wikifier(null, `<<replace "#patchlink">>${newlink}<</replace>>`);
 
         return newlinkPatch;
+    },
+
+    get applyCount() {
+        return this._count ?? 0;
+    },
+
+    set applyCount(value) {
+        this._count = value;
+    },
+
+    _count : 0,
+
+    createDiv(eId = 'patchContent') {
+        const element = document.getElementById(eId);
+        if (element) {
+            return element;
+        }
+
+        const div = document.createElement('div');
+        div.id = eId;
+        return div;
+    },
+
+    wikify(eId = 'patchContent', content) {
+        new Wikifier(null, `<<append "#${eId}">>${content}<</append>>`);
+    },
+
+    /**
+     * @description append content to certain element.
+     * first parameter is the type of element, it can be 'text', 'link', 'div', 'span', 'u', 'b', 'i'
+     * second parameter is the id of the element or the text of the element
+     * third parameter is the content to append
+     * fourth parameter can set the id of the new div
+     * @param {string} tag
+     * @param {string | language | LangType} txt
+     * @param {string} content
+     * @example
+     * appendTo('text', 'you're townie.', '<<anywidget>> or text')
+     * - will append a new div with content after the specified text node
+     * appendTo('link', ['ENLinkText', 'CNLinkText'], '<<anywidget>> or text')
+     * - will append a new div with content after the specified link
+     * appendTo('div', 'divId', '<<anywidget>> or text')
+     * - will append a new div with content after the specified div
+     */
+    appendTo(tag, txt, content, divId = null) {
+        const eType = tag;
+        const eId = txt;
+        const count = this.applyCount + 1;
+        const dId = divId === null ? `patch${tag}${count}` : divId;
+
+        // if the tag is a text node
+        if (eType === 'text') {
+            const textNodes = document.getElementById('passage-content').childNodes;
+            const txt = lanSwitch(eId);
+            let node;
+            for (let i = 0; i < textNodes.length; i++) {
+                if (textNodes[i].textContent.has(txt)) {
+                    node = textNodes[i];
+                    break;
+                }
+            }
+            // append the content after the text node
+            const div = this.createDiv(dId);
+            node.parentNode.insertBefore(div, node.nextSibling);
+            this.wikify(dId, content);
+        }
+        else if (eType === 'link') {
+            const links = document.getElementsByClassName('macro-link');
+            const txt = lanSwitch(eId);
+            let node;
+            for (let i = 0; i < links.length; i++) {
+                if (links[i].textContent.has(txt)) {
+                    node = links[i];
+                    break;
+                }
+            }
+            // append the content after the link
+            const div = this.createDiv(dId);
+            node.parentNode.insertBefore(div, node.nextSibling);
+            this.wikify(dId, content);
+        }
+        else if (eType === 'span' || eType === 'u' || eType === 'b' || eType === 'i') {
+            let nodes;
+            switch (eType) {
+            case 'span':
+                nodes = document.getElementsByTagName('span');
+                break;
+            case 'u':
+                nodes = document.getElementsByTagName('u');
+                break;
+            case 'b':
+                nodes = document.getElementsByTagName('b');
+                break;
+            case 'i':
+                nodes = document.getElementsByTagName('i');
+                break;
+            }
+
+            const txt = lanSwitch(eId);
+            let node;
+            for (let i = 0; i < nodes.length; i++) {
+                if (nodes[i].textContent.has(txt)) {
+                    node = nodes[i];
+                    break;
+                }
+            }
+            // append the content after the span
+            const div = this.createDiv(dId);
+            node.insertAdjacentElement('afterend', div);
+            this.wikify(dId, content);
+        }
+        else if (eId) {
+            const element = document.getElementById(eId);
+            if (!element) {
+                throw new Error(`Element with id ${eId} not found`);
+            }
+
+            // append the content after the element
+            const div = this.createDiv(`patch${eId}${count}`);
+            element.insertAdjacentElement('afterend', div);
+            this.wikify(`patch${eId}${count}`, content);
+        }
+        else {
+            throw new Error('Invalid element type');
+        }
     },
 
     /**

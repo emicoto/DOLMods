@@ -26,7 +26,7 @@ const iUtil = {
 
     updateObj(source, target, prop) {
         if (!prop) {
-            if (typeof target !== typeof source) {
+            if (typeof target !== typeof source && source !== undefined) {
                 return source;
             }
 
@@ -34,13 +34,8 @@ const iUtil = {
                 for (const key in source) {
                     iUtil.updateObj(source, target, key);
                 }
-                for (const key in target) {
-                    iUtil.updateObj(source, target, key);
-                }
-
                 return target;
             }
-			
             return target;
         }
 
@@ -53,17 +48,16 @@ const iUtil = {
                 for (const key in source[prop]) {
                     iUtil.updateObj(source[prop], target[prop], key);
                 }
-                for (const key in target[prop]) {
-                    iUtil.updateObj(source[prop], target[prop], key);
-                }
             }
         }
     },
 
+    // 需替换成新的方法
     noEventRunning() {
         return V.eventskip == 0 && V.combat == 0 && V.phase == 0;
     },
 
+    //需替换成地图管理器的方法
     getLocation() {
         // 巴士里直接返回巴士
         if (V.passage == 'Bus' || V.passage.includes('Bus')) {

@@ -349,6 +349,11 @@ const ApplyZone = (() => {
         }
     }
 
+    Object.defineProperties(window, {
+        eventCheck : { value : eventCheck },
+        createDiv  : { value : createDiv }
+    });
+
     return ApplyZone;
 })();
 
