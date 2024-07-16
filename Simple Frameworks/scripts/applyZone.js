@@ -108,12 +108,7 @@ const ApplyZone = (() => {
         }
         get nodeList() {
             const nodes = this.nodes;
-            return nodes?.values()?.reduce((acc, node) => {
-                if (node) {
-                    acc.push(node);
-                }
-                return acc;
-            }, []) ?? [];
+            return nodes ? [...nodes.values()].filter(node => node) : [];
         }
         resetSanity() {
             this.onMap = false;
