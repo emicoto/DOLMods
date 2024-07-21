@@ -31,23 +31,23 @@ const ApplyZone = (() => {
     }
 
     function isMacroLink(node) {
-        return node.nodeName === 'A' && node.classList.contains('macro-link');
+        return node?.nodeName === 'A' && node.classList.contains('macro-link');
     }
 
     function isIconImg(node) {
-        return node.nodeName === 'IMG' && node.classList.contains('icon');
+        return node?.nodeName === 'IMG' && node.classList.contains('icon');
     }
 
     function isBreakline(node) {
-        return node.nodeName === 'BR' || node.nodeName === 'DIV' || node.nodeName === 'HR';
+        return node?.nodeName === 'BR' || node?.nodeName === 'DIV' || node?.nodeName === 'HR';
     }
 
     function isMap(node) {
-        return node.nodeName.has('svg', 'SVG') || node.nodeName === 'DIV' && node.id == 'divmap';
+        return node?.nodeName.has('svg', 'SVG') || node?.nodeName === 'DIV' && node.id == 'divmap';
     }
 
     function isText(node) {
-        return node.nodeName === '#text' || node.nodeName === 'SPAN' || node.nodeName === 'U' || node.nodeName === 'I' || node.nodeName === 'B';
+        return node?.nodeName === '#text' || node?.nodeName === 'SPAN' || node?.nodeName === 'U' || node?.nodeName === 'I' || node?.nodeName === 'B';
     }
 
     function eventCheck() {
@@ -116,6 +116,7 @@ const ApplyZone = (() => {
             this.msgZone = null;
             this.beforeLink = null;
             this.extraLink = null;
+            this.functionPage = false;
         }
         removeUnusedNode() {
             const nodelist = this.nodeList;
@@ -123,7 +124,7 @@ const ApplyZone = (() => {
             const nodesLength = nodelist.length;
             for (let i = 0; i < nodesLength; i++) {
                 const node = nodelist[i];
-                switch (node.nodeName) {
+                switch (node?.nodeName) {
                 case '#text':
                 // eslint-disable-next-line no-case-declarations
                     const txt = removeEmptyTextNode(node);
@@ -152,10 +153,10 @@ const ApplyZone = (() => {
             const innerHTML = this.el?.innerHTML;
             const nodes = this.nodeList;
             for (const node of nodes) {
-                if (node.nodeName === '#text' && node.textContent.has(mapContent)) {
+                if (node?.nodeName === '#text' && node.textContent.has(mapContent)) {
                     this.onMap = true;
                 }
-                if (node.nodeName === 'A' && node.classList.contains('macro-link') && node.textContent.has(nextContent)) {
+                if (node?.nodeName === 'A' && node.classList.contains('macro-link') && node.textContent.has(nextContent)) {
                     this.hasNext = true;
                 }
             }
@@ -171,6 +172,9 @@ const ApplyZone = (() => {
             if (innerHTML.has('extraLink')) {
                 this.extraLink = el.querySelector('#extraLink');
             }
+            if (this.el.querySelector('input')) {
+                this.functionPage = true;
+            }
         }
         apply() {
             if (this.el == null) {
@@ -182,6 +186,10 @@ const ApplyZone = (() => {
 
             if (this.msgZone == null) {
                 this.applyMsg();
+            }
+
+            if (this.functionPage) {
+                return;
             }
 
             const links = this.el.querySelectorAll('.macro-link');
@@ -265,8 +273,14 @@ const ApplyZone = (() => {
                 stalk.parentNode.insertBefore(addMsg, stalk);
                 return;
             }
-
-            node = this.nodes[1];
+            // find text div before the status div
+            const divs = this.el.querySelectorAll('div');
+            for (let i = 0; i < divs.length; i++) {
+                if (divs[i].innerHTML.count('<span class=') == 4 && divs[i].innerHTML.count('<br>') == 2) {
+                    node = divs[i - 1];
+                    break;
+                }
+            }
             node.appendChild(addMsg);
         }
 
@@ -275,6 +289,17 @@ const ApplyZone = (() => {
 
             // check if the previous valid node isnot br and div and hr
             let prev = findValidPrevNode(link);
+
+            // if not found then just insert to the lastSibling
+            if (prev == null) {
+                prev = link.previousSibling;
+            }
+
+            // if still not found then just insert before the link
+            if (prev == null) {
+                prev = link;
+            }
+
             if (!isBreakline(prev)) {
             // then find the previous br or div
                 let start = 0;

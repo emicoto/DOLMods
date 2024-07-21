@@ -236,7 +236,10 @@ function longerCombatInit() {
             time      : 1
         });
 
-        delete V.iModConfigs.longerMult;
+        // delete old variables
+        if (V.iModConfigs.longerMult) {
+            delete V.iModConfigs.longerMult;
+        }
     }
 }
 
@@ -258,5 +261,15 @@ $(document).on(':passageinit', () => {
 $(document).on(':passagedisplay', () => {
     if (T.outputHtml) {
         new Wikifier(null, `<<append #addAfterMsg>>${T.outputHtml}<br><</append>>`);
+    }
+});
+
+
+TimeHandle.set('onBefore', {
+    eventId : 'longerCombat',
+    func(passData) {
+        if (V.combat == 1 && V.stalk !== true) {
+            passData.passed = iMod.getCf('longerCombat').time * 60;
+        }
     }
 });

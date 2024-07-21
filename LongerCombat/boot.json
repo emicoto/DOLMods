@@ -1,6 +1,6 @@
 {
   "name": "LongerCombat",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "styleFileList": [],
   "scriptFileList_inject_early": [
     "registLC.js"
@@ -20,13 +20,7 @@
       "modName": "TweeReplacer",
       "addonName": "TweeReplacerAddon",
       "modVersion": "1.0.0",
-      "params": [
-        {
-          "passage": "Widgets Effects",
-          "findString": "<<pass 10 seconds>>",
-          "replace": "<<set _timepass = iMod.getCf('longerCombat').time>><<pass _timepass>>"
-        }
-      ]
+      "params": []
     }
   ],
   "dependenceInfo": [
@@ -40,8 +34,8 @@
     },
     {
       "modName": "Simple Frameworks",
-      "version": "^1.6.0"
+      "version": "^1.15.0"
     }
   ],
-  "build": "22"
+  "build": "1"
 }

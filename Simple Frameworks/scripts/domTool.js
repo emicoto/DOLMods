@@ -360,7 +360,7 @@ function parseXml(xml, arrayTags) {
     else throw new Error('cannot parse xml string!');
 
     function parseNode(xmlNode, result) {
-        if (xmlNode.nodeName === '#text') {
+        if (xmlnode?.nodeName === '#text') {
             const v = xmlNode.nodeValue;
             if (v.trim()) result['#text'] = v;
             return;
@@ -372,15 +372,15 @@ function parseXml(xml, arrayTags) {
         }
 
         const jsonNode = {};
-        const existing = result[xmlNode.nodeName];
+        const existing = result[xmlnode?.nodeName];
 
         if (existing) {
-            if (!Array.isArray(existing)) result[xmlNode.nodeName] = [existing, jsonNode];
-            else result[xmlNode.nodeName].push(jsonNode);
+            if (!Array.isArray(existing)) result[xmlnode?.nodeName] = [existing, jsonNode];
+            else result[xmlnode?.nodeName].push(jsonNode);
         }
         else {
-            if (arrayTags && arrayTags.indexOf(xmlNode.nodeName) !== -1) result[xmlNode.nodeName] = [jsonNode];
-            else result[xmlNode.nodeName] = jsonNode;
+            if (arrayTags && arrayTags.indexOf(xmlnode?.nodeName) !== -1) result[xmlnode?.nodeName] = [jsonNode];
+            else result[xmlnode?.nodeName] = jsonNode;
         }
 
         if (xmlNode.attributes) {
