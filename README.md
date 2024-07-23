@@ -74,6 +74,8 @@ most content builded on old version, need update to ML version now.
 
 before install need install Simple framework. loadorder: Simple Frameworks(as earlier as possible)=> longer combat => i Candy Robot(as later ad possible)
 
+吃喝修复分支版本 | a fork version [here](https://github.com/MikasaBay/DOLMods)
+
 ## Snake Transform
 蛇的转化。目前只完成显示逻辑。
 设计提案与像素图：土豆怂怂主厨
