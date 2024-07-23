@@ -276,10 +276,13 @@ const ApplyZone = (() => {
             // find text div before the status div
             const divs = this.el.querySelectorAll('div');
             for (let i = 0; i < divs.length; i++) {
-                if (divs[i].innerHTML.count('<span class=') == 4 && divs[i].innerHTML.count('<br>') == 2) {
-                    node = divs[i - 1];
+                if (divs[i].innerHTML.includes('macro-timed')) {
+                    node = divs[i - 2];
                     break;
                 }
+            }
+            if (!node) {
+                node = divs[1];
             }
             node.appendChild(addMsg);
         }

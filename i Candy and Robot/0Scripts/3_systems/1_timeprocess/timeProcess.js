@@ -322,7 +322,7 @@ const iCandyTimeProcess = (() => {
     
     function timeEffectHandle() {
         const html = [];
-        const { event } = TimeHandle;
+        const { event } = timeRec;
     
         console.log('time effect handle:', clone(event));
     

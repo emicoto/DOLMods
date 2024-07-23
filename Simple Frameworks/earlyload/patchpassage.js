@@ -145,12 +145,6 @@
                 applybefore : '\n<<run NamedNPC.init()>>\n'
             }
         ],
-        'Widgets variablesStatic' : [
-            {
-                src : '<</widget>>',
-                to  : '<<iModInit>>\n\n<</widget>>'
-            }
-        ],
         Social : [
             {
                 src         : 'T.importantNPCs = T.importantNpcOrder',
@@ -533,6 +527,10 @@
 
         passageData.set('PassageDone', data);
 
+        data = passageData.get('StoryInit');
+        data.content += '\n<<iModInit>>\n';
+        passageData.set('StoryInit', data);
+        
         return passageData;
     }
 	
