@@ -1,4 +1,3 @@
-
 const ApplyZone = (() => {
     'use strict';
 
@@ -7,6 +6,7 @@ const ApplyZone = (() => {
     const nextContent = ['Next', '继续', 'Continue', '下一步', 'Accept', 'Refuse', 'Reject', '接受', '拒绝', 'Finish', 'End', '结束', 'Obey', '遵从', '服从', '遵命', '听从', '听命', 'Ignore', '忽略', '无视', '不理', '忽略', 'Agree', 'Nod', '同意', '点头', 'Deny', 'Disagree','否认', '反对', 'Decline', 'Run', '跑'];
 
     const lastContent = ['Setting', '设置', 'Option', 'Config', 'Leave', '离开', '出去', 'Get Out'];
+    const entranceImg = ['get_out', 'get_in', 'stair', 'door', 'ladder'];
 
     function removeEmptyTextNode(node) {
         if (node?.nodeName === '#text') {
@@ -31,7 +31,7 @@ const ApplyZone = (() => {
     }
 
     function isMacroLink(node) {
-        return node?.nodeName === 'A' && node.classList.contains('macro-link');
+        return node?.nodeName == 'A' && node?.classList.contains('macro-link') || node?.nodeName == 'button';
     }
 
     function isIconImg(node) {
@@ -39,7 +39,7 @@ const ApplyZone = (() => {
     }
 
     function isBreakline(node) {
-        return node?.nodeName === 'BR' || node?.nodeName === 'DIV' || node?.nodeName === 'HR';
+        return node?.nodeName === 'BR' || node?.nodeName === 'HR';
     }
 
     function isMap(node) {
@@ -47,13 +47,17 @@ const ApplyZone = (() => {
     }
 
     function isText(node) {
-        return node?.nodeName === '#text' || node?.nodeName === 'SPAN' || node?.nodeName === 'U' || node?.nodeName === 'I' || node?.nodeName === 'B';
+        return node?.nodeName === '#text' || node?.nodeName === 'SPAN' || node?.nodeName === 'U' || node?.nodeName === 'I' || node?.nodeName === 'B' || node?.nodeName === 'STRONG' || node?.nodeName === 'DIV' && node.innerHTML.has('input', 'textarea', 'select') === false;
     }
 
     function eventCheck() {
         const event = V.event;
 
         if (!event || typeof T.eventpoolRunning === 'string') {
+            return false;
+        }
+
+        if (V.phase !== 0) {
             return false;
         }
 
@@ -67,6 +71,94 @@ const ApplyZone = (() => {
         }
 
         return false;
+    }
+
+    function hasInput(doc) {
+        return doc.querySelector('input') || doc.querySelector('textarea') || doc.querySelector('select') || doc.querySelector('mouse');
+    }
+
+    function isInput(node) {
+        return node?.nodeName === 'INPUT' || node?.nodeName === 'TEXTAREA' || node?.nodeName === 'SELECT';
+    }
+
+    function findInteractiveElement(parentNode) {
+        const nodes = parentNode.childNodes;
+        for (const node of nodes) {
+            if (isMacroLink(node)) {
+                return node;
+            }
+            if (isInput(node) === false && node.childNodes.length > 0) {
+                const el = findInteractiveElement(node);
+                if (el) {
+                    return el;
+                }
+            }
+        }
+        return null;
+    }
+
+    function getAllElements(node) {
+        const nodes = [];
+        const children = $(node).children();
+        for (const child of children) {
+            if (!child) continue;
+            
+            if (child.nodeName === 'DIV' && $(child).children().length > 0) {
+                nodes.push(...getAllElements(child));
+                continue;
+            }
+            
+            nodes.push(child);
+        }
+        return nodes;
+    }
+
+    function getAllNodes(node) {
+        const nodes = [];
+        const children = node.childNodes;
+        for (const child of children) {
+            if (!child) continue;
+
+            if (child.nodeName === 'DIV' && child.childNodes.length > 0) {
+                nodes.push(...getAllNodes(child));
+                continue;
+            }
+            nodes.push(child);
+        }
+        return nodes;
+    }
+
+    function removeUnusedNode(node) {
+        const nodelist = node.childNodes;
+        const removeList = [];
+        const nodesLength = nodelist.length;
+        for (let i = 0; i < nodesLength; i++) {
+            const node = nodelist[i];
+
+            switch (node?.nodeName) {
+            case 'DIV':
+                removeUnusedNode(node);
+                break;
+
+            case '#text':
+            // eslint-disable-next-line no-case-declarations
+                const txt = removeEmptyTextNode(node);
+                if (txt === null) {
+                    continue;
+                }
+                // eslint-disable-next-line no-case-declarations
+                const prev = i - 1 >= 0 ? nodelist[i - 1].nodeName == 'IMG' : false;
+                // eslint-disable-next-line no-case-declarations
+                const next = i + 1 < nodesLength ? nodelist[i + 1].nodeName == 'A' : false;
+                if (txt.length === 0 && !prev && !next) {
+                    removeList.push(node);
+                }
+                break;
+            }
+        }
+        removeList.forEach(node => {
+            node.parentNode.removeChild(node);
+        });
     }
 
     class ApplyZone {
@@ -106,10 +198,16 @@ const ApplyZone = (() => {
         get nodes() {
             return this.el?.childNodes ;
         }
-        get nodeList() {
-            const nodes = this.nodes;
-            return nodes ? [...nodes.values()].filter(node => node) : [];
+        // eslint-disable-next-line class-methods-use-this
+        get allElements() {
+            return getAllElements(this.el);
         }
+
+        // eslint-disable-next-line class-methods-use-this
+        get allNodes() {
+            return getAllNodes(this.el);
+        }
+
         resetSanity() {
             this.onMap = false;
             this.hasNext = false;
@@ -118,40 +216,14 @@ const ApplyZone = (() => {
             this.extraLink = null;
             this.functionPage = false;
         }
-        removeUnusedNode() {
-            const nodelist = this.nodeList;
-            const removeList = [];
-            const nodesLength = nodelist.length;
-            for (let i = 0; i < nodesLength; i++) {
-                const node = nodelist[i];
-                switch (node?.nodeName) {
-                case '#text':
-                // eslint-disable-next-line no-case-declarations
-                    const txt = removeEmptyTextNode(node);
-                    if (txt === null) {
-                        continue;
-                    }
-                    // eslint-disable-next-line no-case-declarations
-                    const prev = i - 1 >= 0 ? nodelist[i - 1].nodeName == 'IMG' : false;
-                    // eslint-disable-next-line no-case-declarations
-                    const next = i + 1 < nodesLength ? nodelist[i + 1].nodeName == 'A' : false;
-                    if (txt.length === 0 && !prev && !next) {
-                        removeList.push(node);
-                    }
-                    break;
-                }
-            }
-            const el = this.el;
-            removeList.forEach(node => {
-                el.removeChild(node);
-            });
-        }
         sanityCheck() {
             this.resetSanity();
-            
+
             const el = this.el;
-            const innerHTML = this.el?.innerHTML;
-            const nodes = this.nodeList;
+            if (el == null) return;
+
+            const innerHTML = this.el.innerHTML;
+            const nodes = this.allNodes;
             for (const node of nodes) {
                 if (node?.nodeName === '#text' && node.textContent.has(mapContent)) {
                     this.onMap = true;
@@ -172,7 +244,7 @@ const ApplyZone = (() => {
             if (innerHTML.has('extraLink')) {
                 this.extraLink = el.querySelector('#extraLink');
             }
-            if (this.el.querySelector('input')) {
+            if (hasInput(this.el)) {
                 this.functionPage = true;
             }
         }
@@ -181,13 +253,14 @@ const ApplyZone = (() => {
                 return;
             }
 
-            this.removeUnusedNode();
+            removeUnusedNode(this.el);
             this.sanityCheck();
 
             if (this.msgZone == null) {
                 this.applyMsg();
             }
 
+            // no link zone on function page
             if (this.functionPage) {
                 return;
             }
@@ -218,7 +291,7 @@ const ApplyZone = (() => {
                 return;
             }
 
-            this.removeUnusedNode();
+            removeUnusedNode(this.el);
             this.sanityCheck();
 
             if (this.msgZone == null) {
@@ -240,8 +313,8 @@ const ApplyZone = (() => {
 
         applyMsg() {
             const list = [];
-            for (const node of this.nodeList) {
-                if (isIconImg(node) || isMacroLink(node) || node.textContent.has(mapContent)) {
+            for (const node of this.allNodes) {
+                if (isIconImg(node) || isMacroLink(node) || node.textContent.has(mapContent) || node.nodeName === 'HR' || isInput(node)) {
                     break;
                 }
                 list.push(node);
@@ -254,6 +327,10 @@ const ApplyZone = (() => {
                     lastText = node;
                     break;
                 }
+            }
+            // if not found then just after to last node
+            if (lastText == null) {
+                lastText = list[list.length - 1];
             }
 
             // insert div after last text node;
@@ -290,68 +367,82 @@ const ApplyZone = (() => {
         applyBeforeLink() {
             const link = this.el.querySelector('.macro-link');
 
-            // finde the previous valid node
-            let prev = findValidPrevNode(link);
-            let skip = false;
+            // check if has previous elements sibling
+            let prev = link.previousElementSibling;
 
-            // if not found then just insert to the lastSibling
-            if (prev == null) {
-                prev = link.previousSibling;
+            // if previous is icon then find the previous element, if not found just keep it
+            if (prev && isIconImg(prev) && prev.previousElementSibling) {
+                prev = prev.previousElementSibling;
             }
 
-            // if still not found then just insert before the link
+            // if don't has element before means this is not valid page
             if (prev == null) {
-                prev = link;
-                skip = true;
+                return;
             }
 
-            if (!isBreakline(prev) && !skip) {
+            // get all elements on the page
+            const nodes = getAllElements(this.el);
+
             // then find the previous br or div
-                let start = 0;
-                const nodes = this.nodes;
-                for (let i = 0; i < nodes.length; i++) {
-                    if (!nodes[i]) continue;
+            let start = 0;
+            for (let i = 0; i < nodes.length; i++) {
+                if (!nodes[i]) continue;
 
-                    if (nodes[i] === link) {
-                        start = i;
-                        break;
-                    }
+                if (nodes[i] === link) {
+                    start = i;
+                    break;
                 }
+            }
 
-                for (let i = start; i > 0; i--) {
-                    const node = nodes[i];
-                    if (!node) continue;
-                    if (isBreakline(node)) {
-                        prev = node;
-                        break;
-                    }
+            for (let i = start; i > 0; i--) {
+                const node = nodes[i];
+                if (!node) continue;
+                if (isBreakline(node) || node.nodeName === 'DIV') {
+                    prev = node;
+                    break;
                 }
             }
 
             console.log('[SFDebug] prevNode:', prev);
 
             const beforeLink = createDiv('beforeLink');
-            prev.parentNode.insertBefore(beforeLink, prev.nextSibling);
+
+            if (isDIV) {
+                // if has interactive element then insert before the element
+                const interactive = findInteractiveElement(prev);
+                if (interactive) {
+                    prev.insertBefore(beforeLink, interactive);
+                }
+                else {
+                    prev.insertAdjacentElement('afterend', beforeLink);
+                }
+            }
+            else {
+                prev.parentNode.insertBefore(beforeLink, prev.nextSibling);
+            }
             this.beforeLink = beforeLink;
 
             new Wikifier(null, '<<append #beforeLink>><<BeforeLinkZone>><</append>>');
         }
 
         applyExtraLink() {
-        // find get out/get in img or setting link or leave link or svg
-            const nodes = this.nodeList;
+            // find get out/get in img or setting link or leave link or svg
+            const nodes = this.allNodes;
             let lastNode = null;
 
-            for (const node of nodes) {
-                if (isIconImg(node) && node.src.has('get_out', 'get_in')) {
+            for (let i = nodes.length - 1; i >= 0; i--) {
+                const node = nodes[i];
+
+                if (isIconImg(node) && node.src.has(entranceImg)) {
                     lastNode = node;
                     break;
                 }
                 else if (isMacroLink(node) && node.textContent.has(lastContent)) {
                     lastNode = node;
-                    if (findValidPrevNode(node).nodeName === 'IMG') {
-                        lastNode = findValidPrevNode(node);
+                    if (lastNode.previousElementSibling && lastNode.previousElementSibling.nodeName === 'IMG') {
+                        lastNode = lastNode.previousElementSibling;
                     }
+                    console.log('[SFDebug] lastNode:', lastNode);
                     break;
                 }
                 else if (V.options.mapTop !== true && isMap(node)) {
@@ -365,11 +456,11 @@ const ApplyZone = (() => {
                 lastNode = nodes[nodes.length - 1];
             }
 
+            if (lastNode == null) return;
+
             const extraLink = createDiv('extraLink');
-            if (lastNode != null) {
-                lastNode.parentNode.insertBefore(extraLink, lastNode);
-                new Wikifier(null, '<<append #extraLink>><<ExtraLinkZone>><</append>>');
-            }
+            lastNode.parentNode.insertBefore(extraLink, lastNode);
+            new Wikifier(null, '<<append #extraLink>><<ExtraLinkZone>><</append>>');
             this.extraLink = extraLink;
         }
     }

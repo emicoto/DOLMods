@@ -513,35 +513,3 @@ setup.ModLoveInterest = function () {
         }
     });
 };
-
-
-//------------------------------------------------------
-//
-//  NPC相关进程处理
-//
-//------------------------------------------------------
-setup.iModInit = true;
-
-function updateNPCs() {
-    setup.iModOnLoad = true;
-}
-
-Save.onLoad.add(updateNPCs);
-
-postdisplay.onPostNpc = function () {
-    const passage = this;
-    if (!passage || passage.tags.has('widget')) {
-        return;
-    }
-
-    if (!V.passage || passage.title == 'Start' || passage.title == 'Downgrade Waiting Room' || V.passage == 'Start' || V.passage == 'Downgrade Waiting Room') {
-        return;
-    }
-
-    if (setup.iModOnLoad || setup.iModInit || setup.iModOnDowngrade) {
-        NamedNPC.clear();
-        NamedNPC.update();
-        setup.iModOnLoad = false;
-        setup.iModInit = false;
-    }
-};

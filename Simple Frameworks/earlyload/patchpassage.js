@@ -173,8 +173,16 @@
                 applybefore : '\n\t\t<<iModSettingsButton>>\n\t\t'
             },
             {
-                src : '$NPCName[_npcId].nam',
+                src : '<span class="gold">$per_npc[_pNPCId].name',
+                to  : '<span class="gold">$NPCName[_pNPCId].displayname'
+            },
+            {
+                src : '<<NPC_CN_NAME $NPCName[_npcId].nam>>',
                 to  : '$NPCName[_npcId].displayname'
+            },
+            {
+                src : '\t$NPCName[_npcId].nam',
+                to  : '\t$NPCName[_npcId].displayname'
             }
         ],
         'Widgets Named Npcs' : [

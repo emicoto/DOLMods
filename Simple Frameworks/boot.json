@@ -1,6 +1,6 @@
 {
   "name": "Simple Frameworks",
-  "version": "1.15.2",
+  "version": "1.15.3",
   "modPacker": {
     "modVersionJs": {
       "file": "lib/simplewidget.js",
@@ -26,15 +26,16 @@
     "css/general.css"
   ],
   "scriptFileList": [
+    "scripts/0_iModManager.js",
     "scripts/CNCodeResolver.js",
     "scripts/NamedNPC.js",
     "scripts/applyZone.js",
     "scripts/customUI.js",
+    "scripts/datasetup.js",
     "scripts/domTool.js",
-    "scripts/iModManager.js",
-    "scripts/onSetup.js",
     "scripts/simpleMacros.js",
-    "scripts/timeHandler.js"
+    "scripts/timeHandler.js",
+    "scripts/z_globalProcess.js"
   ],
   "tweeFileList": [],
   "imgFileList": [],
@@ -59,5 +60,5 @@
       "version": "^1.0.0"
     }
   ],
-  "build": 0
+  "build": "2"
 }

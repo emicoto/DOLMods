@@ -1,4 +1,4 @@
-const frameworkversion = "1.15.2"
+const frameworkversion = "1.15.3"
 
 window.simpleFrameworks = {
     version    : frameworkversion,
@@ -80,10 +80,8 @@ window.simpleFrameworks = {
 <<link _output $passage>>
 	<<if setup.language is 'EN'>>
 		<<set setup.language to 'CN'>>
-        <<run iMod.setCf('language', 'CN')>>
 	<<else>>
 		<<set setup.language to 'EN'>>
-        <<run iMod.setCf('language', 'EN')>>
 	<</if>>
     <<run $(document).trigger(':switchlanguage')>>
 <</link>>
