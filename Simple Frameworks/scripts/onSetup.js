@@ -233,7 +233,7 @@ postdisplay.onPost = function () {
         return;
     }
 
-    if (!V.passage || passage.title == 'Start' || passage.title == 'Downgrade Waiting Room' || V.passage == 'Start' || V.passage == 'Downgrade Waiting Room') {
+    if (!V.passage || passage.title == 'Start' || passage.title == 'Downgrade Waiting Room' || V.passage == 'Start' || V.passage == 'Downgrade Waiting Room' || V.passage == 'Settings') {
         return;
     }
 
