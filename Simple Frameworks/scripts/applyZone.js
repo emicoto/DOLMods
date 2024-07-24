@@ -290,8 +290,9 @@ const ApplyZone = (() => {
         applyBeforeLink() {
             const link = this.el.querySelector('.macro-link');
 
-            // check if the previous valid node isnot br and div and hr
+            // finde the previous valid node
             let prev = findValidPrevNode(link);
+            let skip = false;
 
             // if not found then just insert to the lastSibling
             if (prev == null) {
@@ -301,9 +302,10 @@ const ApplyZone = (() => {
             // if still not found then just insert before the link
             if (prev == null) {
                 prev = link;
+                skip = true;
             }
 
-            if (!isBreakline(prev)) {
+            if (!isBreakline(prev) && !skip) {
             // then find the previous br or div
                 let start = 0;
                 const nodes = this.nodes;
