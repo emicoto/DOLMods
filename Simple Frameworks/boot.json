@@ -1,6 +1,6 @@
 {
   "name": "Simple Frameworks",
-  "version": "1.15.1.1",
+  "version": "1.15.2",
   "modPacker": {
     "modVersionJs": {
       "file": "lib/simplewidget.js",
@@ -58,5 +58,6 @@
       "modName": "ReplacePatcher",
       "version": "^1.0.0"
     }
-  ]
+  ],
+  "build": "NaN"
 }
