@@ -417,4 +417,77 @@ slog('log', 'simple framework start at util.js')
             return this.split('').randompop();
         }
     });
+
+    // create alias for randompop
+    Object.defineProperty(Array.prototype, 'randPop', {
+        configurable : true,
+        writable     : true,
+        value() {
+            return this.randompop();
+        }
+    });
+
+    Object.defineProperty(String.prototype, 'randPop', {
+        configurable : true,
+        writable     : true,
+        value() {
+            return this.split('').randompop();
+        }
+    });
+
+    Object.defineProperty(Array.prototype, 'randPopMany', {
+        configurable : true,
+        writable     : true,
+    
+        value(wantSize) {
+            if (this == null) {
+                // lazy equality for null
+                throw new TypeError('Array.prototype.randPopMany called on null or undefined');
+            }
+    
+            const length = this.length >>> 0;
+    
+            if (length === 0) {
+                return [];
+            }
+    
+            let want = Math.trunc(wantSize);
+    
+            if (!Number.isInteger(want)) {
+                throw new Error('Array.prototype.randPopMany want parameter must be an integer');
+            }
+    
+            if (want < 1) {
+                return [];
+            }
+    
+            if (want > length) {
+                want = length;
+            }
+    
+            const splice = Array.prototype.splice;
+            const result = [];
+            let max = length - 1;
+    
+            do {
+                result.push(splice.call(this, random(0, max--), 1)[0]);
+            } while (result.length < want);
+    
+            return result;
+        }
+    });
+
+    Object.defineProperty(String.prototype, 'randPopMany', {
+        configurable : true,
+        writable     : true,
+    
+        value(wantSize) {
+            if (this == null) {
+                // lazy equality for null
+                throw new TypeError('String.prototype.randPopMany called on null or undefined');
+            }
+    
+            return this.split('').randPopMany(wantSize).join('');
+        }
+    });
 })();
