@@ -430,11 +430,12 @@ const ApplyZone = (() => {
             const nodes = this.allNodes;
             let lastNode = null;
 
-            for (let i = nodes.length - 1; i >= 0; i--) {
+            for (let i = 0; i < nodes.length; i++) {
                 const node = nodes[i];
 
                 if (isIconImg(node) && node.src.has(entranceImg)) {
                     lastNode = node;
+                    console.log('[SFDebug] lastNode:',i, lastNode);
                     break;
                 }
                 else if (isMacroLink(node) && node.textContent.has(lastContent)) {
@@ -442,12 +443,12 @@ const ApplyZone = (() => {
                     if (lastNode.previousElementSibling && lastNode.previousElementSibling.nodeName === 'IMG') {
                         lastNode = lastNode.previousElementSibling;
                     }
-                    console.log('[SFDebug] lastNode:', lastNode);
+                    console.log('[SFDebug] lastNode:',i, lastNode);
                     break;
                 }
                 else if (V.options.mapTop !== true && isMap(node)) {
                     lastNode = node;
-                    console.log('[SFDebug] mapNode:', node);
+                    console.log('[SFDebug] mapNode:',i, node);
                     break;
                 }
             }
