@@ -406,20 +406,8 @@ const ApplyZone = (() => {
             console.log('[SFDebug] prevNode:', prev);
 
             const beforeLink = createDiv('beforeLink');
-
-            if (isDIV) {
-                // if has interactive element then insert before the element
-                const interactive = findInteractiveElement(prev);
-                if (interactive) {
-                    prev.insertBefore(beforeLink, interactive);
-                }
-                else {
-                    prev.insertAdjacentElement('afterend', beforeLink);
-                }
-            }
-            else {
-                prev.parentNode.insertBefore(beforeLink, prev.nextSibling);
-            }
+            prev.parentNode.insertBefore(beforeLink, prev.nextSibling);
+            
             this.beforeLink = beforeLink;
 
             new Wikifier(null, '<<append #beforeLink>><<BeforeLinkZone>><</append>>');
