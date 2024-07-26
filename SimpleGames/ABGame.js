@@ -1,8 +1,9 @@
-
+const numberString = '0123456789AB';
+const maxTimes = [0, 0, 0, 10, 10, 18, 28, 36, 34, 32, 32, 36, 36];
 class ABGame {
     // 3, 12
     constructor(hardness) {
-        const maxTimes = [0, 0, 0, 10, 10, 18, 28, 36, 34, 32, 32, 36, 36];
+
         if (hardness < 3 || hardness > 12) {
             throw new Error('min length is 3, max length is 12');
         }
@@ -14,12 +15,8 @@ class ABGame {
     }
 
     generateAnswer() {
-        const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B'];
-        const numbers1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-        if (this.hardness < 9) {
-            return numbers1.randPopMany(this.hardness);
-        }
+        const text = this.hardness < 9 ? numberString.slice(0, 9) : numberString;
+        let numbers = text.split('');
         return numbers.randPopMany(this.hardness);
     }
 
@@ -27,35 +24,42 @@ class ABGame {
         if (input.length !== this.hardness) {
             return 'the input length does not match the hardness';
         }
-        if (this.failed()) {
-            return this.onFailed();
+        if (this.isFailedGame) {
+            return this.failedMessage;
         }
+
         this.tried++;
+
         const result = this.compare(input);
+        if (result.a === this.hardness) {
+            return this.succeedMessage;
+        }
         return `${result.a}A${result.b}B  (${this.tried}/${this.maxTimes})`;
     }
     /**
-     * @param {string} _input
+     * @param {string} inputText
      */
-    compare(_input) {
+    compare(inputText) {
+        if (inputText.length !== this.hardness) {
+            return { a, b };
+        }
         let a = 0;
         let b = 0;
 
         // format input string
-        const input = _input.toUpperCase().split('');
-        if (input.length !== this.hardness) {
-            return { a, b };
-        }
+        const inputArray = inputText.toUpperCase().split('');
+
 
         // string answer
-        const answer = this.answer.join('').split('');
+        const answerArray = typeof this.answer == "string " ? this.answer.split('') : this.answer;
 
         // compare
         for (let i = 0; i < this.hardness; i++) {
-            if (input[i] == answer[i]) {
+            const input = inputArray[i];
+            if (input == answerArray[i]) {
                 a++;
             }
-            else if (answer.includes(input[i])) {
+            else if (answerArray.includes(input)) {
                 b++;
             }
         }
@@ -63,15 +67,17 @@ class ABGame {
         return { a, b };
     }
 
-    failed() {
+    get isFailedGame() {
         return this.tried >= this.maxTimes;
     }
 
-    onFailed() {
-        return `Failed! The answer is ${this.answer.join('')}`;
+    get failedMessage() {
+        return `Failed! The answer is ${this.answerString}`;
     }
-
-    onSucceed() {
-        return `Congratulations! You've tried ${this.tried} times.`;
+    get answerString() {
+        return this.answer.join('');
+    }
+    get succeedMessage() {
+        return `Congratulations! You've tried ${this.tried} times. The answer is ${this.answerString}`;
     }
 }
