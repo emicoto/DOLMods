@@ -47,5 +47,6 @@
 		"eslint": "^8.56.0",
 		"stylelint": "^16.1.0",
 		"stylelint-config-standard": "^36.0.0"
-	}
+	},
+	"packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }

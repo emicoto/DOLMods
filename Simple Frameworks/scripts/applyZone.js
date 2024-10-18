@@ -35,7 +35,7 @@ const ApplyZone = (() => {
     }
 
     function isIconImg(node) {
-        return node?.nodeName === 'IMG' && node.classList.contains('icon');
+        return node?.nodeName === 'IMG' && node.classList.contains('icon') && (isInteractive(node.nextElementSibling) === true || node?.onClick !== null);
     }
 
     function isBreakline(node) {
@@ -49,6 +49,11 @@ const ApplyZone = (() => {
     function isText(node) {
         return node?.nodeName === '#text' || node?.nodeName === 'SPAN' || node?.nodeName === 'U' || node?.nodeName === 'I' || node?.nodeName === 'B' || node?.nodeName === 'STRONG' || node?.nodeName === 'DIV' && node.innerHTML.has('input', 'textarea', 'select') === false;
     }
+
+    function isInteractive(node) {
+        return isMacroLink(node) || isInput(node) || node?.nodeName === 'BUTTON' || node?.nodeName === 'MOUSE' || node?.onClick !== null;
+    }
+
 
     function eventCheck() {
         const event = V.event;
@@ -329,8 +334,12 @@ const ApplyZone = (() => {
                 }
             }
             // if not found then just after to last node
-            if (lastText == null) {
+            if (lastText == null && list.length > 0) {
                 lastText = list[list.length - 1];
+            }
+            // if still not found then just insert to the beginning
+            else if (lastText == null) {
+                lastText = this.allNodes[0];
             }
 
             // insert div after last text node;
