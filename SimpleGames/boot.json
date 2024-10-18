@@ -1,0 +1,36 @@
+{
+  "name": "SimpleGames",
+  "version": "0.0.1",
+  "scriptFileList_inject_early": [],
+  "scriptFileList_earlyload": [],
+  "scriptFileList_preload": [],
+  "styleFileList": [],
+  "scriptFileList": [
+    "ABGame.js"
+  ],
+  "tweeFileList": [],
+  "imgFileList": [],
+  "additionFile": [],
+  "addonPlugin": [
+    {
+      "modName": "TweeReplacer",
+      "addonName": "TweeReplacerAddon",
+      "modVersion": "1.0.0",
+      "params": []
+    }
+  ],
+  "dependenceInfo": [
+    {
+      "modName": "TweeReplacer",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "ReplacePatcher",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "Simple Frameworks",
+      "version": ">=1.0.0"
+    }
+  ]
+}
