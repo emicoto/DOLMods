@@ -1,0 +1,44 @@
+{
+  "name": "Simple Inventory",
+  "version": "0.1.0",
+  "modPacker": {
+    "modScriptFolder": {
+      "scriptFileList_inject_early": [
+        "modules/**/*.js"
+      ]
+    }
+  },
+  "scriptFileList_inject_early": [
+    "modules/InvUI.js",
+    "modules/InvUtil.js",
+    "modules/SFInvMain.js",
+    "modules/SFItem.js",
+    "modules/SFStorage.js"
+  ],
+  "scriptFileList_earlyload": [],
+  "scriptFileList_preload": [],
+  "styleFileList": [],
+  "scriptFileList": [],
+  "tweeFileList": [],
+  "imgFileList": [],
+  "additionFile": [],
+  "addonPlugin": [
+    {
+      "modName": "TweeReplacer",
+      "addonName": "TweeReplacerAddon",
+      "modVersion": "1.0.0",
+      "params": []
+    }
+  ],
+  "dependenceInfo": [
+    {
+      "modName": "TweeReplacer",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "ReplacePatcher",
+      "version": "^1.0.0"
+    }
+  ],
+  "build": "0"
+}
