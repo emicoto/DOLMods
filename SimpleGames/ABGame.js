@@ -3,7 +3,6 @@ const maxTimes = [0, 0, 0, 10, 10, 18, 28, 36, 34, 32, 32, 36, 36];
 class ABGame {
     // 3, 12
     constructor(hardness) {
-
         if (hardness < 3 || hardness > 12) {
             throw new Error('min length is 3, max length is 12');
         }
@@ -16,7 +15,7 @@ class ABGame {
 
     generateAnswer() {
         const text = this.hardness < 9 ? numberString.slice(0, 9) : numberString;
-        let numbers = text.split('');
+        const numbers = text.split('');
         return numbers.randPopMany(this.hardness);
     }
 
@@ -51,7 +50,7 @@ class ABGame {
 
 
         // string answer
-        const answerArray = typeof this.answer == "string " ? this.answer.split('') : this.answer;
+        const answerArray = typeof this.answer == 'string ' ? this.answer.split('') : this.answer;
 
         // compare
         for (let i = 0; i < this.hardness; i++) {

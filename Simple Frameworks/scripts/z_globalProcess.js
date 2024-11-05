@@ -74,6 +74,8 @@ postdisplay.onPost = function () {
     else {
         ApplyZone.applyZone();
     }
+
+    $(document).trigger(':postApplyZone');
 };
 
 //------------------------------------------------------

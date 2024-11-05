@@ -12,5 +12,6 @@
 <</widget>>
 
 <<widget "SFShowAP">>
+<br>
 <span class="green">HP: <<print Math.round($enemyhealth)>>/$enemyhealthmax </span> | <span class="pink">AP: <<print Math.round($enemyarousal)>>/<<print Math.round($enemyarousalmax)>> </span> | <span class="red">Anger: <<print Math.round($enemyanger)>>/$enemyangermax </span> | <span class="teal">Trust: $enemytrust </span>
 <</widget>>

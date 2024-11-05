@@ -81,9 +81,7 @@ var Items = (() => {
         searchType    : _searchByType,
         searchTag     : _searchByTag,
         search        : _search,
-        initItemsData : _initItemsData,
-        getPalam      : _getPalam,
-        getPalamV     : _getPalamV
+        initItemsData : _initItemsData
     });
 })();
 

@@ -258,15 +258,14 @@ $(document).on(':passageinit', () => {
     }
 });
 
-$(document).on(':passagedisplay', () => {
+$(document).on(':postApplyZone', () => {
     setTimeout(() => {
         if (T.outputHtml) {
             console.log('longer combat output:', T.outputHtml);
-            new Wikifier(null, `<<append #addAfterMsg>>${T.outputHtml}<br><</append>>`);
+            new Wikifier('#addAfterMsg', `${T.outputHtml}<br>`);
         }
     }, 100);
 });
-
 
 TimeHandle.set('onBefore', {
     eventId : 'longerCombat',
