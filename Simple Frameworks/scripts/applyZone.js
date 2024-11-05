@@ -351,7 +351,6 @@ const ApplyZone = (() => {
         applyMsgCombat() {
             let node = null;
             const addMsg = createDiv('addAfterMsg');
-            this.msgZone = addMsg;
 
             const stalk = this.el.querySelector('.div_stalk');
             
@@ -370,7 +369,10 @@ const ApplyZone = (() => {
             if (!node) {
                 node = divs[1];
             }
-            node.appendChild(addMsg);
+            if (node) {
+                node.appendChild(addMsg);
+                this.msgZone = addMsg;
+            }
         }
 
         applyBeforeLink() {

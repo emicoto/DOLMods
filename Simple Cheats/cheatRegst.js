@@ -1,0 +1,1 @@
+simpleFrameworks.addto('iModCheats', 'SFCheats');

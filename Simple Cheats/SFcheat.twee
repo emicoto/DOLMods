@@ -1,0 +1,16 @@
+:: SFWidget Cheats [widget]
+<<widget 'SFCheats'>>
+<div class="numberslider-inline">
+    <label>
+    <<=lanSwitch(
+        "disable random ruffle hairs",
+        "禁止自动弄乱头发"
+    )>>    
+    <<checkbox "$SFCheats.keepHairs" false true autocheck>>
+    </label>
+</div>
+<</widget>>
+
+<<widget "SFShowAP">>
+<span class="green">HP: <<print Math.round($enemyhealth)>>/$enemyhealthmax </span> | <span class="pink">AP: <<print Math.round($enemyarousal)>>/<<print Math.round($enemyarousalmax)>> </span> | <span class="red">Anger: <<print Math.round($enemyanger)>>/$enemyangermax </span> | <span class="teal">Trust: $enemytrust </span>
+<</widget>>

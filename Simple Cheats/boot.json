@@ -2,16 +2,16 @@
   "name": "Simple Cheats",
   "version": "1.0.0",
   "scriptFileList_inject_early": [
-    "regist.js"
+    "cheatRegst.js"
   ],
   "scriptFileList_earlyload": [],
   "scriptFileList_preload": [],
   "styleFileList": [],
   "scriptFileList": [
-    "cheats.js"
+    "sfcheat.js"
   ],
   "tweeFileList": [
-    "Cheats.twee"
+    "SFcheat.twee"
   ],
   "imgFileList": [],
   "additionFile": [],
@@ -28,8 +28,23 @@
         },
         {
           "passage": "Furniture Shop Papers",
-          "findString": "<<set _normalisedName to Util.escape(_chosenWallpaperCustom).replace(/[/g, \"&#91;\").replace(/]/g, \"&#93;\")>>",
-          "replace": "<<set _normalisedName to _chosenWallpaperCustom>>"
+          "findString": "<<set _normalisedName to Util.escape(_customHanging).replace(/[/g, \"&#91;\").replace(/]/g, \"&#93;\")>>",
+          "replace": "<<set _normalisedName to _customHanging>>"
+        },
+        {
+          "passage": "Widgets Sleep",
+          "findString": "<<if $ruffledisable is \"f\">>",
+          "replace": "<<if $ruffledisable is \"f\" and $SFCheats.keepHairs is false >>"
+        },
+        {
+          "passage": "Widgets Sleep",
+          "findString": "<<if $ruffledisable is \"f\">>",
+          "replace": "<<if $ruffledisable is \"f\" and $SFCheats.keepHairs is false >>"
+        },
+        {
+          "passage": "Widgets State Man",
+          "findString": "<<widget \"stateman\">>",
+          "replace": "<<widget \"stateman\">><<SFShowAP>><br>"
         }
       ]
     }

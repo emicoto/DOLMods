@@ -259,9 +259,12 @@ $(document).on(':passageinit', () => {
 });
 
 $(document).on(':passagedisplay', () => {
-    if (T.outputHtml) {
-        new Wikifier(null, `<<append #addAfterMsg>>${T.outputHtml}<br><</append>>`);
-    }
+    setTimeout(() => {
+        if (T.outputHtml) {
+            console.log('longer combat output:', T.outputHtml);
+            new Wikifier(null, `<<append #addAfterMsg>>${T.outputHtml}<br><</append>>`);
+        }
+    }, 100);
 });
 
 

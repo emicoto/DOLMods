@@ -1,0 +1,90 @@
+:: ASimpleContentTest [widget]
+<<widget "aSimpleTest">>
+    <div id='test'>just a simple test. make this show at top of every passage!</div>
+	<<link 'Click to Test Passage' 'a Test Passage'>><</link>>
+<</widget>>
+
+<<widget "myOptionsA">>
+   <span class="gold">my Options A</span>
+<br>
+
+<div>
+  any option setting here
+</div>
+
+<</widget>>
+
+<<widget "myOptionsB">>
+    <div id='test'>optionB</div>
+<</widget>>
+
+<<widget "myOptionsC">>
+    <div id='test'>optionC</div>
+<</widget>>
+
+display a button with overlay at UIBar
+<<widget "testButton">>
+<<button lanSwitch('TEST','测试')>>
+    <<iModReplace 'testOverlay'>>
+<</button>>
+<</widget>>
+
+
+setup your UIBar
+<<widget "testOverlay">>
+	<<replace #customOverlayTitle>><<titleTest>><</replace>>
+	<<replace #customOverlayContent>><<TestOver>><</replace>>
+<</widget>>
+
+<<widget "titleTest">>
+	<<setupTabs>>
+	<div id="overlayTabs" class="tab">
+		<<closeButtonMobile>>
+		<<button lanSwitch('TEST','测试')>>
+			<<toggleTab>>
+			<<replace #customOverlayContent>><<TestOver>><</replace>>
+		<</button>>
+	</div>
+	<<closeButton>>
+<</widget>>
+
+<<widget "TestOver">>
+这只是一个测试。
+<</widget>>
+
+<<widget "TestCaption">>
+你有一通未接来电。<br>
+<</widget>>
+
+<<widget "TestCaptionAfter">>
+你中毒了。<br>
+<</widget>>
+
+<<widget "TesterOpinion">>
+<<print C.npc['Tester'].displayname>> <<=lanSwitch("thinks you're its master.", '觉得你是它的主人。')>>
+<</widget>>
+
+<<widget "SamplerOpinion">>
+<<print C.npc['Sampler'].displayname>> <<=lanSwitch("thinks you're cool.", "觉得你很酷。")>>
+<</widget>>
+
+<<widget "RobinOpinionIcon">>
+	<<if C.npc.Robin.love gte 30>>
+		<img scr='img/opinionIcon/robin_love.png'>
+	<<else>>
+		<img scr='img/opinionIcon/robin.png'>
+	<</if>>
+<</widget>>
+
+<<widget 'testLocation'>>
+<<if $location is 'domus'>>
+	<img id="location" class="CustomLocation" @src="_imgLoc + _weather_display + '/almond_path' + _dayState + '.png'">
+<</if>>
+<</widget>>
+
+
+:: a Test Passage
+
+这是一个测试。点击链接返回doms街道。
+
+<<link 'back' 'Domus Street'>><</link>>
