@@ -262,7 +262,7 @@ $(document).on(':postApplyZone', () => {
     setTimeout(() => {
         if (T.outputHtml) {
             console.log('longer combat output:', T.outputHtml);
-            new Wikifier('#addAfterMsg', `${T.outputHtml}<br>`);
+            new Wikifier(null, `<<append #addAfterMsg>>${T.outputHtml}<</append>>`);
         }
     }, 100);
 });

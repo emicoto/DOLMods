@@ -1,11 +1,11 @@
 const ApplyZone = (() => {
     'use strict';
 
-    const mapContent = ['Places of', 'Points of', '可访问地点', '感兴趣地点'];
+    const mapContent = ['Places of', 'Points of', '可访问地点', '感兴趣地点', 'Travel', '其他区域', '快捷小路', 'Alternate Routes'];
 
     const nextContent = ['Next', '继续', 'Continue', '下一步', 'Accept', 'Refuse', 'Reject', '接受', '拒绝', 'Finish', 'End', '结束', 'Obey', '遵从', '服从', '遵命', '听从', '听命', 'Ignore', '忽略', '无视', '不理', '忽略', 'Agree', 'Nod', '同意', '点头', 'Deny', 'Disagree','否认', '反对', 'Decline', 'Run', '跑'];
 
-    const lastContent = ['Setting', '设置', 'Option', 'Config', 'Leave', '离开', '出去', 'Get Out'];
+    const lastContent = ['Setting', '设置', 'Option', 'Config', 'Leave', '离开', '出去', 'Get Out','Get out', 'Sneak', '溜走', '潜入', '进去', '进门', '出门', 'Get in', 'Get In'];
     const entranceImg = ['get_out', 'get_in', 'stair', 'door', 'ladder'];
 
     function removeEmptyTextNode(node) {
@@ -58,11 +58,7 @@ const ApplyZone = (() => {
     function eventCheck() {
         const event = V.event;
 
-        if (!event || typeof T.eventpoolRunning === 'string') {
-            return false;
-        }
-
-        if (V.phase !== 0) {
+        if (typeof event === 'undefined' || event?.length === 0) {
             return false;
         }
 
@@ -73,6 +69,14 @@ const ApplyZone = (() => {
                     return true;
                 }
             }
+        }
+
+        if (typeof T.eventpoolRunning === 'string') {
+            return true;
+        }
+
+        if (V.phase !== 0) {
+            return true;
         }
 
         return false;
@@ -272,8 +276,8 @@ const ApplyZone = (() => {
 
             const links = this.el.querySelectorAll('.macro-link');
 
-            // no link zone on event page and streetevent page and aleast has 2 links
-            if (links.length <= 1 || eventCheck() || this.hasNext === true) {
+            // no link zone on event page and streetevent page
+            if (eventCheck() || this.hasNext === true) {
                 return;
             }
 
@@ -281,8 +285,8 @@ const ApplyZone = (() => {
                 this.applyBeforeLink();
             }
 
-            // no extra link zone on some page aleast has 3 links
-            if (links.length <= 2) {
+            // no extra link zone on some page aleast has 2 links
+            if (links.length <= 1) {
                 return;
             }
 

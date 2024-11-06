@@ -172,10 +172,10 @@ class iStack {
     }
 
     /**
-		 * take required count from stack and return left required count
-		 * @param {number} num
-		 * @returns
-		 */
+     * take required count from stack and return left required count
+     * @param {number} num
+     * @returns
+     */
     take(num) {
         const _count = this.count;
         this.count = Math.max(this.count - num, 0);

@@ -265,7 +265,6 @@ slog('log', 'simple framework start at util.js')
         );
     }
 
-
     Object.defineProperties(window, {
         inrange       : { value : inrange },
         Random        : { value : random },

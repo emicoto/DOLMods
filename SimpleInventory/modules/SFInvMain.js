@@ -10,6 +10,12 @@ const SFInventory = (() => {
         disableStack : false
     };
 
+    const _options = {
+        imgRoot : 'SFInv/',
+        types   : [],
+        rules   : []
+    };
+
     const _sizeData = {
         pill    : 60,
         inject  : 12,
@@ -23,7 +29,13 @@ const SFInventory = (() => {
         small   : 16,
         medium  : 8,
         big     : 4,
-        large   : 1
+        large   : 1,
+
+        add(obj) {
+            for (const key in obj) {
+                this[key] = obj[key];
+            }
+        }
     };
 
 
@@ -38,7 +50,7 @@ const SFInventory = (() => {
         iMod.setCF('SimpleInventory', _config);
     }
 
-    function _getMaxStack(size) {
+    function _getMaxSize(size) {
         const data = _sizeData[size];
 
         if (data) {
@@ -51,11 +63,46 @@ const SFInventory = (() => {
         return null;
     }
 
+    
+    class InventoryRules {
+        constructor(Id = 'default', type = 'pc', slot = 'backpack', size = 12) {
+            this.ruleId = Id;
+            this.type = type;
+            this.slot = slot;
+            this.size = size;
+        }
+
+        init() {
+            if (!V.SFInv[this.type]) {
+                V.SFInv[this.type] = {};
+            }
+
+            if (!V.SFInv[this.type][this.slot]) {
+                V.SFInv[this.type][this.slot] = new Inventory(this.type, this.slot, this.size);
+            }
+        }
+        
+        get() {
+            this.init();
+            return V.SFInv[this.type][this.slot];
+        }
+    }
+
+    Object.defineProperty(window, 'InventoryRules', {
+        value        : InventoryRules,
+        writable     : false,
+        configurable : false
+    });
+
+
     return Object.freeze({
-        config    : _config,
-        sizeData  : _sizeData,
-        import    : _import,
-        export    : _export,
-        maxStacks : _getMaxStack
+        config   : _config,
+        options  : _options,
+        sizeData : _sizeData,
+        import   : _import,
+        export   : _export,
+        maxsize  : _getMaxSize,
+        getTypes : () => _options.types,
+        getRules : () => _options.rules
     });
 })();

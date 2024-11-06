@@ -619,3 +619,97 @@ Macro.add('lanPassage', {
     }
 });
 */
+
+const printer = {
+    templet(string, ...args) {
+        // check if string is valid
+        const isValid = function (str) {
+            if (String(str) == '[object Object]' && (str.EN || str.CN)) return true;
+            return typeof str === 'string' || Array.isArray(str) || typeof str === 'number';
+        };
+    
+        const isLan = function (str) {
+            return String(str) == '[object Object]' || Array.isArray(str);
+        };
+    
+        if (!isValid(string)) return;
+    
+        if (isLan(string)) {
+            string = lanSwitch(string);
+        }
+    
+        for (let i = 0; i < args.length; i++) {
+            let txt = args[i];
+    
+            if (!isValid(txt)) continue;
+    
+            if (isLan(txt)) {
+                txt = lanSwitch(txt);
+            }
+    
+            string = string.replaceAll(`{${i}}`, txt);
+        }
+        return string;
+    },
+
+    toLower(str) {
+        if (String(str) == '[object Object]' && (str.EN || str.CN)) {
+            str.EN = str.EN.toLowerCase();
+            return str;
+        }
+        
+        if (Array.isArray(str)) {
+            str[0] = str[0].toLowerCase();
+            return str;
+        }
+    
+        return str.toLowerCase();
+    },
+
+    toUpper(str) {
+        if (String(str) == '[object Object]' && (str.EN || str.CN)) {
+            str.EN = str.EN.toUpperFirst();
+            return str;
+        }
+        
+        if (Array.isArray(str)) {
+            str[0] = str[0].toUpperFirst();
+            return str;
+        }
+    
+        return str.toUpperFirst();
+    },
+
+    toFull(str) {
+        if (String(str) == '[object Object]' && (str.EN || str.CN)) {
+            str.EN = str.EN.toUpperCase();
+            return str;
+        }
+        
+        if (Array.isArray(str)) {
+            str[0] = str[0].toUpperCase();
+            return str;
+        }
+    
+        return str.toUpperCase();
+    },
+
+    toCamel(str) {
+        if (String(str) == '[object Object]' && (str.EN || str.CN)) {
+            str.EN = str.EN.toCamelCase();
+            return str;
+        }
+        
+        if (Array.isArray(str)) {
+            str[0] = str[0].toCamelCase();
+            return str;
+        }
+    
+        return str.toCamelCase();
+    }
+};
+
+Object.defineProperties(window, {
+    printer : { get : () => printer },
+    P       : { get : () => printer }
+});

@@ -267,6 +267,10 @@ const iModManager = {
 
         setup.locationEntries.push(local);
         return local;
+    },
+
+    isSafePeriod() {
+        return V.combat == 0 && eventCheck() === false;
     }
 
 };
