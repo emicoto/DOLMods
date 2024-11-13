@@ -1,0 +1,27 @@
+:: Phamarcy New Medicine [widget]
+<<widget "SFnewMedicine">>
+    <<pillicon "strong pills">><<link [[Pack of 12 Placebo pills|SFPharmacy Sale]]>><<set $pharmacyItem to setup.pharmacyItems["placebo"]>><</link>><br>
+<</widget>>
+
+:: SFPharmacy Sale
+<<set $outside to 0>><<set $location to "hospital">><<effects>>
+The <<person>> looks at the <<print $pharmacyItem.name>> you're holding.
+<<formatmoney $pharmacyItem.price>>
+<<switch $pharmacyItem.type>>
+	<<case "placebo">>
+        "That'll be _printmoney. So you're feeling unwell? Be careful with these, they can be addictive."
+	<<default>>
+		<<run throw new Error(`Missing pharmacyItem type! ${V.pharmacyItem.type}`)>>
+<</switch>>
+<br><br>
+
+<<if $money gte $pharmacyItem.price>>
+	<<switch $pharmacyItem.type>>
+		<<default>>
+			<<link [[Hand over the money|Pharmacy]]>><<handheldon>><<set $money -= $pharmacyItem.price>><<set $sexStats.pills.pills[$pharmacyItem.type].owned += 12>><<boughtOnce>><</link>>
+	<</switch>>
+<<else>>
+	<span class="purple">You cannot afford them.</span>
+<</if>>
+<br>
+<<link [[Don't buy|Pharmacy]]>><</link>>

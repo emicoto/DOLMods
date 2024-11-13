@@ -39,12 +39,9 @@ var Items = (() => {
 
     function _create(id, obj) {
         const item = {
-            id
+            id,
+            ...obj
         };
-
-        for (const key in obj) {
-            item[key] = obj[key];
-        }
 
         if (typeof item.onUse !== 'function' && item.effects) {
             item.onUse = function (time = 1) {

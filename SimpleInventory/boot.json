@@ -36,9 +36,9 @@
       "version": "^1.0.0"
     },
     {
-      "modName": "ReplacePatcher",
-      "version": "^1.0.0"
+      "modName": "Simple Frameworks",
+      "version": "^1.15.4"
     }
   ],
-  "build": "7"
+  "build": "11"
 }

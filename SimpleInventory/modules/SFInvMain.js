@@ -78,7 +78,16 @@ const SFInventory = (() => {
             }
 
             if (!V.SFInv[this.type][this.slot]) {
+                if (this.size === 'infinity') {
+                    this.size = 0;
+                }
+
                 V.SFInv[this.type][this.slot] = new Inventory(this.type, this.slot, this.size);
+
+                if (this.size === 0) {
+                    V.SFInv[this.type][this.slot].limitsize = 'infinity';
+                    V.SFInv[this.type][this.slot] = {};
+                }
             }
         }
         
