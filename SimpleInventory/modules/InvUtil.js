@@ -1,8 +1,14 @@
 const InvUtil = (() => {
     'use strict';
 
-    // export function
+    // Exported functions of InvUtil module.
     
+    /**
+     * Modifies the attribute value based on the specified parameter and value.
+     * @param {string} param - The parameter to modify (e.g., 'aphrod', 'drunk', etc.).
+     * @param {number} value - The value to be applied to the parameter.
+     * @returns {string} - Returns the modified parameter.
+     */
     function _getPalam(param, value) {
         if (param == 'aphrod') {
             InvUtil.getPalamV('drugged', value);
@@ -18,12 +24,23 @@ const InvUtil = (() => {
         return param;
     }
 
+    /**
+     * Updates the value of a given parameter if not frozen and present in setup list.
+     * @param {string} param - The parameter to be updated.
+     * @param {number} value - The value by which to modify the parameter.
+     */
     function _getPalamV(param, value) {
         if (!V.statFreeze && setup.palamlist.includes(param)) {
             V[param] = Math.clamp(V[param] + value, 0, 10000);
         }
     }
 
+    /**
+     * Returns a formatted string that indicates the level or status of a given parameter.
+     * @param {string} param - The parameter to be formatted.
+     * @param {number} value - The value of the parameter to determine the format.
+     * @returns {string} - Returns a formatted representation of the parameter.
+     */
     function _printPalam(param, value) {
         let gl = 'l';
         let count = 1;
@@ -49,18 +66,24 @@ const InvUtil = (() => {
             }
         }
 
-        if (palam == 'hallucinogen') {
-            palam = 'hallucinogens';
+        if (param == 'hallucinogen') {
+            param = 'hallucinogens';
         }
-        if (palam == 'thirsty') {
-            palam = 'thirst';
+        if (param == 'thirsty') {
+            param = 'thirst';
         }
     
-        return `<<${gl.repeat(count)}${palam}>>`;
+        return `<<${gl.repeat(count)}${param}>>`;
     }
 
+    /**
+     * Returns the maximum size allowed for an item in the inventory.
+     * @param {string} itemId - The ID of the item.
+     * @param {string} [mode='inv'] - The mode to determine size ('inv' or 'raw').
+     * @returns {number} - Returns the calculated maximum size for the item.
+     */
     function _getMaxSize(itemId, mode = 'inv') {
-        const itemData = Items.get(item);
+        const itemData = Items.get(itemId);
         const size = SFInventory.maxsize(itemData.size);
         const { maxsize, boostsize, disableStack } = SFInventory.config;
         
@@ -72,11 +95,10 @@ const InvUtil = (() => {
             return 1;
         }
         else if (disableStack) {
-            // if disabled stacking return a super large number
+            // if stacking is disabled return a very large number
             return Math.pow(10, 20);
         }
     
-        
         if (mode == 'raw') {
             return size;
         }
@@ -84,6 +106,10 @@ const InvUtil = (() => {
         return Math.clamp(size * boostsize, 1, maxsize);
     }
 
+    /**
+     * Organizes the inventory by merging similar items and removing empty slots.
+     * @param {object} Inv - The inventory object to be organized.
+     */
     function _organizeInv(Inv) {
         const remove = [];
     
@@ -112,9 +138,15 @@ const InvUtil = (() => {
         Inv.sort();
     }
     
+    /**
+     * Performs a sanity check to validate the inventory and stack instances.
+     * @param {object} Inv - The inventory object to be validated.
+     * @param {object} stack - The stack object to be validated.
+     * @returns {[object, object]} - Returns the validated inventory and stack objects.
+     */
     function _sanityCheck(Inv, stack) {
         if (Inv instanceof Inventory === false && Inv instanceof Object === true && Inv.invId) {
-            // recover the instance if object is not an instance of Inventory
+            // Recover the instance if the object is not an instance of Inventory
             const [type, pos] = Inv.invId.split('_');
             const _inv = new Inventory(type, pos, Inv.limitsize);
             _inv.slots = Inv.slots.map(stack => new iStack(stack.id, stack.count, stack));
@@ -128,11 +160,16 @@ const InvUtil = (() => {
         return [Inv, stack];
     }
     
-    // should add a single stack to the inventory
+    /**
+     * Merges a stack into the inventory if possible.
+     * @param {object} Inv - The inventory object where the stack should be merged.
+     * @param {object} stack - The stack to be merged into the inventory.
+     * @returns {[object, object]} - Returns the updated inventory and stack objects.
+     */
     function _mergeStack(Inv, stack) {
         [Inv, stack] = _sanityCheck(Inv, stack);
     
-        // merge to same stacks if possible
+        // Merge to same stacks if possible
         const same = Inv.getAll('uid', stack.uid);
         if (same.length > 0) {
             same.forEach(stk => {
@@ -146,7 +183,11 @@ const InvUtil = (() => {
         return [Inv, stack];
     }
     
-    // split the stack if it's count is more than the limit
+    /**
+     * Splits a stack into smaller stacks if the count exceeds a specified limit.
+     * @param {object} stack - The stack to be split.
+     * @returns {array} - Returns an array of new stack objects.
+     */
     function _splitStack(stack) {
         if (stack.count <= stack.size) {
             return [stack];
@@ -165,7 +206,12 @@ const InvUtil = (() => {
         return stacks;
     }
     
-    // should add a single stack to the inventory
+    /**
+     * Adds a stack to the inventory, ensuring all items are appropriately handled.
+     * @param {object} Inv - The inventory object where the stack will be added.
+     * @param {object} stack - The stack to be added.
+     * @returns {boolean|array} - Returns true if successful, or an array of remaining items.
+     */
     function _addStack(Inv, stack) {
         if (stack.count <= 0) {
             console.error('Cannot add stack with zero count:', stack);
@@ -207,8 +253,12 @@ const InvUtil = (() => {
         return true;
     }
     
-    // before addstack check if the stack can be merge and add
-    // Each item should be added to the inventory one by one, not a bunch of them at once.
+    /**
+     * Checks whether a given stack can be merged into the inventory.
+     * @param {object} Inv - The inventory object.
+     * @param {object} stack - The stack to check for merging.
+     * @returns {boolean} - Returns true if merging is possible.
+     */
     function _mergeCheck(Inv, stack) {
         Inv = _sanityCheck(Inv)[0];
     
@@ -219,7 +269,7 @@ const InvUtil = (() => {
         if (same.length > 0) {
             same.forEach(stk => {
                 if (stk.canStack()) {
-                    const remain = s.add(stacks.count);
+                    const remain = stk.add(stacks.count);
                     stacks.take(remain);
                 }
             });
@@ -236,7 +286,12 @@ const InvUtil = (() => {
         return true;
     }
     
-    // try adding a bunch of items to the inventory
+    /**
+     * Tries adding multiple stacks of items to the inventory.
+     * @param {object} Inv - The inventory object.
+     * @param {array} itemStacks - An array of item stacks to be added.
+     * @returns {boolean|array} - Returns true if all items are added, or an array of remaining items.
+     */
     function _addBunchItems(Inv, itemStacks) {
         Inv = _sanityCheck(Inv)[0];
         
@@ -248,7 +303,7 @@ const InvUtil = (() => {
             if (canMerge) {
                 const remain = _addStack(Inv, stack);
                 if (remain !== true) {
-                    // add to last of the itemStacks for next iteration
+                    // Add to last of the itemStacks for next iteration
                     itemStacks.push(...remain);
                 }
             }

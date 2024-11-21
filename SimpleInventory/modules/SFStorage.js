@@ -110,34 +110,69 @@ class Inventory {
     // ---------------------------------------------//
     //              inventory methods               //
     // ---------------------------------------------//
+    /**
+     * set the property of the inventory
+     * @param {string} prop
+     * @param {any} value
+     * @returns {void}
+     */
     set(prop, value) {
         this[prop] = value;
     }
 
+    /**
+     * the current max size of the inventory
+     * @returns {number}
+     */
     max() {
         return this.limitsize;
     }
 
+    /**
+     * the remain space of the inventory
+     * @returns {number}
+     */
     remain() {
         return this.limitsize - this.slots.length;
     }
 
+    /**
+     * the total number of items in the inventory
+     * @returns {number}
+     */
     count() {
         return this.slots.length;
     }
 
+    /**
+     * clear all items in the inventory
+     * @returns {void}
+     */
     clear() {
         this.slots = [];
     }
 
+    /**
+     * check if the inventory is full
+     * @returns {boolean}
+     */
     canStore() {
         return this.remain() > 0;
     }
 
+    /**
+     * check if the inventory can store the stack
+     * @param {number} stackNum
+     * @returns {boolean}
+     */
     canStoreItem(stackNum) {
         return this.remain() >= stackNum;
     }
 
+    /**
+     * display the inventory in html format
+     * @returns {string[]}
+     */
     display() {
         const html = [];
         this.slots.forEach(stack => {
@@ -210,13 +245,22 @@ class Inventory {
         });
     }
 
-    // take whole stack from inventory
+    /**
+     * take the stack from the inventory
+     * @param {number} pos
+     * @returns {iStack}
+     */
     take(pos) {
         return this.slots.splice(pos, 1)[0];
     }
 
-    // take a part from a stack
-    // should finish check availability before calling this method
+    /**
+     * take a part from a stack
+     * should finish check availability before calling this method
+     * @param {number} pos
+     * @param {number} num
+     * @returns {iStack}
+     */
     tackPart(pos, num) {
         if (num > this.slots[pos].count) {
             throw new Error('the required number is greater than the stack count');

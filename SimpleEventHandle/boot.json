@@ -1,0 +1,42 @@
+{
+    "name": "Simple Event Handle",
+    "version": "0.1.0",
+    "modPacker": {
+      "modScriptFolder": {
+        "scriptFileList_inject_early": [
+            "Modules/**/*.js"
+          ],
+          "scriptFileList": [
+            "SC2/**/*.js"
+          ]
+      }
+    },
+    "scriptFileList_inject_early": [
+    ],
+    "scriptFileList_earlyload": [],
+    "scriptFileList_preload": [],
+    "styleFileList": [],
+    "scriptFileList": [],
+    "tweeFileList": [],
+    "imgFileList": [],
+    "additionFile": [],
+    "addonPlugin": [
+      {
+        "modName": "TweeReplacer",
+        "addonName": "TweeReplacerAddon",
+        "modVersion": "1.0.0",
+        "params": []
+      }
+    ],
+    "dependenceInfo": [
+      {
+        "modName": "TweeReplacer",
+        "version": "^1.0.0"
+      },
+      {
+        "modName": "Simple Frameworks",
+        "version": "^1.15.4"
+      }
+    ],
+    "build": "0"
+}

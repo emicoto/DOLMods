@@ -5,6 +5,9 @@
     "modScriptFolder": {
       "scriptFileList_inject_early": [
         "modules/**/*.js"
+      ],
+      "scriptFileList": [
+        "SC2/**/*.js"
       ]
     }
   },
@@ -18,7 +21,9 @@
   "scriptFileList_earlyload": [],
   "scriptFileList_preload": [],
   "styleFileList": [],
-  "scriptFileList": [],
+  "scriptFileList": [
+    "SC2/SFsetup.js"
+  ],
   "tweeFileList": [],
   "imgFileList": [],
   "additionFile": [],
@@ -40,5 +45,5 @@
       "version": "^1.15.4"
     }
   ],
-  "build": "11"
+  "build": "0"
 }

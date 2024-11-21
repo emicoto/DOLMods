@@ -1,4 +1,4 @@
-const frameworkversion = "1.15.4"
+const frameworkversion = '1.15.4';
 
 window.simpleFrameworks = {
     version    : frameworkversion,
@@ -251,7 +251,7 @@ window.simpleFrameworks = {
 
         let html = '\n';
 
-        for (let zone in data) {
+        for (const zone in data) {
             let _html = print.start(zone);
             _html += `<<=iMod.play("${zone}")>>`;
             _html += print.end(zone, data[zone].length);
@@ -298,11 +298,11 @@ window.simpleFrameworks = {
 
         let html = '\r\n';
         const data = this.data;
-        for (const zone in this.data) {
+        for (const zone in data) {
             html += print.start(zone);
             
             // eslint-disable-next-line no-loop-func
-            this.data[zone].forEach(widget => {
+            data[zone].forEach(widget => {
                 if (String(widget) == '[object Object]' && typeof widget.passage == 'string') {
                     html += print.hasPassage(widget);
                 }
@@ -316,7 +316,7 @@ window.simpleFrameworks = {
                     html += print.widget(widget);
                 }
             });
-            html += print.end(zone, this.data[zone].length);
+            html += print.end(zone, data[zone].length);
         }
 
         this.widgethtml = html;
@@ -350,4 +350,4 @@ window.simpleFrameworks = {
     },
 
     widgethtml : ''
-}
+};

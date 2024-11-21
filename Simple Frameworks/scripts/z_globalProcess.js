@@ -64,7 +64,7 @@ postdisplay.onPost = function () {
         setup.language = iMod.getCf('language');
     }
 
-    if (!V.passage || passage.title == 'Start' || passage.title == 'Downgrade Waiting Room' || V.passage == 'Start' || V.passage == 'Downgrade Waiting Room' || V.passage == 'Settings') {
+    if (!V.passage || passage.title.has('Start', 'Downgrade Waiting Room', 'Settings') !== false || V.passage.has('Start', 'Downgrade Waiting Room', 'Settings') !== false) {
         return;
     }
 
