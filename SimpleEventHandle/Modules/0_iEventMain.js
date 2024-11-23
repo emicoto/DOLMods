@@ -219,10 +219,14 @@ var iEvent = (() => {
         isIdle() {
             return this.running === 'idle';
         },
-        isRunning() {
-            return this.running.includes('running');
+        isPlaying() {
+            return this.running.includes('play:');
         },
-        RunningEvent() {
+        isRunning() {
+            // if is running or playing
+            return this.running.includes('running:') || this.running.includes('play:');
+        },
+        currentEvent() {
             if (!this.isRunning()) {
                 return '';
             }
@@ -261,6 +265,30 @@ var iEvent = (() => {
         _state.init = true;
     }
 
+    function _onLoad() {
+        if (_state.isReady() === false) {
+            _initSystem();
+        }
+
+        _state.running = V.eFlags.systemState || 'idle';
+
+        if (_state.isPlaying()) {
+            const event = _state.currentEvent();
+            console.log(`[SF/EventSystem] Event ${event} is running`);
+
+            // restore event running data
+        }
+    }
+
+    function _play(eventData) {
+        // play event by given data
+    }
+
+    function _setEvent(eventData) {
+        // set event data and ready to play by given data
+
+    }
+
 
     return Object.seal({
         get data() {
@@ -270,7 +298,8 @@ var iEvent = (() => {
             return _state;
         },
 
-        init : _initSystem,
+        init   : _initSystem,
+        onLoad : _onLoad,
 
         initFlag : _initFlag,
         setFlag  : _setFlag,
