@@ -5,12 +5,84 @@ class TriggerData {
         this.type = type;
         this.cond = callback;
     }
+    set(obj) {
+        for (const key in obj) {
+            if (!this[key]) {
+                this[key] = clone(obj[key]);
+            }
+        }
+        return this;
+    }
+    onCheck(passage) {
+        if (this.type === 'scene') {
+            if (this.scene && this.scene === V.scene) {
+                return this.cond();
+            }
+            else if (!this.scene) {
+                return this.cond();
+            }
+        }
+
+        if (this.type === 'passage') {
+            return this.checkPasssage(passage) && this.cond();
+        }
+
+        if (this.type === 'location') {
+            return this.checkLocation() && this.cond();
+        }
+
+        if (this.type === 'match') {
+            return this.checkMatch(passage) && this.cond();
+        }
+
+        return false;
+    }
+    checkLocation() {
+        if (!this.location) {
+            return false;
+        }
+        // location should be an array
+        return this.location.includes(V.location);
+    }
+    /**
+     *
+     * @param {string} passage
+     * @returns {boolean}
+     */
+    checkPasssage(passage) {
+        if (!this.passage) {
+            return false;
+        }
+        return this.passage === passage;
+    }
+    checkCond() {
+        return this.cond();
+    }
+    /**
+     *
+     * @param {string} passage
+     * @returns {boolean}
+     */
+    checkMatch(passage) {
+        if (!this.match) {
+            return false;
+        }
+        return passage.match(this.match);
+    }
 }
 
 class PlayOptions {
     constructor(type = 'scene', arg = '') {
         this.type = type;
         this.arg = arg;
+    }
+    set(obj) {
+        for (const key in obj) {
+            if (!this[key]) {
+                this[key] = clone(obj[key]);
+            }
+        }
+        return this;
     }
 }
 

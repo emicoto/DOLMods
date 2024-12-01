@@ -46,7 +46,7 @@ const SFInventory = (() => {
 
     // 导入配置数据的方法，从外部模块获取配置
     function _import() {
-        const { maxsize, boostsize, disableStack } = iMod.getCF('SimpleInventory');
+        const { maxsize, boostsize, disableStack } = iMod.getCf('SimpleInventory');
         _config.maxsize = maxsize;
         _config.boostsize = boostsize;
         _config.disableStack = disableStack;

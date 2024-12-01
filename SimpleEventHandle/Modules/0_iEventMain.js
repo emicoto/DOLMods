@@ -83,7 +83,7 @@ var iEvent = (() => {
 
             this.patches[passageTitle].push(data);
         },
-
+        
         /**
          * add listener to listener storage
          * @param {{
@@ -190,7 +190,7 @@ var iEvent = (() => {
         if (!flagKeys || flagKeys.length === 0) {
             return flags;
         }
-
+ 
         for (const key of flags) {
             flags[key] = _getFlag(key);
         }

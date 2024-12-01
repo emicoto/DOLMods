@@ -3,7 +3,7 @@ const ApplyZone = (() => {
 
     const mapContent = ['Places of', 'Points of', '可访问地点', '感兴趣地点', 'Travel', '其他区域', '快捷小路', 'Alternate Routes'];
 
-    const nextContent = ['Next', '继续', 'Continue', '下一步', 'Accept', 'Refuse', 'Reject', '接受', '拒绝', 'Finish', 'End', '结束', 'Obey', '遵从', '服从', '遵命', '听从', '听命', 'Ignore', '忽略', '无视', '不理', '忽略', 'Agree', 'Nod', '同意', '点头', 'Deny', 'Disagree','否认', '反对', 'Decline', 'Run', '跑'];
+    const nextContent = ['Next', '继续', 'Continue', '下一步', 'Accept', 'Refuse', 'Reject', '接受', '拒绝', 'Finish', 'End', '结束', 'Obey', '遵从', '服从', '遵命', '听从', '听命', 'Ignore', '忽略', '无视', '不理', '忽略', 'Agree', 'Nod', '同意', '点头', 'Deny', 'Disagree','否认', '反对', 'Decline'];
 
     const lastContent = ['Setting', '设置', 'Option', 'Config', 'Leave', '离开', '出去', 'Get Out','Get out', 'Sneak', '溜走', '潜入', '进去', '进门', '出门', 'Get in', 'Get In'];
     const entranceImg = ['get_out', 'get_in', 'stair', 'door', 'ladder'];
@@ -35,6 +35,9 @@ const ApplyZone = (() => {
     }
 
     function isIconImg(node) {
+        if (node?.nodeName === 'SPAN' && (node.classList.contains('icon') || node.classList.contains('icon-container'))) {
+            return true;
+        }
         return node?.nodeName === 'IMG' && node.classList.contains('icon') && (isInteractive(node.nextElementSibling) === true || node?.onClick !== null);
     }
 
@@ -386,36 +389,18 @@ const ApplyZone = (() => {
             let prev = link.previousElementSibling;
 
             // if previous is icon then find the previous element, if not found just keep it
-            if (prev && isIconImg(prev) && prev.previousElementSibling) {
-                prev = prev.previousElementSibling;
+            if (prev && isIconImg(prev)) {
+                if (prev.previousElementSibling) {
+                    prev = prev.previousElementSibling;
+                }
+                else {
+                    prev = prev.previousSibling;
+                }
             }
 
             // if don't has element before means this is not valid page
             if (prev == null) {
                 return;
-            }
-
-            // get all elements on the page
-            const nodes = getAllElements(this.el);
-
-            // then find the previous br or div
-            let start = 0;
-            for (let i = 0; i < nodes.length; i++) {
-                if (!nodes[i]) continue;
-
-                if (nodes[i] === link) {
-                    start = i;
-                    break;
-                }
-            }
-
-            for (let i = start; i > 0; i--) {
-                const node = nodes[i];
-                if (!node) continue;
-                if (isBreakline(node) || node.nodeName === 'DIV') {
-                    prev = node;
-                    break;
-                }
             }
 
             console.log('[SFDebug] prevNode:', prev);
@@ -436,7 +421,7 @@ const ApplyZone = (() => {
             for (let i = 0; i < nodes.length; i++) {
                 const node = nodes[i];
 
-                if (isIconImg(node) && node.src.has(entranceImg)) {
+                if (isIconImg(node) && node?.src?.has(entranceImg)) {
                     lastNode = node;
                     console.log('[SFDebug] lastNode:',i, lastNode);
                     break;

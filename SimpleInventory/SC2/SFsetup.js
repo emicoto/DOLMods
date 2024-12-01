@@ -31,7 +31,7 @@ postdisplay.InvInit = function () {
         }
     }
 
-    if (!iMod.getCF('SimpleInventory')) {
+    if (!iMod.getCf('SimpleInventory')) {
         SFInventory.export();
     }
     else {
