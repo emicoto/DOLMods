@@ -8,6 +8,17 @@ Please download from relase, DO NOT DOWNLOAD FROM MASTER!!
 
 MOD的讨论、反馈用Q群：257791727
 
+#Simple Framework
+一个完整的内容框架，用于支持添加:NPC、物品、左侧栏、菜单、按钮、纹身、商店、自定义UI、自定义文本、地点、链接、事件等等
+
+框架相关以及模块都拆出来移到新仓库统一管理。
+
+详细看看[这里链接](https://github.com/emicoto/SCMLSimpleFramework)
+
+A complete content framework, useful to add new NPC, items, sidebar content, menu, custom UI, custom Popup, location, tattoos, links, events, etc...
+
+The framework related and modules are split out and moved to the new repository for unified management. [here](https://github.com/emicoto/SCMLSimpleFramework)
+
 ## LongerCombat
 更长的遭遇战。彻底根治NPC们的阳痿和早射。
 
@@ -24,18 +35,6 @@ There will be a chance for the NPC's arousal to regress and recover to around 30
 
 you can choose your attitude without requirement.
 
-## Simple Framework
-一个简易的新增内容框架。支持添加：NPC，物品，左侧栏描述、菜单、按钮，模组设置面板支持，新地图入口以及互动点入口等等
-
-只需要把写好的内容入口用widget包装起来，把widget名加到对应的模块队列里就好。
-
-目前支持的模块可以参考temp文件夹里的twee文件。
-
-写法可以参考simple new content文件夹里的文件。
-
-这个MOD必须在排序最前面，但同时必须在汉化MOD之后（避免存在覆盖错误）
-
-更详细的说明可以查看[此处](https://github.com/emicoto/DOLMods/blob/main/Simple%20Frameworks/README.md)
 
 
 A simple new content framework, designed to support additions such as:
