@@ -8,7 +8,7 @@ Please download from relase, DO NOT DOWNLOAD FROM MASTER!!
 
 MOD的讨论、反馈用Q群：257791727
 
-#Simple Framework
+# Simple Framework
 一个完整的内容框架，用于支持添加:NPC、物品、左侧栏、菜单、按钮、纹身、商店、自定义UI、自定义文本、地点、链接、事件等等
 
 框架相关以及模块都拆出来移到新仓库统一管理。
